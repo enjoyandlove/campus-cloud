@@ -11,7 +11,7 @@ import {
   mergeMap,
   switchMap,
   startWith,
-  debounceTime,
+  throttleTime,
   distinctUntilChanged
 } from 'rxjs/operators';
 
@@ -27,9 +27,9 @@ import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
 import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 
 interface IState {
-  query: string;
   group_id: number;
   feeds: Array<any>;
+  searchTerm: string;
   post_types: number;
   user_ids: number[];
   end: null | number;
@@ -42,10 +42,10 @@ interface IState {
 
 const state: IState = {
   feeds: [],
-  query: '',
   end: null,
   start: null,
   user_ids: [],
+  searchTerm: '',
   post_types: 1,
   group_id: null,
   is_integrated: false,
@@ -89,14 +89,14 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     super();
   }
 
-  searchHandler(query: string) {
-    query = query.trim();
+  searchHandler(searchTerm: string) {
+    searchTerm = searchTerm.trim();
 
-    // if query is empty do regular search
-    if (!query) {
+    // if searchTerm is empty do regular search
+    if (!searchTerm) {
       this.state = {
         ...this.state,
-        query: ''
+        searchTerm: ''
       };
       this.store.dispatch(fromStore.setResults({ results: [] }));
       this.store.dispatch(fromStore.setSearchTerm({ term: '' }));
@@ -105,7 +105,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.pageNumber > 1 && !this.state.query) {
+    if (this.pageNumber > 1 && !this.state.searchTerm) {
       this.resetPagination();
     }
 
@@ -113,10 +113,10 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     this.state = {
       ...this.state,
-      query
+      searchTerm
     };
 
-    this.store.dispatch(fromStore.setSearchTerm({ term: query }));
+    this.store.dispatch(fromStore.setSearchTerm({ term: searchTerm }));
     const { post_type, wall_source } = this.feedsAmplitudeService.getWallAmplitudeProperties();
 
     const amplitude = {
@@ -146,7 +146,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     searchCampusParam = searchCampusParam
       .set('obj_types', validObjectTypes.join(','))
-      .set('search_str', query);
+      .set('search_str', searchTerm);
 
     /**
      * do ranged search on all valid object types
@@ -321,6 +321,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       start,
       user_ids,
       group_id,
+      searchTerm,
       post_types,
       is_integrated,
       related_obj_id,
@@ -352,6 +353,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       end,
       start,
       user_ids,
+      searchTerm,
       group_id: group_id,
       post_types: post_types,
       is_integrated: is_integrated,
@@ -360,8 +362,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       removed_by_moderators_only: removed_by_moderators_only
     });
 
-    if (this.state.query) {
-      this.searchHandler(this.state.query);
+    if (this.state.searchTerm) {
+      this.searchHandler(this.state.searchTerm);
       return;
     }
 
@@ -371,8 +373,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   onPaginationNext() {
     super.goToNext();
 
-    if (this.state.query) {
-      this.searchHandler(this.state.query);
+    if (this.state.searchTerm) {
+      this.searchHandler(this.state.searchTerm);
     } else {
       this.fetch();
     }
@@ -380,8 +382,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   onPaginationPrevious() {
     super.goToPrevious();
-    if (this.state.query) {
-      this.searchHandler(this.state.query);
+    if (this.state.searchTerm) {
+      this.searchHandler(this.state.searchTerm);
     } else {
       this.fetch();
     }
@@ -490,14 +492,24 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     const uniqueFilterChanges$ = filters$.pipe(
       distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
       // prevent potential 503
-      debounceTime(700)
+      throttleTime(700)
     );
 
     hostSocialGroup$.pipe(switchMap(() => uniqueFilterChanges$)).subscribe((filters) => {
-      const { users, group, start, end, postType, flaggedByModerators, flaggedByUser } = filters;
+      const {
+        users,
+        group,
+        start,
+        end,
+        postType,
+        searchTerm,
+        flaggedByModerators,
+        flaggedByUser
+      } = filters;
       const filtersObj = {
         end,
         start,
+        searchTerm,
         user_ids: users.map((u) => u.id),
         group_id: group ? group.id : null,
         post_types: postType ? postType.id : null,
@@ -522,8 +534,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
      * as it is still active, clean up the potential undefined
      * results at the end
      */
-    const searchResults$ = combineLatest([results$, posts$, comments$]).pipe(
-      filter(([results]) => Boolean(results.length)),
+    const searchResults$ = combineLatest([results$, posts$, comments$, filters$]).pipe(
+      filter(([, , , { searchTerm }]) => searchTerm !== ''),
       map(([results, posts, comments]) => {
         return results
           .map(({ id, type, children }) => {
