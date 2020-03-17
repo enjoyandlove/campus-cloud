@@ -1,0 +1,18 @@
+{
+  "heading": "t_campus_app_management",
+  "subheading": null,
+  "em": null,
+  "children": [
+    {
+      "label": "t_api_management",
+      "amplitude": "Ready API",
+      "url": "/campus-app-management/api-management"
+    },
+    {
+      "clearParams": true,
+      "label": "t_terms_of_use_menu",
+      "amplitude": "Terms of Use",
+      "url": "/campus-app-management/terms-of-use"
+    }
+  ]
+}

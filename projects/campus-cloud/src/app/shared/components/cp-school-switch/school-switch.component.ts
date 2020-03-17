@@ -16,9 +16,9 @@ export class SchoolSwitchComponent implements OnInit {
 
   helpDeskUrl;
   isSchoolPanel;
-  canManageApis;
   canManageAdmins;
   amplitudeEvents;
+  canManageCampusApp;
   canManageTestUsers;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
@@ -60,8 +60,10 @@ export class SchoolSwitchComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
-  trackViewedApiManagement() {
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.API_MANAGEMENT_VIEWED_PAGE);
+  trackClickMenuEvent() {
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CLICKED_MENU, {
+      menu_name: 'Campus App Management'
+    });
   }
 
   ngOnInit() {
@@ -90,7 +92,7 @@ export class SchoolSwitchComponent implements OnInit {
       this.canManageTestUsers =
         clientPrivileges[CP_PRIVILEGES_MAP.test_users] && this.selectedSchool.is_sandbox;
 
-      this.canManageApis = clientPrivileges[CP_PRIVILEGES_MAP.api_management];
+      this.canManageCampusApp = clientPrivileges[CP_PRIVILEGES_MAP.campus_app_management];
     }
 
     this.amplitudeEvents = {

@@ -31,13 +31,13 @@
         {{ 'profile' | cpI18n }}
       </a>
     </li>
-    <ng-container *ngIf="canManageApis">
+    <ng-container *ngIf="canManageCampusApp">
       <li class="switch__item"
           (click)="close.emit()"
           tabindex="-1"
-          (click)="trackViewedApiManagement()">
-        <a [routerLink]="['/api-management']"
-           class="dropdown-item">{{ 't_api_management' | cpI18n}}</a>
+          (click)="trackClickMenuEvent()">
+        <a [routerLink]="['/campus-app-management']"
+           class="dropdown-item">{{ 't_campus_app_management' | cpI18n}}</a>
       </li>
     </ng-container>
     <li class="switch__item"
