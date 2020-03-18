@@ -5,6 +5,7 @@ import { TextModule } from './text/text.module';
 import { ChartsModule } from './charts/charts.module';
 import { ReadyFormsModule } from './forms/forms.module';
 import { ActionsModule } from './actions/actions.module';
+import { BehaviorModule } from './behavior/behavior.module';
 import { OverlaysModule } from './overlays/overlays.module';
 import { StructureModule } from './structure/structure.module';
 import { NavigationModule } from './navigation/navigation.module';

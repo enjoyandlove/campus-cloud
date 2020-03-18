@@ -93,3 +93,6 @@ export * from './lib/navigation/tabs/tabs/tabs.component';
 export * from './lib/navigation/tabs/tab/tab.component';
 export * from './lib/navigation/navigation.module';
 export * from './lib/navigation/tabs/tabs.module';
+
+export * from './lib/behavior/interceptor/interceptor.directive';
+export * from './lib/behavior/behavior.module';

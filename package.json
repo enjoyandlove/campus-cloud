@@ -55,6 +55,7 @@
     "echarts": "4.3.0",
     "file-saver": "^2.0.2",
     "flatpickr": "4.5.5",
+    "intersection-observer": "0.7.0",
     "jquery": "^3.4.1",
     "jspdf": "^1.5.3",
     "lodash": "4.17.11",
