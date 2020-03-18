@@ -10,6 +10,7 @@ import {
   filter,
   mergeMap,
   switchMap,
+  takeUntil,
   startWith,
   throttleTime,
   distinctUntilChanged
@@ -68,6 +69,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   loading = true;
   disablePost = 100;
   state: IState = state;
+  destroy$ = new Subject();
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
   isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -295,7 +297,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       })
     );
 
-    stream$.subscribe(
+    stream$.pipe(takeUntil(this.destroy$)).subscribe(
       (results) => {
         this.searching.next(false);
         this.store.dispatch(fromStore.setResults({ results }));
@@ -495,31 +497,36 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       throttleTime(700)
     );
 
-    hostSocialGroup$.pipe(switchMap(() => uniqueFilterChanges$)).subscribe((filters) => {
-      const {
-        users,
-        group,
-        start,
-        end,
-        postType,
-        searchTerm,
-        flaggedByModerators,
-        flaggedByUser
-      } = filters;
-      const filtersObj = {
-        end,
-        start,
-        searchTerm,
-        user_ids: users.map((u) => u.id),
-        group_id: group ? group.id : null,
-        post_types: postType ? postType.id : null,
-        flagged_by_users_only: flaggedByUser ? 1 : null,
-        related_obj_id: group ? group.related_obj_id : null,
-        is_integrated: postType ? postType.is_integrated : false,
-        removed_by_moderators_only: flaggedByModerators ? 1 : null
-      };
-      this.onDoFilter(filtersObj);
-    });
+    hostSocialGroup$
+      .pipe(
+        switchMap(() => uniqueFilterChanges$),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((filters) => {
+        const {
+          users,
+          group,
+          start,
+          end,
+          postType,
+          searchTerm,
+          flaggedByModerators,
+          flaggedByUser
+        } = filters;
+        const filtersObj = {
+          end,
+          start,
+          searchTerm,
+          user_ids: users.map((u) => u.id),
+          group_id: group ? group.id : null,
+          post_types: postType ? postType.id : null,
+          flagged_by_users_only: flaggedByUser ? 1 : null,
+          related_obj_id: group ? group.related_obj_id : null,
+          is_integrated: postType ? postType.is_integrated : false,
+          removed_by_moderators_only: flaggedByModerators ? 1 : null
+        };
+        this.onDoFilter(filtersObj);
+      });
 
     this.loading$ = merge(super.isLoading(), this.searching.asObservable()).pipe(startWith(true));
 
@@ -574,6 +581,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('DESTROY');
+    this.destroy$.next();
+    this.destroy$.complete();
     this.store.dispatch(fromStore.resetState());
   }
 
