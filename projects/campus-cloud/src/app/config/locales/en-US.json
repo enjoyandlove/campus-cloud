@@ -3880,7 +3880,7 @@
     "message": "Wall Image"
   },
   "t_walls_max_user_selection_help_text": {
-    "message": "(max 5)"
+    "message": "(max. 5)"
   },
   "t_walls_mute_student": {
     "message": "Mute User"

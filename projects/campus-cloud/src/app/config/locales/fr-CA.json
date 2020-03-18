@@ -2265,6 +2265,9 @@
   "t_announcement_type": {
     "message": "Type d'annonce"
   },
+  "t_api_management": {
+    "message": "Gestion API"
+  },
   "t_api_management_access_token_created": {
     "message": "Token d'accès à l'API créé avec succès"
   },
@@ -3606,6 +3609,9 @@
   "t_shared_preview": {
     "message": "Aperçu"
   },
+  "t_shared_ready_education": {
+    "message": "Ready Education"
+  },
   "t_shared_read_only": {
     "message": "Lecture Seule"
   },
@@ -3827,6 +3833,9 @@
   },
   "t_walls_integration_form_default_image": {
     "message": "Image du mur"
+  },
+  "t_walls_max_user_selection_help_text": {
+    "message": "(max. 5)"
   },
   "t_walls_mute_student": {
     "message": "Désactiver l'utilisateur"
