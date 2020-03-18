@@ -26,7 +26,7 @@ import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { IFeedIntegration } from '@campus-cloud/libs/integrations/common/model';
+import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 import { TextEditorDirective } from '@projects/campus-cloud/src/app/shared/directives';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import {
@@ -53,7 +53,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   @ViewChild(TextEditorDirective, { static: true }) private editor: TextEditorDirective;
 
   @Input() replyView: boolean;
-  @Input() feed: IFeedIntegration;
+  @Input() feed: ICampusThread | ISocialGroupThread;
 
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -326,8 +326,8 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
         group_id: [null],
         school_id: [this.session.g.get('school').id],
         store_id: [this.defaultHost, Validators.required],
-        message: ['', [Validators.maxLength(500)]],
-        message_image_url_list: [[]]
+        message_image_url_list: [[]],
+        message: ['', Validators.maxLength(500)]
       },
       { validators: validThread }
     );
@@ -383,10 +383,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
             const { isCampusWallView } = this.state;
             this.setDefaultHostWallCategory(isCampusWallView);
 
-            if (postType) {
-              this.form.get('post_type').setValue(postType.id);
-            }
-
             if (group) {
               this.form.removeControl('post_type');
               this.form.get('group_id').setValue(group.id);
@@ -395,12 +391,23 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
               this.form.registerControl('post_type', new FormControl(null, Validators.required));
               this.form.controls['store_id'].setValue(this.defaultHost);
             }
+
+            // when Channels filters is set to a Social Post Category
+            if (postType && !this.replyView) {
+              this.form.get('post_type').setValue(postType.id);
+            }
+
+            // on reply mode use the feed's post type
+            if (this.replyView && this.feed) {
+              this.form.get('post_type').setValue(this.feed.post_type);
+            }
           }
         })
       )
       .subscribe();
 
     this.buttonData = {
+      disabled: true,
       class: 'primary',
       text: this.cpI18n.translate('walls_button_create_post')
     };
