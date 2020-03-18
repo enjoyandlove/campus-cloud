@@ -581,7 +581,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('DESTROY');
     this.destroy$.next();
     this.destroy$.complete();
     this.store.dispatch(fromStore.resetState());
