@@ -67,6 +67,7 @@
                     <cp-dropdown [reset]="reset$"
                                  class="dropdown"
                                  [items]="channels$ | async"
+                                 [selectedItem]="selectedItem.value"
                                  (selected)="onSelectedChannel($event)">
                     </cp-dropdown>
                   </div>
