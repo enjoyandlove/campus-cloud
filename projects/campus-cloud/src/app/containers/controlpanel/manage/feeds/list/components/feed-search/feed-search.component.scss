@@ -10,6 +10,10 @@
   }
 }
 
+ready-ui-icon[name="close"] {
+  margin-top: -1px;
+}
+
 button.primary {
   display: flex;
 }
@@ -129,7 +133,7 @@ cp-card {
       border-radius: 4px;
       position: absolute;
       pointer-events: none;
-      border: 1px solid #E5E7ED;
+      border: 1px solid #E6E6E6;
       transition: border 300ms ease-in;
     }
   }
