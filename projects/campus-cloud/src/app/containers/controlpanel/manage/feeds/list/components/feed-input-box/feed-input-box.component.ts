@@ -21,6 +21,7 @@ import { CPSession } from '@campus-cloud/session';
 import { validThread } from '../../../validators';
 import { FeedsService } from '../../../feeds.service';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { IItem } from '@campus-cloud/shared/components';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
@@ -67,6 +68,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   image$: BehaviorSubject<string> = new BehaviorSubject(null);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  selectedItem: BehaviorSubject<null | IItem> = new BehaviorSubject(undefined);
 
   state$: BehaviorSubject<IState> = new BehaviorSubject({
     group: null,
@@ -241,6 +243,8 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   resetFormValues() {
     const { group, isCampusWallView } = this.state;
 
+    this.selectedItem.next(undefined);
+
     if (!group && !isCampusWallView && !this.replyView) {
       this.form.controls['group_id'].setValue(null);
       this.form.controls['post_type'].setValue(null);
@@ -379,6 +383,15 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
             groupType: _get(group, 'group_type', null)
           });
 
+          if (postType) {
+            this.selectedItem.next({
+              action: null,
+              label: postType.name
+            });
+          } else {
+            this.selectedItem.next(undefined);
+          }
+
           if (this.form) {
             const { isCampusWallView } = this.state;
             this.setDefaultHostWallCategory(isCampusWallView);
@@ -390,16 +403,16 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
             } else {
               this.form.registerControl('post_type', new FormControl(null, Validators.required));
               this.form.controls['store_id'].setValue(this.defaultHost);
-            }
 
-            // when Channels filters is set to a Social Post Category
-            if (postType && !this.replyView) {
-              this.form.get('post_type').setValue(postType.id);
-            }
+              // when Channels filters is set to a Social Post Category
+              if (postType && !this.replyView) {
+                this.form.get('post_type').setValue(postType.id);
+              }
 
-            // on reply mode use the feed's post type
-            if (this.replyView && this.feed) {
-              this.form.get('post_type').setValue(this.feed.post_type);
+              // on reply mode use the feed's post type
+              if (this.replyView && this.feed) {
+                this.form.get('post_type').setValue(this.feed.post_type);
+              }
             }
           }
         })
