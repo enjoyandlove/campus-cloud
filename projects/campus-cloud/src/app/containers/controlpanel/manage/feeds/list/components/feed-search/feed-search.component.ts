@@ -294,8 +294,12 @@ export class FeedSearchComponent implements OnInit {
     this.store.dispatch(fromStore.setPostType({ postType: channel }));
   }
 
-  handleGroup(group) {
-    this.store.dispatch(fromStore.setGroup({ group: group }));
+  handleGroup(selectedGroup) {
+    const { group } = this.state$;
+    if (group && group.id === selectedGroup.id) {
+      selectedGroup = null;
+    }
+    this.store.dispatch(fromStore.setGroup({ group: selectedGroup }));
     this.store.dispatch(fromStore.setPostType({ postType: null }));
   }
 

@@ -156,7 +156,7 @@ export class MenuTriggerDirective implements OnDestroy {
       backdropClass: 'ready-ui-menu',
       positionStrategy: this.getPosition(),
       hasBackdrop: this.triggersSubmenu() ? false : true,
-      scrollStrategy: this.overlay.scrollStrategies.close()
+      scrollStrategy: this.overlay.scrollStrategies.block()
     };
   }
 
