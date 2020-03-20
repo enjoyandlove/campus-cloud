@@ -11,6 +11,14 @@ export const now = (tz) => CPDate.now(tz).unix();
 
 export const yesterdayEnd = (tz) => CPDate.toEpoch(yesterdayDate, tz);
 
+export const last7Days = (tz, startDate) =>
+  CPDate.toEpoch(
+    moment(startDate)
+      .subtract(7, 'days')
+      .startOf('day'),
+    tz
+  );
+
 export const last30Days = (tz, startDate) =>
   CPDate.toEpoch(
     moment(startDate)

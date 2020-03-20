@@ -1,44 +1,48 @@
 <ng-container [ngSwitch]="users?.length > 0">
-  <ul *ngSwitchCase="true"
-      class="test-users cp-form">
-    <li class="cp-form__header">
-      <div class="row">
-        <cp-sorting-header class="col-12"
-                           [label]="'email' | cpI18n"
-                           [sortDirection]="sortDirection"
-                           (click)="sort.emit(sortDirection)">
-        </cp-sorting-header>
-      </div>
-    </li>
+  <table ui-table
+         *ngSwitchCase="true">
+    <thead>
+      <tr ui-table-row>
+        <th ui-table-cell
+            sorting="true"
+            colspan="3"
+            [sortDirection]="sortDirection"
+            (sort)="sort.emit(sortDirection)">{{ 'email' | cpI18n }}</th>
+      </tr>
+    </thead>
 
-    <li *ngFor="let user of users; index as i"
-        class="cp-form__item"
-        [cpTarget]="['test_user_' + i]">
-      <div class="row">
-        <span class="col-9">
+    <tbody>
+      <tr ui-table-row
+          [cpTarget]="['test_user_' + i]"
+          *ngFor="let user of users; index as i">
+        <td ui-table-cell>
           {{ user.email }}
-        </span>
-        <span class="col-2 text-truncate">
-          <button type="button"
-                  class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary"
+        </td>
+        <td ui-table-cell>
+          <button ui-button
+                  type="button"
+                  class="resend"
+                  color="primary"
+                  variant="inline"
                   (click)="resend.emit(user.id)">
             {{ 't_sandbox_resend_invite' | cpI18n }}
           </button>
-        </span>
-        <span class="col-1 text-right actions">
-          <button type="button"
-                  class="hover delete unstyled-button"
+        </td>
+        <td align="right"
+            ui-table-cell>
+          <button ui-button
+                  type="button"
+                  class="delete"
+                  variant="inline"
+                  aria-label="Delete Test User"
                   (click)="delete.emit(user.id)">
-            <span aria-hidden="true">&times;</span>
+            <ready-ui-icon name="close"></ready-ui-icon>
           </button>
-        </span>
-      </div>
-    </li>
-  </ul>
-  <div *ngSwitchCase="false"
-       class="row add-margin">
-    <div class="col-12">
-      <cp-no-content [noContentText]="noContentText"></cp-no-content>
-    </div>
-  </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-container *ngSwitchCase="false">
+    <cp-no-content [noContentText]="noContentText"></cp-no-content>
+  </ng-container>
 </ng-container>

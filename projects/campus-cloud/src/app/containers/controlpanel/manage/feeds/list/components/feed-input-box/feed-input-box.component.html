@@ -11,8 +11,7 @@
           <div class="col-6 text-right">
             <label class="error"
                    *ngIf="imageError">{{ imageError }}</label>
-            <cp-upload-button [id]="[threadId ? threadId : 'main_input_box']"
-                              [buttonText]="cpI18n.translate('button_add_photo')"
+            <cp-upload-button [buttonText]="cpI18n.translate('button_add_photo')"
                               buttonClass="cpbtn cpbtn--link"
                               (fileUpload)="onFileUpload($event)">
             </cp-upload-button>
@@ -41,13 +40,13 @@
           </div>
         </div>
         <div class="row justify-content-end">
-          <div *ngIf="!groupId && !_isCampusWallView"
+          <div *ngIf="!state.group && state.isCampusWallView"
                class="col-10 channel-dropdown no-right-padding">
             <div class="row">
               <div class="col-6">
                 <div class="row">
                   <div class="col-5 no-right-padding">
-                    <span i18n>{{ 'feeds_post_as' | cpI18n }}</span>
+                    <span>{{ 'feeds_post_as' | cpI18n }}</span>
                   </div>
                   <div class="col-7 no-left-padding">
                     <cp-dropdown class="dropdown"
@@ -62,12 +61,13 @@
                    *ngIf="!replyView">
                 <div class="row">
                   <div class="col-4 no-right-padding">
-                    <span i18n>{{ 'feeds_post_to' | cpI18n }}</span>
+                    <span>{{ 'feeds_post_to' | cpI18n }}</span>
                   </div>
                   <div class="col-8 no-left-padding">
                     <cp-dropdown [reset]="reset$"
                                  class="dropdown"
                                  [items]="channels$ | async"
+                                 [selectedItem]="selectedItem.value"
                                  (selected)="onSelectedChannel($event)">
                     </cp-dropdown>
                   </div>

@@ -25,13 +25,13 @@
     }
 
     &:not(.tabs-nav__item--active):hover:after {
-      background: map-get($color-grey, 200);
+      background: map-get($ready-grey, 200);
     }
 
     &--active {
 
       &:after {
-        background: $color-primary;
+        background: map-get($ready-primary,'regular');
       }
     }
   }

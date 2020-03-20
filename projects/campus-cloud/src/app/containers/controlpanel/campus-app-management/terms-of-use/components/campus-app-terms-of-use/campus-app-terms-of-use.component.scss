@@ -1,0 +1,14 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.terms-of-use {
+  margin-top: 14px;
+
+  h5 {
+    @include font-16px();
+    @include font-semi-bold();
+  }
+
+  p {
+    line-height: 1.4;
+  }
+}

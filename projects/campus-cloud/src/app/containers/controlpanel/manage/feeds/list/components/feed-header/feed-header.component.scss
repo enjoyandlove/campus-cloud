@@ -3,6 +3,10 @@
 @import '~projects/campus-cloud/src/sass/components/button';
 
 .cp-feed-header {
+  header {
+    word-break: break-all;
+  }
+
   ready-ui-avatar {
     margin-right: 0.5em;
   }

@@ -67,6 +67,14 @@ export class AnnouncementAmplitudeService {
       ('user_details' in announcement && (announcement as any).user_details.length) ||
       ('user_ids' in announcement && (announcement as any).user_ids.length)
     ) {
+      return amplitudeEvents.CUSTOM_AUDIENCE;
+    }
+
+    if ('filters' in announcement && (announcement as any).filters.length) {
+      return amplitudeEvents.DYNAMIC_AUDIENCE;
+    }
+
+    if ('persona_id' in announcement) {
       return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE;
     }
 

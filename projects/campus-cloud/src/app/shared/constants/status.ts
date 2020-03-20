@@ -9,7 +9,7 @@
  *
  */
 
-// TODO REMOVE THIS FILE
+// TODO: REMOVE THIS FILE
 export const STATUS = {
   /**
    * FORMS

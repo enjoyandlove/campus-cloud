@@ -26,6 +26,9 @@ export class MenuTriggerDirective implements OnDestroy {
   overlayRef: OverlayRef;
   _closingActionsSubscription = Subscription.EMPTY;
 
+  @Input()
+  overlayWidth: string;
+
   @Input('triggerFor')
   get menu() {
     return this._menu;
@@ -148,10 +151,12 @@ export class MenuTriggerDirective implements OnDestroy {
 
   private getConfig(): OverlayConfig {
     return {
+      width: this.overlayWidth,
+      disposeOnNavigation: true,
       backdropClass: 'ready-ui-menu',
       positionStrategy: this.getPosition(),
       hasBackdrop: this.triggersSubmenu() ? false : true,
-      scrollStrategy: this.overlay.scrollStrategies.reposition()
+      scrollStrategy: this.overlay.scrollStrategies.block()
     };
   }
 
@@ -167,7 +172,7 @@ export class MenuTriggerDirective implements OnDestroy {
           overlayY: 'top'
         }
       ])
-      .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 5)
-      .withDefaultOffsetX(this.triggersSubmenu() ? 5 : 0);
+      .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 4)
+      .withDefaultOffsetX(this.triggersSubmenu() ? 4 : 0);
   }
 }

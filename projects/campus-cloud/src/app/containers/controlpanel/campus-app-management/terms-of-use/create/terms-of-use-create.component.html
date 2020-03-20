@@ -1,0 +1,68 @@
+<div class="wrapper">
+  <div class="wrapper__left-col">
+    <cp-campus-app-terms-of-use></cp-campus-app-terms-of-use>
+  </div>
+
+  <div class="wrapper__right-col">
+    <div class="wrapper__editor">
+      <h5>{{ 't_terms_of_use_terms_heading' | cpI18n }}</h5>
+      <div
+        class="ui-editor"
+        #editor="ui-editor"
+        ready-ui-text-editor
+        [toolbar]="['link']"
+        [events]="['text-change']"
+        (editor)="onTextChange()"
+        [placeholder]="'t_terms_of_use_placeholder' | cpI18n">
+      </div>
+
+      <h5>
+        {{ 't_shared_ready_education' | cpI18n }}
+
+        <button
+          ui-tooltip
+          type="button"
+          [placement]="'top'"
+          class="unstyled-button"
+          aria-label="Campus App ToU disclaimer"
+          [title]="'t_terms_use_tooltip_text' | cpI18n">
+            <ready-ui-icon
+              [name]="'info'"
+              [size]="'small'">
+            </ready-ui-icon>
+        </button>
+
+        <span class="wrapper__editor__read-only">
+          {{ 't_shared_read_only' | cpI18n }}
+        </span>
+      </h5>
+
+      <span
+        class="wrapper__editor__disclaimer"
+        [innerHtml]="'t_terms_of_use_disclaimer' | privacyLink">
+      </span>
+    </div>
+  </div>
+
+  <div class="wrapper__footer">
+    <div class="cp-wrapper cp-wrapper--outer">
+      <ready-ui-stack alignment="end">
+        <button
+          ui-button
+          type="button"
+          variant="stroked"
+          (click)="resetTermsOfUse()">{{ 'cancel' | cpI18n }}
+        </button>
+
+        <button
+          ui-button
+          type="button"
+          variant="flat"
+          color="primary"
+          (click)="showPublishTermsModal()"
+          [disabled]="disableSubmit$ | async">{{'t_terms_of_use_button_publish' | cpI18n}}
+        </button>
+      </ready-ui-stack>
+    </div>
+  </div>
+</div>

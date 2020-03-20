@@ -9,7 +9,7 @@ describe('Feeds Validators', () => {
       const fb = new FormBuilder();
       form = fb.group(
         {
-          message: null,
+          message: '',
           message_image_url_list: [[]]
         },
         { validators: validThread }
@@ -30,7 +30,7 @@ describe('Feeds Validators', () => {
     it('should return true when message_image_url_list has value', () => {
       const validInput = 'hello';
 
-      form.get('message').setValue([validInput]);
+      form.get('message').setValue(validInput);
       expect(form.valid).toBe(true);
     });
   });

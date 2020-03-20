@@ -1,0 +1,9 @@
+<form>
+  <div class="form__control">
+    <ready-ui-icon name="search"></ready-ui-icon>
+    <input type="search"
+           aria-label="Search"
+           [placeholder]="placeholder"
+           (input)="search.emit($event.target.value)">
+  </div>
+</form>

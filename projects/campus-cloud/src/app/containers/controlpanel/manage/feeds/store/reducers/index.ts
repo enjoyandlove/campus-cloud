@@ -6,5 +6,5 @@ export interface IWallsState {
   bannedEmails: IWallsBannedEmailsState;
 }
 
-export { feedsReducer } from './feeds.reducer';
-export { bannedEmailsReducer } from './banned-emails.reducer';
+export { feedsReducer, feedsinitialState } from './feeds.reducer';
+export { bannedEmailsReducer, wallsBannedEmailsinitialState } from './banned-emails.reducer';

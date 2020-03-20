@@ -14,16 +14,16 @@
 
   &.option--disabled {
     cursor: not-allowed;
-    color: lighten($color: $color-grey-150, $amount: 10%) !important;
+    color: map-get($ready-grey, 400) !important;
   }
 
   &.option--selected {
     color: white;
-    background: $color-primary;
+    background: map-get($ready-primary,'regular');
   }
 
   &:hover:not(.option--disabled):not(.option--selected) {
-    background: lighten($color: $color-grey-150, $amount: 25%);
+    background: map-get($ready-grey, 200);
   }
 
   &__prefix {

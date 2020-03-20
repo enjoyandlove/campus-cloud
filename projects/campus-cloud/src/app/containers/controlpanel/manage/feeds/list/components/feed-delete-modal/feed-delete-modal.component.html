@@ -1,43 +1,5 @@
-<div class="cpmodal">
-  <div class="cpmodal__header">
-    <div class="row">
-      <div class="col-12 text-center">
-        <span><strong>{{ 'feeds_delete_post_modal_title' | cpI18n }}</strong></span>
-
-        <button type="button"
-                aria-label="close"
-                data-dismiss="modal"
-                (click)="teardown.emit()"
-                class="float-right hover cpmodal__header__close unstyled-button">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="cpmodal__body">
-    <div class="row">
-      <div class="col-12">
-        <p class="text-center">
-          {{ 'feeds_delete_post_modal_body' | cpI18n }}
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="cpmodal__footer">
-    <div class="row justify-content-end">
-      <div class="col-6 text-right">
-        <button type="button"
-                class="cpbtn cpbtn--cancel"
-                data-dismiss="modal"
-                (click)="teardown.emit()">
-          {{ 'cancel' | cpI18n }}
-        </button>
-
-        <cp-button [props]="buttonData"
-                   (buttonClick)="onDelete()"> </cp-button>
-      </div>
-    </div>
-  </div>
-</div>
+<cp-delete-modal (cancelClick)="onClose()"
+                 (deleteClick)="onDelete()"
+                 [modalBody]="['feeds_delete_post_modal_body' | cpI18n]"
+                 [modalTitle]="['feeds_delete_post_modal_title' | cpI18n]">
+</cp-delete-modal>

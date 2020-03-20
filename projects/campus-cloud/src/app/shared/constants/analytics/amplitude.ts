@@ -471,8 +471,6 @@ export const amplitudeEvents = {
 
   MANAGE_ADDED_WEB_CHECK_OUT: 'Manage - Added Web Check-Out',
 
-  API_MANAGEMENT_VIEWED_PAGE: 'API Management - Viewed Page',
-
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
 
   NOTIFY_UPDATED_COMMUNICATION: 'Notify - Updated Communication',
@@ -487,11 +485,11 @@ export const amplitudeEvents = {
 
   MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
 
-  API_MANAGEMENT_EDITED_API_KEY: 'API Management - Edited API Key',
+  API_MANAGEMENT_EDITED_API_KEY: 'Ready API - Edited API Key',
 
-  API_MANAGEMENT_REVOKED_API_KEY: 'API Management - Revoked API Key',
+  API_MANAGEMENT_REVOKED_API_KEY: 'Ready API - Revoked API Key',
 
-  API_MANAGEMENT_CREATED_API_KEY: 'API Management - Created API Key',
+  API_MANAGEMENT_CREATED_API_KEY: 'Ready API - Created API Key',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
 

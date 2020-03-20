@@ -25,7 +25,7 @@
     "message": "All Athletics"
   },
   "admin_all_clubs": {
-    "message": "All Clubs"
+    "message": "All Organizations"
   },
   "admin_all_services": {
     "message": "All Services"
@@ -40,10 +40,10 @@
     "message": "View the Assessment Dashboard"
   },
   "admin_athletics_owner": {
-    "message": "Athletics Club Owner"
+    "message": "Athletics Owner"
   },
   "admin_athletics_owner_help": {
-    "message": "Create new athletics clubs; manage information, events and membership for all clubs or select clubs"
+    "message": "Create new athletics organizations; manage information, events and membership for all organizations or select organizations."
   },
   "admin_audience_help": {
     "message": "Notify and assess specific segments (audiences) of users"
@@ -68,14 +68,14 @@
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_can_read_help": {
-    "message": "See content and create content, but not edit all club information",
+    "message": "See content and create content, but not edit all organization information",
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_club_owner": {
-    "message": "Club Owner"
+    "message": "Organization Owner"
   },
   "admin_club_owner_help": {
-    "message": "Create new clubs; manage information, events and membership for all clubs or select clubs"
+    "message": "Create new organizations; manage information, events and membership for all organizations or select organizations."
   },
   "admin_club_service_modal_title": {
     "message": "Select %s"
@@ -108,10 +108,10 @@
     "message": "Event Viewer"
   },
   "admin_form_label_athletics": {
-    "message": "Athletic(s)"
+    "message": "Athletics"
   },
   "admin_form_label_clubs": {
-    "message": "Club(s)"
+    "message": "Organization(s)"
   },
   "admin_form_label_services": {
     "message": "Service(s)"
@@ -162,7 +162,7 @@
     "message": "Select Athletics"
   },
   "admin_select_clubs": {
-    "message": "Select Clubs"
+    "message": "Select Organizations"
   },
   "admin_select_services": {
     "message": "Select Services"
@@ -501,10 +501,10 @@
     "message": "All Athletics"
   },
   "athletics_button_create": {
-    "message": "Create Athletic Club"
+    "message": "Create Athletics"
   },
   "athletics_delete_modal_title": {
-    "message": "Delete Athletic"
+    "message": "Delete Athletics"
   },
   "athletics_import_button_submit": {
     "message": "Import Athletics"
@@ -513,10 +513,10 @@
     "message": "Import Athletics from File"
   },
   "athletics_import_items_to_import": {
-    "message": "File contains data for %s athletic(s)."
+    "message": "File contains data for %s athletics."
   },
   "athletics_label_athletic_banner": {
-    "message": "Athletic Banner"
+    "message": "Athletics Banner"
   },
   "athletics_label_athletic_description": {
     "message": "Description"
@@ -534,7 +534,7 @@
     "message": "Status"
   },
   "athletics_label_edit_athletic": {
-    "message": "Edit Athletic Club"
+    "message": "Edit Athletics"
   },
   "attendee": {
     "message": "Attendee"
@@ -719,9 +719,6 @@
   "calendars_no_results_found": {
     "message": "No calendars found"
   },
-  "campus_wall": {
-    "message": "Campus Wall"
-  },
   "campus_wide": {
     "message": "Campus-Wide"
   },
@@ -772,44 +769,44 @@
     "message": "Clicks"
   },
   "clubs": {
-    "message": "Clubs"
+    "message": "Organizations"
   },
   "clubs_all_clubs": {
-    "message": "All Clubs"
+    "message": "All Organizations"
   },
   "clubs_and_groups": {
-    "message": "Clubs & Groups"
+    "message": "Organizations"
   },
   "clubs_button_create": {
-    "message": "Create Club"
+    "message": "Create Organization"
   },
   "clubs_create_heading": {
-    "message": "Create Club"
+    "message": "Create Organization"
   },
   "clubs_delete_error_unauthorized": {
-    "message": "You do not have permission to delete this club.",
+    "message": "You do not have permission to delete this organization.",
     "description": "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
   },
   "clubs_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
   "clubs_delete_modal_title": {
-    "message": "Delete Club"
+    "message": "Delete Organization"
   },
   "clubs_disabled": {
     "message": "Disabled"
   },
   "clubs_edit_heading": {
-    "message": "Edit Club"
+    "message": "Edit Organization"
   },
   "clubs_import_button_submit": {
-    "message": "Import Clubs"
+    "message": "Import Organizations"
   },
   "clubs_import_heading": {
-    "message": "Import Clubs from File"
+    "message": "Import Organizations from File"
   },
   "clubs_import_items_to_import": {
-    "message": "File contains data for %s club(s)."
+    "message": "File contains data for %s organization(s)."
   },
   "clubs_inactive": {
     "message": "Inactive"
@@ -818,29 +815,29 @@
     "message": "Advisor"
   },
   "clubs_label_club_banner": {
-    "message": "Club Banner"
+    "message": "Organization Banner"
   },
   "clubs_label_club_description": {
-    "message": "Club Description"
+    "message": "Description"
   },
   "clubs_label_club_details": {
-    "message": "Club Details"
+    "message": "Organization Details"
   },
   "clubs_label_club_membership": {
-    "message": "Club Membership"
+    "message": "Membership"
   },
   "clubs_label_club_name": {
-    "message": "Club Name"
+    "message": "Name"
   },
   "clubs_label_club_status": {
-    "message": "Club Status"
+    "message": "Status"
   },
   "clubs_label_constitution": {
     "message": "Constitution",
     "description": "Form Label "
   },
   "clubs_label_edit_club": {
-    "message": "Edit Club"
+    "message": "Edit Organization"
   },
   "clubs_label_executive_position": {
     "message": "Position"
@@ -849,10 +846,10 @@
     "message": "Member Type"
   },
   "clubs_membership_disabled": {
-    "message": "Users can view the club but cannot join or message other members"
+    "message": "Users can view the organization but cannot join or message other members"
   },
   "clubs_membership_enabled": {
-    "message": "Allows users to join the club and message other members"
+    "message": "Allows users to join the organization and message other members"
   },
   "clubs_member_button_create": {
     "message": "Add Member"
@@ -876,19 +873,19 @@
     "message": "No members found"
   },
   "clubs_no_results": {
-    "message": "No clubs found"
+    "message": "No organizations found"
   },
   "clubs_status_active": {
-    "message": "Club is approved and is listed in the Campus App"
+    "message": "Organization is approved and is listed in the Campus App"
   },
   "clubs_status_inactive": {
-    "message": "Club is suspended and is not listed in the Campus App"
+    "message": "Organization is suspended and is not listed in the Campus App"
   },
   "clubs_status_pending": {
-    "message": "Club is awaiting approval and is not listed in the Campus App"
+    "message": "Organization is awaiting approval and is not listed in the Campus App"
   },
   "club_info_notes": {
-    "message": "Club Notes",
+    "message": "Organization Notes",
     "description": "As a club super editor, view a club info page with club notes. "
   },
   "club_membership_disabled_title": {
@@ -1013,7 +1010,7 @@
     "message": "Campus Tile Activity"
   },
   "dashboard_club_views": {
-    "message": "Club Views"
+    "message": "Organization Views"
   },
   "dashboard_downloads_title": {
     "message": "Downloads & Registrations"
@@ -1055,7 +1052,7 @@
     "message": "Comments"
   },
   "dashboard_social_activity_connections": {
-    "message": "Connections"
+    "message": "Friendships"
   },
   "dashboard_social_activity_likes": {
     "message": "Likes"
@@ -1076,7 +1073,7 @@
     "message": "Top Events"
   },
   "dashboard_top_five_clubs_title": {
-    "message": "Top Clubs"
+    "message": "Top Organizations"
   },
   "dashboard_top_services": {
     "message": "Top Services"
@@ -1264,7 +1261,7 @@
     "message": "Event Manager"
   },
   "events_event_manager_tooltip": {
-    "message": "Select a Host (a Club or Service) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
+    "message": "Select a Host (Service or Organization) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
   },
   "events_event_name": {
     "message": "Event Name"
@@ -1359,7 +1356,7 @@
     "message": "Thanks for your feedback"
   },
   "feeds": {
-    "message": "Walls"
+    "message": "Community"
   },
   "feeds_all_posts": {
     "message": "All Posts"
@@ -1395,7 +1392,7 @@
     "message": "Campus Cloud Admins"
   },
   "feeds_club_members": {
-    "message": "Club Members"
+    "message": "Organization Members"
   },
   "feeds_delete_comment": {
     "message": "Delete Comment"
@@ -1419,10 +1416,10 @@
     "message": "To enable posting, change the settings for this wall."
   },
   "feeds_everyone": {
-    "message": "Club Members"
+    "message": "Organization Members"
   },
   "feeds_flagged_posts": {
-    "message": "Flagged Posts"
+    "message": "Flagged"
   },
   "feeds_input_placeholder": {
     "message": "Add some text to this post...."
@@ -1440,22 +1437,22 @@
     "message": "posted in"
   },
   "feeds_post_as": {
-    "message": "Select a Host"
+    "message": "Post As"
   },
   "feeds_post_to": {
     "message": "Post to"
   },
   "feeds_removed_posts": {
-    "message": "Removed Posts"
+    "message": "Deleted"
   },
   "feeds_team_members": {
     "message": "Campus Cloud Admins"
   },
   "feeds_wall_name": {
-    "message": "Club Name"
+    "message": "Organization Name"
   },
   "feeds_wall_settings_modal_title": {
-    "message": "Club Wall Settings"
+    "message": "Organization Wall Settings"
   },
   "first_name": {
     "message": "First Name"
@@ -1788,7 +1785,7 @@
     "message": "Recipients"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "Notifications can be sent to app users, which you can group together into Audiences.  For more info:"
+    "message": "Notifications can be sent to app users, which you can group together into Audiences."
   },
   "no_admins_found": {
     "message": "No Admins found"
@@ -1903,7 +1900,7 @@
     "message": "New as of July 10, 2017:"
   },
   "release_notes_june_2_item_one": {
-    "message": "Administrators can create Clubs and Groups"
+    "message": "Administrators can create Organizations"
   },
   "release_notes_june_2_title": {
     "message": "New as of June 2, 2017:"
@@ -2242,10 +2239,13 @@
     "message": "Your account has already been activated, click below to login"
   },
   "t_admin_invite_notify_permission_tooltip": {
-    "message": "Sending notifications requires access to a host (club, service or athletic). Please add at least one permission in order to enable notify permissions."
+    "message": "Sending notifications requires access to a host (Service or Organization). Please add at least one permission in order to enable notify permissions."
   },
   "t_admin_invite_studio_limited_tooltip": {
-    "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
+    "message": "Full access to Studio requires permission to Services, Events, Organizations, Calendar and Orientation. Your access to add resources will be limited without those permissions."
+  },
+  "t_all_walls_campus_walls_channels": {
+    "message": "All Campus Channels"
   },
   "t_announcements_list_external_source_tooltip": {
     "message": "This announcement was integrated. It will be automatically updated from the integration."
@@ -2595,9 +2595,6 @@
   "t_data_export_wall_posts": {
     "message": "Wall Posts"
   },
-  "t_datepicker_clear": {
-    "message": "Clear"
-  },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
@@ -2869,6 +2866,9 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
+  "t_feeds_campus_wall": {
+    "message": "Campus Wall"
+  },
   "t_help_desk_faq": {
     "message": "Guides & FAQ"
   },
@@ -2893,6 +2893,9 @@
   },
   "t_latitude": {
     "message": "Latitude"
+  },
+  "t_load_more": {
+    "message": "Load More"
   },
   "t_locations_category_create_category": {
     "message": "Create Category"
@@ -3189,10 +3192,10 @@
     "message": "Services"
   },
   "t_personas_tile_create_resource_type_store": {
-    "message": "Group & Club"
+    "message": "Organization"
   },
   "t_personas_tile_create_resource_type_store_list": {
-    "message": "List of Clubs by Type"
+    "message": "List of Organizations by Type"
   },
   "t_personas_tile_create_resource_type_subscribable_calendar": {
     "message": "Calendar"
@@ -3204,7 +3207,7 @@
     "message": "My Orientation Calendars"
   },
   "t_personas_tile_create_store_list_groups_and_clubs": {
-    "message": "Groups & Clubs"
+    "message": "Organizations"
   },
   "t_personas_tile_create_type_resource_external_link": {
     "message": "External Link"
@@ -3468,11 +3471,20 @@
   "t_shared_channel": {
     "message": "Channel"
   },
+  "t_shared_channels": {
+    "message": "Channels"
+  },
   "t_shared_checkin": {
     "message": "Check-in"
   },
   "t_shared_checkins": {
     "message": "Check-ins"
+  },
+  "t_shared_clear": {
+    "message": "Clear"
+  },
+  "t_shared_clear_filters": {
+    "message": "Clear Filters"
   },
   "t_shared_closed": {
     "message": "Closed"
@@ -3494,6 +3506,9 @@
   },
   "t_shared_custom": {
     "message": "Custom"
+  },
+  "t_shared_date": {
+    "message": "Date"
   },
   "t_shared_default": {
     "message": "Default"
@@ -3545,6 +3560,9 @@
   },
   "t_shared_feature_integrations": {
     "message": "Integrations"
+  },
+  "t_shared_filter": {
+    "message": "Filter"
   },
   "t_shared_friday": {
     "message": "Friday"
@@ -3657,11 +3675,14 @@
   "t_shared_saved_update_success_message": {
     "message": "Success! "
   },
+  "t_shared_selection": {
+    "message": "Selection"
+  },
   "t_shared_select_calendar": {
     "message": "Select Calendar"
   },
   "t_shared_select_group_and_club": {
-    "message": "Select Group & Club"
+    "message": "Select Organization"
   },
   "t_shared_select_service": {
     "message": "Select Service"
@@ -3733,7 +3754,7 @@
     "message": "Students"
   },
   "t_student_profile_mute_toggle_body": {
-    "message": "Muting %s prevents them from posting, commenting, liking and flagging on walls. They are still able to view."
+    "message": "Muting %s prevents them from posting, commenting, liking and flagging on communities. They are still able to view."
   },
   "t_student_profile_mute_toggle_title": {
     "message": "Mute %s"
@@ -3831,8 +3852,17 @@
   "t_tile_button_locked": {
     "message": "Locked"
   },
+  "t_walls_campus_walls_channels": {
+    "message": "Campus Channels"
+  },
   "t_walls_hide_post": {
     "message": "Hide Post"
+  },
+  "t_walls_host_walls_channels": {
+    "message": "Host Channels"
+  },
+  "t_walls_integrated_feed_channels": {
+    "message": "Feed Channels"
   },
   "t_walls_integrations_error_could_not_create_channel": {
     "message": "Error while creating channel"
@@ -3849,14 +3879,38 @@
   "t_walls_integration_form_default_image": {
     "message": "Wall Image"
   },
+  "t_walls_max_user_selection_help_text": {
+    "message": "(max. 5)"
+  },
   "t_walls_mute_student": {
     "message": "Mute User"
+  },
+  "t_walls_no_channels_found": {
+    "message": "No channels found"
+  },
+  "t_walls_no_results": {
+    "message": "No Posts found..."
+  },
+  "t_walls_no_users_found": {
+    "message": "No users found"
+  },
+  "t_walls_search_placeholder": {
+    "message": "type to search"
   },
   "t_walls_show_post": {
     "message": "Show Post"
   },
+  "t_walls_snackbar_success_posted_with_filters": {
+    "message": "Successfully posted in %s but not visible with the current filters."
+  },
+  "t_walls_tags_users": {
+    "message": "%s users"
+  },
   "t_walls_unmute_student": {
     "message": "Unmute User"
+  },
+  "t_walls_users_menu_limit_reached": {
+    "message": "You can select a maximum of 5 items at a time"
   },
   "update": {
     "message": "Update",

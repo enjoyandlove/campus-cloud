@@ -11,7 +11,10 @@ Testing Web Staging:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_test
     - echo "Web Staging tested successfully"
   only:
-    - staging
+    refs:
+      - staging
+    changes:
+      - 'projects/campus-cloud/**/*'
   coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
   artifacts:
     paths:
@@ -25,7 +28,10 @@ Building Web Staging:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_build
     - echo "Web Staging built successfully"
   only:
-    - staging
+    refs:
+      - staging
+    changes:
+      - 'projects/campus-cloud/**/*'
   environment: Staging
 
 Deploying Web Staging:
@@ -35,7 +41,10 @@ Deploying Web Staging:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_deploy
     - echo "Web Staging deployed successfully"
   only:
-    - staging
+    refs:
+      - staging
+    changes:
+      - 'projects/campus-cloud/**/*'
   environment: Staging
 
 ## US Production
@@ -47,7 +56,10 @@ Building Web Production:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py production_web_build
     - echo "CC Prod built successfully"
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - 'projects/campus-cloud/**/*'
   environment: Production
 
 Deploying Web Production:
@@ -60,8 +72,41 @@ Deploying Web Production:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py can_production_web_deploy
     - echo "CAN Web Production deployed successfully"
   only:
-    - master
+      refs:
+        - master
+      changes:
+        - 'projects/campus-cloud/**/*'
   environment: Production
+
+## Ready UI
+
+Deploy Ready UI:
+  stage: deploy
+  script:
+    - echo "Building Ready UI..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py ready_ui_deploy
+    - echo "Ready UI successfully deployed"
+
+  only:
+    refs:
+      - staging
+    changes:
+      - 'projects/ready-ui/**/*'
+
+## Playground
+
+Deploy Playground:
+  stage: deploy
+  script:
+    - echo "Building Playground..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py ready_playground_deploy
+    - echo "Playground successfully deployed"
+
+  only:
+    refs:
+      - staging
+    changes:
+      - 'projects/playground/**/*'
 
 ## Development
 

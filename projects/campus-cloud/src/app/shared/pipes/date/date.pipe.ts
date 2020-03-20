@@ -15,7 +15,7 @@ const FORMAT_EN = {
 
 const FORMAT_FR = {
   TIME: 'HH:mm',
-  SHORT: 'D MMMM YYYY',
+  SHORT: 'D MMM, YYYY',
   LONG: 'dddd D MMMM YYYY',
   DATETIME: 'D MMMM YYYY HH:mm',
   DATETIME_SHORT: 'D/MM/YYYY, HH[h]mm'
