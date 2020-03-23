@@ -19,7 +19,7 @@ import {
 })
 export class CPTopBarComponent implements OnInit {
   user: IUser;
-  releaseId = 2;
+  releaseId = 3;
   amplitudeEvents;
   school: ISchool;
   highlight = false;
