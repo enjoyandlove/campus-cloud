@@ -2,6 +2,10 @@
 @import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/components/button';
 
+cp-dropdown {
+  width: 12em;
+}
+
 .editor {
   &__image--wrapper {
     margin-top: 10px;
@@ -38,6 +42,7 @@ p.maxLength {
 }
 
 .channel-dropdown {
+
   span,
   .dropdown {
     display: inline-block;
