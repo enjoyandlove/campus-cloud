@@ -170,7 +170,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
 
     this.eventProperties = {
       ...this.eventProperties,
-      ...EventsAmplitudeService.getEventProperties(event, true),
+      ...EventsAmplitudeService.getEventProperties(event),
       event_id: this.eventId,
       creation_source: EventsAmplitudeService.getEventType(event.is_external),
       updated_description: EventsAmplitudeService.getEventDescriptionStatus(description)

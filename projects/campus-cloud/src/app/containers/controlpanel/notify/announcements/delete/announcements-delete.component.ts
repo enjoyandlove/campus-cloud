@@ -43,7 +43,7 @@ export class AnnouncementDeleteComponent {
       this.cpTracking.getAmplitudeMenuProperties()
     );
 
-    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_DELETED_COMMUNICATION, {
       sub_menu_name,

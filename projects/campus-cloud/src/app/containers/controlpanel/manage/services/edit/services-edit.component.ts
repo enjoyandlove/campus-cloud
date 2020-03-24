@@ -9,9 +9,11 @@ import { ServicesService } from '../services.service';
 import { ServicesUtilsService } from '../services.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { IService } from '@controlpanel/manage/services/service.interface';
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store/base';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ServicesModel } from '@controlpanel/manage/services/model/services.model';
+import { ServicesAmplitudeService } from '@controlpanel/manage/services/services.amplitude.service';
 
 @Component({
   selector: 'cp-services-edit',
@@ -69,10 +71,14 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     }
 
     this.servicesService.updateService(this.form.value, this.serviceId).subscribe(
-      () => {
+      (service: IService) => {
         const route = '/info';
 
         this.trackEvent(this.form.value);
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_ITEM,
+          ServicesAmplitudeService.getItemProperties(service)
+        );
         this.router.navigate(['/manage/services/' + this.serviceId + route]);
       },
       () => {

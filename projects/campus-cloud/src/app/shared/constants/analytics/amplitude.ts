@@ -213,6 +213,8 @@ export const amplitudeEvents = {
 
   All_CATEGORIES: 'All Categories',
 
+  NOT_APPLICABLE: 'Not Applicable',
+
   NO_ENGAGEMENT: 'No Engagement',
 
   SERVICE_EVENT: 'Service Event',
@@ -342,6 +344,10 @@ export const amplitudeEvents = {
   MANAGE_CREATED_CLUB: 'Manage - Created Club',
 
   ASSESS_VIEWED_CARDS: 'Assess - Viewed Cards',
+
+  MANAGE_CREATED_ITEM: 'Manage - Created Item',
+
+  MANAGE_UPDATED_ITEM: 'Manage - Updated Item',
 
   MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
 
@@ -479,8 +485,6 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 
-  MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
-
   MANAGE_ADDED_FEED_INTEGRATION: 'Manage - Added Feed Integration',
 
   MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
@@ -492,8 +496,6 @@ export const amplitudeEvents = {
   API_MANAGEMENT_CREATED_API_KEY: 'Ready API - Created API Key',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
-
-  MANAGE_IMPORTED_CALENDAR_EVENT: 'Manage - Imported Calendar Event',
 
   MANAGE_SYNCED_FEED_INTEGRATION: 'Manage - Synced Feed Integration',
 

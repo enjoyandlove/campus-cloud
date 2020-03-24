@@ -441,7 +441,10 @@ export class EventsExcelComponent extends EventsComponent implements OnInit, OnD
 
     this.service.createEvent(_events, search).subscribe(
       () => {
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_EVENT);
+        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_EVENT, {
+          sub_menu_name
+        });
         this.router.navigate([this.urlPrefix]);
 
         return;
