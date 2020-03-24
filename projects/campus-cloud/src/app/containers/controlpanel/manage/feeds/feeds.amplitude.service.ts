@@ -58,7 +58,7 @@ export class FeedsAmplitudeService {
   }
 
   getWallAmplitudeProperties() {
-    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
     return {
       sub_menu_name,
       post_type: this.getPostType(),
@@ -113,7 +113,7 @@ export class FeedsAmplitudeService {
   }
 
   isWallMenu() {
-    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
     return sub_menu_name === 'Walls';
   }
 

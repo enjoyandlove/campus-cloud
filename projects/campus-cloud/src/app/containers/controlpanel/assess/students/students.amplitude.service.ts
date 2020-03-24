@@ -9,7 +9,7 @@ export class StudentsAmplitudeService {
   constructor(private cpTracking: CPTrackingService) {}
 
   muteUserAmplitudeProperties(user_id, restriction) {
-    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
 
     return {
       user_id,

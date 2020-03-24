@@ -12,9 +12,9 @@ import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '@campus-cloud/session';
 import { ICalendar } from '../calendars.interface';
+import { CalendarsService } from '../calendars.services';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
-import { CalendarsService } from '../calendars.services';
 import { CalendarAmplitudeService } from '../calendar.amplitude.service';
 
 @Component({
@@ -61,6 +61,10 @@ export class CalendarsCreateComponent implements OnInit {
       this.trackEvent(createdCalendar);
       this.created.emit(createdCalendar);
       this.resetModal();
+      this.cpTracking.amplitudeEmitEvent(
+        amplitudeEvents.MANAGE_CREATED_ITEM,
+        CalendarAmplitudeService.getItemProperties()
+      );
     });
   }
 

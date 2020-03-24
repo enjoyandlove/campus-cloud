@@ -36,17 +36,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
   formError = false;
   addedHost = amplitudeEvents.NO;
   disableSubmit$ = new BehaviorSubject(false);
-
-  eventProperties = {
-    event_id: null,
-    location: null,
-    feedback: null,
-    host_type: null,
-    description: null,
-    qr_code_status: null,
-    assessment_status: null
-  };
-
   changedHost$: BehaviorSubject<number> = new BehaviorSubject(null);
 
   constructor(
@@ -135,13 +124,12 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
   }
 
   trackCreateEvent(event: IEvent) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...EventsAmplitudeService.getEventProperties(event),
-      event_id: event.id
-    };
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_EVENT, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_EVENT, {
+      sub_menu_name,
+      ...EventsAmplitudeService.getEventProperties(event)
+    });
   }
 
   trackCancelEvent() {
@@ -157,13 +145,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CANCELED_EVENT, eventProperties);
   }
 
-  onSelectProperties(properties) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...properties
-    };
-  }
-
   onHostSelect(host) {
     this.addedHost = amplitudeEvents.YES;
 
@@ -172,13 +153,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
 
   ngOnInit() {
     this.buildHeader();
-    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      host_type
-    };
-
     let store_id = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     if (this.storeId) {

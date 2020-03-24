@@ -17,8 +17,10 @@ import { Subject } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
 import { ProgramMembership } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { OrientationAmplitudeService } from '../orientation.amplitude.service';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -44,7 +46,8 @@ export class OrientationProgramCreateComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public router: Router,
     public cpI18n: CPI18nService,
-    public service: OrientationService
+    public service: OrientationService,
+    private cpTracking: CPTrackingService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -68,6 +71,10 @@ export class OrientationProgramCreateComponent implements OnInit, OnDestroy {
       .createProgram(this.form.value, search)
       .subscribe((createdOrientationProgram: any) => {
         this.resetModal();
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_ITEM,
+          OrientationAmplitudeService.getItemProperties(createdOrientationProgram)
+        );
         this.router.navigate([`/manage/orientation/${createdOrientationProgram.id}/events`]);
       });
   }
