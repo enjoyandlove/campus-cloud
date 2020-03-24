@@ -2,6 +2,10 @@
 
 :host {
   &.variant--bold {
+    font-weight: 700;
+  }
+
+  &.variant--semibold {
     font-weight: 600;
   }
 
