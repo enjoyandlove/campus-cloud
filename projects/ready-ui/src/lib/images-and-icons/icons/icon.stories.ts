@@ -38,7 +38,8 @@ const icons = {
   'ready-app': 'ready-app',
   filter_list: 'filter_list',
   flag: 'flag',
-  person: 'person'
+  person: 'person',
+  arrow_back: 'arrow_back'
 };
 
 storiesOf('Icons', module)

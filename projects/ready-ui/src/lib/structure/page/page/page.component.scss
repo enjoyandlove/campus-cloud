@@ -1,0 +1,31 @@
+@import '../../../core/sass/variables';
+
+main {
+  background: #f9f9f9;
+}
+
+header {
+  height: 248px;
+  display: flex;
+  padding-top: 80px;
+  justify-content: end;
+  flex-direction: column;
+  align-items: flex-start;
+  background: map-get($map: $ready-grey, $key: 800);
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 0;
+  color: map-get($ready-grey, 100);
+}
+
+h2 {
+  font-size: 1em;
+  margin-bottom: 0;
+  color: map-get($map: $ready-grey, $key: 400)
+}
+
+.nav {
+  margin-top: 40px;
+}

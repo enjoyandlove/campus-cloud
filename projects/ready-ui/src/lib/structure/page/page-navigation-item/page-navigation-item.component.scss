@@ -1,0 +1,16 @@
+@import '../../../core/sass/variables';
+
+:host {
+  color: white;
+  border-bottom: 3px solid transparent;
+  transition: 300ms text-shadow ease-in-out;
+
+  &:hover {
+    color: white;
+    text-shadow: 0.45px 0 0 white;
+  }
+
+  &.active:not(:disabled) {
+    border-bottom: 3px solid map-get($map: $ready-primary, $key: 'regular');
+  }
+}
