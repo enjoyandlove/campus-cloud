@@ -22,20 +22,20 @@
   }
 
   &:disabled {
-    cursor: not-allowed;
+    cursor: default;
   }
 
   &.primary {
     color: white;
-    background: map-get($ready-primary,'regular');
+    background: map-get($ready-primary, 'regular');
     transition: background 300ms ease-in-out;
 
     &.flat {
       color: white;
-      background: map-get($ready-primary,'regular');
+      background: map-get($ready-primary, 'regular');
 
       &:hover:not(:disabled) {
-        background: map-get($ready-primary,'dark');
+        background: map-get($ready-primary, 'dark');
       }
 
       &:disabled {
@@ -45,7 +45,7 @@
     }
 
     &.basic {
-      color: map-get($ready-primary,'regular');
+      color: map-get($ready-primary, 'regular');
       background: transparent;
 
       &:disabled {
@@ -57,7 +57,7 @@
       padding: 0;
       border-radius: 0;
       line-height: inherit;
-      color: map-get($ready-primary,'regular');
+      color: map-get($ready-primary, 'regular');
       background: transparent;
 
       &:disabled {
@@ -66,9 +66,9 @@
     }
 
     &.stroked {
-      color: map-get($ready-primary,'regular');
+      color: map-get($ready-primary, 'regular');
       background: transparent;
-      border: 1px solid map-get($ready-primary,'regular');
+      border: 1px solid map-get($ready-primary, 'regular');
 
       &:disabled {
         color: white;

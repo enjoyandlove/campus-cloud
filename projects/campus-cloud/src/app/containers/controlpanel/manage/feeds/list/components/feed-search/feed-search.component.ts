@@ -193,14 +193,16 @@ export class FeedSearchComponent implements OnInit {
       usersSelected$,
       channelsSelected$,
       statusSelected$,
-      datesSelected$
+      datesSelected$,
+      this.hasFiltersActive$
     ]).pipe(
-      map(([usersSelected, channelsSelected, statusSelected, datesSelected]) => {
+      map(([usersSelected, channelsSelected, statusSelected, datesSelected, hasFiltersActive]) => {
         return {
           usersSelected,
           channelsSelected,
           statusSelected,
-          datesSelected
+          datesSelected,
+          canClearFilters: hasFiltersActive
         };
       })
     );
