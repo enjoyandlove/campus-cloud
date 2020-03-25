@@ -14,7 +14,8 @@
       margin: 25px 20px 20px;
 
       .ui-editor {
-        height: 225px;
+        height: auto;
+        min-height: 225px;
         margin-bottom: 15px;
       }
 
