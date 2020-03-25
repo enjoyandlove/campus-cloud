@@ -39,7 +39,8 @@
             </div>
           </div>
         </div>
-        <ready-ui-stack alignment="between">
+        <ready-ui-stack
+                        [alignment]="!state.group && state.isCampusWallView ? 'between' : 'end'">
           <ng-container *ngIf="!state.group && state.isCampusWallView">
             <ready-ui-stack>
               <span>{{ 'feeds_post_as' | cpI18n }}</span>
@@ -58,9 +59,9 @@
                 </cp-dropdown>
               </ng-container>
             </ready-ui-stack>
-            <cp-button [props]="buttonData"
-                       (buttonClick)="onSubmit(form.value)"> </cp-button>
           </ng-container>
+          <cp-button [props]="buttonData"
+                     (buttonClick)="onSubmit(form.value)"> </cp-button>
         </ready-ui-stack>
       </form>
     </div>
