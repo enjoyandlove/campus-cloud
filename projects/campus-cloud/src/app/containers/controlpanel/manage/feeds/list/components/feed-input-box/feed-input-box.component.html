@@ -39,26 +39,29 @@
             </div>
           </div>
         </div>
-        <ready-ui-stack alignment="between">
+        <ready-ui-stack
+                        [alignment]="!state.group && state.isCampusWallView ? 'between' : 'end'">
           <ng-container *ngIf="!state.group && state.isCampusWallView">
-            <span>{{ 'feeds_post_as' | cpI18n }}</span>
-            <cp-dropdown class="dropdown"
-                         [items]="stores$ | async"
-                         (selected)="onSelectedHost($event)"
-                         [selectedItem]="session.defaultHost">
-            </cp-dropdown>
-            <ng-container *ngIf="!replyView">
-              <span>{{ 'feeds_post_to' | cpI18n }}</span>
-              <cp-dropdown [reset]="reset$"
-                           class="dropdown"
-                           [items]="channels$ | async"
-                           [selectedItem]="selectedItem.value"
-                           (selected)="onSelectedChannel($event)">
+            <ready-ui-stack>
+              <span>{{ 'feeds_post_as' | cpI18n }}</span>
+              <cp-dropdown class="dropdown"
+                           [items]="stores$ | async"
+                           (selected)="onSelectedHost($event)"
+                           [selectedItem]="session.defaultHost">
               </cp-dropdown>
-            </ng-container>
-            <cp-button [props]="buttonData"
-                       (buttonClick)="onSubmit(form.value)"> </cp-button>
+              <ng-container *ngIf="!replyView">
+                <span>{{ 'feeds_post_to' | cpI18n }}</span>
+                <cp-dropdown [reset]="reset$"
+                             class="dropdown"
+                             [items]="channels$ | async"
+                             [selectedItem]="selectedItem.value"
+                             (selected)="onSelectedChannel($event)">
+                </cp-dropdown>
+              </ng-container>
+            </ready-ui-stack>
           </ng-container>
+          <cp-button [props]="buttonData"
+                     (buttonClick)="onSubmit(form.value)"> </cp-button>
         </ready-ui-stack>
       </form>
     </div>
