@@ -202,7 +202,7 @@ export class FeedSearchComponent implements OnInit {
           channelsSelected,
           statusSelected,
           datesSelected,
-          canClearFilters: hasFiltersActive
+          hasFiltersActive
         };
       })
     );
