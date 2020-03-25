@@ -10,23 +10,19 @@
         type="button"
         variant="inline"
         position="right"
-        readyUiPopoverTrigger
-        *ngIf="options.length > 1"
-        [uiPopoverTpl]="dropdownTpl">
+        [triggerFor]="menu"
+        ready-ui-menu-trigger
+        direction="bottom-left"
+        *ngIf="options.length > 1">
   <ready-ui-icon name="expand_more"
                  aria-label="Close"></ready-ui-icon>
 </button>
 
-<ng-template #dropdownTpl
-             let-popover="popover">
-  <ul>
-    <li *ngFor="let option of options"
-        (click)="onOptionClicked(option.action); popover.close()">
-      <button ui-button
-              type="button"
-              variant="inline">
-        {{ option.label }}
-      </button>
-    </li>
-  </ul>
-</ng-template>
+<ready-ui-menu #menu="menu">
+  <ready-ui-menu-item *ngFor="let option of options">
+    <button ui-button
+            type="button"
+            variant="inline"
+            (click)="onOptionClicked(option.action); menu.close()">{{ option.label }}</button>
+  </ready-ui-menu-item>
+</ready-ui-menu>

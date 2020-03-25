@@ -29,6 +29,9 @@ export class MenuTriggerDirective implements OnDestroy {
   @Input()
   overlayWidth: string;
 
+  @Input()
+  direction: 'bottom-right' | 'bottom-left' = 'bottom-right';
+
   @Input('triggerFor')
   get menu() {
     return this._menu;
@@ -161,15 +164,16 @@ export class MenuTriggerDirective implements OnDestroy {
   }
 
   private getPosition(): PositionStrategy {
+    const [yValue, xValue] = this.direction.split('-');
     return this.overlay
       .position()
       .flexibleConnectedTo(this.el)
       .withPositions([
         {
-          originX: this.triggersSubmenu() ? 'end' : 'start',
-          overlayX: 'start',
+          originX: this.triggersSubmenu() || xValue === 'left' ? 'end' : 'start',
+          overlayX: xValue === 'left' ? 'end' : 'start',
           originY: this.triggersSubmenu() ? 'top' : 'bottom',
-          overlayY: 'top'
+          overlayY: yValue === 'bottom' ? 'top' : 'bottom'
         }
       ])
       .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 4)
