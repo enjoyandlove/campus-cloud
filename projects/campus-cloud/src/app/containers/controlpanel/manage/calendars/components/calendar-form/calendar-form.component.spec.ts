@@ -30,20 +30,10 @@ describe('CalendarsFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should set isChecked based on the forms has_membership control, when isOrientation is true', () => {
-    const expected = true;
-    component.isOrientation = true;
-    component.form.get('has_membership').setValue(expected);
-
-    fixture.detectChanges();
-
-    expect(component.isChecked).toBe(expected);
-  });
-
   describe('toggleMembership', () => {
     let cpSwitch: CPSwitchComponent;
     beforeEach(() => {
-      component.isOrientation = true;
+      component.hideMembership = false;
       spyOn(component, 'toggleMembership').and.callThrough();
       component.form.get('has_membership').setValue(ProgramMembership.disabled);
       fixture.detectChanges();
