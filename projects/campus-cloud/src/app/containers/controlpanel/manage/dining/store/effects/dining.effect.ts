@@ -17,7 +17,11 @@ import * as fromDiningCategoryStore from '../../categories/store';
 import { IDining } from '@campus-cloud/libs/locations/common/model';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
-import { LocationsUtilsService, LocationType } from '@campus-cloud/libs/locations/common/utils';
+import {
+  LocationType,
+  LocationsUtilsService,
+  LocationsAmplitudeService
+} from '@campus-cloud/libs/locations/common/utils';
 
 @Injectable()
 export class DiningEffect {
@@ -98,7 +102,10 @@ export class DiningEffect {
           };
 
           this.cpTracking.amplitudeEmitEvent(eventName, properties);
-
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_CREATED_ITEM,
+            LocationsAmplitudeService.getItemProperties(data, 'Dining')
+          );
           return new fromActions.PostDiningSuccess(data);
         }),
         tap((data) => this.router.navigate([`/manage/dining/${data.payload.id}/info`])),
@@ -153,7 +160,10 @@ export class DiningEffect {
           };
 
           this.cpTracking.amplitudeEmitEvent(eventName, properties);
-
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_UPDATED_ITEM,
+            LocationsAmplitudeService.getItemProperties(data, 'Dining')
+          );
           return new fromActions.EditDiningSuccess({ data, categoryId });
         }),
         tap((_) => this.router.navigate([`/manage/dining/${diningId}/info`])),

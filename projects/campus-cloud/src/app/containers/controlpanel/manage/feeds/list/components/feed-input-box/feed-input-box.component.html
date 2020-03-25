@@ -39,47 +39,27 @@
             </div>
           </div>
         </div>
-        <div class="row justify-content-end">
-          <div *ngIf="!state.group && state.isCampusWallView"
-               class="col-10 channel-dropdown no-right-padding">
-            <div class="row">
-              <div class="col-6">
-                <div class="row">
-                  <div class="col-5 no-right-padding">
-                    <span>{{ 'feeds_post_as' | cpI18n }}</span>
-                  </div>
-                  <div class="col-7 no-left-padding">
-                    <cp-dropdown class="dropdown"
-                                 [items]="stores$ | async"
-                                 (selected)="onSelectedHost($event)"
-                                 [selectedItem]="session.defaultHost">
-                    </cp-dropdown>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6"
-                   *ngIf="!replyView">
-                <div class="row">
-                  <div class="col-4 no-right-padding">
-                    <span>{{ 'feeds_post_to' | cpI18n }}</span>
-                  </div>
-                  <div class="col-8 no-left-padding">
-                    <cp-dropdown [reset]="reset$"
-                                 class="dropdown"
-                                 [items]="channels$ | async"
-                                 [selectedItem]="selectedItem.value"
-                                 (selected)="onSelectedChannel($event)">
-                    </cp-dropdown>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-2 float-right text-right">
+        <ready-ui-stack alignment="between">
+          <ng-container *ngIf="!state.group && state.isCampusWallView">
+            <span>{{ 'feeds_post_as' | cpI18n }}</span>
+            <cp-dropdown class="dropdown"
+                         [items]="stores$ | async"
+                         (selected)="onSelectedHost($event)"
+                         [selectedItem]="session.defaultHost">
+            </cp-dropdown>
+            <ng-container *ngIf="!replyView">
+              <span>{{ 'feeds_post_to' | cpI18n }}</span>
+              <cp-dropdown [reset]="reset$"
+                           class="dropdown"
+                           [items]="channels$ | async"
+                           [selectedItem]="selectedItem.value"
+                           (selected)="onSelectedChannel($event)">
+              </cp-dropdown>
+            </ng-container>
             <cp-button [props]="buttonData"
                        (buttonClick)="onSubmit(form.value)"> </cp-button>
-          </div>
-        </div>
+          </ng-container>
+        </ready-ui-stack>
       </form>
     </div>
   </div>

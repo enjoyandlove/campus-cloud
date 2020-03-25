@@ -64,7 +64,7 @@ export class CalendarsItemCreateComponent implements OnInit {
 
   trackEvent(item: IItem) {
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CREATED_CALENDAR_EVENT,
+      amplitudeEvents.MANAGE_CREATED_EVENT,
       CalendarAmplitudeService.getCalendarEventItemProperties(item)
     );
   }

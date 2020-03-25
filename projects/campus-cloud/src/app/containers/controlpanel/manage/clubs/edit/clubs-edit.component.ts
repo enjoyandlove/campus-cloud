@@ -15,6 +15,7 @@ import { baseActionClass, baseActions } from '@campus-cloud/store/base';
 import { ClubsModel } from '@controlpanel/manage/clubs/model/clubs.model';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { clubAthleticLabels } from '@controlpanel/manage/clubs/clubs.athletics.labels';
+import { ClubsAmplitudeService } from '@controlpanel/manage/clubs/clubs.amplitude.service';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -95,6 +96,10 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.clubsService.updateClub(this.form.value, this.clubId, search).subscribe(
       (res: any) => {
         this.trackEvent(res);
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_UPDATED_ITEM,
+          ClubsAmplitudeService.getItemProperties(res, this.isAthletic)
+        );
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info'], {
           queryParams: this.route.snapshot.queryParams
         });

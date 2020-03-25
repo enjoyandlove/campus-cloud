@@ -5,13 +5,15 @@ import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { DealsService } from '../deals.service';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPSession } from '@campus-cloud/session';
 import { dealDateValidator } from '../deals.utils';
-import { CustomValidators } from '@campus-cloud/shared/validators';
-import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { DealsStoreService } from '../stores/store.service';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { DealsAmplitudeService } from '@controlpanel/manage/deals/deals.amplitude.service';
 
 @Component({
   selector: 'cp-deals-create',
@@ -34,6 +36,7 @@ export class DealsCreateComponent implements OnInit {
     public service: DealsService,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService,
     public storeService: DealsStoreService
   ) {}
 
@@ -51,7 +54,13 @@ export class DealsCreateComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.createDeal(data.deal, search).subscribe(
-      (deal: any) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
+      (deal: any) => {
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_ITEM,
+          DealsAmplitudeService.getItemProperties()
+        );
+        this.router.navigate([`/manage/deals/${deal.id}/info`]);
+      },
       (_) => {
         this.error = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');

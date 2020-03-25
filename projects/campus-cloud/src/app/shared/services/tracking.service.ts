@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as amplitude from 'amplitude-js';
 import { Router } from '@angular/router';
+import { pickBy } from 'lodash';
 
 import { EnvService } from '@campus-cloud/config/env';
 
@@ -23,7 +24,12 @@ export class CPTrackingService {
 
   getAmplitudeMenuProperties() {
     const params = [];
-    let properties = {};
+    let properties = {
+      menu_name: null,
+      page_name: null,
+      sub_menu_name: null
+    };
+
     let route = this.router.routerState.snapshot.root;
     do {
       if ('amplitude' in route.data && route.data.amplitude !== 'IGNORE') {
@@ -39,7 +45,7 @@ export class CPTrackingService {
       };
     });
 
-    return properties;
+    return pickBy(properties);
   }
 
   amplitudeEmitEvent(eventName: string, eventProperties?: {}) {

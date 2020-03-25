@@ -40,10 +40,22 @@ export class CalendarAmplitudeService {
 
   static getCalendarEventItemProperties(item: IItem) {
     return {
-      calendar_event_id: item.id,
+      event_id: item.id,
+      sub_menu_name: 'Calendars',
+      host_type: amplitudeEvents.INSTITUTION,
+      feedback: amplitudeEvents.NOT_APPLICABLE,
+      qr_code_status: amplitudeEvents.NOT_APPLICABLE,
       location: this.getPropertyStatus(item.location),
-      all_day: this.getPropertyStatus(item.is_all_day),
+      assessment_status: amplitudeEvents.NOT_APPLICABLE,
       description: this.getPropertyStatus(item.description)
+    };
+  }
+
+  static getItemProperties() {
+    return {
+      item_type: 'Calendar',
+      wall_status: amplitudeEvents.NOT_APPLICABLE,
+      location_status: amplitudeEvents.NOT_APPLICABLE
     };
   }
 }

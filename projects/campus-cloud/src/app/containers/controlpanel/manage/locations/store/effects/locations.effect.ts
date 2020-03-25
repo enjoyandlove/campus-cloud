@@ -15,7 +15,11 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { ILocation } from '@campus-cloud/libs/locations/common/model';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
-import { LocationsUtilsService, LocationType } from '@campus-cloud/libs/locations/common/utils';
+import {
+  LocationType,
+  LocationsUtilsService,
+  LocationsAmplitudeService
+} from '@campus-cloud/libs/locations/common/utils';
 
 @Injectable()
 export class LocationsEffect {
@@ -97,6 +101,10 @@ export class LocationsEffect {
           };
 
           this.cpTracking.amplitudeEmitEvent(eventName, properties);
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_CREATED_ITEM,
+            LocationsAmplitudeService.getItemProperties(data)
+          );
           return new fromActions.PostLocationSuccess(data);
         }),
         tap((data) => this.router.navigate([`/manage/locations/${data.payload.id}/info`])),
@@ -145,6 +153,10 @@ export class LocationsEffect {
           };
 
           this.cpTracking.amplitudeEmitEvent(eventName, properties);
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_UPDATED_ITEM,
+            LocationsAmplitudeService.getItemProperties(data)
+          );
           return new fromActions.EditLocationSuccess({ data: data, categoryId });
         }),
         tap(() => this.router.navigate([`/manage/locations/${locationId}/info`])),

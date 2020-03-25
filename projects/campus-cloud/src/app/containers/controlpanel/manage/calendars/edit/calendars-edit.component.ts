@@ -66,6 +66,10 @@ export class CalendarsEditComponent implements OnInit {
       .subscribe((editedCalendar: any) => {
         this.edited.emit(editedCalendar);
         this.resetModal();
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_UPDATED_ITEM,
+          CalendarAmplitudeService.getItemProperties()
+        );
       });
 
     this.trackEvent();
