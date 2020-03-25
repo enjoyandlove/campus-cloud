@@ -11,7 +11,7 @@ import { ProgramMembership } from '../../../orientation/orientation.status';
 export class CalendarsFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() orientationProgram;
-  @Input() hideMembership = false;
+  @Input() hideMembership = true;
 
   constructor() {}
 
