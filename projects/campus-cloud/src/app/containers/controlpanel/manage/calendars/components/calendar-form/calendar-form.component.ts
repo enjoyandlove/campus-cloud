@@ -10,11 +10,8 @@ import { ProgramMembership } from '../../../orientation/orientation.status';
 })
 export class CalendarsFormComponent implements OnInit {
   @Input() form: FormGroup;
-  @Input() isOrientation = false;
   @Input() orientationProgram;
   @Input() hideMembership = false;
-
-  isChecked = true;
 
   constructor() {}
 
@@ -23,9 +20,5 @@ export class CalendarsFormComponent implements OnInit {
     this.form.controls['has_membership'].setValue(value);
   }
 
-  ngOnInit() {
-    if (this.isOrientation) {
-      this.isChecked = this.form.value.has_membership === ProgramMembership.enabled;
-    }
-  }
+  ngOnInit() {}
 }

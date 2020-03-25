@@ -47,7 +47,6 @@ export class OrientationProgramEditComponent implements OnInit, OnDestroy {
 
   buttonData;
   form: FormGroup;
-  isOrientation = true;
   hasMembership = false;
 
   destroy$ = new Subject<null>();

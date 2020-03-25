@@ -29,7 +29,7 @@
   </div>
   <br />
   <div class="row"
-       *ngIf="isOrientation && !hideMembership">
+       *ngIf="!hideMembership">
     <div class="col-10">
       <label>{{ 'orientation_enable_membership' | cpI18n }}</label>
       <p>{{ 'orientation_enable_membership_description' | cpI18n }}</p>
@@ -37,8 +37,8 @@
     <div class="col-2">
       <span class="float-right">
         <cp-switch [id]="orientationProgram?.id"
-                   [isChecked]="isChecked"
-                   (toggle)="toggleMembership($event)">
+                   (toggle)="toggleMembership($event)"
+                   [isChecked]="form.get('has_membership').value">
         </cp-switch>
       </span>
     </div>
