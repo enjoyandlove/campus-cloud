@@ -29,7 +29,7 @@
   </div>
   <br />
   <div class="row"
-       *ngIf="isOrientation">
+       *ngIf="isOrientation && !hideMembership">
     <div class="col-10">
       <label>{{ 'orientation_enable_membership' | cpI18n }}</label>
       <p>{{ 'orientation_enable_membership_description' | cpI18n }}</p>

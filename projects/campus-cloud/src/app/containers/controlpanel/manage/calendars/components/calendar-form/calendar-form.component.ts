@@ -12,6 +12,7 @@ export class CalendarsFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() isOrientation = false;
   @Input() orientationProgram;
+  @Input() hideMembership = false;
 
   isChecked = true;
 
