@@ -8,6 +8,7 @@ import { InputModule } from './input/input.module';
 import { ErrorModule } from './error/error.module';
 import { SelectModule } from './select/select.module';
 import { ToggleModule } from './toggle/toggle.module';
+import { GalleryModule } from './gallery/gallery.module';
 import { CheckboxModule } from './checkbox/checkbox.module';
 import { FormFieldModule } from './form-field/form-field.module';
 import { DatepickerModule } from './datepicker/datepicker.module';
@@ -24,6 +25,7 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
     ErrorModule,
     ToggleModule,
     SelectModule,
+    GalleryModule,
     CheckboxModule,
     FormFieldModule,
     DatepickerModule,
@@ -39,6 +41,7 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
     SelectModule,
     CommonModule,
     ToggleModule,
+    GalleryModule,
     CheckboxModule,
     FormFieldModule,
     DatepickerModule,
