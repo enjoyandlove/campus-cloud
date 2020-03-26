@@ -214,7 +214,7 @@ export class FeedSearchComponent implements OnInit {
     const defaultDate$ = viewFilters$.pipe(
       map(({ start, end }) => {
         if (start && end) {
-          return [new Date(start * 1000), new Date(end * 1000)];
+          return [start, end];
         }
 
         return undefined;
@@ -226,15 +226,10 @@ export class FeedSearchComponent implements OnInit {
         if (!selectedData) {
           return '';
         }
-        // avoid mutating the original value
-        const _selectedData = [...selectedData];
-        const dateTimeStamps = _selectedData.map((d) => CPDate.toEpoch(d, this.session.tz));
 
-        const matchedKey = Object.keys(this.presetDates).find((key) =>
-          isEqual(this.presetDates[key], dateTimeStamps)
+        return Object.keys(this.presetDates).find((key) =>
+          isEqual(this.presetDates[key], selectedData)
         );
-
-        return matchedKey;
       })
     );
 
