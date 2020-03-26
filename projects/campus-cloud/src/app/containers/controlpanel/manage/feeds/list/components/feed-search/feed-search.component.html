@@ -127,10 +127,11 @@
       </button>
     </ready-ui-menu-item>
     <ready-ui-menu-divider></ready-ui-menu-divider>
-    <ready-ui-menu-item>
+    <ready-ui-menu-item [noHover]="!primaryMenu.hasFiltersActive">
       <button ui-button
               type="button"
               variant="inline"
+              [disabled]="!primaryMenu.hasFiltersActive"
               (click)="handleClearFilters(); primary.close()">
         <ui-text-style color="muted"
                        variant="caption">
