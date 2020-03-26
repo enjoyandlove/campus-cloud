@@ -5,6 +5,7 @@ export * from './input';
 export * from './label';
 export * from './select';
 export * from './toggle';
+export * from './gallery';
 export * from './checkbox';
 export * from './datepicker';
 export * from './form-field';

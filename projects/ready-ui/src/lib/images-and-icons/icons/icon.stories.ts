@@ -39,7 +39,9 @@ const icons = {
   filter_list: 'filter_list',
   flag: 'flag',
   person: 'person',
-  arrow_back: 'arrow_back'
+  arrow_back: 'arrow_back',
+  add_circle: 'add_circle',
+  add_circle_outline: 'add_circle_outline'
 };
 
 storiesOf('Icons', module)
