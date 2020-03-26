@@ -19,6 +19,8 @@ import { CPSession } from '@campus-cloud/session';
 import { baseActions } from '@campus-cloud/store/base';
 import { OrientationService } from '../orientation.services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { OrientationUtilsService } from '../orientation.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { OrientationAmplitudeService } from '../orientation.amplitude.service';
@@ -45,7 +47,7 @@ export class OrientationProgramEditComponent implements OnInit, OnDestroy {
 
   buttonData;
   form: FormGroup;
-  isOrientation = true;
+  hasMembership = false;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -95,6 +97,8 @@ export class OrientationProgramEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.hasMembership = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation);
+
     this.form = this.fb.group({
       name: [this.orientationProgram.name, [Validators.required, Validators.maxLength(225)]],
       description: [this.orientationProgram.description, Validators.maxLength(512)],

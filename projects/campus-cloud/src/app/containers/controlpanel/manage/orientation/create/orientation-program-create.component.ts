@@ -15,10 +15,11 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
-import { ProgramMembership } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants/privileges';
 import { OrientationAmplitudeService } from '../orientation.amplitude.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
@@ -35,16 +36,16 @@ export class OrientationProgramCreateComponent implements OnInit, OnDestroy {
 
   buttonData;
   form: FormGroup;
-  isOrientation = true;
+  hasMembership = false;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
   constructor(
+    public router: Router,
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    public router: Router,
     public cpI18n: CPI18nService,
     public service: OrientationService,
     private cpTracking: CPTrackingService
@@ -80,10 +81,11 @@ export class OrientationProgramCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.hasMembership = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation);
     this.form = this.fb.group({
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      has_membership: [ProgramMembership.enabled]
+      has_membership: [this.hasMembership]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {
