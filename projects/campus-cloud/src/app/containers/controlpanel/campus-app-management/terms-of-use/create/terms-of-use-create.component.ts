@@ -66,7 +66,10 @@ export class TermsOfUseCreateComponent implements OnInit {
         this.disableSubmit$.next(true);
         this.cpTracking.amplitudeEmitEvent('Customize - Published Terms Of Use');
       },
-      () => this.handleError()
+      () => {
+        this.handleError();
+        this.disableSubmit$.next(true);
+      }
     );
   }
 
@@ -94,11 +97,17 @@ export class TermsOfUseCreateComponent implements OnInit {
   }
 
   fetch() {
-    this.service.getTerms().subscribe((terms) => {
-      this.termId = terms['id'];
-      this.content = terms ? TermsOfUseUtilsService.parseContentFromAPI(terms) : [];
-      this.editor.quill.setContents(this.content);
-    });
+    this.service.getTerms().subscribe(
+      (terms) => {
+        this.termId = terms['id'];
+        this.content = terms ? TermsOfUseUtilsService.parseContentFromAPI(terms) : [];
+        this.editor.quill.setContents(this.content);
+      },
+      () => {
+        this.handleError();
+        this.disableSubmit$.next(true);
+      }
+    );
   }
 
   ngOnInit() {
