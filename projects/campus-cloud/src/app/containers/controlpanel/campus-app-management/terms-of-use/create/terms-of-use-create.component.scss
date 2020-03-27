@@ -13,16 +13,10 @@
     &__editor {
       margin: 25px 20px 20px;
 
-      .ql-toolbar {
-        border-radius: 4px 4px 0 0;
-        border-color: rgba(122, 136, 163, 0.2);
-      }
-
       .ui-editor {
         height: auto;
         min-height: 225px;
         margin-bottom: 15px;
-        border-radius: 0 0 4px 4px;
       }
 
       h5 {
