@@ -13,7 +13,10 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Directive({
   exportAs: 'ui-editor',
-  selector: '[ready-ui-text-editor]'
+  selector: '[ready-ui-text-editor]',
+  host: {
+    class: 'ready-ui-text-editor'
+  }
 })
 export class TextEditorDirective implements OnInit, OnDestroy {
   _readOnly = false;
