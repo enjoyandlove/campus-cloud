@@ -11,6 +11,9 @@ import { Component, TemplateRef, Inject, OnInit } from '@angular/core';
   selector: 'ready-ui-modal-component',
   styles: [
     `
+      .wrapper {
+        padding: 1em;
+      }
       header {
         padding-bottom: 1em;
       }
@@ -24,27 +27,29 @@ import { Component, TemplateRef, Inject, OnInit } from '@angular/core';
     `
   ],
   template: `
-    <header>
-      <ready-ui-stack alignment="between">
-        Title
-        <button ui-button type="button" variant="inline" (click)="data.onClose()">
-          <ready-ui-icon name="close" size="small"></ready-ui-icon>
-        </button>
-      </ready-ui-stack>
-    </header>
-    <main>
-      Modal Content
-    </main>
-    <footer>
-      <ready-ui-stack alignment="end">
-        <button ui-button type="button" variant="flat" (click)="data.onCancel()">
-          Cancel
-        </button>
-        <button ui-button type="button" color="danger" variant="flat" (click)="data.onDelete()">
-          Delete
-        </button>
-      </ready-ui-stack>
-    </footer>
+    <div class="wrapper">
+      <header>
+        <ready-ui-stack alignment="between">
+          Title
+          <button ui-button type="button" variant="inline" (click)="data.onClose()">
+            <ready-ui-icon name="close" size="small"></ready-ui-icon>
+          </button>
+        </ready-ui-stack>
+      </header>
+      <main>
+        Modal Content
+      </main>
+      <footer>
+        <ready-ui-stack alignment="end">
+          <button ui-button type="button" variant="flat" (click)="data.onCancel()">
+            Cancel
+          </button>
+          <button ui-button type="button" color="danger" variant="flat" (click)="data.onDelete()">
+            Delete
+          </button>
+        </ready-ui-stack>
+      </footer>
+    </div>
   `
 })
 export class ReadyUIModalComponent {
