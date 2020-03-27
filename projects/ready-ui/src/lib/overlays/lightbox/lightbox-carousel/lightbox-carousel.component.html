@@ -1,0 +1,19 @@
+<div #carousel
+     class="carousel">
+  <img [src]="image.url"
+       alt=""
+       class="carousel__item"
+       (click)="imageClickHandler(image)"
+       *ngFor="let image of items; index as index"
+       (keyup.arrowleft)="imageClickHandler(items[index - 1])"
+       (keyup.arrowright)="imageClickHandler(items[index + 1])">
+</div>
+
+<button ui-button
+        type="button"
+        color="white"
+        variant="inline"
+        (click)="close.emit()">
+  <ready-ui-icon name="close"
+                 aria-label="Close Lightbox"></ready-ui-icon>
+</button>

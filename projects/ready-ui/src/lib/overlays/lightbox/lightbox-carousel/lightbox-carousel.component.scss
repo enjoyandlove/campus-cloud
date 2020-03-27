@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button[ui-button] {
+  top: 30px;
+  right: 30px;
+  position: absolute;
+}
+
+.carousel {
+  height: 600px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  transform: translateX(100vw);
+  transition: transform 300ms ease-in-out;
+
+  &__item {
+    height: auto;
+    cursor: pointer;
+    max-height: 600px;
+    border-radius: 4px;
+    display: inline-block;
+    border: 2px solid white;
+    max-width: calc(100vw - 160px);
+
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+}
