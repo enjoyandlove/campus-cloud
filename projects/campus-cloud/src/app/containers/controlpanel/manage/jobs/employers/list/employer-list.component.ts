@@ -1,15 +1,20 @@
+import { ModalService } from '@ready-education/ready-ui/overlays/modal/modal.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 
 import { IEmployer } from '../employer.interface';
-import { CPSession } from '../../../../../../session';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { EmployerService } from '../employer.service';
-import { BaseComponent } from '../../../../../../base';
-import { baseActions, IHeader } from '../../../../../../store/base';
-import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
+import { baseActions, IHeader } from '@campus-cloud/store';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { EmployerEditComponent } from '@controlpanel/manage/jobs/employers/edit';
+import { EmployerCreateComponent } from '@controlpanel/manage/jobs/employers/create';
+import { EmployerDeleteComponent } from '@controlpanel/manage/jobs/employers/delete';
 
 export interface IState {
   employers: Array<IEmployer>;
@@ -28,24 +33,20 @@ const state = {
 @Component({
   selector: 'cp-employer-list',
   templateUrl: './employer-list.component.html',
-  styleUrls: ['./employer-list.component.scss']
+  styleUrls: ['./employer-list.component.scss'],
+  providers: [ModalService]
 })
 export class EmployerListComponent extends BaseComponent implements OnInit {
   loading;
   eventData;
-  sortingLabels;
-  deleteEmployer;
-  selectedEmployer;
+  modal: OverlayRef;
   state: IState = state;
-  launchDeleteModal = false;
-  launchCreateModal = false;
-  launchEditModal = false;
 
   constructor(
     public session: CPSession,
-    public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public service: EmployerService,
+    private modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
     super();
@@ -65,15 +66,14 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
   }
 
   onLaunchCreateModal() {
-    this.launchCreateModal = true;
+    this.modal = this.modalService.open(EmployerCreateComponent, {
+      onClose: this.resetModal.bind(this),
+      onAction: this.onCreated.bind(this)
+    });
+  }
 
-    setTimeout(
-      () => {
-        $('#createModal').modal({ keyboard: true, focus: true });
-      },
-
-      1
-    );
+  resetModal() {
+    this.modal.dispose();
   }
 
   onSearch(search_str) {
@@ -95,31 +95,46 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
   }
 
   onCreated(newEmployer: IEmployer): void {
-    this.launchCreateModal = false;
     this.state.employers = [newEmployer, ...this.state.employers];
   }
 
-  onEdited(editEmployer: IEmployer) {
-    this.launchEditModal = false;
-    this.selectedEmployer = null;
+  onEdit(employer: IEmployer) {
+    this.modal = this.modalService.open(EmployerEditComponent, {
+      data: employer,
+      onAction: this.onEdited.bind(this),
+      onClose: this.resetModal.bind(this)
+    });
+  }
 
-    this.state = Object.assign({}, this.state, {
+  onEdited(editEmployer: IEmployer) {
+    this.state = {
+      ...this.state,
       employers: this.state.employers.map((employer) =>
         employer.id === editEmployer.id ? editEmployer : employer
       )
+    };
+  }
+
+  onDelete(employer: IEmployer) {
+    this.modal = this.modalService.open(EmployerDeleteComponent, {
+      data: employer,
+      onAction: this.onDeleted.bind(this),
+      onClose: this.resetModal.bind(this)
     });
   }
 
   onDeleted(id: number) {
-    this.deleteEmployer = null;
-    this.state = Object.assign({}, this.state, {
+    this.state = {
+      ...this.state,
       employers: this.state.employers.filter((employer) => employer.id !== id)
-    });
+    };
 
     if (this.state.employers.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
       this.fetch();
     }
+
+    this.resetModal();
   }
 
   public fetch() {
@@ -165,9 +180,5 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
 
     this.fetch();
     this.buildHeader();
-
-    this.sortingLabels = {
-      name: this.cpI18n.translate('name')
-    };
   }
 }

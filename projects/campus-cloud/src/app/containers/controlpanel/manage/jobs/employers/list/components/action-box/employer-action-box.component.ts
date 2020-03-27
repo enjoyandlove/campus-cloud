@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { CPTrackingService } from '../../../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../../../shared/constants/analytics';
-import { CP_TRACK_TO } from '../../../../../../../../shared/directives/tracking';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 
 @Component({
   selector: 'cp-employer-action-box',
