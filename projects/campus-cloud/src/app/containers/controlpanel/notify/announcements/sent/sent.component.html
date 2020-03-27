@@ -54,7 +54,7 @@
                 <button ui-button
                         type="button"
                         variant="inline"
-                        aria-label="close"
+                        *ngIf="message.is_school_wide"
                         aria-label="Delete announcement"
                         (click)="onLauncDeleteModal(message)">
                   <ready-ui-icon name="close"></ready-ui-icon>

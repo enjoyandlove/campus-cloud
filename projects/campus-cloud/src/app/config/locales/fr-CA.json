@@ -3760,7 +3760,7 @@
     "message": "Publier"
   },
   "t_terms_of_use_disclaimer": {
-    "message": "En vous inscrivant, vous acceptez la Politique de confidentialité et les Conditions d’utilisation de Ready Education."
+    "message": "En vous inscrivant, vous acceptez la %privacy et les %tos de Ready Education."
   },
   "t_terms_of_use_menu": {
     "message": "Conditions d'Utilisation"
