@@ -6,6 +6,9 @@ import { StructureModule } from '@ready-education/ready-ui/structure';
 import { ImagesAndIconsModule } from '@ready-education/ready-ui/images-and-icons';
 
 storiesOf('Page (WIP)', module)
+  .addParameters({
+    showPanel: false
+  })
   .addDecorator(
     moduleMetadata({
       imports: [PageModule, StructureModule, ButtonModule, ImagesAndIconsModule]
