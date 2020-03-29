@@ -44,10 +44,6 @@ describe('AnnouncementSentComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should update header', () => {
-    expect(component.store.dispatch).toHaveBeenCalled();
-  });
-
   describe('onLauncDeleteModal', () => {
     it('should open AnnouncementDeleteComponent modal', () => {
       const spy: jasmine.Spy = spyOn(modalService, 'open');

@@ -15,7 +15,7 @@ export class LocationsTimeLabelPipe implements PipeTransform {
 
 @Pipe({ name: 'locationsDayLabel' })
 export class LocationsDayLabelPipe implements PipeTransform {
-  transform(day): number {
+  transform(day): string {
     return LocationsUtilsService.getScheduleLabel(day);
   }
 }

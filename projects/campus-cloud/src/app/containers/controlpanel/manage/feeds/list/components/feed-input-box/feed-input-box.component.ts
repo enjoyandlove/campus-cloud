@@ -82,7 +82,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     private cpI18nPipe: CPI18nPipe,
     public utils: FeedsUtilsService,

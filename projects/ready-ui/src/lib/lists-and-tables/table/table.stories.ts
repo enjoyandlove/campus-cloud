@@ -1,7 +1,9 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 
-storiesOf('Table', module)
+import readme from './table/README.md';
+
+storiesOf('Lists and Tables/Table', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -55,7 +57,7 @@ storiesOf('Table', module)
       };
     },
     {
-      notes: require('./table/README.md')
+      notes: readme
     }
   )
   .add('Advanced', () => {

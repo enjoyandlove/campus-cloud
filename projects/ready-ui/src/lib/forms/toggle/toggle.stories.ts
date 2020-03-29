@@ -3,7 +3,7 @@ import { centered } from '@storybook/addon-centered/angular';
 
 import { ToggleModule } from '@ready-education/ready-ui/forms/toggle';
 
-storiesOf('Toggle', module)
+storiesOf('Form/Toggle', module)
   .addDecorator(moduleMetadata({ imports: [ToggleModule] }))
   .addDecorator(centered)
   .add('toggle', () => {

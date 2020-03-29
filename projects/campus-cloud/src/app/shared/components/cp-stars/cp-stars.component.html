@@ -1,4 +1,4 @@
-<div [class]="['stars ' + size]">
+<div [ngClass]="['stars ' + size]">
   <i class="material-icons"
      *ngFor="let star of stars"
      [class.filled]="star.filled">

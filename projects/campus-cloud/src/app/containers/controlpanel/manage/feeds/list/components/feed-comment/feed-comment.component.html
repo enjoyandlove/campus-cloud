@@ -15,10 +15,9 @@
   <div class="parent-thread__body"
        *ngIf="embbededPost$ | async as feed">
     <cp-feed-item [feed]="feed"
+                  (deleted)="onDeleteNestedThread()"
                   (moved)="parentThreadUpdated.next()"
                   [isCampusWallView]="isCampusWallView"
-                  (deleted)="onDeleteNestedThread($feed)"
-                  (filterByCategory)="onFilterByCategory($event)"
                   [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
     </cp-feed-item>
   </div>
@@ -27,7 +26,7 @@
      [class.nested]="_showParentThread"
      [hidden]="parentThreadHasCommentsExpanded$ | async">
   <div class="col-12">
-    <div [class]="[last ? 'comment isLast' : 'comment']">
+    <div [ngClass]="[last ? 'comment isLast' : 'comment']">
       <div class="row">
         <div class="col-12">
           <div class="comment__header">

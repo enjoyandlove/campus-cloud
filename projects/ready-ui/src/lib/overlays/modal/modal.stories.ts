@@ -124,7 +124,7 @@ export class ReadyUIModalWrapperComponent {
   }
 }
 
-storiesOf('Modal', module)
+storiesOf('Overlays/Modal', module)
   .addDecorator(
     moduleMetadata({
       entryComponents: [ReadyUIModalComponent],

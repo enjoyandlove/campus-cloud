@@ -106,14 +106,16 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `t_deals_form_heading_edit_deal`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `t_deals_form_heading_edit_deal`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

@@ -3,7 +3,9 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { boolean } from '@storybook/addon-knobs';
 
-storiesOf('Color Picker', module)
+import readme from './README.md';
+
+storiesOf('Form/Color Picker', module)
   .addDecorator(
     moduleMetadata({
       imports: [ColorPickerModule]
@@ -56,6 +58,6 @@ storiesOf('Color Picker', module)
       };
     },
     {
-      notes: require('./README.md')
+      notes: readme
     }
   );

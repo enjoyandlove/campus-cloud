@@ -150,18 +150,20 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `employers_manage_employer`,
-        subheading: null,
-        em: null,
-        crumbs: {
-          label: 'jobs',
-          url: 'jobs'
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `employers_manage_employer`,
+          subheading: null,
+          em: null,
+          crumbs: {
+            label: 'jobs',
+            url: 'jobs'
+          },
+          children: []
+        }
+      });
     });
   }
 

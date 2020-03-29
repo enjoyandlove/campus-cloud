@@ -36,18 +36,20 @@ export class CalendarsItemCreateComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 'calendars_item_create_heading',
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: null,
-          label: null
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 'calendars_item_create_heading',
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: null,
+            label: null
+          },
+          children: []
+        }
+      });
     });
   }
 

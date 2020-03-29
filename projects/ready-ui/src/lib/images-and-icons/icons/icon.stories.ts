@@ -3,6 +3,8 @@ import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { select, text } from '@storybook/addon-knobs';
 
+import readme from './icon/README.md';
+
 const sizes = {
   Small: 'small',
   Regular: 'regular'
@@ -44,7 +46,7 @@ const icons = {
   add_circle_outline: 'add_circle_outline'
 };
 
-storiesOf('Icons', module)
+storiesOf('Images and Icons/Icons', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -67,6 +69,6 @@ storiesOf('Icons', module)
       };
     },
     {
-      notes: require('./icon/README.md')
+      notes: readme
     }
   );

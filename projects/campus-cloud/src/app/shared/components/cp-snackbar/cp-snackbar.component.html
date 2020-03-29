@@ -7,7 +7,7 @@
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
       <div class="col-8 offset-2">
-        <div [class]="['bar--wrapper ' + snack.class]">
+        <div [ngClass]="['bar--wrapper ' + snack.class]">
           <div class="bar--wrapper__message">
             <i class="material-icons bar--wrapper--icon">
               {{snack.class === 'success' ? 'check' : 'error_outline' }}

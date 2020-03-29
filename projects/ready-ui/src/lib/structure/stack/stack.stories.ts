@@ -1,6 +1,8 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
-import { select, text } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
+
+import readme from './stack/README.md';
 
 const directions = {
   Horizontal: 'horizontal',
@@ -21,7 +23,7 @@ const spacing = {
   Loose: 'loose'
 };
 
-storiesOf('Stack', module)
+storiesOf('Structure/Stack', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -61,7 +63,7 @@ storiesOf('Stack', module)
       };
     },
     {
-      notes: require('./stack/README.md')
+      notes: readme
     }
   )
   .add(

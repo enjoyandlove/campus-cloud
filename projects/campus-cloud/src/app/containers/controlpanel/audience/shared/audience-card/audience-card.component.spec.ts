@@ -37,7 +37,7 @@ describe('AudienceCardComponent', () => {
 
   it('onFilters should emit selectedFilters', () => {
     spyOn(comp.selectedFilters, 'emit');
-    const expected = 'nothing';
+    const expected: any = 'nothing';
 
     comp.onFilters(expected);
     expect(comp.selectedFilters.emit).toHaveBeenCalledTimes(1);
@@ -46,7 +46,7 @@ describe('AudienceCardComponent', () => {
 
   it('onUsers should emit selectedUsers', () => {
     spyOn(comp.selectedUsers, 'emit');
-    const expected = 'nothing';
+    const expected = [1, 2, 3];
 
     comp.onUsers(expected);
     expect(comp.selectedUsers.emit).toHaveBeenCalledTimes(1);

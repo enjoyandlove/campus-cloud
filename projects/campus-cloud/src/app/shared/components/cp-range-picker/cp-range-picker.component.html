@@ -4,7 +4,7 @@
           aria-haspopup="true"
           aria-expanded="false"
           data-toggle="dropdown"
-          [class]="'cpbtn cpbtn--' + class">
+          [ngClass]="'cpbtn cpbtn--' + class">
     {{ label }}
     <i *ngIf="icon"
        aria-hidden="true"

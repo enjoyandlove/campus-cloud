@@ -5,12 +5,12 @@
     <div class="row margin-bottom">
       <div class="col-12">
         <cp-no-content noContentText="No Clubs to Add..."
-                       *ngIf="!form.controls.clubs.controls.length">
+                       *ngIf="!form['controls'].clubs['controls'].length">
         </cp-no-content>
 
         <form class="form"
               [formGroup]="form"
-              *ngIf="form.controls.clubs.controls.length">
+              *ngIf="form['controls'].clubs['controls'].length">
           <table ui-table
                  formArrayName="clubs">
             <thead>
@@ -26,7 +26,7 @@
             <tbody>
               <tr ui-table-row
                   [formGroupName]="i"
-                  *ngFor="let club of form.controls.clubs.controls; let i = index">
+                  *ngFor="let club of form['controls'].clubs['controls']; let i = index">
                 <td ui-table-cell>
                   <ready-ui-stack>
                     <ng-container *ngIf="club.controls['logo_url'].value">

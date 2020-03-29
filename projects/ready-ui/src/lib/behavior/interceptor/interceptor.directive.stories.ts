@@ -1,7 +1,7 @@
 import { InterceptorDirective } from '@ready-education/ready-ui/behavior';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 
-storiesOf('Interceptor', module)
+storiesOf('Behavior/Interceptor', module)
   .addDecorator(
     moduleMetadata({
       declarations: [InterceptorDirective]
@@ -9,7 +9,7 @@ storiesOf('Interceptor', module)
   )
   .add('Default', () => {
     const onVisible = (id: number) => {
-      console.log(`${id} scrolled into view`);
+      alert(`${id} scrolled into view`);
     };
 
     return {

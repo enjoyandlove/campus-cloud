@@ -75,9 +75,11 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
       children: []
     };
 
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload
+      });
     });
   }
 

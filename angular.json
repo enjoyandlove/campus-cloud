@@ -10,20 +10,14 @@
       "prefix": "cp",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "_dist",
-            "customWebpackConfig": {
-              "path": "./webpack.config.js",
-              "mergeStrategies": {
-                "externals": "replace"
-              }
-            },
             "index": "projects/campus-cloud/src/index.html",
             "main": "projects/campus-cloud/src/main.ts",
             "showCircularDependencies": true,
@@ -66,9 +60,9 @@
               "index": "projects/campus-cloud/src/index.prod.html",
               "statsJson": false,
               "deployUrl": "/dist/",
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
@@ -159,7 +153,12 @@
             "tsConfig": "projects/ready-ui/tsconfig.lib.json",
             "project": "projects/ready-ui/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/ready-ui/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -201,7 +200,7 @@
             "main": "projects/playground/src/main.ts",
             "polyfills": "projects/playground/src/polyfills.ts",
             "tsConfig": "projects/playground/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/playground/src/favicon.ico",
               "projects/playground/src/assets"
@@ -224,7 +223,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -233,6 +231,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -303,7 +305,7 @@
   "defaultProject": "campus-cloud",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
   },
   "cli": {

@@ -5,7 +5,7 @@
        *ngSwitchCase="false">
     <button type="button"
             (click)="isOpen = !isOpen"
-            [class]="'menu__header cpbtn cpbtn--' + props?.class">
+            [ngClass]="'menu__header cpbtn cpbtn--' + props?.class">
       {{ 'events_import_bulk_update' | cpI18n }}
       <span class="icon"><i
            class="material-icons">keyboard_arrow_down</i></span>
@@ -29,7 +29,6 @@
               <div class="menu__item">
                 <label>{{ 't_events_attendance_type' | cpI18n }}</label>
                 <cp-dropdown [items]="checkInOptions"
-                             [selectedItem]="checkInOptions[i]"
                              (selected)="updateCheckInOption($event)">
                 </cp-dropdown>
               </div>

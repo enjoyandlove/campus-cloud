@@ -86,14 +86,16 @@ export class LocationsEditComponent extends BaseComponent
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `t_locations_edit_location`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `t_locations_edit_location`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

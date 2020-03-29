@@ -90,14 +90,16 @@ export class DealsCreateComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `t_deals_form_heading_create_deal`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `t_deals_form_heading_create_deal`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

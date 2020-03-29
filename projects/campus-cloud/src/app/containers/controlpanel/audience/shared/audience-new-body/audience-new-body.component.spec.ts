@@ -85,7 +85,7 @@ describe('AudienceNewBodyComponent', () => {
   });
 
   it('onUsers', () => {
-    const expected = 'hello';
+    const expected = [1, 2];
 
     spyOn(comp.users, 'emit');
 

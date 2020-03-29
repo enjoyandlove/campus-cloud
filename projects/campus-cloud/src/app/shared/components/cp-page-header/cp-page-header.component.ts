@@ -37,7 +37,7 @@ export class CPPageHeaderComponent implements OnChanges {
   constructor(public router: Router, public route: ActivatedRoute, public session: CPSession) {}
 
   ngOnChanges() {
-    if (this.data.children.length > this.maxChildren) {
+    if (this.data && this.data.children.length > this.maxChildren) {
       this.extraChildren = this.data.children.filter((_, index) => index + 1 > this.maxChildren);
 
       this.extraMenu =

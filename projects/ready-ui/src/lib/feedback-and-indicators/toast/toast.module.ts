@@ -12,7 +12,7 @@ import { ToastComponent } from './toast/toast.component';
   entryComponents: [ToastComponent]
 })
 export class ToastModule {
-  public static forRoot(config = defaultToastConfig): ModuleWithProviders {
+  public static forRoot(config = defaultToastConfig): ModuleWithProviders<ToastModule> {
     return {
       ngModule: ToastModule,
       providers: [

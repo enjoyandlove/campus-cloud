@@ -21,8 +21,7 @@
                           *ngIf="!feed.campus_thread_id && !feed.group_thread_id"
                           [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
             </cp-feed-item>
-            <cp-feed-comment [last]="last"
-                             [comment]="feed"
+            <cp-feed-comment [comment]="feed"
                              [replyView]="[true]"
                              showParentThread="true"
                              [isCampusWallView]="isCampusWallView$"

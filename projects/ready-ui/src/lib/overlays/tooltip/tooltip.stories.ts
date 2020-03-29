@@ -3,6 +3,8 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 
+import readme from './README.md';
+
 const placement = {
   Top: 'top',
   Left: 'left',
@@ -10,7 +12,7 @@ const placement = {
   Bottom: 'bottom'
 };
 
-storiesOf('Tooltip', module)
+storiesOf('Overlays/Tooltip', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -46,5 +48,5 @@ storiesOf('Tooltip', module)
       `
       };
     },
-    { notes: require('./README.md') }
+    { notes: readme }
   );

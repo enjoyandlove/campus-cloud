@@ -184,9 +184,11 @@ export class AnnouncementScheduledComponent extends Paginated implements OnInit,
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('../../notify.header.json')
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('../../notify.header.json')
+      });
     });
   }
 

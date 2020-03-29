@@ -3,6 +3,8 @@ import { select, text, boolean, number } from '@storybook/addon-knobs';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { CommonModule } from '@angular/common';
 
+import readme from './avatar/README.md';
+
 const sizes = {
   Regular: 'regular',
   Small: 'small',
@@ -11,7 +13,7 @@ const sizes = {
 
 const defaultImage = 'https://placehold.it/300x230';
 
-storiesOf('Image', module)
+storiesOf('Images and Icons/Image', module)
   .addDecorator(
     moduleMetadata({
       imports: [CommonModule, ReadyUiModule]
@@ -36,7 +38,7 @@ storiesOf('Image', module)
       };
     },
     {
-      notes: require('./avatar/README.md')
+      notes: readme
     }
   )
   .add('Lazy loading multiple images', () => {

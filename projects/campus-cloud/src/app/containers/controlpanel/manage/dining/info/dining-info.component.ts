@@ -37,18 +37,20 @@ export class DiningInfoComponent implements OnInit, OnDestroy, Destroyable {
   ) {}
 
   buildHeader(dining: IDining) {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `[NOTRANSLATE]${dining.name}[NOTRANSLATE]`,
-        subheading: null,
-        em: null,
-        children: [],
-        crumbs: {
-          label: 'dining',
-          url: '/manage/dining'
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `[NOTRANSLATE]${dining.name}[NOTRANSLATE]`,
+          subheading: null,
+          em: null,
+          children: [],
+          crumbs: {
+            label: 'dining',
+            url: '/manage/dining'
+          }
         }
-      }
+      });
     });
   }
 

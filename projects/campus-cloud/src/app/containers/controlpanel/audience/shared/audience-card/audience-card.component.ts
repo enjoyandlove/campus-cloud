@@ -28,10 +28,10 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   @Output() count: EventEmitter<number> = new EventEmitter();
   @Output() importClick: EventEmitter<null> = new EventEmitter();
+  @Output() selectedAudience: EventEmitter<any> = new EventEmitter();
   @Output() resetNewAudience: EventEmitter<null> = new EventEmitter();
   @Output() saveAudienceClick: EventEmitter<null> = new EventEmitter();
   @Output() resetSavedAudience: EventEmitter<null> = new EventEmitter();
-  @Output() selectedAudience: EventEmitter<number> = new EventEmitter();
   @Output() selectedUsers: EventEmitter<Array<number>> = new EventEmitter();
   @Output() selectedFilters: EventEmitter<Array<number>> = new EventEmitter();
   @Output()

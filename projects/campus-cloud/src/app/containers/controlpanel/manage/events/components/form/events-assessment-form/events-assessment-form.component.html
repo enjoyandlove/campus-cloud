@@ -130,7 +130,7 @@
             <input type="text"
                    class="form-control"
                    formControlName="custom_basic_feedback_label"
-                   [class.error]="event_feedback && form.errors?.feedbackLabelRequired" />
+                   [class.error]="form.controls['event_feedback'].value && form.errors?.feedbackLabelRequired" />
           </div>
         </div>
       </div>

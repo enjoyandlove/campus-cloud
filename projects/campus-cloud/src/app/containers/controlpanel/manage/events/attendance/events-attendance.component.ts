@@ -11,6 +11,7 @@ import { FORMAT } from '@campus-cloud/shared/pipes';
 import { CPSession, IUser } from '@campus-cloud/session';
 import { ICheckIn } from './check-in/check-in.interface';
 import { IHeader, baseActions } from '@campus-cloud/store';
+import { STAR_SIZE } from '@campus-cloud/shared/components';
 import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
@@ -75,6 +76,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   isDeleteCheckInModal = false;
   appCheckIn = CheckInMethod.app;
   webCheckIn = CheckInMethod.web;
+  detailStarSize = STAR_SIZE.DEFAULT;
   dateFormat = FORMAT.DATETIME_SHORT;
   deletedAttendee = AttendeeType.deleted;
   emptyCheckOutTime = CheckInOutTime.empty;

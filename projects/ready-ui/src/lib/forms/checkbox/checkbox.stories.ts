@@ -4,7 +4,9 @@ import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { text, boolean } from '@storybook/addon-knobs';
 
-storiesOf('Checkbox', module)
+import readme from './checkbox/README.md';
+
+storiesOf('Form/Checkbox', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule, ReactiveFormsModule]
@@ -42,6 +44,6 @@ storiesOf('Checkbox', module)
       };
     },
     {
-      notes: require('./checkbox/README.md')
+      notes: readme
     }
   );

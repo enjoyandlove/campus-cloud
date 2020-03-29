@@ -77,9 +77,11 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
       children: []
     };
 
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload
+      });
     });
   }
 
