@@ -14,10 +14,13 @@ addDecorator(withKnobs);
 // https://storybook.js.org/docs/configurations/options-parameter/
 addParameters({
   options: {
-    name: `Ready UI (v.${version})`,
+    showRoots: true,
+    name: `Ready UI`,
     theme: themes.light,
     panelPosition: 'right',
-    sidebarAnimations: false
+    sidebarAnimations: false,
+    storySort: (a, b) =>
+      a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, { numeric: true })
   }
 });
 

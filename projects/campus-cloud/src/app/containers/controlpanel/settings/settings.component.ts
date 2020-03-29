@@ -17,7 +17,7 @@ export class SettingsComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select(getHeaderState);
+    Promise.resolve().then(() => (this.headerData$ = this.store.select(getHeaderState)));
 
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,

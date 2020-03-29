@@ -18,7 +18,7 @@ import { ServicesProvidersListComponent } from './components/providers-list/prov
   styleUrls: ['./services-attendance.component.scss']
 })
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
-  @ViewChild('providersList', { static: false }) providersList: ServicesProvidersListComponent;
+  @ViewChild('providersList') providersList: ServicesProvidersListComponent;
 
   loading;
   service;

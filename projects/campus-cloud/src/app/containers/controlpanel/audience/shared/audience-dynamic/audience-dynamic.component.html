@@ -21,7 +21,7 @@
       <form [formGroup]="form">
         <div class="group-item"
              formArrayName="filters"
-             *ngFor="let item of form.get('filters').controls; let i = index">
+             *ngFor="let item of form['controls'].filters['controls']; let i = index">
           <div [formGroupName]="i">
             <div class="row">
               <div class="col-11">

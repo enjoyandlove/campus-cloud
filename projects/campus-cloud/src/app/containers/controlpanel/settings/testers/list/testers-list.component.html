@@ -15,10 +15,10 @@
       <cp-test-users *ngSwitchCase="false"
                      [users]="testers$ | async"
                      [sortDirection]="sortDirection$ | async"
-                     [noContentText]="cpI18n.translate('t_sandbox_no_results_found')"
                      (sort)="doSort($event)"
                      (resend)="doResend($event)"
-                     (delete)="doDelete($event)">
+                     (delete)="doDelete($event)"
+                     [noContentText]="'t_sandbox_no_results_found' | cpI18n">
       </cp-test-users>
     </div>
   </ng-container>

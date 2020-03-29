@@ -2,6 +2,8 @@ export interface IJob {
   id?: number;
   store_id: number;
   title: string;
+  employer_name: string;
+  employer_description: string;
   description: string;
   how_to_apply: string;
   posting_start: number;
@@ -22,4 +24,5 @@ export interface IJob {
   is_credited: boolean;
   is_volunteer: boolean;
   is_oncampus: boolean;
+  employer_logo_url: string;
 }

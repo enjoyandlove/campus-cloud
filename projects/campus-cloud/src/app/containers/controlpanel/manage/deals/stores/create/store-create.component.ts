@@ -13,8 +13,8 @@ import {
   OnDestroy
 } from '@angular/core';
 
-import { CPSession } from '@campus-cloud/session';
 import { IStore } from '../store.interface';
+import { CPSession } from '@campus-cloud/session';
 import * as fromDeals from '@campus-cloud/store/manage/deals';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 

@@ -45,6 +45,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   student;
   studentId;
   messageData;
+  isEvent = 'event';
   engagementData = [];
   engagementsByDay = [];
   loadingEngagementData;

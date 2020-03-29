@@ -82,9 +82,11 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   private buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('../../settings.header.json')
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('../../settings.header.json')
+      });
     });
   }
 

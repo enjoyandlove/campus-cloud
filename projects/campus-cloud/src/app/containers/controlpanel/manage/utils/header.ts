@@ -18,9 +18,11 @@ export class ManageHeaderService {
   }
 
   updateHeader() {
-    this.store.dispatch({
-      type: fromStore.baseActions.HEADER_UPDATE,
-      payload: this.filterByPrivileges()
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromStore.baseActions.HEADER_UPDATE,
+        payload: this.filterByPrivileges()
+      });
     });
   }
 

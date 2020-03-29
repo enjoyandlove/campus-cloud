@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SortablejsModule } from 'angular-sortablejs';
+import { SortablejsModule } from 'ngx-sortablejs';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { TilesService } from './../tiles/tiles.service';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';

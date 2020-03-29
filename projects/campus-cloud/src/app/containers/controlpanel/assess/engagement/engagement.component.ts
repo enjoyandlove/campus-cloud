@@ -289,9 +289,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('../assess.header.json')
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('../assess.header.json')
+      });
     });
   }
 }

@@ -3,7 +3,7 @@
   <ready-ui-stack spacing="tight">
     <ready-ui-icon [name]="tag.icon"
                    size="small"></ready-ui-icon>
-    <span [class]="tag.cssClass"
+    <span [ngClass]="tag.cssClass"
           [attr.title]="tag.label">{{ tag.label }}</span>
     <button ui-button
             type="button"

@@ -3,7 +3,7 @@
        *ngIf="feed.image_list.length">
     <div class="col-3"
          *ngFor="let image of feed.image_list; let i = index"
-         [cpLightbox]="lightbox"
+         cpLightbox="lightbox"
          [host]="cpHost"
          (click)="trackViewLightBoxEvent()"
          [images]="mapImages(feed.image_list)"

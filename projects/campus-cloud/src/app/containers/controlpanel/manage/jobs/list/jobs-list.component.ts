@@ -120,7 +120,9 @@ export class JobsListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
-    this.headerService.updateHeader();
+    Promise.resolve().then(() => {
+      this.headerService.updateHeader();
+    });
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),

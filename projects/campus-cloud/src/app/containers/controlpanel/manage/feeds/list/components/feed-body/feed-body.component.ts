@@ -46,6 +46,7 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   @ViewChild(CPHostDirective, { static: true }) cpHost: CPHostDirective;
 
   _isCampusWallView;
+  isCommentsOpen = false;
   destroy$ = new Subject<null>();
   commentCount$: Observable<number>;
   isCommentsOpen$: Observable<boolean>;

@@ -133,18 +133,20 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   updateHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 't_locations_manage_categories',
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: 'locations',
-          label: 'locations'
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 't_locations_manage_categories',
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: 'locations',
+            label: 'locations'
+          },
+          children: []
+        }
+      });
     });
   }
 

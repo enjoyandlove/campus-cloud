@@ -1,11 +1,12 @@
-import { centered } from '@storybook/addon-centered/angular';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { centered } from '@storybook/addon-centered/angular';
+import readme from './README.md';
 
 const pkg = require('./package.json');
 
 const { version, description, homepage } = pkg;
 
-storiesOf('Welcome', module)
+storiesOf('Getting Started/Welcome', module)
   .addDecorator(centered)
   .add(
     'Welcome',
@@ -36,6 +37,6 @@ storiesOf('Welcome', module)
       };
     },
     {
-      notes: require('./README.md')
+      notes: readme
     }
   );

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -14,15 +14,18 @@ import { baseActions, IHeader } from './../../../store/base';
     </div>
   `
 })
-export class CampusAppManagementComponent {
+export class CampusAppManagementComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
-  constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select(getHeaderState);
+  constructor(private store: Store<any>) {}
 
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('./campus-app-management.header.json')
+  ngOnInit() {
+    this.headerData$ = this.store.select(getHeaderState);
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('./campus-app-management.header.json')
+      });
     });
   }
 }

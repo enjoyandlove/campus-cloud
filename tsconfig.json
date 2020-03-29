@@ -12,7 +12,7 @@
     "target": "es2015",
     "moduleResolution": "node",
     "importHelpers": true,
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": ["node_modules/@types", "./typings.d.ts"],
     "lib": ["es2018", "dom"],
     "paths": {
       "@projects/*": ["projects/*"],
@@ -21,6 +21,10 @@
       "@ready-education/ready-ui": ["projects/ready-ui/src/lib"],
       "@ready-education/ready-ui/*": ["projects/ready-ui/src/lib/*"]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": true
   },
   "compileOnSave": false,
   "buildOnSave": false,

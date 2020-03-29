@@ -14,14 +14,13 @@
 </ng-container>
 
 <ng-container *ngIf="!theme">
-  <div [class]="['input ' + buttonClass]">
+  <div [ngClass]="['input ' + buttonClass]">
     <input type="file"
            name="file"
            [attr.id]="id"
            class="inputfile"
            (change)="onChange($event)" />
     <label [for]="id"
-           [class]="[props?.class]"
            [class.isRequired]="isRequired">
       {{ buttonText ? buttonText : ('t_choose_a_file' | cpI18n) }}
       <cp-working *ngIf="busy"

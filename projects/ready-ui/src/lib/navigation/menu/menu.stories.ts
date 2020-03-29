@@ -25,7 +25,7 @@ const wallChannels = [
   'Integrated'
 ];
 
-storiesOf('Menu', module)
+storiesOf('Navigation/Menu', module)
   .addDecorator(
     moduleMetadata({
       imports: [

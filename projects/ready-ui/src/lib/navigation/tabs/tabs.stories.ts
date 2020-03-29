@@ -2,7 +2,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 
 import { TabsModule } from '@ready-education/ready-ui/navigation';
 
-storiesOf('Tabs', module)
+storiesOf('Navigation/Tabs', module)
   .addDecorator(
     moduleMetadata({
       imports: [TabsModule]

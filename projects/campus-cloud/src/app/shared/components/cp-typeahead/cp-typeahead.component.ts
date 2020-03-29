@@ -41,7 +41,7 @@ interface IProps {
   styleUrls: ['./cp-typeahead.component.scss']
 })
 export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('input', { static: false }) input: ElementRef;
+  @ViewChild('input') input: ElementRef;
 
   @Input() props: IProps;
 

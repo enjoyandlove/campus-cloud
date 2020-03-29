@@ -65,12 +65,12 @@
                   <div class="col-2 no-right-padding"
                        *ngIf="subject_prefix.label">
                     <span
-                          [class]="'subject-input__label text-center ' + subject_prefix.type">
+                          [ngClass]="'subject-input__label text-center ' + subject_prefix.type">
                       {{ subject_prefix.label }}
                     </span>
                   </div>
                   <div
-                       [class]="subject_prefix.label ? 'col-10 no-left-padding' : 'col-12'">
+                       [ngClass]="subject_prefix.label ? 'col-10 no-left-padding' : 'col-12'">
                     <input type="text"
                            formControlName="subject"
                            class="form-control transparent subject-input__input" />
@@ -118,10 +118,9 @@
 
   <cp-modal modalId="audienceImport"
             *ngIf="isAudienceImport">
-    <cp-audience-import (error)="onImportError($event)"
+    <cp-audience-import (error)="onImportError()"
                         (success)="redirectToSaveTab($event)"
-                        (teardown)="isAudienceImport = !isAudienceImport"
-                        (launchCreateModal)="onLaunchCreateModal($event)">
+                        (teardown)="isAudienceImport = !isAudienceImport">
     </cp-audience-import>
   </cp-modal>
 </div>

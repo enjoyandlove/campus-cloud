@@ -133,18 +133,20 @@ export class StoreListComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `stores_manage_store`,
-        subheading: null,
-        em: null,
-        crumbs: {
-          label: 'deals',
-          url: 'deals'
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `stores_manage_store`,
+          subheading: null,
+          em: null,
+          crumbs: {
+            label: 'deals',
+            url: 'deals'
+          },
+          children: []
+        }
+      });
     });
   }
 

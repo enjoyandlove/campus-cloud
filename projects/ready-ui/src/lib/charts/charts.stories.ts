@@ -2,6 +2,9 @@ import { withKnobs, number, boolean } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 
+import barReadme from './components/bar/README.md';
+import lineReadme from './components/line/README.md';
+
 function mockDataGenerator(dataPoints) {
   const entries = Array.from(Array(dataPoints).keys());
 
@@ -16,7 +19,7 @@ function range(n: number) {
   return Array.from(Array(n).keys());
 }
 
-storiesOf('Charts', module)
+storiesOf('Charts/Charts', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -55,7 +58,7 @@ storiesOf('Charts', module)
       };
     },
     {
-      notes: require('./components/line/README.md')
+      notes: lineReadme
     }
   )
   .add(
@@ -99,6 +102,6 @@ storiesOf('Charts', module)
       };
     },
     {
-      notes: require('./components/bar/README.md')
+      notes: barReadme
     }
   );

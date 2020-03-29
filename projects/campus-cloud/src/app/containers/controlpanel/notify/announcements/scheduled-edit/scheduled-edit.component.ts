@@ -174,18 +174,20 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 't_notify_edit_announcement',
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: null,
-          label: null
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 't_notify_edit_announcement',
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: null,
+            label: null
+          },
+          children: []
+        }
+      });
     });
   }
 

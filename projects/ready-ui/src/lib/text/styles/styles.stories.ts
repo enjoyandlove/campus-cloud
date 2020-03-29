@@ -3,6 +3,8 @@ import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { text, select } from '@storybook/addon-knobs';
 
+import readme from './README.md';
+
 const variants = {
   None: '',
   Bold: 'bold',
@@ -17,7 +19,7 @@ const color = {
   Success: 'success'
 };
 
-storiesOf('Text', module)
+storiesOf('Text/Styles', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -39,6 +41,6 @@ storiesOf('Text', module)
       };
     },
     {
-      notes: require('./README.md')
+      notes: readme
     }
   );

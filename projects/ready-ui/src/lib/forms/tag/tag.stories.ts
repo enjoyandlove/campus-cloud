@@ -16,7 +16,7 @@ const variants = {
   Stroked: 'stroked'
 };
 
-storiesOf('Tag', module)
+storiesOf('Form/Tag', module)
   .addDecorator(centered)
   .addDecorator(
     moduleMetadata({

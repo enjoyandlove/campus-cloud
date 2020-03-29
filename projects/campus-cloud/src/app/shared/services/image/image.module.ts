@@ -7,7 +7,7 @@ import { ImageValidatorService } from './image.validator.service';
   providers: [ImageService]
 })
 export class ImageModule {
-  static forRoot(validatorService = ImageValidatorService): ModuleWithProviders {
+  static forRoot(validatorService = ImageValidatorService): ModuleWithProviders<ImageModule> {
     return {
       ngModule: ImageModule,
       providers: [{ provide: ImageValidatorService, useClass: validatorService }]

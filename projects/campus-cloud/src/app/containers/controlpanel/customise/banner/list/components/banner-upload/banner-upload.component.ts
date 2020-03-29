@@ -17,7 +17,7 @@ const IMAGE_SIZE_WIDTH = 1440;
   styleUrls: ['./banner-upload.component.scss']
 })
 export class BannerUploadComponent implements OnInit {
-  @ViewChild(CPImageCropperDirective, { static: false })
+  @ViewChild(CPImageCropperDirective)
   private imageCropper: CPImageCropperDirective;
 
   imageRatio = 1.8;

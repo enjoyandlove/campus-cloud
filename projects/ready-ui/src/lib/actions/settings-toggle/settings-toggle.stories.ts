@@ -3,7 +3,7 @@ import { centered } from '@storybook/addon-centered/angular';
 
 import { SettingsToggleModule } from '@ready-education/ready-ui/actions';
 
-storiesOf('Settings Toggle', module)
+storiesOf('Actions/Settings Toggle', module)
   .addDecorator(
     moduleMetadata({
       imports: [SettingsToggleModule]
@@ -14,7 +14,7 @@ storiesOf('Settings Toggle', module)
     return {
       template: `
       <ready-ui-settings-toggle label="Copy my Campus Cloud Permissions">
-        Grant the new team member the same Campus Cloud permissions as me. 
+        Grant the new team member the same Campus Cloud permissions as me.
       </ready-ui-settings-toggle>
     `
     };
