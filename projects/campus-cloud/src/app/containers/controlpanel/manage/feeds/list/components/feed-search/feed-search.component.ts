@@ -170,8 +170,9 @@ export class FeedSearchComponent implements OnInit {
     const datesSelected$ = viewFilters$.pipe(
       map(({ start, end }) => Boolean(start) && Boolean(end))
     );
+
     const channelsSelected$ = viewFilters$.pipe(
-      map(({ group, postType }) => Boolean(group) || Boolean(postType))
+      map(({ group, postType }) => (this.groupId ? false : Boolean(group) || Boolean(postType)))
     );
     const statusSelected$ = viewFilters$.pipe(
       map(({ flaggedByUser, flaggedByModerators }) => flaggedByUser || flaggedByModerators)
