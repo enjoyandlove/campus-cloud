@@ -72,6 +72,9 @@ export class ReadyUIModalComponent {
   providers: [ModalService],
   styles: [
     `
+      .wrapper {
+        padding: 1em;
+      }
       button:not(:last-child) {
         margin-right: 1em;
       }
@@ -80,7 +83,9 @@ export class ReadyUIModalComponent {
   template: `
     <button ui-button type="button" (click)="templateModal(modal)">Template Modal</button>
     <button ui-button type="button" (click)="componentModal()">Component Modal</button>
-    <ng-template #modal let-data>Template for {{ data.event.name }}</ng-template>
+    <ng-template #modal let-data
+      ><div class="wrapper">Template for {{ data.event.name }}</div></ng-template
+    >
   `
 })
 export class ReadyUIModalWrapperComponent {

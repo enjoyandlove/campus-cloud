@@ -5,7 +5,7 @@ import { ButtonModule } from '@ready-education/ready-ui/actions';
 import { StructureModule } from '@ready-education/ready-ui/structure';
 import { ImagesAndIconsModule } from '@ready-education/ready-ui/images-and-icons';
 
-storiesOf('Page (WIP)', module)
+storiesOf('Structure/Page (WIP)', module)
   .addParameters({
     showPanel: false
   })
