@@ -1,19 +1,17 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
-import { select } from '@storybook/addon-knobs';
 
 import { GalleryModule } from '@ready-education/ready-ui/forms';
 import { LightboxModule } from '@ready-education/ready-ui/overlays';
 import { ImagesAndIconsModule } from '@ready-education/ready-ui/images-and-icons/images-and-icons.module';
 
-storiesOf('Lightbox', module)
+storiesOf('Overlays/Lightbox', module)
   .addDecorator(
     moduleMetadata({
       imports: [LightboxModule, CommonModule, GalleryModule, ImagesAndIconsModule]
     })
   )
   .add('styles', () => {
-    const options = { '1': 1, '2': 2, '3': 3, '4': 4 };
     const randomDimension = () => {
       const randomDigit = Math.floor(Math.random() * 1000).toFixed();
       const randomDigit2 = Math.floor(Math.random() * 1000).toFixed();
@@ -26,9 +24,7 @@ storiesOf('Lightbox', module)
       `https://source.unsplash.com/random/${randomDimension()}/?education`
     ];
 
-    const count = select('How Many Images?', options, 4);
-
-    collection = collection.filter((item, index) => index + 1 <= count);
+    collection = collection.filter((item, index) => index + 1 <= 4);
 
     return {
       styles: [

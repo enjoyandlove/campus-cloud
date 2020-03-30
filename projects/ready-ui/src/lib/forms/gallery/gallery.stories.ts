@@ -13,7 +13,7 @@ let images = [
   'https://source.unsplash.com/random/120x90/?nature'
 ];
 
-storiesOf('Gallery', module)
+storiesOf('Form/Gallery', module)
   .addDecorator(
     moduleMetadata({
       imports: [GalleryModule, ImagesAndIconsModule]

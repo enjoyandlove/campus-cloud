@@ -84,6 +84,5 @@ export class LightboxCarouselComponent implements OnInit, AfterViewInit {
       },
       {}
     ) as { [key: number]: number };
-    console.log(this.imageDimensions, imageElements);
   }
 }
