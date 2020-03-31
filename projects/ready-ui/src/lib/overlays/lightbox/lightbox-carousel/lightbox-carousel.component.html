@@ -1,12 +1,8 @@
 <div #carousel
-     class="carousel">
-  <img [src]="image.url"
-       alt=""
-       class="carousel__item"
-       (click)="imageClickHandler(image)"
-       *ngFor="let image of items; index as index"
-       (keyup.arrowleft)="imageClickHandler(items[index - 1])"
-       (keyup.arrowright)="imageClickHandler(items[index + 1])">
+     class="swiper-container">
+  <div class="swiper-wrapper">
+     <img alt="" [src]="image" class="swiper-slide" *ngFor="let image of images">
+  </div>
 </div>
 
 <button ui-button

@@ -51,17 +51,19 @@ export class LigthboxDirective implements AfterContentInit, OnDestroy {
     const overlayRef = this.overlay.create(this.getConfig());
     const portal = new ComponentPortal<LightboxCarouselComponent>(LightboxCarouselComponent);
     const carousel = overlayRef.attach(portal);
+
+    const images = this.images.map((i) => i.src);
+    const clickedImageIndex = images.findIndex((imageUrl: string) => imageUrl === activeImgUrl);
     carousel.instance.images = this.images.map((i) => i.src);
 
     this.timeOut = setTimeout(() => {
-      carousel.instance.setActiveImageByImgSrc(activeImgUrl);
-      carousel.instance.moveCarousel();
+      carousel.instance.setActiveImage(clickedImageIndex);
     });
 
     const backdropClick$ = overlayRef.backdropClick();
     const carouselCloseClick$ = carousel.instance.close;
-    const escapeKey$ = fromEvent(document, 'keydown').pipe(
-      filter(({ code }: KeyboardEvent) => code === 'ESCAPE')
+    const escapeKey$ = fromEvent(document, 'keyup').pipe(
+      filter(({ code }: KeyboardEvent) => code === 'Escape')
     );
     const closeActions$ = merge(backdropClick$, carouselCloseClick$, escapeKey$);
     closeActions$.pipe(takeUntil(this.destroy$)).subscribe(() => overlayRef.dispose());
@@ -69,7 +71,7 @@ export class LigthboxDirective implements AfterContentInit, OnDestroy {
 
   getConfig(): OverlayConfig {
     return {
-      maxWidth: '95vw',
+      maxWidth: '100vw',
       hasBackdrop: true,
       disposeOnNavigation: true,
       panelClass: this._panelClass,

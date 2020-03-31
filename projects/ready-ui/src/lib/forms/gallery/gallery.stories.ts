@@ -1,13 +1,9 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { button } from '@storybook/addon-knobs';
 
 import { GalleryModule } from '@ready-education/ready-ui/forms';
 import { ImagesAndIconsModule } from '@ready-education/ready-ui/images-and-icons/images-and-icons.module';
 
-let counter = 0;
-const reRender = () => (counter += 1);
-
-let images = [
+const images = [
   'https://source.unsplash.com/random/120x90/?city',
   'https://source.unsplash.com/random/120x90/?people',
   'https://source.unsplash.com/random/120x90/?nature'
@@ -20,15 +16,15 @@ storiesOf('Form/Gallery', module)
     })
   )
   .add('styles', () => {
-    button('Refresh Story', reRender);
     return {
       props: {
         images,
         removeImage: (index: number) => {
           images.splice(index, 1);
         },
-        addImage: (imageUrl: string) => {
-          images = images.concat(imageUrl);
+        addImage: (files: File[]) => {
+          const _images = files.map((file) => URL.createObjectURL(file));
+          images.push(..._images);
         },
         errorHandler: ({ file }) => alert(`File too big ${file.name}`)
       },

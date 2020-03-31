@@ -43,7 +43,8 @@ const icons = {
   person: 'person',
   arrow_back: 'arrow_back',
   add_circle: 'add_circle',
-  add_circle_outline: 'add_circle_outline'
+  add_circle_outline: 'add_circle_outline',
+  collections: 'collections'
 };
 
 storiesOf('Images and Icons/Icons', module)

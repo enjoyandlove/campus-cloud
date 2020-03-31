@@ -12,6 +12,10 @@
 .widget {
   position: relative;
 
+  ready-ui-icon {
+    cursor: pointer;
+  }
+
   &:hover {
     ready-ui-icon[name="add_circle"] {
       display: block;
