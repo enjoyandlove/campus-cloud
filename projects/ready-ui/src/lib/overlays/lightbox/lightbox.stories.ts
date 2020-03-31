@@ -1,4 +1,5 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { boolean } from '@storybook/addon-knobs';
 import { CommonModule } from '@angular/common';
 
 import { GalleryModule } from '@ready-education/ready-ui/forms';
@@ -12,7 +13,12 @@ storiesOf('Overlays/Lightbox', module)
     })
   )
   .add('styles', () => {
+    const withRandomDimensions = boolean('Random Dimensions', false);
+
     const randomDimension = () => {
+      if (!withRandomDimensions) {
+        return '1200x900';
+      }
       const randomDigit = Math.floor(Math.random() * 1000).toFixed();
       const randomDigit2 = Math.floor(Math.random() * 1000).toFixed();
       return `${randomDigit}x${randomDigit2}`;
@@ -35,36 +41,28 @@ storiesOf('Overlays/Lightbox', module)
           display: flex;
           flex-wrap: wrap;
           overflow: hidden;
-          border-radius: 8px;
-          justify-content: space-between;
-        }
-
-        .story-container--row {
-          flex-direction: row;
-        }
-
-        .story-container--column {
+          border-radius: 18px;
           flex-direction: column;
-        }
-
-        .story-container--column .story-container__item {
-          width: 50%;
         }
 
         .story-container__item {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
+          width: 50%;
+          height: 120px;
+          box-sizing: border-box;
+        }
+
+        .story-container__item.full-height {
+          height: 240px;
+        }
+
+        .story-container__item.full-width {
+          width: 100%;
         }
 
         .story-container__item img {
-          width: 100%;
-          height: 120px;
           object-fit: cover;
-        }
-
-        .story-container__item img.full-height {
-          height: 240px;
+          width: calc(100% - 2px);
+          height: calc(100% - 2px);
         }
       `
       ],
@@ -73,11 +71,15 @@ storiesOf('Overlays/Lightbox', module)
       },
       template: `
       <ready-ui-symbol></ready-ui-symbol>
-      <div class="story-container" [ngClass]="images.length > 2 ? 'story-container--column' : 'story-container--row'" ready-ui-lightbox>
-        <div class="story-container__item" *ngFor="let image of images; index as index">
-          <img [src]="image" [ngClass]="{
+      <div class="story-container" ready-ui-lightbox>
+        <div
+          class="story-container__item"
+          *ngFor="let image of images; index as index"
+          [ngClass]="{
+            'full-width': images.length === 1,
             'full-height': images.length < 3 || images.length < 4 && index === 0
-          }" ready-ui-lighbox-item/>
+          }">
+          <img [src]="image" ready-ui-lighbox-item/>
         </div>
       </div>
       `

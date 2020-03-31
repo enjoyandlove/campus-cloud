@@ -1,58 +1,61 @@
 <div class="feed">
-  <div class="row feed__image-wrapper"
-       *ngIf="feed.image_list.length">
-    <div class="col-3"
-         *ngFor="let image of feed.image_list; let i = index"
-         cpLightbox="lightbox"
-         [host]="cpHost"
-         (click)="trackViewLightBoxEvent()"
-         [images]="mapImages(feed.image_list)"
-         [selectedImageIndex]="i">
-      <img ready-ui-image
-           [dataSrc]="image.url"
-           class="img-fluid feed__image"
-           [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
-    </div>
-  </div>
   <div class="row feed__message">
     <div class="col-12 feed__content">
       <p [innerHTML]="feed.message | cpUrlify"></p>
     </div>
   </div>
-  <div class="row feed__footer">
-    <div class="col-6">
-      <span>
-        <i class="material-icons">thumb_up</i>
-        {{ feed.likes }}
-      </span>
-      <span *ngIf="!replyView"
-            class="cpbtn cpbtn--link"
-            (click)="isCommentsOpen = !isCommentsOpen"
-            (click)="toggleReplies.emit(isCommentsOpen)"
-            (click)="trackEvent(isCommentsOpen)">
-        <i class="material-icons">mode_comment</i>
-        {{ 'reply_verb' | cpI18n }}
-      </span>
-      <span class="flag"
-            *ngIf="feed.dislikes > 0 && feed.flag !== 2">
-        <i class="material-icons">flag</i>
-        {{ feed.dislikes }}
-      </span>
-    </div>
-    <div *ngIf="(commentCount$ | async) > 0 && !isRemovedPosts"
-         class="col-6 float-right text-right">
-      <button class="cpbtn cpbtn--link-dark"
-              (click)="onToggleComments()">
-        <i class="material-icons"
-           *ngIf="!(isCommentsOpen$ | async)">chevron_right</i>
-        <i class="material-icons"
-           *ngIf="isCommentsOpen$ | async">expand_more</i>
-        {{ (isCommentsOpen$ | async) ? cpI18n.translate('hide') : cpI18n.translate('show') }}
-        {{ commentCount$ | async }}
-        {{ (commentCount$ | async) > 1 ? cpI18n.translate('comments') : cpI18n.translate('comment') }}
-      </button>
+  <div ready-ui-lightbox
+       class="feed__image-container"
+       *ngIf="feed.image_list.length">
+    <div class="feed__image-container__item"
+         *ngFor="let image of feed.image_list; index as index"
+         [ngClass]="{
+          'feed__image-container__item--full-width': feed.image_list.length === 1,
+          'feed__image-container__item--full-height': feed.image_list.length < 3 || feed.image_list.length < 4 && index === 0
+        }">
+      <img [src]="image.url"
+           ready-ui-lighbox-item />
     </div>
   </div>
 </div>
-
-<ng-template cpHost></ng-template>
+<ready-ui-stack class="feed__footer"
+                alignment="between">
+  <ready-ui-stack>
+    <span>
+      <ready-ui-icon name="thumb_up"
+                     size="small"></ready-ui-icon>
+      {{ feed.likes }}
+    </span>
+    <button ui-button
+            variant="inline"
+            color="primary"
+            *ngIf="!replyView"
+            (click)="isCommentsOpen = !isCommentsOpen"
+            (click)="toggleReplies.emit(isCommentsOpen)"
+            (click)="trackEvent(isCommentsOpen)">
+      <ready-ui-icon name="mode_comment"
+                     size="small"></ready-ui-icon>
+      {{ 'reply_verb' | cpI18n }}
+    </button>
+    <span class="flag"
+          *ngIf="feed.dislikes > 0 && feed.flag !== 2">
+      <ready-ui-icon name="flag"
+                     size="small"></ready-ui-icon>
+      {{ feed.dislikes }}
+    </span>
+  </ready-ui-stack>
+  <ready-ui-stack size="small"
+                  *ngIf="(commentCount$ | async) > 0 && !isRemovedPosts">
+    <button ui-button
+            type="button"
+            variant="inline"
+            (click)="onToggleComments()">
+      <ready-ui-icon
+                     [name]="(isCommentsOpen$ | async) ? 'chevron_right' : 'expand_more'">
+      </ready-ui-icon>
+      {{ (isCommentsOpen$ | async) ? cpI18n.translate('hide') : cpI18n.translate('show') }}
+      {{ commentCount$ | async }}
+      {{ (commentCount$ | async) > 1 ? cpI18n.translate('comments') : cpI18n.translate('comment') }}
+    </button>
+  </ready-ui-stack>
+</ready-ui-stack>

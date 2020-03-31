@@ -1,7 +1,7 @@
-import { map, startWith, takeUntil, tap, take, withLatestFrom } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { map, tap, take, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Subject, merge, interval } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import {
@@ -61,11 +61,11 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   stores$;
   channels$;
   hostType;
-  imageError;
   buttonData;
   campusGroupId;
   form: FormGroup;
-  image$: BehaviorSubject<string> = new BehaviorSubject(null);
+  maxImages = 4;
+  expandGallery = false;
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   selectedItem: BehaviorSubject<null | IItem> = new BehaviorSubject(undefined);
@@ -100,6 +100,61 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   get defaultHost() {
     return this.session.defaultHost ? this.session.defaultHost.value : null;
+  }
+
+  addImageInputHandler(event: Event) {
+    return this.addImages(Array.from((event.target as HTMLInputElement).files));
+  }
+
+  addImages(files: File[]) {
+    const imageCtrl = this.form.get('message_image_url_list');
+
+    // should be taken care of by the UI, just in case
+    if (imageCtrl.value.length > this.maxImages) {
+      return;
+    }
+
+    if (files.length + imageCtrl.value.length > this.maxImages) {
+      // throw max file upload
+    }
+
+    files = files.slice(0, this.maxImages - imageCtrl.value.length);
+
+    const fileUploads$ = merge(...files.map((f: File) => this.imageService.upload(f)));
+
+    fileUploads$
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(({ image_url }: any) => {
+          const images = imageCtrl.value;
+          images.push(image_url);
+          imageCtrl.setValue(images);
+          this.trackUploadImageEvent();
+        })
+      )
+      .subscribe(() => {}, (err) => this.handleError(err));
+  }
+
+  removeImage(imgUrl: string) {
+    const imagesCtrl: AbstractControl = this.form.get('message_image_url_list');
+    let images: string[] = imagesCtrl.value;
+
+    images = images.filter((imgeSrc) => imgeSrc !== imgUrl);
+
+    imagesCtrl.setValue(images);
+  }
+
+  imageUploadError({ file }) {
+    const error = new HttpErrorResponse({ status: 400 });
+    const message = this.cpI18nPipe.transform('t_shared_image_upload_error_size', file.name);
+
+    this.handleError(error, message);
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getAmplitudeMenuProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   replyToThread({ message, message_image_url_list, school_id, store_id }): Promise<any> {
@@ -146,14 +201,18 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     return { ...rest, calendar_id: store_id };
   }
 
-  handleError({ status = 400 }) {
+  handleError(
+    err: HttpErrorResponse,
+    errorMessage = this.cpI18n.translate('something_went_wrong')
+  ) {
+    const { status } = err;
+
     const forbidden = this.cpI18n.translate('feeds_error_wall_is_disabled');
-    const somethingWentWrong = this.cpI18n.translate('something_went_wrong');
 
     this.store.dispatch({
       type: baseActions.SNACKBAR_SHOW,
       payload: {
-        body: status === 403 ? forbidden : somethingWentWrong,
+        body: status === 403 ? forbidden : errorMessage,
         class: 'danger',
         sticky: true,
         autoClose: true
@@ -256,10 +315,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     this.form.controls['message_image_url_list'].setValue([]);
   }
 
-  onDeleteImage() {
-    this.form.get('message_image_url_list').setValue([]);
-  }
-
   onSelectedHost(host): void {
     this.hostType = host.hostType;
     this.form.controls['store_id'].setValue(host.value);
@@ -267,26 +322,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   onSelectedChannel(channel): void {
     this.form.controls['post_type'].setValue(channel.action);
-  }
-
-  onFileUpload(file) {
-    this.imageError = null;
-    this.imageService.upload(file).subscribe(
-      ({ image_url }: any) => {
-        this.image$.next(image_url);
-        this.form.controls['message_image_url_list'].setValue([image_url]);
-        this.trackUploadImageEvent();
-      },
-      (err) => {
-        this.imageError = err.message || this.cpI18n.translate('something_went_wrong');
-      }
-    );
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   trackAmplitudeEvents(data) {

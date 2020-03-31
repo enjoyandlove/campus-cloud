@@ -10,7 +10,7 @@ export class GalleryAddItemComponent implements OnInit {
   maxFileSize = 5e6;
 
   @Output()
-  add: EventEmitter<string> = new EventEmitter();
+  add: EventEmitter<File[]> = new EventEmitter();
 
   @Output()
   error: EventEmitter<{ file: File }> = new EventEmitter();
@@ -20,9 +20,12 @@ export class GalleryAddItemComponent implements OnInit {
   ngOnInit() {}
 
   onChange({ target: { files } }) {
-    Array.from(files)
-      .filter((file: File) => (this.validateSize(file) ? file : this.emitError(file)))
-      .map((file: File) => this.add.emit(this.getLocalUrl(file)));
+    files = Array.from(files).filter((file: File) =>
+      this.validateSize(file) ? file : this.emitError(file)
+    );
+    if (files.length) {
+      this.add.emit(files);
+    }
   }
 
   validateSize(file: File) {

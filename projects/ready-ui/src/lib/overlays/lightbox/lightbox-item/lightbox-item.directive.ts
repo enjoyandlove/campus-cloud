@@ -27,6 +27,7 @@ export class LightboxItemDirective implements OnInit {
   }
 
   ngOnInit() {
+    this.el.nativeElement.style.cursor = 'pointer';
     if (this.el.nativeElement instanceof HTMLImageElement) {
       this.el.nativeElement.src = this.src;
     }

@@ -14,7 +14,6 @@
   }
 
   .feed {
-    margin-top: 14px;
     position: relative;
 
     button i {
@@ -22,13 +21,33 @@
       vertical-align: -4px;
     }
 
-    &__image-wrapper {
-      margin-bottom: 15px;
+    &__image-container {
+      width: 655px;
+      height: 240px;
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      border-radius: 18px;
+      flex-direction: column;
 
-      img {
-        height: 140px;
-        width: 100%;
-        object-fit: cover;
+      &__item {
+        width: 50%;
+        height: 120px;
+        box-sizing: border-box;
+
+        &--full-height {
+          height: 240px;
+        }
+
+        &--full-width {
+          width: 100%;
+        }
+
+        img {
+          object-fit: cover;
+          width: calc(100% - 2px);
+          height: calc(100% - 2px);
+        }
       }
     }
 
@@ -56,36 +75,17 @@
     }
 
     &__footer {
-      &--absolute {
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        position: absolute;
-        padding-right: 20px;
+      margin-top: 1em;
+
+      ready-ui-icon[name="thumb_up"] {
+        color: $color-secondary-text;
       }
 
-      span {
-        font-size: 12px;
-        margin-right: 25px;
-
-        &:not(.cpbtn--link) {
-          color: $color-secondary-text;
-        }
-
-        i {
-          font-size: 15px;
-          margin-right: 3px;
-          vertical-align: -3px;
-          display: inline-block;
-        }
-
-        &.flag {
-          color: $color-danger;
-        }
-
-        &:last-child {
-          margin-right: 0;
-        }
+      ready-ui-icon[name="thumb_up"],
+      ready-ui-icon[name="mode_comment"] {
+        top: -2px;
+        margin-right: 3px;
+        position: relative;
       }
     }
   }

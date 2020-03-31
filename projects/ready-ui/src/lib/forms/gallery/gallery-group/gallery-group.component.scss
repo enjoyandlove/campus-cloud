@@ -1,0 +1,7 @@
+.ready-ui-gallery-group {
+  display: flex;
+
+  ready-ui-gallery-item:not(:last-child) {
+    margin-right: 0.3em;
+  }
+}

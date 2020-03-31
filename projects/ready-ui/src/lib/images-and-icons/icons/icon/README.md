@@ -95,3 +95,4 @@ None
 `arrow_back`
 `add_circle`
 `add_circle_outline`
+`collections`
