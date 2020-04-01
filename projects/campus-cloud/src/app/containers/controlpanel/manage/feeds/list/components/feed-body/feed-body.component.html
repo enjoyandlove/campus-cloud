@@ -50,8 +50,8 @@
             type="button"
             variant="inline"
             (click)="onToggleComments()">
-      <ready-ui-icon
-                     [name]="(isCommentsOpen$ | async) ? 'chevron_right' : 'expand_more'">
+      <ready-ui-icon size="small"
+                     [name]="(isCommentsOpen$ | async) ? 'expand_more' : 'chevron_right'">
       </ready-ui-icon>
       {{ (isCommentsOpen$ | async) ? cpI18n.translate('hide') : cpI18n.translate('show') }}
       {{ commentCount$ | async }}

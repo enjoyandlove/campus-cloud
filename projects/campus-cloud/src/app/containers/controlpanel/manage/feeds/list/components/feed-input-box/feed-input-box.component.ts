@@ -1,7 +1,7 @@
-import { map, tap, take, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { map, tap, take, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Subject, merge, interval } from 'rxjs';
+import { BehaviorSubject, Subject, merge } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import {
@@ -25,8 +25,8 @@ import { IItem } from '@campus-cloud/shared/components';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
+import { amplitudeEvents, MAX_UPLOAD_SIZE } from '@campus-cloud/shared/constants';
 import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 import { TextEditorDirective } from '@projects/campus-cloud/src/app/shared/directives';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
@@ -103,7 +103,17 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   }
 
   addImageInputHandler(event: Event) {
-    return this.addImages(Array.from((event.target as HTMLInputElement).files));
+    let files = Array.from((event.target as HTMLInputElement).files);
+
+    files = files.filter((file: File) =>
+      file.size > MAX_UPLOAD_SIZE ? this.imageUploadError({ file }) : file
+    );
+
+    if (!files.length) {
+      return;
+    }
+
+    return this.addImages(files);
   }
 
   addImages(files: File[]) {
@@ -115,7 +125,9 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     }
 
     if (files.length + imageCtrl.value.length > this.maxImages) {
-      // throw max file upload
+      const errorResponse = new HttpErrorResponse({ status: 400 });
+      const errorMessage = this.cpI18nPipe.transform('t_shared_upload_error_max_items', 4);
+      this.handleError(errorResponse, errorMessage);
     }
 
     files = files.slice(0, this.maxImages - imageCtrl.value.length);
