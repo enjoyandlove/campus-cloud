@@ -3441,9 +3441,6 @@
   "t_shared_all_experiences_and_audiences": {
     "message": "All Experiences & Audiences"
   },
-  "t_shared_announcement": {
-    "message": "Announcement"
-  },
   "t_shared_app": {
     "message": "App"
   },
@@ -3733,7 +3730,7 @@
     "message": "Update Map"
   },
   "t_shared_upload_error_max_items": {
-    "message": "Only %s files are allowed"
+    "message": "You can upload a maximum of %s files"
   },
   "t_shared_upload_icon": {
     "message": "Upload Icon"
@@ -3917,9 +3914,6 @@
   },
   "t_walls_unmute_student": {
     "message": "Unmute User"
-  },
-  "t_walls_users_menu_limit_reached": {
-    "message": "You can select a maximum of 5 items at a time"
   },
   "update": {
     "message": "Update",
