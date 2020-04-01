@@ -3732,6 +3732,9 @@
   "t_shared_update_map": {
     "message": "Update Map"
   },
+  "t_shared_upload_error_max_items": {
+    "message": "Only %s files are allowed"
+  },
   "t_shared_upload_icon": {
     "message": "Upload Icon"
   },
