@@ -25,6 +25,7 @@ export class TermsOfUseCreateComponent implements OnInit {
 
   termId;
   content;
+  tosStr;
   termsModal: OverlayRef;
   disableSubmit$ = new BehaviorSubject(true);
 
@@ -74,9 +75,10 @@ export class TermsOfUseCreateComponent implements OnInit {
   }
 
   onTextChange() {
-    this.editor.quill.getText().trim()
-      ? this.disableSubmit$.next(false)
-      : this.disableSubmit$.next(true);
+    const { tos_str } = TermsOfUseUtilsService.parseContentToAPI(this.editor.quill.getContents());
+    this.tosStr = tos_str.trim();
+
+    this.disableSubmit$.next(!this.tosStr || this.tosStr.length > 2048);
   }
 
   handleSuccess() {
