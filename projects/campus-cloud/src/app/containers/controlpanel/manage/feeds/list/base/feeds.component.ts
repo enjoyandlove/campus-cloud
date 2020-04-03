@@ -20,11 +20,9 @@ import * as fromStore from '../../store';
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
 import { GroupType } from '../../feeds.utils.service';
+import { UserService } from '@campus-cloud/shared/services';
 import { FeedsUtilsService } from '../../feeds.utils.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { FeedsAmplitudeService } from './../../feeds.amplitude.service';
-import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
 import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 
 interface IState {
@@ -83,10 +81,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   constructor(
     public session: CPSession,
     public service: FeedsService,
-    public cpTracking: CPTrackingService,
-    public store: Store<fromStore.IWallsState>,
     public userService: UserService,
-    public feedsAmplitudeService: FeedsAmplitudeService
+    public store: Store<fromStore.IWallsState>
   ) {
     super();
   }
@@ -119,12 +115,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     };
 
     this.store.dispatch(fromStore.setSearchTerm({ term: searchTerm }));
-    const { post_type, wall_source } = this.feedsAmplitudeService.getWallAmplitudeProperties();
-
-    const amplitude = {
-      post_type,
-      wall_source
-    };
 
     const validObjectTypes = [];
 
@@ -301,7 +291,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       (results) => {
         this.searching.next(false);
         this.store.dispatch(fromStore.setResults({ results }));
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_SEARCHED_INFORMATION, amplitude);
         this.state = Object.assign({}, this.state, {
           feeds: FeedsUtilsService.groupThreads(results)
         });

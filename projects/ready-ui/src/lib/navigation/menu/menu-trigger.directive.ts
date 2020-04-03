@@ -122,6 +122,7 @@ export class MenuTriggerDirective implements OnDestroy {
 
     this.overlayRef = overlayRef;
     this.overlayRef.attach(portal);
+    this._menu.opened.emit();
 
     this._closingActionsSubscription = this.menuClosingActions().subscribe(() => this.closeMenu());
   }

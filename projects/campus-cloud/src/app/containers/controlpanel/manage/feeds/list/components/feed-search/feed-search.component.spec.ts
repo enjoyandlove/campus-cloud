@@ -13,6 +13,7 @@ import { UserService } from '@campus-cloud/shared/services';
 import { FeedSearchComponent } from './feed-search.component';
 import { CPTestModule } from '@campus-cloud/shared/tests/test.module';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 class MockFeedsService {
   getSocialGroups() {
@@ -44,6 +45,7 @@ describe('FeedSearchComponent', () => {
       ],
       declarations: [FeedSearchComponent],
       providers: [
+        FeedsAmplitudeService,
         { provide: FeedsService, useClass: MockFeedsService },
         { provide: UserService, useClass: MockUserService }
       ],

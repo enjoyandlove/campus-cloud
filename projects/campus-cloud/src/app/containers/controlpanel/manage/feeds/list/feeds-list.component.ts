@@ -8,7 +8,6 @@ import { CPSession } from '@campus-cloud/session';
 import { GroupType } from '../feeds.utils.service';
 import { ManageHeaderService } from '@controlpanel/manage/utils';
 import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
-import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 @Component({
   selector: 'cp-feeds-list',
@@ -23,12 +22,10 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
     public session: CPSession,
     public service: FeedsService,
     public userService: UserService,
-    public cpTracking: CPTrackingService,
     private headerService: ManageHeaderService,
-    public store: Store<fromStore.IWallsState>,
-    public feedsAmplitudeService: FeedsAmplitudeService
+    public store: Store<fromStore.IWallsState>
   ) {
-    super(session, service, cpTracking, store, userService, feedsAmplitudeService);
+    super(session, service, userService, store);
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
