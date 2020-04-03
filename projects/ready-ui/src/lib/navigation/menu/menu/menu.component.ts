@@ -41,6 +41,9 @@ export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
   @Output()
   closed: EventEmitter<string | null> = new EventEmitter();
 
+  @Output()
+  opened: EventEmitter<null> = new EventEmitter();
+
   @ViewChild(TemplateRef, { static: true }) public template: TemplateRef<any>;
 
   get menuClasses() {

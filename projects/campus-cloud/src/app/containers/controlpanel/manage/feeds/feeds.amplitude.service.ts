@@ -17,9 +17,21 @@ enum wallType {
   integration = 'Feed Integration'
 }
 
+export const dateAmplitudeLabel = {
+  custom: amplitudeEvents.CUSTOM,
+  lastYear: amplitudeEvents.LAST_YEAR,
+  lastWeek: amplitudeEvents.LAST_7_DAYS,
+  last30Days: amplitudeEvents.LAST_30_DAYS,
+  last90Days: amplitudeEvents.LAST_90_DAYS
+};
+
 @Injectable()
 export class FeedsAmplitudeService {
   constructor(private cpTracking: CPTrackingService, private store: Store<fromStore.IWallsState>) {}
+
+  getViewFilters() {
+    return this.store.pipe(select(fromStore.getViewFilters)).pipe(take(1));
+  }
 
   getWallSource() {
     let amplitude = 'Not Applicable';
@@ -28,10 +40,8 @@ export class FeedsAmplitudeService {
       return amplitude;
     }
 
-    this.store
-      .pipe(select(fromStore.getViewFilters))
+    this.getViewFilters()
       .pipe(
-        take(1),
         map(({ postType, group }) => {
           const storeCategoryId = group ? group.store_category_id : null;
           const isIntegrated = (postType && postType.is_integrated) || false;
@@ -99,10 +109,8 @@ export class FeedsAmplitudeService {
 
   getPostType() {
     let amplitude = '';
-    this.store
-      .pipe(select(fromStore.getViewFilters))
+    this.getViewFilters()
       .pipe(
-        take(1),
         map(({ flaggedByUser }) => {
           amplitude = flaggedByUser ? amplitudeEvents.FLAGGED : amplitudeEvents.DEFAULT;
         })
@@ -110,6 +118,32 @@ export class FeedsAmplitudeService {
       .subscribe();
 
     return amplitude;
+  }
+
+  getUserFilter() {
+    let amplitude = hasData.no;
+    this.getViewFilters()
+      .pipe(
+        map(({ users }) => {
+          const hasUser = users ? users.length : null;
+          amplitude = hasUser ? hasData.yes : hasData.no;
+        })
+      )
+      .subscribe();
+
+    return amplitude;
+  }
+
+  getWallFiltersAmplitude(dateLabel, state) {
+    const { start, end } = state;
+    const dateDefaultLabel = start && end ? amplitudeEvents.CUSTOM : 'All Time';
+    const date_filter = dateLabel ? dateAmplitudeLabel[dateLabel] : dateDefaultLabel;
+
+    return {
+      date_filter,
+      user_filter: this.getUserFilter(),
+      ...this.getWallAmplitudeProperties()
+    };
   }
 
   isWallMenu() {
