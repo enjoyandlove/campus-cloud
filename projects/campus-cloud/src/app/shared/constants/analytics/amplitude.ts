@@ -473,6 +473,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
 
+  ASSESS_SUBMITTED_FEEDBACK: 'Assess - Submitted Feedback',
+
   NOTIFY_CREATED_COMMUNICATION: 'Notify - Send Announcement',
 
   CUSTOMIZE_CHANGED_BRANDING: 'Customize - Changed Branding',
