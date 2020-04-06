@@ -68,7 +68,7 @@ describe('FeedMoveComponent', () => {
 
   it('should move feed onSubmit', () => {
     spyOn(component, 'trackAmplitudeEvent');
-    spyOn(component.feedsService, 'moveCampusWallThreadToChannel').and.returnValue(of(mockFeed));
+    spyOn(component.feedsService, 'updateCampusWallThread').and.returnValue(of(mockFeed));
 
     component.onSubmit();
 

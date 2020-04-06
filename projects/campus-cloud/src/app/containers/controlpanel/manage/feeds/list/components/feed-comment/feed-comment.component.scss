@@ -3,6 +3,11 @@
 @import '~projects/campus-cloud/src/sass/components/button';
 
 .cp-feed-comment {
+  cp-feed-body {
+    margin-top: 1em;
+    display: block;
+  }
+
   .nested {
     padding-top: 2em;
   }

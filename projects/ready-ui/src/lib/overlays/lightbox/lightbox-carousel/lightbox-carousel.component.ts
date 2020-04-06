@@ -36,11 +36,15 @@ export class LightboxCarouselComponent implements AfterViewInit {
     this.swiper = new Swiper(this.carousel.nativeElement, {
       slidesPerView: 'auto',
       initialSlide: 0,
+      speed: 50,
       centeredSlides: true,
       spaceBetween: 30,
       slideToClickedSlide: true,
       keyboard: {
         enabled: true
+      },
+      fadeEffect: {
+        crossFade: true
       }
     });
   }
