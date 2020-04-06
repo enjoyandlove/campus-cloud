@@ -29,16 +29,33 @@ enum FeedsActions {
   SET_SOCIAL_POST_CATEGORIES = '[manage.walls] set social post categories',
   SET_FLAGGED_BY_MODERATORS = '[manage.walls] set flagged by moderators',
 
+  SET_SOCIAL_GROUP_IDS = '[manage.walls] set social group ids',
+
   RESET_STATE = '[manage.walls] reset state',
 
-  EXPAND_COMMENTS = '[manage.walls] expand comments'
+  EXPAND_COMMENTS = '[manage.walls] expand comments',
+
+  SET_EDIT = '[manage.walls] set edit'
 }
 
 export const clearFilterUsers = createAction(FeedsActions.CLEAR_FILTER_USERS);
+
 export const setSearchTerm = createAction(FeedsActions.SET_SEARCH_TERM, props<{ term: string }>());
+
 export const setFilterUsers = createAction(FeedsActions.SET_FILTER_USERS, props<{ user: any }>());
 
 export const setEndFilter = createAction(FeedsActions.SET_END_FILTER, props<{ end: number }>());
+
+export const setSocialGroupIds = createAction(
+  FeedsActions.SET_SOCIAL_GROUP_IDS,
+  props<{ groupIds: number[] }>()
+);
+
+export const setEdit = createAction(
+  FeedsActions.SET_EDIT,
+  props<{ editing: { id: number; type: string } | null }>()
+);
+
 export const setStartFilter = createAction(
   FeedsActions.SET_START_FILTER,
   props<{ start: number }>()

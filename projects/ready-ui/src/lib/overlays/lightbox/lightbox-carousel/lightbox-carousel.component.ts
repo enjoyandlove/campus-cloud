@@ -42,6 +42,7 @@ export class LightboxCarouselComponent implements AfterViewInit {
       slidesPerView: 'auto',
       speed: 50,
       initialSlide: 0,
+      speed: 50,
       centeredSlides: true,
       spaceBetween: 30,
       slideToClickedSlide: true,

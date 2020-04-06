@@ -15,10 +15,7 @@ import { FormatLinks } from './format-links';
 
 @Directive({
   exportAs: 'ui-editor',
-  selector: '[ready-ui-text-editor]',
-  host: {
-    class: 'ready-ui-text-editor'
-  }
+  selector: '[ready-ui-text-editor]'
 })
 export class TextEditorDirective implements OnInit, OnDestroy {
   _readOnly = false;
@@ -26,14 +23,16 @@ export class TextEditorDirective implements OnInit, OnDestroy {
 
   @Input()
   theme = 'snow'; // snow, bubble
-  constructor(private el: ElementRef) {}
+
+  @Input()
+  className = 'ready-ui-text-editor';
 
   // https://quilljs.com/docs/modules/toolbar/
   @Input()
   toolbar: boolean | any[] = true;
 
   @Input() // text-change, selection-change, editor-change
-  events: string[];
+  events: string[] = [];
 
   @Input()
   placeholder: string;
@@ -47,11 +46,14 @@ export class TextEditorDirective implements OnInit, OnDestroy {
   @Output()
   editor: EventEmitter<{ event: string; args: any[] }> = new EventEmitter();
 
+  constructor(private el: ElementRef) {}
+
   get quill() {
     return this.instance;
   }
 
   ngOnInit() {
+    Quill.debug('error');
     Quill.register(FormatLinks);
     this.instance = new Quill(this.el.nativeElement, {
       modules: {
@@ -68,6 +70,8 @@ export class TextEditorDirective implements OnInit, OnDestroy {
     this.events.forEach((e: any) =>
       this.instance.on(e, (...args) => this.editor.emit({ event: e, args }))
     );
+
+    (this.el.nativeElement as HTMLElement).classList.add(this.className);
   }
 
   ngOnDestroy() {

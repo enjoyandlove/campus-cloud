@@ -137,14 +137,16 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.labels = clubAthleticLabels(this.isAthletic);
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: this.labels.edit_button,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: this.labels.edit_button,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

@@ -13,9 +13,11 @@ export interface IWallsFeedsState {
   start: number | null;
   postType: any | null;
   flaggedByUser: boolean;
+  socialGroupIds: number[];
   expandedThreadIds: number[];
   socialPostCategories: any[];
   flaggedByModerators: boolean;
+  editing: { id: number; type: 'THREAD' | 'COMMENT' } | null;
   results: Array<{ id: number; type: 'THREAD' | 'COMMENT'; children?: number[] }>;
 }
 
@@ -27,12 +29,14 @@ export const feedsinitialState: IWallsFeedsState = {
   threads: [],
   comments: [],
   searchTerm: '',
-  expandedThreadIds: [],
-  group: null, // Campus Wall
-  postType: null, // All Categories,
+  editing: null,
+  socialGroupIds: [],
   flaggedByUser: false,
+  expandedThreadIds: [],
   socialPostCategories: [],
-  flaggedByModerators: false
+  flaggedByModerators: false,
+  group: null, // Campus Wall
+  postType: null // All Categories,
 };
 
 const _feedsReducer = createReducer(
@@ -41,6 +45,20 @@ const _feedsReducer = createReducer(
     return {
       ...state,
       searchTerm: term
+    };
+  }),
+
+  on(WallsActions.setEdit, (state: IWallsFeedsState, { editing }) => {
+    return {
+      ...state,
+      editing
+    };
+  }),
+
+  on(WallsActions.setSocialGroupIds, (state: IWallsFeedsState, { groupIds }) => {
+    return {
+      ...state,
+      socialGroupIds: groupIds
     };
   }),
 

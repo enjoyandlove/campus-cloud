@@ -1,4 +1,8 @@
-<div class="feed">
+<cp-feed-edit [feed]="feed"
+              *ngIf="editMode$ | async"
+              (updated)="updateHandler($event)"></cp-feed-edit>
+<div class="feed"
+     *ngIf="!(editMode$ | async)">
   <div class="row feed__message">
     <div class="col-12 feed__content">
       <p [innerHTML]="feed.message | cpUrlify"></p>
@@ -40,7 +44,8 @@
     <span class="flag"
           *ngIf="feed.dislikes > 0 && feed.flag !== 2">
       <ready-ui-icon name="flag"
-                     size="small"></ready-ui-icon>
+                     size="small"
+                     color="inherit"></ready-ui-icon>
       {{ feed.dislikes }}
     </span>
   </ready-ui-stack>

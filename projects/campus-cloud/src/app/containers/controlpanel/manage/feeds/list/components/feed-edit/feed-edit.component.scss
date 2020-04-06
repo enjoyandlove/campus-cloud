@@ -1,12 +1,5 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
-@import '~projects/campus-cloud/src/sass/components/form';
-@import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/core/typography';
-@import '~projects/campus-cloud/src/sass/components/button';
-
-cp-dropdown {
-  width: 12em;
-}
 
 label.file {
   input {
@@ -32,11 +25,7 @@ ready-ui-gallery-group {
 }
 
 .editor {
-  &__element {
-    margin-bottom: 1em;
-  }
-}
-
-p.maxLength {
-  margin-bottom: 0;
+  margin-bottom: 1em;
+  margin-left: -12px;
+  margin-right: -12px;
 }
