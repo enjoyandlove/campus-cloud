@@ -88,8 +88,7 @@ import {
   CPPlaceAutoCompleteComponent,
   CPUploadModalFooterComponent,
   CPUploadModalHeaderComponent,
-  CPDropdownMultiSelectComponent,
-  CPUnsavedChangesModalComponent
+  CPDropdownMultiSelectComponent
 } from './components';
 
 @NgModule({
@@ -152,8 +151,7 @@ import {
     CPUploadModalFooterComponent,
     CPUploadModalHeaderComponent,
     CPPlaceAutoCompleteComponent,
-    CPDropdownMultiSelectComponent,
-    CPUnsavedChangesModalComponent
+    CPDropdownMultiSelectComponent
   ],
 
   entryComponents: [CPLightboxComponent, CPImageCropperComponent],
@@ -245,8 +243,7 @@ import {
     CPPlaceAutoCompleteComponent,
     CPUploadModalHeaderComponent,
     CPUploadModalFooterComponent,
-    CPDropdownMultiSelectComponent,
-    CPUnsavedChangesModalComponent
+    CPDropdownMultiSelectComponent
   ]
 })
 export class SharedModule {}

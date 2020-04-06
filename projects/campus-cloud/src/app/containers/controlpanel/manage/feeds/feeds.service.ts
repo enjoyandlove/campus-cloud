@@ -91,19 +91,25 @@ export class FeedsService {
     return this.api.delete(url, null, true);
   }
 
-  updateGroupWallThread(threadId: number, data: any) {
+  approveCampusWallThread(threadId: number, data: any) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+
+    return this.api.update(url, data);
+  }
+
+  approveGroupWallThread(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/${threadId}`;
 
     return this.api.update(url, data);
   }
 
-  updateCampusWallComment(threadId: number, data: any) {
+  approveCampusWallComment(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/${threadId}`;
 
     return this.api.update(url, data);
   }
 
-  updateGroupWallComment(threadId: number, data: any) {
+  approveGroupWallComment(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/${threadId}`;
 
     return this.api.update(url, data);
@@ -121,7 +127,7 @@ export class FeedsService {
     return this.api.get(url, search);
   }
 
-  updateCampusWallThread(threadId: number, data: any) {
+  moveCampusWallThreadToChannel(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
     return this.api.update(url, data);

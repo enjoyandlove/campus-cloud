@@ -77,18 +77,13 @@
     &__footer {
       margin-top: 1em;
 
-      .flag {
-        color: $color-danger;
-      }
-
       ready-ui-icon[name="thumb_up"] {
         color: $color-secondary-text;
       }
 
-      ready-ui-icon[name="flag"],
       ready-ui-icon[name="thumb_up"],
       ready-ui-icon[name="mode_comment"] {
-        top: -1px;
+        top: -2px;
         margin-right: 3px;
         position: relative;
       }

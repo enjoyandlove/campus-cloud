@@ -38,11 +38,14 @@ export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     const data = { flag: 2 };
 
-    const updateCampusWallComment$ = this.feedsService.updateCampusWallComment(this.feed.id, data);
+    const approveCampusWallComment$ = this.feedsService.approveCampusWallComment(
+      this.feed.id,
+      data
+    );
 
-    const updateGroupWallComment$ = this.feedsService.updateGroupWallComment(this.feed.id, data);
+    const approveGroupWallComment$ = this.feedsService.approveGroupWallComment(this.feed.id, data);
 
-    const stream$ = this._isCampusWallView ? updateCampusWallComment$ : updateGroupWallComment$;
+    const stream$ = this._isCampusWallView ? approveCampusWallComment$ : approveGroupWallComment$;
 
     stream$.subscribe((updatedComment) => {
       $('#approveCommentModal').modal('hide');
