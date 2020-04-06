@@ -12,3 +12,7 @@ input.flatpickr-input[readonly] {
 .flatpickr-input[static="true"] ~ .flatpickr-calendar {
   box-shadow: none;
 }
+
+.cdk-overlay-dark-backdrop {
+  background: rgba(33, 33, 33, .56);
+}

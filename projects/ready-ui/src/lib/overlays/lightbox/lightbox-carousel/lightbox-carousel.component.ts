@@ -4,15 +4,11 @@ import {
   Component,
   ViewChild,
   ElementRef,
+  HostListener,
   EventEmitter,
   AfterViewInit
 } from '@angular/core';
 import Swiper from 'swiper';
-
-interface IItem {
-  url: string;
-  active: boolean;
-}
 
 @Component({
   selector: 'ready-ui-lightbox-carousel',
@@ -20,6 +16,7 @@ interface IItem {
   styleUrls: ['./lightbox-carousel.component.scss']
 })
 export class LightboxCarouselComponent implements AfterViewInit {
+  @ViewChild('wrapper', { static: true }) private wrapper: ElementRef;
   @ViewChild('carousel', { static: true }) private carousel: ElementRef;
 
   swiper: Swiper;
@@ -32,15 +29,27 @@ export class LightboxCarouselComponent implements AfterViewInit {
 
   constructor() {}
 
+  @HostListener('document:click', ['$event'])
+  onClick(event: Event) {
+    const insideWrapper = (event.target as HTMLElement).contains(this.wrapper.nativeElement);
+    if (insideWrapper) {
+      this.close.emit();
+    }
+  }
+
   ngAfterViewInit() {
     this.swiper = new Swiper(this.carousel.nativeElement, {
       slidesPerView: 'auto',
+      speed: 50,
       initialSlide: 0,
       centeredSlides: true,
       spaceBetween: 30,
       slideToClickedSlide: true,
       keyboard: {
         enabled: true
+      },
+      fadeEffect: {
+        crossFade: true
       }
     });
   }

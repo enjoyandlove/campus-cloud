@@ -1,7 +1,11 @@
 <div #carousel
      class="swiper-container">
-  <div class="swiper-wrapper">
-     <img alt="" [src]="image" class="swiper-slide" *ngFor="let image of images">
+  <div #wrapper
+       class="swiper-wrapper">
+    <img alt=""
+         [src]="image"
+         class="swiper-slide"
+         *ngFor="let image of images">
   </div>
 </div>
 
