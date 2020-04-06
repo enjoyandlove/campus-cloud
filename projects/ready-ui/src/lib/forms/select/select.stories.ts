@@ -3,6 +3,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { boolean } from '@storybook/addon-knobs';
+import readme from './README.md';
 
 const options = [
   { label: 'Theather Club', value: 1, hint: 'A theather club store', disabled: true },
@@ -11,7 +12,7 @@ const options = [
   { label: 'Soccer Fans', value: 4, hint: 'A soccer club store' }
 ];
 
-storiesOf('Select', module)
+storiesOf('Form/Select', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule, ReactiveFormsModule]
@@ -49,8 +50,9 @@ storiesOf('Select', module)
     `
       };
     },
-    { notes: require('./README.md') }
+    { notes: readme }
   )
+
   .add('With Placeholder Value', () => {
     const form = new FormBuilder().group({
       store_id: ['', Validators.required]

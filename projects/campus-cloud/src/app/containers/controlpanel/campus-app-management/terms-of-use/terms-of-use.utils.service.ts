@@ -17,16 +17,16 @@ export class TermsOfUseUtilsService {
   }
 
   /**
-   * It will take first letter of word from passed string
+   * It will replace spaces with underscore between the words and make it lowercase
    * and prefix and suffix random eight digit with underscore make it unique
    * and return the unique placeholder
-   * i.e 'Hello World' to `45215425_hw_78458585`
+   * i.e 'Hello World' to `45215425_hello_world_78458585`
    */
   static getLinkPlaceholder(str) {
     const string = str
       .split(' ')
-      .map((i) => i.charAt(0).toLowerCase())
-      .join('');
+      .join('_')
+      .toLocaleLowerCase();
 
     return `${this.getEightDigitRandomNum() + '_' + string + '_' + this.getEightDigitRandomNum()}`;
   }

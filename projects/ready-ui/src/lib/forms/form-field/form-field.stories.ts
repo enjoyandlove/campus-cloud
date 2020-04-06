@@ -12,7 +12,7 @@ import {
   FormFieldModule
 } from '@ready-education/ready-ui/forms';
 
-storiesOf('Form Field', module)
+storiesOf('Form/Form Field', module)
   .addDecorator(
     moduleMetadata({
       imports: [

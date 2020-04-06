@@ -198,9 +198,11 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.fetch();
 
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('../../assess.header.json')
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('../../assess.header.json')
+      });
     });
 
     this.eventData = {

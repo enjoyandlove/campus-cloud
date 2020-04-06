@@ -37,7 +37,9 @@ const state: IState = {
 export class AudienceListComponent extends BaseComponent implements OnInit {
   loading;
   eventData;
+  editAudience;
   sortingLabels;
+  deleteAudience;
   audienceUsers;
   isAudienceEdit;
   isAudienceDelete;

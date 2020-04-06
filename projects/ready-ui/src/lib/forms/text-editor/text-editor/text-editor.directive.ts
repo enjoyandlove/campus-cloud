@@ -11,9 +11,14 @@ import {
 import Quill from 'quill';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
+import { FormatLinks } from './format-links';
+
 @Directive({
   exportAs: 'ui-editor',
-  selector: '[ready-ui-text-editor]'
+  selector: '[ready-ui-text-editor]',
+  host: {
+    class: 'ready-ui-text-editor'
+  }
 })
 export class TextEditorDirective implements OnInit, OnDestroy {
   _readOnly = false;
@@ -47,6 +52,7 @@ export class TextEditorDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    Quill.register(FormatLinks);
     this.instance = new Quill(this.el.nativeElement, {
       modules: {
         toolbar: this.toolbar

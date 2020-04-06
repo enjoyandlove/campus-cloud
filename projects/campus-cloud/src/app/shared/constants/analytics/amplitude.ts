@@ -183,6 +183,8 @@ export const amplitudeEvents = {
 
   LAST_30_DAYS: 'Last 30 Days',
 
+  LAST_7_DAYS: 'Last 7 Days',
+
   LAST_90_DAYS: 'Last 90 Days',
 
   SAME_SECTION: 'Same Section',
@@ -359,6 +361,8 @@ export const amplitudeEvents = {
 
   MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
 
+  WALL_APPLIED_FILTERS: 'Wall - Applied Filters',
+
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',
 
   STUDIO_ADDED_SECTION: 'Studio - Added Section',
@@ -468,6 +472,8 @@ export const amplitudeEvents = {
   MANAGE_ADDED_WEB_CHECK_IN: 'Manage - Added Web Check-In',
 
   MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
+
+  ASSESS_SUBMITTED_FEEDBACK: 'Assess - Submitted Feedback',
 
   NOTIFY_CREATED_COMMUNICATION: 'Notify - Send Announcement',
 

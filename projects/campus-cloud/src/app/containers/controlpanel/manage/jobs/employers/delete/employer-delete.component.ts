@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
-import { IJobsState } from '@projects/campus-cloud/src/app/store';
 import * as fromJobs from '@campus-cloud/store/manage/jobs';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { IJobsState } from '@projects/campus-cloud/src/app/store';
+import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays/modal/modal.service';
 
 @Component({
   selector: 'cp-employer-delete',
@@ -17,15 +18,10 @@ import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
   styleUrls: ['./employer-delete.component.scss']
 })
 export class EmployerDeleteComponent implements OnInit, OnDestroy {
-  @Input() employer;
-
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
-  @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
-
-  buttonData;
   destroy$ = new Subject();
 
   constructor(
+    @Inject(READY_MODAL_DATA) public modal,
     public updates$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
@@ -34,7 +30,7 @@ export class EmployerDeleteComponent implements OnInit, OnDestroy {
   ) {}
 
   onDelete() {
-    this.store.dispatch(new fromJobs.DeleteEmployer(this.employer.id));
+    this.store.dispatch(new fromJobs.DeleteEmployer(this.modal.data.id));
   }
 
   trackEvent() {
@@ -48,12 +44,11 @@ export class EmployerDeleteComponent implements OnInit, OnDestroy {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
   }
 
-  ngOnInit() {
-    this.buttonData = {
-      text: this.cpI18n.translate('delete'),
-      class: 'danger'
-    };
+  resetModal() {
+    this.modal.onClose();
+  }
 
+  ngOnInit() {
     this.updates$
       .pipe(
         ofType(fromJobs.DELETE_EMPLOYER_SUCCESS),
@@ -61,9 +56,8 @@ export class EmployerDeleteComponent implements OnInit, OnDestroy {
       )
       .subscribe((action: fromJobs.DeleteEmployerSuccess) => {
         this.trackEvent();
-        this.deleted.emit(action.payload);
-        this.resetDeleteModal.emit();
-        $('#deleteModal').modal('hide');
+        this.resetModal();
+        this.modal.onAction(action.payload);
       });
   }
 

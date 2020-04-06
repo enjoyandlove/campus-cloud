@@ -3,12 +3,14 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 
+import readme from './popover/README.md';
+
 const positions = {
   Left: 'left',
   Right: 'right'
 };
 
-storiesOf('Popover', module)
+storiesOf('Overlays/Popover', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -54,6 +56,6 @@ storiesOf('Popover', module)
       };
     },
     {
-      notes: require('./popover/README.md')
+      notes: readme
     }
   );

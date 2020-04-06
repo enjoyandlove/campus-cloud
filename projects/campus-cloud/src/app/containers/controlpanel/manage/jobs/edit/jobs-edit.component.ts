@@ -130,14 +130,16 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `jobs_job_edit`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `jobs_job_edit`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

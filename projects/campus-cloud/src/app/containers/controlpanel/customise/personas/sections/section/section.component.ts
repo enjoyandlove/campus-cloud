@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
-import * as Sortable from 'sortablejs';
+import Sortable from 'sortablejs';
 import { ITile } from '../../tiles/tile.interface';
 import { ICampusGuide } from '../section.interface';
 import { SectionsService } from '../sections.service';

@@ -16,6 +16,12 @@
         [placeholder]="'t_terms_of_use_placeholder' | cpI18n">
       </div>
 
+      <ready-ui-stack alignment="end">
+        <cp-char-counter [limit]="2048"
+                         [charCount]="tosStr">
+        </cp-char-counter>
+      </ready-ui-stack>
+
       <h5>
         {{ 't_shared_ready_education' | cpI18n }}
 

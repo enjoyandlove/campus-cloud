@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { IService } from '../../../service.interface';
+import { STAR_SIZE } from '@campus-cloud/shared/components';
 import { ServiceAttendance } from '../../../services.status';
 
 @Component({
@@ -13,6 +14,7 @@ export class ServicesProviderStatsComponent implements OnInit {
 
   MAX_RATE = 5;
   serviceRating;
+  detailStarSize = STAR_SIZE.DEFAULT;
   attendanceEnabled = ServiceAttendance.enabled;
 
   constructor() {}

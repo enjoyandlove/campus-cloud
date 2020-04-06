@@ -19,6 +19,8 @@ export class ServicesFeedsComponent implements OnInit {
   ngOnInit() {
     this.service = this.route.snapshot.data.service;
     this.storeId = this.service.store_id;
-    this.utils.buildServiceHeader(this.service);
+    Promise.resolve().then(() => {
+      this.utils.buildServiceHeader(this.service);
+    });
   }
 }

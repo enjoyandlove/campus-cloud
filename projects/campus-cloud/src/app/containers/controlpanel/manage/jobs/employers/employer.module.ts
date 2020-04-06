@@ -11,7 +11,7 @@ import { EmployerActionBoxComponent } from './list/components/action-box';
 
 import { EmployerService } from './employer.service';
 import { EmployerRoutingModule } from './employer.routing.module';
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 @NgModule({
@@ -23,6 +23,7 @@ import { ImageService, ImageValidatorService } from '@campus-cloud/shared/servic
     EmployerCreateComponent,
     EmployerActionBoxComponent
   ],
+  entryComponents: [EmployerCreateComponent, EmployerEditComponent, EmployerDeleteComponent],
   imports: [SharedModule, CommonModule, ReactiveFormsModule, EmployerRoutingModule],
   exports: [EmployerFormComponent],
   providers: [EmployerService, ImageService, ImageValidatorService]

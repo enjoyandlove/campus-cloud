@@ -701,6 +701,9 @@
   "calendars_item_edit_heading": {
     "message": "Éditer entrée calendrier"
   },
+  "calendars_item_image_label": {
+    "message": "Image de l'entrée"
+  },
   "calendars_item_modal_title": {
     "message": "Supprimer entrée calendrier"
   },
@@ -2391,6 +2394,9 @@
   "t_assess_number_events": {
     "message": "Nombre d'événements"
   },
+  "t_assess_number_orientation_events": {
+    "message": "Nombre d'Événements d'orientation"
+  },
   "t_assess_number_services": {
     "message": "Nombre de services"
   },
@@ -2409,8 +2415,14 @@
   "t_assess_top_orientation_programs": {
     "message": "Programmes populaires"
   },
+  "t_assess_total_engagement": {
+    "message": "Total de l'engagement (nombre d'événements + nombre de services)"
+  },
   "t_assess_total_orientation_programs": {
     "message": "Événements d'orientation"
+  },
+  "t_assess_total_orientation_programs_assessed": {
+    "message": "Programmes évalués"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
@@ -3050,6 +3062,9 @@
   "t_personas_form_dropdown_login_required": {
     "message": "Requis"
   },
+  "t_personas_form_heading_my_courses": {
+    "message": "Mes Cours"
+  },
   "t_personas_form_heading_todays_schedule": {
     "message": "Horaire de la journée"
   },
@@ -3073,6 +3088,12 @@
   },
   "t_personas_form_personalized_page_help": {
     "message": "Cette expérience fournira une page d'accueil personnalisée pour les utilisateurs connectés"
+  },
+  "t_personas_form_sub_heading_my_courses": {
+    "message": "Tous les cours actuels (suggéré pour les cours en ligne)"
+  },
+  "t_personas_form_sub_heading_todays_schedule": {
+    "message": "Cours à venir et événements de l'horaire"
   },
   "t_personas_form_sub_heading_upcoming_deadlines": {
     "message": "Devoirs et examens à venir"
@@ -3243,6 +3264,12 @@
   "t_personas_tile_update_header": {
     "message": "Éditer tuile"
   },
+  "t_persona_cant_delete_body": {
+    "message": "Vous devez créer une autre expérience avec authentification pour supprimer cette expérience."
+  },
+  "t_persona_cant_delete_title": {
+    "message": "Impossible de supprimer l'Expérience"
+  },
   "t_persona_create_cancel_button": {
     "message": "Annuler"
   },
@@ -3251,6 +3278,9 @@
   },
   "t_persona_delete_modal_title": {
     "message": "Supprimer expérience"
+  },
+  "t_persona_delete_move_users_title": {
+    "message": "Déplacer les Utilisateurs vers"
   },
   "t_persona_edit_cancel_button": {
     "message": "Annuler"
@@ -3265,7 +3295,7 @@
     "message": "Notifier"
   },
   "t_persona_list_column_heading_authentication": {
-    "message": "Authentication"
+    "message": "Authentification"
   },
   "t_persona_tile_saved_successfully": {
     "message": "La tuile a été enregistrée avec succès"
@@ -3402,6 +3432,9 @@
   "t_shared_add": {
     "message": "Ajouter"
   },
+  "t_shared_add_images": {
+    "message": "Ajouter des Images"
+  },
   "t_shared_all_experiences_and_audiences": {
     "message": "Toutes les audiences & expériences"
   },
@@ -3452,6 +3485,9 @@
   },
   "t_shared_closed": {
     "message": "Fermé"
+  },
+  "t_shared_closed_account": {
+    "message": "Compte fermé"
   },
   "t_shared_color": {
     "message": "Couleur"
@@ -3546,6 +3582,9 @@
   "t_shared_image": {
     "message": "Image"
   },
+  "t_shared_image_upload_error_size": {
+    "message": "Le fichier que vous voulez téléverser (%s) est trop lourd. Le poids maximal est de 5MB par fichier."
+  },
   "t_shared_img_alt": {
     "message": "ressource avatar %s"
   },
@@ -3599,6 +3638,12 @@
   },
   "t_shared_no_integrations_found": {
     "message": "Aucune intégration trouvée"
+  },
+  "t_shared_no_rating_provided": {
+    "message": "Aucune évaluation fournie"
+  },
+  "t_shared_okay": {
+    "message": "Ok"
   },
   "t_shared_open": {
     "message": "Ouvert"
@@ -3681,6 +3726,9 @@
   "t_shared_update_map": {
     "message": "Appliquer"
   },
+  "t_shared_upload_error_max_items": {
+    "message": "Vous pouvez inclure %s fichiers maximum"
+  },
   "t_shared_upload_icon": {
     "message": "Téléverser icône"
   },
@@ -3760,7 +3808,7 @@
     "message": "Publier"
   },
   "t_terms_of_use_disclaimer": {
-    "message": "En vous inscrivant, vous acceptez la Politique de confidentialité et les Conditions d’utilisation de Ready Education."
+    "message": "En vous inscrivant, vous acceptez la %privacy et les %tos de Ready Education."
   },
   "t_terms_of_use_menu": {
     "message": "Conditions d'Utilisation"
@@ -3840,6 +3888,9 @@
   "t_walls_mute_student": {
     "message": "Désactiver l'utilisateur"
   },
+  "t_walls_no_channels_found": {
+    "message": "Aucune chaîne trouvée"
+  },
   "t_walls_no_results": {
     "message": "Aucun résultat.."
   },
@@ -3852,8 +3903,11 @@
   "t_walls_show_post": {
     "message": "Afficher la publication"
   },
+  "t_walls_snackbar_success_posted_with_filters": {
+    "message": "Publié avec succès dans %s, mais pas visible avec les filtres appliqués"
+  },
   "t_walls_tags_users": {
-    "message": "%s users"
+    "message": "%s utilisateurs"
   },
   "t_walls_unmute_student": {
     "message": "Réactiver l'utilisateur"

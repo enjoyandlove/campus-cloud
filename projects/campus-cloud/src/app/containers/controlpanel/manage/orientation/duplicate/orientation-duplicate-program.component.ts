@@ -19,6 +19,8 @@ import { CPSession } from '@campus-cloud/session';
 import { OrientationService } from '../orientation.services';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 
 @Mixin([Destroyable])
 @Component({
@@ -35,7 +37,7 @@ export class OrientationDuplicateProgramComponent implements OnInit, OnDestroy {
 
   buttonData;
   form: FormGroup;
-  isOrientation = true;
+  hasMembership = false;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -73,6 +75,8 @@ export class OrientationDuplicateProgramComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.hasMembership = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation);
+
     const { name, description, has_membership } = this.orientationProgram;
     this.form = this.fb.group({
       clone_calendar_id: [this.orientationProgram.id],

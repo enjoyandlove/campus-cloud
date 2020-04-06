@@ -15,7 +15,7 @@
                                      (trackClickCheckIn)="onTrackClickCheckinEvent($event)">
     </cp-events-attendance-action-box>
 
-    <div *ngIf="!state.search_text && !summaryLoading"
+    <div *ngIf="!state.searchText && !summaryLoading"
          class="row">
       <div class="col-4 text-center">
         <cp-card>
@@ -62,8 +62,8 @@
             <tr ui-table-row>
               <th ui-table-cell
                   (sort)="doSort('firstname')"
-                  [sorting]="state.sort_field === 'firstname'"
-                  [sortDirection]="state.sort_direction">
+                  [sorting]="state.sortField === 'firstname'"
+                  [sortDirection]="state.sortDirection">
                 {{ sortingLabels.name }}
               </th>
               <th ui-table-cell>
@@ -75,14 +75,14 @@
               </th>
               <th ui-table-cell
                   (sort)="doSort('check_in_method')"
-                  [sortDirection]="state.sort_direction"
-                  [sorting]="state.sort_field === 'check_in_method'">
+                  [sortDirection]="state.sortDirection"
+                  [sorting]="state.sortField === 'check_in_method'">
                 {{ sortingLabels.method }}
               </th>
               <th ui-table-cell
                   (sort)="doSort('feedback_rating')"
-                  [sortDirection]="state.sort_direction"
-                  [sorting]="state.sort_field === 'feedback_rating'">
+                  [sortDirection]="state.sortDirection"
+                  [sorting]="state.sortField === 'feedback_rating'">
                 {{ sortingLabels.rating }}
               </th>
               <th ui-table-cell></th>
@@ -124,7 +124,7 @@
                   </ready-ui-icon>
                 </td>
                 <td ui-table-cell>
-                  <cp-stars [size]="listStarSize"
+                  <cp-stars [size]="detailStarSize"
                             [avgRate]="attendee.feedback_rating"
                             [maxRate]="event.rating_scale_maximum">
                   </cp-stars>

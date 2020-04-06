@@ -25,6 +25,7 @@ export class TermsOfUseCreateComponent implements OnInit {
 
   termId;
   content;
+  tosStr;
   termsModal: OverlayRef;
   disableSubmit$ = new BehaviorSubject(true);
 
@@ -66,14 +67,18 @@ export class TermsOfUseCreateComponent implements OnInit {
         this.disableSubmit$.next(true);
         this.cpTracking.amplitudeEmitEvent('Customize - Published Terms Of Use');
       },
-      () => this.handleError()
+      () => {
+        this.handleError();
+        this.disableSubmit$.next(true);
+      }
     );
   }
 
   onTextChange() {
-    this.editor.quill.getText().trim()
-      ? this.disableSubmit$.next(false)
-      : this.disableSubmit$.next(true);
+    const { tos_str } = TermsOfUseUtilsService.parseContentToAPI(this.editor.quill.getContents());
+    this.tosStr = tos_str.trim();
+
+    this.disableSubmit$.next(!this.tosStr || this.tosStr.length > 2048);
   }
 
   handleSuccess() {
@@ -94,11 +99,17 @@ export class TermsOfUseCreateComponent implements OnInit {
   }
 
   fetch() {
-    this.service.getTerms().subscribe((terms) => {
-      this.termId = terms['id'];
-      this.content = terms ? TermsOfUseUtilsService.parseContentFromAPI(terms) : [];
-      this.editor.quill.setContents(this.content);
-    });
+    this.service.getTerms().subscribe(
+      (terms) => {
+        this.termId = terms['id'];
+        this.content = terms ? TermsOfUseUtilsService.parseContentFromAPI(terms) : [];
+        this.editor.quill.setContents(this.content);
+      },
+      () => {
+        this.handleError();
+        this.disableSubmit$.next(true);
+      }
+    );
   }
 
   ngOnInit() {

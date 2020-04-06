@@ -34,7 +34,7 @@ import { PersonasAmplitudeService } from '@controlpanel/customise/personas/perso
   providers: [ModalService]
 })
 export class PersonasEditComponent extends BaseComponent implements OnInit, OnDestroy {
-  @ViewChild('editForm', { static: false }) editForm: PersonasFormComponent;
+  @ViewChild('editForm') editForm: PersonasFormComponent;
 
   services$;
   form: FormGroup;

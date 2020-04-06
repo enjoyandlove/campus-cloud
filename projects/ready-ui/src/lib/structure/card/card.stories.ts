@@ -3,6 +3,8 @@ import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { select, text } from '@storybook/addon-knobs';
 
+import readme from './card/README.md';
+
 const spacing = {
   Loose: 'loose',
   Tight: 'tight',
@@ -15,7 +17,7 @@ const shadows = {
   Regular: 'regular'
 };
 
-storiesOf('Card', module)
+storiesOf('Structure/Card', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -39,6 +41,6 @@ storiesOf('Card', module)
       };
     },
     {
-      notes: require('./card/README.md')
+      notes: readme
     }
   );

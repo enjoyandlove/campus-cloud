@@ -19,7 +19,7 @@ import { CalendarAmplitudeService } from '../../calendar.amplitude.service';
   styleUrls: ['./calendars-items-edit.component.scss']
 })
 export class CalendarsItemsEditComponent extends BaseComponent implements OnInit {
-  @ViewChild('editForm', { static: false }) editForm;
+  @ViewChild('editForm') editForm;
 
   item: any;
   itemId: number;
@@ -46,18 +46,20 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 'calendars_item_edit_heading',
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: null,
-          label: null
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 'calendars_item_edit_heading',
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: null,
+            label: null
+          },
+          children: []
+        }
+      });
     });
   }
 

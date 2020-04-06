@@ -15,7 +15,7 @@ import { PopoverTriggerDirective } from './../popover-trigger.directive';
   styleUrls: ['./popover.component.scss']
 })
 export class PopoverComponent implements OnInit, AfterContentInit {
-  @ContentChild(PopoverTriggerDirective, { static: false })
+  @ContentChild(PopoverTriggerDirective)
   private popoverTrigger: PopoverTriggerDirective;
 
   @ViewChild('popoverBody', { static: true }) private popoverBody: TemplateRef<any>;

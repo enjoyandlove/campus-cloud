@@ -3435,11 +3435,11 @@
   "t_shared_add": {
     "message": "Add"
   },
+  "t_shared_add_images": {
+    "message": "Add Images"
+  },
   "t_shared_all_experiences_and_audiences": {
     "message": "All Experiences & Audiences"
-  },
-  "t_shared_announcement": {
-    "message": "Announcement"
   },
   "t_shared_app": {
     "message": "App"
@@ -3585,6 +3585,9 @@
   "t_shared_image": {
     "message": "Image"
   },
+  "t_shared_image_upload_error_size": {
+    "message": "The file you’re trying to upload (%s) is too big. The maximum size is 5MB per file."
+  },
   "t_shared_img_alt": {
     "message": "resource avatar %s"
   },
@@ -3725,6 +3728,9 @@
   },
   "t_shared_update_map": {
     "message": "Update Map"
+  },
+  "t_shared_upload_error_max_items": {
+    "message": "You can upload a maximum of %s files"
   },
   "t_shared_upload_icon": {
     "message": "Upload Icon"
@@ -3908,9 +3914,6 @@
   },
   "t_walls_unmute_student": {
     "message": "Unmute User"
-  },
-  "t_walls_users_menu_limit_reached": {
-    "message": "You can select a maximum of 5 items at a time"
   },
   "update": {
     "message": "Update",

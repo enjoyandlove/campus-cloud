@@ -3,10 +3,12 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { boolean } from '@storybook/addon-knobs';
 
+import readme from './README.md';
+
 const fruits = ['Banana', 'Apples', 'Pears', 'Kiwis', 'Coconut'];
 const searches = ['Summer', 'Semester', 'Exams', 'Friends', 'Stress', 'Help'];
 
-storiesOf('Results Lists', module)
+storiesOf('Lists and Tables/Results Lists', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule, ReactiveFormsModule]
@@ -67,7 +69,7 @@ storiesOf('Results Lists', module)
       `
       };
     },
-    { notes: require('./README.md') }
+    { notes: readme }
   )
   .add('No Section', () => {
     return {

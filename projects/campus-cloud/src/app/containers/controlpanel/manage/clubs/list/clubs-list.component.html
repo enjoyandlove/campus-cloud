@@ -104,7 +104,7 @@
 
     <cp-no-content class="no-content"
                    *ngIf="!state.clubs.length"
-                   [noContentText]="cpI18n.translate('clubs_no_results')">
+                   [noContentText]="'clubs_no_results' | cpI18n">
     </cp-no-content>
   </div>
 </div>

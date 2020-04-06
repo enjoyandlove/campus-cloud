@@ -116,16 +116,6 @@ describe('EngagementComponent', () => {
     expect(storeSpy).toHaveBeenCalledWith(expected);
   });
 
-  it('ngOnInit', () => {
-    component.ngOnInit();
-
-    const expected = {
-      type: baseActions.HEADER_UPDATE,
-      payload: require('../assess.header.json')
-    };
-    expect(storeSpy).toHaveBeenCalledWith(expected);
-  });
-
   it('onComposeTeardown', () => {
     component.onComposeTeardown();
 

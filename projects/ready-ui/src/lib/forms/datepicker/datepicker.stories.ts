@@ -1,7 +1,9 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 
-storiesOf('Date Picker (WIP)', module)
+import readme from './README.md';
+
+storiesOf('Form/Date Picker (WIP)', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -15,7 +17,7 @@ storiesOf('Date Picker (WIP)', module)
       };
     },
     {
-      notes: require('./README.md')
+      notes: readme
     }
   )
   .add('Inside Popover', () => {

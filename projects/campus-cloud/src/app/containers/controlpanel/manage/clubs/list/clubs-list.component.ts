@@ -65,7 +65,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     public route: ActivatedRoute,
-    private cpI18n: CPI18nService,
+    public cpI18n: CPI18nService,
     private utils: ClubsUtilsService,
     private clubsService: ClubsService,
     private modalService: ModalService,

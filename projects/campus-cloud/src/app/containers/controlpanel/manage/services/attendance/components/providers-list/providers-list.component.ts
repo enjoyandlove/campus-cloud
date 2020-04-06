@@ -4,6 +4,7 @@ import { get as _get } from 'lodash';
 
 import { IService } from '../../../service.interface';
 import IServiceProvider from '../../../providers.interface';
+import { STAR_SIZE } from '@campus-cloud/shared/components';
 import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../../../services.utils.service';
@@ -58,6 +59,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   provider: IServiceProvider;
   noProviderAddProviderMessage;
   showEditProviderModal = false;
+  listStarSize = STAR_SIZE.DEFAULT;
 
   constructor(
     private cpI18n: CPI18nService,

@@ -14,16 +14,17 @@ import { IHeader, baseActions, getHeaderState } from '../../../store/base';
   `
 })
 export class NotifyComponent implements OnInit {
-  headerData$: Observable<IHeader>;
+  headerData$: Observable<IHeader | {}>;
 
-  constructor(private store: Store<any>) {
+  constructor(private store: Store<any>) {}
+
+  ngOnInit() {
     this.headerData$ = this.store.select(getHeaderState);
-
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('./notify.header.json')
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('./notify.header.json')
+      });
     });
   }
-
-  ngOnInit() {}
 }

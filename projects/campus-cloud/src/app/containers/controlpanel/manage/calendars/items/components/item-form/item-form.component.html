@@ -110,11 +110,7 @@
                 <label class="error"
                        *ngIf="formError">
                   <span>&#x26A0;</span>
-                  {{
-                    isDateError
-                      ? dateErrorMessage
-                      : cpI18n.translate('error_fill_out_marked_fields')
-                  }}
+                  {{ 'error_fill_out_marked_fields' | cpI18n }}
                 </label>
                 <a [routerLink]="['/manage/calendars/' + calendarId]"
                    class="cpbtn cpbtn--cancel">

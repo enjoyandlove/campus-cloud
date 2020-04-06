@@ -59,7 +59,9 @@
   <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
 </cp-card>
 
-<ready-ui-menu #primary="menu">
+<ready-ui-menu #primary="menu"
+               (closed)="closeMenu.next()"
+               (opened)="primaryMenuOpened.next()">
   <ng-container *ngIf="primaryMenu$ | async as primaryMenu">
 
     <ready-ui-menu-item ready-ui-menu-trigger
@@ -127,11 +129,12 @@
       </button>
     </ready-ui-menu-item>
     <ready-ui-menu-divider></ready-ui-menu-divider>
-    <ready-ui-menu-item>
+    <ready-ui-menu-item [noHover]="!primaryMenu.hasFiltersActive">
       <button ui-button
               type="button"
               variant="inline"
-              (click)="handleClearFilters(); primary.close()">
+              [disabled]="!primaryMenu.hasFiltersActive"
+              (click)="closeMenu.next(); handleClearFilters(); primary.close()">
         <ui-text-style color="muted"
                        variant="caption">
           <ready-ui-stack spacing="tight">

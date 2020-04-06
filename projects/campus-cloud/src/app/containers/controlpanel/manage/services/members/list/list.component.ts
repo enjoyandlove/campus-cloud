@@ -82,7 +82,9 @@ export class ServicesListMembersComponent extends BaseComponent implements OnIni
     const service = this.route.snapshot.data.service;
     const storeId = service.store_id;
 
-    this.serviceUtils.buildServiceHeader(service);
+    Promise.resolve().then(() => {
+      this.serviceUtils.buildServiceHeader(service);
+    });
 
     const schoolId = this.session.g.get('school').id.toString();
 

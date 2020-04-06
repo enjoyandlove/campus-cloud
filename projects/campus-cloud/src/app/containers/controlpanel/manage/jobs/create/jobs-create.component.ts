@@ -111,14 +111,16 @@ export class JobsCreateComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `jobs_create_job`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `jobs_create_job`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

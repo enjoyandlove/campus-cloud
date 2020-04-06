@@ -17,7 +17,7 @@
         <div class="col-8"
              *ngIf="!noTitle">
           <cp-personas-section-title [name]="guide.name"
-                                     (nameChanged)="onNameChange($event, guide)"
+                                     (nameChanged)="onNameChange($event)"
                                      [noNameChange]="utils.isTemporaryGuide(guide)">
           </cp-personas-section-title>
         </div>
@@ -47,7 +47,7 @@
                           (edited)="onEditedTile($event)"
                           [ngClass]="['col-' + tileWidth]"
                           [cpTarget]="['tile-' + tile.name]"
-                          [class.mb-4]="i % tileWidth === 0"
+                          [class.mb-4]="(i % tileWidth) === 0"
                           (deleteClick)="deleteTileClick.emit($event)"
                           *ngFor="let tile of guide.tiles; let i = index">
         </cp-personas-tile>

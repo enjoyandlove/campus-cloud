@@ -41,7 +41,7 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
   @Input() groupType: GroupType;
   @Input() isCampusWallView: Observable<any>;
 
-  @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
+  @Output() updateWallSettings: EventEmitter<any> = new EventEmitter();
 
   walls;
   wallName;

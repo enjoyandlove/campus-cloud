@@ -70,18 +70,20 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `jobs_job_details`,
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: `/manage/jobs`,
-          label: `jobs`
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `jobs_job_details`,
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: `/manage/jobs`,
+            label: `jobs`
+          },
+          children: []
+        }
+      });
     });
   }
 

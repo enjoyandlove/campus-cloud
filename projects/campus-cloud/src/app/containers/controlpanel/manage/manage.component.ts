@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 
-import { IUser } from '@campus-cloud/session';
 import { ManageHeaderService } from './utils/header';
 import { IHeader, getHeaderState } from '@campus-cloud/store/base';
 
@@ -11,12 +10,10 @@ import { IHeader, getHeaderState } from '@campus-cloud/store/base';
   templateUrl: './manage.component.html'
 })
 export class ManageComponent implements OnInit {
-  user: IUser;
-  headerData$: Observable<IHeader>;
+  headerData$: Observable<IHeader> = this.store.pipe(select(getHeaderState));
 
-  constructor(private store: Store<any>, private headerService: ManageHeaderService) {
-    this.headerData$ = this.store.select(getHeaderState);
-  }
+  constructor(private store: Store<any>, private headerService: ManageHeaderService) {}
+
   ngOnInit() {
     this.headerService.updateHeader();
   }

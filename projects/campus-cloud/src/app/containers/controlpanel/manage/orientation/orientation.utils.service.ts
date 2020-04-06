@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
+
+import { CPSession } from '@campus-cloud/session';
 import { ProgramMembership } from './orientation.status';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 
 @Injectable()
 export class OrientationUtilsService {
+  constructor(private session: CPSession) {}
   getSubNavChildren(hasMembership: number) {
     let links = [];
 
     links = [{ label: 'Info', link: 'info' }, ...links];
+    const hasModerationAccess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation);
 
-    if (hasMembership === ProgramMembership.enabled) {
+    if (hasMembership === ProgramMembership.enabled && hasModerationAccess) {
       links = [{ label: 'Members', link: 'members' }, ...links];
       links = [{ label: 'Feeds', link: 'feeds' }, ...links];
     }

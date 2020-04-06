@@ -1,3 +1,4 @@
+export * from './lightbox';
 export { OverlaysModule } from './overlays.module';
 export { ModalModule } from './modal/modal.module';
 export { TooltipModule } from './tooltip/tooltip.module';

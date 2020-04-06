@@ -3,6 +3,8 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { boolean, text } from '@storybook/addon-knobs';
 
+import readme from './README.md';
+
 const toolbar = [
   ['bold', 'italic', 'underline'],
   ['blockquote'],
@@ -17,7 +19,7 @@ const toolbar = [
   ['clean']
 ];
 
-storiesOf('Text Editor', module)
+storiesOf('Form/Text Editor', module)
   .addDecorator(
     moduleMetadata({
       imports: [TextEditorModule]
@@ -58,5 +60,5 @@ storiesOf('Text Editor', module)
         </div>`
       };
     },
-    { notes: require('./README.md') }
+    { notes: readme }
   );

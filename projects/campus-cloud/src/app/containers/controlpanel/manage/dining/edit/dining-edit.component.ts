@@ -84,9 +84,11 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
       children: []
     };
 
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload
+      });
     });
   }
 

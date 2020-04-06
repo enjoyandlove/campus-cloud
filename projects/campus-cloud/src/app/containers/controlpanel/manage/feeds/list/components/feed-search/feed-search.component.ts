@@ -1,4 +1,16 @@
-import { tap, map, switchMap, takeUntil, startWith, debounceTime } from 'rxjs/operators';
+import {
+  tap,
+  map,
+  take,
+  mapTo,
+  repeat,
+  switchMap,
+  takeUntil,
+  startWith,
+  skipUntil,
+  debounceTime,
+  withLatestFrom
+} from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject, merge, combineLatest } from 'rxjs';
 import { OnInit, Output, Component, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
@@ -13,7 +25,8 @@ import { GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
-import { UserService, CPI18nService } from '@campus-cloud/shared/services';
+import { dateAmplitudeLabel, FeedsAmplitudeService } from '../../../feeds.amplitude.service';
+import { UserService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { now, last7Days, lastYear, last90Days, last30Days } from '@campus-cloud/shared/components';
 @Component({
   selector: 'cp-feed-search',
@@ -54,8 +67,10 @@ export class FeedSearchComponent implements OnInit {
   );
 
   loadMore = new Subject();
+  closeMenu = new Subject();
   channelTerm = new Subject();
   studentTerm = new Subject();
+  primaryMenuOpened = new Subject();
 
   dateMenu$: Observable<any>;
   statusMenu$: Observable<any>;
@@ -73,7 +88,9 @@ export class FeedSearchComponent implements OnInit {
     private session: CPSession,
     private userService: UserService,
     private feedsService: FeedsService,
-    private store: Store<fromStore.IWallsState>
+    private cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>,
+    private feedsAmplitudeService: FeedsAmplitudeService
   ) {}
 
   get state$() {
@@ -170,8 +187,9 @@ export class FeedSearchComponent implements OnInit {
     const datesSelected$ = viewFilters$.pipe(
       map(({ start, end }) => Boolean(start) && Boolean(end))
     );
+
     const channelsSelected$ = viewFilters$.pipe(
-      map(({ group, postType }) => Boolean(group) || Boolean(postType))
+      map(({ group, postType }) => (this.groupId ? false : Boolean(group) || Boolean(postType)))
     );
     const statusSelected$ = viewFilters$.pipe(
       map(({ flaggedByUser, flaggedByModerators }) => flaggedByUser || flaggedByModerators)
@@ -193,16 +211,42 @@ export class FeedSearchComponent implements OnInit {
       usersSelected$,
       channelsSelected$,
       statusSelected$,
-      datesSelected$
+      datesSelected$,
+      this.hasFiltersActive$
     ]).pipe(
-      map(([usersSelected, channelsSelected, statusSelected, datesSelected]) => {
+      map(([usersSelected, channelsSelected, statusSelected, datesSelected, hasFiltersActive]) => {
         return {
           usersSelected,
           channelsSelected,
           statusSelected,
-          datesSelected
+          datesSelected,
+          hasFiltersActive
         };
       })
+    );
+
+    const userSearch$ = this.feedSearch;
+    const primaryMenuClosed$ = this.closeMenu.asObservable();
+    const primaryMenuOpened$ = this.primaryMenuOpened.asObservable();
+    const filterChanges$ = this.store.pipe(select(fromStore.getViewFilters));
+
+    const menuOpensFiltersChangeAndMenuCloses$ = filterChanges$.pipe(
+      skipUntil(primaryMenuOpened$),
+      switchMap(() => primaryMenuClosed$),
+      take(1),
+      repeat()
+    );
+
+    const amplitude$ = merge(
+      menuOpensFiltersChangeAndMenuCloses$.pipe(mapTo(false)),
+      userSearch$.pipe(mapTo(true))
+    ).pipe(
+      takeUntil(this.destroy$),
+      withLatestFrom(this.dateMenu$)
+    );
+
+    amplitude$.subscribe(([isSearch, { presetDateSelected }]) =>
+      this.wallSearchFilterAmplitude(presetDateSelected, isSearch)
     );
   }
 
@@ -212,7 +256,7 @@ export class FeedSearchComponent implements OnInit {
     const defaultDate$ = viewFilters$.pipe(
       map(({ start, end }) => {
         if (start && end) {
-          return [new Date(start * 1000), new Date(end * 1000)];
+          return [start, end];
         }
 
         return undefined;
@@ -224,15 +268,10 @@ export class FeedSearchComponent implements OnInit {
         if (!selectedData) {
           return '';
         }
-        // avoid mutating the original value
-        const _selectedData = [...selectedData];
-        const dateTimeStamps = _selectedData.map((d) => CPDate.toEpoch(d, this.session.tz));
 
-        const matchedKey = Object.keys(this.presetDates).find((key) =>
-          isEqual(this.presetDates[key], dateTimeStamps)
+        return Object.keys(this.presetDates).find((key) =>
+          isEqual(this.presetDates[key], selectedData)
         );
-
-        return matchedKey;
       })
     );
 
@@ -353,5 +392,16 @@ export class FeedSearchComponent implements OnInit {
 
   handleClearSelectedStudents() {
     this.store.dispatch(fromStore.clearFilterUsers());
+  }
+
+  wallSearchFilterAmplitude(dateLabel, isSearch) {
+    const eventName = !isSearch
+      ? amplitudeEvents.WALL_APPLIED_FILTERS
+      : amplitudeEvents.WALL_SEARCHED_INFORMATION;
+
+    this.cpTracking.amplitudeEmitEvent(
+      eventName,
+      this.feedsAmplitudeService.getWallFiltersAmplitude(dateLabel, this.state$)
+    );
   }
 }

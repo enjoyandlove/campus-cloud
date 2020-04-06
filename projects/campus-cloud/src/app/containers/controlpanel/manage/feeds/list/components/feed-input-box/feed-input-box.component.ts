@@ -1,7 +1,7 @@
-import { map, startWith, takeUntil, tap, take, withLatestFrom } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { map, tap, take, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Subject, merge } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import {
@@ -25,8 +25,8 @@ import { IItem } from '@campus-cloud/shared/components';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
+import { amplitudeEvents, MAX_UPLOAD_SIZE } from '@campus-cloud/shared/constants';
 import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 import { TextEditorDirective } from '@projects/campus-cloud/src/app/shared/directives';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
@@ -61,11 +61,11 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   stores$;
   channels$;
   hostType;
-  imageError;
   buttonData;
   campusGroupId;
   form: FormGroup;
-  image$: BehaviorSubject<string> = new BehaviorSubject(null);
+  maxImages = 4;
+  expandGallery = false;
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   selectedItem: BehaviorSubject<null | IItem> = new BehaviorSubject(undefined);
@@ -82,7 +82,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     private cpI18nPipe: CPI18nPipe,
     public utils: FeedsUtilsService,
@@ -100,6 +100,73 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   get defaultHost() {
     return this.session.defaultHost ? this.session.defaultHost.value : null;
+  }
+
+  addImageInputHandler(event: Event) {
+    let files = Array.from((event.target as HTMLInputElement).files);
+
+    files = files.filter((file: File) =>
+      file.size > MAX_UPLOAD_SIZE ? this.imageUploadError({ file }) : file
+    );
+
+    if (!files.length) {
+      return;
+    }
+
+    return this.addImages(files);
+  }
+
+  addImages(files: File[]) {
+    const imageCtrl = this.form.get('message_image_url_list');
+
+    // should be taken care of by the UI, just in case
+    if (imageCtrl.value.length > this.maxImages) {
+      return;
+    }
+
+    if (files.length + imageCtrl.value.length > this.maxImages) {
+      const errorResponse = new HttpErrorResponse({ status: 400 });
+      const errorMessage = this.cpI18nPipe.transform('t_shared_upload_error_max_items', 4);
+      this.handleError(errorResponse, errorMessage);
+    }
+
+    files = files.slice(0, this.maxImages - imageCtrl.value.length);
+
+    const fileUploads$ = merge(...files.map((f: File) => this.imageService.upload(f)));
+
+    fileUploads$
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(({ image_url }: any) => {
+          const images = imageCtrl.value;
+          images.push(image_url);
+          imageCtrl.setValue(images);
+          this.trackUploadImageEvent();
+        })
+      )
+      .subscribe(() => {}, (err) => this.handleError(err));
+  }
+
+  removeImage(imgUrl: string) {
+    const imagesCtrl: AbstractControl = this.form.get('message_image_url_list');
+    let images: string[] = imagesCtrl.value;
+
+    images = images.filter((imgeSrc) => imgeSrc !== imgUrl);
+
+    imagesCtrl.setValue(images);
+  }
+
+  imageUploadError({ file }) {
+    const error = new HttpErrorResponse({ status: 400 });
+    const message = this.cpI18nPipe.transform('t_shared_image_upload_error_size', file.name);
+
+    this.handleError(error, message);
+  }
+
+  trackUploadImageEvent() {
+    const properties = this.cpTracking.getAmplitudeMenuProperties();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   replyToThread({ message, message_image_url_list, school_id, store_id }): Promise<any> {
@@ -146,14 +213,18 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     return { ...rest, calendar_id: store_id };
   }
 
-  handleError({ status = 400 }) {
+  handleError(
+    err: HttpErrorResponse,
+    errorMessage = this.cpI18n.translate('something_went_wrong')
+  ) {
+    const { status } = err;
+
     const forbidden = this.cpI18n.translate('feeds_error_wall_is_disabled');
-    const somethingWentWrong = this.cpI18n.translate('something_went_wrong');
 
     this.store.dispatch({
       type: baseActions.SNACKBAR_SHOW,
       payload: {
-        body: status === 403 ? forbidden : somethingWentWrong,
+        body: status === 403 ? forbidden : errorMessage,
         class: 'danger',
         sticky: true,
         autoClose: true
@@ -256,10 +327,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     this.form.controls['message_image_url_list'].setValue([]);
   }
 
-  onDeleteImage() {
-    this.form.get('message_image_url_list').setValue([]);
-  }
-
   onSelectedHost(host): void {
     this.hostType = host.hostType;
     this.form.controls['store_id'].setValue(host.value);
@@ -267,26 +334,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   onSelectedChannel(channel): void {
     this.form.controls['post_type'].setValue(channel.action);
-  }
-
-  onFileUpload(file) {
-    this.imageError = null;
-    this.imageService.upload(file).subscribe(
-      ({ image_url }: any) => {
-        this.image$.next(image_url);
-        this.form.controls['message_image_url_list'].setValue([image_url]);
-        this.trackUploadImageEvent();
-      },
-      (err) => {
-        this.imageError = err.message || this.cpI18n.translate('something_went_wrong');
-      }
-    );
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   trackAmplitudeEvents(data) {

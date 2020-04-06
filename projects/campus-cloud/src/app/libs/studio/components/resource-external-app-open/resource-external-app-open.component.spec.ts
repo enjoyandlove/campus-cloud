@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { IExternalAppOpenFormDetails } from './external-app-open.interface';
 import { ResourceExternalAppOpenModule } from './resource-external-app-open.module';
 import { PersonasResourceExternalAppOpenComponent } from './resource-external-app-open.component';
 import {

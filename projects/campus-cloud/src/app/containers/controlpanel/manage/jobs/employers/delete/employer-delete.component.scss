@@ -1,2 +1,4 @@
-@import '~projects/campus-cloud/src/sass/components/modal';
-@import '~projects/campus-cloud/src/sass/components/button';
+:host {
+  width: 100%;
+  display: block;
+}

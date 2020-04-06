@@ -124,13 +124,15 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   ngOnInit() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 't_sandbox_test_environment_users',
-        em: 't_sandbox_sub_heading',
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 't_sandbox_test_environment_users',
+          em: 't_sandbox_sub_heading',
+          children: []
+        }
+      });
     });
     this.initSelectors();
     this.fetch();
