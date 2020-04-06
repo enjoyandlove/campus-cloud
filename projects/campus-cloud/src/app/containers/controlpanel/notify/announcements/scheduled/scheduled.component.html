@@ -8,7 +8,8 @@
                    [noContentText]="'t_notify_no_scheduled_data_found' | cpI18n">
     </cp-no-content>
 
-    <table ui-table>
+    <table ui-table
+           *ngIf="state.announcements.length">
       <thead>
         <tr ui-table-row>
           <th ui-table-cell>{{ 'recipient' | cpI18n }}</th>
