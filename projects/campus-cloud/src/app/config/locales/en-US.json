@@ -1361,11 +1361,17 @@
   "feeds_all_posts": {
     "message": "All Posts"
   },
+  "feeds_approve_comment": {
+    "message": "Approve Comment"
+  },
   "feeds_approve_comment_modal_body": {
     "message": "Are you sure you want to approve this post?"
   },
   "feeds_approve_comment_modal_title": {
     "message": "Approve Comment"
+  },
+  "feeds_approve_post": {
+    "message": "Approve Post"
   },
   "feeds_approve_post_modal_body": {
     "message": "Are you sure you want to approve this post?"
@@ -1388,11 +1394,17 @@
   "feeds_club_members": {
     "message": "Organization Members"
   },
+  "feeds_delete_comment": {
+    "message": "Delete Comment"
+  },
   "feeds_delete_comment_modal_body": {
     "message": "Are you sure you want to delete this comment?"
   },
   "feeds_delete_comment_modal_title": {
     "message": "Delete Comment"
+  },
+  "feeds_delete_post": {
+    "message": "Delete Post"
   },
   "feeds_delete_post_modal_body": {
     "message": "Are you sure you want to delete this post?"
@@ -1411,6 +1423,9 @@
   },
   "feeds_input_placeholder": {
     "message": "Add some text to this post...."
+  },
+  "feeds_move_post": {
+    "message": "Move Post"
   },
   "feeds_move_post_from": {
     "message": "Move post from"
@@ -2851,20 +2866,8 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
-  "t_feeds_approve": {
-    "message": "Approve"
-  },
   "t_feeds_campus_wall": {
     "message": "Campus Wall"
-  },
-  "t_feeds_delete": {
-    "message": "Delete"
-  },
-  "t_feeds_edit": {
-    "message": "Edit"
-  },
-  "t_feeds_move": {
-    "message": "Move"
   },
   "t_help_desk_faq": {
     "message": "Guides & FAQ"

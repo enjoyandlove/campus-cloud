@@ -1,5 +1,4 @@
 import { OnInit, Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { TextEditorDirective } from '@ready-education/ready-ui/forms';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -8,6 +7,7 @@ import { PublishTermsModalComponent } from '../components';
 import { TermsOfUseService } from '../terms-of-use.service';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store/base';
 import { TermsOfUseUtilsService } from '../terms-of-use.utils.service';
+import { TextEditorDirective } from '@ready-education/ready-ui/forms/text-editor';
 import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 @Component({

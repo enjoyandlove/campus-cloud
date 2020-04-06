@@ -39,4 +39,3 @@ export * from './cp-resource-banner';
 export * from './cp-form-fixed-footer';
 export * from './cp-place-autocomplete';
 export * from './cp-dropdown-multiselect';
-export * from './cp-unsaved-changes-modal';

@@ -40,7 +40,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   @Input() isRemovedPosts: boolean;
   @Input() isCampusWallView: Observable<{}>;
 
-  @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleReplies: EventEmitter<boolean> = new EventEmitter();
 
@@ -49,7 +48,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   _isCampusWallView;
   isCommentsOpen = false;
   destroy$ = new Subject<null>();
-  editMode$: Observable<boolean>;
   commentCount$: Observable<number>;
   isCommentsOpen$: Observable<boolean>;
 
@@ -76,14 +74,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateHandler(changes) {
-    this.feed = {
-      ...this.feed,
-      ...changes
-    };
-
-    this.edited.emit(changes);
-  }
   mapImages(feedImages): string[] {
     return feedImages.map((imgObj) => imgObj.url);
   }
@@ -104,10 +94,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.editMode$ = this.store
-      .pipe(select(fromStore.getEditing))
-      .pipe(map((editing) => editing && editing.id === this.feed.id));
-
     const results$ = this.store.pipe(select(fromStore.getResults));
 
     this.commentCount$ = combineLatest([results$]).pipe(

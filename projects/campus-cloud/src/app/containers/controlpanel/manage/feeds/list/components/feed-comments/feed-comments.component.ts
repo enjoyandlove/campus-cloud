@@ -87,13 +87,6 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
     this.deleted.emit();
   }
 
-  editedHanlder(changes) {
-    this.state = {
-      ...this.state,
-      comments: this.state.comments.map((c) => (c.id === changes.id ? changes : c))
-    };
-  }
-
   private fetch() {
     let search = new HttpParams().append('thread_id', this.feed.id.toString());
 

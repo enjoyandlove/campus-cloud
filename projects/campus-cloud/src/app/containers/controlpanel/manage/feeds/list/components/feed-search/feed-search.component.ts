@@ -23,7 +23,6 @@ import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
-import { ISocialGroup } from '@controlpanel/manage/feeds/model';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { dateAmplitudeLabel, FeedsAmplitudeService } from '../../../feeds.amplitude.service';
@@ -288,13 +287,7 @@ export class FeedSearchComponent implements OnInit {
 
   fetchSocialGroups() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
-    return this.feedsService.getSocialGroups(search).pipe(
-      tap((socialGroups: ISocialGroup[]) => {
-        this.store.dispatch(
-          fromStore.setSocialGroupIds({ groupIds: socialGroups.map((s) => s.related_obj_id) })
-        );
-      })
-    ) as Observable<ISocialGroup[]>;
+    return this.feedsService.getSocialGroups(search) as Observable<any>;
   }
 
   fetchStudents(): Observable<any[]> {

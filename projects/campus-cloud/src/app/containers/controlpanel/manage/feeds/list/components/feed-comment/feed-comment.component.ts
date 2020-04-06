@@ -45,14 +45,12 @@ export class FeedCommentComponent implements OnInit {
   @Input() wallCategory: string;
 
   @Input() isCampusWallView: Observable<number>;
-  @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
   @Output() approved: EventEmitter<number> = new EventEmitter();
 
   _comment;
   isDeleteModal;
   isApproveModal;
-  editMode = false;
   isComment = true;
   threadIsExpanded = false;
   _showParentThread = false;
