@@ -37,7 +37,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
 
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
 
-  preventSubmit$ = new BehaviorSubject(false);
+  preventSubmit$ = new BehaviorSubject(true);
 
   user;
   formData;
@@ -207,17 +207,10 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   }
 
   hasStorePrivileges() {
-    const regular = this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
-    const emergency = this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
-
     const hasStorePrivileges = this.utils.hasStorePrivileges(
       this.schoolPrivileges,
       this.accountPrivileges
     );
-
-    if (regular || emergency) {
-      this.preventSubmit$.next(this.form.invalid || !hasStorePrivileges);
-    }
 
     return hasStorePrivileges;
   }
@@ -633,6 +626,9 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.isEdit) {
+      this.preventSubmit$.next(false);
+    }
     const session = this.session.g;
     this.user = this.session.g.get('user');
     this.schoolId = this.session.g.get('school').id;
@@ -698,8 +694,6 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       servicesPrivilegeSchool,
       servicesPrivilegeAccount
     );
-
-    this.preventSubmit$.next(this.form.invalid);
 
     if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
       this.updateServicesDropdownLabel();
