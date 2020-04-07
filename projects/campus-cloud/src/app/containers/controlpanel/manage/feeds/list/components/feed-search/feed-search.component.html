@@ -286,29 +286,45 @@
                   type="button"
                   variant="inline"
                   fullWidth="true"
-                  (click)="handleDate(presetDates.lastWeek)"
-                  [class.selected-date]="dateMenu.presetDateSelected === 'lastWeek'">{{ 'assess_last_seven_days' | cpI18n }}</button>
+                  (click)="handleDate(presetDates.lastWeek)">
+            <span>{{ 'assess_last_seven_days' | cpI18n }}</span>
+            <ready-ui-menu-dot
+                               *ngIf="dateMenu.presetDateSelected === 'lastWeek'">
+            </ready-ui-menu-dot>
+          </button>
         </li>
         <li><button ui-button
                   type="button"
                   variant="inline"
                   fullWidth="true"
-                  (click)="handleDate(presetDates.last30Days)"
-                  [class.selected-date]="dateMenu.presetDateSelected === 'last30Days'">{{ 'dashboard_last_30_days' | cpI18n }}</button>
+                  (click)="handleDate(presetDates.last30Days)">
+            {{ 'dashboard_last_30_days' | cpI18n }}
+            <ready-ui-menu-dot
+                               *ngIf="dateMenu.presetDateSelected === 'last30Days'">
+            </ready-ui-menu-dot>
+          </button>
         </li>
         <li><button ui-button
                   type="button"
                   variant="inline"
                   fullWidth="true"
-                  (click)="handleDate(presetDates.last90Days)"
-                  [class.selected-date]="dateMenu.presetDateSelected === 'last90Days'">{{ 'dashboard_last_90_days' | cpI18n }}</button>
+                  (click)="handleDate(presetDates.last90Days)">
+            {{ 'dashboard_last_90_days' | cpI18n }}
+            <ready-ui-menu-dot
+                               *ngIf="dateMenu.presetDateSelected === 'last90Days'">
+            </ready-ui-menu-dot>
+          </button>
         </li>
         <li><button ui-button
                   type="button"
                   variant="inline"
                   fullWidth="true"
-                  (click)="handleDate(presetDates.lastYear)"
-                  [class.selected-date]="dateMenu.presetDateSelected === 'lastYear'">{{ 'dashboard_last_year' | cpI18n }}</button>
+                  (click)="handleDate(presetDates.lastYear)">
+            {{ 'dashboard_last_year' | cpI18n }}
+            <ready-ui-menu-dot
+                               *ngIf="dateMenu.presetDateSelected === 'lastYear'">
+            </ready-ui-menu-dot>
+          </button>
         </li>
       </ul>
       <div class="calendar">

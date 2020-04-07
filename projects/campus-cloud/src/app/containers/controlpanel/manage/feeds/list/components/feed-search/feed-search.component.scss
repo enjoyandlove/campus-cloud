@@ -24,6 +24,10 @@ button.primary {
   height: 24em;
   display: flex;
 
+  ready-ui-menu-dot {
+    display: inline-block;
+  }
+
   ul {
     margin: 0;
     height: 100%;
@@ -34,7 +38,10 @@ button.primary {
     position: relative;
 
     button {
+      display: flex;
       text-align: left;
+      align-items: center;
+      justify-content: space-between;
     }
 
     &:after {
@@ -67,11 +74,6 @@ ready-ui-menu-item {
     text-align: left;
   }
 }
-
-button.selected-date {
-  font-weight: 600;
-}
-
 
 cp-card {
   .wrapper {
