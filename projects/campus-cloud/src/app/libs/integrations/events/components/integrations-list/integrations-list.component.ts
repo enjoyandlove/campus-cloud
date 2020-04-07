@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { FORMAT } from '@projects/campus-cloud/src/app/shared/pipes';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import { IEventIntegration } from './../../model';
 import { SyncStatus } from '../../../common/model';
 @Component({

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IEmployer } from '@projects/campus-cloud/src/app/containers/controlpanel/manage/jobs/employers/employer.interface';
+import { IEmployer } from '@campus-cloud/containers/controlpanel/manage/jobs/employers/employer.interface';
 
 export const LOAD_EMPLOYERS = 'manage.jobs.load employers';
 export const LOAD_EMPLOYERS_FAIL = 'manage.jobs.load employers fail';

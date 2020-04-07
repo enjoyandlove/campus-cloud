@@ -9,7 +9,7 @@ import {
 } from './components';
 
 import { MemberTypeToLabelPipe } from './pipes';
-import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 
 @NgModule({
   declarations: [

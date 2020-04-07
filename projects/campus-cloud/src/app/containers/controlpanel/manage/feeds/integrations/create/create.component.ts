@@ -9,7 +9,7 @@ import { ISocialPostCategory } from '../../model';
 import { IItem } from '@campus-cloud/shared/components';
 import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPSession } from '@projects/campus-cloud/src/app/session';
+import { CPSession } from '@campus-cloud/session';
 import { WallsIntegrationsService } from './../walls-integrations.service';
 import { SocialPostCategoryModel } from './../../model/social-post-category.model';
 import { WallsIntegrationModel } from '@campus-cloud/libs/integrations/walls/model';

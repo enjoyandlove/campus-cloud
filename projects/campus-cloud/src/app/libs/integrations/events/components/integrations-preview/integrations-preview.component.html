@@ -1,0 +1,43 @@
+<table ui-table>
+  <thead>
+    <tr ui-table-row>
+      <th ui-table-cell>
+        Start Date
+      </th>
+      <th ui-table-cell>
+        End Date
+      </th>
+      <th ui-table-cell>
+        Title
+      </th>
+      <th ui-table-cell>
+        Description
+      </th>
+      <th ui-table-cell
+          class="uid">
+        UID
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ui-table-row
+        class="preview-item"
+        *ngFor="let item of items | slice:0:5">
+      <td ui-table-cell>
+        {{ item.start_time | cpDatePipe: dateFormat }}
+      </td>
+      <td ui-table-cell>
+        {{ item.end_time | cpDatePipe: dateFormat }}
+      </td>
+      <td ui-table-cell>
+        {{ item.title }}
+      </td>
+      <td ui-table-cell>
+        {{ item.description }}
+      </td>
+      <td ui-table-cell>
+        <i class="material-icons">done</i>
+      </td>
+    </tr>
+  </tbody>
+</table>

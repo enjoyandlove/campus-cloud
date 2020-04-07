@@ -4,7 +4,7 @@ import { ICPButtonProps } from '@campus-cloud/shared/components';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { LibsCommonMembersService } from '@campus-cloud/libs/members/common/providers';
-import { IMember, MemerUpdateType } from '@projects/campus-cloud/src/app/libs/members/common/model';
+import { IMember, MemerUpdateType } from '@campus-cloud/libs/members/common/model';
 
 @Component({
   selector: 'cp-ahtletics-members-delete',

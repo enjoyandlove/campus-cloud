@@ -1,1 +1,42 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
 @import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.form-group {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.preview {
+    max-width: 900px;
+  }
+}
+
+.preview-status {
+  @include font-semi-bold();
+
+  display: flex;
+  align-items: center;
+
+  &.success {
+    color: $color-success;
+    justify-content: center;
+  }
+
+  &.error {
+    color: $color-danger;
+
+    a.cpbtn.cpbtn--link {
+      @include font-semi-bold();
+    }
+  }
+
+  i {
+    margin-right: 0.5em;
+  }
+}
+
+button.check-button {
+  margin-top: 29px;
+}

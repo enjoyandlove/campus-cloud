@@ -1,4 +1,4 @@
-import { CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
 import { CPI18nPipe } from '../../pipes';
