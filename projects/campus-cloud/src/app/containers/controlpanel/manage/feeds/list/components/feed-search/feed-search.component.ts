@@ -279,8 +279,8 @@ export class FeedSearchComponent implements OnInit {
     return combineLatest([defaultDate$, presetDateSelected$]).pipe(
       map(([defaultDate, presetDateSelected]) => {
         return {
-          defaultDate,
-          presetDateSelected
+          presetDateSelected,
+          defaultDate: defaultDate ? defaultDate.map((d) => new Date(d * 1000)) : undefined
         };
       })
     );
