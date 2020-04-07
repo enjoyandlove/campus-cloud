@@ -92,7 +92,10 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
     );
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_COMMENT, amplitude);
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_THREAD, wallThreadAmplitude);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.COMMUNITY_DELETED_THREAD,
+      wallThreadAmplitude
+    );
   }
 
   ngOnInit() {
