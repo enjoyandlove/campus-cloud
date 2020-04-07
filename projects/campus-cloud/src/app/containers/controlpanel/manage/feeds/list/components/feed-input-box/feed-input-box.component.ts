@@ -336,39 +336,28 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     this.form.controls['post_type'].setValue(channel.action);
   }
 
-  trackAmplitudeEvents(data) {
-    let eventName;
-    let eventProperties;
-
-    eventName = amplitudeEvents.WALL_SUBMITTED_POST;
-
-    eventProperties = {
-      ...this.feedsAmplitudeService.getWallAmplitudeProperties(),
-      post_id: data.id,
-      host_type: this.hostType,
-      upload_image: FeedsAmplitudeService.hasImage(data.has_image)
-    };
+  trackAmplitudeEvents(feed) {
+    let threadAmplitude;
+    const { isCampusWallView } = this.state;
+    const threadType = this.replyView ? 'Comment' : 'Post';
+    const host_type = isCampusWallView ? this.hostType : null;
 
     if (this.replyView) {
-      eventName = amplitudeEvents.WALL_SUBMITTED_COMMENT;
-
-      eventProperties = {
-        ...eventProperties,
-        comment_id: data.id,
-        likes: FeedsAmplitudeService.hasData(this.feed['likes']),
-        creation_source: this.feedsAmplitudeService.getPostCreationSource(this.feed['post_type'])
-      };
-
-      delete eventProperties['post_id'];
-      delete eventProperties['post_type'];
+      this.cpTracking.amplitudeEmitEvent(
+        amplitudeEvents.WALL_SUBMITTED_COMMENT,
+        this.feedsAmplitudeService.getWallPostCommentAmplitude(feed, host_type)
+      );
+    } else {
+      this.cpTracking.amplitudeEmitEvent(
+        amplitudeEvents.WALL_SUBMITTED_POST,
+        this.feedsAmplitudeService.getWallPostFeedAmplitude(feed, host_type)
+      );
     }
 
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
-  }
+    threadAmplitude = this.feedsAmplitudeService.getWallThreadAmplitude(feed, threadType);
+    threadAmplitude['host_type'] = host_type;
 
-  setDefaultHostWallCategory(isCampusWallView) {
-    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-    this.hostType = isCampusWallView ? null : host_type;
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_CREATED_THREAD, threadAmplitude);
   }
 
   buildForm() {
@@ -390,7 +379,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.buildForm();
-
+    this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.stores$ = this.storeService.getStores(search);
@@ -440,9 +429,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
           }
 
           if (this.form) {
-            const { isCampusWallView } = this.state;
-            this.setDefaultHostWallCategory(isCampusWallView);
-
             if (group) {
               this.form.removeControl('post_type');
               this.form.get('group_id').setValue(group.id);

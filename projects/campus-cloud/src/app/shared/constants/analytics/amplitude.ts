@@ -319,13 +319,17 @@ export const amplitudeEvents = {
 
   WALL_APPROVED_POST: 'Wall - Approved Post',
 
-  WALL_CLICKED_IMAGE: 'Wall - Clicked Image',
+  WALL_VIEWED_IMAGE: 'Wall - Viewed Image',
 
   MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
 
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
+
+  WALL_DELETED_THREAD: 'Wall - Deleted Thread',
+
+  WALL_CREATED_THREAD: 'Wall - Created Thread',
 
   MANAGE_DELETED_EVENT: 'Manage Deleted Event',
 

@@ -25,7 +25,7 @@ import { GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
-import { dateAmplitudeLabel, FeedsAmplitudeService } from '../../../feeds.amplitude.service';
+import { FeedsAmplitudeService } from '../../../feeds.amplitude.service';
 import { UserService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { now, last7Days, lastYear, last90Days, last30Days } from '@campus-cloud/shared/components';
 @Component({
@@ -245,9 +245,10 @@ export class FeedSearchComponent implements OnInit {
       withLatestFrom(this.dateMenu$)
     );
 
-    amplitude$.subscribe(([isSearch, { presetDateSelected }]) =>
-      this.wallSearchFilterAmplitude(presetDateSelected, isSearch)
-    );
+    amplitude$.subscribe(([isSearch, { presetDateSelected }]) => {
+      this.feedsAmplitudeService.setFilterLabel(presetDateSelected, this.state$);
+      this.wallSearchFilterAmplitude(isSearch);
+    });
   }
 
   getDateMenu(): Observable<any> {
@@ -394,14 +395,14 @@ export class FeedSearchComponent implements OnInit {
     this.store.dispatch(fromStore.clearFilterUsers());
   }
 
-  wallSearchFilterAmplitude(dateLabel, isSearch) {
+  wallSearchFilterAmplitude(isSearch) {
     const eventName = !isSearch
       ? amplitudeEvents.WALL_APPLIED_FILTERS
       : amplitudeEvents.WALL_SEARCHED_INFORMATION;
 
     this.cpTracking.amplitudeEmitEvent(
       eventName,
-      this.feedsAmplitudeService.getWallFiltersAmplitude(dateLabel, this.state$)
+      this.feedsAmplitudeService.getWallFiltersAmplitude()
     );
   }
 }

@@ -14,7 +14,8 @@
           'feed__image-container__item--full-height': feed.image_list.length < 3 || feed.image_list.length < 4 && index === 0
         }">
       <img [src]="image.url"
-           ready-ui-lighbox-item />
+           ready-ui-lighbox-item
+           (click)="trackViewLightBoxEvent()" />
     </div>
   </div>
 </div>

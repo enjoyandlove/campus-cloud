@@ -66,9 +66,10 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
   }
 
   trackAmplitudeEvent(feed) {
-    const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed);
-    delete amplitude['post_type'];
-    delete amplitude['sub_menu_name'];
+    const {
+      sub_menu_name,
+      ...amplitude
+    } = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed);
     amplitude['wall_source'] = this.wallSource;
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_MOVED_POST, amplitude);
