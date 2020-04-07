@@ -79,7 +79,7 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
 
   trackViewLightBoxEvent() {
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.WALL_VIEWED_IMAGE,
+      amplitudeEvents.COMMUNITY_VIEWED_IMAGE,
       this.feedsAmplitudeService.getWallViewedImageAmplitude(this.feed, this.isComment)
     );
   }

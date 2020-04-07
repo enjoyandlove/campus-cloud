@@ -357,7 +357,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     threadAmplitude = this.feedsAmplitudeService.getWallThreadAmplitude(feed, threadType);
     threadAmplitude['host_type'] = host_type;
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_CREATED_THREAD, threadAmplitude);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.COMMUNITY_CREATED_THREAD, threadAmplitude);
   }
 
   buildForm() {

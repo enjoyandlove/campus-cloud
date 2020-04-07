@@ -77,7 +77,7 @@ export class FeedDeleteModalComponent implements OnInit, OnDestroy {
     const threadAmplitude = this.feedsAmplitudeService.getWallThreadAmplitude(feed, 'Post');
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_POST, amplitude);
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_THREAD, threadAmplitude);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.COMMUNITY_DELETED_THREAD, threadAmplitude);
   }
 
   ngOnInit() {

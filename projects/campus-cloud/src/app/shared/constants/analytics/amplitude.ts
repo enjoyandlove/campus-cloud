@@ -319,17 +319,11 @@ export const amplitudeEvents = {
 
   WALL_APPROVED_POST: 'Wall - Approved Post',
 
-  WALL_VIEWED_IMAGE: 'Wall - Viewed Image',
-
   MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
 
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
-
-  WALL_DELETED_THREAD: 'Wall - Deleted Thread',
-
-  WALL_CREATED_THREAD: 'Wall - Created Thread',
 
   MANAGE_DELETED_EVENT: 'Manage Deleted Event',
 
@@ -399,6 +393,8 @@ export const amplitudeEvents = {
 
   STUDIO_DELETED_SECTION: 'Studio - Deleted Section',
 
+  COMMUNITY_VIEWED_IMAGE: 'Community - Viewed Image',
+
   MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
 
   MANAGE_UPDATED_CALENDAR: 'Manage Updated Calendar',
@@ -454,6 +450,10 @@ export const amplitudeEvents = {
   ASSESS_SENT_ANNOUNCEMENT: 'Assess - Sent Announcement',
 
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
+
+  COMMUNITY_CREATED_THREAD: 'Community - Created Thread',
+
+  COMMUNITY_DELETED_THREAD: 'Community - Deleted Thread',
 
   MANAGE_IMPORTED_AUDIENCE: 'Manage - Imported Audience',
 
