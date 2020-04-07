@@ -156,7 +156,7 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
   }
 
   trackAmplitudeEvent() {
-    const { wall_source, sub_menu_name } = this.feedsAmplitudeService.getWallAmplitudeProperties();
+    const { wall_source, sub_menu_name } = this.feedsAmplitudeService.getWallFiltersAmplitude();
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_UPDATED_SETTINGS, {
       wall_source,

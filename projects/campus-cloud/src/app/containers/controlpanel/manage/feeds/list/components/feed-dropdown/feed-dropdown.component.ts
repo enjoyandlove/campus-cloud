@@ -162,13 +162,10 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
   }
 
   trackMuteUser(user) {
-    const amplitude = {
-      user_id: user.id,
-      status: user.social_restriction ? 'Muted' : 'Unmuted',
-      ...this.feedsAmplitudeService.getWallAmplitudeProperties()
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MUTED_USER, amplitude);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MUTED_USER,
+      this.feedsAmplitudeService.getWallMutedUserAmplitude(user)
+    );
   }
 
   private showMuteOption() {

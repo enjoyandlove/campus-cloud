@@ -68,7 +68,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
       const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(this.feed);
-      delete amplitude['post_type'];
 
       this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_COMMENT, amplitude);
     }
@@ -79,18 +78,10 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   }
 
   trackViewLightBoxEvent() {
-    const message_type = this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
-    const { wall_source, sub_menu_name } = this.feedsAmplitudeService.getWallAmplitudeProperties();
-
-    const amplitude = {
-      wall_source,
-      message_type,
-      sub_menu_name,
-      likes: FeedsAmplitudeService.hasData(this.feed.likes),
-      creation_source: this.feedsAmplitudeService.getPostCreationSource(this.feed.post_type)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_CLICKED_IMAGE, amplitude);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.WALL_VIEWED_IMAGE,
+      this.feedsAmplitudeService.getWallViewedImageAmplitude(this.feed, this.isComment)
+    );
   }
 
   ngOnInit() {

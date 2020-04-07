@@ -1,7 +1,9 @@
 import { take, map } from 'rxjs/internal/operators';
 import { select, Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
+import { omit } from 'lodash';
 
+import { CPSession } from '@campus-cloud/session';
 import * as fromStore from '@controlpanel/manage/feeds/store';
 import { StoreCategoryType } from '@campus-cloud/shared/models';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -27,7 +29,17 @@ export const dateAmplitudeLabel = {
 
 @Injectable()
 export class FeedsAmplitudeService {
-  constructor(private cpTracking: CPTrackingService, private store: Store<fromStore.IWallsState>) {}
+  _filterLabel: string;
+
+  constructor(
+    private session: CPSession,
+    private cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>
+  ) {}
+
+  get filterLabel() {
+    return this._filterLabel;
+  }
 
   getViewFilters() {
     return this.store.pipe(select(fromStore.getViewFilters)).pipe(take(1));
@@ -65,29 +77,6 @@ export class FeedsAmplitudeService {
       .subscribe();
 
     return amplitude;
-  }
-
-  getWallAmplitudeProperties() {
-    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
-    return {
-      sub_menu_name,
-      post_type: this.getPostType(),
-      wall_source: this.getWallSource()
-    };
-  }
-
-  getWallCommonAmplitudeProperties(feed) {
-    const { wall_source, post_type, sub_menu_name } = this.getWallAmplitudeProperties();
-    return {
-      post_type,
-      wall_source,
-      sub_menu_name,
-      post_id: feed.id,
-      likes: FeedsAmplitudeService.hasData(feed.likes),
-      creation_source: this.getPostCreationSource(feed.post_type),
-      comments: FeedsAmplitudeService.hasData(feed.comment_count),
-      upload_image: FeedsAmplitudeService.hasImage(feed.has_image)
-    };
   }
 
   getPostCreationSource(postTypeId) {
@@ -134,15 +123,123 @@ export class FeedsAmplitudeService {
     return amplitude;
   }
 
-  getWallFiltersAmplitude(dateLabel, state) {
+  setFilterLabel(dateLabel, state) {
     const { start, end } = state;
     const dateDefaultLabel = start && end ? amplitudeEvents.CUSTOM : 'All Time';
-    const date_filter = dateLabel ? dateAmplitudeLabel[dateLabel] : dateDefaultLabel;
+    this._filterLabel = dateLabel ? dateAmplitudeLabel[dateLabel] : dateDefaultLabel;
+  }
+
+  getWallCommonAmplitudeProperties(feed) {
+    const amplitude = this.getAllWallAmplitude(feed);
+    return omit(amplitude, ['post_type', 'date_filter', 'user_filter']);
+  }
+
+  getWallFiltersAmplitude() {
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
 
     return {
-      date_filter,
+      sub_menu_name,
+      post_type: this.getPostType(),
+      date_filter: this.filterLabel,
       user_filter: this.getUserFilter(),
-      ...this.getWallAmplitudeProperties()
+      wall_source: this.getWallSource()
+    };
+  }
+
+  getAllWallAmplitude(feed) {
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
+
+    return {
+      sub_menu_name,
+      post_id: feed.id,
+      post_type: this.getPostType(),
+      date_filter: this.filterLabel,
+      wall_source: this.getWallSource(),
+      user_filter: this.getUserFilter(),
+      likes: FeedsAmplitudeService.hasData(feed.likes),
+      creation_source: this.getPostCreationSource(feed.post_type),
+      comments: FeedsAmplitudeService.hasData(feed.comment_count),
+      upload_image: FeedsAmplitudeService.hasImage(feed.has_image)
+    };
+  }
+
+  getWallPostFeedAmplitude(feed, host_type) {
+    const { post_id, upload_image } = this.getAllWallAmplitude(feed);
+    const { post_type, wall_source, sub_menu_name } = this.getWallFiltersAmplitude();
+
+    return {
+      post_id,
+      host_type,
+      post_type,
+      wall_source,
+      sub_menu_name,
+      upload_image
+    };
+  }
+
+  getWallPostCommentAmplitude(feed, host_type) {
+    const {
+      likes,
+      wall_source,
+      sub_menu_name,
+      creation_source,
+      upload_image
+    } = this.getAllWallAmplitude(feed);
+
+    return {
+      likes,
+      host_type,
+      wall_source,
+      upload_image,
+      sub_menu_name,
+      creation_source,
+      comment_id: feed.id
+    };
+  }
+
+  getWallThreadAmplitude(feed, thread_type) {
+    let amplitude;
+    amplitude = this.getAllWallAmplitude(feed);
+    amplitude = omit(amplitude, ['post_id', 'comments']);
+
+    return {
+      ...amplitude,
+      thread_type,
+      thread_id: feed.id
+    };
+  }
+
+  getWallMutedUserAmplitude(user) {
+    const restricted = user.social_restriction_school_ids.includes(this.session.school.id);
+
+    const {
+      sub_menu_name,
+      wall_source,
+      post_type,
+      date_filter,
+      user_filter
+    } = this.getWallFiltersAmplitude();
+
+    return {
+      post_type,
+      wall_source,
+      date_filter,
+      user_filter,
+      sub_menu_name,
+      user_id: user.id,
+      status: restricted ? 'Muted' : 'Unmuted'
+    };
+  }
+
+  getWallViewedImageAmplitude(feed, isComment) {
+    const thread_type = isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
+
+    return {
+      ...this.getWallFiltersAmplitude(),
+      thread_type,
+      thread_id: feed.id,
+      total_images: feed.image_url_list.length,
+      creation_source: this.getPostCreationSource(feed.post_type)
     };
   }
 

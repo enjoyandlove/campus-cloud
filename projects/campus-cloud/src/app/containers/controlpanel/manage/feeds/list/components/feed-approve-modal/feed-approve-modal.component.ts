@@ -70,7 +70,6 @@ export class FeedApproveModalComponent implements OnInit, OnDestroy {
 
   trackAmplitudeEvent(feed) {
     const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed);
-    delete amplitude['post_type'];
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_APPROVED_POST, amplitude);
   }

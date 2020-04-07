@@ -167,10 +167,10 @@ export class FeedCommentComponent implements OnInit {
   }
 
   trackShowPost(feed) {
-    const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed);
-    delete amplitude['post_type'];
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_POST, amplitude);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.WALL_VIEWED_POST,
+      this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed)
+    );
   }
 
   private isGroupThread() {
