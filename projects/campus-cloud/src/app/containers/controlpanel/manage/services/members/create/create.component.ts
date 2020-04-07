@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { IItem } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
-import { ICPButtonProps } from '@projects/campus-cloud/src/app/shared/components';
+import { ICPButtonProps } from '@campus-cloud/shared/components';
 import { MemberModel, IMember, MemberType } from '@campus-cloud/libs/members/common/model';
 import {
   LibsCommonMembersUtilsService,

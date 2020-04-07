@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed, async } from '@angular/core/testing';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@projects/campus-cloud/src/app/shared/tests';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { FeedIntegration } from './../model/integration.model';
 import { CommonIntegrationUtilsService, ReponseErrors } from './integrations.utils.service';
 

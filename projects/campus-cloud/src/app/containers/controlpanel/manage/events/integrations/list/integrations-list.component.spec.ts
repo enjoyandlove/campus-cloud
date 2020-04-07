@@ -14,7 +14,7 @@ import { CPNoContentComponent } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { EventsIntegrationsListComponent } from './integrations-list.component';
 import { IntegrationStatusPipe } from '@campus-cloud/libs/integrations/common/pipes/status.pipe';
-import { IntegrationTypePipe } from '@projects/campus-cloud/src/app/libs/integrations/common/pipes';
+import { IntegrationTypePipe } from '@campus-cloud/libs/integrations/common/pipes';
 
 describe('EventsIntegrationsListComponent', () => {
   configureTestSuite();

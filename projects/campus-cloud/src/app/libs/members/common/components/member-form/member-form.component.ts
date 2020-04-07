@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { CPSession } from '@campus-cloud/session';
 import { MemberType } from '../../model';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { IItem } from '@projects/campus-cloud/src/app/shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 import { LibsCommonMembersService } from '../../providers';
 
 @Component({

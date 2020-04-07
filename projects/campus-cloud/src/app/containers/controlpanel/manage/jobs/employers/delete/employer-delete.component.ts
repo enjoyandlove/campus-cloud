@@ -9,7 +9,7 @@ import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
-import { IJobsState } from '@projects/campus-cloud/src/app/store';
+import { IJobsState } from '@campus-cloud/store';
 import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays/modal/modal.service';
 
 @Component({

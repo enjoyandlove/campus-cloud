@@ -11,7 +11,7 @@ import { ClubsDetailsModule } from './../details/details.module';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { AdminService, FileUploadService } from '@campus-cloud/shared/services';
-import { configureTestSuite, CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 const mockClub = {
   name: 'mock name',

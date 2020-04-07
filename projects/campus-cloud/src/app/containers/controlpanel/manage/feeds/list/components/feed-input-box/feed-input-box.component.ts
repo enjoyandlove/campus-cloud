@@ -28,7 +28,7 @@ import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { amplitudeEvents, MAX_UPLOAD_SIZE } from '@campus-cloud/shared/constants';
 import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
-import { TextEditorDirective } from '@projects/campus-cloud/src/app/shared/directives';
+import { TextEditorDirective } from '@campus-cloud/shared/directives';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import {
   ImageService,

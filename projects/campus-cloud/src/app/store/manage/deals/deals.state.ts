@@ -1,4 +1,4 @@
-import { IItem } from '@projects/campus-cloud/src/app/shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 
 export interface IDealsState {
   stores: IItem[];

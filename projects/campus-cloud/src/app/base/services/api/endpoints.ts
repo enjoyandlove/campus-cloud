@@ -121,6 +121,8 @@ export const ENDPOINTS = {
 
   EXTERNAL_EVENT_FEEDBACK: 'external_event_feedback',
 
+  EVENT_INTEGRATIONS_PREVIEW: 'external_feed/preview',
+
   EXPORT_DATA_APP_USERS_POST: 'export/app_users_data',
 
   ASSESS_ORIENTATION_EVENT: 'assess_orientation_event',

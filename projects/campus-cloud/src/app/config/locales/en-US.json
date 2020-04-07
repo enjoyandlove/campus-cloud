@@ -1361,17 +1361,11 @@
   "feeds_all_posts": {
     "message": "All Posts"
   },
-  "feeds_approve_comment": {
-    "message": "Approve Comment"
-  },
   "feeds_approve_comment_modal_body": {
     "message": "Are you sure you want to approve this post?"
   },
   "feeds_approve_comment_modal_title": {
     "message": "Approve Comment"
-  },
-  "feeds_approve_post": {
-    "message": "Approve Post"
   },
   "feeds_approve_post_modal_body": {
     "message": "Are you sure you want to approve this post?"
@@ -1394,17 +1388,11 @@
   "feeds_club_members": {
     "message": "Organization Members"
   },
-  "feeds_delete_comment": {
-    "message": "Delete Comment"
-  },
   "feeds_delete_comment_modal_body": {
     "message": "Are you sure you want to delete this comment?"
   },
   "feeds_delete_comment_modal_title": {
     "message": "Delete Comment"
-  },
-  "feeds_delete_post": {
-    "message": "Delete Post"
   },
   "feeds_delete_post_modal_body": {
     "message": "Are you sure you want to delete this post?"
@@ -1423,9 +1411,6 @@
   },
   "feeds_input_placeholder": {
     "message": "Add some text to this post...."
-  },
-  "feeds_move_post": {
-    "message": "Move Post"
   },
   "feeds_move_post_from": {
     "message": "Move post from"
@@ -2866,8 +2851,20 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
+  "t_feeds_approve": {
+    "message": "Approve"
+  },
   "t_feeds_campus_wall": {
     "message": "Campus Wall"
+  },
+  "t_feeds_delete": {
+    "message": "Delete"
+  },
+  "t_feeds_edit": {
+    "message": "Edit"
+  },
+  "t_feeds_move": {
+    "message": "Move"
   },
   "t_help_desk_faq": {
     "message": "Guides & FAQ"
@@ -3602,6 +3599,27 @@
   },
   "t_shared_integration_edit_form_modal_title": {
     "message": "Edit Integration"
+  },
+  "t_shared_integration_preview_check": {
+    "message": "Check"
+  },
+  "t_shared_integration_preview_column_uid": {
+    "message": "UID"
+  },
+  "t_shared_integration_preview_error_dates": {
+    "message": "The feed did not contain any upcoming events. Please make sure the feed contains entries that begin in the future."
+  },
+  "t_shared_integration_preview_error_fields": {
+    "message": "Some required fields are missing. Please make sure your feed containes the required fields."
+  },
+  "t_shared_integration_preview_error_format": {
+    "message": "The entries in the feed are not in the right format or the feed was empty. Please make sure it is in the right format and there are entries."
+  },
+  "t_shared_integration_preview_error_url": {
+    "message": "The feed is not hosted on a publicly-available server. Please double-check the provided URL."
+  },
+  "t_shared_integration_preview_success": {
+    "message": "Here's a preview of the first 5 entries of this feed"
   },
   "t_shared_invalid_cords": {
     "message": "Invalid pair of coordinates"

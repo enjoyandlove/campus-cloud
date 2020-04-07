@@ -37,10 +37,3 @@
                           [eventIntegration]="selectedIntegration">
   </cp-integrations-delete>
 </cp-modal>
-
-<cp-modal *ngIf="showCreateModal"
-          modalId="integrationCreate"
-          (modalClose)="onCreateTeardown()">
-  <cp-events-integrations-create (teardown)="onCreateTeardown()">
-  </cp-events-integrations-create>
-</cp-modal>

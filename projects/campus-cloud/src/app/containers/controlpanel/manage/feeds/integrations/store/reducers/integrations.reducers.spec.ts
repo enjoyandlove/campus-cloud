@@ -4,7 +4,7 @@ import * as fromActions from '../actions';
 import { mockSchool } from '@campus-cloud/session/mock';
 import { mockIntegration } from './../../tests/mocks';
 import * as fromReducer from './integrations.reducers';
-import { IWallsIntegration } from '@projects/campus-cloud/src/app/libs/integrations/walls/model';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 const pagination = {
   startRange: 1,

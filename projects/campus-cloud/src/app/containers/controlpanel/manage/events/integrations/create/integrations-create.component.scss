@@ -1,6 +1,15 @@
 @import '~projects/campus-cloud/src/sass/components/modal';
 @import '~projects/campus-cloud/src/sass/components/button';
 
+.cpmodal {
+  max-height: 90vh;
+
+  &.preview {
+    width: 900px;
+    overflow-y: scroll;
+  }
+}
+
 .cpmodal__body {
   margin-top: 15px;
 }

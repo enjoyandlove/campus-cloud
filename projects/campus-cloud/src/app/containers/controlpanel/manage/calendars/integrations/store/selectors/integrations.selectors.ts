@@ -3,7 +3,7 @@ import { createSelector } from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import { getFeatureState } from './feature.selector';
 import * as fromIntegrations from '../reducers/integrations.reducers';
-import { IEventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
+import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
 
 export const getIntegrationsState = createSelector(
   getFeatureState,

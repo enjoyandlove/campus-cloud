@@ -6,7 +6,7 @@ import { CPSession } from '@campus-cloud/session';
 import { BannerModule } from './../banner.module';
 import { BannerService } from './../banner.service';
 import { BannerListComponent } from './banner-list.component';
-import { mockSchool } from '@projects/campus-cloud/src/app/session/mock';
+import { mockSchool } from '@campus-cloud/session/mock';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { MockBannerService, MockSchoolService } from '../tests';
 import { SchoolService, ImageService, ImageValidatorService } from '@campus-cloud/shared/services';

@@ -1361,17 +1361,11 @@
   "feeds_all_posts": {
     "message": "Toutes les publications"
   },
-  "feeds_approve_comment": {
-    "message": "Approuver commentaire"
-  },
   "feeds_approve_comment_modal_body": {
     "message": "Êtes-vous sûr de vouloir approuver cette publication ?"
   },
   "feeds_approve_comment_modal_title": {
     "message": "Approuver commentaire"
-  },
-  "feeds_approve_post": {
-    "message": "Approuver publication"
   },
   "feeds_approve_post_modal_body": {
     "message": "Êtes-vous sûr de vouloir approuver cette publication ?"
@@ -1394,17 +1388,11 @@
   "feeds_club_members": {
     "message": "Membres de l'Organisation"
   },
-  "feeds_delete_comment": {
-    "message": "Supprimer commentaire"
-  },
   "feeds_delete_comment_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
   },
   "feeds_delete_comment_modal_title": {
     "message": "Supprimer commentaire"
-  },
-  "feeds_delete_post": {
-    "message": "Supprimer publication"
   },
   "feeds_delete_post_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer cette publication ?"
@@ -1423,9 +1411,6 @@
   },
   "feeds_input_placeholder": {
     "message": "Ajouter du texte à cette publication..."
-  },
-  "feeds_move_post": {
-    "message": "Déplacer publication"
   },
   "feeds_move_post_from": {
     "message": "Déplacer la publication depuis"
@@ -2866,6 +2851,15 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
+  "t_feeds_approve": {
+    "message": "Approuver"
+  },
+  "t_feeds_delete": {
+    "message": "Supprimer"
+  },
+  "t_feeds_move": {
+    "message": "Déplacer"
+  },
   "t_help_desk_faq": {
     "message": "Guides et FAQ"
   },
@@ -3599,6 +3593,9 @@
   },
   "t_shared_integration_edit_form_modal_title": {
     "message": "Éditer intégration"
+  },
+  "t_shared_integration_preview_column_uid": {
+    "message": "UID"
   },
   "t_shared_invalid_cords": {
     "message": "Paire de coordonnées invalide"

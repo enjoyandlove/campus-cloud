@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { IItem } from '@campus-cloud/shared/components/cp-dropdown';
 import { FeedIntegration } from './../model/integration.model';
-import { parseErrorResponse } from '@projects/campus-cloud/src/app/shared/utils/http';
+import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
 
 export enum ReponseErrors {
   'duplicate_feed_url_in_school' = 'duplicate feed_url in school'
