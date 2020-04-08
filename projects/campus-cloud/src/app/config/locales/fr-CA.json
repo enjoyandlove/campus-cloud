@@ -2857,6 +2857,9 @@
   "t_feeds_delete": {
     "message": "Supprimer"
   },
+  "t_feeds_edit": {
+    "message": "Éditer"
+  },
   "t_feeds_move": {
     "message": "Déplacer"
   },
@@ -3596,6 +3599,21 @@
   },
   "t_shared_integration_preview_column_uid": {
     "message": "UID"
+  },
+  "t_shared_integration_preview_error_dates": {
+    "message": "Le flux ne contenait aucun événement à venir. Veuillez vous assurer que le flux contienne des entrées qui démarrent dans le futur."
+  },
+  "t_shared_integration_preview_error_fields": {
+    "message": "Des champs requis sont manquants. Veuillez vous assurer que votre flux contienne les champs requis."
+  },
+  "t_shared_integration_preview_error_format": {
+    "message": "Les entrées dans le flux ne sont pas au bon format ou le flux était vide. Veuillez vous assurer qu'il est au bon format et qu'il y a des entrées."
+  },
+  "t_shared_integration_preview_error_url": {
+    "message": "Le flux n'est pas hébergé sur un serveur disponible publiquement. Veuillez re-vérifier l'URL fournie."
+  },
+  "t_shared_integration_preview_success": {
+    "message": "Voici un aperçu des 5 premières entrées de ce flux"
   },
   "t_shared_invalid_cords": {
     "message": "Paire de coordonnées invalide"
