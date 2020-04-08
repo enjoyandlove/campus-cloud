@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { mockEventIntegrationPreview } from '../tests/mock';
 import { CPSession } from '@campus-cloud/session';
 import { CPDatePipe } from '@campus-cloud/shared/pipes';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { MockCPSession } from '@campus-cloud/session/mock';
+import { mockEventIntegrationPreview } from '../tests/mock';
 import { IntegrationsPreviewComponent } from './integrations-preview.component';
 
 describe('IntegrationsPreviewComponent', () => {
@@ -13,6 +14,7 @@ describe('IntegrationsPreviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [CPTestModule],
       declarations: [IntegrationsPreviewComponent, CPDatePipe],
       providers: [
         {
