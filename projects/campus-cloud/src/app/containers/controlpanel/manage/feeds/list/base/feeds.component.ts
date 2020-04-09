@@ -6,6 +6,7 @@ import { isEqual } from 'lodash';
 import {
   map,
   tap,
+  skip,
   take,
   filter,
   mergeMap,
@@ -20,9 +21,9 @@ import * as fromStore from '../../store';
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
 import { GroupType } from '../../feeds.utils.service';
-import { UserService } from '@campus-cloud/shared/services';
 import { FeedsUtilsService } from '../../feeds.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { UserService, StoreService } from '@campus-cloud/shared/services';
 import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 
 interface IState {
@@ -94,7 +95,8 @@ export class FeedsComponent extends FeedsList implements OnInit, OnDestroy {
     public session: CPSession,
     public service: FeedsService,
     public userService: UserService,
-    public store: Store<fromStore.IWallsState>
+    public store: Store<fromStore.IWallsState>,
+    public storeService: StoreService
   ) {
     super();
   }
@@ -576,6 +578,7 @@ export class FeedsComponent extends FeedsList implements OnInit, OnDestroy {
     this.results$ = merge(regularThreads$, searchResults$);
 
     this.fetchBannedEmails();
+    this.getStores();
     this.view$ = combineLatest([this.loading$, this.results$]).pipe(
       map(([loading, results]) => ({
         results,
@@ -588,6 +591,19 @@ export class FeedsComponent extends FeedsList implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
     this.store.dispatch(fromStore.resetState());
+  }
+
+  getStores() {
+    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+    this.storeService
+      .getStores(params)
+      .pipe(
+        skip(3),
+        map((stores) => stores.filter((s) => s.value).map((s) => s.value)),
+        tap((stores) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: stores }))),
+        take(1)
+      )
+      .subscribe();
   }
 
   fetchBannedEmails() {
