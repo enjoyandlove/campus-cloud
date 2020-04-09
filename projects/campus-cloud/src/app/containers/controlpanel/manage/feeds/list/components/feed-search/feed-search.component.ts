@@ -23,6 +23,7 @@ import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { ISocialGroup } from '@controlpanel/manage/feeds/model';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { FeedsAmplitudeService } from '../../../feeds.amplitude.service';
@@ -37,7 +38,6 @@ export class FeedSearchComponent implements OnInit {
   @Input() groupId: number;
   @Input() groupType: GroupType;
   @Input() hideIntegrations: boolean;
-  @Input() isCampusWallView: Observable<any>;
 
   @Output()
   feedSearch: EventEmitter<string> = new EventEmitter();
@@ -288,7 +288,7 @@ export class FeedSearchComponent implements OnInit {
 
   fetchSocialGroups() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
-    return this.feedsService.getSocialGroups(search) as Observable<any>;
+    return this.feedsService.getSocialGroups(search) as Observable<ISocialGroup[]>;
   }
 
   fetchStudents(): Observable<any[]> {

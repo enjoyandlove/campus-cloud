@@ -17,8 +17,7 @@
     <cp-feed-item [feed]="feed"
                   (deleted)="onDeleteNestedThread()"
                   (moved)="parentThreadUpdated.next()"
-                  [isCampusWallView]="isCampusWallView"
-                  [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
+                  [isCampusWallView]="isCampusWallView">
     </cp-feed-item>
   </div>
 </div>
@@ -36,8 +35,7 @@
               <cp-feed-dropdown [feed]="_comment"
                                 [isComment]="isComment"
                                 (selected)="onSelected($event)"
-                                [isCampusWallView]="isCampusWallView"
-                                [requiresApproval]="requiresApproval$">
+                                [isCampusWallView]="isCampusWallView">
               </cp-feed-dropdown>
             </div>
           </div>
@@ -50,7 +48,7 @@
                         [isComment]="true"
                         [replyView]="replyView"
                         [wallCategory]="wallCategory"
-                        [isCampusWallView]="isCampusWallView">
+                        (edited)="edited.emit($event)">
           </cp-feed-body>
         </div>
       </div>

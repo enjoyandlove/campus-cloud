@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, combineLatest, merge } from 'rxjs';
-import { takeUntil, map, mapTo, filter, startWith } from 'rxjs/operators';
+import { Observable, Subject, combineLatest, merge, of } from 'rxjs';
+import { map, mapTo, filter, startWith } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { select, Store } from '@ngrx/store';
 
@@ -28,7 +28,6 @@ export class FeedItemComponent implements OnInit, OnDestroy {
   @Input() groupId: number;
   @Input() groupType: GroupType;
   @Input() isCampusWallView: Observable<any>;
-  @Input() isFilteredByRemovedPosts: Observable<any>;
 
   @Output() moved: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -39,7 +38,6 @@ export class FeedItemComponent implements OnInit, OnDestroy {
   isApproveModal;
   isRemovedPosts;
   CPDate = CPDate;
-  _isCampusWallView;
   FORMAT = FORMAT.SHORT;
   isCommentsOpen = false;
   threadIsExpanded = false;
@@ -48,7 +46,10 @@ export class FeedItemComponent implements OnInit, OnDestroy {
   loadEmbededPost$: Observable<boolean>;
   loadEmbededPost: Subject<boolean> = new Subject();
   embeddedPost$: Observable<{ loading: boolean; feed: any }>;
-  requiresApproval$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  view$: Observable<{
+    commentsOpen: boolean;
+    matchedComments: any[];
+  }>;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -126,7 +127,6 @@ export class FeedItemComponent implements OnInit, OnDestroy {
 
   onApprovedPost(updatedThread: ICampusThread) {
     this.store.dispatch(fromStore.updateThread({ thread: updatedThread }));
-    this.requiresApproval$.next(false);
   }
 
   parseComment() {
@@ -149,38 +149,31 @@ export class FeedItemComponent implements OnInit, OnDestroy {
         .pipe(filter((loading) => loading));
       const search = new HttpParams().set('school_id', this.session.school.id.toString());
       const embeddedPost$ = this.service.getCampusThreadById(this.feed.campus_thread_id, search);
-
       const loading$ = merge(loadEmbededPost$, embeddedPost$.pipe(mapTo(false)));
-
       this.embeddedPost$ = combineLatest([embeddedPost$, loading$]).pipe(
         map(([feed, loading]) => ({ feed, loading }))
       );
     }
-
     const results$ = this.store.pipe(select(fromStore.getResults));
     const comments$ = this.store.pipe(select(fromStore.getComments));
-
     this.matchedComments$ = combineLatest([results$, comments$, this.isCommentsOpen$]).pipe(
       map(([results, comments, isCommentsOpen]) => {
         if (isCommentsOpen) {
           return [];
         }
         const matchedThread = results.find((r) => r.id === this.feed.id);
-
         const matchedCommentIds =
           matchedThread && matchedThread.children ? matchedThread.children : [];
-
         return comments.filter((c) => matchedCommentIds.includes(c.id));
       })
     );
 
-    this.requiresApproval$.next(this.feed.dislikes > 0 && this.feed.flag !== 2);
-    this.isCampusWallView
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this._isCampusWallView = res.type));
-    this.isFilteredByRemovedPosts
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.isRemovedPosts = res));
+    this.view$ = combineLatest([this.isCommentsOpen$, this.matchedComments$]).pipe(
+      map(([commentsOpen, matchedComments]) => ({
+        commentsOpen,
+        matchedComments
+      }))
+    );
   }
 
   ngOnDestroy() {

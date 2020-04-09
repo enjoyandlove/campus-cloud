@@ -25,6 +25,11 @@ export const getSocialPostCategories = createSelector(
   ({ socialPostCategories }: IWallsFeedsState) => socialPostCategories
 );
 
+export const getSocialGroupIds = createSelector(
+  getFeedsState,
+  ({ socialGroupIds }: IWallsFeedsState) => socialGroupIds
+);
+
 export const getFilterUsers = createSelector(
   getFeedsState,
   ({ users }: IWallsFeedsState) => users
@@ -76,6 +81,11 @@ export const getThreads = createSelector(
 
     return threads.filter((thread) => filters.every((filterFn) => filterFn(thread)));
   }
+);
+
+export const getEditing = createSelector(
+  getFeedsState,
+  ({ editing }: IWallsFeedsState) => editing
 );
 
 export const getResults = createSelector(

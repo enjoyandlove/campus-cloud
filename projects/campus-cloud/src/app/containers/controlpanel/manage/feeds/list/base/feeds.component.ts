@@ -53,15 +53,28 @@ const state: IState = {
   removed_by_moderators_only: null
 };
 
+class FeedsList extends BaseComponent {
+  constructor() {
+    super();
+    this.maxPerPage = 20;
+    this.endRange = this.maxPerPage + 1;
+  }
+}
+
 @Component({
   selector: 'cp-feeds',
   templateUrl: './feeds.component.html',
   styleUrls: ['./feeds.component.scss']
 })
-export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
+export class FeedsComponent extends FeedsList implements OnInit, OnDestroy {
   @Input() groupId: number;
   @Input() groupType: GroupType;
   @Input() hideIntegrations = false;
+
+  view$: Observable<{
+    loading: boolean;
+    results: any[];
+  }>;
 
   channels;
   loading = true;
@@ -70,7 +83,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
-  isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   results$: Observable<Array<{ id: number; type: string; children?: number[] }> | any[]>;
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
@@ -85,6 +97,10 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     public store: Store<fromStore.IWallsState>
   ) {
     super();
+  }
+
+  trackByFn(_: number, item) {
+    return item.id;
   }
 
   searchHandler(searchTerm: string) {
@@ -326,13 +342,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       group_id: related_obj_id
     });
 
-    // filter by removed posts
-    if (removed_by_moderators_only) {
-      this.isFilteredByRemovedPosts$.next(true);
-    } else {
-      this.isFilteredByRemovedPosts$.next(false);
-    }
-
     // filter by flagged posts
     if (flagged_by_users_only) {
       this.isFilteredByFlaggedPosts$.next(true);
@@ -567,6 +576,12 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     this.results$ = merge(regularThreads$, searchResults$);
 
     this.fetchBannedEmails();
+    this.view$ = combineLatest([this.loading$, this.results$]).pipe(
+      map(([loading, results]) => ({
+        results,
+        loading
+      }))
+    );
   }
 
   ngOnDestroy() {

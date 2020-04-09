@@ -39,7 +39,6 @@ const TYPE_STRINGS = {
 export class FeedSettingsComponent implements OnInit, OnDestroy {
   @Input() groupId: number;
   @Input() groupType: GroupType;
-  @Input() isCampusWallView: Observable<any>;
 
   @Output() updateWallSettings: EventEmitter<any> = new EventEmitter();
 
@@ -48,7 +47,6 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
   modalTitle;
   privileges;
   form: FormGroup;
-  _isCampusWallView;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -194,10 +192,6 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
         action: 0
       }
     ];
-
-    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this._isCampusWallView = res.type === 1;
-    });
   }
 
   ngOnDestroy() {

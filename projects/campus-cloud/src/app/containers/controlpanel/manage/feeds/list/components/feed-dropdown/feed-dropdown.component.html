@@ -11,6 +11,7 @@
         variant="inline"
         position="right"
         [triggerFor]="menu"
+        overlayWidth="100px"
         ready-ui-menu-trigger
         direction="bottom-left"
         *ngIf="options.length > 1">
@@ -23,6 +24,7 @@
     <button ui-button
             type="button"
             variant="inline"
+            fullWidth="true"
             (click)="onOptionClicked(option.action); menu.close()">{{ option.label }}</button>
   </ready-ui-menu-item>
 </ready-ui-menu>

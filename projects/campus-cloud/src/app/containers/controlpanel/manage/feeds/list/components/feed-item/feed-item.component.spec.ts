@@ -42,7 +42,6 @@ describe('FeedItemComponent', () => {
 
     component.feed = mockFeed;
     component.isCampusWallView = of(true);
-    component.isFilteredByRemovedPosts = of(false);
 
     fixture.detectChanges();
   }));
