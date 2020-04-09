@@ -97,14 +97,16 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 'services_edit_heading',
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 'services_edit_heading',
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

@@ -66,8 +66,8 @@ describe('FeedApproveCommentModalComponent', () => {
   });
 
   it('should approve comment onSubmit', () => {
-    spyOn(component.feedsService, 'approveGroupWallComment').and.returnValue(of({}));
-    spyOn(component.feedsService, 'approveCampusWallComment').and.returnValue(of({}));
+    spyOn(component.feedsService, 'updateGroupWallComment').and.returnValue(of({}));
+    spyOn(component.feedsService, 'updateCampusWallComment').and.returnValue(of({}));
 
     component.onSubmit();
 

@@ -7,9 +7,9 @@ import {
   EventEmitter,
   ViewEncapsulation
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, of, merge } from 'rxjs';
 import { mergeMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { Observable, Subject, of, merge } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 
@@ -45,12 +45,14 @@ export class FeedCommentComponent implements OnInit {
   @Input() wallCategory: string;
 
   @Input() isCampusWallView: Observable<number>;
+  @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
   @Output() approved: EventEmitter<number> = new EventEmitter();
 
   _comment;
   isDeleteModal;
   isApproveModal;
+  editMode = false;
   isComment = true;
   threadIsExpanded = false;
   _showParentThread = false;
@@ -59,9 +61,7 @@ export class FeedCommentComponent implements OnInit {
   loadEmbbedPost$: Observable<void>;
   parentThreadUpdated = new Subject();
   loadEmbbedPost = new Subject<void>();
-  isFilteredByRemovedPosts$: Observable<boolean>;
   parentThreadHasCommentsExpanded$: Observable<boolean>;
-  requiresApproval$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private service: FeedsService,
@@ -87,10 +87,6 @@ export class FeedCommentComponent implements OnInit {
             : false
         )
       );
-
-    this.isFilteredByRemovedPosts$ = this.store
-      .pipe(select(fromStore.getViewFilters))
-      .pipe(map(({ flaggedByModerators }) => flaggedByModerators));
 
     this.loadEmbbedPost$ = this.loadEmbbedPost.asObservable();
 
@@ -129,8 +125,6 @@ export class FeedCommentComponent implements OnInit {
         }
       })
     );
-
-    this.requiresApproval$.next(this._comment.dislikes > 0 && this._comment.flag !== 2);
   }
 
   onDeleteNestedThread() {

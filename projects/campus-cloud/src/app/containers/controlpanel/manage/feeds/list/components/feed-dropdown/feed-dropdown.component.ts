@@ -1,8 +1,18 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { mergeMap, startWith, takeUntil, take, tap } from 'rxjs/operators';
+import { ModalService } from '@ready-education/ready-ui/overlays/modal/modal.service';
+import { get as _get, isEqual } from 'lodash';
+import { Observable, Subject, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { get as _get } from 'lodash';
+import {
+  map,
+  tap,
+  take,
+  filter,
+  mergeMap,
+  startWith,
+  takeUntil,
+  withLatestFrom
+} from 'rxjs/operators';
 
 import * as fromStore from '../../../store';
 
@@ -12,6 +22,7 @@ import { User, IUser } from '@campus-cloud/shared/models';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { CPUnsavedChangesModalComponent } from '@campus-cloud/shared/components';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { CPI18nService, CPTrackingService, UserService } from '@campus-cloud/shared/services';
@@ -20,18 +31,20 @@ import { CPI18nService, CPTrackingService, UserService } from '@campus-cloud/sha
 @Component({
   selector: 'cp-feed-dropdown',
   templateUrl: './feed-dropdown.component.html',
-  styleUrls: ['./feed-dropdown.component.scss']
+  styleUrls: ['./feed-dropdown.component.scss'],
+  providers: [ModalService]
 })
 export class FeedDropdownComponent implements OnInit, OnDestroy {
   @Input() feed;
   @Input() isComment: boolean;
-  @Input() requiresApproval: Observable<boolean>;
   @Input() isCampusWallView: Observable<number>;
   @Output() selected: EventEmitter<number> = new EventEmitter();
 
   options;
   _isCampusWallView;
-  _requiresApproval;
+  unsavedChangesModal;
+  requiresApproval = false;
+  canEdit$: Observable<boolean>;
   isBanned$: Observable<boolean>;
   bannedEmails$ = this.store.pipe(select(fromStore.getBannedEmails));
 
@@ -43,40 +56,52 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private userService: UserService,
+    private modalService: ModalService,
     private cpTracking: CPTrackingService,
     private feedsAmplitudeService: FeedsAmplitudeService,
     private store: Store<fromStore.IWallsState | ISnackbar>
   ) {}
 
   ngOnInit() {
-    if (!this.requiresApproval) {
-      return this.requiresApproval.pipe(startWith(false));
+    this.canEdit$ =
+      'extern_poster_id' in this.feed
+        ? this.store.pipe(select(fromStore.getSocialGroupIds)).pipe(
+            filter((socialGroupIds: number[]) => Boolean(socialGroupIds.length)),
+            take(1),
+            withLatestFrom(this.store.pipe(select(fromStore.getViewFilters))),
+            map(([socialGroupIds, { flaggedByModerators, searchTerm }]) => {
+              const notSearching = searchTerm === '';
+              const notDeleted = !flaggedByModerators;
+              const hostHasAccessToSocialGroup = socialGroupIds.includes(
+                this.feed.extern_poster_id
+              );
+              return notSearching && notDeleted && hostHasAccessToSocialGroup;
+            })
+          )
+        : of(false);
+
+    this.requiresApproval = this.feed.dislikes > 0 && this.feed.flag !== 2;
+
+    if (!this.requiresApproval && this.options) {
+      this.removeApproveOption();
     }
 
     this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
 
-    this.requiresApproval.pipe(takeUntil(this.destroy$)).subscribe((requiresApproval) => {
-      this._requiresApproval = requiresApproval;
-
-      if (!requiresApproval && this.options) {
-        this.removeApproveOption();
-      }
-    });
-
     let items = [
       {
         action: 3,
         isPostOnly: false,
-        label: this.cpI18n.translate(this.isComment ? 'feeds_delete_comment' : 'feeds_delete_post')
+        label: this.cpI18n.translate('t_feeds_delete')
       }
     ];
 
     if (this._isCampusWallView) {
       const approveMenu = {
         action: 2,
-        label: this.cpI18n.translate('feeds_move_post'),
+        label: this.cpI18n.translate('t_feeds_move'),
         isPostOnly: true
       };
 
@@ -94,13 +119,11 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
       ];
     }
 
-    if (this._requiresApproval) {
+    if (this.requiresApproval) {
       const flaggedMenu = {
         action: 1,
         isPostOnly: false,
-        label: this.cpI18n.translate(
-          this.isComment ? 'feeds_approve_comment' : 'feeds_approve_post'
-        )
+        label: this.cpI18n.translate('t_feeds_approve')
       };
 
       items = [flaggedMenu, ...items];
@@ -115,15 +138,59 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
         this.options.find((o) => o.action === 4).label = this.cpI18n.translate(phraseAppKey);
       });
     }
+
+    this.canEdit$
+      .pipe(
+        filter((canEdit) => canEdit),
+        take(1)
+      )
+      .subscribe(() => {
+        const editMenu = {
+          action: 5,
+          isPostOnly: false,
+          label: this.cpI18n.translate('t_feeds_edit')
+        };
+
+        this.options = [editMenu, ...this.options];
+      });
   }
 
   ngOnDestroy() {
     this.emitDestroy();
   }
 
+  cancelHandler() {
+    this.unsavedChangesModal.dispose();
+  }
+
+  discardHandler(editing) {
+    this.store.dispatch(fromStore.setEdit({ editing }));
+    this.unsavedChangesModal.dispose();
+  }
+
   onOptionClicked(action) {
     if (action === 4) {
       this.muteUser();
+    }
+    if (action === 5) {
+      const payload = {
+        id: this.feed.id,
+        type: this.isComment ? 'COMMENT' : 'THREAD'
+      };
+      this.store
+        .pipe(select(fromStore.getEditing))
+        .pipe(take(1))
+        .subscribe((editing) => {
+          if (editing && editing.id !== this.feed.id) {
+            this.unsavedChangesModal = this.modalService.open(CPUnsavedChangesModalComponent, {
+              cancel: this.cancelHandler.bind(this),
+              discard: () => this.discardHandler.call(this, payload)
+            });
+            return;
+          }
+          const toggle = isEqual(editing, payload);
+          this.store.dispatch(fromStore.setEdit({ editing: toggle ? null : payload }));
+        });
     } else {
       this.selected.emit(action);
     }

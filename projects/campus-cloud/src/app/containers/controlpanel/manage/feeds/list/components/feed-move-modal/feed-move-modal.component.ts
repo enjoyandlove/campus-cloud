@@ -55,14 +55,12 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.feedsService
-      .moveCampusWallThreadToChannel(this.feed.id, this.form.value)
-      .subscribe((res) => {
-        this.store.dispatch(fromStore.updateThread({ thread: res }));
-        this.trackAmplitudeEvent(this.feed);
-        $('#moveFeedModal').modal('hide');
-        this.moved.emit(res);
-      });
+    this.feedsService.updateCampusWallThread(this.feed.id, this.form.value).subscribe((res) => {
+      this.store.dispatch(fromStore.updateThread({ thread: res }));
+      this.trackAmplitudeEvent(this.feed);
+      $('#moveFeedModal').modal('hide');
+      this.moved.emit(res);
+    });
   }
 
   trackAmplitudeEvent(feed) {

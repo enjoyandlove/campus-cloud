@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -38,7 +37,6 @@ describe('FeedBodyComponent', () => {
     component = fixture.componentInstance;
 
     component.feed = mockFeed;
-    component.isCampusWallView = new BehaviorSubject({ type: 1 });
     spy = spyOn(component.cpTracking, 'amplitudeEmitEvent');
     eventProperties = {
       ...mockViewCommentProperties

@@ -44,19 +44,19 @@ export class FeedApproveModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     const data = { flag: 2 };
 
-    const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(
+    const updateCampusWallThread$ = this.feedsService.updateCampusWallThread(
       this.feed.id,
       data
     ) as Observable<ICampusThread>;
 
-    const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(
+    const updateGroupWall$ = this.feedsService.updateGroupWallThread(
       this.feed.id,
       data
     ) as Observable<ISocialGroupThread>;
 
     const stream$: Observable<ICampusThread | ISocialGroupThread> = this._isCampusWallView
-      ? approveCampusWallThread$
-      : approveGroupWallThread$;
+      ? updateCampusWallThread$
+      : updateGroupWall$;
 
     stream$.subscribe((approvedThread) => {
       this.trackAmplitudeEvent(this.feed);
