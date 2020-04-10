@@ -42,7 +42,7 @@ module.exports = function(config) {
         global: {
           statements: 55,
           branches: 40, // TODO increease one percent
-          functions: 41,
+          functions: 44,
           lines: 56
         }
       }
