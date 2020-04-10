@@ -54,20 +54,12 @@ const state: IState = {
   removed_by_moderators_only: null
 };
 
-class FeedsList extends BaseComponent {
-  constructor() {
-    super();
-    this.maxPerPage = 20;
-    this.endRange = this.maxPerPage + 1;
-  }
-}
-
 @Component({
   selector: 'cp-feeds',
   templateUrl: './feeds.component.html',
   styleUrls: ['./feeds.component.scss']
 })
-export class FeedsComponent extends FeedsList implements OnInit, OnDestroy {
+export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() groupId: number;
   @Input() groupType: GroupType;
   @Input() hideIntegrations = false;
