@@ -1,5 +1,6 @@
 import {
   Input,
+  NgZone,
   OnInit,
   Output,
   Component,
@@ -9,16 +10,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import {
-  map,
-  tap,
-  take,
-  filter,
-  switchMap,
-  startWith,
-  takeUntil,
-  withLatestFrom
-} from 'rxjs/operators';
+import { map, tap, take, filter, switchMap, startWith, withLatestFrom } from 'rxjs/operators';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { TextEditorDirective } from '@ready-education/ready-ui/forms';
 import { Observable, merge, Subject, of, combineLatest } from 'rxjs';
@@ -68,6 +60,7 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
   disableSubmit$: Observable<boolean>;
 
   constructor(
+    private zone: NgZone,
     private fb: FormBuilder,
     private cpI18n: CPI18nService,
     private cpI18nPipe: CPI18nPipe,
@@ -144,7 +137,7 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     const message = 'message' in this.feed ? this.feed.message : this.feed.comment;
-    this.editor.quill.setText(message);
+    this.zone.runOutsideAngular(() => this.editor.quill.setText(message, 'silent'));
   }
 
   cancelHandler() {
