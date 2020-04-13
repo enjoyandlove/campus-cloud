@@ -7,7 +7,7 @@
       </cp-feed-header>
       <div class="feed__more">
         <cp-feed-dropdown [feed]="feed"
-                          *ngIf="!isRemovedPosts"
+                          *ngIf="feed.flag !== -3"
                           (selected)="onSelected($event)"
                           [isComment]="!!feedIsAComment"
                           [isCampusWallView]="isCampusWallView">
