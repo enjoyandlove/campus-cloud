@@ -1937,11 +1937,6 @@
     "@types/jquery" "*"
     popper.js "^1.14.1"
 
-"@types/browserslist@4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@types/browserslist/-/browserslist-4.4.0.tgz#e2a5f7f8c7e97afb39f50812a77e5230d3ca2353"
-  integrity sha512-hrIjWSu7Hh96/rKlpChe58qHEwIZ0+F5Zf4QNdvSVP5LUXbaJM04g9tBjo702VTNqPZr5znEJeqNR3nAV3vJPg==
-
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -3430,6 +3425,11 @@ bootstrap@4.3.1:
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.3.1.tgz#280ca8f610504d99d7b6b4bfc4b68cec601704ac"
   integrity sha512-rXqOmH1VilAt2DyPzluTi2blhk17bO7ef+zLLPlWvG494pDxcM234pJ8wTc/6R40UWizAIIMgxjvxZg5kmsbag==
 
+bowser@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.4.0.tgz#fcfbca3d7659ba88afabbb8a45b33d2e4876a90c"
+  integrity sha512-DA9Opnb8S8TBLPPszrHDtCCATbAMkrxF+AxPs/d95r99frBioGpNwL1cbG3AHeV3FnoZW655vEvEryBHFeGrMg==
+
 boxen@^4.1.0, boxen@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-4.2.0.tgz#e411b62357d6d6d36587c8ac3d5d974daa070e64"
@@ -3982,6 +3982,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+classlist.js@1.1.20150312:
+  version "1.1.20150312"
+  resolved "https://registry.yarnpkg.com/classlist.js/-/classlist.js-1.1.20150312.tgz#1d70842f7022f08d9ac086ce69e5b250f2c57789"
+  integrity sha1-HXCEL3Ai8I2awIbOaeWyUPLFd4k=
 
 classnames@^2.2.5:
   version "2.2.6"
