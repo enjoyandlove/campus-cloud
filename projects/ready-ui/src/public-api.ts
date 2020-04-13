@@ -71,9 +71,13 @@ export * from './lib/overlays/modal/modal.module';
 export * from './lib/overlays/overlays.module';
 
 export * from './lib/structure/page/page-navigation-item/page-navigation-item.component';
+export * from './lib/structure/skeleton/skeleton-avatar/skeleton-avatar.component';
+export * from './lib/structure/skeleton/skeleton-table/skeleton-table.component';
+export * from './lib/structure/skeleton/skeleton-text/skeleton-text.component';
 export * from './lib/structure/page/page-navigation/page-navigation.component';
 export * from './lib/structure/page/page-container/page-container.component';
 export * from './lib/structure/stack/stack/stack.component';
+export * from './lib/structure/skeleton/skeleton.module';
 export * from './lib/structure/page/page/page.component';
 export * from './lib/structure/card/card/card.component';
 export * from './lib/structure/stack/stack.module';
