@@ -36,7 +36,6 @@ export class FeedItemComponent implements OnInit, OnDestroy {
   isMoveModal;
   isDeleteModal;
   isApproveModal;
-  isRemovedPosts;
   CPDate = CPDate;
   FORMAT = FORMAT.SHORT;
   isCommentsOpen = false;

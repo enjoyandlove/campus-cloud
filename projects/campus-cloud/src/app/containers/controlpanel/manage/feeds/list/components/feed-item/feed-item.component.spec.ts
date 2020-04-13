@@ -1,5 +1,7 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { StoreModule, Store } from '@ngrx/store';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
 import * as fromStore from '../../../store';
@@ -8,6 +10,7 @@ import { FeedsModule } from './../../../feeds.module';
 import { FeedItemComponent } from './feed-item.component';
 import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { FeedDropdownComponent } from './../feed-dropdown/feed-dropdown.component';
 
 describe('FeedItemComponent', () => {
   configureTestSuite();
@@ -30,6 +33,7 @@ describe('FeedItemComponent', () => {
       .catch(done.fail);
   });
 
+  let de: DebugElement;
   let store: Store<fromStore.IWallsState>;
   let fixture: ComponentFixture<FeedItemComponent>;
   let component: FeedItemComponent;
@@ -38,8 +42,9 @@ describe('FeedItemComponent', () => {
     fixture = TestBed.createComponent(FeedItemComponent);
     component = fixture.componentInstance;
 
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
 
+    de = fixture.debugElement;
     component.feed = mockFeed;
     component.isCampusWallView = of(true);
 
@@ -54,6 +59,30 @@ describe('FeedItemComponent', () => {
       component.onMoved(expected);
 
       expect(component.moved.emit).toHaveBeenCalledWith(expected);
+    });
+  });
+
+  describe('dropdown element', () => {
+    it('should be visibile for non deleted threads', () => {
+      component.feed = {
+        ...mockFeed,
+        flag: 0
+      };
+      fixture.detectChanges();
+      const dropdown = de.query(By.directive(FeedDropdownComponent));
+
+      expect(dropdown).not.toBeNull();
+    });
+
+    it('should be hidden for deleted threads', () => {
+      component.feed = {
+        ...mockFeed,
+        flag: -3
+      };
+      fixture.detectChanges();
+      const dropdown = de.query(By.directive(FeedDropdownComponent));
+
+      expect(dropdown).toBeNull();
     });
   });
 
