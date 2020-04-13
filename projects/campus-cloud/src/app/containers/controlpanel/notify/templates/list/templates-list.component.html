@@ -95,14 +95,14 @@
 <cp-modal modalId="templateComposeModal"
           *ngIf="isTemplateComposeModal">
   <cp-templates-compose [data]="templateData"
-                        (created)="onComposed($event)"
+                        (created)="onComposed()"
                         (teardown)="doComposeModalTeardown()">
   </cp-templates-compose>
 </cp-modal>
 
 <cp-modal modalId="templateCreateModal"
           *ngIf="isTemplateCreateModal">
-  <cp-templates-create (created)="onCreated($event)"
+  <cp-templates-create (created)="onCreated()"
                        (teardown)="isTemplateCreateModal = false">
   </cp-templates-create>
 </cp-modal>

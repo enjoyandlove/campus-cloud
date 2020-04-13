@@ -1,0 +1,18 @@
+<ready-ui-tag [color]="tag.canClose ? 'primary' : 'default'"
+              *ngFor="let tag of tags$ | async as tags">
+  <ready-ui-stack spacing="tight">
+    <ready-ui-icon [name]="tag.icon"
+                   size="small"></ready-ui-icon>
+    <span [ngClass]="tag.cssClass"
+          [attr.title]="tag.label">{{ tag.label }}</span>
+    <button ui-button
+            type="button"
+            color="inherit"
+            variant="inline"
+            *ngIf="tag.canClose"
+            (click)="tag.onClick()">
+      <ready-ui-icon name="close"
+                     size="small"></ready-ui-icon>
+    </button>
+  </ready-ui-stack>
+</ready-ui-tag>

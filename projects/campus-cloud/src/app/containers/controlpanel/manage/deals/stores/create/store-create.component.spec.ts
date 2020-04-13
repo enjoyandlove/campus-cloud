@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Actions } from '@ngrx/effects';
 
+import { IStore } from '../store.interface';
 import { StoreModule } from '../store.module';
 import * as fromDeals from '@campus-cloud/store/manage/deals';
 import { mockSchool } from '@campus-cloud/session/mock/school';
@@ -108,7 +109,7 @@ describe('DealsStoreCreateComponent', () => {
     fixture.detectChanges();
 
     expect(component.created.emit).toHaveBeenCalledTimes(1);
-    expect(component.created.emit).toHaveBeenCalledWith(newStore);
+    expect(component.created.emit).toHaveBeenCalledWith(newStore as IStore);
     expect(component.resetModal).toHaveBeenCalledTimes(1);
   }));
 });

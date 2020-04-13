@@ -70,9 +70,14 @@ export * from './lib/overlays/modal/modal.service';
 export * from './lib/overlays/modal/modal.module';
 export * from './lib/overlays/overlays.module';
 
+export * from './lib/structure/page/page-navigation-item/page-navigation-item.component';
+export * from './lib/structure/page/page-navigation/page-navigation.component';
+export * from './lib/structure/page/page-container/page-container.component';
 export * from './lib/structure/stack/stack/stack.component';
+export * from './lib/structure/page/page/page.component';
 export * from './lib/structure/card/card/card.component';
 export * from './lib/structure/stack/stack.module';
+export * from './lib/structure/page/page.module';
 export * from './lib/structure/card/card.module';
 export * from './lib/structure/structure.module';
 
@@ -93,3 +98,6 @@ export * from './lib/navigation/tabs/tabs/tabs.component';
 export * from './lib/navigation/tabs/tab/tab.component';
 export * from './lib/navigation/navigation.module';
 export * from './lib/navigation/tabs/tabs.module';
+
+export * from './lib/behavior/interceptor/interceptor.directive';
+export * from './lib/behavior/behavior.module';

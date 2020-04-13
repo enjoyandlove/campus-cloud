@@ -6,7 +6,6 @@
 
         <button type="button"
                 aria-label="close"
-                data-dismiss="modal"
                 (click)="resetModal()"
                 class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
@@ -21,18 +20,24 @@
   </div>
 
   <div class="cpmodal__footer">
-    <div class="row justify-content-end">
-      <div class="col-6 text-right">
-        <button type="button"
-                data-dismiss="modal"
-                (click)="resetModal()"
-                class="cpbtn cpbtn--cancel">
-          {{ 'cancel' | cpI18n }}
-        </button>
-
-        <cp-button (buttonClick)="onSubmit()"
-                   [props]="buttonData"> </cp-button>
-      </div>
-    </div>
+    <ready-ui-stack alignment="end"
+                    spacing="tight">
+      <button ui-button
+              type="button"
+              variant="stroked"
+              aria-label="Cancel Edit Employer"
+              (click)="resetModal()">
+        {{ 'cancel' | cpI18n }}
+      </button>
+      <button ui-button
+              type="button"
+              variant="flat"
+              color="primary"
+              (click)="onSubmit()"
+              aria-label="Edit Employer"
+              [disabled]="disableButton">
+        {{ 'save' | cpI18n }}
+      </button>
+    </ready-ui-stack>
   </div>
 </div>

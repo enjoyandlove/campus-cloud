@@ -64,6 +64,20 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
     this.fetch();
   }
 
+  onApproved(commentId: number) {
+    this.state = {
+      ...this.state,
+      comments: this.state.comments.map((c) =>
+        c.id === commentId
+          ? {
+              ...c,
+              dislikes: c.dislikes > 1 ? c.dislikes - 1 : 0
+            }
+          : c
+      )
+    };
+  }
+
   onDeletedComment(commentId: number) {
     const _state = Object.assign({}, this.state);
 

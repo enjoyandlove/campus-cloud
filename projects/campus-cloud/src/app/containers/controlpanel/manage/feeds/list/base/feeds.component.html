@@ -1,23 +1,13 @@
 <ng-container [ngSwitch]="loading$ | async">
   <cp-one-column width="third">
-    <cp-feed-search (feedSearch)="searchHandler($event)"></cp-feed-search>
+    <cp-feed-search [groupId]="groupId"
+                    [groupType]="groupType"
+                    (feedSearch)="searchHandler($event)"
+                    [isCampusWallView]="isCampusWallView$"
+                    [hideIntegrations]="hideIntegrations"></cp-feed-search>
     <div class="row justify-content-around">
       <div class="col-12">
-        <cp-feed-filters [groupId]="groupId"
-                         [groupType]="groupType"
-                         [selectedItem]="selectedItem"
-                         (doFilter)="onDoFilter($event)"
-                         [isCampusWallView]="isCampusWallView$"
-                         [hideIntegrations]="hideIntegrations">
-        </cp-feed-filters>
-
-        <cp-feed-input-box [groupId]="groupId"
-                           [groupType]="groupType"
-                           [isCampusWallView]="isCampusWallView$"
-                           [disablePost]="
-          state.currentView ? state.currentView.postingMemberType === disablePost : false
-        ">
-        </cp-feed-input-box>
+        <cp-feed-input-box></cp-feed-input-box>
 
         <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
@@ -31,8 +21,7 @@
                           *ngIf="!feed.campus_thread_id && !feed.group_thread_id"
                           [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
             </cp-feed-item>
-            <cp-feed-comment [last]="last"
-                             [comment]="feed"
+            <cp-feed-comment [comment]="feed"
                              [replyView]="[true]"
                              showParentThread="true"
                              [isCampusWallView]="isCampusWallView$"
@@ -44,7 +33,7 @@
 
           <cp-no-content class="no-content"
                          *ngIf="!(results$ | async).length"
-                         noContentText="No Posts found...">
+                         [noContentText]="'t_walls_no_results' | cpI18n">
           </cp-no-content>
 
           <div class="row">

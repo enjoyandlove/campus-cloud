@@ -1,8 +1,7 @@
 <div class="dropdown">
   <button type="button"
           data-toggle="dropdown"
-          [class]="buttonClass"
-          i18n>
+          [ngClass]="buttonClass">
     <div class="row">
       <div class="col-10 no-right-padding text-truncate">
         {{ selectedItem.label }}
@@ -23,13 +22,11 @@
              *ngIf="selectedItem === item">check</i>
         </div>
         <div class="col-10 no-left-padding">
-          <p class="dropdown__item--title"
-             i18n>
+          <p class="dropdown__item--title">
             {{ item.label }}
           </p>
           <p [innerHTML]="item.description"
-             class="dropdown__item--description"
-             i18n></p>
+             class="dropdown__item--description"></p>
         </div>
       </div>
     </li>

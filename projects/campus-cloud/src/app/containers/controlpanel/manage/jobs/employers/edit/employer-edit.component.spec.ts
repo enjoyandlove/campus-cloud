@@ -7,10 +7,11 @@ import { Actions } from '@ngrx/effects';
 
 import { EmployerModule } from '../employer.module';
 import * as fromJobs from '@campus-cloud/store/manage/jobs';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerEditComponent } from './employer-edit.component';
+import { mockEmployer } from '@controlpanel/manage/jobs/employers/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
-import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
+import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays/modal/modal.service';
 
 describe('EmployerEditComponent', () => {
   configureTestSuite();
@@ -24,7 +25,21 @@ describe('EmployerEditComponent', () => {
           RouterTestingModule,
           StoreModule.forRoot({}, { runtimeChecks: {} })
         ],
-        providers: [Store, Actions, FormBuilder, ImageService, ImageValidatorService]
+        providers: [
+          Store,
+          Actions,
+          FormBuilder,
+          ImageService,
+          ImageValidatorService,
+          {
+            provide: READY_MODAL_DATA,
+            useValue: {
+              onClose: () => {},
+              onAction: () => {},
+              data: mockEmployer
+            }
+          }
+        ]
       });
       await TestBed.compileComponents();
     })()
@@ -39,60 +54,52 @@ describe('EmployerEditComponent', () => {
   beforeEach(async(() => {
     fixture = TestBed.createComponent(EmployerEditComponent);
     component = fixture.componentInstance;
+    component.modal.data = mockEmployer;
 
-    component.session.g.set('school', mockSchool);
-
-    component.employer = {
-      id: 84,
-      name: 'Hello World!',
-      description: 'This is description',
-      email: 'test@test.com',
-      logo_url: MOCK_IMAGE
-    };
     fixture.detectChanges();
   }));
 
   it('form validation - should fail', () => {
     component.employerForm.controls['name'].setValue(null);
-    expect(component.employerForm.valid).toBeFalsy();
+    expect(component.employerForm.valid).toBe(false);
   });
 
   it('form validation - should pass', () => {
-    expect(component.employerForm.valid).toBeTruthy();
+    expect(component.employerForm.valid).toBe(true);
   });
 
   it('form validation - max length 120 - should fail', () => {
     const charCount121 = 'a'.repeat(121);
 
     component.employerForm.controls['name'].setValue(charCount121);
-    expect(component.employerForm.valid).toBeFalsy();
+    expect(component.employerForm.valid).toBe(false);
   });
 
   it('save button should be disabled', () => {
     component.employerForm.controls['name'].setValue(null);
-    expect(component.buttonData.disabled).toBeTruthy();
+    expect(component.disableButton).toBe(true);
   });
 
   it('save button should be enabled', () => {
-    expect(component.buttonData.disabled).toBeFalsy();
+    expect(component.disableButton).toBe(true);
   });
 
   it('should emit edit action', () => {
     spy = spyOn(component.store, 'dispatch');
     component.onSubmit();
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith(new fromJobs.EditEmployer(component.employerForm.value));
   });
 
-  it('should emit after edit', async(() => {
-    spyOn(component.edited, 'emit');
+  it('should reset modal after edit', async(() => {
     spyOn(component, 'resetModal');
+    spyOn(component.modal, 'onAction');
 
-    component.store.dispatch(new fromJobs.EditEmployerSuccess(component.employer));
+    component.store.dispatch(new fromJobs.EditEmployerSuccess(component.modal.data));
 
-    expect(component.edited.emit).toHaveBeenCalledTimes(1);
-    expect(component.edited.emit).toHaveBeenCalledWith(component.employer);
-    expect(component.resetModal).toHaveBeenCalledTimes(1);
+    expect(component.resetModal).toHaveBeenCalled();
+    expect(component.modal.onAction).toHaveBeenCalled();
+    expect(component.modal.onAction).toHaveBeenCalledWith(component.modal.data);
   }));
 });

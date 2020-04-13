@@ -1,5 +1,13 @@
-<ready-ui-menu-item>
-  <ui-text-style variant="bold">{{name}}</ui-text-style>
+<ready-ui-menu-item noHover="true">
+  <ng-container *ngTemplateOutlet="
+                    headerTpl
+                    ||
+                    default">
+  </ng-container>
 </ready-ui-menu-item>
 
 <ng-content></ng-content>
+
+<ng-template #default>
+  <ui-text-style variant="semibold">{{name}}</ui-text-style>
+</ng-template>

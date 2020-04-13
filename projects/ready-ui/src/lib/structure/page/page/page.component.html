@@ -1,0 +1,18 @@
+<header>
+  <ready-ui-page-container>
+    <div class="crumbs">
+      <ng-content select="ready-ui-page-crumbs"></ng-content>
+    </div>
+    <h1 *ngIf="heading"
+        ui-text-style
+        variant="bold">{{ heading }}</h1>
+    <h2 *ngIf="subheading"><em>{{ subheading }}</em></h2>
+    <div class="nav">
+      <ng-content select="ready-ui-page-navigation"></ng-content>
+    </div>
+  </ready-ui-page-container>
+</header>
+
+<main>
+  <ng-content></ng-content>
+</main>

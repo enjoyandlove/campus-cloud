@@ -5,8 +5,8 @@
   border-radius: 4px;
   margin-bottom: 12px;
   transition: all 200ms ease-in-out;
-  background: map-get($color-grey, 100);
-  border: 1px solid map-get($color-grey, 200);
+  background: map-get($ready-grey, 100);
+  border: 1px solid map-get($ready-grey, 200);
 
   &.active {
     border: 1px solid $color-success;
@@ -24,6 +24,6 @@
   }
 
   &__content {
-    color: map-get($color-grey, 400);
+    color: map-get($ready-grey, 400);
   }
 }

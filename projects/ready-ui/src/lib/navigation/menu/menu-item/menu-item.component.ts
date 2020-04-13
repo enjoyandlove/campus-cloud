@@ -3,9 +3,10 @@ import {
   OnInit,
   Output,
   Component,
+  TemplateRef,
+  HostBinding,
   HostListener,
-  EventEmitter,
-  HostBinding
+  EventEmitter
 } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
@@ -15,11 +16,20 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
   styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemComponent implements OnInit {
+  _noHover = false;
   _disabled = false;
   _triggersSubMenu = false;
 
   @Output()
   itemClick: EventEmitter<MenuItemComponent> = new EventEmitter();
+
+  @Input()
+  set noHover(noHover: string | boolean) {
+    this._noHover = coerceBooleanProperty(noHover);
+  }
+
+  @Input()
+  suffixTpl: TemplateRef<any>;
 
   @Input()
   set disabled(disabled: string | boolean) {
@@ -41,6 +51,11 @@ export class MenuItemComponent implements OnInit {
   @HostBinding('class.disabled')
   get isDisabled() {
     return this._disabled;
+  }
+
+  @HostBinding('class.no-hover')
+  get isNoHover() {
+    return this._noHover;
   }
 
   ngOnInit() {}

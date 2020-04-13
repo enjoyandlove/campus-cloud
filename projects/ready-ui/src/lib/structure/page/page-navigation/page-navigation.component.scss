@@ -1,0 +1,7 @@
+.ready-ui-page-navigation {
+  line-height: 2.5;
+
+  a[ready-ui-page-navigation-item]:not(:last-child) {
+    margin-right: 2em;
+  }
+}

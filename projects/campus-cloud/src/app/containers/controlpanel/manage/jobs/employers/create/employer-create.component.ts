@@ -1,24 +1,13 @@
+import { OnInit, Inject, Component, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import {
-  OnInit,
-  Output,
-  Component,
-  ViewChild,
-  OnDestroy,
-  ElementRef,
-  EventEmitter,
-  HostListener
-} from '@angular/core';
 
-import { CPSession } from '@campus-cloud/session';
-import { IJobsState } from '@projects/campus-cloud/src/app/store';
-import { IEmployer } from '../employer.interface';
 import * as fromJobs from '@campus-cloud/store/manage/jobs';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { IJobsState } from '@projects/campus-cloud/src/app/store';
+import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays/modal/modal.service';
 
 @Component({
   selector: 'cp-employer-create',
@@ -28,37 +17,23 @@ import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 export class EmployerCreateComponent implements OnInit, OnDestroy {
   @ViewChild('createForm', { static: true }) createForm;
 
-  @Output() created: EventEmitter<IEmployer> = new EventEmitter();
-  @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
-
-  buttonData;
+  disableButton = true;
   employerForm: FormGroup;
   destroy$ = new Subject();
 
   constructor(
-    public el: ElementRef,
+    @Inject(READY_MODAL_DATA) public modal,
     public fb: FormBuilder,
     public updates$: Actions,
-    public session: CPSession,
-    public cpI18n: CPI18nService,
     public store: Store<IJobsState>
   ) {}
 
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    // out of modal reset form
-    if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
-    }
-  }
-
   resetModal() {
-    this.resetCreateModal.emit();
-    this.createForm.employerForm.reset();
-    $('#createModal').modal('hide');
+    this.modal.onClose();
   }
 
   onSubmit() {
+    this.disableButton = true;
     this.store.dispatch(new fromJobs.CreateEmployer(this.employerForm.value));
   }
 
@@ -70,14 +45,8 @@ export class EmployerCreateComponent implements OnInit, OnDestroy {
       email: [null]
     });
 
-    this.buttonData = Object.assign({}, this.buttonData, {
-      class: 'primary',
-      disabled: true,
-      text: this.cpI18n.translate('save')
-    });
-
     this.employerForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.buttonData = { ...this.buttonData, disabled: !this.employerForm.valid };
+      this.disableButton = !this.employerForm.valid;
     });
 
     this.updates$
@@ -86,7 +55,7 @@ export class EmployerCreateComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((action: fromJobs.CreateEmployerSuccess) => {
-        this.created.emit(action.payload);
+        this.modal.onAction(action.payload);
         this.resetModal();
       });
   }

@@ -12,18 +12,39 @@ enum hasData {
   no = 'No'
 }
 
+enum wallType {
+  manual = 'Manual',
+  integration = 'Feed Integration'
+}
+
+export const dateAmplitudeLabel = {
+  custom: amplitudeEvents.CUSTOM,
+  lastYear: amplitudeEvents.LAST_YEAR,
+  lastWeek: amplitudeEvents.LAST_7_DAYS,
+  last30Days: amplitudeEvents.LAST_30_DAYS,
+  last90Days: amplitudeEvents.LAST_90_DAYS
+};
+
 @Injectable()
 export class FeedsAmplitudeService {
   constructor(private cpTracking: CPTrackingService, private store: Store<fromStore.IWallsState>) {}
 
-  getWallSource() {
-    let amplitude = null;
+  getViewFilters() {
+    return this.store.pipe(select(fromStore.getViewFilters)).pipe(take(1));
+  }
 
-    this.store
-      .pipe(select(fromStore.getViewFilters))
+  getWallSource() {
+    let amplitude = 'Not Applicable';
+
+    if (!this.isWallMenu()) {
+      return amplitude;
+    }
+
+    this.getViewFilters()
       .pipe(
-        take(1),
-        map(({ postType, isIntegrated, storeCategoryId }) => {
+        map(({ postType, group }) => {
+          const storeCategoryId = group ? group.store_category_id : null;
+          const isIntegrated = (postType && postType.is_integrated) || false;
           // storeCategoryId can be 0 as well to avoid failing condition we are checking integer
           if (Number.isInteger(storeCategoryId)) {
             amplitude = FeedsAmplitudeService.storeCategoryIdToAmplitudeName(storeCategoryId);
@@ -36,7 +57,7 @@ export class FeedsAmplitudeService {
               .select(fromStore.getSocialPostCategories)
               .pipe(take(1))
               .subscribe((channels) => {
-                amplitude = channels.find((c) => c.id === postType).name;
+                amplitude = channels.find((c) => c.id === postType.id).name;
               });
           }
         })
@@ -47,7 +68,7 @@ export class FeedsAmplitudeService {
   }
 
   getWallAmplitudeProperties() {
-    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
     return {
       sub_menu_name,
       post_type: this.getPostType(),
@@ -63,17 +84,33 @@ export class FeedsAmplitudeService {
       sub_menu_name,
       post_id: feed.id,
       likes: FeedsAmplitudeService.hasData(feed.likes),
+      creation_source: this.getPostCreationSource(feed.post_type),
       comments: FeedsAmplitudeService.hasData(feed.comment_count),
       upload_image: FeedsAmplitudeService.hasImage(feed.has_image)
     };
   }
 
+  getPostCreationSource(postTypeId) {
+    let isIntegrated = false;
+
+    if (!this.isWallMenu()) {
+      return wallType.manual;
+    }
+
+    this.store
+      .select(fromStore.getSocialPostCategories)
+      .pipe(take(1))
+      .subscribe((channels) => {
+        isIntegrated = channels.find((c) => c.id === postTypeId).is_integrated;
+      });
+
+    return isIntegrated ? wallType.integration : wallType.manual;
+  }
+
   getPostType() {
     let amplitude = '';
-    this.store
-      .pipe(select(fromStore.getViewFilters))
+    this.getViewFilters()
       .pipe(
-        take(1),
         map(({ flaggedByUser }) => {
           amplitude = flaggedByUser ? amplitudeEvents.FLAGGED : amplitudeEvents.DEFAULT;
         })
@@ -81,6 +118,37 @@ export class FeedsAmplitudeService {
       .subscribe();
 
     return amplitude;
+  }
+
+  getUserFilter() {
+    let amplitude = hasData.no;
+    this.getViewFilters()
+      .pipe(
+        map(({ users }) => {
+          const hasUser = users ? users.length : null;
+          amplitude = hasUser ? hasData.yes : hasData.no;
+        })
+      )
+      .subscribe();
+
+    return amplitude;
+  }
+
+  getWallFiltersAmplitude(dateLabel, state) {
+    const { start, end } = state;
+    const dateDefaultLabel = start && end ? amplitudeEvents.CUSTOM : 'All Time';
+    const date_filter = dateLabel ? dateAmplitudeLabel[dateLabel] : dateDefaultLabel;
+
+    return {
+      date_filter,
+      user_filter: this.getUserFilter(),
+      ...this.getWallAmplitudeProperties()
+    };
+  }
+
+  isWallMenu() {
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
+    return sub_menu_name === 'Walls';
   }
 
   static storeCategoryIdToAmplitudeName(storeCategory) {

@@ -1,0 +1,57 @@
+@import '../../../core/sass/variables';
+
+
+:host {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: transparentize(map-get($map: $ready-grey, $key: 400), 0.5);
+}
+
+.widget {
+  position: relative;
+
+  ready-ui-icon {
+    cursor: pointer;
+  }
+
+  &:hover {
+    ready-ui-icon[name="add_circle"] {
+      display: block;
+    }
+
+    ready-ui-icon[name="add_circle_outline"] {
+      display: none;
+    }
+  }
+
+  &__bg {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  &__icon {
+    top: 28px;
+    left: 28px;
+    position: absolute;
+
+    ready-ui-icon[name="add_circle"] {
+      display: none;
+    }
+
+    ready-ui-icon[name="add_circle_outline"] {
+      display: block;
+    }
+  }
+
+  &__input {
+    input {
+      width: 0;
+      height: 0;
+      opacity: 0;
+    }
+  }
+}

@@ -6,10 +6,9 @@ import { of as observableOf } from 'rxjs';
 
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { CPSession } from '@campus-cloud/session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { DealsEditComponent } from './deals-edit.component';
 import { DealsStoreService } from '../stores/store.service';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 
 class MockDealsService {
@@ -48,10 +47,8 @@ describe('DealsEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [DealsModule, HttpClientModule, RouterTestingModule],
+      imports: [DealsModule, CPTestModule, HttpClientModule, RouterTestingModule],
       providers: [
-        CPSession,
-        CPI18nService,
         provideMockStore(),
         { provide: DealsStoreService, useClass: MockStoreService },
         { provide: DealsService, useClass: MockDealsService }

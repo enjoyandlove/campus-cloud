@@ -11,6 +11,7 @@ import { GroupType } from '../../../feeds.utils.service';
 import { FORMAT } from '@campus-cloud/shared/pipes/date';
 import * as fromStore from '@controlpanel/manage/feeds/store';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { ICampusThread } from '@controlpanel/manage/feeds/model';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 
 declare var $: any;
@@ -123,8 +124,7 @@ export class FeedItemComponent implements OnInit, OnDestroy {
     this.store.dispatch(fromStore.updateThread({ thread: updatedThread }));
   }
 
-  onApprovedPost(updatedThread) {
-    this.feed = Object.assign({}, this.feed, { flag: 2 });
+  onApprovedPost(updatedThread: ICampusThread) {
     this.store.dispatch(fromStore.updateThread({ thread: updatedThread }));
     this.requiresApproval$.next(false);
   }

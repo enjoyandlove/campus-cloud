@@ -3,7 +3,6 @@ import { IEnvironment } from './environment.interface';
 export const environment: IEnvironment = {
   root: '/dist/',
   production: true,
-  version: process.env.APP_VERSION,
   flags: {},
   keys: {
     readyApiKey: 'IUm65kXecFWch54mzJjpy63spWZX3AVp',

@@ -40,14 +40,14 @@ describe('TestUsersComponent', () => {
   it('should be empty', () => {
     component.users = [];
     fixture.detectChanges();
-    const testUsers = debugEl.queryAll(By.css('.cp-form__item'));
+    const testUsers = debugEl.queryAll(By.css('tbody tr[ui-table-row]'));
     const noContent = debugEl.query(By.css('cp-no-content'));
     expect(testUsers.length).toBe(0);
     expect(noContent).toBeTruthy();
   });
 
   it('should have testers', () => {
-    const testUsers = debugEl.queryAll(By.css('.cp-form__item'));
+    const testUsers = debugEl.queryAll(By.css('tbody tr[ui-table-row]'));
     const noContent = debugEl.query(By.css('cp-no-content'));
     expect(testUsers.length).toBe(1);
     expect(noContent).toBeNull();
@@ -55,7 +55,7 @@ describe('TestUsersComponent', () => {
 
   it('should emit resend', () => {
     const spy = spyOn(component.resend, 'emit');
-    const resendBtn = debugEl.query(By.css('.cpbtn--secondary'));
+    const resendBtn = debugEl.query(By.css('.resend'));
     resendBtn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(mockTesters[0].id);

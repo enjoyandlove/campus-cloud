@@ -359,7 +359,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
         const host_type = this.hostType
           ? this.hostType
           : CPAmplitudeService.storeCategoryIdToAmplitudeName(this.data['store_category_id']);
-        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
         const properties = {
           ...TemplatesAmplitudeService.getAmplitudeProperties(data as any, this.data.id),
           host_type,

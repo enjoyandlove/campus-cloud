@@ -7,13 +7,16 @@ import { Store } from '@ngrx/store';
 
 import { JobDate } from './../jobs.status';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
-import { CPDate } from '../../../../../shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { JobsUtilsService } from './../jobs.utils.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { EmployerService } from '../employers/employer.service';
 import { baseActions, IHeader } from '../../../../../store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { JobsAmplitudeService } from '@controlpanel/manage/jobs/jobs.amplitude.service';
 
 @Component({
   selector: 'cp-jobs-edit',
@@ -40,6 +43,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public utils: JobsUtilsService,
+    private cpTracking: CPTrackingService,
     public employerService: EmployerService
   ) {
     super();
@@ -84,12 +88,16 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   editJob(data) {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service
-      .editJob(this.jobId, data.job, search)
-      .subscribe(
-        (job: any) => this.router.navigate([`/manage/jobs/${job.id}/info`]),
-        (_) => this.flashMessageError()
-      );
+    this.service.editJob(this.jobId, data.job, search).subscribe(
+      (job: any) => {
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_UPDATED_ITEM,
+          JobsAmplitudeService.getItemProperties(job)
+        );
+        this.router.navigate([`/manage/jobs/${job.id}/info`]);
+      },
+      (_) => this.flashMessageError()
+    );
   }
 
   editJobWithNewEmployer(data) {
@@ -122,14 +130,16 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `jobs_job_edit`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `jobs_job_edit`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

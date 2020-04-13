@@ -6,66 +6,64 @@
   </div>
 </div>
 
-<div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+<ng-container [ngSwitch]="loading">
+  <ready-ui-spinner *ngSwitchCase="true"></ready-ui-spinner>
 
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
     <cp-no-content class="no-content"
                    *ngIf="!state.employers.length"
-                   [noContentText]="cpI18n.translate('employers_no_results_found')">
+                   [noContentText]="'employers_no_results_found' | cpI18n">
     </cp-no-content>
 
-    <div *ngIf="state.employers.length">
-      <ul class="cp-form employer">
-        <li class="employer__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-11"
-                               sortLabel="name"
-                               (click)="doSort('name')"
-                               [label]="sortingLabels.name"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
+    <ng-container *ngIf="state.employers.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                colspan="2"
+                (click)="doSort('name')"
+                [sortDirection]="state.sort_direction"
+                [sorting]="state.sort_field === 'name'">
+              {{ 'name' | cpI18n }}
+            </th>
+          </tr>
+        </thead>
 
-            <span class="col-1 hover"></span>
-          </div>
-        </li>
-
-        <li class="employer__item col-12"
-            *ngFor="let employer of state.employers">
-          <div class="row">
-            <span class="col-11 text-truncate">
-              <button cpTracker
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let employer of state.employers; index as index">
+            <td ui-table-cell>
+              <ready-ui-stack>
+                <ready-ui-avatar [alt]="'t_shared_img_alt' | cpI18n: index + 1"
+                                 [src]="employer.logo_url"></ready-ui-avatar>
+                <button ui-button
+                        cpTracker
+                        type="button"
+                        variant="inline"
+                        class="text-left"
+                        [eventData]="eventData"
+                        (click)="onEdit(employer)">
+                  <strong>
+                    {{ employer.name }}
+                  </strong>
+                  <br/>
+                  {{employer.description}}
+                </button>
+              </ready-ui-stack>
+            </td>
+            <td ui-table-cell
+                align="right">
+              <button ui-button
                       type="button"
-                      [eventData]="eventData"
-                      data-toggle="modal"
-                      data-target="#editModal"
-                      (click)="launchEditModal = true; selectedEmployer = employer"
-                      class="text-left employer__thumbnail unstyled-button text-truncate">
-                <img *ngIf="employer.logo_url"
-                     [src]="employer.logo_url"
-                     [alt]=""
-                     class="rounded img-fit-cover" />
-                <strong>
-                  {{ employer.name }}
-                </strong>
-                <br />
-                {{ employer.description }}
+                      variant="inline"
+                      aria-label="Delete Employer"
+                      (click)="onDelete(employer)">
+                <ready-ui-icon name="close"></ready-ui-icon>
               </button>
-            </span>
-            <span class="col-1 text-right">
-              <button type="button"
-                      aria-label="delete"
-                      (click)="deleteEmployer = employer; launchDeleteModal = true"
-                      data-toggle="modal"
-                      data-target="#deleteModal"
-                      class="delete-employer unstyled-button">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNext]="pageNext"
                      [pagePrev]="pagePrev"
@@ -73,29 +71,6 @@
                      (next)="onPaginationNext()"
                      (previous)="onPaginationPrevious()">
       </cp-pagination>
-    </div>
-  </div>
-</div>
-
-<cp-modal modalId="createModal"
-          *ngIf="launchCreateModal">
-  <cp-employer-create (created)="onCreated($event)"
-                      (resetCreateModal)="launchCreateModal = false">
-  </cp-employer-create>
-</cp-modal>
-
-<cp-modal modalId="editModal"
-          *ngIf="launchEditModal">
-  <cp-employer-edit [employer]="selectedEmployer"
-                    (edited)="onEdited($event)"
-                    (resetEditModal)="launchEditModal = false">
-  </cp-employer-edit>
-</cp-modal>
-
-<cp-modal modalId="deleteModal"
-          *ngIf="launchDeleteModal">
-  <cp-employer-delete [employer]="deleteEmployer"
-                      (deleted)="onDeleted($event)"
-                      (resetDeleteModal)="launchDeleteModal = false">
-  </cp-employer-delete>
-</cp-modal>
+    </ng-container>
+  </ng-container>
+</ng-container>

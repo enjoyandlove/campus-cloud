@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  ready-ui-tag:not(:last-child) {
+    margin-right: 0.5em;
+  }
+
+  ready-ui-tag {
+    margin-top: 0.86em;
+
+    span {
+      min-width: 0;
+      line-height: 2;
+      max-width: 618px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+      text-overflow: ellipsis;
+    }
+  }
+}

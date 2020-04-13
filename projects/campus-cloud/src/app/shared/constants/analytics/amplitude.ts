@@ -183,6 +183,8 @@ export const amplitudeEvents = {
 
   LAST_30_DAYS: 'Last 30 Days',
 
+  LAST_7_DAYS: 'Last 7 Days',
+
   LAST_90_DAYS: 'Last 90 Days',
 
   SAME_SECTION: 'Same Section',
@@ -212,6 +214,8 @@ export const amplitudeEvents = {
   SELECT_ACCESS: 'Select Access',
 
   All_CATEGORIES: 'All Categories',
+
+  NOT_APPLICABLE: 'Not Applicable',
 
   NO_ENGAGEMENT: 'No Engagement',
 
@@ -343,6 +347,10 @@ export const amplitudeEvents = {
 
   ASSESS_VIEWED_CARDS: 'Assess - Viewed Cards',
 
+  MANAGE_CREATED_ITEM: 'Manage - Created Item',
+
+  MANAGE_UPDATED_ITEM: 'Manage - Updated Item',
+
   MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
 
   STUDIO_CREATED_TILE: 'Studio - Created Tile',
@@ -352,6 +360,8 @@ export const amplitudeEvents = {
   STUDIO_DELETED_TILE: 'Studio - Deleted Tile',
 
   MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
+
+  WALL_APPLIED_FILTERS: 'Wall - Applied Filters',
 
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',
 
@@ -463,6 +473,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
 
+  ASSESS_SUBMITTED_FEEDBACK: 'Assess - Submitted Feedback',
+
   NOTIFY_CREATED_COMMUNICATION: 'Notify - Send Announcement',
 
   CUSTOMIZE_CHANGED_BRANDING: 'Customize - Changed Branding',
@@ -470,8 +482,6 @@ export const amplitudeEvents = {
   STUDIO_CHANGED_TILE_STATUS: 'Studio - Changed Tile Status',
 
   MANAGE_ADDED_WEB_CHECK_OUT: 'Manage - Added Web Check-Out',
-
-  API_MANAGEMENT_VIEWED_PAGE: 'API Management - Viewed Page',
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
 
@@ -481,21 +491,17 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 
-  MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
-
   MANAGE_ADDED_FEED_INTEGRATION: 'Manage - Added Feed Integration',
 
   MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
 
-  API_MANAGEMENT_EDITED_API_KEY: 'API Management - Edited API Key',
+  API_MANAGEMENT_EDITED_API_KEY: 'Ready API - Edited API Key',
 
-  API_MANAGEMENT_REVOKED_API_KEY: 'API Management - Revoked API Key',
+  API_MANAGEMENT_REVOKED_API_KEY: 'Ready API - Revoked API Key',
 
-  API_MANAGEMENT_CREATED_API_KEY: 'API Management - Created API Key',
+  API_MANAGEMENT_CREATED_API_KEY: 'Ready API - Created API Key',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
-
-  MANAGE_IMPORTED_CALENDAR_EVENT: 'Manage - Imported Calendar Event',
 
   MANAGE_SYNCED_FEED_INTEGRATION: 'Manage - Synced Feed Integration',
 

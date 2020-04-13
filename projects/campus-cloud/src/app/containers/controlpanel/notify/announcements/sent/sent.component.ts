@@ -179,9 +179,11 @@ export class AnnouncementSentComponent extends BaseComponent implements OnInit {
   }
 
   updateHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('../../notify.header.json')
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('../../notify.header.json')
+      });
     });
   }
 

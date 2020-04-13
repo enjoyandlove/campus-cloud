@@ -1,0 +1,66 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.cp-terms-of-use-create {
+  .wrapper {
+    display: flex;
+    padding-bottom: 90px;
+
+    &__left-col {
+      width: 24%;
+      flex-basis: 24%
+    }
+
+    &__editor {
+      margin: 25px 20px 20px;
+
+      .ui-editor {
+        height: auto;
+        min-height: 225px;
+      }
+
+      h5 {
+        @include font-14px();
+        @include font-semi-bold();
+      }
+
+      &__read-only {
+        @include font-normal();
+
+        float: right;
+        color: $color-secondary-text;
+      }
+
+      &__disclaimer {
+        padding: 8px 10px;
+        display: block;
+        border-radius: 4px;
+        color: $color-secondary-text;
+        background-color: $color-light-grey;
+
+        a {
+          text-decoration: underline;
+          color: $color-secondary-text;
+        }
+      }
+    }
+
+    &__right-col {
+      width: 76%;
+      flex-basis: 76%;
+      margin-left: 40px;
+      border-radius: 5px;
+      background-color: $color-white;
+      border: 1px solid $border-color;
+    }
+
+    &__footer {
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      position: fixed;
+      padding: 15px 0;
+      background: $color-white;
+      border-top: 1px solid $border-color;
+    }
+  }
+}

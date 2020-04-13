@@ -1,0 +1,18 @@
+<div class="wrapper">
+  <div class="wrapper__body">
+    <img [src]="sanitizer.bypassSecurityTrustUrl(src)"
+         alt="" />
+  </div>
+  <div class="wrapper__close">
+    <button ui-button
+            type="button"
+            color="inherit"
+            variant="inline"
+            [disabled]="_disabled"
+            (click)="close.emit()">
+      <ready-ui-icon width="12px"
+                     height="12px"
+                     name="close"></ready-ui-icon>
+    </button>
+  </div>
+</div>

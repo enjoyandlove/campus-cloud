@@ -1,0 +1,19 @@
+<div #carousel
+     class="swiper-container">
+  <div #wrapper
+       class="swiper-wrapper">
+    <img alt=""
+         [src]="image"
+         class="swiper-slide"
+         *ngFor="let image of images">
+  </div>
+</div>
+
+<button ui-button
+        type="button"
+        color="white"
+        variant="inline"
+        (click)="close.emit()">
+  <ready-ui-icon name="close"
+                 aria-label="Close Lightbox"></ready-ui-icon>
+</button>

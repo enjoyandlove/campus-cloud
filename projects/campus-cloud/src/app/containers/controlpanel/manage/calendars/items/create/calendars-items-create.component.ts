@@ -36,18 +36,20 @@ export class CalendarsItemCreateComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 'calendars_item_create_heading',
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: null,
-          label: null
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 'calendars_item_create_heading',
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: null,
+            label: null
+          },
+          children: []
+        }
+      });
     });
   }
 
@@ -64,7 +66,7 @@ export class CalendarsItemCreateComponent implements OnInit {
 
   trackEvent(item: IItem) {
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CREATED_CALENDAR_EVENT,
+      amplitudeEvents.MANAGE_CREATED_EVENT,
       CalendarAmplitudeService.getCalendarEventItemProperties(item)
     );
   }

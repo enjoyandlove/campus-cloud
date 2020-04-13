@@ -11,7 +11,7 @@
   <div *ngSwitchCase="false">
     <cp-no-content class="no-content"
                    *ngIf="!(integrations$ | async)?.length"
-                   [noContentText]="cpI18n.translate('t_shared_no_integrations_found')">
+                   [noContentText]="'t_shared_no_integrations_found' | cpI18n">
     </cp-no-content>
 
     <div *ngIf="(integrations$ | async)?.length">

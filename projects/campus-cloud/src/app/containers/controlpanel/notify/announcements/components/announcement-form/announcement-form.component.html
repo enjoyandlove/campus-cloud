@@ -44,12 +44,12 @@
         <div class="col-2 no-right-padding"
              *ngIf="form.get('priority').value !== regularPriority">
           <span
-                [class]="'subject-input__label text-center ' + labelConfig.class">
+                [ngClass]="'subject-input__label text-center ' + labelConfig.class">
             {{ labelConfig.label }}
           </span>
         </div>
         <div
-             [class]="form.get('priority').value !== regularPriority ? 'col-10 no-left-padding' : 'col-12'">
+             [ngClass]="form.get('priority').value !== regularPriority ? 'col-10 no-left-padding' : 'col-12'">
           <input type="text"
                  [cpTarget]="'subject'"
                  formControlName="subject"

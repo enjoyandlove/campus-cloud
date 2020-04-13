@@ -24,19 +24,18 @@ button {
 
       &:focus ~ .select__bg:after,
       &:active ~ .select__bg:after {
-        border: 1px solid $color-grey-50;
+        border: 1px solid map-get($ready-grey, 900);
       }
 
       &:disabled ~ .select__bg:after {
-        color: $color-grey-100;
-        border: 1px solid $color-grey-100;
-        background: transparentize($color: $color-grey-100, $amount: 0.8);
+        color: map-get($ready-grey, 700);
+        border: 1px solid map-get($ready-grey, 700);
+        background: transparentize($color: map-get($ready-grey, 700), $amount: 0.8);
       }
     }
   }
 
-  &__input-suffix {
-  }
+  &__input-suffix {}
 
   &__bg {
     &:after {
@@ -48,7 +47,7 @@ button {
       border-radius: 4px;
       position: absolute;
       pointer-events: none;
-      border: 1px solid $color-grey-100;
+      border: 1px solid map-get($ready-grey, 700);
     }
   }
 }

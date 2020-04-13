@@ -12,6 +12,7 @@ import { baseActions, baseActionClass } from '@campus-cloud/store/base';
 import { ClubsModel } from '@controlpanel/manage/clubs/model/clubs.model';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { ClubsAmplitudeService } from '@controlpanel/manage/clubs/clubs.amplitude.service';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -68,6 +69,10 @@ export class ClubsCreateComponent implements OnInit {
     this.clubsService.createClub(this.form.value, search).subscribe(
       (res: any) => {
         this.trackEvent(res);
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_ITEM,
+          ClubsAmplitudeService.getItemProperties(res, this.isAthletic)
+        );
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
       () => {

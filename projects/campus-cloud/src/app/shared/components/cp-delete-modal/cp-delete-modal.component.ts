@@ -26,6 +26,7 @@ export class CPDeleteModalComponent implements OnInit {
   @Input() modalBody: string;
   @Input() modalTitle: string;
   @Input() submitLabel = 'delete';
+  @Input() submitClass = 'danger';
   @Input() modalFooterTemplate: TemplateRef<any>;
 
   @Output() cancelClick: EventEmitter<null> = new EventEmitter();
@@ -61,7 +62,7 @@ export class CPDeleteModalComponent implements OnInit {
 
   ngOnInit() {
     this.buttonData = {
-      class: 'danger',
+      class: this.submitClass,
       disabled: this._warnings.length > 0,
       text: this.cpI18n.translate(this.submitLabel)
     };

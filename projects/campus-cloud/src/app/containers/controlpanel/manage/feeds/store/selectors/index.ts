@@ -15,11 +15,6 @@ export const getFeedsState = createSelector(
   ({ feeds }: IWallsState) => feeds
 );
 
-export const getThreads = createSelector(
-  getFeedsState,
-  ({ threads }: IWallsFeedsState) => threads
-);
-
 export const getExpandedThreadIds = createSelector(
   getFeedsState,
   ({ expandedThreadIds }: IWallsFeedsState) => expandedThreadIds
@@ -30,38 +25,57 @@ export const getSocialPostCategories = createSelector(
   ({ socialPostCategories }: IWallsFeedsState) => socialPostCategories
 );
 
+export const getFilterUsers = createSelector(
+  getFeedsState,
+  ({ users }: IWallsFeedsState) => users
+);
+
 export const getComments = createSelector(
   getFeedsState,
   ({ comments }: IWallsFeedsState) => comments
 );
 
-export const getSocialPostCategoryNameByPostType = (postType: number) =>
+export const getSocialPostCategoryNameByPostType = (postType: any) =>
   createSelector(
     getFeedsState,
-    ({ socialPostCategories, groupId }: IWallsFeedsState) => {
+    ({ socialPostCategories, group }: IWallsFeedsState) => {
       const postCategory = socialPostCategories.find((c) => c.id === postType);
       // Group Threads do not belong to a Post Category
-      return postCategory && !groupId ? postCategory.name : '';
+      return postCategory && !group ? postCategory.name : '';
     }
   );
 
 export const getViewFilters = createSelector(
   getFeedsState,
   ({
-    groupId,
+    end,
+    start,
+    group,
+    users,
     postType,
-    isIntegrated,
-    storeCategoryId,
+    searchTerm,
     flaggedByUser,
     flaggedByModerators
   }: IWallsFeedsState) => ({
-    groupId,
+    end,
+    group,
+    start,
+    users,
     postType,
-    isIntegrated,
+    searchTerm,
     flaggedByUser,
-    storeCategoryId,
     flaggedByModerators
   })
+);
+
+export const getThreads = createSelector(
+  getFeedsState,
+  getViewFilters,
+  ({ threads }, state) => {
+    const filters = getFiltersToApply(state);
+
+    return threads.filter((thread) => filters.every((filterFn) => filterFn(thread)));
+  }
 );
 
 export const getResults = createSelector(
@@ -71,43 +85,15 @@ export const getResults = createSelector(
     /**
      * filter searched results by current filters state
      */
-    const {
-      results,
-      threads,
-      comments,
-      groupId,
-      postType,
-      flaggedByUser,
-      flaggedByModerators
-    } = state;
+    const { results, threads, comments } = state;
 
-    const filters = [];
-    const postTypeFilter = (thread) => thread.post_type === postType;
-    const flaggedByUserFilter = (thread) => thread.dislikes > 0;
-    const flaggedByModeratorsFilter = (thread) => thread.flag < 0;
-    const groupIdFilter = (thread) => thread.group_id === groupId;
-
-    if (groupId) {
-      filters.push(groupIdFilter);
-    }
-
-    if (flaggedByUser) {
-      filters.push(flaggedByUserFilter);
-    }
-
-    if (flaggedByModerators) {
-      filters.push(flaggedByModeratorsFilter);
-    }
-
-    if (postType) {
-      filters.push(postTypeFilter);
-    }
+    const filters = getFiltersToApply(state);
 
     const validThreadIds = threads
       .filter((thread) => filters.every((filterFn) => filterFn(thread)))
       .map((t) => t.id);
     const validCommentIds = comments
-      .filter((thread) => filters.every((filterFn) => filterFn(thread)))
+      .filter((thread) => filters.every((filterFn) => filterFn(thread, true)))
       .map((t) => t.id);
 
     return results
@@ -137,3 +123,35 @@ export const getCommentById = (commentId: number) =>
     getFeedsState,
     ({ comments }: IWallsFeedsState) => comments.find((t) => t.id === commentId)
   );
+
+function getFiltersToApply({ end, start, group, postType, flaggedByUser, flaggedByModerators }) {
+  const filters = [];
+  // the post_type field in comments is not a Social Post Category
+  const postTypeFilter = (thread, isComment = false) =>
+    isComment ? true : thread.post_type === postType.id;
+  const flaggedByUserFilter = (thread) => thread.dislikes > 0;
+  const flaggedByModeratorsFilter = (thread) => thread.flag < 0;
+  const groupIdFilter = (thread) => thread.group_id === group.id;
+  const byDate = ({ added_time }) => added_time >= start && added_time <= end;
+
+  if (group) {
+    filters.push(groupIdFilter);
+  }
+
+  if (start && end) {
+    filters.push(byDate);
+  }
+
+  if (flaggedByUser) {
+    filters.push(flaggedByUserFilter);
+  }
+
+  if (flaggedByModerators) {
+    filters.push(flaggedByModeratorsFilter);
+  }
+
+  if (postType) {
+    filters.push(postTypeFilter);
+  }
+  return filters;
+}

@@ -31,7 +31,7 @@ export class EventsAmplitudeService {
 
   static getFeedbackStatus(event) {
     return !event.event_attendance
-      ? amplitudeEvents.DISABLED
+      ? amplitudeEvents.NOT_APPLICABLE
       : event.event_feedback === EventFeedback.enabled
       ? Feedback.enabled
       : Feedback.disabled;
@@ -71,13 +71,11 @@ export class EventsAmplitudeService {
     }
   }
 
-  static getEventProperties(event: IEvent, isEdited = false) {
-    const description = event.description ? amplitudeEvents.YES : amplitudeEvents.NO;
-
+  static getEventProperties(event: IEvent) {
     const feedback = EventsAmplitudeService.getFeedbackStatus(event);
 
     const qr_code_status = !event.event_attendance
-      ? amplitudeEvents.DISABLED
+      ? amplitudeEvents.NOT_APPLICABLE
       : this.getQRCodeStatus(event, true);
 
     const assessment_status = !event.event_attendance
@@ -89,22 +87,15 @@ export class EventsAmplitudeService {
     const hostType = CPAmplitudeService.storeCategoryIdToAmplitudeName(event.store_category);
     const host_type = hostType ? hostType : amplitudeEvents.ORIENTATION;
 
-    const events = {
+    return {
       feedback,
       host_type,
       qr_code_status,
-      assessment_status
+      assessment_status,
+      event_id: event.id,
+      location: this.getPropertyStatus(event.address),
+      description: this.getPropertyStatus(event.description)
     };
-
-    if (!isEdited) {
-      return {
-        ...events,
-        description,
-        location: EventsAmplitudeService.getPropertyStatus(event.location)
-      };
-    }
-
-    return events;
   }
 
   static getQRCodeCheckOutStatus(data: IEvent | IServiceProvider, isEvent = false) {

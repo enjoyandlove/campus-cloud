@@ -28,6 +28,7 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
 
   channels$;
   buttonData;
+  wallSource;
   currentChannel$;
   form: FormGroup;
 
@@ -49,6 +50,7 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
   }
 
   onSelectedChannel(post_type) {
+    this.wallSource = post_type.label;
     this.form.controls['post_type'].setValue(post_type.action);
   }
 
@@ -67,6 +69,7 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
     const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed);
     delete amplitude['post_type'];
     delete amplitude['sub_menu_name'];
+    amplitude['wall_source'] = this.wallSource;
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_MOVED_POST, amplitude);
   }

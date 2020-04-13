@@ -2,12 +2,14 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { select, text, boolean } from '@storybook/addon-knobs';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 
+import readme from './spinner/README.md';
+
 const sizes = {
   Regular: 'regular',
   Small: 'small'
 };
 
-storiesOf('Spinner', module)
+storiesOf('Feedback and Indicators/Spinner', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -30,6 +32,6 @@ storiesOf('Spinner', module)
       };
     },
     {
-      notes: require('./spinner/README.md')
+      notes: readme
     }
   );

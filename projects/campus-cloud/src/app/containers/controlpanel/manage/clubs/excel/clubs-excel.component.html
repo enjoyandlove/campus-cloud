@@ -1,72 +1,73 @@
-<div [ngSwitch]="isFormReady">
+<ng-container [ngSwitch]="isFormReady">
   <cp-spinner *ngSwitchCase="false"></cp-spinner>
 
-  <div *ngSwitchCase="true">
+  <ng-container *ngSwitchCase="true">
     <div class="row margin-bottom">
       <div class="col-12">
         <cp-no-content noContentText="No Clubs to Add..."
-                       *ngIf="!form.controls.clubs.controls.length">
+                       *ngIf="!form['controls'].clubs['controls'].length">
         </cp-no-content>
 
         <form class="form"
               [formGroup]="form"
-              *ngIf="form.controls.clubs.controls.length">
-          <ul class="col-12 cp-form"
-              formArrayName="clubs">
-            <div class="clubs">
-              <li class="cp-form__header row">
-                <span
-                      class="col-4">{{ labels.create_edit_name | cpI18n }}</span>
-                <span class="col-3">{{ 'email' | cpI18n }}</span>
-                <span class="col-2">{{ 'phone_number' | cpI18n }}</span>
-                <span class="col-2">{{ 'website' | cpI18n }}</span>
-                <span class="col-1"></span>
-              </li>
+              *ngIf="form['controls'].clubs['controls'].length">
+          <table ui-table
+                 formArrayName="clubs">
+            <thead>
+              <tr ui-table-row>
+                <th ui-table-cell>{{ labels.create_edit_name | cpI18n }}</th>
+                <th ui-table-cell>{{ 'email' | cpI18n }}</th>
+                <th ui-table-cell>{{ 'phone_number' | cpI18n }}</th>
+                <th ui-table-cell
+                    colspan="2">{{ 'website' | cpI18n }}</th>
+              </tr>
+            </thead>
 
-              <li class="cp-form__item row"
-                  *ngFor="let club of form.controls.clubs.controls; let i = index">
-                <div [formGroupName]="i"
-                     class="col-12">
-                  <div class="row">
-                    <span class="col-4 text-truncate clubs__thumbnail">
-                      <div class="avatar float-left">
-                        <button type="button"
-                                (click)="onRemoveImage(i)"
-                                *ngIf="club.controls['logo_url'].value"
-                                class="deleteButton hover unstyled-button">
-                          &times;
-                        </button>
-                        <cp-upload-button theme="small"
-                                          [id]="['upload_club_' + i]"
-                                          [isRequired]="formError && club.controls.logo_url.hasError('required')"
-                                          (fileUpload)="onImageUpload($event, i)"
-                                          *ngIf="!club.controls['logo_url'].value">
-                        </cp-upload-button>
-                        <img [alt]="['club avatar ' + i + 1]"
-                             class="rounded img-fit-cover"
-                             *ngIf="club.controls['logo_url'].value"
-                             [src]="club.controls['logo_url'].value" />
-                      </div>
-                      {{ club.controls.name.value }}
-                      <br />
-                      <span
-                            class="text-muted">{{ club.controls.description.value }}</span>
-                    </span>
+            <tbody>
+              <tr ui-table-row
+                  [formGroupName]="i"
+                  *ngFor="let club of form['controls'].clubs['controls']; let i = index">
+                <td ui-table-cell>
+                  <ready-ui-stack>
+                    <ng-container *ngIf="club.controls['logo_url'].value">
+                      <button type="button"
+                              (click)="onRemoveImage(i)"
+                              class="deleteButton hover unstyled-button">
+                        <ready-ui-icon name="close"
+                                       size="small"></ready-ui-icon>
+                      </button>
+                      <ready-ui-avatar [alt]="['club avatar ' + i + 1]"
+                                       [src]="club.controls['logo_url'].value">
+                      </ready-ui-avatar>
+                    </ng-container>
+                    <ng-container *ngIf="!club.controls['logo_url'].value">
+                      <cp-upload-button theme="small"
+                                        [id]="['upload_club_' + i]"
+                                        [isRequired]="formError && club.controls.logo_url.hasError('required')"
+                                        (fileUpload)="onImageUpload($event, i)">
+                      </cp-upload-button>
+                    </ng-container>
+                    <ready-ui-stack direction="vertical"
+                                    spacing="tight">
+                      <span>{{ club.controls.name.value }}</span>
+                      <ui-text-style color="muted">
+                        {{ club.controls.description.value }}</ui-text-style>
+                    </ready-ui-stack>
+                  </ready-ui-stack>
+                </td>
 
-                    <span class="col-3 text-truncate">
-                      {{ club.controls.email.value }}
-                    </span>
-                    <span class="col-2 text-truncate">
-                      {{ club.controls.phone.value }}
-                    </span>
-                    <span class="col-3 text-truncate">
-                      {{ club.controls.website.value }}
-                    </span>
-                  </div>
-                </div>
-              </li>
-            </div>
-          </ul>
+                <td ui-table-cell>
+                  {{ club.controls.email.value }}
+                </td>
+                <td ui-table-cell>
+                  {{ club.controls.phone.value }}
+                </td>
+                <td ui-table-cell>
+                  {{ club.controls.website.value }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </form>
       </div>
     </div>
@@ -76,16 +77,22 @@
         <div class="row">
           <div class="col-12">
             <div class="float-right">
-              <a [routerLink]="['/manage/' + labels.club_athletic]"
-                 class="cpbtn cpbtn--cancel">
+              <a ui-button
+                 variant="stroked"
+                 [routerLink]="['/manage/' + labels.club_athletic]">
                 {{ 'cancel' | cpI18n }}
               </a>
-              <cp-button [props]="buttonData"
-                         (buttonClick)="onSubmit()"> </cp-button>
+              <button ui-button
+                      type="bnutton"
+                      variant="flat"
+                      color="primary"
+                      (click)="onSubmit()">
+                {{ labels.import_button | cpI18n }}
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>

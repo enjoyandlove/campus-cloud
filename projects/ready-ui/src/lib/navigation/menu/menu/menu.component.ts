@@ -23,7 +23,12 @@ import { MenuItemComponent } from './../menu-item/menu-item.component';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
-  @Input() public id: string;
+  _maxHeight: string | undefined;
+
+  @Input()
+  set maxHeight(maxHeight: string | number) {
+    this._maxHeight = typeof maxHeight === 'number' ? `${maxHeight}em` : maxHeight;
+  }
 
   childrenClick$: Observable<MenuComponent>;
 
@@ -36,7 +41,16 @@ export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
   @Output()
   closed: EventEmitter<string | null> = new EventEmitter();
 
+  @Output()
+  opened: EventEmitter<null> = new EventEmitter();
+
   @ViewChild(TemplateRef, { static: true }) public template: TemplateRef<any>;
+
+  get menuClasses() {
+    return {
+      scrollable: Boolean(this._maxHeight)
+    };
+  }
 
   constructor() {}
 
@@ -48,5 +62,9 @@ export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
 
   ngAfterContentInit() {
     this.childrenClick$ = merge(...this.items.map(({ itemClick }) => itemClick)).pipe(mapTo(this));
+  }
+
+  close() {
+    this.closed.emit();
   }
 }

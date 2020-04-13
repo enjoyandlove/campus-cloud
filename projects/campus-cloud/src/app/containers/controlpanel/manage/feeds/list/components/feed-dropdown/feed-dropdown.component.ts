@@ -8,7 +8,7 @@ import * as fromStore from '../../../store';
 
 import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
-import { User } from '@campus-cloud/shared/models';
+import { User, IUser } from '@campus-cloud/shared/models';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
@@ -143,14 +143,15 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
         mergeMap((emails: string[]) => {
           return this.userService
             .updateById(user_id, {
+              school_id: this.session.school.id,
               social_restriction: !emails.includes(this.getFeedEmail())
             })
             .pipe(tap((res) => this.trackMuteUser(res)));
         })
       )
       .subscribe(
-        ({ social_restriction }: any) => {
-          if (social_restriction) {
+        (user: IUser) => {
+          if (User.isMutedInSchool(user, this.session.school.id)) {
             this.store.dispatch(fromStore.banEmail({ email }));
           } else {
             this.store.dispatch(fromStore.unBanEmail({ email }));

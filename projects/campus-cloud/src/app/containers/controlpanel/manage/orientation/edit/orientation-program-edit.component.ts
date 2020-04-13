@@ -18,9 +18,13 @@ import { Subject } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
 import { baseActions } from '@campus-cloud/store/base';
 import { OrientationService } from '../orientation.services';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { OrientationUtilsService } from '../orientation.utils.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { OrientationAmplitudeService } from '../orientation.amplitude.service';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -43,7 +47,7 @@ export class OrientationProgramEditComponent implements OnInit, OnDestroy {
 
   buttonData;
   form: FormGroup;
-  isOrientation = true;
+  hasMembership = false;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -55,7 +59,8 @@ export class OrientationProgramEditComponent implements OnInit, OnDestroy {
     private store: Store<any>,
     public cpI18n: CPI18nService,
     public service: OrientationService,
-    public utils: OrientationUtilsService
+    public utils: OrientationUtilsService,
+    private cpTracking: CPTrackingService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -84,10 +89,16 @@ export class OrientationProgramEditComponent implements OnInit, OnDestroy {
         });
         this.edited.emit(editedProgram);
         this.resetModal();
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_UPDATED_ITEM,
+          OrientationAmplitudeService.getItemProperties(editedProgram)
+        );
       });
   }
 
   ngOnInit() {
+    this.hasMembership = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation);
+
     this.form = this.fb.group({
       name: [this.orientationProgram.name, [Validators.required, Validators.maxLength(225)]],
       description: [this.orientationProgram.description, Validators.maxLength(512)],

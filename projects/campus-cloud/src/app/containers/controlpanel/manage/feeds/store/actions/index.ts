@@ -18,9 +18,12 @@ enum FeedsActions {
   SET_RESULTS = '[manage.walls] set results',
   REMOVE_RESULT = '[manage.walls] remove result',
 
-  SET_GROUP_ID = '[manage.walls] set group id',
-  SET_STORE_CATEGORY_ID = '[manage.walls] set store category id',
-  SET_IS_INTEGRATED = '[manage.walls] set is integrated',
+  SET_GROUP = '[manage.walls] set group',
+  SET_SEARCH_TERM = '[manage.walls] set search term',
+  SET_FILTER_USERS = '[manage.walls] set filter users',
+  CLEAR_FILTER_USERS = '[manage.walls] clear filter users',
+  SET_START_FILTER = '[manage.walls] set start date',
+  SET_END_FILTER = '[manage.walls] set end date',
   SET_POST_TYPE = '[manage.walls] set post type',
   SET_FLAGGED_BY_USER = '[manage.walls] set flagged by user',
   SET_SOCIAL_POST_CATEGORIES = '[manage.walls] set social post categories',
@@ -30,6 +33,16 @@ enum FeedsActions {
 
   EXPAND_COMMENTS = '[manage.walls] expand comments'
 }
+
+export const clearFilterUsers = createAction(FeedsActions.CLEAR_FILTER_USERS);
+export const setSearchTerm = createAction(FeedsActions.SET_SEARCH_TERM, props<{ term: string }>());
+export const setFilterUsers = createAction(FeedsActions.SET_FILTER_USERS, props<{ user: any }>());
+
+export const setEndFilter = createAction(FeedsActions.SET_END_FILTER, props<{ end: number }>());
+export const setStartFilter = createAction(
+  FeedsActions.SET_START_FILTER,
+  props<{ start: number }>()
+);
 
 export const setSocialPostCategories = createAction(
   FeedsActions.SET_SOCIAL_POST_CATEGORIES,
@@ -46,26 +59,13 @@ export const expandComments = createAction(
   props<{ threadId: number }>()
 );
 
-export const setGroupId = createAction(
-  FeedsActions.SET_GROUP_ID,
-  props<{ groupId: number | null }>()
-);
-
-export const setStoreCategoryId = createAction(
-  FeedsActions.SET_STORE_CATEGORY_ID,
-  props<{ storeCategoryId: number | null }>()
-);
-
-export const setIsIntegrated = createAction(
-  FeedsActions.SET_IS_INTEGRATED,
-  props<{ isIntegrated: boolean | null }>()
-);
+export const setGroup = createAction(FeedsActions.SET_GROUP, props<{ group: any | null }>());
 
 export const resetState = createAction(FeedsActions.RESET_STATE);
 
 export const setPostType = createAction(
   FeedsActions.SET_POST_TYPE,
-  props<{ postType: number | null }>()
+  props<{ postType: any | null }>()
 );
 
 export const setFlaggedByUser = createAction(

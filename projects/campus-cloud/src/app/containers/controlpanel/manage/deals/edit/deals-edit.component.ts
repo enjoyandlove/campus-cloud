@@ -7,12 +7,14 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { dealDateValidator } from '../deals.utils';
-import { CustomValidators } from '@campus-cloud/shared/validators';
-import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { DealsService, DateStatus } from '../deals.service';
 import { DealsStoreService } from './../stores/store.service';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { DealsAmplitudeService } from '@controlpanel/manage/deals/deals.amplitude.service';
 
 @Component({
   selector: 'cp-deals-edit',
@@ -38,6 +40,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public route: ActivatedRoute,
+    private cpTracking: CPTrackingService,
     public storeService: DealsStoreService
   ) {
     super();
@@ -67,7 +70,13 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service.editDeal(this.dealId, data.deal, search).subscribe(
-      (deal: any) => this.router.navigate([`/manage/deals/${deal.id}/info`]),
+      (deal: any) => {
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_UPDATED_ITEM,
+          DealsAmplitudeService.getItemProperties()
+        );
+        this.router.navigate([`/manage/deals/${deal.id}/info`]);
+      },
       (_) => {
         this.error = true;
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
@@ -97,14 +106,16 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `t_deals_form_heading_edit_deal`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `t_deals_form_heading_edit_deal`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

@@ -6,13 +6,16 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
-import { CPDate } from '../../../../../shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { JobsTypeDesireStudy } from '../jobs.status';
 import { JobsUtilsService } from '../jobs.utils.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { EmployerService } from '../employers/employer.service';
 import { baseActions, IHeader } from '../../../../../store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { JobsAmplitudeService } from '@controlpanel/manage/jobs/jobs.amplitude.service';
 
 @Component({
   selector: 'cp-jobs-create',
@@ -36,6 +39,7 @@ export class JobsCreateComponent implements OnInit {
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public utils: JobsUtilsService,
+    private cpTracking: CPTrackingService,
     public employerService: EmployerService
   ) {}
 
@@ -68,9 +72,13 @@ export class JobsCreateComponent implements OnInit {
   createJob(data) {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service
-      .createJob(data.job, search)
-      .subscribe((job: any) => this.router.navigate([`/manage/jobs/${job.id}/info`]));
+    this.service.createJob(data.job, search).subscribe((job: any) => {
+      this.cpTracking.amplitudeEmitEvent(
+        amplitudeEvents.MANAGE_CREATED_ITEM,
+        JobsAmplitudeService.getItemProperties(job)
+      );
+      this.router.navigate([`/manage/jobs/${job.id}/info`]);
+    });
   }
 
   createJobWithNewEmployer(data) {
@@ -103,14 +111,16 @@ export class JobsCreateComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `jobs_create_job`,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `jobs_create_job`,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 

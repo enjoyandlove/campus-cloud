@@ -16,14 +16,15 @@ import { baseActions, IHeader, getHeaderState } from '../../../store/base';
 export class CustomiseComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
-  constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select(getHeaderState);
+  constructor(private store: Store<any>) {}
 
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('./customise.header.json')
+  ngOnInit() {
+    this.headerData$ = this.store.select(getHeaderState);
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('./customise.header.json')
+      });
     });
   }
-
-  ngOnInit() {}
 }

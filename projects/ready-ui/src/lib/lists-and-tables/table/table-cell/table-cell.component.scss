@@ -4,14 +4,14 @@
   max-width: 12em;
   background: white;
   padding: 1em 1.35em;
-  line-break: anywhere;
+  word-break: break-word;
 
   &.header {
     text-align: left;
     font-weight: 600;
-    color: map-get($color-grey, 800);
-    background: map-get($color-grey, 100);
-    border-bottom: 1px solid map-get($color-grey, 200);
+    color: map-get($ready-grey, 700);
+    background: map-get($ready-grey, 100);
+    border-bottom: 1px solid map-get($ready-grey, 200);
   }
 
   .wrapper {
@@ -19,11 +19,11 @@
     align-items: center;
 
     &.align-left {
-      justify-content: start;
+      justify-content: flex-start;
     }
 
     &.align-right {
-      justify-content: end;
+      justify-content: flex-end;
     }
 
     &.align-center {

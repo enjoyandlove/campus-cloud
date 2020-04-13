@@ -1,6 +1,6 @@
 export interface IExternalAppOpenLinkParams {
-  android: { store_url: string; package_name: string };
-  ios: { store_url: string; http_url: string };
+  android: { fallback_http_url: string; package_name: string };
+  ios: { fallback_http_url: string; app_link: string };
 }
 
 export interface IExternalAppOpenFormDetails {

@@ -66,7 +66,9 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
       this.launchConfirmationModal = true;
       this.confirmationData = confirmationData;
       this.originalData = items.items;
-      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_CALENDAR_EVENT);
+      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_EVENT, {
+        sub_menu_name: 'Calendars'
+      });
 
       setTimeout(
         () => {

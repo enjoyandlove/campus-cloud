@@ -5,7 +5,7 @@ import { boolean } from '@storybook/addon-knobs';
 
 import { InputModule } from '@ready-education/ready-ui/forms';
 
-storiesOf('Input', module)
+storiesOf('Form/Input', module)
   .addDecorator(
     moduleMetadata({
       imports: [InputModule, ReactiveFormsModule]

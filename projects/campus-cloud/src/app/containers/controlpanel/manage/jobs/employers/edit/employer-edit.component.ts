@@ -1,25 +1,13 @@
+import { Component, OnInit, ViewChild, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-  OnDestroy
-} from '@angular/core';
 
-import { CPSession } from '@campus-cloud/session';
-import { IJobsState } from '@projects/campus-cloud/src/app/store';
-import { IEmployer } from '../employer.interface';
 import * as fromJobs from '@campus-cloud/store/manage/jobs';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { IJobsState } from '@projects/campus-cloud/src/app/store';
+import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays/modal/modal.service';
 
 @Component({
   selector: 'cp-employer-edit',
@@ -29,59 +17,37 @@ import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 export class EmployerEditComponent implements OnInit, OnDestroy {
   @ViewChild('editForm', { static: true }) editForm;
 
-  @Input() employer: IEmployer;
-
-  @Output() edited: EventEmitter<IEmployer> = new EventEmitter();
-  @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
-
-  buttonData;
+  disableButton = true;
   employerForm: FormGroup;
   destroy$ = new Subject();
 
   constructor(
-    public el: ElementRef,
+    @Inject(READY_MODAL_DATA) public modal,
     public fb: FormBuilder,
     public updates$: Actions,
-    public session: CPSession,
-    public cpI18n: CPI18nService,
     public store: Store<IJobsState>
   ) {}
 
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    // out of modal reset form
-    if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
-    }
-  }
-
   resetModal() {
-    this.resetEditModal.emit();
-    this.editForm.employerForm.reset();
-    $('#editModal').modal('hide');
+    this.modal.onClose();
   }
 
   onSubmit() {
+    this.disableButton = true;
     this.store.dispatch(new fromJobs.EditEmployer(this.employerForm.value));
   }
 
   ngOnInit() {
     this.employerForm = this.fb.group({
-      id: [this.employer.id],
-      name: [this.employer.name, [Validators.required, Validators.maxLength(120)]],
-      description: [this.employer.description],
-      logo_url: [this.employer.logo_url, Validators.required],
-      email: [this.employer.email]
-    });
-
-    this.buttonData = Object.assign({}, this.buttonData, {
-      class: 'primary',
-      disabled: false,
-      text: this.cpI18n.translate('save')
+      id: [this.modal.data.id],
+      name: [this.modal.data.name, [Validators.required, Validators.maxLength(120)]],
+      description: [this.modal.data.description],
+      logo_url: [this.modal.data.logo_url, Validators.required],
+      email: [this.modal.data.email]
     });
 
     this.employerForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.buttonData = { ...this.buttonData, disabled: !this.employerForm.valid };
+      this.disableButton = !this.employerForm.valid;
     });
 
     this.updates$
@@ -90,7 +56,7 @@ export class EmployerEditComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((action: fromJobs.EditEmployerSuccess) => {
-        this.edited.emit(action.payload);
+        this.modal.onAction(action.payload);
         this.resetModal();
       });
   }

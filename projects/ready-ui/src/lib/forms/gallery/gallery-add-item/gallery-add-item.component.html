@@ -1,0 +1,22 @@
+<div class="widget">
+  <div class="widget__input">
+    <label class="file">
+      <input multiple
+             type="file"
+             (change)="onChange($event)"
+             aria-label="Select Images"
+             accept="image/png, image/jpeg, image/png, image/jpg" />
+      <div class="widget__icon">
+        <ready-ui-icon width="20px"
+                       height="20px"
+                       color="757575"
+                       name="add_circle_outline"></ready-ui-icon>
+        <ready-ui-icon width="20px"
+                       height="20px"
+                       color="757575"
+                       name="add_circle"></ready-ui-icon>
+      </div>
+      <span class="widget__bg"></span>
+    </label>
+  </div>
+</div>

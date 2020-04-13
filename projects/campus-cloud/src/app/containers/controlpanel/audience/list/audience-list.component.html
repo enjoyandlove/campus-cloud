@@ -120,8 +120,8 @@
 
 <cp-modal modalId="audienceEdit"
           *ngIf="isAudienceEdit">
-  <cp-audience-edit [audienceId]="editAudience.id"
-                    (reset)="isAudienceEdit = false"
-                    (edited)="onEditedAudience($event)">
+  <cp-audience-edit (edited)="onEditedAudience()"
+                    [audienceId]="editAudience.id"
+                    (reset)="isAudienceEdit = false">
   </cp-audience-edit>
 </cp-modal>

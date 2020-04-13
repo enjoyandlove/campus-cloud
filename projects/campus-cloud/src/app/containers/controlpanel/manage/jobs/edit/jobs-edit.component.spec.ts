@@ -6,9 +6,8 @@ import { of as observableOf } from 'rxjs';
 
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '@campus-cloud/session';
 import { JobsEditComponent } from './jobs-edit.component';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerService } from '../employers/employer.service';
 import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
@@ -52,12 +51,10 @@ describe('JobsEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [JobsModule, HttpClientModule, RouterTestingModule],
+      imports: [CPTestModule, JobsModule, HttpClientModule, RouterTestingModule],
       providers: [
-        CPSession,
-        CPI18nService,
-        provideMockStore(),
         ImageService,
+        provideMockStore(),
         ImageValidatorService,
         { provide: EmployerService, useClass: MockEmployerService },
         { provide: JobsService, useClass: MockJobsService }

@@ -30,8 +30,7 @@
 
             <div class="row">
               <ul class="col-12 items-list__results">
-                <li class="cp-form__item"
-                    *ngFor="
+                <li *ngFor="
                     let item of state.selected
                       | cpTeamFilterPipe: { query: query, filterBy: 'name' }; index as i
                   ">
@@ -69,7 +68,7 @@
                 <div class="row">
                   <ul
                       class="col-12 items-list__results items-list__results--full-height">
-                    <li class="cp-form__item col-12"
+                    <li class="col-12"
                         *ngFor="let item of state.selected | cpTeamSelectedPipe; index as selectedResourceIndex">
                       <div class="row"
                            *ngIf="item.checked">
@@ -161,8 +160,7 @@
         <button type="button"
                 (click)="onSubmit()"
                 data-dismiss="modal"
-                class="cpbtn cpbtn--primary"
-                i18n>
+                class="cpbtn cpbtn--primary">
           Done
         </button>
       </div>

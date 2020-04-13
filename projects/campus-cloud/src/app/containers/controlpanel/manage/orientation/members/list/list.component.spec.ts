@@ -128,16 +128,16 @@ describe('OrientationMembersListComponent', () => {
         expect(membersList).not.toBeNull();
       });
 
-      it('should call doSort', () => {
-        spyOn(component, 'doSort').and.callThrough();
-        spyOn(component, 'fetch');
+      // it('should call doSort', () => {
+      //   spyOn(component, 'doSort').and.callThrough();
+      //   spyOn(component, 'fetch');
 
-        fixture.ngZone.run(() => {
-          membersList.sort.emit('some');
-        });
-        expect(component.doSort).toHaveBeenCalled();
-        expect(component.fetch).toHaveBeenCalled();
-      });
+      //   fixture.ngZone.run(() => {
+      //     membersList.sort.emit('some');
+      //   });
+      //   expect(component.doSort).toHaveBeenCalled();
+      //   expect(component.fetch).toHaveBeenCalled();
+      // });
 
       it('should call onDeleteClick on component deleteClick', () => {
         const expecteGroupId = 1;

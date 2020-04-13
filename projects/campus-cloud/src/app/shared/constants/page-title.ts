@@ -15,6 +15,8 @@ export const pageTitle = {
 
   MANAGE_WALL: 'Manage | Wall',
 
+  TERMS_OF_USE: 'Terms of Use',
+
   MANAGE_JOBS: 'Manage | Jobs',
 
   TEAM_SETTINGS: 'Team Settings',

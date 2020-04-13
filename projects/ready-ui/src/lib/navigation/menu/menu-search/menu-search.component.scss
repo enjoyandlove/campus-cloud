@@ -1,0 +1,33 @@
+@import '../../../core/sass/variables';
+
+:host {
+  top: 0;
+  z-index: 1;
+  position: sticky;
+  background: white;
+}
+
+form,
+input,
+.form__control {
+  width: 100%
+}
+
+.form__control {
+  height: 3em;
+  display: flex;
+  padding: 0.5em 1em;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid map-get($ready-grey, 200);
+
+  input {
+    border: none;
+    box-shadow: none;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+}

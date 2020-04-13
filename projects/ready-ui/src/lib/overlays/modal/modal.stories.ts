@@ -11,6 +11,9 @@ import { Component, TemplateRef, Inject, OnInit } from '@angular/core';
   selector: 'ready-ui-modal-component',
   styles: [
     `
+      .wrapper {
+        padding: 1em;
+      }
       header {
         padding-bottom: 1em;
       }
@@ -24,27 +27,29 @@ import { Component, TemplateRef, Inject, OnInit } from '@angular/core';
     `
   ],
   template: `
-    <header>
-      <ready-ui-stack alignment="between">
-        Title
-        <button ui-button type="button" variant="inline" (click)="data.onClose()">
-          <ready-ui-icon name="close" size="small"></ready-ui-icon>
-        </button>
-      </ready-ui-stack>
-    </header>
-    <main>
-      Modal Content
-    </main>
-    <footer>
-      <ready-ui-stack alignment="end">
-        <button ui-button type="button" variant="flat" (click)="data.onCancel()">
-          Cancel
-        </button>
-        <button ui-button type="button" color="danger" variant="flat" (click)="data.onDelete()">
-          Delete
-        </button>
-      </ready-ui-stack>
-    </footer>
+    <div class="wrapper">
+      <header>
+        <ready-ui-stack alignment="between">
+          Title
+          <button ui-button type="button" variant="inline" (click)="data.onClose()">
+            <ready-ui-icon name="close" size="small"></ready-ui-icon>
+          </button>
+        </ready-ui-stack>
+      </header>
+      <main>
+        Modal Content
+      </main>
+      <footer>
+        <ready-ui-stack alignment="end">
+          <button ui-button type="button" variant="flat" (click)="data.onCancel()">
+            Cancel
+          </button>
+          <button ui-button type="button" color="danger" variant="flat" (click)="data.onDelete()">
+            Delete
+          </button>
+        </ready-ui-stack>
+      </footer>
+    </div>
   `
 })
 export class ReadyUIModalComponent {
@@ -67,6 +72,9 @@ export class ReadyUIModalComponent {
   providers: [ModalService],
   styles: [
     `
+      .wrapper {
+        padding: 1em;
+      }
       button:not(:last-child) {
         margin-right: 1em;
       }
@@ -75,7 +83,9 @@ export class ReadyUIModalComponent {
   template: `
     <button ui-button type="button" (click)="templateModal(modal)">Template Modal</button>
     <button ui-button type="button" (click)="componentModal()">Component Modal</button>
-    <ng-template #modal let-data>Template for {{ data.event.name }}</ng-template>
+    <ng-template #modal let-data
+      ><div class="wrapper">Template for {{ data.event.name }}</div></ng-template
+    >
   `
 })
 export class ReadyUIModalWrapperComponent {
@@ -119,7 +129,7 @@ export class ReadyUIModalWrapperComponent {
   }
 }
 
-storiesOf('Modal', module)
+storiesOf('Overlays/Modal', module)
   .addDecorator(
     moduleMetadata({
       entryComponents: [ReadyUIModalComponent],

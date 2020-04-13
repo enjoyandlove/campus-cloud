@@ -32,16 +32,22 @@ export class DatePickerDirective implements OnInit {
   private _noCalendar = false;
   private _enableTime = false;
   private _closeOnSelect = true;
+  private _defaultDate: Date | Date[] | undefined;
   private _mode: 'single' | 'multiple' | 'range' = 'single';
 
   @Input()
-  locale: any;
+  locale = 'en';
 
   @Input()
   minuteIncrement = 5;
 
   @Input()
-  defaultDate: number | string | Date;
+  set defaultDate(defaultDate) {
+    this._defaultDate = defaultDate;
+    if (this.picker) {
+      this.picker.setDate(defaultDate);
+    }
+  }
 
   @Input()
   set closeOnSelect(closeOnSelect: boolean | string) {
@@ -177,13 +183,13 @@ export class DatePickerDirective implements OnInit {
       mode: this._mode,
       position: 'below',
       clickOpens: true,
-      locale: this.locale,
       inline: this._inline,
       static: this._static,
       minDate: this._minDate,
       maxDate: this._maxDate,
       altInput: this._altInput,
       altFormat: this.dateFormat,
+      locale: this.locale as any,
       enableTime: this._enableTime,
       noCalendar: this._noCalendar,
       onOpen: this.onOpen.bind(this),
@@ -191,11 +197,7 @@ export class DatePickerDirective implements OnInit {
       closeOnSelect: this._closeOnSelect,
       onChange: this.onChange.bind(this),
       minuteIncrement: this.minuteIncrement,
-      defaultDate: this.defaultDate
-        ? this._noCalendar
-          ? this.defaultDate
-          : new Date(this.defaultDate)
-        : undefined
+      defaultDate: this._defaultDate
     };
   }
 }

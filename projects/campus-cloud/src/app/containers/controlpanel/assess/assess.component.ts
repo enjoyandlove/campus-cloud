@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -14,11 +14,15 @@ import { baseActions, IHeader } from './../../../store/base';
     </div>
   `
 })
-export class AssessComponent {
+export class AssessComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
-  constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select(getHeaderState);
+  constructor(private store: Store<any>) {}
+
+  ngOnInit() {
+    Promise.resolve().then(() => {
+      this.headerData$ = this.store.select(getHeaderState);
+    });
 
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,

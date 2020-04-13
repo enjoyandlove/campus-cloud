@@ -236,9 +236,11 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   }
 
   updateHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: require('../../customise.header.json')
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: require('../../customise.header.json')
+      });
     });
   }
 

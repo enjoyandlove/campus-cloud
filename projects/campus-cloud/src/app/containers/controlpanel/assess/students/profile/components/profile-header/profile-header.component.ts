@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
+import { User } from '@campus-cloud/shared/models';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
@@ -32,7 +33,9 @@ export class StudentsProfileHeaderComponent implements OnInit {
   }
 
   get isMuted() {
-    return typeof this.muted === 'undefined' ? this.student.social_restriction : this.muted;
+    return typeof this.muted === 'undefined'
+      ? User.isMutedInSchool(this.student, this.session.school.id)
+      : this.muted;
   }
 
   ngOnInit() {
@@ -45,10 +48,13 @@ export class StudentsProfileHeaderComponent implements OnInit {
   }
 
   onMute(social_restriction: boolean) {
-    this.userService.updateById(this.student.id, { social_restriction }).subscribe(() => {
-      this.muted = social_restriction;
-      this.trackMuteUser(social_restriction);
-    });
+    const school_id = this.session.school.id;
+    this.userService
+      .updateById(this.student.id, { school_id, social_restriction })
+      .subscribe(() => {
+        this.muted = social_restriction;
+        this.trackMuteUser(social_restriction);
+      });
   }
 
   trackMuteUser(restriction) {

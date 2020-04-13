@@ -8,7 +8,7 @@ import { Input, Component, OnInit, HostBinding } from '@angular/core';
 })
 export class StylesComponent implements OnInit {
   @Input()
-  variant: 'bold' | 'caption';
+  variant: 'bold' | 'semibold' | 'caption';
 
   @Input()
   color: 'muted' | 'success' | 'danger' | 'info';
@@ -38,6 +38,11 @@ export class StylesComponent implements OnInit {
   @HostBinding('class.variant--bold')
   get isBold() {
     return this.variant === 'bold';
+  }
+
+  @HostBinding('class.variant--semibold')
+  get isSemiBold() {
+    return this.variant === 'semibold';
   }
 
   @HostBinding('class.variant--caption')

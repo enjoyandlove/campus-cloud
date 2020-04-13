@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 import { FeedDeleteModalComponent } from '@controlpanel/manage/feeds/list/components';
@@ -28,9 +29,8 @@ describe('FeedDeleteModalComponent', () => {
       .catch(done.fail)
   );
 
-  let closeButton: HTMLSpanElement;
-  let cancelButton: HTMLButtonElement;
   let component: FeedDeleteModalComponent;
+  let cpDeleteModal: CPDeleteModalComponent;
   let fixture: ComponentFixture<FeedDeleteModalComponent>;
 
   beforeEach(() => {
@@ -40,44 +40,27 @@ describe('FeedDeleteModalComponent', () => {
     component.feed = mockFeed;
     component.isCampusWallView = new BehaviorSubject({ type: 1 });
 
-    const closeButtonDebugEl = fixture.debugElement.query(By.css('.cpmodal__header__close'));
-
-    const cancelButtonDebugEl = fixture.debugElement.query(By.css('.cpbtn--cancel'));
-
-    closeButton = closeButtonDebugEl.nativeElement;
-    cancelButton = cancelButtonDebugEl.nativeElement;
+    cpDeleteModal = fixture.debugElement.query(By.directive(CPDeleteModalComponent))
+      .componentInstance;
 
     fixture.detectChanges();
+  });
 
-    spyOn(component.deleted, 'emit');
+  it('should call onClose on cancelClick', () => {
+    spyOn(component, 'onClose').and.callThrough();
     spyOn(component.teardown, 'emit');
+
+    cpDeleteModal.cancelClick.emit();
+
+    expect(component.onClose).toHaveBeenCalled();
+    expect(component.teardown.emit).toHaveBeenCalled();
   });
 
-  it('should call teardown on close button click', () => {
-    closeButton.click();
+  it('should call onDelete on cp-delete-modal deleteClick event', () => {
+    spyOn(component, 'onDelete');
 
-    expect(component.teardown.emit).toHaveBeenCalled();
-    expect(component.teardown.emit).toHaveBeenCalledTimes(1);
-  });
+    cpDeleteModal.deleteClick.emit();
 
-  it('should call teardown on cancel button click', () => {
-    cancelButton.click();
-
-    expect(component.teardown.emit).toHaveBeenCalled();
-    expect(component.teardown.emit).toHaveBeenCalledTimes(1);
-  });
-
-  it('should delete feed onDelete', () => {
-    spyOn(component, 'trackAmplitudeEvent');
-    spyOn(component.feedsService, 'deleteGroupWallMessageByThreadId').and.returnValue(of({}));
-    spyOn(component.feedsService, 'deleteCampusWallMessageByThreadId').and.returnValue(of({}));
-
-    component.onDelete();
-
-    expect(component.buttonData.disabled).toBe(false);
-    expect(component.deleted.emit).toHaveBeenCalled();
-    expect(component.teardown.emit).toHaveBeenCalled();
-    expect(component.trackAmplitudeEvent).toHaveBeenCalled();
-    expect(component.deleted.emit).toHaveBeenCalledWith(mockFeed.id);
+    expect(component.onDelete).toHaveBeenCalled();
   });
 });

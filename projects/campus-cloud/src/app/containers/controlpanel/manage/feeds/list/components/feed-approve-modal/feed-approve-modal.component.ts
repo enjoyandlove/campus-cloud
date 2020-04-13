@@ -10,6 +10,7 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 @Mixin([Destroyable])
@@ -19,11 +20,11 @@ import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitud
   styleUrls: ['./feed-approve-modal.component.scss']
 })
 export class FeedApproveModalComponent implements OnInit, OnDestroy {
-  @Input() feed: any;
+  @Input() feed: ICampusThread;
   @Input() isCampusWallView: Observable<{}>;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() approved: EventEmitter<number> = new EventEmitter();
+  @Output() approved: EventEmitter<ICampusThread | ISocialGroupThread> = new EventEmitter();
 
   buttonData;
   _isCampusWallView;
@@ -43,18 +44,26 @@ export class FeedApproveModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     const data = { flag: 2 };
 
-    const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(this.feed.id, data);
+    const approveCampusWallThread$ = this.feedsService.approveCampusWallThread(
+      this.feed.id,
+      data
+    ) as Observable<ICampusThread>;
 
-    const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(this.feed.id, data);
+    const approveGroupWallThread$ = this.feedsService.approveGroupWallThread(
+      this.feed.id,
+      data
+    ) as Observable<ISocialGroupThread>;
 
-    const stream$ = this._isCampusWallView ? approveCampusWallThread$ : approveGroupWallThread$;
+    const stream$: Observable<ICampusThread | ISocialGroupThread> = this._isCampusWallView
+      ? approveCampusWallThread$
+      : approveGroupWallThread$;
 
     stream$.subscribe((approvedThread) => {
       this.trackAmplitudeEvent(this.feed);
       $('#approveFeedModal').modal('hide');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
       this.store.dispatch(fromStore.updateThread({ thread: approvedThread }));
-      this.approved.emit(this.feed);
+      this.approved.emit(approvedThread);
       this.teardown.emit();
     });
   }

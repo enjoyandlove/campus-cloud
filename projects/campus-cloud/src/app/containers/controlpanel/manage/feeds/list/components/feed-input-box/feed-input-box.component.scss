@@ -1,11 +1,44 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
 @import '~projects/campus-cloud/src/sass/components/form';
 @import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
 @import '~projects/campus-cloud/src/sass/components/button';
+
+cp-dropdown {
+  width: 12em;
+}
+
+label.file {
+  input {
+    opacity: 0;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  span {
+    @include font-normal();
+
+    cursor: pointer;
+    color: $color-brand;
+  }
+}
+
+ready-ui-gallery-group {
+  display: block;
+  margin-top: 1em;
+}
 
 .editor {
   &__image--wrapper {
     margin-top: 10px;
     position: relative;
+  }
+
+  &__element {
+    margin-bottom: 1em;
   }
 
   &__images {
@@ -38,6 +71,7 @@ p.maxLength {
 }
 
 .channel-dropdown {
+
   span,
   .dropdown {
     display: inline-block;

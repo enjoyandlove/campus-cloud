@@ -1,0 +1,116 @@
+<form [formGroup]="form">
+  <div class="form row">
+    <div class="col-9 no-left-padding no-right-padding">
+      <div class="form__app-name">
+        <label for="name">{{ 'app_name' | cpI18n }}</label>
+        <input id="name"
+               type="text"
+               cpTarget="name"
+               class="form-control"
+               formControlName="name"
+               [class.error]="formErrors && form.get('name').invalid"
+               [placeholder]="'t_api_management_name_input_placeholder' | cpI18n"/>
+      </div>
+
+      <ng-container *ngIf="isEdit">
+        <div class="row form__id">
+          <div class="col-12 no-right-padding no-left-padding">
+            <label for="key-id"
+                   class="form__key-label">{{ 't_api_management_key_id_label' | cpI18n}}</label>
+            <input id="key-id"
+                   class="form__key-id"
+                   type="text"
+                   disabled
+                   [value]="formData.id">
+          </div>
+        </div>
+        <div class="row form__key">
+          <div class="col-12 no-right-padding no-left-padding">
+            <cp-api-management-key [key]="formData.token">
+            </cp-api-management-key>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="row">
+        <div class="col-5">
+          <label>{{ 't_api_management_api_endpoints' | cpI18n }}</label>
+          <ng-container formGroupName="permission_data">
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'announcement'"
+                         formControlName="notification"
+                         [hasError]="formErrors && form.errors?.required"
+                         [label]="'t_api_management_push_notification' | cpI18n">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'user'"
+                         formControlName="user"
+                         [hasError]="formErrors && form.errors?.required"
+                         [label]="'t_api_management_user_information' | cpI18n">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'campus'"
+                         formControlName="campus"
+                         [isChecked]="hasCampus"
+                         [isDisabled]="hasCampus"
+                         [label]="'t_shared_campus' | cpI18n"
+                         [hasError]="formErrors && form.errors?.required">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'experience'"
+                         formControlName="experience"
+                         [label]="'t_shared_experience' | cpI18n"
+                         (toggle)="setCampusValueAndStatus($event)"
+                         [hasError]="formErrors && form.errors?.required">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'audience'"
+                         formControlName="audience"
+                         [label]="'t_shared_audience' | cpI18n"
+                         (toggle)="setCampusValueAndStatus($event)"
+                         [hasError]="formErrors && form.errors?.required">
+            </cp-checkbox>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer row">
+    <div class="col-7 no-left-padding no-right-padding">
+      <div ui-tooltip
+           class="row"
+           *ngIf="!isSandbox"
+           cpTarget="warning_text"
+           [title]="'t_api_management_sanbox_school_tooltip_text' | cpI18n">
+        <div class="col-1">
+          <i class="material-icons">warning</i>
+        </div>
+        <div
+             class="col-11 no-left-padding no-right-padding footer_warning_text">
+          <span>{{ 't_api_management_warning_text_1' | cpI18n }}</span><br>
+          <span>{{'t_api_management_warning_text_2' | cpI18n}}</span>
+        </div>
+      </div>
+    </div>
+    <div
+         class="col-5 footer__action_button text-right no-left-padding no-right-padding">
+      <button *ngIf="isEdit"
+              (click)="cancelEdit.emit()"
+              class="cpbtn cpbtn--cancel">
+        {{ 'cancel' | cpI18n }}
+      </button>
+
+      <a *ngIf="!isEdit"
+         [routerLink]="['/campus-app-management/api-management']"
+         class="cpbtn cpbtn--cancel">
+        {{ 'cancel' | cpI18n }}
+      </a>
+
+      <cp-button cpTarget="submit"
+                 [props]="buttonData"
+                 (click)="onSave()">
+      </cp-button>
+    </div>
+  </div>
+</form>

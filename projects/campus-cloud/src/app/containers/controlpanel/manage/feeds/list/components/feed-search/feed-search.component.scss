@@ -1,9 +1,88 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
 
+.centered-button {
+  height: 36px;
+
+  ready-ui-icon {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
+
+ready-ui-icon[name="close"] {
+  margin-top: -2px;
+}
+
+button.primary {
+  display: flex;
+}
+
+
+.dates {
+  padding: 2em;
+  height: 24em;
+  display: flex;
+
+  ul {
+    margin: 0;
+    height: 100%;
+    width: 160px;
+    padding-left: 0;
+    list-style: none;
+    padding-right: 2em;
+    position: relative;
+
+    button {
+      text-align: left;
+    }
+
+    &:after {
+      top: -2em;
+      right: 0;
+      width: 1px;
+      content: '';
+      position: absolute;
+      height: calc(100% + 4em);
+      background: $color-light-grey;
+    }
+  }
+
+  .calendar {
+    width: 225px;
+    margin-left: 1em;
+  }
+}
+
+ready-ui-menu-item {
+  &.load-more {
+    background: $color-light-grey;
+
+    button[ui-button] {
+      text-align: center;
+    }
+  }
+
+  button[ui-button] {
+    text-align: left;
+  }
+}
+
+button.selected-date {
+  font-weight: 600;
+}
+
+
 cp-card {
   .wrapper {
+    flex: 1;
     display: flex;
     position: relative;
+    align-items: center;
+
+    ready-ui-icon[name="search"] {
+      margin-left: 0.5em;
+    }
 
     span {
       display: flex;
@@ -20,10 +99,16 @@ cp-card {
       flex: 1 1 0%;
       border: none;
       caret-color: $color-brand;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
     }
 
     input,
     button {
+
       &:hover ~ .wrapper__border:after,
       &:focus ~ .wrapper__border:after,
       &:active ~ .wrapper__border:after {
@@ -48,8 +133,12 @@ cp-card {
       border-radius: 4px;
       position: absolute;
       pointer-events: none;
-      border: 1px solid $border-color;
+      border: 1px solid #E6E6E6;
       transition: border 300ms ease-in;
     }
   }
+}
+
+.custom-section-header ready-ui-menu-divider {
+  margin: 1em 0;
 }

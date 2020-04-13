@@ -3,6 +3,8 @@ import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import { select, text } from '@storybook/addon-knobs';
 
+import readme from './README.md';
+
 const variants = {
   Flat: 'flat',
   Basic: 'basic',
@@ -23,7 +25,7 @@ const disabled = {
   False: null
 };
 
-storiesOf('Button', module)
+storiesOf('Actions/Button', module)
   .addDecorator(
     moduleMetadata({
       imports: [ReadyUiModule]
@@ -51,7 +53,7 @@ storiesOf('Button', module)
       };
     },
     {
-      notes: require('./README.md')
+      notes: readme
     }
   )
   .add('Button with icon', () => {

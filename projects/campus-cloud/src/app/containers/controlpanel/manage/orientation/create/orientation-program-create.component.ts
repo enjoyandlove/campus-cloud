@@ -15,10 +15,13 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
-import { ProgramMembership } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants/privileges';
+import { OrientationAmplitudeService } from '../orientation.amplitude.service';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -33,18 +36,19 @@ export class OrientationProgramCreateComponent implements OnInit, OnDestroy {
 
   buttonData;
   form: FormGroup;
-  isOrientation = true;
+  hasMembership = false;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
   constructor(
+    public router: Router,
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    public router: Router,
     public cpI18n: CPI18nService,
-    public service: OrientationService
+    public service: OrientationService,
+    private cpTracking: CPTrackingService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -68,15 +72,20 @@ export class OrientationProgramCreateComponent implements OnInit, OnDestroy {
       .createProgram(this.form.value, search)
       .subscribe((createdOrientationProgram: any) => {
         this.resetModal();
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_ITEM,
+          OrientationAmplitudeService.getItemProperties(createdOrientationProgram)
+        );
         this.router.navigate([`/manage/orientation/${createdOrientationProgram.id}/events`]);
       });
   }
 
   ngOnInit() {
+    this.hasMembership = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation);
     this.form = this.fb.group({
       name: [null, [Validators.required, Validators.maxLength(225)]],
       description: [null, Validators.maxLength(512)],
-      has_membership: [ProgramMembership.enabled]
+      has_membership: [this.hasMembership]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {

@@ -12,6 +12,7 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store/base';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ServicesModel } from '@controlpanel/manage/services/model/services.model';
+import { ServicesAmplitudeService } from '@controlpanel/manage/services/services.amplitude.service';
 
 @Component({
   selector: 'cp-services-create',
@@ -74,6 +75,10 @@ export class ServicesCreateComponent implements OnInit {
         const url = service.service_attendance ? '/info' : '';
 
         this.trackEvent(service, service.id);
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.MANAGE_CREATED_ITEM,
+          ServicesAmplitudeService.getItemProperties(service)
+        );
         this.router.navigate(['/manage/services/' + service.id + url]);
       },
       () => {

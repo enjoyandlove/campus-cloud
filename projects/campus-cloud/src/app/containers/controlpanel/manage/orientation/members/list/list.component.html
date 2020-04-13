@@ -28,9 +28,9 @@
       <div class="row">
         <div class="col-12">
           <cp-pagination (next)="onPaginationNext($event)"
-                         [pagePrev]="(previous$ | async)?.next"
                          [pageNext]="(pagination$ | async)?.next"
                          (previous)="onPaginationPrevious($event)"
+                         [pagePrev]="(pagination$ | async)?.previous"
                          [pageNumber]="(pagination$ | async)?.page">
           </cp-pagination>
         </div>

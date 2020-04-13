@@ -26,6 +26,12 @@ export class MenuTriggerDirective implements OnDestroy {
   overlayRef: OverlayRef;
   _closingActionsSubscription = Subscription.EMPTY;
 
+  @Input()
+  overlayWidth: string;
+
+  @Input()
+  direction: 'bottom-right' | 'bottom-left' = 'bottom-right';
+
   @Input('triggerFor')
   get menu() {
     return this._menu;
@@ -116,6 +122,7 @@ export class MenuTriggerDirective implements OnDestroy {
 
     this.overlayRef = overlayRef;
     this.overlayRef.attach(portal);
+    this._menu.opened.emit();
 
     this._closingActionsSubscription = this.menuClosingActions().subscribe(() => this.closeMenu());
   }
@@ -148,26 +155,29 @@ export class MenuTriggerDirective implements OnDestroy {
 
   private getConfig(): OverlayConfig {
     return {
+      width: this.overlayWidth,
+      disposeOnNavigation: true,
       backdropClass: 'ready-ui-menu',
       positionStrategy: this.getPosition(),
       hasBackdrop: this.triggersSubmenu() ? false : true,
-      scrollStrategy: this.overlay.scrollStrategies.reposition()
+      scrollStrategy: this.overlay.scrollStrategies.block()
     };
   }
 
   private getPosition(): PositionStrategy {
+    const [yValue, xValue] = this.direction.split('-');
     return this.overlay
       .position()
       .flexibleConnectedTo(this.el)
       .withPositions([
         {
-          originX: this.triggersSubmenu() ? 'end' : 'start',
-          overlayX: 'start',
+          originX: this.triggersSubmenu() || xValue === 'left' ? 'end' : 'start',
+          overlayX: xValue === 'left' ? 'end' : 'start',
           originY: this.triggersSubmenu() ? 'top' : 'bottom',
-          overlayY: 'top'
+          overlayY: yValue === 'bottom' ? 'top' : 'bottom'
         }
       ])
-      .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 5)
-      .withDefaultOffsetX(this.triggersSubmenu() ? 5 : 0);
+      .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 4)
+      .withDefaultOffsetX(this.triggersSubmenu() ? 4 : 0);
   }
 }

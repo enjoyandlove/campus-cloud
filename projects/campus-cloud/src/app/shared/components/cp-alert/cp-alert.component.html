@@ -1,6 +1,6 @@
 <div class="alerts text-center"
      *ngIf="message.isShow">
-  <p [class]="['cpalert cpalert-' + message.class]">
+  <p [ngClass]="['cpalert cpalert-' + message.class]">
     {{ message.body }}
     <!--<span class="float-right hover" (click)="onClose()">&#10006;</span>-->
   </p>

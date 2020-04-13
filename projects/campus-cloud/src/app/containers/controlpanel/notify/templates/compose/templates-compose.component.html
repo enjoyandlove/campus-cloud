@@ -92,11 +92,11 @@
                 <div class="col-2"
                      *ngIf="subject_prefix.label">
                   <span
-                        [class]="'subject-input__label text-center ' + subject_prefix.type">
+                        [ngClass]="'subject-input__label text-center ' + subject_prefix.type">
                     {{ subject_prefix.label }}
                   </span>
                 </div>
-                <div [class]="subject_prefix.label ? 'col-10' : 'col-12'">
+                <div [ngClass]="subject_prefix.label ? 'col-10' : 'col-12'">
                   <input id="subject"
                          type="text"
                          formControlName="subject"
