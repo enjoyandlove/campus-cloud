@@ -2481,6 +2481,9 @@
   "t_clubs_admin": {
     "message": "Admin"
   },
+  "t_community_tooltip_download_csv_zip_file": {
+    "message": "Community CSV downloads reflect the search and applied filters"
+  },
   "t_copy_of": {
     "message": "Copy of"
   },
@@ -3671,6 +3674,9 @@
   },
   "t_shared_pending": {
     "message": "Pending"
+  },
+  "t_shared_posts": {
+    "message": "Posts"
   },
   "t_shared_preview": {
     "message": "Preview"

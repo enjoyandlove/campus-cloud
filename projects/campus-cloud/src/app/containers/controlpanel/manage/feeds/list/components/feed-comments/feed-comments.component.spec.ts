@@ -9,6 +9,7 @@ import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { FeedCommentsComponent } from '@controlpanel/manage/feeds/list/components';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 describe('FeedCommentsComponent', () => {
   configureTestSuite();
@@ -17,7 +18,7 @@ describe('FeedCommentsComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule],
-        providers: [FeedsService, provideMockStore()],
+        providers: [FeedsService, FeedsAmplitudeService, provideMockStore()],
         declarations: [FeedCommentsComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

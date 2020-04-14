@@ -489,6 +489,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
 
+  COMMUNITY_DOWNLOADED_REPORT: 'Community - Downloaded Report',
+
   NOTIFY_UPDATED_COMMUNICATION: 'Notify - Updated Communication',
 
   MANAGE_DOWNLOAD_MEMBER_DATA: 'Manage - Downloaded Member Data',

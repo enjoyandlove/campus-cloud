@@ -1,14 +1,25 @@
+import { catchError, tap, take } from 'rxjs/operators';
+import { of, Observable, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
 
+import { CPSession } from '@campus-cloud/session';
 import { ApiService } from '@campus-cloud/base/services';
 import { SocialWallContent } from './model/feeds.interfaces';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
+import { FeedsExportUtilsService } from '@controlpanel/manage/feeds/feeds-export.utils.service';
 
 @Injectable()
 export class FeedsService {
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    private session: CPSession,
+    private cpTracking: CPTrackingService,
+    private dataExportUtils: FeedsExportUtilsService,
+    private feedsAmplitudeService: FeedsAmplitudeService
+  ) {}
 
   getCampusWallFeeds(startRange: number, endRange: number, search?: HttpParams) {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}`;
@@ -170,5 +181,37 @@ export class FeedsService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/`;
 
     return this.api.get(url, search, true);
+  }
+
+  getCampusWallsPosts(params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_POST}/`;
+
+    return this.api.get(url, params, true);
+  }
+
+  getCampusWallsComment(params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_COMMENT}/`;
+
+    return this.api.get(url, params, true);
+  }
+
+  generateReport(params: HttpParams) {
+    const campusWall$ = this.getCampusWallsPosts(params);
+    const campusWallComment$ = this.getCampusWallsComment(params);
+    const stream$ = combineLatest([campusWall$, campusWallComment$]);
+
+    return stream$.pipe(
+      take(1),
+      tap(([wall, comment]) => {
+        this.dataExportUtils.compressFiles(wall, comment);
+        this.trackCommunityExportThread();
+      })
+    );
+  }
+
+  private trackCommunityExportThread() {
+    const { sub_menu_name, ...amplitude } = this.feedsAmplitudeService.getWallFiltersAmplitude();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.COMMUNITY_DOWNLOADED_REPORT, amplitude);
   }
 }
