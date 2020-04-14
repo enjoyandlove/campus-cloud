@@ -4,14 +4,16 @@ import {
   take,
   mapTo,
   repeat,
+  mergeMap,
   switchMap,
   takeUntil,
   startWith,
   skipUntil,
+  catchError,
   debounceTime,
   withLatestFrom
 } from 'rxjs/operators';
-import { Subject, Observable, BehaviorSubject, merge, combineLatest } from 'rxjs';
+import { Subject, Observable, BehaviorSubject, merge, combineLatest, of } from 'rxjs';
 import { OnInit, Output, Component, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -37,16 +39,35 @@ import { now, last7Days, lastYear, last90Days, last30Days } from '@campus-cloud/
 export class FeedSearchComponent implements OnInit {
   @Input() groupId: number;
   @Input() groupType: GroupType;
+  @Input() filterParams: HttpParams;
   @Input() hideIntegrations: boolean;
+  @Input() isCampusWallView: boolean;
 
   @Output()
   feedSearch: EventEmitter<string> = new EventEmitter();
+  @Output()
+  downloading: EventEmitter<boolean> = new EventEmitter();
   maxDate = new Date();
   form = this.fb.group({
     query: ['']
   });
 
   destroy$ = new Subject();
+  downloadThread = new Subject();
+  downloadThread$ = this.downloadThread.asObservable();
+  generateZipFile$ = this.downloadThread.pipe(
+    mergeMap(() => this.feedsService.generateReport(this.filterParams)),
+    catchError(() => of(false))
+  );
+
+  downloading$ = merge(
+    this.downloadThread$.pipe(mapTo(true)),
+    this.generateZipFile$.pipe(mapTo(false))
+  ).pipe(
+    startWith(false),
+    tap((downloading) => this.downloading.emit(downloading))
+  );
+
   eventData = {
     type: CP_TRACK_TO.AMPLITUDE,
     eventName: amplitudeEvents.MANAGE_VIEWED_FEED_INTEGRATION,

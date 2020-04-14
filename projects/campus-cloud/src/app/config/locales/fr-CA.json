@@ -2481,6 +2481,9 @@
   "t_clubs_admin": {
     "message": "Administrateur"
   },
+  "t_community_tooltip_download_csv_zip_file": {
+    "message": "Les téléchargements CSV de la communaté reflètent la recherche et les filtres appliqués"
+  },
   "t_copy_of": {
     "message": "Copie de"
   },
@@ -3597,6 +3600,9 @@
   "t_shared_integration_edit_form_modal_title": {
     "message": "Éditer intégration"
   },
+  "t_shared_integration_preview_check": {
+    "message": "Vérifier"
+  },
   "t_shared_integration_preview_column_uid": {
     "message": "UID"
   },
@@ -3665,6 +3671,9 @@
   },
   "t_shared_pending": {
     "message": "En attente"
+  },
+  "t_shared_posts": {
+    "message": "Publications"
   },
   "t_shared_preview": {
     "message": "Aperçu"

@@ -73,7 +73,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   loading = true;
   disablePost = 100;
   state: IState = state;
+  filterParams: HttpParams;
   destroy$ = new Subject();
+  downloadingReport = false;
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -213,6 +215,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
                 'comment_ids',
                 groupThreadCommentIds.length ? groupThreadCommentIds.join(',') : null
               );
+
+        this.filterParams = threadSearch;
 
         /**
          * Convert the array of SocialWallContent into an object
@@ -414,6 +418,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     search = this.state.isCampusThread
       ? search.append('school_id', this.session.g.get('school').id.toString())
       : search.append('group_id', this.state.group_id.toString());
+
+    this.filterParams = search;
 
     const stream$ = this.doAdvancedSearch(search);
     super
@@ -617,5 +623,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
         (emails) => this.store.dispatch(fromStore.setBannedEmails({ emails })),
         () => this.store.dispatch(fromStore.setBannedEmails({ emails: [] }))
       );
+  }
+
+  onDownloadReport(value) {
+    this.downloadingReport = value;
   }
 }

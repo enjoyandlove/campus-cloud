@@ -6,6 +6,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { FeedApproveCommentModalComponent } from '@controlpanel/manage/feeds/list/components';
 
 describe('FeedApproveCommentModalComponent', () => {
@@ -15,7 +16,7 @@ describe('FeedApproveCommentModalComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule],
-        providers: [FeedsService],
+        providers: [FeedsService, FeedsAmplitudeService],
         declarations: [FeedApproveCommentModalComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

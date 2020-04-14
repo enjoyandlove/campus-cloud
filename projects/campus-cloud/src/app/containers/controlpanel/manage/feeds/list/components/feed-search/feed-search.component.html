@@ -54,6 +54,20 @@
       <ready-ui-icon width="20px"
                      name="settings_applications"></ready-ui-icon>
     </button>
+    <ng-container *ngIf="isCampusWallView">
+      <button ui-button
+              ui-tooltip
+              size="small"
+              type="button"
+              variant="stroked"
+              class="centered-button"
+              (click)="downloadThread.next()"
+              [disabled]="downloading$ | async"
+              [title]="'t_community_tooltip_download_csv_zip_file' | cpI18n">
+        <ready-ui-icon width="20px"
+                       name="save_alt"></ready-ui-icon>
+      </button>
+    </ng-container>
   </ready-ui-stack>
 
   <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
