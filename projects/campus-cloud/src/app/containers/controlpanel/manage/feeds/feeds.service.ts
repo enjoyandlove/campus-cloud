@@ -183,21 +183,21 @@ export class FeedsService {
     return this.api.get(url, search, true);
   }
 
-  getCampusWallsPosts(params: HttpParams) {
+  getCampusWallsPostsExportData(params: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_POST}/`;
 
     return this.api.get(url, params, true);
   }
 
-  getCampusWallsComment(params: HttpParams) {
+  getCampusWallsCommentExportData(params: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_COMMENT}/`;
 
     return this.api.get(url, params, true);
   }
 
   generateReport(params: HttpParams) {
-    const campusWall$ = this.getCampusWallsPosts(params);
-    const campusWallComment$ = this.getCampusWallsComment(params);
+    const campusWall$ = this.getCampusWallsPostsExportData(params);
+    const campusWallComment$ = this.getCampusWallsCommentExportData(params);
     const stream$ = combineLatest([campusWall$, campusWallComment$]);
 
     return stream$.pipe(

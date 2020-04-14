@@ -54,7 +54,7 @@
       <ready-ui-icon width="20px"
                      name="settings_applications"></ready-ui-icon>
     </button>
-    <ng-container *ngIf="isCampusWallView">
+    <ng-container *ngIf="isCampusWallView$ | async">
       <button ui-button
               ui-tooltip
               size="small"

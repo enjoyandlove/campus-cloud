@@ -1,4 +1,4 @@
-import { IDataExportWallsPost, IDataExportWallsComment } from '../feeds-export.utils.service';
+import { IDataExportWallsPost, IDataExportWallsComment } from '../model/feeds.interfaces';
 
 export const mockSocialPostCategory = {
   id: 1,
