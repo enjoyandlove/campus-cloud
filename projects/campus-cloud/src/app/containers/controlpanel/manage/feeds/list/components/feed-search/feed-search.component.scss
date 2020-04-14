@@ -18,6 +18,10 @@ button.primary {
   display: flex;
 }
 
+cp-feed-tags {
+  flex: 1 0;
+}
+
 
 .dates {
   padding: 2em;
@@ -143,4 +147,15 @@ cp-card {
 
 .custom-section-header ready-ui-menu-divider {
   margin: 1em 0;
+}
+
+footer {
+  ready-ui-stack:first-child {
+    margin-top: 1em;
+    align-items: start;
+
+    cp-feed-tags {
+      margin-top: -0.86em;
+    }
+  }
 }
