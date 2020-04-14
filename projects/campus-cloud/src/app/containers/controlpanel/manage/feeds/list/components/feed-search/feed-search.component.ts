@@ -11,13 +11,15 @@ import {
   skipUntil,
   catchError,
   debounceTime,
-  withLatestFrom
+  withLatestFrom,
+  distinctUntilChanged
 } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject, merge, combineLatest, of } from 'rxjs';
 import { OnInit, Output, Component, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
+import * as numeral from 'numeral';
 import { isEqual } from 'lodash';
 
 import * as fromStore from '../../../store';
@@ -86,6 +88,18 @@ export class FeedSearchComponent implements OnInit {
       }
     })
   );
+
+  view$: Observable<{
+    dateMenu: any;
+    statusMenu: any;
+    primaryMenu: any;
+    studentsMenu: any;
+    channelsMenu: any;
+    postCount: number;
+    counting: boolean;
+    commentCount: number;
+    hasFiltersActive: boolean;
+  }>;
 
   loadMore = new Subject();
   closeMenu = new Subject();
@@ -271,7 +285,94 @@ export class FeedSearchComponent implements OnInit {
       this.wallSearchFilterAmplitude(isSearch);
     });
 
-    this.isCampusWallView$ = viewFilters$.pipe(map(({ group }) => group === null));
+    const filtersChanged$ = this.viewFilters$.pipe(
+      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
+      mapTo(true)
+    );
+    const countisDone$ = this.getCount().pipe(mapTo(false));
+    const calculatingCount$ = merge(filtersChanged$, countisDone$).pipe(distinctUntilChanged());
+
+    this.view$ = combineLatest([
+      this.hasFiltersActive$,
+      this.dateMenu$.pipe(startWith(false)),
+      this.statusMenu$.pipe(startWith(false)),
+      this.primaryMenu$.pipe(startWith(false)),
+      this.studentsMenu$.pipe(startWith(false)),
+      this.channelsMenu$.pipe(startWith(false)),
+      this.getCount().pipe(startWith(false)),
+      calculatingCount$.pipe(startWith(true)),
+      viewFilters$.pipe(map(({ group }) => group !== null))
+    ]).pipe(
+      map(
+        ([
+          hasFiltersActive,
+          dateMenu,
+          statusMenu,
+          primaryMenu,
+          studentsMenu,
+          channelsMenu,
+          count,
+          counting,
+          isHostWallView
+        ]) => ({
+          hasFiltersActive,
+          dateMenu,
+          statusMenu,
+          primaryMenu,
+          studentsMenu,
+          channelsMenu,
+          ...count,
+          counting,
+          isHostWallView
+        })
+      )
+    );
+  }
+
+  getCount() {
+    const defaultValue = {
+      postCount: 0,
+      commentCount: 0
+    };
+    return this.viewFilters$.pipe(
+      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
+      switchMap(({ group, users, postType, searchTerm, flaggedByUser, flaggedByModerators }) => {
+        // TODO: remove once API is ready
+        if (group) {
+          return of([{ count: 0 }, { count: 0 }]);
+        }
+
+        const params = new HttpParams()
+          .set('count_only', '1')
+          .set('post_types', postType ? postType.id : null)
+          .set('school_id', this.session.school.id.toString())
+          .set('flagged_by_users_only', flaggedByUser ? '1' : null)
+          .set('search_str', searchTerm !== '' ? searchTerm : null)
+          .set('removed_by_moderators_only', flaggedByModerators ? '1' : null)
+          .set('user_ids', users.length ? users.map(({ id }) => id).join(',') : null);
+
+        if (group) {
+          return combineLatest([
+            this.feedsService.getGroupWallFeeds(1, 1, params) as Observable<{ count: number }>,
+            this.feedsService.getGroupWallCommentsByThreadId(params, 1) as Observable<{
+              count: number;
+            }>
+          ]);
+        }
+
+        return combineLatest([
+          this.feedsService.getCampusWallFeeds(1, 1, params) as Observable<{ count: number }>,
+          this.feedsService.getCampusWallCommentsByThreadId(params, 1) as Observable<{
+            count: number;
+          }>
+        ]);
+      }),
+      map(([posts, comments]) => ({
+        postCount: numeral(posts.count).format('0a'),
+        commentCount: numeral(comments.count).format('0a')
+      })),
+      catchError(() => of(defaultValue))
+    );
   }
 
   getDateMenu(): Observable<any> {

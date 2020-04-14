@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
+import { of, BehaviorSubject } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
-import { of } from 'rxjs';
 
 import * as fromStore from '../../../store';
 
@@ -11,6 +12,7 @@ import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock';
 import { UserService } from '@campus-cloud/shared/services';
 import { FeedSearchComponent } from './feed-search.component';
+import { mockFeedGroup } from '@controlpanel/manage/feeds/tests';
 import { CPTestModule } from '@campus-cloud/shared/tests/test.module';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
@@ -18,6 +20,21 @@ import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitud
 class MockFeedsService {
   getSocialGroups() {
     return of([]);
+  }
+
+  getGroupWallFeeds() {
+    return of({ count: 1 });
+  }
+
+  getGroupWallCommentsByThreadId() {
+    return of({ count: 1 });
+  }
+
+  getCampusWallFeeds() {
+    return of({ count: 1 });
+  }
+  getCampusWallCommentsByThreadId() {
+    return of({ count: 1 });
   }
 }
 class MockUserService {
@@ -30,6 +47,7 @@ describe('FeedSearchComponent', () => {
   let de: DebugElement;
   let session: CPSession;
   let formBuilder: FormBuilder;
+  let feedService: FeedsService;
   let component: FeedSearchComponent;
   let fixture: ComponentFixture<FeedSearchComponent>;
 
@@ -56,11 +74,12 @@ describe('FeedSearchComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FeedSearchComponent);
     component = fixture.componentInstance;
-    formBuilder = TestBed.get(FormBuilder);
+    formBuilder = TestBed.inject(FormBuilder);
     de = fixture.debugElement;
 
-    session = TestBed.get(CPSession);
+    session = TestBed.inject(CPSession);
     session.g.set('school', mockSchool);
+    feedService = TestBed.inject(FeedsService);
 
     component.form = formBuilder.group({
       query: ['']
@@ -126,6 +145,44 @@ describe('FeedSearchComponent', () => {
 
         component.input.next('');
         expect(spy).toHaveBeenCalledWith('');
+      });
+    });
+  });
+
+  describe('getCount', () => {
+    it('should include valid params', () => {
+      const spy = spyOn(feedService, 'getCampusWallFeeds').and.returnValue(of({ count: 1 }));
+      const spy2 = spyOn(feedService, 'getCampusWallCommentsByThreadId').and.returnValue(
+        of({ count: 1 })
+      );
+
+      component.getCount().subscribe(() => {
+        const [, , campusWallParams] = spy.calls.mostRecent().args as [number, number, HttpParams];
+        const [commentParams] = spy2.calls.mostRecent().args as [HttpParams, number];
+
+        const acceptedParams = [
+          'user_ids',
+          'count_only',
+          'post_types',
+          'school_id',
+          'search_str',
+          'flagged_by_users_only',
+          'removed_by_moderators_only'
+        ];
+
+        expect(commentParams.keys().length).toBe(acceptedParams.length);
+        expect(campusWallParams.keys().length).toBe(acceptedParams.length);
+
+        acceptedParams.forEach((key) => {
+          expect(commentParams.get(key)).toBeDefined(`${key} is not defined in commentParams`);
+          expect(campusWallParams.get(key)).toBeDefined(
+            `${key} is not defined in campusWallParams`
+          );
+        });
+      });
+
+      component.viewFilters$ = new BehaviorSubject({
+        group: mockFeedGroup
       });
     });
   });
