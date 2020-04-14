@@ -1,43 +1,17 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
 
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CPDate, compressFiles, createSpreadSheet } from '@campus-cloud/shared/utils';
-
-export interface IDataExportWallsComment {
-  thread_id: number;
-  author_name: string;
-  author_email: string;
-  student_id: string;
-  created_at: string;
-  content: string;
-  attachments: string[];
-  likes: number;
-  dislikes: number;
-}
-
-export interface IDataExportWallsPost {
-  id: string;
-  author_name: string;
-  author_email: string;
-  student_id: string;
-  created_at: string;
-  content: string;
-  attachments: string[];
-  likes: number;
-  dislikes: number;
-  comment_count: number;
-}
+import { IDataExportWallsComment, IDataExportWallsPost } from './model/feeds.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedsExportUtilsService {
-  readonly fileDateSignature = moment().format('YYYY_MM_DD_HHmm');
+  readonly fileDateSignature = CPDate.format(new Date(), 'YYYY_MM_DD_HHmm');
 
   constructor(private cpI18n: CPI18nService, private session: CPSession) {}
-
   generateCSV(columns: string[], data: any[]) {
     return createSpreadSheet(data, columns, 'file', false);
   }

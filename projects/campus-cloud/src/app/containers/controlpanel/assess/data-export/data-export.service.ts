@@ -28,13 +28,13 @@ export class DataExportService {
     private exportDataUtils: DataExportUtilsService
   ) {}
 
-  getCampusWallsComment(params: HttpParams): Observable<IDataExportWallsComment[]> {
+  getCampusWallsCommentExportData(params: HttpParams): Observable<IDataExportWallsComment[]> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_COMMENT}/`;
 
     return <Observable<IDataExportWallsComment[]>>this.api.get(url, params, true);
   }
 
-  getCampusWallsPosts(params: HttpParams): Observable<IDataExportWallsPost[]> {
+  getCampusWallsPostsExportData(params: HttpParams): Observable<IDataExportWallsPost[]> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_POST}/`;
 
     return <Observable<IDataExportWallsPost[]>>this.api.get(url, params, true);
@@ -51,14 +51,14 @@ export class DataExportService {
 
     switch (item.type) {
       case DataExportType.wallComments:
-        return this.getCampusWallsComment(params).pipe(
+        return this.getCampusWallsCommentExportData(params).pipe(
           tap((data: IDataExportWallsComment[]) => {
             this.exportDataUtils.createWallCommentsCSV(data);
             this.trackExportDataSuccess(dataExportAmplitudeMap[DataExportType.wallComments]);
           })
         );
       case DataExportType.wallPosts:
-        return this.getCampusWallsPosts(params).pipe(
+        return this.getCampusWallsPostsExportData(params).pipe(
           tap((data: IDataExportWallsPost[]) => {
             this.exportDataUtils.createWallPostCSV(data);
             this.trackExportDataSuccess(dataExportAmplitudeMap[DataExportType.wallPosts]);

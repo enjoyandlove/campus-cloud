@@ -41,7 +41,6 @@ export class FeedSearchComponent implements OnInit {
   @Input() groupType: GroupType;
   @Input() filterParams: HttpParams;
   @Input() hideIntegrations: boolean;
-  @Input() isCampusWallView: boolean;
 
   @Output()
   feedSearch: EventEmitter<string> = new EventEmitter();
@@ -54,19 +53,20 @@ export class FeedSearchComponent implements OnInit {
 
   destroy$ = new Subject();
   downloadThread = new Subject();
-  downloadThread$ = this.downloadThread.asObservable();
   generateZipFile$ = this.downloadThread.pipe(
     mergeMap(() => this.feedsService.generateReport(this.filterParams)),
     catchError(() => of(false))
   );
 
   downloading$ = merge(
-    this.downloadThread$.pipe(mapTo(true)),
+    this.downloadThread.asObservable().pipe(mapTo(true)),
     this.generateZipFile$.pipe(mapTo(false))
   ).pipe(
     startWith(false),
     tap((downloading) => this.downloading.emit(downloading))
   );
+
+  isCampusWallView$: Observable<boolean>;
 
   eventData = {
     type: CP_TRACK_TO.AMPLITUDE,
@@ -270,6 +270,8 @@ export class FeedSearchComponent implements OnInit {
       this.feedsAmplitudeService.setFilterLabel(presetDateSelected, this.state$);
       this.wallSearchFilterAmplitude(isSearch);
     });
+
+    this.isCampusWallView$ = viewFilters$.pipe(map(({ group }) => group === null));
   }
 
   getDateMenu(): Observable<any> {
