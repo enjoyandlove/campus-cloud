@@ -1,16 +1,9 @@
 @import '../../../core/sass/variables';
 
-:host {
-  top: 0;
-  z-index: 1;
-  position: sticky;
-  background: white;
-}
-
 form,
 input,
 .form__control {
-  width: 100%
+  width: 100%;
 }
 
 .form__control {

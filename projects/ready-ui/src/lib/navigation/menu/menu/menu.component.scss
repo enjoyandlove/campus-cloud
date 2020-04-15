@@ -1,17 +1,28 @@
 .ui-menu {
   width: 100%;
-  display: flex;
-  max-width: 60em;
-  overflow: hidden;
-  background: white;
   border-radius: 4px;
-  line-break: anywhere;
-  flex-direction: column;
+  position: relative;
+  background: white;
   box-shadow: 1px 0 4px rgba(0, 0, 0, 0.17);
 
-  &.scrollable {
-    max-height: 16em;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  ready-ui-menu-search {
+    top: 0;
+    z-index: 1;
+    position: sticky;
+    background: white;
+  }
+
+  &__content {
+    display: flex;
+    max-width: 60em;
+    overflow: hidden;
+    line-break: anywhere;
+    flex-direction: column;
+
+    &.scrollable {
+      max-height: 16em;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
   }
 }

@@ -1,7 +1,10 @@
 <ng-template>
-  <div class="ui-menu"
-       [ngClass]="menuClasses"
-       [ngStyle]="{'max-height': _maxHeight}">
-    <ng-content></ng-content>
+  <div class="ui-menu">
+    <ng-content select="ready-ui-menu-search"></ng-content>
+    <div class="ui-menu__content"
+         [ngClass]="menuClasses"
+         [ngStyle]="{'max-height': _maxHeight}">
+      <ng-content></ng-content>
+    </div>
   </div>
 </ng-template>
