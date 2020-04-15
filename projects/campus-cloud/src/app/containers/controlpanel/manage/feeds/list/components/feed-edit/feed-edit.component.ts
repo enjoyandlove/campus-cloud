@@ -10,10 +10,19 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { map, tap, take, filter, switchMap, startWith, withLatestFrom } from 'rxjs/operators';
+import {
+  map,
+  tap,
+  take,
+  filter,
+  switchMap,
+  takeUntil,
+  startWith,
+  withLatestFrom
+} from 'rxjs/operators';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { TextEditorDirective } from '@ready-education/ready-ui/forms';
-import { Observable, merge, Subject, of, combineLatest } from 'rxjs';
+import { Observable, merge, Subject, combineLatest } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { baseActions } from '@campus-cloud/store/base';
 import { Store, select } from '@ngrx/store';
@@ -177,12 +186,11 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     files = files.slice(0, this.maxImages - imageCtrl.value.length);
-
     const fileUploads$ = merge(...files.map((f: File) => this.imageService.upload(f)));
 
     fileUploads$
       .pipe(
-        take(1),
+        takeUntil(this.destroy$),
         tap(({ image_url }: any) => {
           const images = imageCtrl.value;
           images.push(image_url);
