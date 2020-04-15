@@ -75,7 +75,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   state: IState = state;
   filterParams: HttpParams;
   destroy$ = new Subject();
-  downloadingReport = false;
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -623,9 +622,5 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
         (emails) => this.store.dispatch(fromStore.setBannedEmails({ emails })),
         () => this.store.dispatch(fromStore.setBannedEmails({ emails: [] }))
       );
-  }
-
-  onDownloadReport(value) {
-    this.downloadingReport = value;
   }
 }

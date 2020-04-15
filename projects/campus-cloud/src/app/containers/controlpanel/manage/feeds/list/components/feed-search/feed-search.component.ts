@@ -46,8 +46,7 @@ export class FeedSearchComponent implements OnInit {
 
   @Output()
   feedSearch: EventEmitter<string> = new EventEmitter();
-  @Output()
-  downloading: EventEmitter<boolean> = new EventEmitter();
+
   maxDate = new Date();
   form = this.fb.group({
     query: ['']
@@ -63,12 +62,7 @@ export class FeedSearchComponent implements OnInit {
   downloading$ = merge(
     this.downloadThread.asObservable().pipe(mapTo(true)),
     this.generateZipFile$.pipe(mapTo(false))
-  ).pipe(
-    startWith(false),
-    tap((downloading) => this.downloading.emit(downloading))
-  );
-
-  isCampusWallView$: Observable<boolean>;
+  ).pipe(startWith(false));
 
   eventData = {
     type: CP_TRACK_TO.AMPLITUDE,
