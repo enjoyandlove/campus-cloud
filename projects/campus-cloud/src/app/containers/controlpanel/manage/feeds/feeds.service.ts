@@ -2,12 +2,15 @@ import { catchError, tap, take } from 'rxjs/operators';
 import { of, Observable, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 
+import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { ApiService } from '@campus-cloud/base/services';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { SocialWallContent } from './model/feeds.interfaces';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPTrackingService } from '@campus-cloud/shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { FeedsExportUtilsService } from '@controlpanel/manage/feeds/feeds-export.utils.service';
 
@@ -16,6 +19,8 @@ export class FeedsService {
   constructor(
     private api: ApiService,
     private session: CPSession,
+    private cpI18n: CPI18nService,
+    private store: Store<ISnackbar>,
     private cpTracking: CPTrackingService,
     private dataExportUtils: FeedsExportUtilsService,
     private feedsAmplitudeService: FeedsAmplitudeService
@@ -205,6 +210,15 @@ export class FeedsService {
       tap(([wall, comment]) => {
         this.dataExportUtils.compressFiles(wall, comment);
         this.trackCommunityExportThread();
+        this.handleSuccess();
+      })
+    );
+  }
+
+  private handleSuccess() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate('t_community_data_export_success')
       })
     );
   }

@@ -2481,6 +2481,9 @@
   "t_clubs_admin": {
     "message": "Admin"
   },
+  "t_community_data_export_success": {
+    "message": "Data exported successfully"
+  },
   "t_community_tooltip_download_csv_zip_file": {
     "message": "Community CSV downloads reflect the search and applied filters"
   },
@@ -3881,6 +3884,12 @@
   },
   "t_tile_button_locked": {
     "message": "Locked"
+  },
+  "t_unsupported_browser_modal_body": {
+    "message": "We recommend upgrading your browser to the latest version in order to get the best experience"
+  },
+  "t_unsupported_browser_modal_header": {
+    "message": "Unsupported browser detected"
   },
   "t_walls_campus_walls_channels": {
     "message": "Campus Channels"
