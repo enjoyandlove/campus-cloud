@@ -185,10 +185,10 @@
 
   <ready-ui-menu #users="menu"
                  maxHeight="20em">
+    <ready-ui-menu-search (search)="studentTerm.next($event)"
+                          [placeholder]="'t_walls_search_placeholder' | cpI18n">
+    </ready-ui-menu-search>
     <ng-container *ngIf="view.studentsMenu as studentMenu">
-      <ready-ui-menu-search (search)="studentTerm.next($event)"
-                            [placeholder]="'t_walls_search_placeholder' | cpI18n">
-      </ready-ui-menu-search>
 
       <ng-container
                     *ngIf="studentMenu.selectedUsers.length && !studentMenu.isSearching">
@@ -236,11 +236,10 @@
 
   <ready-ui-menu #channels="menu"
                  maxHeight="20em">
+    <ready-ui-menu-search (search)="channelTerm.next($event)"
+                          [placeholder]="'t_walls_search_placeholder' | cpI18n">
+    </ready-ui-menu-search>
     <ng-container *ngIf="view.channelsMenu as channelsMenu">
-
-      <ready-ui-menu-search (search)="channelTerm.next($event)"
-                            [placeholder]="'t_walls_search_placeholder' | cpI18n">
-      </ready-ui-menu-search>
       <ready-ui-menu-item
                           *ngIf="!channelsMenu.integratedChannels.length && !channelsMenu.nonIntegratedChannels.length && !channelsMenu.socialGroups.length">
         {{ 't_walls_no_channels_found' | cpI18n }}
