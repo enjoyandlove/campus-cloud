@@ -150,12 +150,22 @@ cp-card {
 }
 
 footer {
-  ready-ui-stack:first-child {
-    margin-top: 1em;
-    align-items: start;
+  display: flex;
+  margin-top: 1em;
+  align-items: flex-start;
+  justify-content: space-between;
 
-    cp-feed-tags {
-      margin-top: -0.86em;
+  cp-feed-tags {
+    margin-top: -0.86em;
+  }
+
+  .counter {
+    width: 170px;
+    display: flex;
+    justify-content: flex-end;
+
+    ui-text-style:not(:last-child) {
+      margin-right: 8px;
     }
   }
 }

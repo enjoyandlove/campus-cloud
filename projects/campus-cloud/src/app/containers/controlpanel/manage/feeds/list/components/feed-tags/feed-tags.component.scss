@@ -1,7 +1,7 @@
 :host {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  width: calc(100% - 170px);
 
   ready-ui-tag:not(:last-child) {
     margin-right: 0.5em;
@@ -13,7 +13,7 @@
     span {
       min-width: 0;
       line-height: 2;
-      max-width: 618px;
+      max-width: 460px;
       overflow: hidden;
       white-space: nowrap;
       display: inline-block;
