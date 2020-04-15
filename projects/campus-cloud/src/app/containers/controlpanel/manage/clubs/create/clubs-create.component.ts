@@ -7,11 +7,12 @@ import { Store } from '@ngrx/store';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '@campus-cloud/session';
 import { ClubsUtilsService } from '../clubs.utils.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { baseActions, baseActionClass } from '@campus-cloud/store/base';
 import { ClubsModel } from '@controlpanel/manage/clubs/model/clubs.model';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ClubsAmplitudeService } from '@controlpanel/manage/clubs/clubs.amplitude.service';
 
 @Component({
@@ -122,6 +123,14 @@ export class ClubsCreateComponent implements OnInit {
     this.form = ClubsModel.form(this.isAthletic);
     this.labels = clubAthleticLabels(this.isAthletic);
     this.buildHeader();
+
+    const hasModeration =
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.membership);
+
+    if (!hasModeration) {
+      this.form.get('has_membership').setValue(false);
+    }
 
     this.buttonData = {
       class: 'primary',
