@@ -28,14 +28,15 @@
                [cpTarget]="'name'"
                class="form-control"
                formControlName="name"
-               [class.error]="formError && form.get('name').invalid"/>
+               [class.error]="formError && form.get('name').invalid" />
       </div>
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-12">
-      <label for="description">{{ labels.create_edit_description | cpI18n }}</label>
+      <label for="description"
+             for="description">{{ labels.create_edit_description | cpI18n }}</label>
       <textarea id="description"
                 class="form-control"
                 [cpTarget]="'description'"
@@ -58,7 +59,8 @@
         </div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-6"
+         *ngIf="hasMemberShip">
       <label>{{ labels.create_edit_membership | cpI18n }}</label>
       <div class="row">
         <div class="col-12">
@@ -103,7 +105,7 @@
                    type="text"
                    class="form-control"
                    [cpTarget]="'location'"
-                   formControlName="location"/>
+                   formControlName="location" />
           </div>
           <div class="col-6">
             <label for="room">{{ 'room' | cpI18n }}</label>
@@ -111,7 +113,7 @@
                    type="text"
                    class="form-control"
                    [cpTarget]="'room_info'"
-                   formControlName="room_info"/>
+                   formControlName="room_info" />
           </div>
         </div>
       </div>
