@@ -73,25 +73,23 @@
       </ready-ui-stack>
     </header>
     <footer>
-      <ready-ui-stack spacing="between">
-        <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
-        <ng-container *ngIf="!view.isHostWallView">
-
-          <ready-ui-skeleton-text width="140px"
-                                  *ngIf="view.counting">
-          </ready-ui-skeleton-text>
-          <ready-ui-stack *ngIf="!view.counting">
-            <ui-text-style color="muted"
-                           variant="semibold">{{ view.postCount }}
-              {{ 't_shared_posts' | cpI18n }}
-            </ui-text-style>
-            <ui-text-style color="muted"
-                           variant="semibold">{{ view.commentCount }}
-              {{ 'comments' | cpI18n }}
-            </ui-text-style>
-          </ready-ui-stack>
+      <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
+      <div class="counter"
+           *ngIf="!view.isHostWallView">
+        <ready-ui-skeleton-text width="140px"
+                                *ngIf="view.counting">
+        </ready-ui-skeleton-text>
+        <ng-container *ngIf="!view.counting">
+          <ui-text-style color="muted"
+                         variant="semibold">{{ view.postCount }}
+            {{ 't_shared_posts' | cpI18n }}
+          </ui-text-style>
+          <ui-text-style color="muted"
+                         variant="semibold">{{ view.commentCount }}
+            {{ 'comments' | cpI18n }}
+          </ui-text-style>
         </ng-container>
-      </ready-ui-stack>
+      </div>
     </footer>
 
   </cp-card>

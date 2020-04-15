@@ -3,6 +3,7 @@ import {
   map,
   take,
   mapTo,
+  share,
   repeat,
   mergeMap,
   switchMap,
@@ -279,11 +280,14 @@ export class FeedSearchComponent implements OnInit {
       this.wallSearchFilterAmplitude(isSearch);
     });
 
+    // share to avoid making multiple requests
+    const count$ = this.getCount().pipe(share());
+
     const filtersChanged$ = this.viewFilters$.pipe(
       distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
       mapTo(true)
     );
-    const countisDone$ = this.getCount().pipe(mapTo(false));
+    const countisDone$ = count$.pipe(mapTo(false));
     const calculatingCount$ = merge(filtersChanged$, countisDone$).pipe(distinctUntilChanged());
 
     this.view$ = combineLatest([
@@ -293,7 +297,7 @@ export class FeedSearchComponent implements OnInit {
       this.primaryMenu$.pipe(startWith(false)),
       this.studentsMenu$.pipe(startWith(false)),
       this.channelsMenu$.pipe(startWith(false)),
-      this.getCount().pipe(startWith(false)),
+      count$.pipe(startWith(false)),
       calculatingCount$.pipe(startWith(true)),
       viewFilters$.pipe(map(({ group }) => group !== null))
     ]).pipe(
