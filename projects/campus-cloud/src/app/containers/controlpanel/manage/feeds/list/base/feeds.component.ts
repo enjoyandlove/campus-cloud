@@ -6,7 +6,6 @@ import { isEqual } from 'lodash';
 import {
   map,
   tap,
-  skip,
   take,
   filter,
   mergeMap,
@@ -595,10 +594,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     this.storeService
       .getStores(params)
       .pipe(
-        skip(3),
         map((stores) => stores.filter((s) => s.value).map((s) => s.value)),
         tap((stores) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: stores }))),
-        take(1)
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
