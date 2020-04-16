@@ -161,6 +161,8 @@ describe('FeedSearchComponent', () => {
         const [commentParams] = spy2.calls.mostRecent().args as [HttpParams, number];
 
         const acceptedParams = [
+          'end',
+          'start',
           'user_ids',
           'count_only',
           'post_types',

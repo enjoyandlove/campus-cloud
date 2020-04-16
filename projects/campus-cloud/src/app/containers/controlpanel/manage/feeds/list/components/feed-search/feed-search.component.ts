@@ -5,6 +5,7 @@ import {
   mapTo,
   share,
   repeat,
+  filter,
   mergeMap,
   switchMap,
   takeUntil,
@@ -336,37 +337,51 @@ export class FeedSearchComponent implements OnInit {
     };
     return this.viewFilters$.pipe(
       distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
-      switchMap(({ group, users, postType, searchTerm, flaggedByUser, flaggedByModerators }) => {
-        // TODO: remove once API is ready
-        if (group) {
-          return of([{ count: 0 }, { count: 0 }]);
-        }
+      filter(({ end, start }) => (start || end ? start && end : true)),
+      switchMap(
+        ({
+          end,
+          start,
+          group,
+          users,
+          postType,
+          searchTerm,
+          flaggedByUser,
+          flaggedByModerators
+        }) => {
+          // TODO: remove once API is ready
+          if (group) {
+            return of([{ count: 0 }, { count: 0 }]);
+          }
 
-        const params = new HttpParams()
-          .set('count_only', '1')
-          .set('post_types', postType ? postType.id : null)
-          .set('school_id', this.session.school.id.toString())
-          .set('flagged_by_users_only', flaggedByUser ? '1' : null)
-          .set('search_str', searchTerm !== '' ? searchTerm : null)
-          .set('removed_by_moderators_only', flaggedByModerators ? '1' : null)
-          .set('user_ids', users.length ? users.map(({ id }) => id).join(',') : null);
+          const params = new HttpParams()
+            .set('count_only', '1')
+            .set('end', start && end ? end : null)
+            .set('start', start && end ? start : null)
+            .set('post_types', postType ? postType.id : null)
+            .set('school_id', this.session.school.id.toString())
+            .set('flagged_by_users_only', flaggedByUser ? '1' : null)
+            .set('search_str', searchTerm !== '' ? searchTerm : null)
+            .set('removed_by_moderators_only', flaggedByModerators ? '1' : null)
+            .set('user_ids', users.length ? users.map(({ id }) => id).join(',') : null);
 
-        if (group) {
+          if (group) {
+            return combineLatest([
+              this.feedsService.getGroupWallFeeds(1, 1, params) as Observable<{ count: number }>,
+              this.feedsService.getGroupWallCommentsByThreadId(params, 1) as Observable<{
+                count: number;
+              }>
+            ]);
+          }
+
           return combineLatest([
-            this.feedsService.getGroupWallFeeds(1, 1, params) as Observable<{ count: number }>,
-            this.feedsService.getGroupWallCommentsByThreadId(params, 1) as Observable<{
+            this.feedsService.getCampusWallFeeds(1, 1, params) as Observable<{ count: number }>,
+            this.feedsService.getCampusWallCommentsByThreadId(params, 1) as Observable<{
               count: number;
             }>
           ]);
         }
-
-        return combineLatest([
-          this.feedsService.getCampusWallFeeds(1, 1, params) as Observable<{ count: number }>,
-          this.feedsService.getCampusWallCommentsByThreadId(params, 1) as Observable<{
-            count: number;
-          }>
-        ]);
-      }),
+      ),
       map(([posts, comments]) => ({
         postCount: numeral(posts.count).format('0a'),
         commentCount: numeral(comments.count).format('0a')
@@ -512,7 +527,8 @@ export class FeedSearchComponent implements OnInit {
   }
 
   parseCalendarDate(date: Date[]) {
-    this.handleDate(date.map((d) => CPDate.toEpoch(d, this.session.tz)));
+    const dates = date.map((d) => CPDate.toEpoch(d, this.session.tz));
+    this.handleDate(dates);
   }
 
   handleClearSelectedStudents() {
