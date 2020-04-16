@@ -18,10 +18,10 @@ import {
 import { Subject, Observable, BehaviorSubject, merge, combineLatest, of } from 'rxjs';
 import { OnInit, Output, Component, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { isEqual, get as _get } from 'lodash';
 import { FormBuilder } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import * as numeral from 'numeral';
-import { isEqual } from 'lodash';
 
 import * as fromStore from '../../../store';
 import { CPSession } from '@campus-cloud/session';
@@ -198,8 +198,10 @@ export class FeedSearchComponent implements OnInit {
           selectedHostWall,
           query
         ]) => {
-          const searchByName = (item) =>
-            item.name.toLowerCase().startsWith((query as string).toLowerCase().trim());
+          const searchByName = (item) => {
+            const name = _get(item, 'name', '');
+            return name.toLowerCase().startsWith((query as string).toLowerCase().trim());
+          };
           return {
             selectedChannel,
             selectedHostWall,
