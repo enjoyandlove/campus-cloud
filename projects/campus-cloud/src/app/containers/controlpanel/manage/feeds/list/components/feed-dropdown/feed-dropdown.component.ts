@@ -67,7 +67,6 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
       'extern_poster_id' in this.feed
         ? this.store.pipe(select(fromStore.getSocialGroupIds)).pipe(
             filter((socialGroupIds: number[]) => Boolean(socialGroupIds.length)),
-            take(1),
             withLatestFrom(this.store.pipe(select(fromStore.getViewFilters))),
             map(([socialGroupIds, { flaggedByModerators, searchTerm }]) => {
               const notSearching = searchTerm === '';
