@@ -76,7 +76,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
         this.trackEvent(this.form.value);
         this.cpTracking.amplitudeEmitEvent(
-          amplitudeEvents.MANAGE_CREATED_ITEM,
+          amplitudeEvents.MANAGE_UPDATED_ITEM,
           ServicesAmplitudeService.getItemProperties(service)
         );
         this.router.navigate(['/manage/services/' + this.serviceId + route]);
