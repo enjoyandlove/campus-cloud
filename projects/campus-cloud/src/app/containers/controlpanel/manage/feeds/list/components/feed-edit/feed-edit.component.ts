@@ -33,6 +33,7 @@ import { validThread } from '../../../validators';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { MAX_UPLOAD_SIZE, amplitudeEvents } from '@campus-cloud/shared/constants';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { CPTrackingService, ImageService, CPI18nService } from '@campus-cloud/shared/services';
 
 import {
@@ -76,7 +77,8 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
     private feedService: FeedsService,
     private imageService: ImageService,
     private cpTracking: CPTrackingService,
-    private store: Store<fromStore.IWallsState>
+    private store: Store<fromStore.IWallsState>,
+    private feedsAmplitudeService: FeedsAmplitudeService
   ) {}
 
   ngOnInit(): void {
@@ -246,6 +248,7 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this.submitting.next(true);
     this.updateThread$.pipe(take(1)).subscribe(
       (res) => {
+        this.trackEditEvent(res);
         this.updated.emit(res);
         this.submitting.next(false);
         this.store.dispatch(fromStore.setEdit({ editing: null }));
@@ -255,5 +258,18 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
         this.handleError(err);
       }
     );
+  }
+
+  trackEditEvent(feed) {
+    this.store
+      .pipe(select(fromStore.getEditing))
+      .pipe(take(1))
+      .subscribe(({ type }) => {
+        const amplitude = this.feedsAmplitudeService.getWallThreadAmplitude(
+          feed,
+          type === 'COMMENT' ? 'Comment' : 'Post'
+        );
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.COMMUNITY_EDITED_THREAD, amplitude);
+      });
   }
 }
