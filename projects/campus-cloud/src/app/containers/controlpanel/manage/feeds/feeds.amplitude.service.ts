@@ -100,8 +100,8 @@ export class FeedsAmplitudeService {
     let amplitude = '';
     this.getViewFilters()
       .pipe(
-        map(({ flaggedByUser }) => {
-          amplitude = flaggedByUser ? amplitudeEvents.FLAGGED : amplitudeEvents.DEFAULT;
+        map(({ flaggedByUser, flaggedByModerators }) => {
+          amplitude = FeedsAmplitudeService.postType(flaggedByUser, flaggedByModerators);
         })
       )
       .subscribe();
@@ -266,5 +266,15 @@ export class FeedsAmplitudeService {
 
   static hasImage(image) {
     return image ? hasData.yes : hasData.no;
+  }
+
+  static postType(flaggedByUser, flaggedByModerators) {
+    if (flaggedByUser) {
+      return amplitudeEvents.FLAGGED;
+    } else if (flaggedByModerators) {
+      return amplitudeEvents.REMOVED;
+    }
+
+    return amplitudeEvents.DEFAULT;
   }
 }
