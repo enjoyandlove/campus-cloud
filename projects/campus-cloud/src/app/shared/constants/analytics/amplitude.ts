@@ -421,6 +421,8 @@ export const amplitudeEvents = {
 
   MANAGE_CC_WEB_CHECK_IN: 'Manage - CC  Web Check-In',
 
+  COMMUNITY_EDITED_THREAD: 'Community - Edited Thread',
+
   COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE: 'Experience',
 
   AUDIENCE_DOWNLOAD_DATA: 'Audience - Downloaded Data',
