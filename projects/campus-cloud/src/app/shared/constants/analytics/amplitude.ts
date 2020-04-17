@@ -75,6 +75,8 @@ export const amplitudeEvents = {
 
   PENDING: 'Pending',
 
+  REMOVED: 'Removed',
+
   ENABLED: 'Enabled',
 
   AUDIENCE: 'Audience',
