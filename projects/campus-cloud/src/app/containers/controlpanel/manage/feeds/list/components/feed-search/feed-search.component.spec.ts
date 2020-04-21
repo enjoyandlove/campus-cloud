@@ -30,10 +30,10 @@ class MockFeedsService {
     return of({ count: 1 });
   }
 
-  getCampusWallFeeds() {
+  getCampusWallsPostsExportData() {
     return of({ count: 1 });
   }
-  getCampusWallCommentsByThreadId() {
+  getCampusWallsCommentExportData() {
     return of({ count: 1 });
   }
 }
@@ -132,7 +132,7 @@ describe('FeedSearchComponent', () => {
   });
 
   describe('query$', () => {
-    it('should emit feedSearch when, querys length is zero or greater than 3', () => {
+    it('should emit feedSearch when, query length is zero or greater than 3', () => {
       const spy = spyOn(component.feedSearch, 'emit');
 
       component.input$.subscribe(() => {
@@ -151,20 +151,23 @@ describe('FeedSearchComponent', () => {
 
   describe('getCount', () => {
     it('should include valid params', () => {
-      const spy = spyOn(feedService, 'getCampusWallFeeds').and.returnValue(of({ count: 1 }));
-      const spy2 = spyOn(feedService, 'getCampusWallCommentsByThreadId').and.returnValue(
+      const spy = spyOn(feedService, 'getCampusWallsPostsExportData').and.returnValue(
+        of({ count: 1 })
+      );
+      const spy2 = spyOn(feedService, 'getCampusWallsCommentExportData').and.returnValue(
         of({ count: 1 })
       );
 
       component.getCount().subscribe(() => {
-        const [, , campusWallParams] = spy.calls.mostRecent().args as [number, number, HttpParams];
-        const [commentParams] = spy2.calls.mostRecent().args as [HttpParams, number];
+        const [campusWallParams] = spy.calls.mostRecent().args as [HttpParams];
+        const [commentParams] = spy2.calls.mostRecent().args as [HttpParams];
 
         const acceptedParams = [
           'end',
           'start',
           'user_ids',
           'count_only',
+          'group_id',
           'post_types',
           'school_id',
           'search_str',
