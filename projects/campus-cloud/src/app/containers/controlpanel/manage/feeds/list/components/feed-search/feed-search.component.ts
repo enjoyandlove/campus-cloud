@@ -349,14 +349,10 @@ export class FeedSearchComponent implements OnInit {
           flaggedByUser,
           flaggedByModerators
         }) => {
-          // TODO: remove once API is ready
-          if (group) {
-            return of([{ count: 0 }, { count: 0 }]);
-          }
-
           const params = new HttpParams()
             .set('count_only', '1')
             .set('end', start && end ? end : null)
+            .set('group_id', group ? group.id : null)
             .set('start', start && end ? start : null)
             .set('post_types', postType ? postType.id : null)
             .set('school_id', this.session.school.id.toString())
@@ -367,16 +363,18 @@ export class FeedSearchComponent implements OnInit {
 
           if (group) {
             return combineLatest([
-              this.feedsService.getGroupWallFeeds(1, 1, params) as Observable<{ count: number }>,
-              this.feedsService.getGroupWallCommentsByThreadId(params, 1) as Observable<{
+              this.feedsService.getGroupThreadExportData(params) as Observable<{ count: number }>,
+              this.feedsService.getGroupCommentExportData(params) as Observable<{
                 count: number;
               }>
             ]);
           }
 
           return combineLatest([
-            this.feedsService.getCampusWallFeeds(1, 1, params) as Observable<{ count: number }>,
-            this.feedsService.getCampusWallCommentsByThreadId(params, 1) as Observable<{
+            this.feedsService.getCampusWallsPostsExportData(params) as Observable<{
+              count: number;
+            }>,
+            this.feedsService.getCampusWallsCommentExportData(params) as Observable<{
               count: number;
             }>
           ]);
