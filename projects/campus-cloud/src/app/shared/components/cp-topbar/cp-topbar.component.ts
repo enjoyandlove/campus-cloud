@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { get as _get } from 'lodash';
 
 import { EnvService } from '@campus-cloud/config/env';
 import { appStorage, base64 } from '@campus-cloud/shared/utils';
@@ -48,7 +49,7 @@ export class CPTopBarComponent implements OnInit {
       return 'events';
     } else if (
       canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
-      this.session.g.get('schoolConfig').campus_wall_enabled
+      _get(this.session.g.get('schoolConfig'), 'campus_wall_enabled', false)
     ) {
       return 'feeds';
     } else if (
