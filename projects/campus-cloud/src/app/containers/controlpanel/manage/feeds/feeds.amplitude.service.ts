@@ -19,6 +19,10 @@ enum wallType {
   integration = 'Feed Integration'
 }
 
+enum DateFilterLabel {
+  allTime = 'All Time'
+}
+
 export const dateAmplitudeLabel = {
   custom: amplitudeEvents.CUSTOM,
   lastYear: amplitudeEvents.LAST_YEAR,
@@ -125,7 +129,7 @@ export class FeedsAmplitudeService {
 
   setFilterLabel(dateLabel, state) {
     const { start, end } = state;
-    const dateDefaultLabel = start && end ? amplitudeEvents.CUSTOM : 'All Time';
+    const dateDefaultLabel = start && end ? amplitudeEvents.CUSTOM : DateFilterLabel.allTime;
     this._filterLabel = dateLabel ? dateAmplitudeLabel[dateLabel] : dateDefaultLabel;
   }
 
@@ -136,11 +140,12 @@ export class FeedsAmplitudeService {
 
   getWallFiltersAmplitude() {
     const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
+    const date_filter = this.filterLabel ? this.filterLabel : DateFilterLabel.allTime;
 
     return {
+      date_filter,
       sub_menu_name,
       post_type: this.getPostType(),
-      date_filter: this.filterLabel,
       user_filter: this.getUserFilter(),
       wall_source: this.getWallSource()
     };
@@ -148,16 +153,20 @@ export class FeedsAmplitudeService {
 
   getAllWallAmplitude(feed) {
     const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
+    const creation_source =
+      feed.user_id > 0 ? 'App User' : this.getPostCreationSource(feed.post_type);
+
+    const date_filter = this.filterLabel ? this.filterLabel : DateFilterLabel.allTime;
 
     return {
+      date_filter,
       sub_menu_name,
+      creation_source,
       post_id: feed.id,
       post_type: this.getPostType(),
-      date_filter: this.filterLabel,
       wall_source: this.getWallSource(),
       user_filter: this.getUserFilter(),
       likes: FeedsAmplitudeService.hasData(feed.likes),
-      creation_source: this.getPostCreationSource(feed.post_type),
       comments: FeedsAmplitudeService.hasData(feed.comment_count),
       upload_image: FeedsAmplitudeService.hasImage(feed.has_image)
     };
@@ -233,13 +242,15 @@ export class FeedsAmplitudeService {
 
   getWallViewedImageAmplitude(feed, isComment) {
     const thread_type = isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
+    const creation_source =
+      feed.user_id > 0 ? 'App User' : this.getPostCreationSource(feed.post_type);
 
     return {
       ...this.getWallFiltersAmplitude(),
       thread_type,
+      creation_source,
       thread_id: feed.id,
-      total_images: feed.image_url_list.length,
-      creation_source: this.getPostCreationSource(feed.post_type)
+      total_images: feed.image_url_list.length
     };
   }
 
