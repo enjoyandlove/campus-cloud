@@ -67,7 +67,8 @@ export const mockDataExportWallPost: IDataExportWallsPost = {
   attachments: [],
   likes: 1,
   dislikes: 1,
-  comment_count: 1
+  comment_count: 1,
+  channel_name: 'News'
 };
 
 export const mockDataExportWallComment: IDataExportWallsComment = {
@@ -79,5 +80,7 @@ export const mockDataExportWallComment: IDataExportWallsComment = {
   content: 'Comment Body',
   attachments: [],
   likes: 1,
-  dislikes: 1
+  dislikes: 1,
+  channel_name: 'News',
+  thread_content: 'Post Body'
 };

@@ -2526,6 +2526,9 @@
   "t_data_export_app_users": {
     "message": "App Users"
   },
+  "t_data_export_csv_posts_channel_name": {
+    "message": "Channel Name"
+  },
   "t_data_export_csv_posts_comments_count": {
     "message": "# of Comments"
   },
@@ -2562,6 +2565,9 @@
   "t_data_export_csv_walls_date_created": {
     "message": "Date"
   },
+  "t_data_export_csv_walls_post": {
+    "message": "Post"
+  },
   "t_data_export_csv_wall_comment_comment": {
     "message": "Wall Comment"
   },
@@ -2579,12 +2585,6 @@
   },
   "t_data_export_waiting_title": {
     "message": "Generating CSV file"
-  },
-  "t_data_export_wall_comments": {
-    "message": "Wall Comments"
-  },
-  "t_data_export_wall_posts": {
-    "message": "Wall Posts"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2848,6 +2848,12 @@
   "t_external_check_in_error_fill_out_all_fields": {
     "message": "Please fill out the marked fields"
   },
+  "t_external_check_in_event_feedback_already_provided": {
+    "message": "You have already provided feedback for this event."
+  },
+  "t_external_check_in_footer_note": {
+    "message": "You can close this tab and ignore the email which brought you here."
+  },
   "t_external_check_in_forbidden_error": {
     "message": "Cannot check user in to event as you do not have the proper privileges. "
   },
@@ -2856,6 +2862,12 @@
   },
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
+  },
+  "t_external_check_in_service_feedback_already_provided": {
+    "message": "You have already provided feedback for this service."
+  },
+  "t_external_event_not_found": {
+    "message": "The event does not exist."
   },
   "t_feeds_approve": {
     "message": "Approve"
@@ -3740,6 +3752,9 @@
   },
   "t_shared_sync": {
     "message": "Sync"
+  },
+  "t_shared_thank_you": {
+    "message": "Thank You"
   },
   "t_shared_thursday": {
     "message": "Thursday"

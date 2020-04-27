@@ -2523,6 +2523,9 @@
   "t_data_export_app_users": {
     "message": "Utilisateurs de l'application"
   },
+  "t_data_export_csv_posts_channel_name": {
+    "message": "Nom de la chaîne"
+  },
   "t_data_export_csv_posts_comments_count": {
     "message": "# de Commentaires"
   },
@@ -2559,6 +2562,9 @@
   "t_data_export_csv_walls_date_created": {
     "message": "Date"
   },
+  "t_data_export_csv_walls_post": {
+    "message": "Publier"
+  },
   "t_data_export_csv_wall_comment_comment": {
     "message": "Commentaire Du Mur"
   },
@@ -2576,12 +2582,6 @@
   },
   "t_data_export_waiting_title": {
     "message": "Génération du fichier CSV"
-  },
-  "t_data_export_wall_comments": {
-    "message": "Commentaires Du Mur"
-  },
-  "t_data_export_wall_posts": {
-    "message": "Publications Du Mur"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
@@ -2853,6 +2853,9 @@
   },
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
+  },
+  "t_external_check_in_service_feedback_already_provided": {
+    "message": "You have already provided feedback for this service."
   },
   "t_feeds_approve": {
     "message": "Approuver"
@@ -3734,6 +3737,9 @@
   },
   "t_shared_sync": {
     "message": "Synchroniser"
+  },
+  "t_shared_thank_you": {
+    "message": "Thank You"
   },
   "t_shared_thursday": {
     "message": "Jeudi"

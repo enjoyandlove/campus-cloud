@@ -22,6 +22,7 @@ export class FeedsExportUtilsService {
       author_name: this.cpI18n.translate('t_data_export_csv_posts_student_or_host_name'),
       author_email: this.cpI18n.translate('t_data_export_csv_posts_student_email'),
       student_id: this.cpI18n.translate('t_data_export_csv_posts_student_id'),
+      channel_name: this.cpI18n.translate('t_data_export_csv_posts_channel_name'),
       created_at: this.cpI18n.translate('t_data_export_csv_posts_date_posted'),
       content: this.cpI18n.translate('t_data_export_csv_posts_wall_post'),
       attachments: this.cpI18n.translate('t_data_export_csv_posts_wall_post_images'),
@@ -36,6 +37,7 @@ export class FeedsExportUtilsService {
         content,
         created_at,
         student_id,
+        channel_name,
         author_name,
         author_email,
         attachments,
@@ -49,6 +51,7 @@ export class FeedsExportUtilsService {
         [columns.author_name]: author_name,
         [columns.author_email]: author_email,
         [columns.student_id]: student_id,
+        [columns.channel_name]: channel_name,
         [columns.created_at]: CPDate.fromEpoch(created_at, this.session.tz).format(
           'DD/MM/YYYY hh:mm:ssA'
         ),
@@ -66,9 +69,11 @@ export class FeedsExportUtilsService {
   createWallCommentsCSV(data: IDataExportWallsComment[]) {
     const columns = {
       thread_id: this.cpI18n.translate('t_data_export_csv_posts_post_id'),
+      thread_content: this.cpI18n.translate('t_data_export_csv_walls_post'),
       author_name: this.cpI18n.translate('t_data_export_csv_posts_student_or_host_name'),
       author_email: this.cpI18n.translate('t_data_export_csv_posts_student_email'),
       student_id: this.cpI18n.translate('t_data_export_csv_posts_student_id'),
+      channel_name: this.cpI18n.translate('t_data_export_csv_posts_channel_name'),
       created_at: this.cpI18n.translate('t_data_export_csv_walls_date_created'),
       content: this.cpI18n.translate('t_data_export_csv_wall_comment_comment'),
       attachments: this.cpI18n.translate('t_data_export_csv_wall_comment_images'),
@@ -79,9 +84,11 @@ export class FeedsExportUtilsService {
     const formattedData = data.map((d: IDataExportWallsComment) => {
       const {
         thread_id,
+        thread_content,
         content,
         created_at,
         student_id,
+        channel_name,
         author_name,
         author_email,
         attachments,
@@ -91,9 +98,11 @@ export class FeedsExportUtilsService {
 
       return {
         [columns.thread_id]: thread_id,
+        [columns.thread_content]: thread_content,
         [columns.author_name]: author_name,
         [columns.author_email]: author_email,
         [columns.student_id]: student_id,
+        [columns.channel_name]: channel_name,
         [columns.created_at]: CPDate.fromEpoch(created_at, this.session.tz).format(
           'DD/MM/YYYY hh:mm:ssA'
         ),

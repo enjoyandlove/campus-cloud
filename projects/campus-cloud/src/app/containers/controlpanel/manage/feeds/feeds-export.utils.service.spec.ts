@@ -41,9 +41,11 @@ describe('FeedsExportUtilsService', () => {
       const [columns] = spy.calls.mostRecent().args;
       const expectedColumns = [
         cpI18n.translate('t_data_export_csv_posts_post_id'),
+        cpI18n.translate('t_data_export_csv_walls_post'),
         cpI18n.translate('t_data_export_csv_posts_student_or_host_name'),
         cpI18n.translate('t_data_export_csv_posts_student_email'),
         cpI18n.translate('t_data_export_csv_posts_student_id'),
+        cpI18n.translate('t_data_export_csv_posts_channel_name'),
         cpI18n.translate('t_data_export_csv_walls_date_created'),
         cpI18n.translate('t_data_export_csv_wall_comment_comment'),
         cpI18n.translate('t_data_export_csv_wall_comment_images'),
@@ -61,9 +63,11 @@ describe('FeedsExportUtilsService', () => {
       const result = Object.values(data[0]);
       const expectedValues = [
         mockDataExportWallComment.thread_id,
+        mockDataExportWallComment.thread_content,
         mockDataExportWallComment.author_name,
         mockDataExportWallComment.author_email,
         mockDataExportWallComment.student_id,
+        mockDataExportWallComment.channel_name,
         CPDate.fromEpoch(mockDataExportWallComment.created_at, session.tz).format(
           'DD/MM/YYYY hh:mm:ssA'
         ),
@@ -94,6 +98,7 @@ describe('FeedsExportUtilsService', () => {
         cpI18n.translate('t_data_export_csv_posts_student_or_host_name'),
         cpI18n.translate('t_data_export_csv_posts_student_email'),
         cpI18n.translate('t_data_export_csv_posts_student_id'),
+        cpI18n.translate('t_data_export_csv_posts_channel_name'),
         cpI18n.translate('t_data_export_csv_posts_date_posted'),
         cpI18n.translate('t_data_export_csv_posts_wall_post'),
         cpI18n.translate('t_data_export_csv_posts_wall_post_images'),
@@ -115,6 +120,7 @@ describe('FeedsExportUtilsService', () => {
         mockDataExportWallPost.author_name,
         mockDataExportWallPost.author_email,
         mockDataExportWallPost.student_id,
+        mockDataExportWallPost.channel_name,
         CPDate.fromEpoch(mockDataExportWallPost.created_at, session.tz).format(
           'DD/MM/YYYY hh:mm:ssA'
         ),

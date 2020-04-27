@@ -8,9 +8,7 @@ import {
   IDataExport,
   DataExportType,
   IDataExportAppUsers,
-  IDataExportWallsPost,
-  dataExportAmplitudeMap,
-  IDataExportWallsComment
+  dataExportAmplitudeMap
 } from './data-export.interface';
 import { CPSession } from '@campus-cloud/session';
 import { CPTrackingService } from '@campus-cloud/shared/services';
@@ -28,18 +26,6 @@ export class DataExportService {
     private exportDataUtils: DataExportUtilsService
   ) {}
 
-  getCampusWallsCommentExportData(params: HttpParams): Observable<IDataExportWallsComment[]> {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_COMMENT}/`;
-
-    return <Observable<IDataExportWallsComment[]>>this.api.get(url, params, true);
-  }
-
-  getCampusWallsPostsExportData(params: HttpParams): Observable<IDataExportWallsPost[]> {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_POST}/`;
-
-    return <Observable<IDataExportWallsPost[]>>this.api.get(url, params, true);
-  }
-
   getAppUsers(params: HttpParams): Observable<IDataExportAppUsers[]> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_APP_USERS_POST}/`;
 
@@ -50,20 +36,6 @@ export class DataExportService {
     const params = new HttpParams().set('school_id', this.session.school.id.toString());
 
     switch (item.type) {
-      case DataExportType.wallComments:
-        return this.getCampusWallsCommentExportData(params).pipe(
-          tap((data: IDataExportWallsComment[]) => {
-            this.exportDataUtils.createWallCommentsCSV(data);
-            this.trackExportDataSuccess(dataExportAmplitudeMap[DataExportType.wallComments]);
-          })
-        );
-      case DataExportType.wallPosts:
-        return this.getCampusWallsPostsExportData(params).pipe(
-          tap((data: IDataExportWallsPost[]) => {
-            this.exportDataUtils.createWallPostCSV(data);
-            this.trackExportDataSuccess(dataExportAmplitudeMap[DataExportType.wallPosts]);
-          })
-        );
       case DataExportType.appUsers:
         return this.getAppUsers(params).pipe(
           tap((data: IDataExportAppUsers[]) => {

@@ -155,6 +155,8 @@ export interface IDataExportWallsComment {
   attachments: string[];
   likes: number;
   dislikes: number;
+  channel_name: string;
+  thread_content: string;
 }
 
 export interface IDataExportWallsPost {
@@ -168,4 +170,5 @@ export interface IDataExportWallsPost {
   likes: number;
   dislikes: number;
   comment_count: number;
+  channel_name: string;
 }
