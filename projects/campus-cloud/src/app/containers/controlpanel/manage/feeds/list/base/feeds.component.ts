@@ -462,7 +462,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const filters$ = this.store.pipe(select(fromStore.getViewFilters));
+    const filters$ = this.store
+      .pipe(select(fromStore.getViewFilters))
+      .pipe(filter(({ end, start }) => (end || start ? end !== null && start !== null : true)));
 
     /**
      * when rendered inside a host wall (service, clubs...)
@@ -509,6 +511,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
           flaggedByModerators,
           flaggedByUser
         } = filters;
+
         const filtersObj = {
           end,
           start,
