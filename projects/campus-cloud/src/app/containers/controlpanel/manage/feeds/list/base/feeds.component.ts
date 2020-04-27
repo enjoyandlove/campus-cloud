@@ -490,9 +490,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
      * changes, thus we need to ensure the prevState !== currentState to avoid 503's
      */
     const uniqueFilterChanges$ = filters$.pipe(
-      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
       // prevent potential 503
-      throttleTime(700)
+      throttleTime(700),
+      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState))
     );
 
     hostSocialGroup$
