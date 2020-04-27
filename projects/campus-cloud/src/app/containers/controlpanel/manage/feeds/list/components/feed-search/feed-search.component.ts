@@ -335,8 +335,30 @@ export class FeedSearchComponent implements OnInit {
       postCount: 0,
       commentCount: 0
     };
-    return this.viewFilters$.pipe(
-      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
+    const uniqueChanges = (prevState, currentState) => isEqual(prevState, currentState);
+
+    const filterChanges$ = this.viewFilters$.pipe(
+      distinctUntilChanged(uniqueChanges),
+      filter(({ end, start }) => (start || end ? start && end : true))
+    );
+
+    const threadChanges$ = this.store
+      .pipe(select(fromStore.getThreads))
+      .pipe(distinctUntilChanged(uniqueChanges));
+
+    const commentChanges$ = this.store
+      .pipe(select(fromStore.getComments))
+      .pipe(distinctUntilChanged(uniqueChanges));
+
+    const shouldReCount$ = merge(threadChanges$, commentChanges$).pipe(
+      withLatestFrom(filterChanges$),
+      map(([, filters]) => filters)
+    );
+    const stream$ = merge(shouldReCount$, filterChanges$).pipe(
+      filter((filters) => Boolean(Object.keys(filters).length))
+    );
+
+    return stream$.pipe(
       filter(({ end, start }) => (start || end ? start && end : true)),
       switchMap(
         ({
