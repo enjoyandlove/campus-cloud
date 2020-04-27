@@ -32,7 +32,7 @@ export class BannerUploadButtonComponent implements OnInit {
 
     CCImage.getImageDimensions(file)
       .then(({ height, width }) => {
-        if (width < 1440 || height < width / CC_TILE_IMAGE_RATIO) {
+        if (width < 1440 || +(width / height).toFixed(1) !== CC_TILE_IMAGE_RATIO) {
           throw new Error(this.cpI18n.translate('t_studio_banner_error_wrong_dimensions'));
         }
         this.imageService.upload(file).subscribe(
