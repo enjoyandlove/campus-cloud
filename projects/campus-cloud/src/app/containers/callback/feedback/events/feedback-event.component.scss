@@ -1,0 +1,14 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+p {
+  @include font-bold();
+  @include font-36px();
+
+  margin-top: 90px;
+}
+
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
