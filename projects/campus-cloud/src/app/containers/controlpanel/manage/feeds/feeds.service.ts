@@ -1,7 +1,7 @@
 import { catchError, tap, take } from 'rxjs/operators';
-import { of, Observable, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { ISnackbar } from '@campus-cloud/store';
@@ -13,6 +13,12 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { FeedsExportUtilsService } from '@controlpanel/manage/feeds/feeds-export.utils.service';
+import {
+  IDataExportWallsPost,
+  IDataExportGroupThread,
+  IDataExportWallsComment,
+  IDataExportGroupThreadComment
+} from '@controlpanel/manage/feeds/model';
 
 @Injectable()
 export class FeedsService {
@@ -212,12 +218,13 @@ export class FeedsService {
     return this.api.get(url, params, true);
   }
 
-  generateReport(params: HttpParams) {
-    const campusWall$ = this.getCampusWallsPostsExportData(params);
-    const campusWallComment$ = this.getCampusWallsCommentExportData(params);
-    const stream$ = combineLatest([campusWall$, campusWallComment$]);
-
-    return stream$.pipe(
+  generateReport(
+    stream: Observable<
+      | [IDataExportGroupThread[], IDataExportGroupThreadComment[]]
+      | [IDataExportWallsPost[], IDataExportWallsComment[]]
+    >
+  ) {
+    return stream.pipe(
       take(1),
       tap(([wall, comment]) => {
         this.dataExportUtils.compressFiles(wall, comment);

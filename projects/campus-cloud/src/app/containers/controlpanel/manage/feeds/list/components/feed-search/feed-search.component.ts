@@ -29,12 +29,18 @@ import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
-import { ISocialGroup } from '@controlpanel/manage/feeds/model';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { FeedsAmplitudeService } from '../../../feeds.amplitude.service';
 import { UserService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { now, last7Days, lastYear, last90Days, last30Days } from '@campus-cloud/shared/components';
+import {
+  ISocialGroup,
+  IDataExportWallsPost,
+  IDataExportGroupThread,
+  IDataExportWallsComment,
+  IDataExportGroupThreadComment
+} from '@controlpanel/manage/feeds/model';
 @Component({
   selector: 'cp-feed-search',
   templateUrl: './feed-search.component.html',
@@ -43,7 +49,6 @@ import { now, last7Days, lastYear, last90Days, last30Days } from '@campus-cloud/
 export class FeedSearchComponent implements OnInit {
   @Input() groupId: number;
   @Input() groupType: GroupType;
-  @Input() filterParams: HttpParams;
   @Input() hideIntegrations: boolean;
 
   @Output()
@@ -57,7 +62,7 @@ export class FeedSearchComponent implements OnInit {
   destroy$ = new Subject();
   downloadThread = new Subject();
   generateZipFile$ = this.downloadThread.pipe(
-    mergeMap(() => this.feedsService.generateReport(this.filterParams)),
+    mergeMap(() => this.feedsService.generateReport(this.getExportDataStream())),
     catchError(() => of(false))
   );
 
@@ -360,53 +365,66 @@ export class FeedSearchComponent implements OnInit {
 
     return stream$.pipe(
       filter(({ end, start }) => (start || end ? start && end : true)),
-      switchMap(
-        ({
-          end,
-          start,
-          group,
-          users,
-          postType,
-          searchTerm,
-          flaggedByUser,
-          flaggedByModerators
-        }) => {
-          const params = new HttpParams()
-            .set('count_only', '1')
-            .set('end', start && end ? end : null)
-            .set('group_id', group ? group.id : null)
-            .set('start', start && end ? start : null)
-            .set('post_types', postType ? postType.id : null)
-            .set('school_id', this.session.school.id.toString())
-            .set('flagged_by_users_only', flaggedByUser ? '1' : null)
-            .set('search_str', searchTerm !== '' ? searchTerm : null)
-            .set('removed_by_moderators_only', flaggedByModerators ? '1' : null)
-            .set('user_ids', users.length ? users.map(({ id }) => id).join(',') : null);
+      switchMap((filterState) => {
+        const { group } = filterState;
+        const params = this.getExportDataQueryParams(filterState).set('count_only', '1');
 
-          if (group) {
-            return combineLatest([
-              this.feedsService.getGroupThreadExportData(params) as Observable<{ count: number }>,
-              this.feedsService.getGroupCommentExportData(params) as Observable<{
-                count: number;
-              }>
-            ]);
-          }
-
+        if (group) {
           return combineLatest([
-            this.feedsService.getCampusWallsPostsExportData(params) as Observable<{
-              count: number;
-            }>,
-            this.feedsService.getCampusWallsCommentExportData(params) as Observable<{
+            this.feedsService.getGroupThreadExportData(params) as Observable<{ count: number }>,
+            this.feedsService.getGroupCommentExportData(params) as Observable<{
               count: number;
             }>
           ]);
         }
-      ),
+
+        return combineLatest([
+          this.feedsService.getCampusWallsPostsExportData(params) as Observable<{
+            count: number;
+          }>,
+          this.feedsService.getCampusWallsCommentExportData(params) as Observable<{
+            count: number;
+          }>
+        ]);
+      }),
       map(([posts, comments]) => ({
         postCount: numeral(posts.count).format('0a'),
         commentCount: numeral(comments.count).format('0a')
       })),
       catchError(() => of(defaultValue))
+    );
+  }
+
+  getExportDataStream(): Observable<
+    | [IDataExportGroupThread[], IDataExportGroupThreadComment[]]
+    | [IDataExportWallsPost[], IDataExportWallsComment[]]
+  > {
+    return this.viewFilters$.pipe(
+      take(1),
+      switchMap((filterState) => {
+        const { group } = filterState;
+        const params = this.getExportDataQueryParams(filterState);
+
+        if (group) {
+          return combineLatest([
+            this.feedsService.getGroupThreadExportData(params) as Observable<
+              IDataExportGroupThread[]
+            >,
+            this.feedsService.getGroupCommentExportData(params) as Observable<
+              IDataExportGroupThreadComment[]
+            >
+          ]);
+        }
+
+        return combineLatest([
+          this.feedsService.getCampusWallsPostsExportData(params) as Observable<
+            IDataExportWallsPost[]
+          >,
+          this.feedsService.getCampusWallsCommentExportData(params) as Observable<
+            IDataExportWallsComment[]
+          >
+        ]);
+      })
     );
   }
 
@@ -480,6 +498,30 @@ export class FeedSearchComponent implements OnInit {
 
   emitValue() {
     this.feedSearch.emit(this.query.value);
+  }
+
+  getExportDataQueryParams(filterState) {
+    const {
+      end,
+      start,
+      users,
+      group,
+      postType,
+      searchTerm,
+      flaggedByUser,
+      flaggedByModerators
+    } = filterState;
+
+    return new HttpParams()
+      .set('end', start && end ? end : null)
+      .set('group_id', group ? group.id : null)
+      .set('start', start && end ? start : null)
+      .set('post_types', postType ? postType.id : null)
+      .set('school_id', this.session.school.id.toString())
+      .set('flagged_by_users_only', flaggedByUser ? '1' : null)
+      .set('search_str', searchTerm !== '' ? searchTerm : null)
+      .set('removed_by_moderators_only', flaggedByModerators ? '1' : null)
+      .set('user_ids', users.length ? users.map(({ id }) => id).join(',') : null);
   }
 
   handleChannel(channel) {

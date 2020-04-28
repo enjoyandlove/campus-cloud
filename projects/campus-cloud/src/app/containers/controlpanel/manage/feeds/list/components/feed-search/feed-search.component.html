@@ -63,7 +63,6 @@
                 type="button"
                 variant="stroked"
                 class="centered-button"
-                *ngIf="!view.isHostWallView"
                 (click)="downloadThread.next()"
                 [disabled]="downloading$ | async"
                 [title]="'t_community_tooltip_download_csv_zip_file' | cpI18n">

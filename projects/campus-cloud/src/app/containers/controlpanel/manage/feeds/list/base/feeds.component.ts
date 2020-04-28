@@ -71,7 +71,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   loading = true;
   disablePost = 100;
   state: IState = state;
-  filterParams: HttpParams;
   destroy$ = new Subject();
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
@@ -212,8 +211,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
                 'comment_ids',
                 groupThreadCommentIds.length ? groupThreadCommentIds.join(',') : null
               );
-
-        this.filterParams = threadSearch;
 
         /**
          * Convert the array of SocialWallContent into an object
@@ -415,8 +412,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     search = this.state.isCampusThread
       ? search.append('school_id', this.session.g.get('school').id.toString())
       : search.append('group_id', this.state.group_id.toString());
-
-    this.filterParams = search;
 
     const stream$ = this.doAdvancedSearch(search);
     super
