@@ -46,7 +46,8 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
       .then((res) => (this.event = res.data))
       .catch((err) => {
         this.loading = false;
-        this.alreadySubmitted = this.isExist = FeedbackUtilsService.isFeedbackAlreadySubmitted(err);
+        this.isExist = err.status === 404;
+        this.alreadySubmitted = FeedbackUtilsService.isFeedbackAlreadySubmitted(err);
       });
   }
 
