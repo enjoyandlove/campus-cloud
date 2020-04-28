@@ -1,16 +1,23 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngIf="isExist">
-    <cp-base-feedback [data]="event"
-                      *ngSwitchCase="false"
-                      [isService]="isService"
-                      (send)="onSubmit($event)"
-                      [isSubmitted]="isSubmitted$">
-    </cp-base-feedback>
-  </div>
-  <div *ngIf="!isExist"
-       class="col-8 offset-2 text-center">
-    <p>{{ 'service_or_service_provider_error_not_found' | cpI18n }}</p>
-  </div>
+  <ng-container *ngSwitchCase="false">
+    <cp-feedback-already-submitted *ngIf="alreadySubmitted"
+                                   [heading]="'t_external_check_in_service_feedback_already_provided' | cpI18n">
+    </cp-feedback-already-submitted>
+
+    <ng-container *ngIf="!alreadySubmitted">
+      <cp-base-feedback [data]="event"
+                        *ngIf="isExist"
+                        [isService]="isService"
+                        (send)="onSubmit($event)"
+                        [isSubmitted]="isSubmitted$">
+      </cp-base-feedback>
+
+      <div *ngIf="!isExist"
+           class="not-found">
+        <p>{{ 'service_or_service_provider_error_not_found' | cpI18n }}</p>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>

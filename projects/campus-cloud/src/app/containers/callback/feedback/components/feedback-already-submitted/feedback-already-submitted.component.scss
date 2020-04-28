@@ -1,0 +1,37 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.wrapper {
+  padding-top: 250px;
+
+  p {
+    @include font-24px;
+    @include font-semi-bold();
+
+    text-align: center;
+  }
+
+  .check {
+    width: 90px;
+    height: 90px;
+    display: block;
+    border-radius: 50%;
+    margin: 0 auto 100px auto;
+    border: 4px solid $color-success;
+
+    .icon {
+      display: block;
+      margin: 8px 0 0 12px;
+      color: $color-success;
+    }
+  }
+
+  &__footer-note {
+    @include font-14px;
+
+    display: block;
+    margin-top: 200px;
+    text-align: center;
+    color: $color-secondary-text;
+  }
+}
