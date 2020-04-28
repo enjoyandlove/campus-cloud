@@ -12,6 +12,7 @@ import {
   switchMap,
   takeUntil,
   startWith,
+  debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
 
@@ -456,9 +457,15 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const filters$ = this.store
-      .pipe(select(fromStore.getViewFilters))
-      .pipe(filter(({ end, start }) => (end || start ? end !== null && start !== null : true)));
+    const filters$ = this.store.pipe(select(fromStore.getViewFilters)).pipe(
+      /**
+       * avoid mulliple emitions when switching boolean values
+       * eg: from status Deleted to Flagged this emits once to set
+       * Deleted to false and then again to set Flagged to true
+       */
+      debounceTime(350),
+      filter(({ end, start }) => (end || start ? end !== null && start !== null : true))
+    );
 
     /**
      * when rendered inside a host wall (service, clubs...)
