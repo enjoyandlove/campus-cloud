@@ -1,18 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ModalService } from '@ready-education/ready-ui/overlays/modal/modal.service';
 import { get as _get, isEqual } from 'lodash';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, combineLatest } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import {
-  map,
-  tap,
-  take,
-  filter,
-  mergeMap,
-  startWith,
-  takeUntil,
-  withLatestFrom
-} from 'rxjs/operators';
+import { map, tap, take, filter, mergeMap, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import * as fromStore from '../../../store';
 
@@ -40,12 +31,17 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
   @Input() isCampusWallView: Observable<number>;
   @Output() selected: EventEmitter<number> = new EventEmitter();
 
+  view$: Observable<{
+    deleted: boolean;
+  }>;
+
   options;
   _isCampusWallView;
   unsavedChangesModal;
   requiresApproval = false;
   canEdit$: Observable<boolean>;
   isBanned$: Observable<boolean>;
+  filters$ = this.store.pipe(select(fromStore.getViewFilters));
   bannedEmails$ = this.store.pipe(select(fromStore.getBannedEmails));
 
   destroy$ = new Subject<null>();
@@ -63,11 +59,17 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.view$ = combineLatest([this.filters$]).pipe(
+      map(([{ flaggedByModerators }]) => ({
+        deleted: Boolean(flaggedByModerators)
+      }))
+    );
+
     this.canEdit$ =
       'extern_poster_id' in this.feed
         ? this.store.pipe(select(fromStore.getSocialGroupIds)).pipe(
             filter((socialGroupIds: number[]) => Boolean(socialGroupIds.length)),
-            withLatestFrom(this.store.pipe(select(fromStore.getViewFilters))),
+            withLatestFrom(this.filters$),
             map(([socialGroupIds, { flaggedByModerators, searchTerm }]) => {
               const notSearching = searchTerm === '';
               const notDeleted = !flaggedByModerators;
