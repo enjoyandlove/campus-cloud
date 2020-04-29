@@ -32,7 +32,6 @@ export class FeedbackAmplitudeService {
     return {
       source_id,
       rating: rating[data['user_rating_percent']],
-      feedback: data['user_feedback_text'] ? 'Yes' : 'No',
       assessment_type: this.getAssessmentType(event, isProvider)
     };
   }
