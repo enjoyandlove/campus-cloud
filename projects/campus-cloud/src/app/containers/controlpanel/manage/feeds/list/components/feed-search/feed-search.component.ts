@@ -388,8 +388,12 @@ export class FeedSearchComponent implements OnInit {
         ]);
       }),
       map(([posts, comments]) => ({
-        postCount: numeral(posts.count).format('0a'),
-        commentCount: numeral(comments.count).format('0a')
+        postCount:
+          posts.count.toString().length >= 4 ? numeral(posts.count).format('0.0a') : posts.count,
+        commentCount:
+          comments.count.toString().length >= 4
+            ? numeral(comments.count).format('0.0a')
+            : comments.count
       })),
       catchError(() => of(defaultValue))
     );
