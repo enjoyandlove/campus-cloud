@@ -2481,6 +2481,9 @@
   "t_clubs_admin": {
     "message": "Administrateur"
   },
+  "t_community_data_export_success": {
+    "message": "Données exportées avec succès"
+  },
   "t_community_tooltip_download_csv_zip_file": {
     "message": "Les téléchargements CSV de la communaté reflètent la recherche et les filtres appliqués"
   },
@@ -2845,6 +2848,12 @@
   "t_external_check_in_error_fill_out_all_fields": {
     "message": "Veuillez remplir les champs marqués"
   },
+  "t_external_check_in_event_feedback_already_provided": {
+    "message": "Vous avez déjà fourni un retour pour cet événement."
+  },
+  "t_external_check_in_footer_note": {
+    "message": "Vous pouvez fermer cet onglet et ignorer le courriel qui vous a amené ici."
+  },
   "t_external_check_in_forbidden_error": {
     "message": "Vous ne pouvez pas enregistrer l'utilisateur à l'événement car vous n'avez pas le privilège approprié."
   },
@@ -2856,6 +2865,9 @@
   },
   "t_external_check_in_service_feedback_already_provided": {
     "message": "You have already provided feedback for this service."
+  },
+  "t_external_event_not_found": {
+    "message": "Cet événement n'existe pas."
   },
   "t_feeds_approve": {
     "message": "Approuver"
@@ -3884,6 +3896,12 @@
   },
   "t_tile_button_locked": {
     "message": "Verrouillé"
+  },
+  "t_unsupported_browser_modal_body": {
+    "message": "Nous recommandons de mettre à jour votre navigateur à la dernière version pour bénéficier de la meilleure expérience."
+  },
+  "t_unsupported_browser_modal_header": {
+    "message": "Navigateur non supporté détecté"
   },
   "t_walls_campus_walls_channels": {
     "message": "Chaînes du Campus"
