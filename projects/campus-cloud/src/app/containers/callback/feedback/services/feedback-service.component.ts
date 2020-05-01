@@ -11,6 +11,10 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedbackAmplitudeService } from '../feedback.amplitude.service';
 import { CPAmplitudeService, CPTrackingService } from '@campus-cloud/shared/services';
 
+const errorMesages = {
+  400: 'something_went_wrong',
+  404: 'service_or_service_provider_error_not_found'
+};
 @Component({
   selector: 'cp-feedback-service',
   templateUrl: './feedback-service.component.html',
@@ -19,10 +23,11 @@ import { CPAmplitudeService, CPTrackingService } from '@campus-cloud/shared/serv
 export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   event;
   loading;
-  isExist = true;
+  error: boolean;
   isService = true;
   checkinId: number;
   search: HttpParams;
+  errorMessage: string;
   alreadySubmitted = false;
   isSubmitted$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -41,12 +46,16 @@ export class FeedbackServiceComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
+    this.error = false;
+
     super
       .fetchData(this.feedbackService.getServiceData(this.search, true))
       .then((res) => (this.event = res.data))
       .catch((err) => {
+        this.error = true;
         this.loading = false;
-        this.isExist = err.status === 404;
+        const { status = 400 } = err;
+        this.errorMessage = errorMesages[status] || errorMesages[400];
         this.alreadySubmitted = FeedbackUtilsService.isFeedbackAlreadySubmitted(err);
       });
   }
