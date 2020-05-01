@@ -1,7 +1,7 @@
 import { async, TestBed } from '@angular/core/testing';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@projects/campus-cloud/src/app/shared/tests';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { ResourceExternalAppOpenUtils } from './resource-external-app-open.utils.service';
 
 describe('ResourceExternalAppOpenUtils', () => {

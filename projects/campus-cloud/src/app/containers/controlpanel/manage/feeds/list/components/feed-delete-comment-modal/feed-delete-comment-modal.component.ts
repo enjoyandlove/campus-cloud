@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
@@ -75,8 +75,7 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
       likes,
       wall_source,
       upload_image,
-      sub_menu_name,
-      creation_source
+      sub_menu_name
     } = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(comment);
 
     const amplitude = {
@@ -84,11 +83,19 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
       wall_source,
       upload_image,
       sub_menu_name,
-      creation_source,
       comment_id: comment.id
     };
 
+    const wallThreadAmplitude = this.feedsAmplitudeService.getWallThreadAmplitude(
+      this.feed,
+      'Comment'
+    );
+
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_COMMENT, amplitude);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.COMMUNITY_DELETED_THREAD,
+      wallThreadAmplitude
+    );
   }
 
   ngOnInit() {

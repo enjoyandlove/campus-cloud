@@ -8,9 +8,8 @@ import { DateStatus } from '../../deals.service';
 import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { IStore } from '../../stores/store.interface';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   enableTime: true
@@ -41,25 +40,11 @@ export class DealsFormComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(
-    public session: CPSession,
-    public cpI18n: CPI18nService,
-    public cpTracking: CPTrackingService
-  ) {}
+  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
 
   onUploadedImage(image) {
     this.form.controls['image_url'].setValue(image);
     this.form.controls['image_thumb_url'].setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   toggleOngoing(): void {

@@ -9,7 +9,7 @@ import { CPDate } from '@campus-cloud/shared/utils';
 import { CPSession } from '@campus-cloud/session';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ItemsIntegrationsService } from './../../integrations.service';
-import { EventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
+import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 import { StoreService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model/event-integration.interface';

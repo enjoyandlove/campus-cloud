@@ -60,9 +60,11 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
       children: []
     };
 
-    this.storeHeader.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload
+    Promise.resolve().then(() => {
+      this.storeHeader.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload
+      });
     });
   }
 
@@ -125,6 +127,11 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
 
   trackCreateEvent(event: IEvent) {
     const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
+
+    event = {
+      ...event,
+      ...this.form.value
+    };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_EVENT, {
       sub_menu_name,

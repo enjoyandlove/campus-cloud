@@ -40,3 +40,18 @@ export const getCompletedAction = createSelector(
   getIntegrationsState,
   fromIntegrations.getCompletedAction
 );
+
+export const getPreview = createSelector(
+  getIntegrationsState,
+  fromIntegrations.getPreview
+);
+
+export const getPreviewError = createSelector(
+  getIntegrationsState,
+  fromIntegrations.getPreviewError
+);
+
+export const getPreviewLoading = createSelector(
+  getIntegrationsState,
+  fromIntegrations.getPreviewLoading
+);

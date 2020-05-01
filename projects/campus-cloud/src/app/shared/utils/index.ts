@@ -4,6 +4,7 @@ export * from './date';
 export * from './http';
 export * from './type';
 export * from './text';
+export * from './files';
 export * from './router';
 export * from './object';
 export * from './storage';

@@ -3,7 +3,7 @@ import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { IItem } from '@campus-cloud/shared/components';
-import { FORMAT } from '@projects/campus-cloud/src/app/shared/pipes';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import { IWallsIntegration } from './../../model';
 import { SyncStatus } from '../../../common/model';
 

@@ -11,7 +11,7 @@ import { BaseComponent } from '@campus-cloud/base';
 import { IItem } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
-import { Mixin, Destroyable } from '@projects/campus-cloud/src/app/shared/mixins';
+import { Mixin, Destroyable } from '@campus-cloud/shared/mixins';
 
 @Component({
   selector: 'cp-walls-integrations-list',

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
-import { IItem } from '@projects/campus-cloud/src/app/shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 import { IExternalAppOpenFormDetails } from './external-app-open.interface';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { ResourceExternalAppOpenUtils } from './resource-external-app-open.utils.service';

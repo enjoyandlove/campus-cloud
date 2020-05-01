@@ -142,13 +142,15 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   }
 
   public buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 'events_edit_event',
-        subheading: '',
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 'events_edit_event',
+          subheading: '',
+          children: []
+        }
+      });
     });
   }
 

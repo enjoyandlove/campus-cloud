@@ -3,6 +3,8 @@ import { Action } from '@ngrx/store';
 import { IStore } from '@campus-cloud/shared/services/store.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model/event-integration.interface';
 
+import { IPreviewRequest, IPreviewResponse } from '@campus-cloud/libs/integrations/common/model';
+
 export enum IntegrationActions {
   DESTROY = '[manage.events.integrations] destroy',
 
@@ -31,7 +33,12 @@ export enum IntegrationActions {
   SYNC_NOW_SUCCESS = '[manage.events.integrations] sync now success',
 
   CREATE_AND_SYNC = '[manage.events.integrations] create and sync',
-  UPDATE_AND_SYNC = '[manage.events.integrations] update and sync'
+  UPDATE_AND_SYNC = '[manage.events.integrations] update and sync',
+
+  PREVIEW_FEED = '[manage.events.integrations] preview',
+  PREVIEW_FEED_FAIL = '[manage.events.integrations] preview fail',
+  PREVIEW_FEED_SUCCESS = '[manage.events.integrations] preview success',
+  PREVIEW_FEED_RESET = '[manage.events.integrations] preview reset'
 }
 
 export class GetIntegrations implements Action {
@@ -158,6 +165,30 @@ export class UpdateAndSync implements Action {
   constructor(public payload: { integrationId: number; body: IEventIntegration }) {}
 }
 
+export class PreviewFeed implements Action {
+  readonly type = IntegrationActions.PREVIEW_FEED;
+
+  constructor(public payload: IPreviewRequest) {}
+}
+
+export class PreviewFeedFail implements Action {
+  readonly type = IntegrationActions.PREVIEW_FEED_FAIL;
+
+  constructor(public payload: { error: string }) {}
+}
+
+export class PreviewFeedSuccess implements Action {
+  readonly type = IntegrationActions.PREVIEW_FEED_SUCCESS;
+
+  constructor(public payload: IPreviewResponse[]) {}
+}
+
+export class PreviewFeedReset implements Action {
+  readonly type = IntegrationActions.PREVIEW_FEED_RESET;
+
+  constructor() {}
+}
+
 export type Actions =
   | Destroy
   | GetIntegrations
@@ -179,4 +210,8 @@ export type Actions =
   | SyncNow
   | SyncNowFail
   | SyncNowSuccess
-  | UpdateAndSync;
+  | UpdateAndSync
+  | PreviewFeed
+  | PreviewFeedFail
+  | PreviewFeedSuccess
+  | PreviewFeedReset;

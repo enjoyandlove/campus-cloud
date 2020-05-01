@@ -10,7 +10,8 @@ import { CPDate } from '@campus-cloud/shared/utils/date';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IntegrationsService } from './../../integrations.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
-import { EventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
+import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
+import { IPreviewResponse } from '@campus-cloud/libs/integrations/common/model';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { IntegrationsUitlsService } from '@controlpanel/manage/events/integrations/integrations.utils.service';
 
@@ -203,6 +204,19 @@ export class IntegrationsEffects {
         catchError(({ error }: HttpErrorResponse) =>
           of(new fromActions.EditIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
         )
+      );
+    })
+  );
+
+  @Effect()
+  previewFeed$: Observable<
+    fromActions.PreviewFeedSuccess | fromActions.PreviewFeedFail
+  > = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.PREVIEW_FEED),
+    mergeMap((action: fromActions.PreviewFeed) => {
+      return this.service.previewFeed(action.payload).pipe(
+        map((preview: IPreviewResponse[]) => new fromActions.PreviewFeedSuccess(preview)),
+        catchError(({ error }: HttpErrorResponse) => of(new fromActions.PreviewFeedFail(error)))
       );
     })
   );

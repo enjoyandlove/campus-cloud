@@ -13,7 +13,7 @@ import { ServicesUtilsService } from '../services.utils.service';
 import { ServicesInfoComponent } from './services-info.component';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
-import { mockUser, mockSchool } from '@projects/campus-cloud/src/app/session/mock';
+import { mockUser, mockSchool } from '@campus-cloud/session/mock';
 
 class MockService {
   dummy;

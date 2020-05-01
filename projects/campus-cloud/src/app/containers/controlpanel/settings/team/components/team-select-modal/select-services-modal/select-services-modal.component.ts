@@ -30,32 +30,39 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
   ngOnInit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    this.service.getServices(1, 1000, search).subscribe((services: Array<any>) => {
-      let res = {};
-      const selected = {};
-      if (this.selectedServices) {
-        services.map((service) => {
-          if (Object.keys(this.selectedServices).includes(service.store_id.toString())) {
-            if (CP_PRIVILEGES_MAP.services in this.selectedServices[service.store_id]) {
-              selected[service.store_id] = service;
+    this.service.getServices(1, 1000, search).subscribe(
+      (services: Array<any>) => {
+        let res = {};
+        const selected = {};
+        if (this.selectedServices) {
+          services.map((service) => {
+            if (Object.keys(this.selectedServices).includes(service.store_id.toString())) {
+              if (CP_PRIVILEGES_MAP.services in this.selectedServices[service.store_id]) {
+                selected[service.store_id] = service;
+              }
             }
-          }
 
-          if (selected[service.store_id]) {
-            service.checked = true;
-            selected[service.store_id] = Object.assign({}, selected[service.store_id], {
-              id: service.id
-            });
-          }
-        });
-      }
-      res = {
-        data: services,
-        selected: selected
-      };
+            if (selected[service.store_id]) {
+              service.checked = true;
+              selected[service.store_id] = Object.assign({}, selected[service.store_id], {
+                id: service.id
+              });
+            }
+          });
+        }
+        res = {
+          data: services,
+          selected: selected
+        };
 
-      this.teardown.emit();
-      this.data$.next(res);
-    });
+        this.teardown.emit();
+        this.data$.next(res);
+      },
+      () =>
+        this.data$.next({
+          data: [],
+          selected: {}
+        })
+    );
   }
 }

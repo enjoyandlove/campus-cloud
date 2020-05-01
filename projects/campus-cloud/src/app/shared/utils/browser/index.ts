@@ -1,17 +1,4 @@
-import * as browserslist from 'browserslist';
-import * as Bowser from 'bowser';
-
-export function getSupportedBrowser() {
-  return browserslist('last 2 years, not dead, not IE 9-11');
-}
-
-export function getBrowser() {
-  return Bowser.getParser(window.navigator.userAgent).getBrowser();
-}
-
 export function isSupported() {
-  const { name, version } = getBrowser();
-  const supportedBrowsers = getSupportedBrowser();
-  const parsedBrowser = `${name.toLowerCase()} ${Number(version).toFixed()}`;
-  return supportedBrowsers.includes(parsedBrowser);
+  const supportedBrowsers = require('../../../../assets/supportedBrowsers.js');
+  return supportedBrowsers.test(navigator.userAgent);
 }

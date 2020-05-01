@@ -1,7 +1,7 @@
 import { ITile } from '../../tile.interface';
 import { MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
-import { mockSchool } from '@projects/campus-cloud/src/app/session/mock';
+import { mockSchool } from '@campus-cloud/session/mock';
 
 export const mockLinkData = {
   link_type: 0,

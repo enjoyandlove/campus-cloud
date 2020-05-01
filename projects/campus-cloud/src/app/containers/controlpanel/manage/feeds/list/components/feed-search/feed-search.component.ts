@@ -3,20 +3,26 @@ import {
   map,
   take,
   mapTo,
+  share,
   repeat,
+  filter,
+  mergeMap,
   switchMap,
   takeUntil,
   startWith,
   skipUntil,
+  catchError,
   debounceTime,
-  withLatestFrom
+  withLatestFrom,
+  distinctUntilChanged
 } from 'rxjs/operators';
-import { Subject, Observable, BehaviorSubject, merge, combineLatest } from 'rxjs';
+import { Subject, Observable, BehaviorSubject, merge, combineLatest, of } from 'rxjs';
 import { OnInit, Output, Component, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { isEqual, get as _get } from 'lodash';
 import { FormBuilder } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { isEqual } from 'lodash';
+import * as numeral from 'numeral';
 
 import * as fromStore from '../../../store';
 import { CPSession } from '@campus-cloud/session';
@@ -25,9 +31,16 @@ import { GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
-import { dateAmplitudeLabel, FeedsAmplitudeService } from '../../../feeds.amplitude.service';
+import { FeedsAmplitudeService } from '../../../feeds.amplitude.service';
 import { UserService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { now, last7Days, lastYear, last90Days, last30Days } from '@campus-cloud/shared/components';
+import {
+  ISocialGroup,
+  IDataExportWallsPost,
+  IDataExportGroupThread,
+  IDataExportWallsComment,
+  IDataExportGroupThreadComment
+} from '@controlpanel/manage/feeds/model';
 @Component({
   selector: 'cp-feed-search',
   templateUrl: './feed-search.component.html',
@@ -37,16 +50,27 @@ export class FeedSearchComponent implements OnInit {
   @Input() groupId: number;
   @Input() groupType: GroupType;
   @Input() hideIntegrations: boolean;
-  @Input() isCampusWallView: Observable<any>;
 
   @Output()
   feedSearch: EventEmitter<string> = new EventEmitter();
+
   maxDate = new Date();
   form = this.fb.group({
     query: ['']
   });
 
   destroy$ = new Subject();
+  downloadThread = new Subject();
+  generateZipFile$ = this.downloadThread.pipe(
+    mergeMap(() => this.feedsService.generateReport(this.getExportDataStream())),
+    catchError(() => of(false))
+  );
+
+  downloading$ = merge(
+    this.downloadThread.asObservable().pipe(mapTo(true)),
+    this.generateZipFile$.pipe(mapTo(false))
+  ).pipe(startWith(false));
+
   eventData = {
     type: CP_TRACK_TO.AMPLITUDE,
     eventName: amplitudeEvents.MANAGE_VIEWED_FEED_INTEGRATION,
@@ -66,6 +90,18 @@ export class FeedSearchComponent implements OnInit {
     })
   );
 
+  view$: Observable<{
+    dateMenu: any;
+    statusMenu: any;
+    primaryMenu: any;
+    studentsMenu: any;
+    channelsMenu: any;
+    postCount: number;
+    counting: boolean;
+    commentCount: number;
+    hasFiltersActive: boolean;
+  }>;
+
   loadMore = new Subject();
   closeMenu = new Subject();
   channelTerm = new Subject();
@@ -78,6 +114,7 @@ export class FeedSearchComponent implements OnInit {
   channelsMenu$: Observable<any>;
   studentsMenu$: Observable<any>;
 
+  FEATURE_FLAG = 'FEEDS_CSV_COUNT';
   hasFiltersActive$: Observable<boolean>;
   presetDates: { [key: string]: number[] };
   viewFilters$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -168,8 +205,10 @@ export class FeedSearchComponent implements OnInit {
           selectedHostWall,
           query
         ]) => {
-          const searchByName = (item) =>
-            item.name.toLowerCase().startsWith((query as string).toLowerCase().trim());
+          const searchByName = (item) => {
+            const name = _get(item, 'name', '');
+            return name.toLowerCase().startsWith((query as string).toLowerCase().trim());
+          };
           return {
             selectedChannel,
             selectedHostWall,
@@ -245,8 +284,152 @@ export class FeedSearchComponent implements OnInit {
       withLatestFrom(this.dateMenu$)
     );
 
-    amplitude$.subscribe(([isSearch, { presetDateSelected }]) =>
-      this.wallSearchFilterAmplitude(presetDateSelected, isSearch)
+    amplitude$.subscribe(([isSearch, { presetDateSelected }]) => {
+      this.feedsAmplitudeService.setFilterLabel(presetDateSelected, this.state$);
+      this.wallSearchFilterAmplitude(isSearch);
+    });
+
+    // share to avoid making multiple requests
+    const count$ = this.getCount().pipe(share());
+
+    const filtersChanged$ = this.viewFilters$.pipe(
+      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
+      mapTo(true)
+    );
+    const countisDone$ = count$.pipe(mapTo(false));
+    const calculatingCount$ = merge(filtersChanged$, countisDone$).pipe(distinctUntilChanged());
+
+    this.view$ = combineLatest([
+      this.hasFiltersActive$,
+      this.dateMenu$.pipe(startWith(false)),
+      this.statusMenu$.pipe(startWith(false)),
+      this.primaryMenu$.pipe(startWith(false)),
+      this.studentsMenu$.pipe(startWith(false)),
+      this.channelsMenu$.pipe(startWith(false)),
+      count$.pipe(startWith(false)),
+      calculatingCount$.pipe(startWith(true)),
+      viewFilters$.pipe(map(({ group }) => group !== null))
+    ]).pipe(
+      map(
+        ([
+          hasFiltersActive,
+          dateMenu,
+          statusMenu,
+          primaryMenu,
+          studentsMenu,
+          channelsMenu,
+          count,
+          counting,
+          isHostWallView
+        ]) => ({
+          hasFiltersActive,
+          dateMenu,
+          statusMenu,
+          primaryMenu,
+          studentsMenu,
+          channelsMenu,
+          ...count,
+          counting,
+          isHostWallView
+        })
+      )
+    );
+  }
+
+  getCount() {
+    const defaultValue = {
+      postCount: 0,
+      commentCount: 0
+    };
+    const uniqueChanges = (prevState, currentState) => isEqual(prevState, currentState);
+
+    const filterChanges$ = this.viewFilters$.pipe(
+      distinctUntilChanged(uniqueChanges),
+      filter(({ end, start }) => (start || end ? start && end : true))
+    );
+
+    const threadChanges$ = this.store
+      .pipe(select(fromStore.getThreads))
+      .pipe(distinctUntilChanged(uniqueChanges));
+
+    const commentChanges$ = this.store
+      .pipe(select(fromStore.getComments))
+      .pipe(distinctUntilChanged(uniqueChanges));
+
+    const shouldReCount$ = merge(threadChanges$, commentChanges$).pipe(
+      withLatestFrom(filterChanges$),
+      map(([, filters]) => filters)
+    );
+    const stream$ = merge(shouldReCount$, filterChanges$).pipe(
+      filter((filters) => Boolean(Object.keys(filters).length))
+    );
+
+    return stream$.pipe(
+      filter(({ end, start }) => (start || end ? start && end : true)),
+      switchMap((filterState) => {
+        const { group } = filterState;
+        const params = this.getExportDataQueryParams(filterState).set('count_only', '1');
+
+        if (group) {
+          return combineLatest([
+            this.feedsService.getGroupThreadExportData(params) as Observable<{ count: number }>,
+            this.feedsService.getGroupCommentExportData(params) as Observable<{
+              count: number;
+            }>
+          ]);
+        }
+
+        return combineLatest([
+          this.feedsService.getCampusWallsPostsExportData(params) as Observable<{
+            count: number;
+          }>,
+          this.feedsService.getCampusWallsCommentExportData(params) as Observable<{
+            count: number;
+          }>
+        ]);
+      }),
+      map(([posts, comments]) => ({
+        postCount:
+          posts.count.toString().length >= 4 ? numeral(posts.count).format('0.0a') : posts.count,
+        commentCount:
+          comments.count.toString().length >= 4
+            ? numeral(comments.count).format('0.0a')
+            : comments.count
+      })),
+      catchError(() => of(defaultValue))
+    );
+  }
+
+  getExportDataStream(): Observable<
+    | [IDataExportGroupThread[], IDataExportGroupThreadComment[]]
+    | [IDataExportWallsPost[], IDataExportWallsComment[]]
+  > {
+    return this.viewFilters$.pipe(
+      take(1),
+      switchMap((filterState) => {
+        const { group } = filterState;
+        const params = this.getExportDataQueryParams(filterState);
+
+        if (group) {
+          return combineLatest([
+            this.feedsService.getGroupThreadExportData(params) as Observable<
+              IDataExportGroupThread[]
+            >,
+            this.feedsService.getGroupCommentExportData(params) as Observable<
+              IDataExportGroupThreadComment[]
+            >
+          ]);
+        }
+
+        return combineLatest([
+          this.feedsService.getCampusWallsPostsExportData(params) as Observable<
+            IDataExportWallsPost[]
+          >,
+          this.feedsService.getCampusWallsCommentExportData(params) as Observable<
+            IDataExportWallsComment[]
+          >
+        ]);
+      })
     );
   }
 
@@ -287,7 +470,7 @@ export class FeedSearchComponent implements OnInit {
 
   fetchSocialGroups() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
-    return this.feedsService.getSocialGroups(search) as Observable<any>;
+    return this.feedsService.getSocialGroups(search) as Observable<ISocialGroup[]>;
   }
 
   fetchStudents(): Observable<any[]> {
@@ -300,7 +483,10 @@ export class FeedSearchComponent implements OnInit {
       .set('is_sandbox', String(this.session.school.is_sandbox))
       .set('client_id', this.session.school.client_id.toString());
 
-    const initialResults$ = this.userService.getAll(params, 1, 15) as Observable<any[]>;
+    const fetchStudents$ = (max: number) =>
+      this.userService.getAll(params, 1, max).pipe(catchError(() => of([]))) as Observable<any[]>;
+
+    const initialResults$ = fetchStudents$(15);
 
     const loadMore$ = this.loadMore
       .asObservable()
@@ -308,18 +494,43 @@ export class FeedSearchComponent implements OnInit {
 
     const userSearch$ = this.studentTerm.asObservable().pipe(
       debounceTime(400),
-      tap((term: string) => (params = params.set('search_str', Boolean(term) ? term : null)))
+      tap(
+        (term: string) =>
+          (params = params.set('search_str', Boolean(term.trim().length) ? term.trim() : null))
+      )
     );
 
-    const reload$ = merge(loadMore$, userSearch$).pipe(
-      switchMap(() => this.userService.getAll(params, 1, cutOff) as Observable<any[]>)
-    );
+    const reload$ = merge(loadMore$, userSearch$).pipe(switchMap(() => fetchStudents$(cutOff)));
 
     return merge(reload$, initialResults$);
   }
 
   emitValue() {
     this.feedSearch.emit(this.query.value);
+  }
+
+  getExportDataQueryParams(filterState) {
+    const {
+      end,
+      start,
+      users,
+      group,
+      postType,
+      searchTerm,
+      flaggedByUser,
+      flaggedByModerators
+    } = filterState;
+
+    return new HttpParams()
+      .set('end', start && end ? end : null)
+      .set('group_id', group ? group.id : null)
+      .set('start', start && end ? start : null)
+      .set('post_types', postType ? postType.id : null)
+      .set('school_id', this.session.school.id.toString())
+      .set('flagged_by_users_only', flaggedByUser ? '1' : null)
+      .set('search_str', searchTerm !== '' ? searchTerm : null)
+      .set('removed_by_moderators_only', flaggedByModerators ? '1' : null)
+      .set('user_ids', users.length ? users.map(({ id }) => id).join(',') : null);
   }
 
   handleChannel(channel) {
@@ -387,21 +598,22 @@ export class FeedSearchComponent implements OnInit {
   }
 
   parseCalendarDate(date: Date[]) {
-    this.handleDate(date.map((d) => CPDate.toEpoch(d, this.session.tz)));
+    const dates = date.map((d) => CPDate.toEpoch(d, this.session.tz));
+    this.handleDate(dates);
   }
 
   handleClearSelectedStudents() {
     this.store.dispatch(fromStore.clearFilterUsers());
   }
 
-  wallSearchFilterAmplitude(dateLabel, isSearch) {
+  wallSearchFilterAmplitude(isSearch) {
     const eventName = !isSearch
       ? amplitudeEvents.WALL_APPLIED_FILTERS
       : amplitudeEvents.WALL_SEARCHED_INFORMATION;
 
     this.cpTracking.amplitudeEmitEvent(
       eventName,
-      this.feedsAmplitudeService.getWallFiltersAmplitude(dateLabel, this.state$)
+      this.feedsAmplitudeService.getWallFiltersAmplitude()
     );
   }
 }

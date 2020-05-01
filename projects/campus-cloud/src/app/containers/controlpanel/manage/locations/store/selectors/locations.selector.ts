@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
-import { getRouterState } from '@projects/campus-cloud/src/app/store';
+import { getRouterState } from '@campus-cloud/store';
 import { getFeatureState } from './feature.selector';
 import * as fromLocations from '../reducers/locations.reducer';
 

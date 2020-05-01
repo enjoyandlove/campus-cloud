@@ -165,13 +165,14 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
             school_id: this.session.g.get('school').id,
             ids: this.guideService.guides.map((g) => g.id)
           };
-
-          this.guideService.bulkUpdateTileCategory(body).subscribe(() => this.navigateOnSuccess());
+          this.guideService
+            .bulkUpdateTileCategory(body)
+            .subscribe(() => this.navigateOnSuccess(), () => this.handleError());
         } else {
           this.navigateOnSuccess();
         }
       },
-      (_) => {
+      () => {
         this.handleError();
         this.disableSubmitButton = false;
       }

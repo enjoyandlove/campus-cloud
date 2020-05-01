@@ -3,10 +3,10 @@ import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { get as _get } from 'lodash';
 
-import { CPMap } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { CPMap, canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { ServicesService } from '@controlpanel/manage/services/services.service';
 import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 
@@ -26,19 +26,19 @@ export class ServicesFormComponent implements OnInit {
   school: ISchool;
   selectedCategory;
   selectedMembership;
+  hasModeration = false;
   showLocationDetails = true;
   categories = [{ label: '---' }];
   mapCenter: BehaviorSubject<any>;
-  membershipTypes = this.utils.membershipTypes;
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
+  membershipTypes = this.utils.membershipTypes;
   categoryTooltip = this.cpI18n.translate('manage_create_service_category_tooltip');
 
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
-    private cpTracking: CPTrackingService,
     public servicesService: ServicesService
   ) {}
 
@@ -59,16 +59,6 @@ export class ServicesFormComponent implements OnInit {
 
   onUploadedImage(image) {
     this.form.get('logo_url').setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onLocationToggle(value) {
@@ -196,6 +186,10 @@ export class ServicesFormComponent implements OnInit {
     this.selectedMembership = this.membershipTypes.find(
       (type) => type.action === service.has_membership
     );
+
+    this.hasModeration =
+      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
+      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.membership);
   }
 
   ngOnInit() {

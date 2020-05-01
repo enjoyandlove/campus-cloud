@@ -9,7 +9,7 @@ import { CPSession } from '@campus-cloud/session';
 import { ServicesModule } from '../../../services.module';
 import { ProvidersService } from '../../../providers.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { mockUser } from '@projects/campus-cloud/src/app/session/mock';
+import { mockUser } from '@campus-cloud/session/mock';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { ProvidersUtilsService } from '../../../providers.utils.service';
 import { ServicesProvidersListComponent } from './providers-list.component';

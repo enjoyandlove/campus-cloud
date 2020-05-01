@@ -18,11 +18,19 @@ button.primary {
   display: flex;
 }
 
+cp-feed-tags {
+  flex: 1 0;
+}
+
 
 .dates {
   padding: 2em;
   height: 24em;
   display: flex;
+
+  ready-ui-menu-dot {
+    display: inline-block;
+  }
 
   ul {
     margin: 0;
@@ -34,7 +42,10 @@ button.primary {
     position: relative;
 
     button {
+      display: flex;
       text-align: left;
+      align-items: center;
+      justify-content: space-between;
     }
 
     &:after {
@@ -67,11 +78,6 @@ ready-ui-menu-item {
     text-align: left;
   }
 }
-
-button.selected-date {
-  font-weight: 600;
-}
-
 
 cp-card {
   .wrapper {
@@ -141,4 +147,24 @@ cp-card {
 
 .custom-section-header ready-ui-menu-divider {
   margin: 1em 0;
+}
+
+footer {
+  display: flex;
+  margin-top: 1em;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  cp-feed-tags {
+    margin-top: -0.86em;
+  }
+
+  .counter {
+    display: flex;
+    justify-content: flex-end;
+
+    ui-text-style:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
 
 import { filledForm as filledSocialPostCategory } from './../../tests/mocks';
-import { IWallsIntegration } from '@projects/campus-cloud/src/app/libs/integrations/walls/model';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 export const emptyForm = {
   school_id: 157,

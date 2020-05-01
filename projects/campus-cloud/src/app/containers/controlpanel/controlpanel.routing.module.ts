@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'dashboard',
-        data: { amplitude: 'Dashboard' },
+        data: { amplitude: 'Banner' },
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
 

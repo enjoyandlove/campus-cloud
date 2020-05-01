@@ -40,9 +40,7 @@ describe('FeedSettingsComponent', () => {
     fixture = TestBed.createComponent(FeedSettingsComponent);
     component = fixture.componentInstance;
 
-    component.isCampusWallView = new BehaviorSubject({ type: 1 });
-
-    session = TestBed.get(CPSession);
+    session = TestBed.inject(CPSession);
     session.g.set('school', mockSchool);
 
     fixture.detectChanges();
