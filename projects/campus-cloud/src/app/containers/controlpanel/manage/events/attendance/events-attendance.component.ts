@@ -10,12 +10,13 @@ import { EventsService } from '../events.service';
 import { FORMAT } from '@campus-cloud/shared/pipes';
 import { CPSession, IUser } from '@campus-cloud/session';
 import { ICheckIn } from './check-in/check-in.interface';
-import { IHeader, baseActions } from '@campus-cloud/store';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { STAR_SIZE } from '@campus-cloud/shared/components';
 import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { EventsAmplitudeService } from '../events.amplitude.service';
+import { IHeader, baseActions, ISnackbar } from '@campus-cloud/store';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
 import { CheckInMethod, CheckInOutTime, CheckInOut, AttendeeType } from '../event.status';
@@ -94,12 +95,12 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<IHeader>,
     private route: ActivatedRoute,
     public service: EventsService,
     public utils: EventUtilService,
     public modalService: ModalService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public store: Store<IHeader | ISnackbar>
   ) {
     super(session, cpI18n, service, modalService, store);
     this.eventId = this.route.snapshot.params['eventId'];
@@ -115,14 +116,17 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
         .set('calendar_id', this.orientationId.toString());
     }
 
-    super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {
-      this.event = event.data;
-      this.fetchAttendees();
-      this.buildHeader(event.data);
-      this.loading = false;
-      this.setCheckInEventProperties();
-      this.updateQrCode.next(this.event.attend_verification_methods);
-    });
+    super.fetchData(this.service.getEventById(this.eventId, search)).then(
+      (event) => {
+        this.event = event.data;
+        this.fetchAttendees();
+        this.buildHeader(event.data);
+        this.loading = false;
+        this.setCheckInEventProperties();
+        this.updateQrCode.next(this.event.attend_verification_methods);
+      },
+      () => this.handleError()
+    );
   }
 
   updateAssessment() {
@@ -491,9 +495,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
         this.trackQrCode(this.event);
         this.onSuccessQRCheckInMessage(isEnabled);
       },
-      (_) => {
-        this.onErrorQRCheckInMessage();
-      }
+      () => this.handleError()
     );
   }
 
@@ -512,15 +514,12 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     });
   }
 
-  onErrorQRCheckInMessage() {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        class: 'danger',
-        body: this.cpI18n.translate('something_went_wrong'),
-        autoClose: true
-      }
-    });
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 
   onTrackClickCheckinEvent(event: IEvent) {
