@@ -1,8 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { CPTrackingService } from '../../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-
 @Component({
   selector: 'cp-employer-form',
   templateUrl: './employer-form.component.html',
@@ -12,19 +9,9 @@ export class EmployerFormComponent {
   @Input() formError;
   @Input() employerForm;
 
-  constructor(public cpTracking: CPTrackingService) {}
+  constructor() {}
 
   onUploadedImage(image) {
     this.employerForm.controls['logo_url'].setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 }

@@ -7,8 +7,8 @@ import { FORMAT } from '@campus-cloud/shared/pipes';
 import { CPDate, CPMap } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, StoreService } from '@campus-cloud/shared/services';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
-import { CPI18nService, CPTrackingService, StoreService } from '@campus-cloud/shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -49,8 +49,7 @@ export class EventsFormComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public storeService: StoreService,
-    public cpTracking: CPTrackingService
+    public storeService: StoreService
   ) {}
 
   onUploadedImage(image) {
@@ -58,8 +57,6 @@ export class EventsFormComponent implements OnInit {
     this.form.controls['poster_thumb_url'].setValue(image);
 
     if (image) {
-      this.trackUploadImageEvent();
-
       this.eventProperties = {
         ...this.eventProperties,
         updated_image: amplitudeEvents.YES
@@ -67,12 +64,6 @@ export class EventsFormComponent implements OnInit {
 
       this.amplitudeProperties.emit(this.eventProperties);
     }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   setStart(date) {

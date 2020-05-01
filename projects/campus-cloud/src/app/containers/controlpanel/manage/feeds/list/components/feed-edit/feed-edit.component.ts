@@ -197,7 +197,6 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
           const images = imageCtrl.value;
           images.push(image_url);
           imageCtrl.setValue(images);
-          this.trackUploadImageEvent();
         })
       )
       .subscribe(() => {}, (err) => this.handleError(err));
@@ -236,12 +235,6 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
     const message = this.cpI18nPipe.transform('t_shared_image_upload_error_size', file.name);
 
     this.handleError(error, message);
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   submitHandler() {
