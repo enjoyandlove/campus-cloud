@@ -11,17 +11,17 @@ import {
 import { OverlayRef, OverlayConfig, ConnectedPosition } from '@angular/cdk/overlay';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
-import { filter, tap, takeUntil } from 'rxjs/operators';
-import { InjectionToken } from '@angular/core';
+import { filter, tap, takeUntil, debounceTime, delay, repeat } from 'rxjs/operators';
+import { OnInit, NgZone } from '@angular/core';
 import { Overlay } from '@angular/cdk/overlay';
 import { fromEvent, Observable } from 'rxjs';
-import { OnInit } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 
 import { TOOLTIP_DATA } from './tokens';
 import { TooltipComponent } from './tooltip.component';
 
 @Directive({
+  exportAs: 'tooltip',
   selector: '[ui-tooltip]'
 })
 export class TooltipDirective implements OnInit, OnDestroy {
@@ -68,11 +68,16 @@ export class TooltipDirective implements OnInit, OnDestroy {
     this._placement = placement;
   }
 
-  constructor(private el: ElementRef, private overlay: Overlay, private injector: Injector) {}
+  constructor(
+    private el: ElementRef,
+    private overlay: Overlay,
+    private injector: Injector,
+    private ngZone: NgZone
+  ) {}
 
   ngOnInit() {
     if (this._title !== '' || typeof this._template !== 'undefined') {
-      this.attachListeners();
+      this.ngZone.runOutsideAngular(() => this.attachListeners());
     }
   }
 
@@ -82,14 +87,16 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   open() {
-    this._tooltip = this.overlay.create(this.getConfig());
-    const portal = new ComponentPortal<TooltipComponent>(
-      TooltipComponent,
-      null,
-      this.createInjector()
-    );
-    this._templateCompRef = this._tooltip.attach<TooltipComponent>(portal);
-    this._show = true;
+    this.ngZone.run(() => {
+      this._tooltip = this.overlay.create(this.getConfig());
+      const portal = new ComponentPortal<TooltipComponent>(
+        TooltipComponent,
+        null,
+        this.createInjector()
+      );
+      this._templateCompRef = this._tooltip.attach<TooltipComponent>(portal);
+      this._show = true;
+    });
   }
 
   close() {
@@ -203,10 +210,16 @@ export class TooltipDirective implements OnInit, OnDestroy {
     const focus$ = fromEvent(el, 'focus');
     const mouseleave$ = fromEvent(el, 'mouseleave');
     const mouseenter$ = fromEvent(el, 'mouseenter');
+    const delayedEntrance$ = mouseenter$.pipe(
+      delay(this._delay),
+      takeUntil(mouseleave$),
+      repeat()
+    );
     const mousemove$ = fromEvent(document, 'mousemove');
 
     const hoverOutSideTriggerAndTooltip$ = mousemove$.pipe(
       filter(() => this._show),
+      debounceTime(this._delay),
       filter((e: MouseEvent) => {
         // const { x, y } = this.getOffset();
 
@@ -234,7 +247,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
       filter((e: KeyboardEvent) => e.code === 'Escape')
     );
 
-    const openEvents$ = merge(mouseenter$, focus$).pipe(
+    const openEvents$ = merge(delayedEntrance$, focus$).pipe(
       filter(() => !this._show),
       tap(() => this.open())
     );
