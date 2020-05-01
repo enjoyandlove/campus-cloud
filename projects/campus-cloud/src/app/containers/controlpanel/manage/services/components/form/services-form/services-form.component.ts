@@ -4,10 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 import { get as _get } from 'lodash';
 
 import { CPSession, ISchool } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { CPMap, canSchoolWriteResource } from '@campus-cloud/shared/utils';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ServicesService } from '@controlpanel/manage/services/services.service';
-import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 
 @Component({
@@ -39,7 +39,6 @@ export class ServicesFormComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
-    private cpTracking: CPTrackingService,
     public servicesService: ServicesService
   ) {}
 
@@ -60,16 +59,6 @@ export class ServicesFormComponent implements OnInit {
 
   onUploadedImage(image) {
     this.form.get('logo_url').setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   onLocationToggle(value) {

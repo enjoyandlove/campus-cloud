@@ -3,10 +3,9 @@ import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 import { CPSession, ISchool } from '@campus-cloud/session';
-import { CPTrackingService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { CPMap, canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { ClubsUtilsService } from '@controlpanel/manage/clubs/clubs.utils.service';
-import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
 
 @Component({
@@ -34,24 +33,10 @@ export class ClubsFormComponent implements OnInit {
   statusTypes = this.utils.getStatusTypes();
   membershipTypes = this.utils.getMembershipTypes();
 
-  constructor(
-    private session: CPSession,
-    private utils: ClubsUtilsService,
-    private cpTracking: CPTrackingService
-  ) {}
+  constructor(private session: CPSession, private utils: ClubsUtilsService) {}
 
   onUploadedImage(image): void {
     this.form.get('logo_url').setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   getSelectedStatus(value) {

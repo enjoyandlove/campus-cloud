@@ -233,8 +233,6 @@ export const amplitudeEvents = {
 
   ATHLETIC_EVENT: 'Athletic Event',
 
-  UPLOADED_PHOTO: 'Uploaded Photo',
-
   RESET_PASSWORD: 'Reset Password',
 
   ONE_ENGAGEMENT: 'One Engagement',

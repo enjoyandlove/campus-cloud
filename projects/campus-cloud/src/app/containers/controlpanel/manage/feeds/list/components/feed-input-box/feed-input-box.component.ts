@@ -141,7 +141,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
           const images = imageCtrl.value;
           images.push(image_url);
           imageCtrl.setValue(images);
-          this.trackUploadImageEvent();
         })
       )
       .subscribe(() => {}, (err) => this.handleError(err));
@@ -161,12 +160,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     const message = this.cpI18nPipe.transform('t_shared_image_upload_error_size', file.name);
 
     this.handleError(error, message);
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   replyToThread({ message, message_image_url_list, school_id, store_id }): Promise<any> {
