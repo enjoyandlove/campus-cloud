@@ -13,8 +13,7 @@
           <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
           <ng-container *ngSwitchCase="false">
-            <ng-container
-              *ngFor="let feed of view.results; trackBy: trackById">
+            <ng-container *ngFor="let feed of view.results; trackBy: trackById">
 
               <cp-feed-item [feed]="feed"
                             [groupId]="groupId"

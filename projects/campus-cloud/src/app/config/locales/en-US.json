@@ -2878,6 +2878,9 @@
   "t_feeds_edit": {
     "message": "Edit"
   },
+  "t_feeds_likes_tootlip": {
+    "message": "and %s more..."
+  },
   "t_feeds_move": {
     "message": "Move"
   },
