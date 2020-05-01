@@ -482,7 +482,10 @@ export class FeedSearchComponent implements OnInit {
       .set('is_sandbox', String(this.session.school.is_sandbox))
       .set('client_id', this.session.school.client_id.toString());
 
-    const initialResults$ = this.userService.getAll(params, 1, 15) as Observable<any[]>;
+    const fetchStudents$ = (max: number) =>
+      this.userService.getAll(params, 1, max).pipe(catchError(() => of([]))) as Observable<any[]>;
+
+    const initialResults$ = fetchStudents$(15);
 
     const loadMore$ = this.loadMore
       .asObservable()
@@ -490,12 +493,13 @@ export class FeedSearchComponent implements OnInit {
 
     const userSearch$ = this.studentTerm.asObservable().pipe(
       debounceTime(400),
-      tap((term: string) => (params = params.set('search_str', Boolean(term) ? term : null)))
+      tap(
+        (term: string) =>
+          (params = params.set('search_str', Boolean(term.trim().length) ? term.trim() : null))
+      )
     );
 
-    const reload$ = merge(loadMore$, userSearch$).pipe(
-      switchMap(() => this.userService.getAll(params, 1, cutOff) as Observable<any[]>)
-    );
+    const reload$ = merge(loadMore$, userSearch$).pipe(switchMap(() => fetchStudents$(cutOff)));
 
     return merge(reload$, initialResults$);
   }
