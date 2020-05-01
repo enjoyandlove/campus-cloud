@@ -2,7 +2,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
 import {

@@ -1,14 +1,36 @@
+import { catchError, tap, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
+import { ISnackbar } from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
 import { ApiService } from '@campus-cloud/base/services';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { SocialWallContent } from './model/feeds.interfaces';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
+import { FeedsExportUtilsService } from '@controlpanel/manage/feeds/feeds-export.utils.service';
+import {
+  IDataExportWallsPost,
+  IDataExportGroupThread,
+  IDataExportWallsComment,
+  IDataExportGroupThreadComment
+} from '@controlpanel/manage/feeds/model';
 
 @Injectable()
 export class FeedsService {
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    private session: CPSession,
+    private cpI18n: CPI18nService,
+    private store: Store<ISnackbar>,
+    private cpTracking: CPTrackingService,
+    private dataExportUtils: FeedsExportUtilsService,
+    private feedsAmplitudeService: FeedsAmplitudeService
+  ) {}
 
   getCampusWallFeeds(startRange: number, endRange: number, search?: HttpParams) {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}`;
@@ -28,7 +50,7 @@ export class FeedsService {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_POST_CATEGORY}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search).pipe(catchError(() => of([])));
   }
 
   getSocialGroups(search?: HttpParams) {
@@ -91,25 +113,19 @@ export class FeedsService {
     return this.api.delete(url, null, true);
   }
 
-  approveCampusWallThread(threadId: number, data: any) {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
-
-    return this.api.update(url, data);
-  }
-
-  approveGroupWallThread(threadId: number, data: any) {
+  updateGroupWallThread(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/${threadId}`;
 
     return this.api.update(url, data);
   }
 
-  approveCampusWallComment(threadId: number, data: any) {
+  updateCampusWallComment(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/${threadId}`;
 
     return this.api.update(url, data);
   }
 
-  approveGroupWallComment(threadId: number, data: any) {
+  updateGroupWallComment(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/${threadId}`;
 
     return this.api.update(url, data);
@@ -127,7 +143,7 @@ export class FeedsService {
     return this.api.get(url, search);
   }
 
-  moveCampusWallThreadToChannel(threadId: number, data: any) {
+  updateCampusWallThread(threadId: number, data: any) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
     return this.api.update(url, data);
@@ -176,5 +192,59 @@ export class FeedsService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/`;
 
     return this.api.get(url, search, true);
+  }
+
+  getCampusWallsPostsExportData(params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_POST}/`;
+
+    return this.api.get(url, params, true);
+  }
+
+  getCampusWallsCommentExportData(params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_DATA_WALL_COMMENT}/`;
+
+    return this.api.get(url, params, true);
+  }
+
+  getGroupThreadExportData(params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_GROUP_THREADS}/`;
+
+    return this.api.get(url, params, true);
+  }
+
+  getGroupCommentExportData(params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_GROUP_COMMENTS}/`;
+
+    return this.api.get(url, params, true);
+  }
+
+  generateReport(
+    stream: Observable<
+      | [IDataExportGroupThread[], IDataExportGroupThreadComment[]]
+      | [IDataExportWallsPost[], IDataExportWallsComment[]]
+    >
+  ) {
+    return stream.pipe(
+      take(1),
+      tap(([wall, comment]) => {
+        this.dataExportUtils.compressFiles(wall, comment);
+        this.trackCommunityExportThread();
+        this.handleSuccess();
+      })
+    );
+  }
+
+  private handleSuccess() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate('t_community_data_export_success')
+      })
+    );
+  }
+
+  private trackCommunityExportThread() {
+    const { sub_menu_name, ...amplitude } = this.feedsAmplitudeService.getWallFiltersAmplitude();
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.COMMUNITY_DOWNLOADED_REPORT, amplitude);
   }
 }

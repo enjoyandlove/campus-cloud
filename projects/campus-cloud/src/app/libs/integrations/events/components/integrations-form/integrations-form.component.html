@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-6">
         <label for="type">{{ 't_shared_type' | cpI18n }}</label>
-        <cp-dropdown cpTarget="type"
+        <cp-dropdown id="type"
+                     cpTarget="type"
                      [items]="typesDropdown"
                      [selectedItem]="selectedType"
                      (selected)="onTypeSelected($event)">
@@ -18,14 +19,60 @@
 
   <div class="form-group">
     <div class="row">
-      <div class="col-12">
+      <div [ngClass]="{ 'col-10': showPreview, 'col-12': !showPreview }">
         <label for="url">{{ 't_shared_url' | cpI18n }}</label>
         <input type="text"
                cpTarget="url"
                formControlName="feed_url" />
       </div>
+
+      <ng-container *ngIf="showPreview">
+        <div class="col-2 no-left-padding">
+          <button ui-button
+                  type="button"
+                  variant="flat"
+                  color="primary"
+                  class="check-button"
+                  (click)="onPreviewUrl()"
+                  [disabled]="!form.get('feed_url').valid">
+            Check
+          </button>
+        </div>
+      </ng-container>
     </div>
   </div>
+
+  <ng-container *ngIf="_preview$ | async as preview">
+    <ng-container [ngSwitch]="preview.loading">
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
+      <ng-container *ngSwitchCase="false">
+        <div *ngIf="preview.errorStr"
+             class="form-group preview-status error">
+          <i class="material-icons">report_problem</i>
+          <span>{{ preview.errorStr | cpI18n}}
+            <a ui-button
+               [href]="pkdbUrl"
+               target="_blank"
+               variant="inline"
+               color="primary"
+               *ngIf="preview.errorStr === 't_shared_integration_preview_error_fields'">
+              {{ 'learn_more' | cpI18n }}
+            </a>
+          </span>
+        </div>
+
+        <div *ngIf="preview.data"
+             class="form-group preview">
+          <p class="preview-status success">
+            <i class="material-icons">done</i>
+            <span>{{ 't_shared_integration_preview_success' | cpI18n }}</span>
+          </p>
+          <cp-events-integrations-preview [items]="preview.data">
+          </cp-events-integrations-preview>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
 
   <div *ngIf="showHosts"
        class="form-group">

@@ -1,0 +1,31 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+label.file {
+  input {
+    opacity: 0;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  span {
+    @include font-normal();
+
+    cursor: pointer;
+    color: $color-brand;
+  }
+}
+
+ready-ui-gallery-group {
+  display: block;
+  margin-top: 1em;
+}
+
+.editor {
+  margin-bottom: 1em;
+  margin-left: -12px;
+  margin-right: -12px;
+}

@@ -8,7 +8,9 @@ import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { ServicesService } from '../services.service';
 import { ServicesUtilsService } from '../services.utils.service';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants/privileges';
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store/base';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ServicesModel } from '@controlpanel/manage/services/model/services.model';
@@ -45,14 +47,16 @@ export class ServicesCreateComponent implements OnInit {
   ) {}
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 'services_create_heading',
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 'services_create_heading',
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 
@@ -126,6 +130,14 @@ export class ServicesCreateComponent implements OnInit {
     this.buildHeader();
 
     this.form = ServicesModel.form();
+
+    const hasModeration =
+      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
+      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.membership);
+
+    if (!hasModeration) {
+      this.form.get('has_membership').setValue(false);
+    }
 
     this.buttonData = {
       disabled: false,

@@ -12,7 +12,7 @@ import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
 import { DiningCategoriesEditComponent } from './dining-categories-edit.component';
-import { categoryTypes } from '@projects/campus-cloud/src/app/libs/locations/common/categories/model';
+import { categoryTypes } from '@campus-cloud/libs/locations/common/categories/model';
 import {
   filledForm,
   mockCategories,

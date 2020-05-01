@@ -186,8 +186,8 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
 
     if (TilesUtilsService.isIntegrationLink(this.campusLink.link_url)) {
       linkParamsMatch = this.items
-        .map((i) => _get(i, ['meta', 'link_params', 'id'], null))
-        .includes(this.campusLink.link_params.id);
+        .map((i) => _get(i, ['meta', 'link_params', 'int_extra_data_id'], null))
+        .includes(this.campusLink.link_params.int_extra_data_id);
     }
 
     return (

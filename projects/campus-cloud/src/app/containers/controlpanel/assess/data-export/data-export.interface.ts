@@ -4,41 +4,12 @@ export interface IDataExport {
 }
 
 export enum DataExportType {
-  appUsers = 'appUsers',
-  wallPosts = 'wallPosts',
-  wallComments = 'wallComments'
+  appUsers = 'appUsers'
 }
 
 export const dataExportAmplitudeMap = {
-  [DataExportType.wallPosts]: 'Campus Wall Post',
-  [DataExportType.appUsers]: 'Campus App User List',
-  [DataExportType.wallComments]: 'Campus Wall Comment'
+  [DataExportType.appUsers]: 'Campus App User List'
 };
-
-export interface IDataExportWallsComment {
-  thread_id: number;
-  author_name: string;
-  author_email: string;
-  student_id: string;
-  created_at: string;
-  content: string;
-  attachments: string[];
-  likes: number;
-  dislikes: number;
-}
-
-export interface IDataExportWallsPost {
-  id: string;
-  author_name: string;
-  author_email: string;
-  student_id: string;
-  created_at: string;
-  content: string;
-  attachments: string[];
-  likes: number;
-  dislikes: number;
-  comment_count: number;
-}
 
 export interface IDataExportAppUsers {
   email: string;

@@ -1,16 +1,19 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { provideMockStore } from '@ngrx/store/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { ServicesFormComponent } from './services-form.component';
 import { mockLocation } from '@controlpanel/manage/services/tests';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
 import { ServicesService } from '@controlpanel/manage/services/services.service';
 import { ServicesModel } from '@controlpanel/manage/services/model/services.model';
 import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
+import { mockUser } from '@projects/campus-cloud/src/app/session/mock';
 
 describe('ServicesFormComponent', () => {
   configureTestSuite();
@@ -30,8 +33,9 @@ describe('ServicesFormComponent', () => {
   });
 
   let session;
-  let fixture: ComponentFixture<ServicesFormComponent>;
+  let de: DebugElement;
   let component: ServicesFormComponent;
+  let fixture: ComponentFixture<ServicesFormComponent>;
 
   beforeEach(async(() => {
     fixture = TestBed.createComponent(ServicesFormComponent);
@@ -42,6 +46,8 @@ describe('ServicesFormComponent', () => {
     session.g.set('school', mockSchool);
     component.form = ServicesModel.form();
     spyOn(component.servicesService, 'getCategories').and.returnValue(of([]));
+
+    de = fixture.debugElement;
 
     fixture.detectChanges();
   }));
@@ -116,5 +122,30 @@ describe('ServicesFormComponent', () => {
     expect(component.form.controls['room_data'].value).toBe('');
     expect(component.mapCenter.value.lat).toEqual(mockSchool.latitude);
     expect(component.mapCenter.value.lng).toEqual(mockSchool.latitude);
+  });
+
+  describe('community dropdown', () => {
+    it('should be hidden when admin is missing moderation and membership privileges', () => {
+      let dropdown = getElementByCPTargetValue(de, 'moderation');
+
+      expect(dropdown).toBeNull();
+
+      const user = {
+        ...mockUser,
+        school_level_privileges: {
+          [session.school.id]: {
+            [CP_PRIVILEGES_MAP.moderation]: { w: true, r: true },
+            [CP_PRIVILEGES_MAP.membership]: { w: true, r: true }
+          }
+        }
+      };
+
+      session.g.set('user', user);
+      component.initialize();
+      fixture.detectChanges();
+
+      dropdown = getElementByCPTargetValue(de, 'moderation');
+      expect(dropdown).not.toBeNull();
+    });
   });
 });

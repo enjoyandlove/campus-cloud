@@ -3,7 +3,7 @@ import { createSelector } from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import { getFeatureState } from './feature.selector';
 
-import { getRouterState } from '@projects/campus-cloud/src/app/store';
+import { getRouterState } from '@campus-cloud/store';
 import * as fromDining from '../reducers/dining.reducer';
 
 export const getDiningState = createSelector(

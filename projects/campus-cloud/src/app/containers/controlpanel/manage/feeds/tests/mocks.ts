@@ -1,3 +1,5 @@
+import { IDataExportWallsPost, IDataExportWallsComment } from '../model/feeds.interfaces';
+
 export const mockSocialPostCategory = {
   id: 1,
   school_id: 157,
@@ -53,4 +55,32 @@ export const mockFeed = {
   is_anonymous: false,
   email: 'sebastien@oohlalamobile.com',
   avatar_thumb: 'https://d3tlp0m01b6d9o.cloudfront.net/defaultavatar_2016.png'
+};
+
+export const mockDataExportWallPost: IDataExportWallsPost = {
+  id: '1',
+  author_name: 'John',
+  author_email: 'john@gmail.com',
+  student_id: '1',
+  created_at: 'Fri Oct 11 2019 11:50:19 GMT-0400',
+  content: 'Post Body',
+  attachments: [],
+  likes: 1,
+  dislikes: 1,
+  comment_count: 1,
+  channel_name: 'News'
+};
+
+export const mockDataExportWallComment: IDataExportWallsComment = {
+  thread_id: 1,
+  author_name: 'john',
+  author_email: 'john@gmail.com',
+  student_id: '1',
+  created_at: 'Fri Oct 11 2019 11:50:19 GMT-0400',
+  content: 'Comment Body',
+  attachments: [],
+  likes: 1,
+  dislikes: 1,
+  channel_name: 'News',
+  thread_content: 'Post Body'
 };

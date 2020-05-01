@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '@campus-cloud/store';
@@ -34,7 +35,7 @@ export class ManageHeaderService {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events) ? child : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.moderation) {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
-          this.session.g.get('schoolConfig').campus_wall_enabled
+          _get(this.session.g.get('schoolConfig'), 'campus_wall_enabled', false)
           ? child
           : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.clubs) {

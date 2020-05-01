@@ -13,7 +13,7 @@ import { MODAL_DATA } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsDeleteComponent } from './events-delete.component';
 import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
-import { configureTestSuite, CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 describe('EventDeleteComponent', () => {

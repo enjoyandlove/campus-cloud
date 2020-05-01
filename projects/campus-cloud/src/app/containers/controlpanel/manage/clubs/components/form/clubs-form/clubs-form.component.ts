@@ -2,10 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
-import { CPMap } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPTrackingService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { CPMap, canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { ClubsUtilsService } from '@controlpanel/manage/clubs/clubs.utils.service';
 import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
 
@@ -26,31 +25,18 @@ export class ClubsFormComponent implements OnInit {
   selectedStatus;
   school: ISchool;
   selectedMembership;
+  hasMemberShip = false;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
-  statusTypes = this.utils.getStatusTypes();
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
+  statusTypes = this.utils.getStatusTypes();
   membershipTypes = this.utils.getMembershipTypes();
 
-  constructor(
-    private session: CPSession,
-    private utils: ClubsUtilsService,
-    private cpTracking: CPTrackingService
-  ) {}
+  constructor(private session: CPSession, private utils: ClubsUtilsService) {}
 
   onUploadedImage(image): void {
     this.form.get('logo_url').setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   getSelectedStatus(value) {
@@ -168,6 +154,10 @@ export class ClubsFormComponent implements OnInit {
     this.mapCenter = new BehaviorSubject(
       CPMap.setDefaultMapCenter(club.latitude, club.longitude, this.school)
     );
+
+    this.hasMemberShip =
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.membership);
   }
 
   ngOnInit() {

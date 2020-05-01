@@ -14,4 +14,8 @@ p {
   @include font-36px();
 
   margin-top: 90px;
+
+  &.center {
+    text-align: center;
+  }
 }

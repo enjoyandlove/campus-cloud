@@ -18,6 +18,7 @@ import { FeedbackAndIndicatorsModule } from './feedback-and-indicators/feedback-
     TextModule,
     ChartsModule,
     ActionsModule,
+    BehaviorModule,
     OverlaysModule,
     StructureModule,
     ReadyFormsModule,

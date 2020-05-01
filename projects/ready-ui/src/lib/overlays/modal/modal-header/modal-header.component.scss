@@ -1,0 +1,7 @@
+@import '../../../core/sass/variables';
+
+:host {
+  padding: 1em;
+  display: block;
+  background: map-get($map: $ready-grey, $key: 200);
+}

@@ -41,8 +41,8 @@ module.exports = function(config) {
         emitWarning: false,
         global: {
           statements: 55,
-          branches: 41, // TODO increease one percent
-          functions: 41,
+          branches: 40, // TODO increease one percent
+          functions: 44,
           lines: 56
         }
       }

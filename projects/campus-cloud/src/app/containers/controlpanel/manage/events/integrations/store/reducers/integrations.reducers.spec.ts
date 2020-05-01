@@ -4,6 +4,7 @@ import * as fromActions from '../actions';
 import { mockSchool } from '@campus-cloud/session/mock';
 import { mockIntegration } from './../../tests/mocks';
 import * as fromReducer from './integrations.reducers';
+import { mockEventIntegrationPreview } from '@campus-cloud/libs/integrations/events/components/tests/mock';
 
 const pagination = {
   startRange: 1,
@@ -308,6 +309,50 @@ describe('Event Integrations Reducer', () => {
       expect(error).toBeNull();
       expect(loading).toBe(false);
       expect(hosts).toEqual(payload);
+    });
+  });
+
+  describe('PREVIEW_FEED', () => {
+    it('LOAD', () => {
+      const { initialState } = fromReducer;
+      const action = new fromActions.PreviewFeed(undefined);
+      const { preview, previewError, previewLoading } = fromReducer.reducer(initialState, action);
+
+      expect(preview).toBeNull();
+      expect(previewError).toBeNull();
+      expect(previewLoading).toBe(true);
+    });
+
+    it('SUCCESS', () => {
+      const { initialState } = fromReducer;
+      const payload = mockEventIntegrationPreview;
+      const action = new fromActions.PreviewFeedSuccess(payload);
+      const { preview, previewError, previewLoading } = fromReducer.reducer(initialState, action);
+
+      expect(preview).toBe(mockEventIntegrationPreview);
+      expect(previewError).toBeNull();
+      expect(previewLoading).toBe(false);
+    });
+
+    it('FAIL', () => {
+      const { initialState } = fromReducer;
+      const payload = { error: 'required_fields_missing' };
+      const action = new fromActions.PreviewFeedFail(payload);
+      const { preview, previewError, previewLoading } = fromReducer.reducer(initialState, action);
+
+      expect(preview).toBeNull();
+      expect(previewError).toBe('t_shared_integration_preview_error_fields');
+      expect(previewLoading).toBe(false);
+    });
+
+    it('RESET', () => {
+      const { initialState } = fromReducer;
+      const action = new fromActions.PreviewFeedReset();
+      const { preview, previewError, previewLoading } = fromReducer.reducer(initialState, action);
+
+      expect(preview).toBeNull();
+      expect(previewError).toBeNull();
+      expect(previewLoading).toBe(false);
     });
   });
 });

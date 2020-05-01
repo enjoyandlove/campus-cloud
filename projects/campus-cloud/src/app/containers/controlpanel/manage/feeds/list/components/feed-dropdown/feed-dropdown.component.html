@@ -1,28 +1,35 @@
-<ng-container *ngIf="options.length === 1">
-  <button type="button"
-          class="cpbtn cpbtn--link-dark"
-          (click)="selected.emit(3)">
-    <ready-ui-icon name="close"></ready-ui-icon>
-  </button>
-</ng-container>
+<ng-container *ngIf="view$ | async as view">
+  <ng-container *ngIf="!view.deleted">
 
-<button ui-button
-        type="button"
-        variant="inline"
-        position="right"
-        [triggerFor]="menu"
-        ready-ui-menu-trigger
-        direction="bottom-left"
-        *ngIf="options.length > 1">
-  <ready-ui-icon name="expand_more"
-                 aria-label="Close"></ready-ui-icon>
-</button>
+    <ng-container *ngIf="options.length === 1">
+      <button type="button"
+              class="cpbtn cpbtn--link-dark"
+              (click)="selected.emit(3)">
+        <ready-ui-icon name="close"></ready-ui-icon>
+      </button>
+    </ng-container>
+
+    <button ui-button
+            type="button"
+            variant="inline"
+            position="right"
+            [triggerFor]="menu"
+            overlayWidth="100px"
+            ready-ui-menu-trigger
+            direction="bottom-left"
+            *ngIf="options.length > 1">
+      <ready-ui-icon name="expand_more"
+                     aria-label="Close"></ready-ui-icon>
+    </button>
+  </ng-container>
+</ng-container>
 
 <ready-ui-menu #menu="menu">
   <ready-ui-menu-item *ngFor="let option of options">
     <button ui-button
             type="button"
             variant="inline"
+            fullWidth="true"
             (click)="onOptionClicked(option.action); menu.close()">{{ option.label }}</button>
   </ready-ui-menu-item>
 </ready-ui-menu>

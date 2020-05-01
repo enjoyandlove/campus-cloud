@@ -9,7 +9,12 @@ export enum Formats {
   dateTimeFormat = 'M/DD/YYYY h:mm A'
 }
 
-export const createSpreadSheet = (data: any[], fields: Array<string>, filename = 'download') => {
+export const createSpreadSheet = (
+  data: any[],
+  fields: Array<string>,
+  filename = 'download',
+  download = true
+) => {
   const parseData = unparse({
     fields,
     data: [...data]
@@ -25,6 +30,10 @@ export const createSpreadSheet = (data: any[], fields: Array<string>, filename =
   // );
 
   const file = new Blob([parseData], { type: 'text/csv;charset=utf-8' });
+
+  if (!download) {
+    return file;
+  }
 
   saveAs(file, `${filename}.csv`);
 };

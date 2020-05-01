@@ -10,3 +10,5 @@ export * from './stack/stack.module';
 export * from './card/card.module';
 export * from './page/page.module';
 export * from './structure.module';
+
+export * from './skeleton';

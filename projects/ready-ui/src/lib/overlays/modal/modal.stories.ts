@@ -1,55 +1,28 @@
+import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { Component, TemplateRef, Inject } from '@angular/core';
+import { centered } from '@storybook/addon-centered/angular';
 import { ReadyUiModule } from '@ready-education/ready-ui';
 import {
   ModalService,
   READY_MODAL_DATA
 } from '@ready-education/ready-ui/overlays/modal/modal.service';
-import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { centered } from '@storybook/addon-centered/angular';
-import { Component, TemplateRef, Inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ready-ui-modal-component',
-  styles: [
-    `
-      .wrapper {
-        padding: 1em;
-      }
-      header {
-        padding-bottom: 1em;
-      }
-      footer {
-        padding-top: 1em;
-        border-top: 1px solid #eee;
-      }
-      main {
-        padding: 2em 0;
-      }
-    `
-  ],
   template: `
-    <div class="wrapper">
-      <header>
-        <ready-ui-stack alignment="between">
-          Title
-          <button ui-button type="button" variant="inline" (click)="data.onClose()">
-            <ready-ui-icon name="close" size="small"></ready-ui-icon>
-          </button>
-        </ready-ui-stack>
-      </header>
-      <main>
-        Modal Content
-      </main>
-      <footer>
-        <ready-ui-stack alignment="end">
-          <button ui-button type="button" variant="flat" (click)="data.onCancel()">
-            Cancel
-          </button>
-          <button ui-button type="button" color="danger" variant="flat" (click)="data.onDelete()">
-            Delete
-          </button>
-        </ready-ui-stack>
-      </footer>
-    </div>
+    <ready-ui-modal-header heading="Modal title" (close)="onCloseClick()"></ready-ui-modal-header>
+    <ready-ui-modal-content>
+      Are you sure you want to delete test?
+    </ready-ui-modal-content>
+    <ready-ui-modal-divider></ready-ui-modal-divider>
+    <ready-ui-modal-footer>
+      <button ui-button type="button" variant="stroked" (click)="onCancelClick()">
+        Cancel
+      </button>
+      <button ui-button variant="flat" type="button" color="danger" (click)="onDeleteClick()">
+        Delete
+      </button>
+    </ready-ui-modal-footer>
   `
 })
 export class ReadyUIModalComponent {

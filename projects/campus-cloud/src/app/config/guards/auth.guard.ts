@@ -101,7 +101,7 @@ export class AuthGuard implements CanActivate {
       .getSchoolConfig(search)
       .toPromise()
       .then((config) => this.session.g.set('schoolConfig', config))
-      .catch();
+      .catch(() => this.session.g.set('schoolConfig', {}));
   }
 
   setDefaultHost(): Promise<any> {

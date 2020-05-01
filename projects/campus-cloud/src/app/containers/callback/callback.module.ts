@@ -23,7 +23,8 @@ import {
   FeedbackStarsComponent,
   FeedbackServiceComponent,
   FeedbackConfirmationComponent,
-  FeedbackOrientationEventComponent
+  FeedbackOrientationEventComponent,
+  FeedbackAlreadySubmittedComponent
 } from './feedback';
 
 import {
@@ -62,7 +63,8 @@ import {
     CheckinInternalModalComponent,
     CallbackPasswordResetComponent,
     CheckinOrientationEventsComponent,
-    FeedbackOrientationEventComponent
+    FeedbackOrientationEventComponent,
+    FeedbackAlreadySubmittedComponent
   ],
 
   imports: [

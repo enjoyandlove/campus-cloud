@@ -5,12 +5,35 @@ $img_height: 108px;
 
 .wrapper {
   &__right-side {
-    position: relative;
-    height: $img_height;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     span,
     label:not(.dark) {
       color: $color-secondary-text;
+    }
+
+    label.file {
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 4px;
+      color: $color-brand;
+      border: 1px solid $color-brand;
+
+      &:hover {
+        color: #1771b5;
+        border: 1px solid #1771b5;
+      }
+
+      input {
+        opacity: 0;
+        z-index: -1;
+        width: 0.1px;
+        height: 0.1px;
+        overflow: hidden;
+        position: absolute;
+      }
     }
 
     label.error {

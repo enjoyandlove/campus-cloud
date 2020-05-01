@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { LocationsDayLabelPipe } from './pipes';
-import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import {
   LocationFormComponent,
   LocationsInfoCardComponent,

@@ -8,7 +8,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CPImageCropperDirective } from '@projects/campus-cloud/src/app/shared/directives';
+import { CPImageCropperDirective } from '@campus-cloud/shared/directives';
 
 const IMAGE_SIZE_WIDTH = 1440;
 @Component({

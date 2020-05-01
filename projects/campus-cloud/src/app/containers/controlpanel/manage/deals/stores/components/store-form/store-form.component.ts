@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { CPMap } from '../../../../../../../shared/utils';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
+import { CPMap } from '@campus-cloud/shared/utils';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-store-form',
@@ -20,28 +19,10 @@ export class StoreFormComponent implements OnInit {
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
-  constructor(
-    public session: CPSession,
-    public cpI18n: CPI18nService,
-    public cpTracking: CPTrackingService
-  ) {}
+  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
 
   onUploadedImage(image) {
     this.storeForm.controls['logo_url'].setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = {
-      ...this.cpTracking.getAmplitudeMenuProperties(),
-      page_type: amplitudeEvents.STORE
-    };
-
-    delete properties['page_name'];
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
   centerMap(lat: number, lng: number) {
