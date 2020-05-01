@@ -259,6 +259,18 @@ export class FeedsAmplitudeService {
     return sub_menu_name === 'Walls';
   }
 
+  getAddedImageAmplitude(feed, isComment) {
+    const thread_type = isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
+
+    return {
+      thread_type,
+      sub_menu_name,
+      thread_id: feed.id,
+      count: feed.image_url_list.length
+    };
+  }
+
   static storeCategoryIdToAmplitudeName(storeCategory) {
     if (storeCategory === StoreCategoryType.athletics) {
       return 'Athletic Channel';

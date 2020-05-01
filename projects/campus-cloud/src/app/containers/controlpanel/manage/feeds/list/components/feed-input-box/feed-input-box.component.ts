@@ -359,6 +359,11 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     delete threadAmplitude['likes'];
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.COMMUNITY_CREATED_THREAD, threadAmplitude);
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.COMMUNITY_ADDED_IMAGE,
+      this.feedsAmplitudeService.getAddedImageAmplitude(feed, this.replyView)
+    );
   }
 
   buildForm() {

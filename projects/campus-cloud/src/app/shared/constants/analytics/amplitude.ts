@@ -381,6 +381,8 @@ export const amplitudeEvents = {
 
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
+  COMMUNITY_ADDED_IMAGE: 'Community - Added Image',
+
   MANAGE_CREATED_DINING: 'Manage - Created Dining',
 
   MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
