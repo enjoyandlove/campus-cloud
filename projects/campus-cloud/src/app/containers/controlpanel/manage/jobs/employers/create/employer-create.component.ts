@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import * as fromJobs from '@campus-cloud/store/manage/jobs';
-import { IJobsState } from '@projects/campus-cloud/src/app/store';
+import { IJobsState } from '@campus-cloud/store';
 import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays/modal/modal.service';
 
 @Component({

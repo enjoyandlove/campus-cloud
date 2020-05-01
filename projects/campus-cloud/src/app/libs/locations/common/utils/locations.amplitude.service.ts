@@ -6,7 +6,7 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
   providedIn: 'root'
 })
 export class LocationsAmplitudeService {
-  static getItemProperties(data, item_type = 'Service') {
+  static getItemProperties(data, item_type = 'Location') {
     const location_status = data.address ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
     return {
       item_type,

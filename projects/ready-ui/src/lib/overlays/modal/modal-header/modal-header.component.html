@@ -1,0 +1,11 @@
+<ready-ui-stack alignment="between">
+  <span>{{ heading }}</span>
+  <button type="button"
+          ui-button
+          variant="inline"
+          *ngIf="_closable"
+          (click)="close.emit()">
+    <ready-ui-icon name="close"
+                   size="small"></ready-ui-icon>
+  </button>
+</ready-ui-stack>

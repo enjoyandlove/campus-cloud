@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -8,6 +7,7 @@ import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { FeedBodyComponent } from '@controlpanel/manage/feeds/list/components';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
+import { mockViewCommentProperties } from '@controlpanel/manage/feeds/tests/mockAmplitude';
 
 describe('FeedBodyComponent', () => {
   configureTestSuite();
@@ -28,6 +28,7 @@ describe('FeedBodyComponent', () => {
   );
 
   let spy;
+  let eventProperties;
   let component: FeedBodyComponent;
   let fixture: ComponentFixture<FeedBodyComponent>;
 
@@ -36,13 +37,13 @@ describe('FeedBodyComponent', () => {
     component = fixture.componentInstance;
 
     component.feed = mockFeed;
-    component.isCampusWallView = new BehaviorSubject({ type: 1 });
     spy = spyOn(component.cpTracking, 'amplitudeEmitEvent');
-    spyOn(component.feedsAmplitudeService, 'getWallAmplitudeProperties').and.returnValues({
-      post_type: '',
-      sub_menu_name: 'Walls',
-      wall_source: 'All Categories'
-    });
+    eventProperties = {
+      ...mockViewCommentProperties
+    };
+    spyOn(component.feedsAmplitudeService, 'getWallCommonAmplitudeProperties').and.returnValues(
+      eventProperties
+    );
   });
 
   it('should track viewed comment event', () => {

@@ -75,6 +75,8 @@ export const amplitudeEvents = {
 
   PENDING: 'Pending',
 
+  REMOVED: 'Removed',
+
   ENABLED: 'Enabled',
 
   AUDIENCE: 'Audience',
@@ -231,8 +233,6 @@ export const amplitudeEvents = {
 
   ATHLETIC_EVENT: 'Athletic Event',
 
-  UPLOADED_PHOTO: 'Uploaded Photo',
-
   RESET_PASSWORD: 'Reset Password',
 
   ONE_ENGAGEMENT: 'One Engagement',
@@ -319,8 +319,6 @@ export const amplitudeEvents = {
 
   WALL_APPROVED_POST: 'Wall - Approved Post',
 
-  WALL_CLICKED_IMAGE: 'Wall - Clicked Image',
-
   MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
 
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
@@ -381,6 +379,8 @@ export const amplitudeEvents = {
 
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
+  COMMUNITY_ADDED_IMAGE: 'Community - Added Image',
+
   MANAGE_CREATED_DINING: 'Manage - Created Dining',
 
   MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
@@ -394,6 +394,8 @@ export const amplitudeEvents = {
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
 
   STUDIO_DELETED_SECTION: 'Studio - Deleted Section',
+
+  COMMUNITY_VIEWED_IMAGE: 'Community - Viewed Image',
 
   MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
 
@@ -420,6 +422,8 @@ export const amplitudeEvents = {
   INTEGRATED_FEED_CHANNEL: 'Integrated Feed Channel',
 
   MANAGE_CC_WEB_CHECK_IN: 'Manage - CC  Web Check-In',
+
+  COMMUNITY_EDITED_THREAD: 'Community - Edited Thread',
 
   COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE: 'Experience',
 
@@ -450,6 +454,10 @@ export const amplitudeEvents = {
   ASSESS_SENT_ANNOUNCEMENT: 'Assess - Sent Announcement',
 
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
+
+  COMMUNITY_CREATED_THREAD: 'Community - Created Thread',
+
+  COMMUNITY_DELETED_THREAD: 'Community - Deleted Thread',
 
   MANAGE_IMPORTED_AUDIENCE: 'Manage - Imported Audience',
 
@@ -484,6 +492,8 @@ export const amplitudeEvents = {
   MANAGE_ADDED_WEB_CHECK_OUT: 'Manage - Added Web Check-Out',
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
+
+  COMMUNITY_DOWNLOADED_REPORT: 'Community - Downloaded Report',
 
   NOTIFY_UPDATED_COMMUNICATION: 'Notify - Updated Communication',
 

@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { ISocialPostCategory } from '../../../model';
-import { IItem } from '@projects/campus-cloud/src/app/shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 export enum IntegrationActions {

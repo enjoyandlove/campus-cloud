@@ -1,16 +1,5 @@
-@import '~projects/campus-cloud/src/sass/components/dropdown';
-
-ul {
-  @include cpDropdownMenu();
-
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-radius: 4px;
-
-  li {
-    display: flex;
-    height: 2.5em;
-    padding: 0 1em;
+ready-ui-menu-item {
+  button {
+    text-align: left;
   }
 }

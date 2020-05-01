@@ -1,20 +1,27 @@
 import * as fromIntegrations from '../actions';
 import { IStore } from '@campus-cloud/shared/services/store.service';
+import { IPreviewResponse } from '@campus-cloud/libs/integrations/common/model';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model/event-integration.interface';
 
 export interface IntegrationsState {
   error: string;
   loading: boolean;
   hosts: IStore[];
+  previewError: string;
+  previewLoading: boolean;
   completedAction: string;
   data: IEventIntegration[];
+  preview: IPreviewResponse[];
 }
 
 export const initialState: IntegrationsState = {
   data: [],
   hosts: [],
   error: null,
+  preview: null,
   loading: false,
+  previewError: null,
+  previewLoading: false,
   completedAction: null
 };
 
@@ -132,6 +139,52 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       };
     }
 
+    case fromIntegrations.IntegrationActions.PREVIEW_FEED: {
+      return {
+        ...state,
+        preview: null,
+        previewError: null,
+        previewLoading: true
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.PREVIEW_FEED_FAIL: {
+      const { error } = action.payload;
+      const previewError =
+        error === 'no_future_events'
+          ? 't_shared_integration_preview_error_dates'
+          : error === 'required_fields_missing'
+          ? 't_shared_integration_preview_error_fields'
+          : error === 'feed_format_invalid'
+          ? 't_shared_integration_preview_error_format'
+          : 't_shared_integration_preview_error_url';
+
+      return {
+        ...state,
+        previewError,
+        preview: null,
+        previewLoading: false
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.PREVIEW_FEED_SUCCESS: {
+      return {
+        ...state,
+        previewError: null,
+        previewLoading: false,
+        preview: action.payload
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.PREVIEW_FEED_RESET: {
+      return {
+        ...state,
+        preview: null,
+        previewError: null,
+        previewLoading: false
+      };
+    }
+
     default: {
       return state;
     }
@@ -139,7 +192,10 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
 }
 
 export const getHosts = (state: IntegrationsState) => state.hosts;
+export const getPreview = (state: IntegrationsState) => state.preview;
 export const getIntegrations = (state: IntegrationsState) => state.data;
 export const getIntegrationsError = (state: IntegrationsState) => state.error;
+export const getPreviewError = (state: IntegrationsState) => state.previewError;
 export const getIntegrationsLoading = (state: IntegrationsState) => state.loading;
+export const getPreviewLoading = (state: IntegrationsState) => state.previewLoading;
 export const getCompletedAction = (state: IntegrationsState) => state.completedAction;

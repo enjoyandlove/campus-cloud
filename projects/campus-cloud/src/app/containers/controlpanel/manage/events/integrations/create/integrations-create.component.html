@@ -1,4 +1,5 @@
-<div class="cpmodal">
+<div class="cpmodal"
+     [ngClass]="{ 'preview': widerModal$ | async }">
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
@@ -21,9 +22,14 @@
   <div class="cpmodal__body">
     <cp-events-integrations-form [form]="form"
                                  [stores$]="stores$"
+                                 [showPreview]="true"
+                                 [preview$]="preview$"
                                  [selectedType]="selectedType"
+                                 [previewError$]="previewError$"
                                  [typesDropdown]="typesDropdown"
                                  [pkdbUrl]="eventIntegrationPkdbUrl"
+                                 [previewLoading$]="previewLoading$"
+                                 (loadPreview)="loadPreview()"
                                  (hostSelected)="onHostSelected($event)">
     </cp-events-integrations-form>
   </div>
@@ -31,17 +37,22 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button type="button"
+        <button ui-button
+                type="button"
+                variant="stroked"
                 data-dismiss="modal"
                 (click)="resetModal()"
-                class="cpbtn cpbtn--cancel">
+                class="js_cancel_button">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button type="button"
+        <button ui-button
+                type="button"
+                variant="flat"
+                color="primary"
                 (click)="doSubmit()"
-                [disabled]="!form.valid"
-                class="cpbtn cpbtn--primary js_submit_button">
+                [disabled]="disableSubmit$ | async"
+                class="js_submit_button">
           {{ 'save' | cpI18n }}
         </button>
       </div>

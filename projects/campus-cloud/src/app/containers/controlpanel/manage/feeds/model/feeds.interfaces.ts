@@ -144,3 +144,59 @@ export interface ISocialGroupThreadComment {
   image_thumb_url: string;
   image_list: any[];
 }
+
+export interface IDataExportWallsComment {
+  thread_id: number;
+  author_name: string;
+  author_email: string;
+  student_id: string;
+  created_at: string;
+  content: string;
+  attachments: string[];
+  likes: number;
+  dislikes: number;
+  channel_name: string;
+  thread_content: string;
+}
+
+export interface IDataExportWallsPost {
+  id: string;
+  author_name: string;
+  author_email: string;
+  student_id: string;
+  created_at: string;
+  content: string;
+  attachments: string[];
+  likes: number;
+  dislikes: number;
+  comment_count: number;
+  channel_name: string;
+}
+
+export interface IDataExportGroupThread {
+  id: string;
+  author_name: string;
+  author_email: string;
+  student_id: string;
+  created_at: string;
+  content: string;
+  attachments: string[];
+  likes: number;
+  dislikes: number;
+  comment_count: number;
+  channel_name: string;
+}
+
+export interface IDataExportGroupThreadComment {
+  thread_id: number;
+  author_name: string;
+  author_email: string;
+  student_id: string;
+  created_at: string;
+  content: string;
+  attachments: string[];
+  likes: number;
+  dislikes: number;
+  channel_name: string;
+  thread_content: string;
+}

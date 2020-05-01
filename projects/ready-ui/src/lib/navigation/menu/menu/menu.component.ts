@@ -1,4 +1,3 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { merge, Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import {
@@ -12,7 +11,9 @@ import {
   TemplateRef,
   EventEmitter,
   ContentChildren,
-  AfterContentInit
+  AfterContentInit,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { MenuItemComponent } from './../menu-item/menu-item.component';
@@ -20,7 +21,9 @@ import { MenuItemComponent } from './../menu-item/menu-item.component';
   exportAs: 'menu',
   selector: 'ready-ui-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
   _maxHeight: string | undefined;

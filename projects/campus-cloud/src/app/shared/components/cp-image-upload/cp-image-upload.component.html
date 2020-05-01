@@ -18,25 +18,31 @@
     </div>
   </div>
   <div class="col-8 wrapper__right-side">
-    <label class="no-margin dark">{{ heading }}</label>
-    <a target="_blank"
-       [attr.href]="zdArticle">
-      <span class="text-muted">{{ description }}</span>
-    </a>
-    <div class="row"
-         *ngIf="error">
-      <div class="col-12">
-        <label class="error">
-          {{ error }}
-        </label>
+    <div>
+      <label class="no-margin dark">{{ heading }}</label>
+      <a target="_blank"
+         [attr.href]="zdArticle">
+        <span class="text-muted">{{ description }}</span>
+      </a>
+      <div class="row"
+           *ngIf="error">
+        <div class="col-12">
+          <label class="error">
+            {{ error }}
+          </label>
+        </div>
       </div>
     </div>
-
-    <cp-upload-button [id]="['upload_component ' + id]"
-                      [buttonText]="buttonText"
-                      class="wrapper__button"
-                      buttonClass="cpbtn cpbtn--secondary"
-                      (fileUpload)="onFileUpload($event)">
-    </cp-upload-button>
+    <div>
+      <label class="file"
+             [attr.for]="['upload_component ' + id]">
+        <input type="file"
+               aria-label="Select Images"
+               [id]="['upload_component ' + id]"
+               (change)="onFileUpload($event.target.files[0])"
+               accept="image/png, image/jpeg, image/png, image/jpg" />
+        {{buttonText}}
+      </label>
+    </div>
   </div>
 </div>

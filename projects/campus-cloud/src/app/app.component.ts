@@ -52,7 +52,10 @@ export class AppComponent implements OnInit {
         mergeMap((route) => route.data)
       )
       .subscribe((event) => {
-        (this.document.activeElement as any).blur();
+        const activeElement: HTMLElement = this.document.activeElement;
+        if (activeElement) {
+          activeElement.blur();
+        }
         if (this.router.url.endsWith('#main')) {
           const main = this.document.getElementById('main');
           if (main) {

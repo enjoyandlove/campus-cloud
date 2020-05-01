@@ -1,0 +1,36 @@
+<div class="cpmodal"
+     cdkTrapFocus
+     cdkTrapFocusAutoCapture>
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span><strong>{{ 't_api_management_discard_modal_title' | cpI18n }}</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    {{'t_api_management_discard_modal_body' | cpI18n}}
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row justify-content-end">
+      <div class="col-12 text-right">
+        <button ui-button
+                type="button"
+                variant="flat"
+                color="danger"
+                (click)="modal.discard()">
+          {{ 't_shared_discard_changes' | cpI18n }}
+        </button>
+
+        <button ui-button
+                type="button"
+                variant="stroked"
+                (click)="modal.cancel()">
+          {{'t_shared_go_back' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

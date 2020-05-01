@@ -16,14 +16,13 @@
     <div class="col-12">
       <p class="title">{{ 'services_label_details' | cpI18n }}</p>
       <div class="form-group margin-top">
-        <label
-          for="name">{{ 'services_label_name' | cpI18n }}</label>
+        <label for="name">{{ 'services_label_name' | cpI18n }}</label>
         <input id="name"
                type="text"
                [cpTarget]="'name'"
                class="form-control"
                formControlName="name"
-               [class.error]="formError && form.get('name').invalid"/>
+               [class.error]="formError && form.get('name').invalid" />
       </div>
 
       <div class="row form-group">
@@ -50,13 +49,12 @@
 
       <div class="row form-group">
         <div class="col-6">
-          <label
-            for="contactphone">{{ 'phone_number' | cpI18n }}</label>
+          <label for="contactphone">{{ 'phone_number' | cpI18n }}</label>
           <input id="contactphone"
                  type="text"
                  class="form-control"
                  [cpTarget]="'phone_number'"
-                 formControlName="contactphone"/>
+                 formControlName="contactphone" />
         </div>
       </div>
 
@@ -67,7 +65,7 @@
                  type="email"
                  [cpTarget]="'email'"
                  class="form-control"
-                 formControlName="email"/>
+                 formControlName="email" />
         </div>
       </div>
 
@@ -82,19 +80,22 @@
                  class="form-control"
                  [cpTarget]="'website'"
                  formControlName="website"
-                 [class.error]="formError && form.get('website').invalid"/>
+                 [class.error]="formError && form.get('website').invalid" />
         </div>
       </div>
 
       <div class="form-group">
         <label
-          for="description">{{ 'services_label_description' | cpI18n }}</label>
+               for="description">{{ 'services_label_description' | cpI18n }}</label>
         <textarea id="description"
                   [cpTarget]="'description'"
                   formControlName="description"></textarea>
       </div>
 
-      <div class="row from-group">
+      <div class="row from-group"
+           *ngIf="hasModeration"
+           class="moderation"
+           [cpTarget]="'moderation'">
         <div class="col-6">
           <label>{{ 't_services_label_membership_wall' | cpI18n }}</label>
           <cp-check-dropdown [items]="membershipTypes"
@@ -131,24 +132,22 @@
             </div>
             <div class="row form-group">
               <div class="col-6">
-                <label
-                  for="location">{{ 'building' | cpI18n }}</label>
+                <label for="location">{{ 'building' | cpI18n }}</label>
                 <input id="location"
                        type="text"
                        class="form-control"
                        [cpTarget]="'location'"
-                       formControlName="location"/>
+                       formControlName="location" />
               </div>
 
               <div class="col-6">
                 <div class="form-group">
-                  <label
-                    for="room_data">{{ 'room' | cpI18n }}</label>
+                  <label for="room_data">{{ 'room' | cpI18n }}</label>
                   <input id="room_data"
                          type="text"
                          class="form-control"
                          [cpTarget]="'room_data'"
-                         formControlName="room_data"/>
+                         formControlName="room_data" />
                 </div>
               </div>
             </div>

@@ -1,26 +1,30 @@
 import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { BaseComponent } from '@campus-cloud/base';
+import { EventsIntegrationsCreateComponent } from '../create';
 import { FORMAT } from '@campus-cloud/shared/pipes/date/date.pipe';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
+import { ModalService } from '@ready-education/ready-ui/overlays/modal/modal.service';
 
 @Component({
   selector: 'cp-events-integrations',
   templateUrl: './integrations-list.component.html',
-  styleUrls: ['./integrations-list.component.scss']
+  styleUrls: ['./integrations-list.component.scss'],
+  providers: [ModalService]
 })
 export class EventsIntegrationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   showDeleteModal = false;
-  showCreateModal = false;
+  createModal: OverlayRef;
   dateFormat = FORMAT.DATETIME;
   loading$: Observable<boolean>;
   selectedIntegration: IEventIntegration = null;
@@ -29,6 +33,7 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
 
   constructor(
     public cpI18n: CPI18nService,
+    private modalService: ModalService,
     public store: Store<fromStore.IEventIntegrationState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {
     super();
@@ -64,8 +69,7 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   }
 
   onCreateTeardown() {
-    this.showCreateModal = false;
-    $('#integrationCreate').modal('hide');
+    this.createModal.dispose();
   }
 
   onDeleteTeardown() {
@@ -74,18 +78,20 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   }
 
   updateHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 't_shared_feature_integrations',
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: 'events',
-          label: 'events'
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 't_shared_feature_integrations',
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: 'events',
+            label: 'events'
+          },
+          children: []
+        }
+      });
     });
   }
 
@@ -98,9 +104,10 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   }
 
   onLaunchCreateModal() {
-    this.showCreateModal = true;
-
-    setTimeout(() => $('#integrationCreate').modal({ keyboard: true, focus: true }));
+    this.createModal = this.modalService.open(EventsIntegrationsCreateComponent, {
+      onClose: this.onCreateTeardown.bind(this),
+      onCancel: this.onCreateTeardown.bind(this)
+    });
   }
 
   onLaunchDeleteModal(integration: IEventIntegration) {

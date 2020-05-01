@@ -4,8 +4,8 @@ import { notifyAtEpochNow } from './model/announcement.interface';
 import { CPAmplitudeService } from '@campus-cloud/shared/services';
 
 const listTypeMap = {
-  0: amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE,
-  1: amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE,
+  0: amplitudeEvents.DYNAMIC_AUDIENCE,
+  1: amplitudeEvents.DYNAMIC_AUDIENCE,
   2: amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE
 };
 
@@ -52,7 +52,7 @@ export class AnnouncementAmplitudeService {
     }
 
     if ('list_ids' in announcement && (announcement as any).list_ids.length) {
-      return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE;
+      return amplitudeEvents.DYNAMIC_AUDIENCE;
     }
 
     if (

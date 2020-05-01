@@ -115,11 +115,17 @@ export const ENDPOINTS = {
 
   WALLS_INTEGRATIONS: 'external_feed/campus_thread',
 
+  EXPORT_GROUP_THREADS: 'export/group_thread_data',
+
+  EXPORT_GROUP_COMMENTS: 'export/group_comment_data',
+
   EXPORT_DATA_WALL_POST: 'export/campus_thread_data',
 
   SEARCH_SOCIAL_WALL_CONTENT: 'social_wall_content',
 
   EXTERNAL_EVENT_FEEDBACK: 'external_event_feedback',
+
+  EVENT_INTEGRATIONS_PREVIEW: 'external_feed/preview',
 
   EXPORT_DATA_APP_USERS_POST: 'export/app_users_data',
 

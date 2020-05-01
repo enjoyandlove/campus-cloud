@@ -1361,17 +1361,11 @@
   "feeds_all_posts": {
     "message": "Toutes les publications"
   },
-  "feeds_approve_comment": {
-    "message": "Approuver commentaire"
-  },
   "feeds_approve_comment_modal_body": {
     "message": "Êtes-vous sûr de vouloir approuver cette publication ?"
   },
   "feeds_approve_comment_modal_title": {
     "message": "Approuver commentaire"
-  },
-  "feeds_approve_post": {
-    "message": "Approuver publication"
   },
   "feeds_approve_post_modal_body": {
     "message": "Êtes-vous sûr de vouloir approuver cette publication ?"
@@ -1394,17 +1388,11 @@
   "feeds_club_members": {
     "message": "Membres de l'Organisation"
   },
-  "feeds_delete_comment": {
-    "message": "Supprimer commentaire"
-  },
   "feeds_delete_comment_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
   },
   "feeds_delete_comment_modal_title": {
     "message": "Supprimer commentaire"
-  },
-  "feeds_delete_post": {
-    "message": "Supprimer publication"
   },
   "feeds_delete_post_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer cette publication ?"
@@ -1423,9 +1411,6 @@
   },
   "feeds_input_placeholder": {
     "message": "Ajouter du texte à cette publication..."
-  },
-  "feeds_move_post": {
-    "message": "Déplacer publication"
   },
   "feeds_move_post_from": {
     "message": "Déplacer la publication depuis"
@@ -2496,6 +2481,12 @@
   "t_clubs_admin": {
     "message": "Administrateur"
   },
+  "t_community_data_export_success": {
+    "message": "Données exportées avec succès"
+  },
+  "t_community_tooltip_download_csv_zip_file": {
+    "message": "Les téléchargements CSV de la communaté reflètent la recherche et les filtres appliqués"
+  },
   "t_copy_of": {
     "message": "Copie de"
   },
@@ -2535,6 +2526,9 @@
   "t_data_export_app_users": {
     "message": "Utilisateurs de l'application"
   },
+  "t_data_export_csv_posts_channel_name": {
+    "message": "Nom de la chaîne"
+  },
   "t_data_export_csv_posts_comments_count": {
     "message": "# de Commentaires"
   },
@@ -2571,6 +2565,9 @@
   "t_data_export_csv_walls_date_created": {
     "message": "Date"
   },
+  "t_data_export_csv_walls_post": {
+    "message": "Publier"
+  },
   "t_data_export_csv_wall_comment_comment": {
     "message": "Commentaire Du Mur"
   },
@@ -2588,12 +2585,6 @@
   },
   "t_data_export_waiting_title": {
     "message": "Génération du fichier CSV"
-  },
-  "t_data_export_wall_comments": {
-    "message": "Commentaires Du Mur"
-  },
-  "t_data_export_wall_posts": {
-    "message": "Publications Du Mur"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
@@ -2857,6 +2848,12 @@
   "t_external_check_in_error_fill_out_all_fields": {
     "message": "Veuillez remplir les champs marqués"
   },
+  "t_external_check_in_event_feedback_already_provided": {
+    "message": "Vous avez déjà fourni un retour pour cet événement."
+  },
+  "t_external_check_in_footer_note": {
+    "message": "Vous pouvez fermer cet onglet et ignorer le courriel qui vous a amené ici."
+  },
   "t_external_check_in_forbidden_error": {
     "message": "Vous ne pouvez pas enregistrer l'utilisateur à l'événement car vous n'avez pas le privilège approprié."
   },
@@ -2865,6 +2862,24 @@
   },
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
+  },
+  "t_external_check_in_service_feedback_already_provided": {
+    "message": "You have already provided feedback for this service."
+  },
+  "t_external_event_not_found": {
+    "message": "Cet événement n'existe pas."
+  },
+  "t_feeds_approve": {
+    "message": "Approuver"
+  },
+  "t_feeds_delete": {
+    "message": "Supprimer"
+  },
+  "t_feeds_edit": {
+    "message": "Éditer"
+  },
+  "t_feeds_move": {
+    "message": "Déplacer"
   },
   "t_help_desk_faq": {
     "message": "Guides et FAQ"
@@ -3600,6 +3615,27 @@
   "t_shared_integration_edit_form_modal_title": {
     "message": "Éditer intégration"
   },
+  "t_shared_integration_preview_check": {
+    "message": "Vérifier"
+  },
+  "t_shared_integration_preview_column_uid": {
+    "message": "UID"
+  },
+  "t_shared_integration_preview_error_dates": {
+    "message": "Le flux ne contenait aucun événement à venir. Veuillez vous assurer que le flux contienne des entrées qui démarrent dans le futur."
+  },
+  "t_shared_integration_preview_error_fields": {
+    "message": "Des champs requis sont manquants. Veuillez vous assurer que votre flux contienne les champs requis."
+  },
+  "t_shared_integration_preview_error_format": {
+    "message": "Les entrées dans le flux ne sont pas au bon format ou le flux était vide. Veuillez vous assurer qu'il est au bon format et qu'il y a des entrées."
+  },
+  "t_shared_integration_preview_error_url": {
+    "message": "Le flux n'est pas hébergé sur un serveur disponible publiquement. Veuillez re-vérifier l'URL fournie."
+  },
+  "t_shared_integration_preview_success": {
+    "message": "Voici un aperçu des 5 premières entrées de ce flux"
+  },
   "t_shared_invalid_cords": {
     "message": "Paire de coordonnées invalide"
   },
@@ -3650,6 +3686,9 @@
   },
   "t_shared_pending": {
     "message": "En attente"
+  },
+  "t_shared_posts": {
+    "message": "Publications"
   },
   "t_shared_preview": {
     "message": "Aperçu"
@@ -3710,6 +3749,9 @@
   },
   "t_shared_sync": {
     "message": "Synchroniser"
+  },
+  "t_shared_thank_you": {
+    "message": "Thank You"
   },
   "t_shared_thursday": {
     "message": "Jeudi"
@@ -3854,6 +3896,12 @@
   },
   "t_tile_button_locked": {
     "message": "Verrouillé"
+  },
+  "t_unsupported_browser_modal_body": {
+    "message": "Nous recommandons de mettre à jour votre navigateur à la dernière version pour bénéficier de la meilleure expérience."
+  },
+  "t_unsupported_browser_modal_header": {
+    "message": "Navigateur non supporté détecté"
   },
   "t_walls_campus_walls_channels": {
     "message": "Chaînes du Campus"

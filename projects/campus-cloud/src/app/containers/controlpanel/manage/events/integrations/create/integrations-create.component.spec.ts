@@ -6,10 +6,11 @@ import { By } from '@angular/platform-browser';
 import * as fromStore from '../store';
 
 import { CPSession } from '@campus-cloud/session';
+import { emptyForm, fillForm, resetForm } from '../tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockSchool } from '@campus-cloud/session/mock/school';
-import { emptyForm, fillForm, resetForm } from '../tests';
+import { READY_MODAL_DATA } from '@projects/ready-ui/src/public-api';
 import { EventsIntegrationsCreateComponent } from './integrations-create.component';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers/integrations.utils.service';
 
@@ -20,7 +21,17 @@ describe('EventsIntegrationsCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule],
-        providers: [CPSession, provideMockStore(), CommonIntegrationUtilsService],
+        providers: [
+          CPSession,
+          provideMockStore(),
+          CommonIntegrationUtilsService,
+          {
+            provide: READY_MODAL_DATA,
+            useValue: {
+              onClose: () => {}
+            }
+          }
+        ],
         declarations: [EventsIntegrationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -32,7 +43,7 @@ describe('EventsIntegrationsCreateComponent', () => {
   );
 
   let session: CPSession;
-  let tearDownSpy: jasmine.Spy;
+  let modalCloseSpy: jasmine.Spy;
   let formResetSpy: jasmine.Spy;
   let closeButton: HTMLSpanElement;
   let cancelButton: HTMLButtonElement;
@@ -44,26 +55,25 @@ describe('EventsIntegrationsCreateComponent', () => {
     fixture = TestBed.createComponent(EventsIntegrationsCreateComponent);
     component = fixture.componentInstance;
 
-    session = TestBed.get(CPSession);
+    session = TestBed.inject(CPSession);
 
     session.g.set('school', mockSchool);
 
+    const cancelButtonDebugEl = fixture.debugElement.query(By.css('.js_cancel_button'));
     const closeButtonDebugEl = fixture.debugElement.query(By.css('.cpmodal__header__close'));
-
-    const cancelButtonDebugEl = fixture.debugElement.query(By.css('.cpbtn--cancel'));
 
     closeButton = closeButtonDebugEl.nativeElement;
     cancelButton = cancelButtonDebugEl.nativeElement;
 
     fixture.detectChanges();
 
-    tearDownSpy = spyOn(component.teardown, 'emit');
     formResetSpy = spyOn(component.form, 'reset');
+    modalCloseSpy = spyOn(component.modal, 'onClose');
   });
 
   it('should emit teardown event on reset', () => {
     component.resetModal();
-    expect(tearDownSpy).toHaveBeenCalled();
+    expect(modalCloseSpy).toHaveBeenCalled();
     expect(formResetSpy).toHaveBeenCalled();
   });
 
@@ -111,7 +121,7 @@ describe('EventsIntegrationsCreateComponent', () => {
     expect(type).toEqual(fromStore.IntegrationActions.CREATE_AND_SYNC);
   });
 
-  it('submit button should be disabled unless form is valid', () => {
+  it('submit button should be disabled unless form is valid and preview exists', () => {
     const de = fixture.debugElement;
     const submitBtn = de.query(By.css('.js_submit_button')).nativeElement;
 
@@ -133,6 +143,6 @@ describe('EventsIntegrationsCreateComponent', () => {
 
     component.form.get('feed_type').setValue(1);
     fixture.detectChanges();
-    expect(submitBtn.disabled).toBe(false);
+    expect(submitBtn.disabled).toBe(true);
   });
 });

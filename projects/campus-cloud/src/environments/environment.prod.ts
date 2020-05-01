@@ -3,7 +3,11 @@ import { IEnvironment } from './environment.interface';
 export const environment: IEnvironment = {
   root: '/dist/',
   production: true,
-  flags: {},
+  flags: {
+    FEEDS_CSV_COUNT: {
+      whitelist: []
+    }
+  },
   keys: {
     readyApiKey: 'IUm65kXecFWch54mzJjpy63spWZX3AVp',
     beamerApiKey: 'b_Fi9BaLL/1kzue1MjGOiATUB5Kk8vkDKeO7nSqKSlFxo=',

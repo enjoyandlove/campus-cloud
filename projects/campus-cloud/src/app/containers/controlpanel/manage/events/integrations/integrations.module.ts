@@ -33,6 +33,7 @@ import { EventsIntegrationsModule } from '@campus-cloud/libs/integrations/events
     StoreModule.forFeature('eventIntegrations', reducers)
   ],
   exports: [],
-  providers: [IntegrationsService, CommonIntegrationUtilsService]
+  providers: [IntegrationsService, CommonIntegrationUtilsService],
+  entryComponents: [EventsIntegrationsCreateComponent]
 })
 export class EventIntegrationsModule {}

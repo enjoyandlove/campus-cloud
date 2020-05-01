@@ -7,7 +7,7 @@ import { FeedsService } from '../feeds.service';
 import { CPSession } from '@campus-cloud/session';
 import { GroupType } from '../feeds.utils.service';
 import { ManageHeaderService } from '@controlpanel/manage/utils';
-import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
+import { UserService, StoreService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-feeds-list',
@@ -23,9 +23,10 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
     public service: FeedsService,
     public userService: UserService,
     private headerService: ManageHeaderService,
-    public store: Store<fromStore.IWallsState>
+    public store: Store<fromStore.IWallsState>,
+    public storeService: StoreService
   ) {
-    super(session, service, userService, store);
+    super(session, service, userService, store, storeService);
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 

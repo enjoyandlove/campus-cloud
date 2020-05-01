@@ -73,8 +73,8 @@
                 {
                   "type": "bundle",
                   "name": "main",
-                  "maximumWarning": "350kb",
-                  "maximumError": "800kb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "initial",
@@ -103,10 +103,16 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "watch": false,
+            "sourceMap": false,
+            "codeCoverage": true,
             "main": "projects/campus-cloud/src/test.ts",
             "polyfills": "projects/campus-cloud/src/polyfills.ts",
             "tsConfig": "projects/campus-cloud/tsconfig.spec.json",
             "karmaConfig": "projects/campus-cloud/karma.conf.js",
+            "codeCoverageExclude": [
+              "**/*.amplitude.service.ts"
+            ],
             "styles": [
               "projects/campus-cloud/src/styles.scss"
             ],

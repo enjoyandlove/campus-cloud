@@ -13,12 +13,12 @@ export class OrientationFeedbackService extends FeedbackService {
   getEventData(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK}/`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 
   doEventFeedback(data: any, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK}/`;
 
-    return this.api.update(url, data, search);
+    return this.api.update(url, data, search, true);
   }
 }

@@ -1,7 +1,7 @@
 import * as fromActions from '../actions';
 import { initialState, reducer } from './members.reducer';
 import { mockMember } from '@campus-cloud/libs/members/common/tests/mock';
-import { IMember, MemerUpdateType } from '@projects/campus-cloud/src/app/libs/members/common/model';
+import { IMember, MemerUpdateType } from '@campus-cloud/libs/members/common/model';
 
 describe('Orientation Members Reducer', () => {
   describe('GET_MEMBERS', () => {

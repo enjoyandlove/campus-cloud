@@ -9,7 +9,7 @@ import { DataExportListComponent } from './list.component';
 import { DataExportService } from '../data-export.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { DataExportUtilsService } from '../data-export.utils.service';
-import { CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { SNACKBAR_ERROR } from '@campus-cloud/store/base/reducers/snackbar.reducer';
 
 describe('DataExportListComponent', () => {

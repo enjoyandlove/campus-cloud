@@ -12,7 +12,7 @@ import {
   switchMap,
   takeUntil,
   startWith,
-  throttleTime,
+  debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
 
@@ -20,9 +20,9 @@ import * as fromStore from '../../store';
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
 import { GroupType } from '../../feeds.utils.service';
-import { UserService } from '@campus-cloud/shared/services';
 import { FeedsUtilsService } from '../../feeds.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { UserService, StoreService } from '@campus-cloud/shared/services';
 import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 
 interface IState {
@@ -63,6 +63,11 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() groupType: GroupType;
   @Input() hideIntegrations = false;
 
+  view$: Observable<{
+    loading: boolean;
+    results: any[];
+  }>;
+
   channels;
   loading = true;
   disablePost = 100;
@@ -70,7 +75,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
-  isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   results$: Observable<Array<{ id: number; type: string; children?: number[] }> | any[]>;
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
@@ -82,9 +86,14 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public service: FeedsService,
     public userService: UserService,
-    public store: Store<fromStore.IWallsState>
+    public store: Store<fromStore.IWallsState>,
+    public storeService: StoreService
   ) {
     super();
+  }
+
+  trackByFn(_: number, item) {
+    return item.id;
   }
 
   searchHandler(searchTerm: string) {
@@ -326,13 +335,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       group_id: related_obj_id
     });
 
-    // filter by removed posts
-    if (removed_by_moderators_only) {
-      this.isFilteredByRemovedPosts$.next(true);
-    } else {
-      this.isFilteredByRemovedPosts$.next(false);
-    }
-
     // filter by flagged posts
     if (flagged_by_users_only) {
       this.isFilteredByFlaggedPosts$.next(true);
@@ -455,7 +457,15 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const filters$ = this.store.pipe(select(fromStore.getViewFilters));
+    const filters$ = this.store.pipe(select(fromStore.getViewFilters)).pipe(
+      /**
+       * avoid mulliple emitions when switching boolean values
+       * eg: from status Deleted to Flagged this emits once to set
+       * Deleted to false and then again to set Flagged to true
+       */
+      debounceTime(350),
+      filter(({ end, start }) => (end || start ? end !== null && start !== null : true))
+    );
 
     /**
      * when rendered inside a host wall (service, clubs...)
@@ -481,9 +491,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
      * changes, thus we need to ensure the prevState !== currentState to avoid 503's
      */
     const uniqueFilterChanges$ = filters$.pipe(
-      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
-      // prevent potential 503
-      throttleTime(700)
+      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState))
     );
 
     hostSocialGroup$
@@ -502,6 +510,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
           flaggedByModerators,
           flaggedByUser
         } = filters;
+
         const filtersObj = {
           end,
           start,
@@ -567,12 +576,31 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     this.results$ = merge(regularThreads$, searchResults$);
 
     this.fetchBannedEmails();
+    this.getStores();
+    this.view$ = combineLatest([this.loading$, this.results$]).pipe(
+      map(([loading, results]) => ({
+        results,
+        loading
+      }))
+    );
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
     this.store.dispatch(fromStore.resetState());
+  }
+
+  getStores() {
+    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+    this.storeService
+      .getStores(params)
+      .pipe(
+        map((stores) => stores.filter((s) => s.value).map((s) => s.value)),
+        tap((stores) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: stores }))),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   fetchBannedEmails() {

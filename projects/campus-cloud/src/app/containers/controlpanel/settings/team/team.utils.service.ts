@@ -320,8 +320,6 @@ export class TeamUtilsService {
     return (
       !!(CP_PRIVILEGES_MAP.clubs in obj) &&
       !!(CP_PRIVILEGES_MAP.events in obj) &&
-      !!(CP_PRIVILEGES_MAP.membership in obj) &&
-      !!(CP_PRIVILEGES_MAP.moderation in obj) &&
       !!(CP_PRIVILEGES_MAP.event_attendance in obj)
     );
   }
@@ -330,8 +328,6 @@ export class TeamUtilsService {
     return (
       !!(CP_PRIVILEGES_MAP.athletics in obj) &&
       !!(CP_PRIVILEGES_MAP.events in obj) &&
-      !!(CP_PRIVILEGES_MAP.membership in obj) &&
-      !!(CP_PRIVILEGES_MAP.moderation in obj) &&
       !!(CP_PRIVILEGES_MAP.event_attendance in obj)
     );
   }

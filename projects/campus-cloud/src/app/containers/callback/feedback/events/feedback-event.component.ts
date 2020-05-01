@@ -7,6 +7,7 @@ import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { FeedbackService } from '../feedback.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { FeedbackUtilsService } from '../feedback.utils.service';
 import { FeedbackAmplitudeService } from '../feedback.amplitude.service';
 import { CPAmplitudeService, CPTrackingService } from '@campus-cloud/shared/services';
 
@@ -19,13 +20,16 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
   event;
   loading;
   isEvent = true;
+  isExist = true;
   eventId: number;
   search: HttpParams;
+  alreadySubmitted = false;
   isSubmitted$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private session: CPSession,
     private route: ActivatedRoute,
+    private utils: FeedbackUtilsService,
     private cpTracking: CPTrackingService,
     private cpAmplitude: CPAmplitudeService,
     private feedbackService: FeedbackService
@@ -40,7 +44,11 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.feedbackService.getEventData(this.search))
       .then((res) => (this.event = res.data))
-      .catch((_) => {});
+      .catch((err) => {
+        this.loading = false;
+        this.isExist = err.status === 404;
+        this.alreadySubmitted = FeedbackUtilsService.isFeedbackAlreadySubmitted(err);
+      });
   }
 
   onSubmit(data) {
@@ -49,9 +57,7 @@ export class FeedbackEventComponent extends BaseComponent implements OnInit {
         this.feedbackAmplitude(data);
         this.isSubmitted$.next(true);
       },
-      (err) => {
-        throw new Error(err);
-      }
+      () => this.utils.handleError()
     );
   }
 
