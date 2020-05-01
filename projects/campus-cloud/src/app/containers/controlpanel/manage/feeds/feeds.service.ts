@@ -50,7 +50,7 @@ export class FeedsService {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_POST_CATEGORY}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search).pipe(catchError(() => of([])));
   }
 
   getSocialGroups(search?: HttpParams) {
