@@ -50,7 +50,7 @@ export class FeedInteractionsComponent implements OnInit {
     private session: CPSession,
     private modalService: ModalService,
     private store: Store<fromStore.IWallsState>,
-    private service: SocialContentInteractionService
+    public service: SocialContentInteractionService
   ) {}
 
   ngOnInit(): void {
