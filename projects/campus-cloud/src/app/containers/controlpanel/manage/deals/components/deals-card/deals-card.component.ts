@@ -20,4 +20,6 @@ export class DealsCardComponent {
     store: IStore;
     storeFormValid: boolean;
   }> = new EventEmitter();
+
+  @Output() addedImage: EventEmitter<null> = new EventEmitter();
 }

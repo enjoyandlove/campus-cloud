@@ -12,6 +12,7 @@ export class JobsAmplitudeService {
     return {
       location_status,
       item_type: 'Jobs',
+      added_image: amplitudeEvents.NOT_APPLICABLE,
       wall_status: amplitudeEvents.NOT_APPLICABLE
     };
   }

@@ -30,6 +30,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   errorMessage;
   error = false;
   form: FormGroup;
+  addedImage = false;
   storeForm: FormGroup;
 
   constructor(
@@ -73,7 +74,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
       (deal: any) => {
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_UPDATED_ITEM,
-          DealsAmplitudeService.getItemProperties()
+          DealsAmplitudeService.getItemProperties(this.addedImage)
         );
         this.router.navigate([`/manage/deals/${deal.id}/info`]);
       },

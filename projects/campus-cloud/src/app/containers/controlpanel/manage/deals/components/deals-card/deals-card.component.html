@@ -1,4 +1,5 @@
 <cp-deals-form [form]="form"
                [storeForm]="storeForm"
+               (addedImage)="addedImage.emit()"
                (formData)="formData.emit($event)">
 </cp-deals-form>

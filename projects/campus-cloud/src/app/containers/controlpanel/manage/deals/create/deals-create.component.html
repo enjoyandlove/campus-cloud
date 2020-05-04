@@ -4,6 +4,7 @@
       <div class="col">
         <cp-deals-card [form]="form"
                        [storeForm]="storeForm"
+                       (addedImage)="addedImage=true"
                        (formData)="onFormData($event)">
         </cp-deals-card>
       </div>
