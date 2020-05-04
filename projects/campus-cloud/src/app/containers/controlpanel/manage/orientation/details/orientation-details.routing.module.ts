@@ -19,7 +19,7 @@ const appRoutes: Routes = [
 
       {
         path: 'todos',
-        data: { title: pageTitle.MANAGE_ORIENTATION, amplitude: 'Todos' },
+        data: { title: pageTitle.MANAGE_ORIENTATION, amplitude: 'To-Dos' },
         loadChildren: () => import('../todos/todos.module').then((m) => m.TodosModule)
       },
 

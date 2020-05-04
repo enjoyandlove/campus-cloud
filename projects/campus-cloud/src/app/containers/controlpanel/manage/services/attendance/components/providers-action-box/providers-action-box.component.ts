@@ -3,7 +3,9 @@ import { Observable } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { IDateRange } from '@campus-cloud/shared/components';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 
@@ -21,12 +23,14 @@ export class ServicesProviderActionBoxComponent implements OnInit {
   @Output() launchAddProviderModal: EventEmitter<null> = new EventEmitter();
   @Output() updateStudentFilter: EventEmitter<EngageUtils.IStudentFilter> = new EventEmitter();
 
+  eventData;
   studentFilter$: Observable<any[]>;
   dateRanges: EngageUtils.IDateFilter[];
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService,
     public engageService: EngagementService,
     public engageUtils: EngageUtils.EngagementUtilsService
   ) {}
@@ -59,6 +63,12 @@ export class ServicesProviderActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getAmplitudeMenuProperties()
+    };
+
     this.studentFilter$ = this.engageUtils.getStudentFilter();
     this.dateRanges = this.engageUtils.dateFilter();
   }
