@@ -94,7 +94,8 @@ export class FeedsAmplitudeService {
       .select(fromStore.getSocialPostCategories)
       .pipe(take(1))
       .subscribe((channels) => {
-        isIntegrated = channels.find((c) => c.id === postTypeId).is_integrated;
+        const postCategory = channels.find((c) => c.id === postTypeId);
+        isIntegrated = postCategory ? postCategory.is_integrated : false;
       });
 
     return isIntegrated ? wallType.integration : wallType.manual;
