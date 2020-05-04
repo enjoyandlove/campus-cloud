@@ -54,6 +54,7 @@ export class CalendarAmplitudeService {
   static getItemProperties() {
     return {
       item_type: 'Calendar',
+      added_image: amplitudeEvents.NOT_APPLICABLE,
       wall_status: amplitudeEvents.NOT_APPLICABLE,
       location_status: amplitudeEvents.NOT_APPLICABLE
     };

@@ -25,6 +25,7 @@ export class ServicesCreateComponent implements OnInit {
   buttonData;
   form: FormGroup;
   formError = false;
+  addedImage = false;
 
   eventProperties = {
     phone: null,
@@ -81,7 +82,7 @@ export class ServicesCreateComponent implements OnInit {
         this.trackEvent(service, service.id);
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_CREATED_ITEM,
-          ServicesAmplitudeService.getItemProperties(service)
+          ServicesAmplitudeService.getItemProperties(service, this.addedImage)
         );
         this.router.navigate(['/manage/services/' + service.id + url]);
       },

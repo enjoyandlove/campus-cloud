@@ -6,9 +6,10 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
   providedIn: 'root'
 })
 export class DealsAmplitudeService {
-  static getItemProperties() {
+  static getItemProperties(addedImage) {
     return {
       item_type: 'Deals',
+      added_image: addedImage ? 'Yes' : 'No',
       wall_status: amplitudeEvents.NOT_APPLICABLE,
       location_status: amplitudeEvents.NOT_APPLICABLE
     };

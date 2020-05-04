@@ -20,6 +20,7 @@ export class ServicesFormComponent implements OnInit {
   @Input() formError;
   @Input() form: FormGroup;
 
+  @Output() addedImage: EventEmitter<null> = new EventEmitter();
   @Output() amplitudeProperties: EventEmitter<any> = new EventEmitter();
 
   eventProperties;
@@ -58,6 +59,7 @@ export class ServicesFormComponent implements OnInit {
   }
 
   onUploadedImage(image) {
+    this.addedImage.emit();
     this.form.get('logo_url').setValue(image);
   }
 

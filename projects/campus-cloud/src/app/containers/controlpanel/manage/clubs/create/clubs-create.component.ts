@@ -27,6 +27,7 @@ export class ClubsCreateComponent implements OnInit {
   formError;
   buttonData;
   form: FormGroup;
+  addedImage = false;
   statusTypes = this.utils.getStatusTypes();
   membershipTypes = this.utils.getMembershipTypes();
 
@@ -72,7 +73,7 @@ export class ClubsCreateComponent implements OnInit {
         this.trackEvent(res);
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_CREATED_ITEM,
-          ClubsAmplitudeService.getItemProperties(res, this.isAthletic)
+          ClubsAmplitudeService.getItemProperties(res, this.isAthletic, this.addedImage)
         );
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
@@ -108,14 +109,16 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: this.labels.create_button,
-        subheading: null,
-        em: null,
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: this.labels.create_button,
+          subheading: null,
+          em: null,
+          children: []
+        }
+      });
     });
   }
 
