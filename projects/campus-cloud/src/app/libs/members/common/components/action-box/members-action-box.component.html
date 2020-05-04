@@ -13,7 +13,9 @@
                   cpTarget="download_assessment">
             {{ 'download' | cpI18n }}
           </button>
-          <button type="button"
+          <button cpTracker
+                  type="button"
+                  [eventData]="eventData"
                   (click)="create.emit()"
                   *ngIf="showCreateButton"
                   class="cpbtn cpbtn--primary"
