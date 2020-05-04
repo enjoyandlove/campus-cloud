@@ -20,10 +20,12 @@ export class JobsAmplitudeService {
     };
   }
 
-  getEmployerAmplitudeClickedItem() {
-    return {
+  amplitudeEmployerClickedItem() {
+    const amplitude = {
       ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.EMPLOYER
     };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CLICKED_CREATE_ITEM, amplitude);
   }
 }

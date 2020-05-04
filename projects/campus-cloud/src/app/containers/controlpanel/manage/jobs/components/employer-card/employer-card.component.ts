@@ -3,9 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { JobsAmplitudeService } from '@controlpanel/manage/jobs/jobs.amplitude.service';
 
 @Mixin([Destroyable])
@@ -33,11 +32,7 @@ export class EmployerCardComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(
-    public cpI18n: CPI18nService,
-    private cpTracking: CPTrackingService,
-    private amplitude: JobsAmplitudeService
-  ) {}
+  constructor(public cpI18n: CPI18nService, private amplitude: JobsAmplitudeService) {}
 
   onTabClick({ id }) {
     if (id === 'existing') {
@@ -51,10 +46,7 @@ export class EmployerCardComponent implements OnInit, OnDestroy {
       this.isStoreRequired(false);
       this.isNewEmployer.emit(true);
 
-      this.cpTracking.amplitudeEmitEvent(
-        amplitudeEvents.CLICKED_CREATE_ITEM,
-        this.amplitude.getEmployerAmplitudeClickedItem()
-      );
+      this.amplitude.amplitudeEmployerClickedItem();
     }
   }
 

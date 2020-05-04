@@ -5,9 +5,8 @@ import { Subject } from 'rxjs';
 
 import { IDeal } from '../../deals.interface';
 import { IStore } from '../../stores/store.interface';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { DealsAmplitudeService } from '@controlpanel/manage/deals/deals.amplitude.service';
 
 @Mixin([Destroyable])
@@ -35,11 +34,7 @@ export class StoreCardComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(
-    public cpI18n: CPI18nService,
-    private cpTracking: CPTrackingService,
-    private amplitude: DealsAmplitudeService
-  ) {}
+  constructor(public cpI18n: CPI18nService, private amplitude: DealsAmplitudeService) {}
 
   onTabClick({ id }) {
     if (id === 'existing') {
@@ -53,10 +48,7 @@ export class StoreCardComponent implements OnInit, OnDestroy {
       this.isStoreRequired(false);
       this.isNewStore.emit(true);
 
-      this.cpTracking.amplitudeEmitEvent(
-        amplitudeEvents.CLICKED_CREATE_ITEM,
-        this.amplitude.getStoreAmplitudeClickedItem()
-      );
+      this.amplitude.amplitudeStoreClickedItem();
     }
   }
 
