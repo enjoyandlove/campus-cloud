@@ -18,10 +18,12 @@ export class DealsAmplitudeService {
     };
   }
 
-  getStoreAmplitudeClickedItem() {
-    return {
+  amplitudeStoreClickedItem() {
+    const amplitude = {
       ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.STORE
     };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CLICKED_CREATE_ITEM, amplitude);
   }
 }
