@@ -45,13 +45,14 @@ describe('FeedInteractionsComponent', () => {
 
   describe('fetch', () => {
     let spy: jasmine.Spy;
+    const acceptedParams = ['content_id', 'like_type', 'content_type', 'school_id', 'group_id'];
 
     beforeEach(() => {
       spy = spyOn(component.service, 'get');
+      spy.and.returnValue(of([]));
     });
 
-    it('it should have right params', (done) => {
-      spy.and.returnValue(of([]));
+    it('it request first five items', (done) => {
       component.likeType = InteractionLikeType.like;
       fixture.detectChanges();
 
@@ -60,12 +61,42 @@ describe('FeedInteractionsComponent', () => {
       sub.subscribe(() => {
         const [_, endRange, params] = spy.calls.mostRecent().args as [number, number, HttpParams];
         expect(endRange).toBe(5);
-        const acceptedParams = ['content_id', 'like_type', 'content_type', 'school_id', 'group_id'];
+        done();
+      });
+    });
+
+    it('should have accepted params', (done) => {
+      component.likeType = InteractionLikeType.like;
+      fixture.detectChanges();
+
+      const sub = component.fetch();
+
+      sub.subscribe(() => {
+        const [, , params] = spy.calls.mostRecent().args as [number, number, HttpParams];
+        expect(params.keys().length).toEqual(acceptedParams.length);
         acceptedParams.forEach((p) =>
           expect(params.get(p)).toBeDefined(`missing expected param ${p}`)
         );
         expect(params.get('content_id')).toBe(component.feed.id.toString());
         expect(params.get('like_type')).toBe(component.likeType.toString());
+        done();
+      });
+    });
+
+    it('should send group_id when group is present', (done) => {
+      const mockGroupId = 1;
+      component.likeType = InteractionLikeType.like;
+      (component.feed as any).group_id = mockGroupId;
+      component.filters$ = of({ group: { ...mockFeed } } as any);
+
+      fixture.detectChanges();
+
+      const sub = component.fetch();
+
+      sub.subscribe(() => {
+        const [, , params] = spy.calls.mostRecent().args as [number, number, HttpParams];
+        expect(params.get('school_id')).toBe(null);
+        expect(params.get('group_id')).toBe(mockGroupId.toString());
         done();
       });
     });
