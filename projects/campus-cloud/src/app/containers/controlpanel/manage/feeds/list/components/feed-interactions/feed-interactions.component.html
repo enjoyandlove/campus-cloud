@@ -30,7 +30,7 @@
              let-data>
   <div class="modal-list">
     <ready-ui-modal-header (close)="closeModal()">
-      {{ 't_feeds_people_who_liked' | cpI18n }}
+      {{ likeType === '1' ? ('t_feeds_people_who_liked' | cpI18n) : ('t_feeds_people_who_flagged' | cpI18n) }}
     </ready-ui-modal-header>
     <ready-ui-modal-content>
       <ng-container *ngIf="data.view$ | async as view">
