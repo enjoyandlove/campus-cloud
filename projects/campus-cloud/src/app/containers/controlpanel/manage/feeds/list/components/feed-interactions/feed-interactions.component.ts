@@ -1,7 +1,14 @@
-import { tap, map, share, mapTo, repeat, catchError, startWith, switchMap } from 'rxjs/operators';
-import { Input, OnInit, Component, ChangeDetectionStrategy, TemplateRef } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Component,
+  ElementRef,
+  TemplateRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import { map, tap, share, mapTo, repeat, startWith, catchError, switchMap } from 'rxjs/operators';
 import { ModalService } from '@ready-education/ready-ui/overlays';
-import { Observable, of, combineLatest } from 'rxjs';
+import { Observable, of, combineLatest, fromEvent, merge, interval } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 
@@ -37,10 +44,15 @@ export class FeedInteractionsComponent implements OnInit {
   @Input()
   maxCount: string;
 
-  students$: Observable<SocialContentInteractionItem[]>;
+  tooltip$: Observable<{
+    loading: boolean;
+    users: SocialContentInteractionItem[];
+  }>;
+
   filters$ = this.store.pipe(select(fromStore.getViewFilters));
 
   constructor(
+    private el: ElementRef,
     private session: CPSession,
     private modalService: ModalService,
     private amplitude: FeedsAmplitudeService,
@@ -49,7 +61,19 @@ export class FeedInteractionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.students$ = +this.maxCount === 0 ? of([]) : this.fetch();
+    const mouseEnter$ = fromEvent(this.el.nativeElement, 'mouseenter');
+
+    const data$ = mouseEnter$.pipe(switchMap(() => this.fetch()));
+    const loading$ = merge(mouseEnter$.pipe(mapTo(true)), data$.pipe(mapTo(false))).pipe(
+      startWith(true)
+    );
+
+    this.tooltip$ = combineLatest([data$.pipe(startWith([])), loading$]).pipe(
+      map(([users, loading]) => ({
+        users,
+        loading
+      }))
+    );
   }
 
   fetch(endRange = 5) {

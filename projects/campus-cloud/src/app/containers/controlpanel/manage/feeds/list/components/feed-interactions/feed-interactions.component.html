@@ -1,30 +1,33 @@
-<div ui-tooltip
-     [template]="tooltipTpl">
-  <ng-content></ng-content>
-</div>
+<ng-container *ngIf="tooltip$ | async as tooltip">
+  <div ui-tooltip
+       [template]="tooltipTpl">
+    <ng-content></ng-content>
+  </div>
 
-<ng-template #tooltipTpl>
-  <div class="users-content">
-    <ng-container *ngIf="students$ | async as users">
-      <ul>
-        <li *ngFor="let user of users | slice: 0:5">
+  <ng-template #tooltipTpl>
+    <div class="users-content">
+      <ul *ngIf="!tooltip.loading else loading">
+        <li *ngFor="let user of tooltip.users | slice: 0:5">
           {{ user.firstname }} {{ user.lastname }}
         </li>
-        <li *ngIf="!users.length">{{ 'no_results' | cpI18n }}</li>
+        <li *ngIf="!tooltip.users.length">{{ 'no_results' | cpI18n }}</li>
         <li>
           <button ui-button
                   type="button"
                   color="primary"
                   variant="inline"
-                  *ngIf="users.length > 5"
+                  *ngIf="tooltip.users.length > 5"
                   (click)="modalHandler(modalTpl)">
-            {{ 't_feeds_likes_tootlip' | cpI18n : users.length - 5 }}
+            {{ 't_feeds_likes_tootlip' | cpI18n : tooltip.users.length - 5 }}
           </button>
         </li>
       </ul>
-    </ng-container>
-  </div>
-</ng-template>
+      <ng-template #loading>
+        <cp-working></cp-working>
+      </ng-template>
+    </div>
+  </ng-template>
+</ng-container>
 
 <ng-template #modalTpl
              let-data>
