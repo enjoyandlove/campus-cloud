@@ -127,7 +127,9 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         return group
           ? this.feedService.updateGroupWallThread(this.feed.id, this.form.value)
-          : this.feedService.updateCampusWallThread(this.feed.id, this.form.value);
+          : this.feedService
+              .updateCampusWallThread(this.feed.id, this.form.value)
+              .pipe(tap((thread) => this.store.dispatch(fromStore.updateThread({ thread }))));
       })
     );
 
