@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { flatten } from 'lodash';
 
+import { Feed } from '@controlpanel/manage/feeds/model';
+
 /**
  * @deprecated
  * TODO:
@@ -17,6 +19,10 @@ export enum GroupType {
 
 @Injectable()
 export class FeedsUtilsService {
+  static isComment(feed: Feed) {
+    return 'campus_thread_id' in feed || 'group_thread_id' in feed;
+  }
+
   static parseComment(comment) {
     return {
       ...comment,

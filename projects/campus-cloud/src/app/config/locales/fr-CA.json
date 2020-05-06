@@ -2884,6 +2884,12 @@
   "t_feeds_move": {
     "message": "Déplacer"
   },
+  "t_feeds_people_who_flagged": {
+    "message": "Personnes qui ont signalé"
+  },
+  "t_feeds_people_who_liked": {
+    "message": "Personnes qui ont aimé"
+  },
   "t_help_desk_faq": {
     "message": "Guides et FAQ"
   },

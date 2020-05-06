@@ -1,5 +1,5 @@
+import { tap, map, share, mapTo, repeat, catchError, startWith, switchMap } from 'rxjs/operators';
 import { Input, OnInit, Component, ChangeDetectionStrategy, TemplateRef } from '@angular/core';
-import { catchError, map, share, mapTo, startWith, switchMap } from 'rxjs/operators';
 import { ModalService } from '@ready-education/ready-ui/overlays';
 import { Observable, of, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
@@ -13,16 +13,10 @@ import {
   SocialContentInteractionItem,
   SocialContentInteractionService
 } from '@campus-cloud/services';
-
-import {
-  ICampusThread,
-  ISocialGroupThread,
-  ICampusThreadComment,
-  ISocialGroupThreadComment
-} from '@controlpanel/manage/feeds/model';
 import { CPSession } from '@campus-cloud/session';
-
-type Feed = ICampusThread | ISocialGroupThread | ICampusThreadComment | ISocialGroupThreadComment;
+import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
+import { Feed, ISocialGroupThreadComment } from '@controlpanel/manage/feeds/model';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 @Component({
   selector: 'cp-feed-interactions',
@@ -44,11 +38,12 @@ export class FeedInteractionsComponent implements OnInit {
   maxCount: string;
 
   students$: Observable<SocialContentInteractionItem[]>;
-  filters$ = this.store.pipe(select(fromStore.getViewFilters)).pipe(share());
+  filters$ = this.store.pipe(select(fromStore.getViewFilters));
 
   constructor(
     private session: CPSession,
     private modalService: ModalService,
+    private amplitude: FeedsAmplitudeService,
     private store: Store<fromStore.IWallsState>,
     public service: SocialContentInteractionService
   ) {}
@@ -58,10 +53,10 @@ export class FeedInteractionsComponent implements OnInit {
   }
 
   fetch(endRange = 5) {
-    const isGroupWall$ = this.filters$.pipe(map(({ group }) => Boolean(group)));
+    const isGroupWall$ = this.filters$.pipe(map(({ group }) => Boolean(group), repeat()));
     const contentType$ = isGroupWall$.pipe(
       map((isGroup) => {
-        const isComment = 'campus_thread_id' in this.feed || 'group_thread_id' in this.feed;
+        const isComment = FeedsUtilsService.isComment(this.feed);
 
         if (isGroup) {
           return isComment
@@ -95,9 +90,10 @@ export class FeedInteractionsComponent implements OnInit {
           .set('school_id', groupId ? null : schoolId)
           .set('group_id', groupId ? groupId.toString() : null);
 
-        return this.service.get(1, endRange, params).pipe(catchError(() => of([]))) as Observable<
-          SocialContentInteractionItem[]
-        >;
+        return this.service.get(1, endRange, params).pipe(
+          tap(() => this.amplitude.trackViewedUserList(this.feed, this.likeType)),
+          catchError(() => of([]))
+        ) as Observable<SocialContentInteractionItem[]>;
       })
     );
   }

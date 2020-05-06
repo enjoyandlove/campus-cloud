@@ -10,6 +10,7 @@ import { CPTestModule } from '@campus-cloud/shared/tests';
 import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { InteractionLikeType } from '@campus-cloud/services';
 import { FeedInteractionsComponent } from './feed-interactions.component';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 describe('FeedInteractionsComponent', () => {
   let session: CPSession;
@@ -21,6 +22,7 @@ describe('FeedInteractionsComponent', () => {
       imports: [CPTestModule],
       providers: [
         ModalService,
+        FeedsAmplitudeService,
         provideMockStore({
           initialState: {
             WALLS_STATE: {
