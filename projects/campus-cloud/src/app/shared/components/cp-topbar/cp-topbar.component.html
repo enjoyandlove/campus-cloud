@@ -39,9 +39,8 @@
       </ul>
     </nav>
     <div class="right-side">
-      <div
-        class="extras nav__help-desk"
-        [class.nav__help-desk--whats-new]="highlight">
+      <div class="extras nav__help-desk"
+           [class.nav__help-desk--whats-new]="highlight">
         <button type="button"
                 data-toggle="dropdown"
                 (click)="setWhatsNewCookie()"
@@ -74,7 +73,7 @@
                    [ngStyle]="{ 'background-image': 'url( ' + defaultImage + ')' }">
               </div>
               <div class="nav__school__user text-truncate">
-                <span>{{ user.firstname }}</span>
+                <span>{{ user?.firstname }}</span>
               </div>
               <div class="nav__school__name text-truncate">
                 {{ school.name }}
