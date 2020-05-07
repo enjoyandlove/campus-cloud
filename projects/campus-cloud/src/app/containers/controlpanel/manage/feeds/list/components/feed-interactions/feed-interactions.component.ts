@@ -34,6 +34,7 @@ import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitud
 })
 export class FeedInteractionsComponent implements OnInit {
   modal;
+  total: number;
 
   @Input()
   feed: Feed;
@@ -61,6 +62,7 @@ export class FeedInteractionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.total = +this.likeType === InteractionLikeType.like ? this.feed.likes : this.feed.flag;
     const mouseEnter$ = fromEvent(this.el.nativeElement, 'mouseenter');
 
     const data$ = mouseEnter$.pipe(switchMap(() => this.fetch()));
