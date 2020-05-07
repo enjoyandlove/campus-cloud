@@ -16,9 +16,9 @@
                   type="button"
                   color="primary"
                   variant="inline"
-                  *ngIf="tooltip.users.length > 5"
+                  *ngIf="total > 5"
                   (click)="modalHandler(modalTpl)">
-            {{ 't_feeds_likes_tootlip' | cpI18n : tooltip.users.length - 5 }}
+            {{ 't_feeds_likes_tootlip' | cpI18n : total - 5 }}
           </button>
         </li>
       </ul>
