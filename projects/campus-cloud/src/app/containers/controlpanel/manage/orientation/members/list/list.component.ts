@@ -1,7 +1,7 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil, take, filter } from 'rxjs/operators';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -29,7 +29,7 @@ import { ModalService, CPI18nService, CPTrackingService } from '@campus-cloud/sh
   providers: [RouterParamsUtils]
 })
 @Mixin([Destroyable])
-export class OrientationMembersListComponent implements OnInit {
+export class OrientationMembersListComponent implements OnInit, OnDestroy {
   groupId: number;
   activeModal: OverlayRef;
   showStudentIds: boolean;
@@ -160,8 +160,8 @@ export class OrientationMembersListComponent implements OnInit {
     this.store
       .select(fromStore.getGroupId)
       .pipe(
-        filter((groupId) => coerceBooleanProperty(groupId)),
-        take(1)
+        takeUntil(this.destroy$),
+        filter((groupId) => coerceBooleanProperty(groupId))
       )
       .subscribe((groupId) => (this.groupId = groupId));
 
@@ -182,5 +182,9 @@ export class OrientationMembersListComponent implements OnInit {
 
     this.showStudentIds =
       canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation) && this.session.hasSSO;
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }
