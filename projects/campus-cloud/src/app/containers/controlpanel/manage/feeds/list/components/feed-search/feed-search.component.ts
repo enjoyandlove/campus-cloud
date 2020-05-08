@@ -494,6 +494,7 @@ export class FeedSearchComponent implements OnInit {
 
     const userSearch$ = this.studentTerm.asObservable().pipe(
       debounceTime(400),
+      filter((term) => typeof term === 'string'),
       tap(
         (term: string) =>
           (params = params.set('search_str', Boolean(term.trim().length) ? term.trim() : null))
