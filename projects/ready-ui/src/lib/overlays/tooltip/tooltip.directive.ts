@@ -134,7 +134,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
     return {
       panelClass,
       disposeOnNavigation: true,
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      scrollStrategy: this.overlay.scrollStrategies.close(),
       positionStrategy: this.overlay
         .position()
         .flexibleConnectedTo(this.el)

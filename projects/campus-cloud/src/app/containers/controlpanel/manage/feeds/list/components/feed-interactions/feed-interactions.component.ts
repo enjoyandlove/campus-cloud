@@ -6,9 +6,9 @@ import {
   TemplateRef,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { map, tap, share, mapTo, repeat, startWith, catchError, switchMap } from 'rxjs/operators';
+import { map, share, mapTo, repeat, startWith, catchError, switchMap } from 'rxjs/operators';
+import { Observable, of, combineLatest, fromEvent, merge } from 'rxjs';
 import { ModalService } from '@ready-education/ready-ui/overlays';
-import { Observable, of, combineLatest, fromEvent, merge, interval } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 
@@ -42,9 +42,6 @@ export class FeedInteractionsComponent implements OnInit {
   @Input()
   likeType: InteractionLikeType;
 
-  @Input()
-  maxCount: string;
-
   tooltip$: Observable<{
     loading: boolean;
     users: SocialContentInteractionItem[];
@@ -62,7 +59,7 @@ export class FeedInteractionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.total = +this.likeType === InteractionLikeType.like ? this.feed.likes : this.feed.flag;
+    this.total = +this.likeType === InteractionLikeType.like ? this.feed.likes : this.feed.dislikes;
     const mouseEnter$ = fromEvent(this.el.nativeElement, 'mouseenter');
 
     const data$ = mouseEnter$.pipe(switchMap(() => this.fetch()));
@@ -116,16 +113,15 @@ export class FeedInteractionsComponent implements OnInit {
           .set('school_id', groupId ? null : schoolId)
           .set('group_id', groupId ? groupId.toString() : null);
 
-        return this.service.get(1, endRange, params).pipe(
-          tap(() => this.amplitude.trackViewedUserList(this.feed, this.likeType)),
-          catchError(() => of([]))
-        ) as Observable<SocialContentInteractionItem[]>;
+        return this.service.get(1, endRange, params).pipe(catchError(() => of([]))) as Observable<
+          SocialContentInteractionItem[]
+        >;
       })
     );
   }
 
   modalHandler(modalTpl: TemplateRef<any>) {
-    const request$ = this.fetch(+this.maxCount).pipe(share());
+    const request$ = this.fetch(this.total).pipe(share());
     const loading$ = request$.pipe(
       mapTo(false),
       startWith(true)
@@ -141,6 +137,8 @@ export class FeedInteractionsComponent implements OnInit {
     this.modal = this.modalService.open(modalTpl, {
       view$
     });
+
+    this.amplitude.trackViewedUserList(this.feed, this.likeType);
   }
 
   closeModal() {
