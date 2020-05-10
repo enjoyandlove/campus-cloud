@@ -28,8 +28,7 @@
                   alignment="between">
     <ready-ui-stack>
       <cp-feed-interactions likeType="1"
-                            [feed]="feed"
-                            [maxCount]="feed.likes">
+                            [feed]="feed">
         <ready-ui-icon name="thumb_up"
                        size="small"></ready-ui-icon>
         {{ feed.likes }}
@@ -45,9 +44,8 @@
       </button>
       <cp-feed-interactions class="flag"
                             [feed]="feed"
-                            *ngIf="feed.dislikes > 0 && feed.flag !== 2"
                             likeType="-1"
-                            [maxCount]="feed.dislikes">
+                            *ngIf="feed.dislikes > 0 && feed.flag !== 2">
         <ready-ui-icon name="flag"
                        size="small"
                        color="inherit"></ready-ui-icon>
