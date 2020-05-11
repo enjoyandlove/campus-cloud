@@ -9,39 +9,45 @@
         </h3>
       </div>
     </div>
+    <ng-container *ngIf="!error else errorTpl">
 
-    <div class="row">
-      <div class="col-6">
-        <div class="row">
-          <div class="col-8 tile--stat">
-            <p>{{ 'dashboard_event_views' | cpI18n }}</p>
-          </div>
-          <div class="col-4 text-right tile--amount">
-            {{ data.event_views | cpStatsFormatter }}</div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="row">
-          <div class="col-8 tile--stat">
-            <p>{{ 'dashboard_announcements' | cpI18n }}</p>
-          </div>
-          <div class="col-4 text-right tile--amount">
-            {{ data.announcements | cpStatsFormatter }}
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-8 tile--stat">
+              <p>{{ 'dashboard_event_views' | cpI18n }}</p>
+            </div>
+            <div class="col-4 text-right tile--amount">
+              {{ data.event_views | cpStatsFormatter }}</div>
           </div>
         </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-8 tile--stat">
+              <p>{{ 'dashboard_announcements' | cpI18n }}</p>
+            </div>
+            <div class="col-4 text-right tile--amount">
+              {{ data.announcements | cpStatsFormatter }}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-6">
-        <div class="row">
-          <div class="col-8 tile--stat">
-            <p>{{ 'dashboard_club_views' | cpI18n }}</p>
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-8 tile--stat">
+              <p>{{ 'dashboard_club_views' | cpI18n }}</p>
+            </div>
+            <div class="col-4 text-right tile--amount">
+              {{ data.club_views | cpStatsFormatter }}</div>
           </div>
-          <div class="col-4 text-right tile--amount">
-            {{ data.club_views | cpStatsFormatter }}</div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </ng-container>
+
+<ng-template #errorTpl>
+  {{ 'something_went_wrong' | cpI18n }}
+</ng-template>
