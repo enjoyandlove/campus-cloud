@@ -218,7 +218,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
     const mousemove$ = fromEvent(document, 'mousemove');
 
     const hoverOutSideTriggerAndTooltip$ = mousemove$.pipe(
-      filter(() => this._show),
+      filter(() => this._show && Boolean(this._templateCompRef)),
       debounceTime(this._delay),
       filter((e: MouseEvent) => {
         // const { x, y } = this.getOffset();
