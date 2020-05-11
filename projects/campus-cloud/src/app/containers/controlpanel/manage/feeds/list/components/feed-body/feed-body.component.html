@@ -18,7 +18,8 @@
           'feed__image-container__item--full-width': feed.image_list.length === 1,
           'feed__image-container__item--full-height': feed.image_list.length < 3 || feed.image_list.length < 4 && index === 0
         }">
-        <img [src]="image.url"
+        <img ready-ui-image
+             [dataSrc]="image.url"
              ready-ui-lighbox-item
              (click)="trackViewLightBoxEvent()" />
       </div>
