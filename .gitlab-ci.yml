@@ -10,11 +10,10 @@ Testing Web Staging:
     - echo "Testing Web Staging..."
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_test
     - echo "Web Staging tested successfully"
-  only:
-    refs:
-      - staging
-    changes:
-      - 'projects/campus-cloud/**/*'
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+      changes:
+        - 'projects/campus-cloud/**/*'
   coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
   artifacts:
     paths:
@@ -27,11 +26,10 @@ Building Web Staging:
     - echo "Building Web Staging..."
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_build
     - echo "Web Staging built successfully"
-  only:
-    refs:
-      - staging
-    changes:
-      - 'projects/campus-cloud/**/*'
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+      changes:
+        - 'projects/campus-cloud/**/*'
   environment: Staging
 
 Deploying Web Staging:
@@ -40,11 +38,10 @@ Deploying Web Staging:
     - echo "Deploying Web Staging..."
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_deploy
     - echo "Web Staging deployed successfully"
-  only:
-    refs:
-      - staging
-    changes:
-      - 'projects/campus-cloud/**/*'
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+      changes:
+        - 'projects/campus-cloud/**/*'
   environment: Staging
 
 ## US Production
@@ -55,11 +52,10 @@ Building Web Production:
     - echo "Building CC Prod..."
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py production_web_build
     - echo "CC Prod built successfully"
-  only:
-    refs:
-      - master
-    changes:
-      - 'projects/campus-cloud/**/*'
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      changes:
+        - 'projects/campus-cloud/**/*'
   environment: Production
 
 Deploying Web Production:
@@ -71,9 +67,8 @@ Deploying Web Production:
     - echo "Deploying CAN Web Production..."
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py can_production_web_deploy
     - echo "CAN Web Production deployed successfully"
-  only:
-      refs:
-        - master
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
       changes:
         - 'projects/campus-cloud/**/*'
   environment: Production
@@ -87,11 +82,10 @@ Deploy Ready UI:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py ready_ui_deploy
     - echo "Ready UI successfully deployed"
 
-  only:
-    refs:
-      - staging
-    changes:
-      - 'projects/ready-ui/**/*'
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+      changes:
+        - 'projects/ready-ui/**/*'
 
 ## Playground
 
