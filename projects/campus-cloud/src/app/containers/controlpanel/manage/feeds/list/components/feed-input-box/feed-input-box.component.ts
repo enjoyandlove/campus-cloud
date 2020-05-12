@@ -260,7 +260,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
             return;
           }
 
-          let channelName = this.cpI18nPipe.transform('t_feeds_campus_wall');
+          let channelName = this.cpI18nPipe.transform('feeds');
           if (group) {
             channelName = group.name;
           } else if (postType) {
