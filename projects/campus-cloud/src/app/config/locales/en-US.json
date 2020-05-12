@@ -3696,6 +3696,9 @@
   "t_shared_pending": {
     "message": "Pending"
   },
+  "t_shared_permalink": {
+    "message": "Permalink"
+  },
   "t_shared_posts": {
     "message": "Posts"
   },

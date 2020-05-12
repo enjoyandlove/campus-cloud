@@ -112,7 +112,7 @@ export class DashboardService {
   getGeneralInformation(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION}/`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 
   getTopEvents(search: HttpParams) {
