@@ -302,13 +302,15 @@ export class FeedsAmplitudeService {
   }
 
   trackViewedUserList(feed: Feed, likeType: InteractionLikeType) {
+    const { creation_source } = this.getAllWallAmplitude(feed);
     const { wall_source, post_type, date_filter, user_filter } = this.getWallFiltersAmplitude();
     const props = {
       post_type,
       user_filter,
       wall_source,
       date_filter,
-      source: likeType === InteractionLikeType.like ? 'Likes' : 'Flags',
+      creation_source,
+      source: +likeType === InteractionLikeType.like ? 'Likes' : 'Flags',
       thread_type: FeedsUtilsService.isComment(feed) ? 'Comment' : 'Post',
       image: feed.has_image ? 'Yes' : 'No'
     };
