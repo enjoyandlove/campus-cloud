@@ -33,6 +33,8 @@ export class DealsFormComponent implements OnInit, OnDestroy {
     storeFormValid: boolean;
   }> = new EventEmitter();
 
+  @Output() addedImage: EventEmitter<null> = new EventEmitter();
+
   postingStartDatePickerOptions;
   postingEndDatePickerOptions;
   expiration: number;
@@ -43,6 +45,7 @@ export class DealsFormComponent implements OnInit, OnDestroy {
   constructor(public session: CPSession, public cpI18n: CPI18nService) {}
 
   onUploadedImage(image) {
+    this.addedImage.emit();
     this.form.controls['image_url'].setValue(image);
     this.form.controls['image_thumb_url'].setValue(image);
   }

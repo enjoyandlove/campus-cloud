@@ -30,8 +30,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   updateHeader() {
+    const { firstname = '' } = this.user;
     const hello = this.cpI18n.translate('hello');
-    const username = `[NOTRANSLATE]${this.user.firstname}[NOTRANSLATE]`;
+    const username = `[NOTRANSLATE]${firstname}[NOTRANSLATE]`;
     const heading = `${hello} ${username}!`;
 
     this.headerData = {

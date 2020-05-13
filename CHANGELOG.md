@@ -1,4 +1,11 @@
 # Campus Cloud Changelog
+### [1.8.1](https://gitlab.com/oohlalamobile-web/cc_front_end/compare/v1.8.0...v1.8.1) (2020-05-13)
+
+
+### Bug Fixes
+
+* #WEB-4939 ([d975dbf](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/d975dbfa709a3d8cdd03a34f8499a30aab9a978a)), closes [#WEB-4939](https://oohlalaproduct.atlassian.net/browse/WEB-4939)
+
 ## 1.8.0 (2020-05-01)
 
 

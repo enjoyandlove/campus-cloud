@@ -8,9 +8,9 @@ import { CPSession } from '@campus-cloud/session';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { ApiService } from '@campus-cloud/base/services';
 import mockSession from '@campus-cloud/session/mock/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { EnvService, MockEnvService } from '@campus-cloud/config/env';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ServicesProviderActionBoxComponent } from './providers-action-box.component';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import {
@@ -35,6 +35,7 @@ describe('ServicesProviderActionBoxComponent', () => {
         providers: [
           ApiService,
           CPI18nService,
+          CPTrackingService,
           EngagementService,
           EngagementUtilsService,
           {

@@ -114,7 +114,6 @@ export class FeedSearchComponent implements OnInit {
   channelsMenu$: Observable<any>;
   studentsMenu$: Observable<any>;
 
-  FEATURE_FLAG = 'FEEDS_CSV_COUNT';
   hasFiltersActive$: Observable<boolean>;
   presetDates: { [key: string]: number[] };
   viewFilters$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -494,6 +493,7 @@ export class FeedSearchComponent implements OnInit {
 
     const userSearch$ = this.studentTerm.asObservable().pipe(
       debounceTime(400),
+      filter((term) => typeof term === 'string'),
       tap(
         (term: string) =>
           (params = params.set('search_str', Boolean(term.trim().length) ? term.trim() : null))

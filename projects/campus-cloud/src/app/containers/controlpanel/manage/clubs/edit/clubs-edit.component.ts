@@ -34,6 +34,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   buttonData;
   limitedAdmin;
   form: FormGroup;
+  addedImage = false;
   isFormReady = false;
 
   eventProperties = {
@@ -98,7 +99,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
         this.trackEvent(res);
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_UPDATED_ITEM,
-          ClubsAmplitudeService.getItemProperties(res, this.isAthletic)
+          ClubsAmplitudeService.getItemProperties(res, this.isAthletic, this.addedImage)
         );
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info'], {
           queryParams: this.route.snapshot.queryParams

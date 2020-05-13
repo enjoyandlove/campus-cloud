@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
@@ -21,6 +21,8 @@ export class ClubsFormComponent implements OnInit {
   @Input() limitedAdmin = false;
   @Input() isAthletic = isClubAthletic.club;
 
+  @Output() addedImage: EventEmitter<null> = new EventEmitter();
+
   labels;
   selectedStatus;
   school: ISchool;
@@ -36,6 +38,7 @@ export class ClubsFormComponent implements OnInit {
   constructor(private session: CPSession, private utils: ClubsUtilsService) {}
 
   onUploadedImage(image): void {
+    this.addedImage.emit();
     this.form.get('logo_url').setValue(image);
   }
 

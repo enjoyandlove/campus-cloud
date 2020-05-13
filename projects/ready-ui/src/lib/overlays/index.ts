@@ -1,5 +1,5 @@
+export * from './modal';
+export * from './tooltip';
 export * from './lightbox';
-export { OverlaysModule } from './overlays.module';
 export { ModalModule } from './modal/modal.module';
-export { TooltipModule } from './tooltip/tooltip.module';
 export { PopoverModule } from './popover/popover.module';

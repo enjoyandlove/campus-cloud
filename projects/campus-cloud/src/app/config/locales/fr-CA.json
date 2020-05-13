@@ -2864,7 +2864,7 @@
     "message": "Cet événement ne peut pas être trouvé"
   },
   "t_external_check_in_service_feedback_already_provided": {
-    "message": "You have already provided feedback for this service."
+    "message": "Vous avez déjà fourni un retour pour ce service."
   },
   "t_external_event_not_found": {
     "message": "Cet événement n'existe pas."
@@ -2878,8 +2878,17 @@
   "t_feeds_edit": {
     "message": "Éditer"
   },
+  "t_feeds_likes_tootlip": {
+    "message": "et %s de plus..."
+  },
   "t_feeds_move": {
     "message": "Déplacer"
+  },
+  "t_feeds_people_who_flagged": {
+    "message": "Personnes qui ont signalé"
+  },
+  "t_feeds_people_who_liked": {
+    "message": "Personnes qui ont aimé"
   },
   "t_help_desk_faq": {
     "message": "Guides et FAQ"
@@ -3751,7 +3760,7 @@
     "message": "Synchroniser"
   },
   "t_shared_thank_you": {
-    "message": "Thank You"
+    "message": "Merci"
   },
   "t_shared_thursday": {
     "message": "Jeudi"

@@ -27,6 +27,7 @@ export class DealsCreateComponent implements OnInit {
   isNewStore;
   errorMessage;
   form: FormGroup;
+  addedImage = false;
   storeForm: FormGroup;
 
   constructor(
@@ -57,7 +58,7 @@ export class DealsCreateComponent implements OnInit {
       (deal: any) => {
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_CREATED_ITEM,
-          DealsAmplitudeService.getItemProperties()
+          DealsAmplitudeService.getItemProperties(this.addedImage)
         );
         this.router.navigate([`/manage/deals/${deal.id}/info`]);
       },
