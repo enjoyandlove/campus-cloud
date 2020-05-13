@@ -11,7 +11,7 @@ Testing Web Staging:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_test
     - echo "Web Staging tested successfully"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+    - if: '$CI_COMMIT_REF_SLUG == "staging"'
       changes:
         - 'projects/campus-cloud/**/*'
   coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
@@ -27,7 +27,7 @@ Building Web Staging:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_build
     - echo "Web Staging built successfully"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+    - if: '$CI_COMMIT_REF_SLUG == "staging"'
       changes:
         - 'projects/campus-cloud/**/*'
   environment: Staging
@@ -39,7 +39,7 @@ Deploying Web Staging:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_deploy
     - echo "Web Staging deployed successfully"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+    - if: '$CI_COMMIT_REF_SLUG == "staging"'
       changes:
         - 'projects/campus-cloud/**/*'
   environment: Staging
@@ -53,7 +53,7 @@ Building Web Production:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py production_web_build
     - echo "CC Prod built successfully"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+    - if: '$CI_COMMIT_REF_SLUG == "master"'
       changes:
         - 'projects/campus-cloud/**/*'
   environment: Production
@@ -68,7 +68,7 @@ Deploying Web Production:
     - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py can_production_web_deploy
     - echo "CAN Web Production deployed successfully"
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+    - if: '$CI_COMMIT_REF_SLUG == "master"'
       changes:
         - 'projects/campus-cloud/**/*'
   environment: Production
@@ -83,7 +83,7 @@ Deploy Ready UI:
     - echo "Ready UI successfully deployed"
 
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"'
+    - if: '$CI_COMMIT_REF_SLUG == "staging"'
       changes:
         - 'projects/ready-ui/**/*'
 
