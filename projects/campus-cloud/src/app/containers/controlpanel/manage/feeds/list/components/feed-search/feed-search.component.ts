@@ -114,7 +114,6 @@ export class FeedSearchComponent implements OnInit {
   channelsMenu$: Observable<any>;
   studentsMenu$: Observable<any>;
 
-  FEATURE_FLAG = 'FEEDS_CSV_COUNT';
   hasFiltersActive$: Observable<boolean>;
   presetDates: { [key: string]: number[] };
   viewFilters$: BehaviorSubject<any> = new BehaviorSubject({});
