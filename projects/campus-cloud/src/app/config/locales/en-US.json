@@ -2878,8 +2878,17 @@
   "t_feeds_edit": {
     "message": "Edit"
   },
+  "t_feeds_likes_tootlip": {
+    "message": "and %s more..."
+  },
   "t_feeds_move": {
     "message": "Move"
+  },
+  "t_feeds_people_who_flagged": {
+    "message": "People who flagged"
+  },
+  "t_feeds_people_who_liked": {
+    "message": "People who liked"
   },
   "t_help_desk_faq": {
     "message": "Guides & FAQ"
@@ -3687,6 +3696,9 @@
   "t_shared_pending": {
     "message": "Pending"
   },
+  "t_shared_permalink": {
+    "message": "Permalink"
+  },
   "t_shared_posts": {
     "message": "Posts"
   },
@@ -3896,6 +3908,9 @@
   },
   "t_tile_button_locked": {
     "message": "Locked"
+  },
+  "t_unsubscribe_feed_email_digest": {
+    "message": "Unsubscribed from Daily Digest."
   },
   "t_unsupported_browser_modal_body": {
     "message": "We recommend upgrading your browser to the latest version in order to get the best experience"

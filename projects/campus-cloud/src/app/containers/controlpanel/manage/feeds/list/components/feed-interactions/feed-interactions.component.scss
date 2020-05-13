@@ -1,0 +1,35 @@
+.users-content {
+  max-width: 148px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    button {
+      margin-top: 12px;
+    }
+  }
+}
+
+.modal-list {
+  max-width: 420px;
+
+  ready-ui-spinner {
+    display: block;
+    text-align: center;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-top: -1em;
+    max-height: 300px;
+    overflow-x: scroll;
+
+    li {
+      line-height: 2;
+    }
+  }
+}

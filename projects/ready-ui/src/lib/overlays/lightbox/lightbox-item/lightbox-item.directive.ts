@@ -10,11 +10,12 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[ready-ui-lighbox-item]'
+  selector: 'img[ready-ui-lighbox-item]'
 })
 export class LightboxItemDirective implements OnInit {
-  @Input()
-  src: string;
+  get src() {
+    return this.el.nativeElement.src;
+  }
 
   @Output()
   click$: EventEmitter<string> = new EventEmitter();
@@ -28,8 +29,5 @@ export class LightboxItemDirective implements OnInit {
 
   ngOnInit() {
     this.el.nativeElement.style.cursor = 'pointer';
-    if (this.el.nativeElement instanceof HTMLImageElement) {
-      this.el.nativeElement.src = this.src;
-    }
   }
 }

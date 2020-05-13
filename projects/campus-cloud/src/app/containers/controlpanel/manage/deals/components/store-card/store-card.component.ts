@@ -7,6 +7,7 @@ import { IDeal } from '../../deals.interface';
 import { IStore } from '../../stores/store.interface';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { DealsAmplitudeService } from '@controlpanel/manage/deals/deals.amplitude.service';
 
 @Mixin([Destroyable])
 @Component({
@@ -33,7 +34,7 @@ export class StoreCardComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(public cpI18n: CPI18nService, private amplitude: DealsAmplitudeService) {}
 
   onTabClick({ id }) {
     if (id === 'existing') {
@@ -46,6 +47,8 @@ export class StoreCardComponent implements OnInit, OnDestroy {
       this.setRequiredField(true);
       this.isStoreRequired(false);
       this.isNewStore.emit(true);
+
+      this.amplitude.amplitudeStoreClickedItem();
     }
   }
 

@@ -15,6 +15,8 @@ import { ImageService, ImageValidatorService } from '@campus-cloud/shared/servic
 const mockJobs = require('../mockJobs.json');
 const mockEmployers = require('../employers/mockEmployer.json');
 
+const tomorrow = new Date().setTime(new Date().getTime() + 60 * 60 * 24 * 1000);
+
 class MockJobsService {
   dummy;
 
@@ -137,7 +139,7 @@ describe('JobsCreateComponent', () => {
     };
 
     component.data.job.posting_start = 1525783196;
-    component.data.job.posting_end = 1588941596;
+    component.data.job.posting_end = tomorrow;
     component.onSubmit();
 
     expect(jobSpy).toHaveBeenCalled();
@@ -155,7 +157,7 @@ describe('JobsCreateComponent', () => {
     };
 
     component.data.job.posting_start = 1525783196;
-    component.data.job.posting_end = 1588941596;
+    component.data.job.posting_end = tomorrow;
     component.onSubmit();
 
     expect(jobSpy).toHaveBeenCalled();

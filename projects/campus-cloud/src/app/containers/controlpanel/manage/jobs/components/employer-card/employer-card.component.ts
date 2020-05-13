@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { JobsAmplitudeService } from '@controlpanel/manage/jobs/jobs.amplitude.service';
 
 @Mixin([Destroyable])
 @Component({
@@ -31,7 +32,7 @@ export class EmployerCardComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(public cpI18n: CPI18nService, private amplitude: JobsAmplitudeService) {}
 
   onTabClick({ id }) {
     if (id === 'existing') {
@@ -44,6 +45,8 @@ export class EmployerCardComponent implements OnInit, OnDestroy {
       this.setRequiredField(true);
       this.isStoreRequired(false);
       this.isNewEmployer.emit(true);
+
+      this.amplitude.amplitudeEmployerClickedItem();
     }
   }
 

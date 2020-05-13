@@ -31,6 +31,7 @@ import {
   FeedDropdownComponent,
   FeedInputBoxComponent,
   FeedDeleteModalComponent,
+  FeedInteractionsComponent,
   FeedApproveModalComponent,
   FeedDeleteCommentModalComponent,
   FeedApproveCommentModalComponent
@@ -54,6 +55,7 @@ import {
     FeedCommentsComponent,
     FeedDeleteModalComponent,
     FeedApproveModalComponent,
+    FeedInteractionsComponent,
     FeedDeleteCommentModalComponent,
     FeedApproveCommentModalComponent
   ],

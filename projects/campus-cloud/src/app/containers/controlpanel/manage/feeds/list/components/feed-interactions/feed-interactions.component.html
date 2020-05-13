@@ -1,0 +1,50 @@
+<ng-container *ngIf="tooltip$ | async as tooltip">
+  <div ui-tooltip
+       [template]="tooltipTpl">
+    <ng-content></ng-content>
+  </div>
+
+  <ng-template #tooltipTpl>
+    <div class="users-content">
+      <ul *ngIf="!tooltip.loading else loading">
+        <li *ngFor="let user of tooltip.users | slice: 0:5">
+          {{ user.firstname }} {{ user.lastname }}
+        </li>
+        <li *ngIf="!tooltip.users.length">{{ 'no_results' | cpI18n }}</li>
+        <li>
+          <button ui-button
+                  type="button"
+                  color="primary"
+                  variant="inline"
+                  *ngIf="total > 5"
+                  (click)="modalHandler(modalTpl)">
+            {{ 't_feeds_likes_tootlip' | cpI18n : total - 5 }}
+          </button>
+        </li>
+      </ul>
+      <ng-template #loading>
+        <cp-working></cp-working>
+      </ng-template>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #modalTpl
+             let-data>
+  <div class="modal-list">
+    <ready-ui-modal-header (close)="closeModal()">
+      {{ likeType === '1' ? ('t_feeds_people_who_liked' | cpI18n) : ('t_feeds_people_who_flagged' | cpI18n) }}
+    </ready-ui-modal-header>
+    <ready-ui-modal-content>
+      <ng-container *ngIf="data.view$ | async as view">
+        <ready-ui-spinner *ngIf="view.loading"
+                          centered="false"></ready-ui-spinner>
+        <ul *ngIf="!view.loading">
+          <li *ngFor="let person of view.people">
+            {{ person.firstname }} {{ person.lastname }}
+          </li>
+        </ul>
+      </ng-container>
+    </ready-ui-modal-content>
+  </div>
+</ng-template>

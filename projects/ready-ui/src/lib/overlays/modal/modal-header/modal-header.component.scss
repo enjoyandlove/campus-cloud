@@ -3,5 +3,11 @@
 :host {
   padding: 1em;
   display: block;
+  font-weight: 600;
+  text-align: center;
   background: map-get($map: $ready-grey, $key: 200);
+
+  button {
+    float: right;
+  }
 }

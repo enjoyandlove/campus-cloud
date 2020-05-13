@@ -19,7 +19,8 @@ import { DashboardUtilsService } from './../../dashboard.utils.service';
 export class DashboardGeneralInformationComponent extends BaseComponent
   implements OnInit, OnDestroy {
   data;
-  loading;
+  error: boolean;
+  loading: boolean;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -47,9 +48,15 @@ export class DashboardGeneralInformationComponent extends BaseComponent
 
     const stream$ = this.service.getGeneralInformation(search);
 
-    super.fetchData(stream$).then((res) => {
-      this.data = res.data;
-    });
+    super
+      .fetchData(stream$)
+      .then((res) => {
+        this.data = res.data;
+      })
+      .catch(() => {
+        this.error = true;
+        this.loading = false;
+      });
   }
 
   listenForQueryParamChanges() {
