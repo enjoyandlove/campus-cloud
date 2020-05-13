@@ -3909,6 +3909,9 @@
   "t_tile_button_locked": {
     "message": "Locked"
   },
+  "t_unsubscribe_feed_email_digest": {
+    "message": "Unsubscribed from Daily Digest."
+  },
   "t_unsupported_browser_modal_body": {
     "message": "We recommend upgrading your browser to the latest version in order to get the best experience"
   },
