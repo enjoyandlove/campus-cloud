@@ -26,6 +26,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   form: FormGroup;
   formError = false;
   serviceId: number;
+  addedImage = false;
 
   eventProperties = {
     phone: null,
@@ -77,7 +78,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         this.trackEvent(this.form.value);
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.MANAGE_UPDATED_ITEM,
-          ServicesAmplitudeService.getItemProperties(service)
+          ServicesAmplitudeService.getItemProperties(service, this.addedImage)
         );
         this.router.navigate(['/manage/services/' + this.serviceId + route]);
       },

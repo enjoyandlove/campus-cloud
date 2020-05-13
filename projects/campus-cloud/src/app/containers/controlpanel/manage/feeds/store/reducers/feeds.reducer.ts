@@ -1,5 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { flatten } from 'lodash';
+import { flatten, omit } from 'lodash';
 
 import * as WallsActions from '../actions';
 
@@ -168,10 +168,16 @@ const _feedsReducer = createReducer(
   }),
 
   on(WallsActions.updateThread, (state: IWallsFeedsState, { thread }) => {
-    const { message, display_name, ...editableFields } = thread;
+    const searching = state.searchTerm !== '';
+    const nonEditableFields = ['display_name'];
+    if (searching) {
+      nonEditableFields.push('message');
+    }
+    const changes = omit(thread, nonEditableFields);
+
     return {
       ...state,
-      threads: state.threads.map((t) => (t.id === thread.id ? { ...t, ...editableFields } : t))
+      threads: state.threads.map((t) => (t.id === thread.id ? { ...t, ...changes } : t))
     };
   }),
 

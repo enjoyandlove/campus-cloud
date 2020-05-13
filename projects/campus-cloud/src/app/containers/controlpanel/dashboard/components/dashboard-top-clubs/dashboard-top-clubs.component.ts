@@ -21,9 +21,10 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit,
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
-  loading;
   items = [];
   isSuperAdmin;
+  error: boolean;
+  loading: boolean;
   defaultImage = `${environment.root}assets/default/user.png`;
 
   @Input()
@@ -59,7 +60,13 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit,
 
     const stream$ = this.service.getTopClubs(search);
 
-    super.fetchData(stream$).then((res) => (this.items = res.data));
+    super.fetchData(stream$).then(
+      (res) => (this.items = res.data),
+      () => {
+        this.error = true;
+        this.loading = false;
+      }
+    );
   }
 
   ngOnInit() {

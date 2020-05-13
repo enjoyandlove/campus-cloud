@@ -12,6 +12,8 @@ import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerService } from '../employers/employer.service';
 import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
+const tomorrow = new Date().setTime(new Date().getTime() + 60 * 60 * 24 * 1000);
+
 const mockJobs = require('../mockJobs.json');
 const mockEmployers = require('../employers/mockEmployer.json');
 
@@ -140,7 +142,7 @@ describe('JobsEditComponent', () => {
     };
 
     component.data.job.posting_start = 1525783196;
-    component.data.job.posting_end = 1588941596;
+    component.data.job.posting_end = tomorrow;
     component.onSubmit();
 
     expect(jobSpy).toHaveBeenCalled();
@@ -161,7 +163,7 @@ describe('JobsEditComponent', () => {
     };
 
     component.data.job.posting_start = 1525783196;
-    component.data.job.posting_end = 1588941596;
+    component.data.job.posting_end = tomorrow;
     component.onSubmit();
 
     expect(jobSpy).toHaveBeenCalled();

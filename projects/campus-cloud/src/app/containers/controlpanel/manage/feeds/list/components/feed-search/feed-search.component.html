@@ -65,7 +65,6 @@
                 class="centered-button"
                 (click)="downloadThread.next()"
                 [disabled]="downloading$ | async"
-                *cpFeatureToggle="FEATURE_FLAG"
                 [title]="'t_community_tooltip_download_csv_zip_file' | cpI18n">
           <ready-ui-icon width="20px"
                          name="save_alt"></ready-ui-icon>
@@ -74,8 +73,7 @@
     </header>
     <footer>
       <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
-      <div class="counter"
-           *cpFeatureToggle="FEATURE_FLAG">
+      <div class="counter">
         <ready-ui-skeleton-text width="140px"
                                 *ngIf="view.counting">
         </ready-ui-skeleton-text>

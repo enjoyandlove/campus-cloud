@@ -22,7 +22,7 @@ export class AudienceService {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true).pipe(catchError(() => of([])));
   }
 
   getAudienceById(audienceId: number, search: HttpParams): Observable<any> {

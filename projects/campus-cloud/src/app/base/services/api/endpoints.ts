@@ -143,6 +143,8 @@ export const ENDPOINTS = {
 
   DASHBORD_USER_ACQUISITION: 'analytics/user_acquisition',
 
+  SOCIAL_CONTENT_INTERACTION: 'social/content_interaction',
+
   EXTERNAL_USER_EVENT_CHECKIN: 'external_user_event_checkin',
 
   DASHBOARD_INTEGRATION_STATUS: 'analytics/integration_status',

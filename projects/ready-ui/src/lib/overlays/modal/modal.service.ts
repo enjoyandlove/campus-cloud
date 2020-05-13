@@ -82,6 +82,8 @@ export class ModalService {
     return {
       minWidth: '30em',
       hasBackdrop: true,
+      disposeOnNavigation: true,
+      scrollStrategy: this._overlay.scrollStrategies.block(),
       positionStrategy: this._overlay
         .position()
         .global()

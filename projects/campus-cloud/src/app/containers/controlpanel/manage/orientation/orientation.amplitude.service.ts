@@ -11,6 +11,7 @@ export class OrientationAmplitudeService {
     return {
       wall_status,
       item_type: 'Orientation',
+      added_image: amplitudeEvents.NOT_APPLICABLE,
       location_status: amplitudeEvents.NOT_APPLICABLE
     };
   }

@@ -13,9 +13,6 @@ export class ModalHeaderComponent implements OnInit {
   _closable = true;
 
   @Input()
-  heading: string;
-
-  @Input()
   set closable(closable: string | boolean) {
     this._closable = coerceBooleanProperty(closable);
   }

@@ -10,7 +10,7 @@ import {
 @Component({
   selector: 'ready-ui-modal-component',
   template: `
-    <ready-ui-modal-header heading="Modal title" (close)="onCloseClick()"></ready-ui-modal-header>
+    <ready-ui-modal-header (close)="onCloseClick()">Modal title</ready-ui-modal-header>
     <ready-ui-modal-content>
       Are you sure you want to delete test?
     </ready-ui-modal-content>

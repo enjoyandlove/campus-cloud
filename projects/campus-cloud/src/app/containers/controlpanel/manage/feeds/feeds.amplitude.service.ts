@@ -4,10 +4,17 @@ import { Injectable } from '@angular/core';
 import { omit } from 'lodash';
 
 import { CPSession } from '@campus-cloud/session';
+import { Feed } from '@controlpanel/manage/feeds/model';
+import { FeedsUtilsService } from './feeds.utils.service';
+import { InteractionLikeType } from '@campus-cloud/services';
 import * as fromStore from '@controlpanel/manage/feeds/store';
 import { StoreCategoryType } from '@campus-cloud/shared/models';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
+
+export enum CommunityAmplitudeEvents {
+  VIEWED_USER_LIST = 'Community - Viewed User List'
+}
 
 enum hasData {
   yes = 'Yes',
@@ -35,6 +42,36 @@ export const dateAmplitudeLabel = {
 export class FeedsAmplitudeService {
   _filterLabel: string;
 
+  static storeCategoryIdToAmplitudeName(storeCategory) {
+    if (storeCategory === StoreCategoryType.athletics) {
+      return 'Athletic Channel';
+    } else if (storeCategory === StoreCategoryType.club) {
+      return 'Club Channel';
+    } else if (storeCategory === StoreCategoryType.services) {
+      return 'Service Channel';
+    }
+
+    return null;
+  }
+
+  static hasData(data) {
+    return data > 0 ? hasData.yes : hasData.no;
+  }
+
+  static hasImage(image) {
+    return image ? hasData.yes : hasData.no;
+  }
+
+  static postType(flaggedByUser, flaggedByModerators) {
+    if (flaggedByUser) {
+      return amplitudeEvents.FLAGGED;
+    } else if (flaggedByModerators) {
+      return amplitudeEvents.REMOVED;
+    }
+
+    return amplitudeEvents.DEFAULT;
+  }
+
   constructor(
     private session: CPSession,
     private cpTracking: CPTrackingService,
@@ -43,6 +80,10 @@ export class FeedsAmplitudeService {
 
   get filterLabel() {
     return this._filterLabel;
+  }
+
+  private track(eventName: string, props?: { [key: string]: any }) {
+    this.cpTracking.amplitudeEmitEvent(eventName, props);
   }
 
   getViewFilters() {
@@ -94,7 +135,8 @@ export class FeedsAmplitudeService {
       .select(fromStore.getSocialPostCategories)
       .pipe(take(1))
       .subscribe((channels) => {
-        isIntegrated = channels.find((c) => c.id === postTypeId).is_integrated;
+        const postCategory = channels.find((c) => c.id === postTypeId);
+        isIntegrated = postCategory ? postCategory.is_integrated : false;
       });
 
     return isIntegrated ? wallType.integration : wallType.manual;
@@ -259,6 +301,23 @@ export class FeedsAmplitudeService {
     return sub_menu_name === 'Walls';
   }
 
+  trackViewedUserList(feed: Feed, likeType: InteractionLikeType) {
+    const { creation_source } = this.getAllWallAmplitude(feed);
+    const { wall_source, post_type, date_filter, user_filter } = this.getWallFiltersAmplitude();
+    const props = {
+      post_type,
+      user_filter,
+      wall_source,
+      date_filter,
+      creation_source,
+      source: +likeType === InteractionLikeType.like ? 'Likes' : 'Flags',
+      thread_type: FeedsUtilsService.isComment(feed) ? 'Comment' : 'Post',
+      image: feed.has_image ? 'Yes' : 'No'
+    };
+
+    this.track(CommunityAmplitudeEvents.VIEWED_USER_LIST, props);
+  }
+
   getAddedImageAmplitude(feed, isComment) {
     const thread_type = isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
     const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties();
@@ -269,35 +328,5 @@ export class FeedsAmplitudeService {
       thread_id: feed.id,
       count: feed.image_url_list.length
     };
-  }
-
-  static storeCategoryIdToAmplitudeName(storeCategory) {
-    if (storeCategory === StoreCategoryType.athletics) {
-      return 'Athletic Channel';
-    } else if (storeCategory === StoreCategoryType.club) {
-      return 'Club Channel';
-    } else if (storeCategory === StoreCategoryType.services) {
-      return 'Service Channel';
-    }
-
-    return null;
-  }
-
-  static hasData(data) {
-    return data > 0 ? hasData.yes : hasData.no;
-  }
-
-  static hasImage(image) {
-    return image ? hasData.yes : hasData.no;
-  }
-
-  static postType(flaggedByUser, flaggedByModerators) {
-    if (flaggedByUser) {
-      return amplitudeEvents.FLAGGED;
-    } else if (flaggedByModerators) {
-      return amplitudeEvents.REMOVED;
-    }
-
-    return amplitudeEvents.DEFAULT;
   }
 }
