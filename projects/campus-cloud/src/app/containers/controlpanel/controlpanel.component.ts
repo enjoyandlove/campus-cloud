@@ -58,7 +58,7 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     /**
      * this gets initialized only once
-     * so we track the first page load here
+     * so we track the first page load here TEST
      */
     this.cpAmplitudeService.loadAmplitude();
     this.cpTrackingService.gaTrackPage(this.router.url);
