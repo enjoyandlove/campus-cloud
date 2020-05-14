@@ -280,7 +280,7 @@ export class ServicesUtilsService {
       const attendance = {
         label: 'service_provider',
         isSubMenuItem: true,
-        amplitude: amplitudeEvents.ASSESSMENT,
+        amplitude: amplitudeEvents.SERVICE_PROVIDER,
         url: `/manage/services/${service.id}`
       };
 

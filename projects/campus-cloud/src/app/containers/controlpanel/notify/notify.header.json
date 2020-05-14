@@ -5,7 +5,7 @@
   "children": [
     {
       "label": "t_notify_tab_sent",
-      "amplitude": "Announcements",
+      "amplitude": "Sent",
       "url": "/notify/sent"
     },
     {

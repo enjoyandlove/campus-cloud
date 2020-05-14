@@ -15,12 +15,12 @@ export class OrientationUtilsService {
     const hasModerationAccess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation);
 
     if (hasMembership === ProgramMembership.enabled && hasModerationAccess) {
-      links = [{ label: 'Members', link: 'members' }, ...links];
-      links = [{ label: 'Feeds', link: 'feeds' }, ...links];
+      links = [{ label: 'Members', link: 'members', amplitude: 'Members' }, ...links];
+      links = [{ label: 'Feeds', link: 'feeds', amplitude: 'Walls' }, ...links];
     }
 
-    links = [{ label: 'To-Dos', link: 'todos' }, ...links];
-    links = [{ label: 'Events', link: 'events' }, ...links];
+    links = [{ label: 'To-Dos', link: 'todos', amplitude: 'To-Dos' }, ...links];
+    links = [{ label: 'Events', link: 'events', amplitude: 'Events' }, ...links];
 
     return links;
   }
@@ -42,7 +42,7 @@ export class OrientationUtilsService {
     subNav.forEach((nav) => {
       menu.children.push({
         isSubMenuItem: true,
-        amplitude: nav.label,
+        amplitude: nav.amplitude,
         label: nav.label.toLocaleLowerCase(),
         url: `/manage/orientation/${program.id}/${nav.link}`
       });

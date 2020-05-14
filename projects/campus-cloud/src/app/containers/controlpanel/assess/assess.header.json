@@ -11,7 +11,7 @@
     },
     {
       "label": "t_app_users",
-      "amplitude": "Students",
+      "amplitude": "App User",
       "url": "/assess/students"
     },
     {
