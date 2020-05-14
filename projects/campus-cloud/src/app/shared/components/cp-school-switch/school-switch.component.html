@@ -82,17 +82,17 @@
          (click)="trackEvent(amplitudeEvents.changed_school, school)">
         <div class="row">
           <div class="col-10">
-            <div *ngIf="school.app_logo_url !== ''"
+            <div *ngIf="school?.app_logo_url !== ''"
                  class="switch__school__thumb"
-                 [ngStyle]="{ 'background-image': 'url(' + school.app_logo_url + ')' }">
+                 [ngStyle]="{ 'background-image': 'url(' + school?.app_logo_url + ')' }">
             </div>
-            <div *ngIf="school.app_logo_url === ''"
+            <div *ngIf="school?.app_logo_url === ''"
                  class="switch__school__thumb"
                  [ngStyle]="{ 'background-image': 'url(' + defaultImage + ')' }">
             </div>
             <div class="switch__school__name">
-              <div class="text-truncate">{{ school.name }}</div>
-              <div *ngIf="school.is_sandbox"
+              <div class="text-truncate">{{ school?.name }}</div>
+              <div *ngIf="school?.is_sandbox"
                    class="switch__school__label">
                 {{ 't_sandbox_test_environment' | cpI18n }}
               </div>
@@ -101,7 +101,7 @@
           <div class="col-2">
             <div class="switch__school__default">
               <span class="float-right"
-                    *ngIf="selectedSchool.id === school.id">
+                    *ngIf="selectedSchool.id === school?.id">
                 <i class="material-icons">check</i>
               </span>
             </div>
