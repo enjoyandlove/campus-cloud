@@ -184,10 +184,10 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
     links.forEach((link) => {
       menu.children.push({
-        amplitude: link,
+        amplitude: link.amplitude,
         isSubMenuItem: true,
-        label: link.toLocaleLowerCase(),
-        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`
+        label: link.label,
+        url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.label}`
       });
     });
 

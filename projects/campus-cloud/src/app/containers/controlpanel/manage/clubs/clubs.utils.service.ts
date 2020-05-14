@@ -71,20 +71,20 @@ export class ClubsUtilsService {
     const schoolOrStoreAccess = (permission) => schoolAccess(permission) || storeAccess(permission);
 
     if (clubIsActive && schoolOrStoreAccess(CP_PRIVILEGES_MAP.events)) {
-      links = ['Events', ...links];
+      links = [{ label: 'events', amplitude: 'Events' }, ...links];
     }
 
     if (club.has_membership) {
       if (clubIsPending && canSchoolReadResource(session.g, CP_PRIVILEGES_MAP.moderation)) {
-        links = ['Feeds', ...links];
+        links = [{ label: 'feeds', amplitude: 'Walls' }, ...links];
       }
 
       if (canSchoolReadResource(session.g, CP_PRIVILEGES_MAP.membership)) {
-        links = ['Members', ...links];
+        links = [{ label: 'members', amplitude: 'Members' }, ...links];
       }
     }
 
-    links = ['Info', ...links];
+    links = [{ label: 'info', amplitude: 'Info' }, ...links];
 
     return links;
   }
