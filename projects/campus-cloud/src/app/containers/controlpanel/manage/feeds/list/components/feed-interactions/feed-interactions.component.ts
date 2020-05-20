@@ -44,7 +44,7 @@ export class FeedInteractionsComponent implements OnInit {
 
   tooltip$: Observable<{
     loading: boolean;
-    users: SocialContentInteractionItem[];
+    profiles: SocialContentInteractionItem[];
   }>;
 
   filters$ = this.store.pipe(select(fromStore.getViewFilters));
@@ -68,8 +68,8 @@ export class FeedInteractionsComponent implements OnInit {
     );
 
     this.tooltip$ = combineLatest([data$.pipe(startWith([])), loading$]).pipe(
-      map(([users, loading]) => ({
-        users,
+      map(([profiles, loading]) => ({
+        profiles,
         loading
       }))
     );
@@ -128,8 +128,8 @@ export class FeedInteractionsComponent implements OnInit {
     );
 
     const view$ = combineLatest([request$.pipe(startWith([])), loading$]).pipe(
-      map(([people, loading]) => ({
-        people,
+      map(([profiles, loading]) => ({
+        profiles,
         loading
       }))
     );
