@@ -5,14 +5,19 @@ import { Observable } from 'rxjs';
 import { ApiService } from '@campus-cloud/base/services';
 
 export interface SocialContentInteractionItem {
-  user_id: number;
-  firstname: string;
-  lastname: string;
+  id: number;
+  name: string;
+  originator_type: OriginatorType;
 }
 
 export enum InteractionLikeType {
   like = 1,
   dislike = -1
+}
+
+export enum OriginatorType {
+  user = 1,
+  store = 2
 }
 
 export enum InteractionContentType {

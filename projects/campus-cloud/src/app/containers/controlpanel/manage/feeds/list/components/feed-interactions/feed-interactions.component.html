@@ -7,10 +7,10 @@
   <ng-template #tooltipTpl>
     <div class="users-content">
       <ul *ngIf="!tooltip.loading else loading">
-        <li *ngFor="let user of tooltip.users | slice: 0:5">
-          {{ user.firstname }} {{ user.lastname }}
+        <li *ngFor="let profile of tooltip.profiles | slice: 0:5">
+          {{ profile.name }}
         </li>
-        <li *ngIf="!tooltip.users.length">{{ 'no_results' | cpI18n }}</li>
+        <li *ngIf="!tooltip.profiles.length">{{ 'no_results' | cpI18n }}</li>
         <li>
           <button ui-button
                   type="button"
@@ -40,8 +40,8 @@
         <ready-ui-spinner *ngIf="view.loading"
                           centered="false"></ready-ui-spinner>
         <ul *ngIf="!view.loading">
-          <li *ngFor="let person of view.people">
-            {{ person.firstname }} {{ person.lastname }}
+          <li *ngFor="let profile of view.profiles">
+            {{ profile.name }}
           </li>
         </ul>
       </ng-container>
