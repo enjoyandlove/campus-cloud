@@ -139,6 +139,14 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
           [CP_PRIVILEGES_MAP.event_attendance]: {
             r: true,
             w: true
+          },
+          [CP_PRIVILEGES_MAP.moderation]: {
+            r: true,
+            w: true
+          },
+          [CP_PRIVILEGES_MAP.membership]: {
+            r: true,
+            w: item.type === permissionType.write
           }
         };
       }
