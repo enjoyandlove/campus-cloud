@@ -41,6 +41,8 @@ export const pageTitle = {
 
   ASSESS_STUDENT: 'Assess | Student',
 
+  UNSUBSCRIBE_MAIL: 'Unsubscribe Mail',
+
   MANAGE_SERVICES: 'Manage | Services',
 
   STUDION_BRANDING: 'Studio | Branding',

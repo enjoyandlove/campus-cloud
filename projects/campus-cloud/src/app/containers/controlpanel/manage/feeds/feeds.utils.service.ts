@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { flatten } from 'lodash';
 
 import { Feed } from '@controlpanel/manage/feeds/model';
@@ -75,5 +76,11 @@ export class FeedsUtilsService {
     return results;
   }
 
-  constructor() {}
+  constructor(private router: Router) {}
+
+  isPostDetailPage() {
+    const path = /manage\/feeds\/[\d]+\/info/;
+
+    return path.test(this.router.url);
+  }
 }

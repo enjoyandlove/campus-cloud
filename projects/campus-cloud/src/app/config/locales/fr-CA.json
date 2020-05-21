@@ -3696,6 +3696,9 @@
   "t_shared_pending": {
     "message": "En attente"
   },
+  "t_shared_permalink": {
+    "message": "Lien permanent"
+  },
   "t_shared_posts": {
     "message": "Publications"
   },
@@ -3905,6 +3908,9 @@
   },
   "t_tile_button_locked": {
     "message": "Verrouillé"
+  },
+  "t_unsubscribe_feed_email_digest": {
+    "message": "Se désabonner du résumé quotidien."
   },
   "t_unsupported_browser_modal_body": {
     "message": "Nous recommandons de mettre à jour votre navigateur à la dernière version pour bénéficier de la meilleure expérience."

@@ -15,6 +15,7 @@ import { FeedsComponent } from './list/base/feeds.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { FeedsAmplitudeService } from './feeds.amplitude.service';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
+import { FeedsInfoComponent } from '@controlpanel/manage/feeds/info';
 import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 
 import {
@@ -46,6 +47,7 @@ import {
     FeedTagsComponent,
     FeedsListComponent,
     FeedEditComponent,
+    FeedsInfoComponent,
     FeedHeaderComponent,
     FeedSearchComponent,
     FeedCommentComponent,

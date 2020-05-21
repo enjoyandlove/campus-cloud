@@ -13,6 +13,7 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 
 export enum CommunityAmplitudeEvents {
+  VIEWED_COMMUNITY = 'Experiment - Viewed Community',
   VIEWED_USER_LIST = 'Community - Viewed User List'
 }
 
@@ -23,6 +24,7 @@ enum hasData {
 
 enum wallType {
   manual = 'Manual',
+  permalink = 'Permalink',
   integration = 'Feed Integration'
 }
 
@@ -74,6 +76,7 @@ export class FeedsAmplitudeService {
 
   constructor(
     private session: CPSession,
+    private utils: FeedsUtilsService,
     private cpTracking: CPTrackingService,
     private store: Store<fromStore.IWallsState>
   ) {}
@@ -129,6 +132,10 @@ export class FeedsAmplitudeService {
 
     if (!this.isWallMenu()) {
       return wallType.manual;
+    }
+
+    if (this.utils.isPostDetailPage()) {
+      return wallType.permalink;
     }
 
     this.store
@@ -328,5 +335,9 @@ export class FeedsAmplitudeService {
       thread_id: feed.id,
       count: feed.image_url_list.length
     };
+  }
+
+  trackViewedPostDetail(source = 'Campus Cloud') {
+    this.track(CommunityAmplitudeEvents.VIEWED_COMMUNITY, { source });
   }
 }

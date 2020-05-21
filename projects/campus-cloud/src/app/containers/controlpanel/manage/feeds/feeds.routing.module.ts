@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FeedsListComponent } from './list';
 import { pageTitle } from '@campus-cloud/shared/constants';
 import { PrivilegesGuard } from '@campus-cloud/config/guards';
+import { FeedsInfoComponent } from '@controlpanel/manage/feeds/info';
 
 const appRoutes: Routes = [
   {
@@ -11,6 +12,12 @@ const appRoutes: Routes = [
     canActivate: [PrivilegesGuard],
     component: FeedsListComponent,
     data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL, amplitude: 'IGNORE' }
+  },
+  {
+    path: ':feedId/info',
+    canActivate: [PrivilegesGuard],
+    component: FeedsInfoComponent,
+    data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL, amplitude: 'Info' }
   },
   {
     path: 'integrations',

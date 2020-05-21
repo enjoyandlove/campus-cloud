@@ -7,8 +7,8 @@ import { appStorage } from '@campus-cloud/shared/utils';
 
 import { AuthService } from '../auth.service';
 import { baseActions } from '@campus-cloud/store/base';
-import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { LayoutWidth, LayoutAlign } from '@campus-cloud/layouts/interfaces';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { CPI18nService, ErrorService, ZendeskService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -58,7 +58,16 @@ export class LoginComponent implements OnInit, OnDestroy {
           appStorage.set(appStorage.keys.SESSION, res.id);
 
           if (this.goTo) {
-            this.router.navigate([`/${decodeURIComponent(this.goTo)}`], setUserLoginState);
+            const { goTo, ...params } = this.route.snapshot.queryParams;
+
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                ...params,
+                login: true
+              }
+            };
+
+            this.router.navigate([`/${decodeURIComponent(this.goTo)}`], navigationExtras);
 
             return;
           }

@@ -29,6 +29,12 @@ const routes: Routes = [
       import('./containers/callback/callback.module').then((m) => m.CallbackModule)
   },
 
+  {
+    path: 'unsubscribe',
+    loadChildren: () =>
+      import('./containers/unsubscribe/unsubscribe.module').then((m) => m.UnsubscribeModule)
+  },
+
   { path: 'logout', component: LogoutComponent },
 
   { path: '**', redirectTo: 'login' }

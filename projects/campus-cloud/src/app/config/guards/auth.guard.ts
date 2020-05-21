@@ -7,7 +7,6 @@ import { EnvService } from '../env';
 import { appStorage } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { CPLogger } from '@campus-cloud/shared/services/logger';
-import { base64 } from '@campus-cloud/shared/utils/encrypt/encrypt';
 import { ICampusStore, StoreCategoryType } from '@campus-cloud/shared/models';
 import {
   AdminService,
@@ -72,23 +71,15 @@ export class AuthGuard implements CanActivate {
             }
           }
 
-          try {
-            schoolIdInUrl = base64.decode(route.queryParams.school);
-          } catch (error) {
-            schoolIdInUrl = null;
-          }
+          schoolIdInUrl = route.queryParams.school;
 
           if (schoolIdInUrl) {
-            Object.keys(schools).map((key: any) => {
-              if (schools[key].id === +schoolIdInUrl) {
-                schoolObjFromUrl = schools[key];
-              }
-            });
+            schoolObjFromUrl = schools.find((school: ISchool) => school.id === +schoolIdInUrl);
           }
 
           this.session.g.set('schools', schools);
 
-          this.session.g.set('school', storedSchool || schoolObjFromUrl || schools[0]);
+          this.session.g.set('school', schoolObjFromUrl || storedSchool || schools[0]);
         })
       )
       .toPromise();
@@ -147,10 +138,11 @@ export class AuthGuard implements CanActivate {
     CPLogger.setUser({ id, username, email });
   }
 
-  redirectAndSaveGoTo(url): boolean {
+  redirectAndSaveGoTo(url, queryParams): boolean {
     this.router.navigate(['/login'], {
       queryParams: {
-        goTo: encodeURIComponent(url)
+        goTo: encodeURIComponent(url),
+        ...queryParams
       },
       queryParamsHandling: 'merge'
     });
@@ -180,6 +172,9 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    return this.redirectAndSaveGoTo(state.url);
+    const url = state.url.split('?')[0];
+    const { queryParams } = activatedRoute;
+
+    return this.redirectAndSaveGoTo(url, queryParams);
   }
 }

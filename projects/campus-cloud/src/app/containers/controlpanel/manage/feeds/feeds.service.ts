@@ -59,6 +59,12 @@ export class FeedsService {
     return this.api.get(url, search, true).pipe(catchError(() => of([])));
   }
 
+  getSocialGroupById(groupId, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_GROUP}/${groupId}`;
+
+    return this.api.get(url, search, true).pipe(catchError(() => of({})));
+  }
+
   upodateSocialGroup(groupId, data, search) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_GROUP}/${groupId}`;
 
