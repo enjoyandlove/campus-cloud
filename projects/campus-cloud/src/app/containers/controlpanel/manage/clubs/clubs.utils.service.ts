@@ -75,11 +75,11 @@ export class ClubsUtilsService {
     }
 
     if (club.has_membership) {
-      if (clubIsPending && canSchoolReadResource(session.g, CP_PRIVILEGES_MAP.moderation)) {
+      if (clubIsPending && schoolOrStoreAccess(CP_PRIVILEGES_MAP.moderation)) {
         links = [{ label: 'feeds', amplitude: 'Walls' }, ...links];
       }
 
-      if (canSchoolReadResource(session.g, CP_PRIVILEGES_MAP.membership)) {
+      if (schoolOrStoreAccess(CP_PRIVILEGES_MAP.membership)) {
         links = [{ label: 'members', amplitude: 'Members' }, ...links];
       }
     }

@@ -3,10 +3,9 @@ import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { get as _get } from 'lodash';
 
+import { CPMap } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { CPMap, canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { ServicesService } from '@controlpanel/manage/services/services.service';
 import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 
@@ -27,7 +26,6 @@ export class ServicesFormComponent implements OnInit {
   school: ISchool;
   selectedCategory;
   selectedMembership;
-  hasModeration = false;
   showLocationDetails = true;
   categories = [{ label: '---' }];
   mapCenter: BehaviorSubject<any>;
@@ -188,10 +186,6 @@ export class ServicesFormComponent implements OnInit {
     this.selectedMembership = this.membershipTypes.find(
       (type) => type.action === service.has_membership
     );
-
-    this.hasModeration =
-      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
-      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.membership);
   }
 
   ngOnInit() {
