@@ -175,7 +175,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.router.navigate(['/notify/templates'], {
       queryParams: {
         template: base64.encode(template.id.toString()),
-        school: base64.encode(this.session.g.get('school').id.toString())
+        school: this.session.g.get('school').id.toString()
       }
     });
   }

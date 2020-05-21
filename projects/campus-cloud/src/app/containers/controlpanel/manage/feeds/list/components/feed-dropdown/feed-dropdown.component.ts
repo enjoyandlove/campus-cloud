@@ -1,9 +1,10 @@
+import { map, tap, take, filter, mergeMap, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ModalService } from '@ready-education/ready-ui/overlays/modal/modal.service';
-import { get as _get, isEqual } from 'lodash';
 import { Observable, Subject, of, combineLatest } from 'rxjs';
+import { get as _get, isEqual } from 'lodash';
 import { Store, select } from '@ngrx/store';
-import { map, tap, take, filter, mergeMap, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import * as fromStore from '../../../store';
 
@@ -14,9 +15,10 @@ import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { CPUnsavedChangesModalComponent } from '@campus-cloud/shared/components';
+import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
-import { CPI18nService, CPTrackingService, UserService } from '@campus-cloud/shared/services';
+import { UserService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -49,8 +51,10 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
   emitDestroy() {}
 
   constructor(
+    private router: Router,
     private session: CPSession,
     public cpI18n: CPI18nService,
+    private utils: FeedsUtilsService,
     private userService: UserService,
     private modalService: ModalService,
     private cpTracking: CPTrackingService,
@@ -91,7 +95,10 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
       this._isCampusWallView = res.type === 1;
     });
 
-    let items = [
+    let items = [];
+
+    items = [
+      ...items,
       {
         action: 3,
         isPostOnly: false,
@@ -130,16 +137,6 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
       items = [flaggedMenu, ...items];
     }
 
-    this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
-
-    if (this.showMuteOption()) {
-      this.bannedEmails$.pipe(takeUntil(this.destroy$)).subscribe((emails: string[]) => {
-        const muted = emails.includes(this.getFeedEmail());
-        const phraseAppKey = muted ? 't_walls_unmute_student' : 't_walls_mute_student';
-        this.options.find((o) => o.action === 4).label = this.cpI18n.translate(phraseAppKey);
-      });
-    }
-
     this.canEdit$
       .pipe(
         filter((canEdit) => canEdit),
@@ -152,8 +149,29 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
           label: this.cpI18n.translate('t_feeds_edit')
         };
 
-        this.options = [editMenu, ...this.options];
+        items = [editMenu, ...items];
       });
+
+    if (!this.utils.isPostDetailPage()) {
+      items = [
+        {
+          action: 6,
+          isPostOnly: true,
+          label: this.cpI18n.translate('t_shared_permalink')
+        },
+        ...items
+      ];
+    }
+
+    this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
+
+    if (this.showMuteOption()) {
+      this.bannedEmails$.pipe(takeUntil(this.destroy$)).subscribe((emails: string[]) => {
+        const muted = emails.includes(this.getFeedEmail());
+        const phraseAppKey = muted ? 't_walls_unmute_student' : 't_walls_mute_student';
+        this.options.find((o) => o.action === 4).label = this.cpI18n.translate(phraseAppKey);
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -192,6 +210,12 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
           const toggle = isEqual(editing, payload);
           this.store.dispatch(fromStore.setEdit({ editing: toggle ? null : payload }));
         });
+    }
+    if (action === 6) {
+      this.feedsAmplitudeService.trackViewedPostDetail();
+      this.router.navigate([`/manage/feeds/${this.feed.id}/info`], {
+        queryParams: { groupId: this.feed.group_id }
+      });
     } else {
       this.selected.emit(action);
     }

@@ -69,6 +69,7 @@
 <cp-modal modalId="deleteFeedModal"
           *ngIf="isDeleteModal">
   <cp-feed-delete-modal [feed]="feed"
+                        (deleted)="onDeleted()"
                         [isCampusWallView]="isCampusWallView"
                         (teardown)="isDeleteModal = false; deleted.emit($event)">
   </cp-feed-delete-modal>

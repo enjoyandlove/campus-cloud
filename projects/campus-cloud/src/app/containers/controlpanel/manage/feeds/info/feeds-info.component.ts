@@ -1,0 +1,148 @@
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { tap, take, filter, switchMap, map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { StoreService } from '@campus-cloud/shared/services';
+import * as fromStore from '@controlpanel/manage/feeds/store';
+import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
+import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
+import { ICampusThread, ISocialGroup, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
+
+@Component({
+  selector: 'cp-feeds-info',
+  templateUrl: './feeds-info.component.html',
+  styleUrls: ['./feeds-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestroy {
+  error: boolean;
+  feedId: number;
+  groupId: number;
+  loading$: Observable<boolean>;
+  layoutWidth = LayoutWidth.third;
+  feed$: Observable<ICampusThread | ISocialGroupThread>;
+  isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
+    type: 1,
+    group_id: null
+  });
+
+  constructor(
+    public router: Router,
+    private session: CPSession,
+    private route: ActivatedRoute,
+    public feedService: FeedsService,
+    private storeService: StoreService,
+    private store: Store<fromStore.IWallsState>,
+    private feedAmplitude: FeedsAmplitudeService
+  ) {
+    super();
+    this.loading$ = super.isLoading();
+  }
+
+  fetch() {
+    let params = new HttpParams();
+    params =
+      this.groupId && this.groupId > 0
+        ? params.set('group_id', this.groupId.toString())
+        : params.set('school_id', this.session.school.id.toString());
+
+    const stream$ = this.groupId
+      ? this.feedService.getGroupThreadById(this.feedId, params)
+      : this.feedService.getCampusThreadById(this.feedId, params);
+
+    super.fetchData(stream$).then(
+      (res) => this.store.dispatch(fromStore.addThread({ thread: res.data })),
+      (err) => {
+        this.loading$ = of(false);
+        err.status === 404 ? this.router.navigate(['/manage/feeds']) : (this.error = true);
+      }
+    );
+
+    this.feed$ = this.store.select(fromStore.getThreads).pipe(map((feed) => feed[0]));
+  }
+
+  loadCategories() {
+    const _search = new HttpParams().append(
+      'school_id',
+      this.session.g.get('school').id.toString()
+    );
+
+    this.store
+      .select(fromStore.getSocialPostCategories)
+      .pipe(
+        take(1),
+        filter((channels) => !!channels),
+        switchMap(() => {
+          return this.feedService
+            .getChannelsBySchoolId(1, 1000, _search)
+            .pipe(
+              tap((results: any) =>
+                this.store.dispatch(fromStore.setSocialPostCategories({ categories: results }))
+              )
+            );
+        })
+      )
+      .subscribe();
+  }
+
+  loadStores() {
+    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+
+    this.store
+      .select(fromStore.getSocialGroupIds)
+      .pipe(
+        take(1),
+        filter((socialGroupIds) => !!socialGroupIds),
+        switchMap(() => {
+          return this.storeService.getStores(params).pipe(
+            map((stores) => stores.filter((s) => s.value).map((s) => s.value)),
+            tap((stores) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: stores })))
+          );
+        })
+      )
+      .subscribe();
+  }
+
+  loadGroups() {
+    if (this.groupId) {
+      const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
+      this.feedService
+        .getSocialGroupById(this.groupId, search)
+        .pipe(
+          take(1),
+          tap((group: ISocialGroup) => this.store.dispatch(fromStore.setGroup({ group })))
+        )
+        .subscribe();
+    }
+  }
+
+  ngOnInit() {
+    this.feedId = this.route.snapshot.params['feedId'];
+    this.groupId = this.route.snapshot.queryParams['groupId'];
+    const schoolId = this.route.snapshot.queryParams['school'];
+
+    if (schoolId) {
+      this.feedAmplitude.trackViewedPostDetail('Daily Summary Email');
+    }
+
+    this.isCampusWallView$.next({
+      type: this.groupId ? this.groupId : 1,
+      group_id: this.groupId
+    });
+
+    this.fetch();
+    this.loadGroups();
+    this.loadStores();
+    this.loadCategories();
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(fromStore.resetState());
+  }
+}

@@ -11,7 +11,7 @@ export class IconComponent implements OnInit {
   name: string;
 
   @Input()
-  size: 'small' | 'regular' = 'regular';
+  size: 'small' | 'large' | 'regular' = 'regular';
 
   @Input()
   height: string;
@@ -29,6 +29,7 @@ export class IconComponent implements OnInit {
   get svgClasses() {
     return {
       small: this.size === 'small',
+      large: this.size === 'large',
       regular: this.size === 'regular'
     };
   }

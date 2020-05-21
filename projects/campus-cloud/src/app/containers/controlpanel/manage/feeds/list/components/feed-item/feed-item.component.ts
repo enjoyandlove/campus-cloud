@@ -3,6 +3,7 @@ import { Observable, Subject, combineLatest, merge, of } from 'rxjs';
 import { map, mapTo, filter, startWith } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { select, Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
@@ -58,8 +59,10 @@ export class FeedItemComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private router: Router,
     private session: CPSession,
     private service: FeedsService,
+    private utils: FeedsUtilsService,
     private store: Store<fromStore.IWallsState>
   ) {}
 
@@ -137,6 +140,14 @@ export class FeedItemComponent implements OnInit, OnDestroy {
     this.loadEmbededPost.next(this.threadIsExpanded);
   }
 
+  onDeleted() {
+    if (!this.utils.isPostDetailPage()) {
+      return;
+    }
+
+    this.router.navigate(['/manage/feeds']);
+  }
+
   ngOnInit() {
     this.isCommentsOpen$ = this.store.pipe(select(fromStore.getExpandedThreadIds)).pipe(
       map((expandedThreadIds) => expandedThreadIds.includes(this.feed.id)),
@@ -173,6 +184,10 @@ export class FeedItemComponent implements OnInit, OnDestroy {
         matchedComments
       }))
     );
+
+    if (this.utils.isPostDetailPage()) {
+      this.onExpandComments();
+    }
   }
 
   ngOnDestroy() {

@@ -1,0 +1,15 @@
+<ng-container [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase=""></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <cp-one-column [width]="layoutWidth" *ngIf="!error; else errorTpl">
+      <cp-feed-item [feed]="feed$ | async"
+                    [isCampusWallView]="isCampusWallView$">
+      </cp-feed-item>
+    </cp-one-column>
+  </ng-container>
+</ng-container>
+
+<ng-template #errorTpl>
+  {{ 'something_went_wrong' | cpI18n }}
+</ng-template>

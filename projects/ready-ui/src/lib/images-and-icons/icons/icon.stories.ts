@@ -7,7 +7,8 @@ import readme from './icon/README.md';
 
 const sizes = {
   Small: 'small',
-  Regular: 'regular'
+  Regular: 'regular',
+  Large: 'large'
 };
 
 const icons = {

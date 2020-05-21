@@ -1,0 +1,20 @@
+<ng-container *ngIf="view$ | async as view">
+  <cp-spinner *ngIf="view.loading"></cp-spinner>
+
+  <ng-container *ngIf="!view.loading">
+    <div class="wrapper" *ngIf="!view.error; else errorTpl">
+      <span class="check">
+        <ready-ui-icon size="large"
+                       name="done"
+                       class="icon">
+        </ready-ui-icon>
+      </span>
+      <p>{{ 't_unsubscribe_feed_email_digest' | cpI18n }}</p>
+    </div>
+  </ng-container>
+</ng-container>
+
+
+<ng-template #errorTpl>
+  <p>{{ 'something_went_wrong' | cpI18n }}</p>
+</ng-template>

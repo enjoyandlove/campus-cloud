@@ -15,6 +15,7 @@ import { FeedSearchComponent } from './feed-search.component';
 import { mockFeedGroup } from '@controlpanel/manage/feeds/tests';
 import { CPTestModule } from '@campus-cloud/shared/tests/test.module';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
+import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 class MockFeedsService {
@@ -63,6 +64,7 @@ describe('FeedSearchComponent', () => {
       ],
       declarations: [FeedSearchComponent],
       providers: [
+        FeedsUtilsService,
         FeedsAmplitudeService,
         { provide: FeedsService, useClass: MockFeedsService },
         { provide: UserService, useClass: MockUserService }

@@ -43,7 +43,7 @@ TODO
 
   Default `regular`
 
-  Options `small`, `regular`
+  Options `small`, `regular`, `large`
 
 - **Color**
 
