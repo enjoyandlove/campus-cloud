@@ -152,16 +152,16 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
         items = [editMenu, ...items];
       });
 
-    if (!this.utils.isPostDetailPage()) {
-      items = [
-        {
-          action: 6,
-          isPostOnly: true,
-          label: this.cpI18n.translate('t_shared_permalink')
-        },
-        ...items
-      ];
-    }
+    // if (!this.utils.isPostDetailPage()) {
+    //   items = [
+    //     {
+    //       action: 6,
+    //       isPostOnly: true,
+    //       label: this.cpI18n.translate('t_shared_permalink')
+    //     },
+    //     ...items
+    //   ];
+    // }
 
     this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
 
