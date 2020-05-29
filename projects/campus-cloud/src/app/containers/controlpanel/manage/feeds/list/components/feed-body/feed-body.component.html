@@ -41,7 +41,8 @@
               (click)="toggleReplies.emit(isCommentsOpen); trackEvent(isCommentsOpen)">
         <ready-ui-icon name="mode_comment"
                        size="small"></ready-ui-icon>
-        {{ 'reply_verb' | cpI18n }}
+        {{ view.commentCount }}
+        {{ view.commentCount > 1 ? ('comments' | cpI18n) : ('comment' | cpI18n) }}
       </button>
       <cp-feed-interactions class="flag"
                             [feed]="feed"
@@ -52,20 +53,6 @@
                        color="inherit"></ready-ui-icon>
         {{ feed.dislikes }}
       </cp-feed-interactions>
-    </ready-ui-stack>
-    <ready-ui-stack size="small"
-                    *ngIf="view.commentCount > 0 && !isRemovedPosts">
-      <button ui-button
-              type="button"
-              variant="inline"
-              (click)="onToggleComments()">
-        <ready-ui-icon size="small"
-                       [name]="view.isCommentsOpen ? 'expand_more' : 'chevron_right'">
-        </ready-ui-icon>
-        {{ view.isCommentsOpen ? ('hide' | cpI18n) : ('show' | cpI18n) }}
-        {{ view.commentCount }}
-        {{ view.commentCount > 1 ? ('comments' | cpI18n) : ('comment' | cpI18n) }}
-      </button>
     </ready-ui-stack>
   </ready-ui-stack>
 </ng-container>

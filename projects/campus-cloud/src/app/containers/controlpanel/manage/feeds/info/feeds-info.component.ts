@@ -1,16 +1,17 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
 import { tap, take, filter, switchMap, map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
-import { StoreService } from '@campus-cloud/shared/services';
+import { appStorage } from '@campus-cloud/shared/utils';
 import * as fromStore from '@controlpanel/manage/feeds/store';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
+import { StoreService, ReadyStore } from '@campus-cloud/shared/services';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { ICampusThread, ISocialGroup, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 
@@ -27,10 +28,16 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
   loading$: Observable<boolean>;
   layoutWidth = LayoutWidth.third;
   feed$: Observable<ICampusThread | ISocialGroupThread>;
+  selectedHost$: Observable<ReadyStore> = this.store.pipe(select(fromStore.getHost));
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
     type: 1,
     group_id: null
   });
+
+  view$: Observable<{
+    loading: boolean;
+    host: ReadyStore;
+  }>;
 
   constructor(
     public router: Router,
@@ -123,6 +130,14 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   ngOnInit() {
+    const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
+
+    if (storedHost) {
+      Promise.resolve().then(() => {
+        this.store.dispatch(fromStore.setHost({ host: JSON.parse(storedHost) }));
+      });
+    }
+
     this.feedId = this.route.snapshot.params['feedId'];
     this.groupId = this.route.snapshot.queryParams['groupId'];
     const schoolId = this.route.snapshot.queryParams['school'];
@@ -140,6 +155,13 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     this.loadGroups();
     this.loadStores();
     this.loadCategories();
+
+    this.view$ = combineLatest([this.loading$, this.selectedHost$]).pipe(
+      map(([loading, host]) => ({
+        host,
+        loading
+      }))
+    );
   }
 
   ngOnDestroy() {

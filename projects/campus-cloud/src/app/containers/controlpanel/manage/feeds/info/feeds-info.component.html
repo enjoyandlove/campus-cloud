@@ -1,23 +1,24 @@
-<ng-container [ngSwitch]="loading$ | async">
-  <cp-spinner *ngSwitchCase=""></cp-spinner>
-
-  <ng-container *ngSwitchCase="false">
-    <div class="page">
-      <div class="page__sidebar">
-        <cp-feed-host-selector></cp-feed-host-selector>
+<ng-container *ngIf="view$ | async as view">
+  <ng-container [ngSwitch]="view.loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+    <ng-container *ngSwitchCase="false">
+      <div class="page">
+        <div class="page__sidebar">
+          <cp-feed-host-selector [host]="view.host"></cp-feed-host-selector>
+        </div>
+        <div class="page__content">
+          <ng-container [width]="layoutWidth"
+                        *ngIf="!error; else errorTpl">
+            <cp-feed-item [feed]="feed$ | async"
+                          [readOnlyMode]="!view.host"
+                          [isCampusWallView]="isCampusWallView$">
+            </cp-feed-item>
+          </ng-container>
+        </div>
       </div>
-      <div class="page__content">
-        <ng-container [width]="layoutWidth"
-                      *ngIf="!error; else errorTpl">
-          <cp-feed-item [feed]="feed$ | async"
-                        [isCampusWallView]="isCampusWallView$">
-          </cp-feed-item>
-        </ng-container>
-      </div>
-    </div>
+    </ng-container>
   </ng-container>
+  <ng-template #errorTpl>
+    {{ 'something_went_wrong' | cpI18n }}
+  </ng-template>
 </ng-container>
-
-<ng-template #errorTpl>
-  {{ 'something_went_wrong' | cpI18n }}
-</ng-template>
