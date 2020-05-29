@@ -107,10 +107,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
     this.emitDestroy();
   }
 
-  onToggleComments() {
-    this.store.dispatch(fromStore.expandComments({ threadId: this.feed.id }));
-  }
-
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
       const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(this.feed);
