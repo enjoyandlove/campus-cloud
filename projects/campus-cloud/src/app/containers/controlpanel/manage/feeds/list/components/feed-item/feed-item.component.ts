@@ -10,6 +10,8 @@ import { CPDate } from '@campus-cloud/shared/utils';
 import { FeedsService } from './../../../feeds.service';
 import { GroupType } from '../../../feeds.utils.service';
 import { FORMAT } from '@campus-cloud/shared/pipes/date';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import * as fromStore from '@controlpanel/manage/feeds/store';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ICampusThread } from '@controlpanel/manage/feeds/model';
@@ -62,6 +64,7 @@ export class FeedItemComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private service: FeedsService,
     private utils: FeedsUtilsService,
     private store: Store<fromStore.IWallsState>
@@ -145,6 +148,12 @@ export class FeedItemComponent implements OnInit, OnDestroy {
     if (!this.utils.isPostDetailPage()) {
       return;
     }
+
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate('t_community_post_delete_success')
+      })
+    );
 
     this.router.navigate(['/manage/feeds']);
   }

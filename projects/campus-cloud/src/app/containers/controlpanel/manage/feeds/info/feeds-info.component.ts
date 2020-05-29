@@ -10,8 +10,9 @@ import { BaseComponent } from '@campus-cloud/base';
 import { appStorage } from '@campus-cloud/shared/utils';
 import * as fromStore from '@controlpanel/manage/feeds/store';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
+import { baseActionClass, baseActions } from '@campus-cloud/store/base';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
-import { StoreService, ReadyStore } from '@campus-cloud/shared/services';
+import { CPI18nService, StoreService, ReadyStore } from '@campus-cloud/shared/services';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { ICampusThread, ISocialGroup, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 
@@ -43,6 +44,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     public router: Router,
     private session: CPSession,
     private route: ActivatedRoute,
+    private cpI18n: CPI18nService,
     public feedService: FeedsService,
     private storeService: StoreService,
     private store: Store<fromStore.IWallsState>,
@@ -67,11 +69,25 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
       (res) => this.store.dispatch(fromStore.addThread({ thread: res.data })),
       (err) => {
         this.loading$ = of(false);
-        err.status === 404 ? this.router.navigate(['/manage/feeds']) : (this.error = true);
+
+        if (err.status === 404) {
+          this.handleError();
+          this.router.navigate(['/manage/feeds']);
+        }
+
+        this.error = true;
       }
     );
 
     this.feed$ = this.store.select(fromStore.getThreads).pipe(map((feed) => feed[0]));
+  }
+
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('t_community_post_not_exist')
+      })
+    );
   }
 
   loadCategories() {
@@ -129,6 +145,24 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     }
   }
 
+  buildHeader() {
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload: {
+          heading: `t_community_post_details`,
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: `/manage/feeds`,
+            label: `feeds`
+          },
+          children: []
+        }
+      });
+    });
+  }
+
   ngOnInit() {
     const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
 
@@ -154,6 +188,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     this.fetch();
     this.loadGroups();
     this.loadStores();
+    this.buildHeader();
     this.loadCategories();
 
     this.view$ = combineLatest([this.loading$, this.selectedHost$]).pipe(
