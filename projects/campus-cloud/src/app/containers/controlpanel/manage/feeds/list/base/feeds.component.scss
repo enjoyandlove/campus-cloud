@@ -5,6 +5,20 @@
   @include card-margin();
 }
 
+.page {
+  display: flex;
+
+  &__sidebar {
+    width: 250px;
+    margin-right: 40px;
+  }
+
+  &__content {
+    width: 715px;
+  }
+}
+
+
 cp-feed-search {
   display: block;
   margin-bottom: $default_margin;

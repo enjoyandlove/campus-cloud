@@ -109,7 +109,7 @@ export class MenuTriggerDirective implements OnDestroy {
   }
 
   private open() {
-    if (this._menuOpen) {
+    if (this._menuOpen || typeof this._menu === 'undefined') {
       return;
     }
 

@@ -1,54 +1,57 @@
 <ng-container *ngIf="view$ | async as view">
 
   <ng-container [ngSwitch]="view.loading">
-    <cp-one-column width="third">
-      <cp-feed-search [groupId]="groupId"
-                      [groupType]="groupType"
-                      (feedSearch)="searchHandler($event)"
-                      [hideIntegrations]="hideIntegrations"></cp-feed-search>
-      <div class="row justify-content-around">
-        <div class="col-12">
-          <cp-feed-input-box></cp-feed-input-box>
-
-          <cp-spinner *ngSwitchCase="true"></cp-spinner>
-
-          <ng-container *ngSwitchCase="false">
-            <ng-container *ngFor="let feed of view.results; trackBy: trackById">
-
-              <cp-feed-item [feed]="feed"
-                            [groupId]="groupId"
-                            [groupType]="groupType"
-                            [isCampusWallView]="isCampusWallView$"
-                            (filterByCategory)="onFilterByCategory($event)"
-                            *ngIf="!feed.campus_thread_id && !feed.group_thread_id">
-              </cp-feed-item>
-              <cp-feed-comment [comment]="feed"
-                               [replyView]="[true]"
-                               showParentThread="true"
-                               [isCampusWallView]="isCampusWallView$"
-                               *ngIf="!!feed.campus_thread_id || !!feed.group_thread_id">
-              </cp-feed-comment>
-            </ng-container>
-
-
-            <cp-no-content class="no-content"
-                           *ngIf="!view.results.length"
-                           [noContentText]="'t_walls_no_results' | cpI18n">
-            </cp-no-content>
-
-            <div class="row">
-              <div class="col-12">
-                <cp-pagination [pageNext]="pageNext"
-                               [pagePrev]="pagePrev"
-                               [pageNumber]="pageNumber"
-                               (next)="onPaginationNext()"
-                               (previous)="onPaginationPrevious()">
-                </cp-pagination>
-              </div>
-            </div>
-          </ng-container>
-        </div>
+    <div class="page">
+      <div class="page__sidebar">
+        <cp-feed-host-selector [host]="view.host"></cp-feed-host-selector>
       </div>
-    </cp-one-column>
+      <div class="page__content">
+        <cp-feed-search [groupId]="groupId"
+                        [groupType]="groupType"
+                        (feedSearch)="searchHandler($event)"
+                        [hideIntegrations]="hideIntegrations"></cp-feed-search>
+
+        <cp-feed-input-box *ngIf="view.host"></cp-feed-input-box>
+
+        <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+        <ng-container *ngSwitchCase="false">
+          <ng-container *ngFor="let feed of view.results; trackBy: trackById">
+
+            <cp-feed-item [feed]="feed"
+                          [groupId]="groupId"
+                          [groupType]="groupType"
+                          [readOnlyMode]="!view.host"
+                          [isCampusWallView]="isCampusWallView$"
+                          (filterByCategory)="onFilterByCategory($event)"
+                          *ngIf="!feed.campus_thread_id && !feed.group_thread_id">
+            </cp-feed-item>
+            <cp-feed-comment [comment]="feed"
+                             [replyView]="[true]"
+                             showParentThread="true"
+                             [isCampusWallView]="isCampusWallView$"
+                             *ngIf="!!feed.campus_thread_id || !!feed.group_thread_id">
+            </cp-feed-comment>
+          </ng-container>
+
+
+          <cp-no-content class="no-content"
+                         *ngIf="!view.results.length"
+                         [noContentText]="'t_walls_no_results' | cpI18n">
+          </cp-no-content>
+
+          <div class="row">
+            <div class="col-12">
+              <cp-pagination [pageNext]="pageNext"
+                             [pagePrev]="pagePrev"
+                             [pageNumber]="pageNumber"
+                             (next)="onPaginationNext()"
+                             (previous)="onPaginationPrevious()">
+              </cp-pagination>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </ng-container>
 </ng-container>

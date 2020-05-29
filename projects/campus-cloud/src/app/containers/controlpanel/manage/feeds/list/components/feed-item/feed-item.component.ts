@@ -28,6 +28,7 @@ export class FeedItemComponent implements OnInit, OnDestroy {
   @Input() feedId: number;
   @Input() groupId: number;
   @Input() groupType: GroupType;
+  @Input() readOnlyMode = false;
   @Input() isCampusWallView: Observable<any>;
 
   @Output() moved: EventEmitter<any> = new EventEmitter();

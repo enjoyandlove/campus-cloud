@@ -2,11 +2,13 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { flatten, omit } from 'lodash';
 
 import * as WallsActions from '../actions';
+import { ReadyStore } from '@campus-cloud/shared/services';
 
 export interface IWallsFeedsState {
   users: any[];
   threads: any[];
   comments: any[];
+  host: ReadyStore;
   group: any | null;
   searchTerm: string;
   end: number | null;
@@ -24,6 +26,7 @@ export interface IWallsFeedsState {
 export const feedsinitialState: IWallsFeedsState = {
   end: null,
   users: [],
+  host: null,
   start: null,
   results: [],
   threads: [],
@@ -46,6 +49,13 @@ const _feedsReducer = createReducer(
       ...state,
       editing: null,
       searchTerm: term
+    };
+  }),
+
+  on(WallsActions.setHost, (state: IWallsFeedsState, { host }) => {
+    return {
+      ...state,
+      host
     };
   }),
 
