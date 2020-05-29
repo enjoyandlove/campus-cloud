@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
+import { ReadyStore } from '@campus-cloud/shared/services';
+
 enum FeedsActions {
   BAN_EMAIL = '[manage.walls] ban email',
   UNBAN_EMAIL = '[manage.walls] un-ban email',
@@ -35,10 +37,14 @@ enum FeedsActions {
 
   EXPAND_COMMENTS = '[manage.walls] expand comments',
 
-  SET_EDIT = '[manage.walls] set edit'
+  SET_EDIT = '[manage.walls] set edit',
+
+  SET_HOST = '[manage.walls] set host'
 }
 
 export const clearFilterUsers = createAction(FeedsActions.CLEAR_FILTER_USERS);
+
+export const setHost = createAction(FeedsActions.SET_HOST, props<{ host: ReadyStore }>());
 
 export const setSearchTerm = createAction(FeedsActions.SET_SEARCH_TERM, props<{ term: string }>());
 

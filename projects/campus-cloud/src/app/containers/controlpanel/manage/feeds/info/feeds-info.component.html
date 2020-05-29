@@ -2,11 +2,19 @@
   <cp-spinner *ngSwitchCase=""></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
-    <cp-one-column [width]="layoutWidth" *ngIf="!error; else errorTpl">
-      <cp-feed-item [feed]="feed$ | async"
-                    [isCampusWallView]="isCampusWallView$">
-      </cp-feed-item>
-    </cp-one-column>
+    <div class="page">
+      <div class="page__sidebar">
+        <cp-feed-host-selector></cp-feed-host-selector>
+      </div>
+      <div class="page__content">
+        <ng-container [width]="layoutWidth"
+                      *ngIf="!error; else errorTpl">
+          <cp-feed-item [feed]="feed$ | async"
+                        [isCampusWallView]="isCampusWallView$">
+          </cp-feed-item>
+        </ng-container>
+      </div>
+    </div>
   </ng-container>
 </ng-container>
 

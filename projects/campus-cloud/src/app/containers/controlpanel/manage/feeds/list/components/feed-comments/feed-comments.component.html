@@ -16,7 +16,8 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row"
+     *ngIf="!readOnlyMode">
   <div class="col-12">
     <cp-feed-input-box [feed]="feed"
                        (created)="onReplied()"

@@ -2484,6 +2484,15 @@
   "t_community_data_export_success": {
     "message": "Data exported successfully"
   },
+  "t_community_post_delete_success": {
+    "message": "Post has been deleted successfully"
+  },
+  "t_community_post_details": {
+    "message": "Post Details"
+  },
+  "t_community_post_not_exist": {
+    "message": "Post does not exist"
+  },
   "t_community_tooltip_download_csv_zip_file": {
     "message": "Community CSV downloads reflect the search and applied filters"
   },
@@ -2877,6 +2886,9 @@
   },
   "t_feeds_edit": {
     "message": "Edit"
+  },
+  "t_feeds_group_selector_tooltip_content": {
+    "message": "Select a host to post and comment on the community"
   },
   "t_feeds_likes_tootlip": {
     "message": "and %s more..."

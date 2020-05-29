@@ -20,6 +20,11 @@ export const getExpandedThreadIds = createSelector(
   ({ expandedThreadIds }: IWallsFeedsState) => expandedThreadIds
 );
 
+export const getHost = createSelector(
+  getFeedsState,
+  ({ host }: IWallsFeedsState) => host
+);
+
 export const getSocialPostCategories = createSelector(
   getFeedsState,
   ({ socialPostCategories }: IWallsFeedsState) => socialPostCategories

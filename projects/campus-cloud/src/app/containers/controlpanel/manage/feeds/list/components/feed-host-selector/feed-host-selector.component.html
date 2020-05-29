@@ -1,0 +1,66 @@
+<ng-container *ngIf="view$ | async as view">
+  <div class="group">
+    <button ui-button
+            variant="inline"
+            overlayWidth="250px"
+            class="group__button"
+            ready-ui-menu-trigger
+            [attr.title]="view.host?.name"
+            [triggerFor]="(view.sections | json) === '{}' ? undefined : menu">
+      <div class="group__wrapper">
+        <ng-template #empty>
+          <div class="group__avatar group__avatar--bordered"></div>
+          <div class="group__meta">
+            <span>{{ 'feeds_post_as' | cpI18n }}</span>
+            <span>{{ 'select_host' | cpI18n }}</span>
+          </div>
+        </ng-template>
+        <ng-container *ngIf="view.host else empty">
+          <img [src]="view.host.logo_url"
+               class="group__avatar"
+               [attr.alt]="view.host.name" />
+          <div class="group__meta">
+            <span>{{ 'feeds_post_as' | cpI18n }}</span>
+            <span class="text-truncate">{{ view.host.name }}</span>
+          </div>
+        </ng-container>
+      </div>
+      <div class="group__chevron">
+        <ready-ui-icon size="small"
+                       name="expand_more"></ready-ui-icon>
+      </div>
+    </button>
+
+    <div class="group__help"
+         *ngIf="!view.host">
+      <span class="group__help__arrow"></span>
+      {{ 't_feeds_group_selector_tooltip_content' | cpI18n }}
+    </div>
+  </div>
+
+
+  <ready-ui-menu id="menu"
+                 #menu="menu"
+                 ready-ui-menu
+                 maxHeight="20em">
+    <ready-ui-menu-search (search)="search.next($event)"
+                          [placeholder]="'search' | cpI18n">
+    </ready-ui-menu-search>
+    <ready-ui-menu-item noHover
+                        *ngIf="(view.sections | json) === '{}'">
+      {{ 'no_results' | cpI18n }}
+    </ready-ui-menu-item>
+    <ready-ui-menu-section [name]="section.key | cpI18n"
+                           *ngFor="let section of view.sections | keyvalue">
+      <ready-ui-menu-item *ngFor="let store of section.value"
+                          (click)="hostClickHandler(store); menu.close()"
+                          [suffixTpl]="view.host?.id === store.id ? activeItem : undefined">
+        {{ store.name }}
+      </ready-ui-menu-item>
+    </ready-ui-menu-section>
+  </ready-ui-menu>
+
+  <ng-template #activeItem>
+    <ready-ui-menu-dot></ready-ui-menu-dot>
+  </ng-template>
+</ng-container>

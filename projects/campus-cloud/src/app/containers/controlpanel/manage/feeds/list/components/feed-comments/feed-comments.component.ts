@@ -33,6 +33,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
   @Input() groupId: number;
   @Input() postType: number;
   @Input() groupType: GroupType;
+  @Input() readOnlyMode: boolean;
   @Input() isCampusWallView: Observable<{}>;
   @Output() deleted: EventEmitter<null> = new EventEmitter();
   @Output() replied: EventEmitter<null> = new EventEmitter();

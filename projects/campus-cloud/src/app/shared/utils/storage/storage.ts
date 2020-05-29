@@ -4,7 +4,8 @@ const STORAGE_KEYS = {
   SESSION: 'session',
   WHATS_NEW: 'whats_new',
   HELP_ICON: 'help_icon',
-  DEFAULT_SCHOOL_ID: 'default_school_id'
+  DEFAULT_SCHOOL_ID: 'default_school_id',
+  WALLS_DEFAULT_HOST: 'walls_default_host'
 };
 
 function storageAvailable() {

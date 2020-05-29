@@ -1,7 +1,7 @@
-import { map, tap, take, filter, mergeMap, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ModalService } from '@ready-education/ready-ui/overlays/modal/modal.service';
-import { Observable, Subject, of, combineLatest } from 'rxjs';
+import { Observable, Subject, of, combineLatest, BehaviorSubject } from 'rxjs';
+import { map, tap, take, mergeMap, takeUntil } from 'rxjs/operators';
 import { get as _get, isEqual } from 'lodash';
 import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
@@ -28,21 +28,24 @@ import { UserService, CPI18nService, CPTrackingService } from '@campus-cloud/sha
   providers: [ModalService]
 })
 export class FeedDropdownComponent implements OnInit, OnDestroy {
+  _readOnlyMode: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   @Input() feed;
   @Input() isComment: boolean;
   @Input() isCampusWallView: Observable<number>;
   @Output() selected: EventEmitter<number> = new EventEmitter();
 
+  @Input()
+  set readOnlyMode(readOnlyMode: boolean) {
+    this._readOnlyMode.next(readOnlyMode);
+  }
+
   view$: Observable<{
     deleted: boolean;
+    options: Array<any>;
   }>;
 
-  options;
-  _isCampusWallView;
   unsavedChangesModal;
-  requiresApproval = false;
-  canEdit$: Observable<boolean>;
-  isBanned$: Observable<boolean>;
   filters$ = this.store.pipe(select(fromStore.getViewFilters));
   bannedEmails$ = this.store.pipe(select(fromStore.getBannedEmails));
 
@@ -62,116 +65,115 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
     private store: Store<fromStore.IWallsState | ISnackbar>
   ) {}
 
-  ngOnInit() {
-    this.view$ = combineLatest([this.filters$]).pipe(
-      map(([{ flaggedByModerators }]) => ({
-        deleted: Boolean(flaggedByModerators)
-      }))
-    );
+  canEdit(): Observable<boolean> {
+    return 'extern_poster_id' in this.feed
+      ? combineLatest([
+          this._readOnlyMode,
+          this.store.pipe(select(fromStore.getSocialGroupIds)),
+          this.filters$
+        ]).pipe(
+          map(([readOnly, socialGroupIds, { flaggedByModerators, searchTerm }]) => {
+            if (readOnly) {
+              return false;
+            }
 
-    this.canEdit$ =
-      'extern_poster_id' in this.feed
-        ? this.store.pipe(select(fromStore.getSocialGroupIds)).pipe(
-            filter((socialGroupIds: number[]) => Boolean(socialGroupIds.length)),
-            withLatestFrom(this.filters$),
-            map(([socialGroupIds, { flaggedByModerators, searchTerm }]) => {
-              const notSearching = searchTerm === '';
-              const notDeleted = !flaggedByModerators;
-              const hostHasAccessToSocialGroup = socialGroupIds.includes(
-                this.feed.extern_poster_id
-              );
-              return notSearching && notDeleted && hostHasAccessToSocialGroup;
-            })
-          )
-        : of(false);
+            const notSearching = searchTerm === '';
+            const notDeleted = !flaggedByModerators;
+            const hostHasAccessToSocialGroup = socialGroupIds.includes(this.feed.extern_poster_id);
+            return notSearching && notDeleted && hostHasAccessToSocialGroup;
+          })
+        )
+      : of(false);
+  }
 
-    this.requiresApproval = this.feed.dislikes > 0 && this.feed.flag !== 2;
+  isCampusWall(): Observable<boolean> {
+    return this.filters$.pipe(map(({ group }) => !group));
+  }
 
-    if (!this.requiresApproval && this.options) {
-      this.removeApproveOption();
-    }
+  isMuted(): Observable<boolean> {
+    return this.bannedEmails$
+      .pipe(takeUntil(this.destroy$))
+      .pipe(map((emails) => emails.includes(this.getFeedEmail())));
+  }
 
-    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this._isCampusWallView = res.type === 1;
-    });
+  getItems() {
+    return combineLatest([this.canEdit(), this.isCampusWall(), this.isMuted()]).pipe(
+      map(([canEdit, isCampusWall, isMuted]) => {
+        const items = [];
+        const requiresApproval = this.feed.dislikes > 0 && this.feed.flag !== 2;
 
-    let items = [];
+        const flaggedMenu = {
+          action: 1,
+          isPostOnly: false,
+          label: this.cpI18n.translate('t_feeds_approve')
+        };
 
-    items = [
-      ...items,
-      {
-        action: 3,
-        isPostOnly: false,
-        label: this.cpI18n.translate('t_feeds_delete')
-      }
-    ];
+        const approveMenu = {
+          action: 2,
+          label: this.cpI18n.translate('t_feeds_move'),
+          isPostOnly: true
+        };
 
-    if (this._isCampusWallView) {
-      const approveMenu = {
-        action: 2,
-        label: this.cpI18n.translate('t_feeds_move'),
-        isPostOnly: true
-      };
+        const deleteMenu = {
+          action: 3,
+          isPostOnly: false,
+          label: this.cpI18n.translate('t_feeds_delete')
+        };
 
-      items = [approveMenu, ...items];
-    }
-
-    if (this.showMuteOption()) {
-      items = [
-        ...items,
-        {
+        const muteMenu = {
           action: 4,
           isPostOnly: false,
-          label: this.cpI18n.translate('t_shared_student_mute')
-        }
-      ];
-    }
+          label: isMuted
+            ? this.cpI18n.translate('t_walls_unmute_student')
+            : this.cpI18n.translate('t_shared_student_mute')
+        };
 
-    if (this.requiresApproval) {
-      const flaggedMenu = {
-        action: 1,
-        isPostOnly: false,
-        label: this.cpI18n.translate('t_feeds_approve')
-      };
-
-      items = [flaggedMenu, ...items];
-    }
-
-    this.canEdit$
-      .pipe(
-        filter((canEdit) => canEdit),
-        take(1)
-      )
-      .subscribe(() => {
         const editMenu = {
           action: 5,
           isPostOnly: false,
           label: this.cpI18n.translate('t_feeds_edit')
         };
 
-        items = [editMenu, ...items];
-      });
+        const permalinkMenu = {
+          action: 6,
+          isPostOnly: true,
+          label: this.cpI18n.translate('t_shared_permalink')
+        };
 
-    // if (!this.utils.isPostDetailPage()) {
-    //   items = [
-    //     {
-    //       action: 6,
-    //       isPostOnly: true,
-    //       label: this.cpI18n.translate('t_shared_permalink')
-    //     },
-    //     ...items
-    //   ];
-    // }
+        items.push(deleteMenu);
 
-    this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
+        if (requiresApproval) {
+          items.push(flaggedMenu);
+        }
 
-    if (this.showMuteOption()) {
-      this.bannedEmails$.pipe(takeUntil(this.destroy$)).subscribe((emails: string[]) => {
-        const muted = emails.includes(this.getFeedEmail());
-        const phraseAppKey = muted ? 't_walls_unmute_student' : 't_walls_mute_student';
-        this.options.find((o) => o.action === 4).label = this.cpI18n.translate(phraseAppKey);
-      });
-    }
+        if (isCampusWall) {
+          items.push(approveMenu);
+        }
+
+        if (this.showMuteOption()) {
+          items.push(muteMenu);
+        }
+
+        if (canEdit) {
+          items.push(editMenu);
+        }
+
+        if (!this.utils.isPostDetailPage()) {
+          items.push(permalinkMenu);
+        }
+
+        return this.isComment ? items.filter((item) => !item.isPostOnly) : items;
+      })
+    );
+  }
+
+  ngOnInit() {
+    this.view$ = combineLatest([this.filters$, this.getItems()]).pipe(
+      map(([{ flaggedByModerators }, options]) => ({
+        options,
+        deleted: Boolean(flaggedByModerators)
+      }))
+    );
   }
 
   ngOnDestroy() {
@@ -219,10 +221,6 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
     } else {
       this.selected.emit(action);
     }
-  }
-
-  removeApproveOption() {
-    this.options = this.options.filter((option) => option.action !== 1);
   }
 
   muteUser() {

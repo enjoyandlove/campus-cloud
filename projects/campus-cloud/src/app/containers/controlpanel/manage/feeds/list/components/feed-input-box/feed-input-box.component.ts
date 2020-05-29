@@ -1,7 +1,7 @@
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { map, tap, take, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { BehaviorSubject, Subject, merge, combineLatest } from 'rxjs';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Subject, merge } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import {
@@ -25,20 +25,22 @@ import { IItem } from '@campus-cloud/shared/components';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
+import { TextEditorDirective } from '@campus-cloud/shared/directives';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { amplitudeEvents, MAX_UPLOAD_SIZE } from '@campus-cloud/shared/constants';
 import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
-import { TextEditorDirective } from '@campus-cloud/shared/directives';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import {
+  ReadyStore,
   ImageService,
-  StoreService,
   CPI18nService,
-  CPTrackingService
+  CPTrackingService,
+  CPAmplitudeService
 } from '@campus-cloud/shared/services';
 
 interface IState {
   postType: any;
+  host: ReadyStore;
   groupType: GroupType;
   isCampusWallView: boolean;
   group: ISocialGroup | null;
@@ -58,9 +60,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   @Output() created: EventEmitter<null> = new EventEmitter();
 
-  stores$;
   channels$;
-  hostType;
   buttonData;
   campusGroupId;
   form: FormGroup;
@@ -71,6 +71,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   selectedItem: BehaviorSubject<null | IItem> = new BehaviorSubject(undefined);
 
   state$: BehaviorSubject<IState> = new BehaviorSubject({
+    host: null,
     group: null,
     postType: null,
     groupType: null,
@@ -88,7 +89,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     public utils: FeedsUtilsService,
     private imageService: ImageService,
     private feedsService: FeedsService,
-    private storeService: StoreService,
     public cpTracking: CPTrackingService,
     public feedsAmplitudeService: FeedsAmplitudeService,
     public store: Store<ISnackbar | fromStore.IWallsState>
@@ -96,10 +96,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   get state(): IState {
     return this.state$.value;
-  }
-
-  get defaultHost() {
-    return this.session.defaultHost ? this.session.defaultHost.value : null;
   }
 
   addImageInputHandler(event: Event) {
@@ -320,11 +316,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     this.form.controls['message_image_url_list'].setValue([]);
   }
 
-  onSelectedHost(host): void {
-    this.hostType = host.hostType;
-    this.form.controls['store_id'].setValue(host.value);
-  }
-
   onSelectedChannel(channel): void {
     this.form.controls['post_type'].setValue(channel.action);
   }
@@ -333,7 +324,10 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     let threadAmplitude;
     const { isCampusWallView } = this.state;
     const threadType = this.replyView ? 'Comment' : 'Post';
-    const host_type = isCampusWallView ? this.hostType : null;
+    const hostCategoryId = _get(this.state.host, 'category_id', null);
+    const host_type = isCampusWallView
+      ? CPAmplitudeService.storeCategoryIdToAmplitudeName(hostCategoryId)
+      : null;
 
     if (this.replyView) {
       this.cpTracking.amplitudeEmitEvent(
@@ -364,7 +358,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       {
         group_id: [null],
         school_id: [this.session.g.get('school').id],
-        store_id: [this.defaultHost, Validators.required],
+        store_id: [null, Validators.required],
         message_image_url_list: [[]],
         message: ['', Validators.maxLength(500)]
       },
@@ -378,10 +372,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.buildForm();
-    this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
-
-    this.stores$ = this.storeService.getStores(search);
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search).pipe(
       startWith([{ label: '---' }]),
@@ -406,12 +397,16 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.store
-      .pipe(select(fromStore.getViewFilters))
+    const host$ = this.store.pipe(select(fromStore.getHost));
+    const filters$ = this.store.pipe(select(fromStore.getViewFilters));
+    const state$ = combineLatest([filters$, host$]);
+
+    state$
       .pipe(
         takeUntil(this.destroy$),
-        tap(({ postType, group }) => {
+        tap(([{ postType, group }, host]) => {
           this.state$.next({
+            host,
             group,
             isCampusWallView: !group,
             postType: _get(postType, 'id', null),
@@ -428,13 +423,14 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
           }
 
           if (this.form) {
+            if (host) {
+              this.form.get('store_id').setValue(host.id);
+            }
             if (group) {
               this.form.removeControl('post_type');
               this.form.get('group_id').setValue(group.id);
-              this.form.get('store_id').setValue(group.related_obj_id);
             } else {
               this.form.registerControl('post_type', new FormControl(null, Validators.required));
-              this.form.controls['store_id'].setValue(this.defaultHost);
 
               // when Channels filters is set to a Social Post Category
               if (postType && !this.replyView) {

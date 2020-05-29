@@ -2484,6 +2484,15 @@
   "t_community_data_export_success": {
     "message": "Données exportées avec succès"
   },
+  "t_community_post_delete_success": {
+    "message": "La publication a été supprimée avec succès"
+  },
+  "t_community_post_details": {
+    "message": "Détails de la publication"
+  },
+  "t_community_post_not_exist": {
+    "message": "La publication n'existe pas"
+  },
   "t_community_tooltip_download_csv_zip_file": {
     "message": "Les téléchargements CSV de la communaté reflètent la recherche et les filtres appliqués"
   },
@@ -2877,6 +2886,9 @@
   },
   "t_feeds_edit": {
     "message": "Éditer"
+  },
+  "t_feeds_group_selector_tooltip_content": {
+    "message": "Sélectionnez un hôte pour publier et commenter dans la communauté"
   },
   "t_feeds_likes_tootlip": {
     "message": "et %s de plus..."

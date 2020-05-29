@@ -22,6 +22,41 @@ export interface IStore {
   hostType?: string;
 }
 
+export enum StoreCategory {
+  clubs = 0,
+  athletics = 16,
+  employers = 18,
+  services = 19,
+  deals = 20
+}
+
+export interface ReadyStore {
+  id?: number;
+  franchise_id: number;
+  name: string;
+  phone: string;
+  latitude: number;
+  longitude: number;
+  address: string;
+  province: string;
+  city: string;
+  country: string;
+  postal_code: string;
+  category_id: number;
+  likes: number;
+  dislikes: number;
+  description: string;
+  website: string;
+  email: string;
+  location: string;
+  room_info: string;
+  has_hours: boolean;
+  total_item_count: number;
+  item_preview: string;
+  secondary_name: string;
+  logo_url: string;
+}
+
 @Injectable()
 export class StoreService {
   constructor(private api: ApiService, public session: CPSession) {}
@@ -219,5 +254,10 @@ export class StoreService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STORE}/${storeId}`;
 
     return <Observable<ICampusStore>>this.api.get(url, params, true);
+  }
+
+  getRanged(start: number, end: number, params: HttpParams): Observable<ReadyStore[]> {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STORE}/${start};${end}`;
+    return <Observable<ReadyStore[]>>this.api.get(url, params, true);
   }
 }

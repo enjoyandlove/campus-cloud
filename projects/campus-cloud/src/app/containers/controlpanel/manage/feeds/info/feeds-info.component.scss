@@ -1,0 +1,12 @@
+.page {
+  display: flex;
+
+  &__sidebar {
+    width: 250px;
+    margin-right: 40px;
+  }
+
+  &__content {
+    width: 715px;
+  }
+}

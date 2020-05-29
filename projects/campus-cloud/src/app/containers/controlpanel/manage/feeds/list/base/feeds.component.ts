@@ -20,10 +20,11 @@ import * as fromStore from '../../store';
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
 import { GroupType } from '../../feeds.utils.service';
+import { appStorage } from '@campus-cloud/shared/utils';
 import { FeedsUtilsService } from '../../feeds.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { UserService, StoreService } from '@campus-cloud/shared/services';
 import { SocialWallContentObjectType, SocialWallContent } from './../../model';
+import { UserService, StoreService, ReadyStore } from '@campus-cloud/shared/services';
 
 interface IState {
   group_id: number;
@@ -66,6 +67,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   view$: Observable<{
     loading: boolean;
     results: any[];
+    host: ReadyStore;
   }>;
 
   channels;
@@ -76,6 +78,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  selectedHost$: Observable<ReadyStore> = this.store.pipe(select(fromStore.getHost));
   results$: Observable<Array<{ id: number; type: string; children?: number[] }> | any[]>;
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
     type: 1,
@@ -457,6 +460,14 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
+
+    if (storedHost) {
+      Promise.resolve().then(() => {
+        this.store.dispatch(fromStore.setHost({ host: JSON.parse(storedHost) }));
+      });
+    }
+
     const filters$ = this.store.pipe(select(fromStore.getViewFilters)).pipe(
       /**
        * avoid mulliple emitions when switching boolean values
@@ -577,8 +588,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     this.fetchBannedEmails();
     this.getStores();
-    this.view$ = combineLatest([this.loading$, this.results$]).pipe(
-      map(([loading, results]) => ({
+    this.view$ = combineLatest([this.loading$, this.results$, this.selectedHost$]).pipe(
+      map(([loading, results, host]) => ({
+        host,
         results,
         loading
       }))
