@@ -232,8 +232,8 @@ export class FeedsService {
   ) {
     return stream.pipe(
       take(1),
-      tap(([wall, comment]) => {
-        this.dataExportUtils.compressFiles(wall, comment);
+      tap(async ([wall, comment]) => {
+        await this.dataExportUtils.compressFiles(wall, comment);
         this.trackCommunityExportThread();
         this.handleSuccess();
       })

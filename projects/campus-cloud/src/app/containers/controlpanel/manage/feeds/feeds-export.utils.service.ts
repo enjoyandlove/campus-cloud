@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { saveAs } from 'file-saver';
 
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
@@ -116,7 +117,7 @@ export class FeedsExportUtilsService {
     return this.generateCSV(Object.values(columns), formattedData);
   }
 
-  compressFiles(wall, comment) {
+  async compressFiles(wall, comment) {
     const files = [
       { name: `Campus_Wall_Post_${this.fileDateSignature}`, content: this.createWallPostCSV(wall) },
       {
@@ -125,6 +126,7 @@ export class FeedsExportUtilsService {
       }
     ];
 
-    compressFiles(files, `Campus_Wall_Post_Comment_${this.fileDateSignature}`);
+    const content = await compressFiles(files);
+    saveAs(content, `Campus_Wall_Post_Comment_${this.fileDateSignature}.zip`);
   }
 }
