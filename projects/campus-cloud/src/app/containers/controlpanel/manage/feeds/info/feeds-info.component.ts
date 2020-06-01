@@ -56,10 +56,9 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
 
   fetch() {
     let params = new HttpParams();
-    params =
-      this.groupId && this.groupId > 0
-        ? params.set('group_id', this.groupId.toString())
-        : params.set('school_id', this.session.school.id.toString());
+    params = this.groupId
+      ? params.set('group_id', this.groupId.toString())
+      : params.set('school_id', this.session.school.id.toString());
 
     const stream$ = this.groupId
       ? this.feedService.getGroupThreadById(this.feedId, params)
@@ -173,7 +172,8 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     this.feedId = this.route.snapshot.params['feedId'];
-    this.groupId = this.route.snapshot.queryParams['groupId'];
+    const groupId = this.route.snapshot.queryParams['groupId'];
+    this.groupId = groupId > 0 ? groupId : null;
     const schoolId = this.route.snapshot.queryParams['school'];
 
     if (schoolId) {
