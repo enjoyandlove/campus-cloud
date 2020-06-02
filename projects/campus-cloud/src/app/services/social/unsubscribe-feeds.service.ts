@@ -20,7 +20,7 @@ export class UnsubscribeFeedsService {
   constructor(private api: ApiService) {}
 
   unsubscribe(data) {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXTERNAL_EMAIL_UNSUBSCRIBE}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXTERNAL_EMAIL_UNSUBSCRIBE}/`;
 
     return this.api.post(url, data, null, true);
   }
