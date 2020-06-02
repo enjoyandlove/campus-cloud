@@ -1,6 +1,11 @@
 .page {
   display: flex;
 
+  &__sticky__wrapper {
+    top: 15px;
+    position: sticky;
+  }
+
   &__sidebar {
     width: 250px;
     margin-right: 40px;

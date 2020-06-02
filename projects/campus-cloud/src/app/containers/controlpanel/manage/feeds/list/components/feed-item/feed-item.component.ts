@@ -160,7 +160,13 @@ export class FeedItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isCommentsOpen$ = this.store.pipe(select(fromStore.getExpandedThreadIds)).pipe(
-      map((expandedThreadIds) => expandedThreadIds.includes(this.feed.id)),
+      map((expandedThreadIds) => {
+        if (this.feed.comment_count === 0 && this.readOnlyMode) {
+          return false;
+        }
+
+        return expandedThreadIds.includes(this.feed.id);
+      }),
       startWith(false)
     );
     if (this.feedIsAComment) {

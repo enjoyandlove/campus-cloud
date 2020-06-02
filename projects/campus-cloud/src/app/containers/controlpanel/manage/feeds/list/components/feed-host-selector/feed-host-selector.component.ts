@@ -6,8 +6,10 @@ import { groupBy, mapKeys } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../../../store';
+import { ISocialGroup } from './../../../model';
 import { CPSession } from '@campus-cloud/session';
 import { appStorage } from '@campus-cloud/shared/utils';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { ReadyStore, StoreService, StoreCategory } from '@campus-cloud/shared/services';
 
 @Component({
@@ -16,7 +18,14 @@ import { ReadyStore, StoreService, StoreCategory } from '@campus-cloud/shared/se
   styleUrls: ['./feed-host-selector.component.scss']
 })
 export class FeedHostSelectorComponent implements OnInit {
-  _host: BehaviorSubject<ReadyStore> = new BehaviorSubject(undefined);
+  defaultImage = `${environment.root}assets/default/user.png`;
+  _host: BehaviorSubject<ReadyStore> = new BehaviorSubject(null);
+  _socialGroup: BehaviorSubject<ISocialGroup> = new BehaviorSubject(null);
+
+  @Input()
+  set socialGroup(socialGroup: ISocialGroup) {
+    this._socialGroup.next(socialGroup);
+  }
 
   @Input()
   set host(host: ReadyStore) {
@@ -28,7 +37,8 @@ export class FeedHostSelectorComponent implements OnInit {
 
   view$: Observable<{
     search: string;
-    host: ReadyStore;
+    canOpenMenu: boolean;
+    host: ReadyStore | ISocialGroup;
     sections: { [key: string]: ReadyStore[] };
   }>;
 
@@ -42,9 +52,15 @@ export class FeedHostSelectorComponent implements OnInit {
     const request$ = this.fetch().pipe(share());
     const stores$ = request$.pipe(startWith({}));
     const selectedHost$ = this._host.asObservable();
+    const socialGroup$ = this._socialGroup.asObservable();
 
-    this.view$ = combineLatest([stores$, this.search$, selectedHost$]).pipe(
-      map(([sections, search, host]) => ({ sections, search, host }))
+    this.view$ = combineLatest([stores$, this.search$, selectedHost$, socialGroup$]).pipe(
+      map(([sections, search, host, socialGroup]) => ({
+        sections,
+        search,
+        canOpenMenu: !socialGroup,
+        host: socialGroup ? this.socialGroupToReadyStore(socialGroup) : host
+      }))
     );
   }
 
@@ -82,5 +98,13 @@ export class FeedHostSelectorComponent implements OnInit {
         );
       })
     );
+  }
+
+  private socialGroupToReadyStore(socialGroup: ISocialGroup) {
+    const { name, image_url } = socialGroup;
+    return {
+      name,
+      logo_url: image_url
+    } as ReadyStore;
   }
 }

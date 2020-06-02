@@ -4,14 +4,18 @@
     <ng-container *ngSwitchCase="false">
       <div class="page">
         <div class="page__sidebar">
-          <cp-feed-host-selector [host]="view.host"></cp-feed-host-selector>
+          <div class="page__sticky__wrapper">
+            <cp-feed-host-selector [host]="view.host"
+                                   [socialGroup]="view.socialGroup">
+            </cp-feed-host-selector>
+          </div>
         </div>
         <div class="page__content">
           <ng-container [width]="layoutWidth"
                         *ngIf="!error; else errorTpl">
             <cp-feed-item [feed]="feed$ | async"
-                          [readOnlyMode]="!view.host"
-                          [isCampusWallView]="isCampusWallView$">
+                          [isCampusWallView]="isCampusWallView$"
+                          [readOnlyMode]="!view.host && !view.socialGroup">
             </cp-feed-item>
           </ng-container>
         </div>
