@@ -29,6 +29,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
   loading$: Observable<boolean>;
   layoutWidth = LayoutWidth.third;
   feed$: Observable<ICampusThread | ISocialGroupThread>;
+  filters$ = this.store.pipe(select(fromStore.getViewFilters));
   selectedHost$: Observable<ReadyStore> = this.store.pipe(select(fromStore.getHost));
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
     type: 1,
@@ -38,6 +39,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
   view$: Observable<{
     loading: boolean;
     host: ReadyStore;
+    socialGroup: ISocialGroup;
   }>;
 
   constructor(
@@ -191,10 +193,11 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     this.buildHeader();
     this.loadCategories();
 
-    this.view$ = combineLatest([this.loading$, this.selectedHost$]).pipe(
-      map(([loading, host]) => ({
+    this.view$ = combineLatest([this.loading$, this.selectedHost$, this.filters$]).pipe(
+      map(([loading, host, { group }]) => ({
         host,
-        loading
+        loading,
+        socialGroup: group
       }))
     );
   }

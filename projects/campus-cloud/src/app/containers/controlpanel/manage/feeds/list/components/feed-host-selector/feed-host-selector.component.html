@@ -6,7 +6,7 @@
             class="group__button"
             ready-ui-menu-trigger
             [attr.title]="view.host?.name"
-            [triggerFor]="(view.sections | json) === '{}' ? undefined : menu">
+            [triggerFor]="(view.sections | json) === '{}' || !view.canOpenMenu ? undefined : menu">
       <div class="group__wrapper">
         <ng-template #empty>
           <div class="group__avatar group__avatar--bordered"></div>
@@ -16,7 +16,7 @@
           </div>
         </ng-template>
         <ng-container *ngIf="view.host else empty">
-          <img [src]="view.host.logo_url"
+          <img [src]="view.host.logo_url === '' ? defaultImage : view.host.logo_url"
                class="group__avatar"
                [attr.alt]="view.host.name" />
           <div class="group__meta">

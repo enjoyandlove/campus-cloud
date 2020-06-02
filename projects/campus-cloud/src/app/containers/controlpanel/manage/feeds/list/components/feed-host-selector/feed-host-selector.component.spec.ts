@@ -97,7 +97,7 @@ describe('FeedHostSelectorComponent', () => {
       component.view$.pipe(take(1)).subscribe(({ sections, search, host }) => {
         expect(JSON.stringify(sections)).toBe('{}');
         expect(search).toBe('');
-        expect(host).toBe(undefined);
+        expect(host).toBe(null);
         done();
       });
     });

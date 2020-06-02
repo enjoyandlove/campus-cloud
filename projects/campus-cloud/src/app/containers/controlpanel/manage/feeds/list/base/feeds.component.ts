@@ -23,8 +23,8 @@ import { GroupType } from '../../feeds.utils.service';
 import { appStorage } from '@campus-cloud/shared/utils';
 import { FeedsUtilsService } from '../../feeds.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 import { UserService, StoreService, ReadyStore } from '@campus-cloud/shared/services';
+import { SocialWallContentObjectType, SocialWallContent, ISocialGroup } from './../../model';
 
 interface IState {
   group_id: number;
@@ -65,9 +65,10 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() hideIntegrations = false;
 
   view$: Observable<{
-    loading: boolean;
     results: any[];
+    loading: boolean;
     host: ReadyStore;
+    socialGroup: ISocialGroup;
   }>;
 
   channels;
@@ -77,6 +78,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   loading$: Observable<boolean>;
   searching: Subject<boolean> = new Subject();
+  filters$ = this.store.pipe(select(fromStore.getViewFilters));
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   selectedHost$: Observable<ReadyStore> = this.store.pipe(select(fromStore.getHost));
   results$: Observable<Array<{ id: number; type: string; children?: number[] }> | any[]>;
@@ -468,7 +470,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       });
     }
 
-    const filters$ = this.store.pipe(select(fromStore.getViewFilters)).pipe(
+    const filters$ = this.filters$.pipe(
       /**
        * avoid mulliple emitions when switching boolean values
        * eg: from status Deleted to Flagged this emits once to set
@@ -588,11 +590,17 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     this.fetchBannedEmails();
     this.getStores();
-    this.view$ = combineLatest([this.loading$, this.results$, this.selectedHost$]).pipe(
-      map(([loading, results, host]) => ({
+    this.view$ = combineLatest([
+      this.loading$,
+      this.results$,
+      this.selectedHost$,
+      this.filters$
+    ]).pipe(
+      map(([loading, results, host, { group }]) => ({
         host,
         results,
-        loading
+        loading,
+        socialGroup: group
       }))
     );
   }

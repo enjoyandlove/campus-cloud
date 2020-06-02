@@ -62,7 +62,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   channels$;
   buttonData;
-  campusGroupId;
   form: FormGroup;
   maxImages = 4;
   expandGallery = false;
@@ -405,10 +404,11 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         tap(([{ postType, group }, host]) => {
+          const isCampusWallView = !group;
           this.state$.next({
             host,
             group,
-            isCampusWallView: !group,
+            isCampusWallView,
             postType: _get(postType, 'id', null),
             groupType: _get(group, 'group_type', null)
           });
@@ -429,6 +429,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
             if (group) {
               this.form.removeControl('post_type');
               this.form.get('group_id').setValue(group.id);
+              this.form.get('store_id').setValue(group.related_obj_id);
             } else {
               this.form.registerControl('post_type', new FormControl(null, Validators.required));
 
