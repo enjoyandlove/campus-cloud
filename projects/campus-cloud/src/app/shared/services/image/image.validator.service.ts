@@ -9,7 +9,7 @@ const validExtensionName = (extension: string) => {
 };
 const getFileNameExtension = (name: string) => {
   const nameLength = name.split('.').length;
-  return name.split('.')[nameLength - 1];
+  return name.toLocaleLowerCase().split('.')[nameLength - 1];
 };
 
 @Injectable()
