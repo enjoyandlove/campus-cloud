@@ -1,6 +1,6 @@
+import { OnInit, Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { tap, take, filter, switchMap, map, startWith } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
-import { OnInit, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
@@ -19,7 +19,8 @@ import { ICampusThread, ISocialGroup, ISocialGroupThread } from '@controlpanel/m
 @Component({
   selector: 'cp-feeds-info',
   templateUrl: './feeds-info.component.html',
-  styleUrls: ['./feeds-info.component.scss']
+  styleUrls: ['./feeds-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestroy {
   error: boolean;

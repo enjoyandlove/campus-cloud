@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { takeUntil, withLatestFrom } from 'rxjs/operators';
+import { Observable, Subject, BehaviorSubject, combineLatest } from 'rxjs';
+import { takeUntil, withLatestFrom, map } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 
@@ -48,12 +48,14 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
   @Output() deleted: EventEmitter<null> = new EventEmitter();
   @Output() replied: EventEmitter<null> = new EventEmitter();
 
-  loading;
   comments;
   _isCampusWallView;
   isReplyView = true;
   campusGroupId: number;
   state: IState = state;
+  view$: Observable<{
+    loading: boolean;
+  }>;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -67,7 +69,6 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
     super();
     this.endRange = 10000;
     this.maxPerPage = 10000;
-    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   onReplied() {
@@ -149,6 +150,11 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
   }
 
   ngOnInit() {
+    this.view$ = combineLatest([super.isLoading()]).pipe(
+      map(([loading]) => ({
+        loading
+      }))
+    );
     this.endRange = this.feed.comment_count + 1;
     this.maxPerPage = this.feed.comment_count + 1;
 
