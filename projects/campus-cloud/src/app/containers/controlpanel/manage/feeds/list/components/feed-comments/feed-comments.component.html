@@ -1,4 +1,4 @@
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false"
@@ -14,7 +14,7 @@
                      (deleted)="onDeletedComment($event)">
     </cp-feed-comment>
   </div>
-</div>
+</ng-container>
 
 <div class="row"
      *ngIf="!readOnlyMode">

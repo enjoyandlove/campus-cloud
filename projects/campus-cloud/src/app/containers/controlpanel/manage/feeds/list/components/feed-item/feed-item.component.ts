@@ -70,6 +70,10 @@ export class FeedItemComponent implements OnInit, OnDestroy {
     private store: Store<fromStore.IWallsState>
   ) {}
 
+  onExpandComments() {
+    this.store.dispatch(fromStore.expandComments({ threadId: this.feed.id }));
+  }
+
   onMoved(movedThread) {
     this.moved.emit(movedThread);
   }
@@ -117,10 +121,6 @@ export class FeedItemComponent implements OnInit, OnDestroy {
       comment_count
     };
     this.store.dispatch(fromStore.updateThread({ thread: updatedThread }));
-  }
-
-  onExpandComments() {
-    this.store.dispatch(fromStore.expandComments({ threadId: this.feed.id }));
   }
 
   onReplied() {
@@ -200,10 +200,6 @@ export class FeedItemComponent implements OnInit, OnDestroy {
         matchedComments
       }))
     );
-
-    if (this.utils.isPostDetailPage()) {
-      this.onExpandComments();
-    }
   }
 
   ngOnDestroy() {
