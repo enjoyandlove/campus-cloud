@@ -60,6 +60,7 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
       this.trackAmplitudeEvent(this.feed);
       $('#moveFeedModal').modal('hide');
       this.moved.emit(res);
+      this.teardown.emit();
     });
   }
 
