@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil, withLatestFrom } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 import * as fromStore from '../../../store';
@@ -13,6 +13,7 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store/base';
+import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 
 interface IState {
   comments: Array<any>;
@@ -29,7 +30,16 @@ const state: IState = {
   styleUrls: ['./feed-comments.component.scss']
 })
 export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDestroy {
-  @Input() feed;
+  _feed: BehaviorSubject<ICampusThread | ISocialGroupThread> = new BehaviorSubject(null);
+
+  @Input()
+  set feed(feed: ICampusThread | ISocialGroupThread) {
+    this._feed.next(feed);
+  }
+
+  get feed() {
+    return this._feed.value;
+  }
   @Input() groupId: number;
   @Input() postType: number;
   @Input() groupType: GroupType;

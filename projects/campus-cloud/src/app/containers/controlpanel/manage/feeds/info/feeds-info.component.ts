@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { tap, take, filter, switchMap, map, startWith } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
-import { tap, take, filter, switchMap, map } from 'rxjs/operators';
+import { OnInit, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
@@ -19,8 +19,7 @@ import { ICampusThread, ISocialGroup, ISocialGroupThread } from '@controlpanel/m
 @Component({
   selector: 'cp-feeds-info',
   templateUrl: './feeds-info.component.html',
-  styleUrls: ['./feeds-info.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./feeds-info.component.scss']
 })
 export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestroy {
   error: boolean;
@@ -28,7 +27,6 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
   groupId: number;
   loading$: Observable<boolean>;
   layoutWidth = LayoutWidth.third;
-  feed$: Observable<ICampusThread | ISocialGroupThread>;
   filters$ = this.store.pipe(select(fromStore.getViewFilters));
   selectedHost$: Observable<ReadyStore> = this.store.pipe(select(fromStore.getHost));
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
@@ -40,6 +38,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     loading: boolean;
     host: ReadyStore;
     socialGroup: ISocialGroup;
+    feed: ICampusThread | ISocialGroupThread;
   }>;
 
   constructor(
@@ -65,9 +64,11 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     const stream$ = this.groupId
       ? this.feedService.getGroupThreadById(this.feedId, params)
       : this.feedService.getCampusThreadById(this.feedId, params);
-
     super.fetchData(stream$).then(
-      (res) => this.store.dispatch(fromStore.addThread({ thread: res.data })),
+      (res) => {
+        this.store.dispatch(fromStore.addThread({ thread: res.data }));
+        this.store.dispatch(fromStore.expandComments({ threadId: res.data.id }));
+      },
       (err) => {
         this.loading$ = of(false);
 
@@ -79,8 +80,6 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
         this.error = true;
       }
     );
-
-    this.feed$ = this.store.select(fromStore.getThreads).pipe(map((feed) => feed[0]));
   }
 
   handleError() {
@@ -165,6 +164,22 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   ngOnInit() {
+    const feed$ = this.store.select(fromStore.getThreads).pipe(map((feed) => feed[0]));
+
+    this.view$ = combineLatest([
+      this.loading$.pipe(startWith(true)),
+      this.selectedHost$,
+      feed$,
+      this.filters$
+    ]).pipe(
+      map(([loading, host, feed, { group }]) => ({
+        host,
+        feed,
+        loading,
+        socialGroup: group
+      }))
+    );
+
     const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
 
     if (storedHost) {
@@ -192,14 +207,6 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     this.loadStores();
     this.buildHeader();
     this.loadCategories();
-
-    this.view$ = combineLatest([this.loading$, this.selectedHost$, this.filters$]).pipe(
-      map(([loading, host, { group }]) => ({
-        host,
-        loading,
-        socialGroup: group
-      }))
-    );
   }
 
   ngOnDestroy() {

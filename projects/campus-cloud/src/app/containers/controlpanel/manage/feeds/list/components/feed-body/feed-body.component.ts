@@ -10,8 +10,8 @@ import {
   ViewEncapsulation,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { of, Observable, Subject, combineLatest, BehaviorSubject } from 'rxjs';
 import { map, startWith, distinctUntilChanged } from 'rxjs/operators';
-import { of, Observable, Subject, combineLatest } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 import * as fromStore from '../../../store';
@@ -35,7 +35,16 @@ import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitud
   }
 })
 export class FeedBodyComponent implements OnInit, OnDestroy {
-  @Input() feed: any;
+  _feed: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  @Input()
+  set feed(feed: any) {
+    this._feed.next(feed);
+  }
+
+  get feed() {
+    return this._feed.value;
+  }
   @Input() replyView = false;
   @Input() isComment: boolean;
   @Input() wallCategory: string;
@@ -77,9 +86,9 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
 
     this.commentCount$ = this.isComment
       ? of(0)
-      : results$.pipe(
-          map((results) => {
-            const { comment_count, id } = this.feed;
+      : combineLatest([results$, this._feed]).pipe(
+          map(([results, feed]) => {
+            const { comment_count, id } = feed;
             const matchedPost = results.find((r) => r.type === 'THREAD' && r.id === id);
 
             return matchedPost && matchedPost.children

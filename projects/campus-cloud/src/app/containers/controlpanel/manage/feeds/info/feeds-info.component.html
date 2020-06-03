@@ -13,7 +13,7 @@
         <div class="page__content">
           <ng-container [width]="layoutWidth"
                         *ngIf="!error; else errorTpl">
-            <cp-feed-item [feed]="feed$ | async"
+            <cp-feed-item [feed]="view.feed"
                           [isCampusWallView]="isCampusWallView$"
                           [readOnlyMode]="!view.host && !view.socialGroup">
             </cp-feed-item>
