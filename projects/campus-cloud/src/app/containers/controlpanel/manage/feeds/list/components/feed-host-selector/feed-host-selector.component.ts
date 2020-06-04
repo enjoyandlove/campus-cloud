@@ -60,7 +60,7 @@ export class FeedHostSelectorComponent implements OnInit {
          * check if current user has access to stored host
          */
         if (host && Object.keys(sections).length) {
-          const hostSection = sections[StoreCategory[host.category_id]];
+          const hostSection = sections[StoreCategory[host.category_id]] || [];
           const hostExists = hostSection.find(({ id }) => id === host.id);
 
           if (!hostExists) {
