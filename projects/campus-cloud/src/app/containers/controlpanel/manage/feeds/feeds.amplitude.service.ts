@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 import { omit } from 'lodash';
 
 import { CPSession } from '@campus-cloud/session';
-import { Feed } from '@controlpanel/manage/feeds/model';
 import { FeedsUtilsService } from './feeds.utils.service';
 import { InteractionLikeType } from '@campus-cloud/services';
 import * as fromStore from '@controlpanel/manage/feeds/store';
-import { StoreCategoryType } from '@campus-cloud/shared/models';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { StoreCategoryType } from '@campus-cloud/shared/models';
 import { CPTrackingService } from '@campus-cloud/shared/services';
+import { Feed, SocialGroupTypes } from '@controlpanel/manage/feeds/model';
 
 export enum CommunityAmplitudeEvents {
   VIEWED_COMMUNITY = 'Experiment - Viewed Community',
@@ -103,11 +103,12 @@ export class FeedsAmplitudeService {
     this.getViewFilters()
       .pipe(
         map(({ postType, group }) => {
-          const storeCategoryId = group ? group.store_category_id : null;
           const isIntegrated = (postType && postType.is_integrated) || false;
-          // storeCategoryId can be 0 as well to avoid failing condition we are checking integer
-          if (Number.isInteger(storeCategoryId)) {
-            amplitude = FeedsAmplitudeService.storeCategoryIdToAmplitudeName(storeCategoryId);
+          if (group) {
+            amplitude =
+              group.group_type === SocialGroupTypes.calendar
+                ? 'Orientation Channel'
+                : FeedsAmplitudeService.storeCategoryIdToAmplitudeName(group.store_category_id);
           } else if (!postType) {
             amplitude = amplitudeEvents.All_CATEGORIES;
           } else if (isIntegrated) {

@@ -1,3 +1,8 @@
+export enum SocialGroupTypes {
+  store = 6,
+  calendar = 7
+}
+
 export interface ISocialPostCategory {
   readonly id: number;
   name: string;
