@@ -43,6 +43,7 @@ export class FeedCommentComponent implements OnInit {
   @Input() last: boolean;
   @Input() replyView: number;
   @Input() wallCategory: string;
+  @Input() readOnlyMode = false;
 
   @Input() isCampusWallView: Observable<number>;
   @Output() edited: EventEmitter<any> = new EventEmitter();

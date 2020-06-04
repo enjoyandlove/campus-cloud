@@ -34,6 +34,7 @@
             <div class="comment__more">
               <cp-feed-dropdown [feed]="_comment"
                                 [isComment]="isComment"
+                                [readOnlyMode]="readOnlyMode"
                                 (selected)="onSelected($event)"
                                 [isCampusWallView]="isCampusWallView">
               </cp-feed-dropdown>
