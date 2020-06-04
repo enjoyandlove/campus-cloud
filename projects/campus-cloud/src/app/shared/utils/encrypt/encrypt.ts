@@ -1,9 +1,9 @@
 function encode(input: string) {
-  return btoa(input);
+  return btoa(unescape(encodeURIComponent(input)));
 }
 
 function decode(input: string) {
-  return atob(input);
+  return decodeURIComponent(escape(window.atob(input)));
 }
 
 export const base64 = {
