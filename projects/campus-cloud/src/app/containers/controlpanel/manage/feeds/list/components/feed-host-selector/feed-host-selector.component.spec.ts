@@ -65,7 +65,7 @@ describe('FeedHostSelectorComponent', () => {
         expect(params.get('school_id')).toBe(mockSchool.id.toString());
 
         expect(params.get('category_ids')).toBe(
-          [StoreCategory.clubs, StoreCategory.services, StoreCategory.athletics].join(',')
+          [StoreCategory.services, StoreCategory.clubs, StoreCategory.athletics].join(',')
         );
         done();
       });
