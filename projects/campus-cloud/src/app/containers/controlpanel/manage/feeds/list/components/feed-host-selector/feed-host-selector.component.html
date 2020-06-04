@@ -51,7 +51,7 @@
       {{ 'no_results' | cpI18n }}
     </ready-ui-menu-item>
     <ready-ui-menu-section [name]="section.key | cpI18n"
-                           *ngFor="let section of view.sections | keyvalue">
+                           *ngFor="let section of view.sections | keyvalue: sectionSorting">
       <ready-ui-menu-item *ngFor="let store of section.value"
                           (click)="hostClickHandler(store); menu.close()"
                           [suffixTpl]="view.host?.id === store.id ? activeItem : undefined">

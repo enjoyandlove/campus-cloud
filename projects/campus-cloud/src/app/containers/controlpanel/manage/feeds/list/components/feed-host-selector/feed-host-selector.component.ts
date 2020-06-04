@@ -55,13 +55,31 @@ export class FeedHostSelectorComponent implements OnInit {
     const socialGroup$ = this._socialGroup.asObservable();
 
     this.view$ = combineLatest([stores$, this.search$, selectedHost$, socialGroup$]).pipe(
-      map(([sections, search, host, socialGroup]) => ({
-        sections,
-        search,
-        canOpenMenu: !socialGroup,
-        host: socialGroup ? this.socialGroupToReadyStore(socialGroup) : host
-      }))
+      map(([sections, search, host, socialGroup]) => {
+        /**
+         * check if current user has access to stored host
+         */
+        if (host && Object.keys(sections).length) {
+          const hostSection = sections[StoreCategory[host.category_id]];
+          const hostExists = hostSection.find(({ id }) => id === host.id);
+
+          if (!hostExists) {
+            this.store.dispatch(fromStore.setHost({ host: null }));
+          }
+        }
+        return {
+          sections,
+          search,
+          canOpenMenu: !socialGroup,
+          host: socialGroup ? this.socialGroupToReadyStore(socialGroup) : host
+        };
+      })
     );
+  }
+
+  sectionSorting(obj1: { [key: string]: any }, obj2: { [key: string]: any }) {
+    // default `keyvalue` sorting, by section name ascending
+    return obj1.key > obj2.key;
   }
 
   hostClickHandler(host: ReadyStore) {
@@ -70,14 +88,10 @@ export class FeedHostSelectorComponent implements OnInit {
   }
 
   fetch(): Observable<{ [key: string]: ReadyStore[] }> {
+    const hostCategories = [StoreCategory.services, StoreCategory.clubs, StoreCategory.athletics];
     return this.search$.pipe(
       debounceTime(500),
       switchMap((search) => {
-        const hostCategories = [
-          StoreCategory.clubs,
-          StoreCategory.services,
-          StoreCategory.athletics
-        ];
         const params = new HttpParams()
           .set('search_str', search === '' ? null : search)
           .set('school_id', this.session.school.id.toString())
