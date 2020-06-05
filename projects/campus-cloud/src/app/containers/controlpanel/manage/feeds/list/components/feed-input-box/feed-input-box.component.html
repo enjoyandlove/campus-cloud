@@ -29,7 +29,7 @@
                   </ui-text-style>
                 </ready-ui-stack>
                 <ready-ui-gallery-group
-                                        *ngIf="form.get('message_image_url_list').value.length || expandGallery">
+                                        *ngIf="(images$ | async)?.length || expandGallery">
                   <ready-ui-gallery-item [src]="image"
                                          (close)="removeImage(image)"
                                          *ngFor="let image of form.get('message_image_url_list').value">

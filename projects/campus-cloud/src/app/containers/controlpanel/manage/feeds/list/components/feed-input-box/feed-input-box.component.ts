@@ -1,6 +1,6 @@
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { map, tap, take, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
-import { BehaviorSubject, Subject, merge, combineLatest } from 'rxjs';
+import { map, tap, take, startWith, takeUntil, withLatestFrom, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Subject, merge, combineLatest, of } from 'rxjs';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import { get as _get } from 'lodash';
@@ -60,6 +60,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   @Output() created: EventEmitter<null> = new EventEmitter();
 
+  images$;
   channels$;
   buttonData;
   form: FormGroup;
@@ -129,16 +130,24 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
     const fileUploads$ = merge(...files.map((f: File) => this.imageService.upload(f)));
 
-    fileUploads$
-      .pipe(
-        takeUntil(this.destroy$),
-        tap(({ image_url }: any) => {
-          const images = imageCtrl.value;
-          images.push(image_url);
-          imageCtrl.setValue(images);
-        })
-      )
-      .subscribe(() => {}, (err) => this.handleError(err));
+    this.images$ = fileUploads$.pipe(
+      map(({ image_url }: any) => {
+        const images = imageCtrl.value;
+        images.push(image_url);
+        imageCtrl.setValue(images);
+        this.expandGallery = true;
+        return images;
+      }),
+      catchError((err) => {
+        this.handleError(err);
+        return of([]);
+      })
+    );
+  }
+
+  resetUploadImage() {
+    this.images$ = of([]);
+    this.expandGallery = false;
   }
 
   removeImage(imgUrl: string) {
@@ -291,6 +300,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
         }
         this.resetFormValues();
         this.created.emit(res);
+        this.resetUploadImage();
       })
       .catch((err) => {
         this.buttonData = { ...this.buttonData, disabled: false };
