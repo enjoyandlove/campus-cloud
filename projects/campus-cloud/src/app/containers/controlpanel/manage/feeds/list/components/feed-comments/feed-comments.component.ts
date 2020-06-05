@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subject, BehaviorSubject, combineLatest } from 'rxjs';
-import { takeUntil, withLatestFrom, map } from 'rxjs/operators';
+import { takeUntil, withLatestFrom, map, startWith } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 
@@ -150,7 +150,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
   }
 
   ngOnInit() {
-    this.view$ = combineLatest([super.isLoading()]).pipe(
+    this.view$ = combineLatest([super.isLoading().pipe(startWith(true))]).pipe(
       map(([loading]) => ({
         loading
       }))
