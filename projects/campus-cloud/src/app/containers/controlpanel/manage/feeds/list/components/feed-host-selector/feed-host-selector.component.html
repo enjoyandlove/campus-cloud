@@ -6,7 +6,7 @@
             class="group__button"
             ready-ui-menu-trigger
             [attr.title]="view.host?.name"
-            [triggerFor]="(view.sections | json) === '{}' || !view.canOpenMenu ? undefined : menu">
+            [triggerFor]="!view.canOpenMenu ? undefined : menu">
       <div class="group__wrapper">
         <ng-template #empty>
           <div class="group__avatar group__avatar--bordered"></div>
