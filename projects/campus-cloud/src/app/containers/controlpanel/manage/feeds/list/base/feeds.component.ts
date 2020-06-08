@@ -589,7 +589,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     this.results$ = merge(regularThreads$, searchResults$);
 
     this.fetchBannedEmails();
-    this.getStores();
+    this.getGroups();
     this.view$ = combineLatest([
       this.loading$,
       this.results$,
@@ -611,13 +611,13 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     this.store.dispatch(fromStore.resetState());
   }
 
-  getStores() {
+  getGroups() {
     const params = new HttpParams().set('school_id', this.session.school.id.toString());
-    this.storeService
-      .getStores(params)
+    this.service
+      .getSocialGroups(params)
       .pipe(
-        map((stores) => stores.filter((s) => s.value).map((s) => s.value)),
-        tap((stores) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: stores }))),
+        map((groups: ISocialGroup[]) => groups.map((g) => g.related_obj_id)),
+        tap((groups) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: groups }))),
         takeUntil(this.destroy$)
       )
       .subscribe();

@@ -115,7 +115,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
       .subscribe();
   }
 
-  loadStores() {
+  loadGroups() {
     const params = new HttpParams().set('school_id', this.session.school.id.toString());
 
     this.store
@@ -124,9 +124,9 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
         take(1),
         filter((socialGroupIds) => !!socialGroupIds),
         switchMap(() => {
-          return this.storeService.getStores(params).pipe(
-            map((stores) => stores.filter((s) => s.value).map((s) => s.value)),
-            tap((stores) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: stores })))
+          return this.feedService.getSocialGroups(params).pipe(
+            map((groups: ISocialGroup[]) => groups.map((g) => g.related_obj_id)),
+            tap((groups) => this.store.dispatch(fromStore.setSocialGroupIds({ groupIds: groups })))
           );
         })
       )
@@ -206,7 +206,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     });
 
     this.fetch();
-    this.loadStores();
+    this.loadGroups();
     this.buildHeader();
     this.loadCategories();
   }
