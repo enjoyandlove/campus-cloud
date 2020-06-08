@@ -7,7 +7,6 @@ import { Store, select } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
-import { appStorage } from '@campus-cloud/shared/utils';
 import * as fromStore from '@controlpanel/manage/feeds/store';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { baseActionClass, baseActions } from '@campus-cloud/store/base';
@@ -161,12 +160,7 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
         const params = new HttpParams().set('school_id', this.session.school.id.toString());
         if (!this.groupId) {
           const { extern_poster_id } = feed;
-          return this.storeService.getStoreById(extern_poster_id, params).pipe(
-            map((store: ReadyStore) => {
-              const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
-              return storedHost ? JSON.parse(storedHost) : store;
-            })
-          );
+          return this.storeService.getStoreById(extern_poster_id, params);
         }
         return this.feedService
           .getSocialGroupById(this.groupId, params)
