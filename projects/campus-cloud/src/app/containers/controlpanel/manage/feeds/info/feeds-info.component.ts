@@ -37,8 +37,8 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
 
   view$: Observable<{
     loading: boolean;
-    host: ReadyStore;
     socialGroup: ISocialGroup;
+    host: ReadyStore;
     feed: ICampusThread | ISocialGroupThread;
   }>;
 
@@ -133,19 +133,6 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
       .subscribe();
   }
 
-  loadGroups() {
-    if (this.groupId) {
-      const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
-      this.feedService
-        .getSocialGroupById(this.groupId, search)
-        .pipe(
-          take(1),
-          tap((group: ISocialGroup) => this.store.dispatch(fromStore.setGroup({ group })))
-        )
-        .subscribe();
-    }
-  }
-
   buildHeader() {
     Promise.resolve().then(() => {
       this.store.dispatch({
@@ -167,27 +154,42 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
   ngOnInit() {
     const feed$ = this.store.select(fromStore.getThreads).pipe(map((feed) => feed[0]));
 
+    const host$ = feed$.pipe(
+      filter((feed) => Boolean(feed)),
+      take(1),
+      switchMap((feed): any => {
+        const params = new HttpParams().set('school_id', this.session.school.id.toString());
+        if (!this.groupId) {
+          const { extern_poster_id } = feed;
+          return this.storeService.getStoreById(extern_poster_id, params).pipe(
+            map((store: ReadyStore) => {
+              const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
+              return storedHost ? JSON.parse(storedHost) : store;
+            })
+          );
+        }
+        return this.feedService
+          .getSocialGroupById(this.groupId, params)
+          .pipe(tap((group: ISocialGroup) => this.store.dispatch(fromStore.setGroup({ group }))));
+      }),
+      tap((host: ReadyStore) => this.store.dispatch(fromStore.setHost({ host }))),
+      startWith({} as ReadyStore)
+    );
+
     this.view$ = combineLatest([
       this.loading$.pipe(startWith(true)),
-      this.selectedHost$,
+      host$,
       feed$,
-      this.filters$
+      this.filters$,
+      this.selectedHost$
     ]).pipe(
-      map(([loading, host, feed, { group }]) => ({
-        host,
+      map(([loading, host, feed, { group }, selectedHost]) => ({
+        host: selectedHost ? selectedHost : host,
         feed,
         loading,
         socialGroup: group
       }))
     );
-
-    const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
-
-    if (storedHost) {
-      Promise.resolve().then(() => {
-        this.store.dispatch(fromStore.setHost({ host: JSON.parse(storedHost) }));
-      });
-    }
 
     this.feedId = this.route.snapshot.params['feedId'];
     const groupId = this.route.snapshot.queryParams['groupId'];
@@ -204,7 +206,6 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
     });
 
     this.fetch();
-    this.loadGroups();
     this.loadStores();
     this.buildHeader();
     this.loadCategories();
