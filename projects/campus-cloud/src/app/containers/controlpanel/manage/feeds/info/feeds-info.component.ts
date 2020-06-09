@@ -1,5 +1,5 @@
+import { tap, take, filter, switchMap, map, startWith, catchError } from 'rxjs/operators';
 import { OnInit, Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { tap, take, filter, switchMap, map, startWith } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
@@ -160,11 +160,14 @@ export class FeedsInfoComponent extends BaseComponent implements OnInit, OnDestr
         const params = new HttpParams().set('school_id', this.session.school.id.toString());
         if (!this.groupId) {
           const { extern_poster_id } = feed;
-          return this.storeService.getStoreById(extern_poster_id, params);
+          return this.storeService
+            .getStoreById(extern_poster_id, params)
+            .pipe(catchError(() => of(null)));
         }
-        return this.feedService
-          .getSocialGroupById(this.groupId, params)
-          .pipe(tap((group: ISocialGroup) => this.store.dispatch(fromStore.setGroup({ group }))));
+        return this.feedService.getSocialGroupById(this.groupId, params).pipe(
+          catchError(() => of(null)),
+          tap((group: ISocialGroup) => this.store.dispatch(fromStore.setGroup({ group })))
+        );
       }),
       tap((host: ReadyStore) => this.store.dispatch(fromStore.setHost({ host }))),
       startWith({} as ReadyStore)
