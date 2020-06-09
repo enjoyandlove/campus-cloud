@@ -597,9 +597,15 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     this.fetchBannedEmails();
     this.getGroups();
-    this.view$ = combineLatest([this.loading$, this.results$, storedHost$, this.filters$]).pipe(
-      map(([loading, results, host, { group }]) => ({
-        host,
+    this.view$ = combineLatest([
+      this.loading$,
+      this.results$,
+      storedHost$,
+      this.filters$,
+      this.selectedHost$
+    ]).pipe(
+      map(([loading, results, host, { group }, selectedHost]) => ({
+        host: selectedHost ? selectedHost : host,
         results,
         loading,
         socialGroup: group
