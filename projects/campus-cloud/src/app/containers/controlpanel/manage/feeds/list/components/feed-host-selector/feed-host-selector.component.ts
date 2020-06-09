@@ -56,17 +56,6 @@ export class FeedHostSelectorComponent implements OnInit {
 
     this.view$ = combineLatest([stores$, this.search$, selectedHost$, socialGroup$]).pipe(
       map(([sections, search, host, socialGroup]) => {
-        /**
-         * check if current user has access to stored host
-         */
-        if (host && Object.keys(sections).length) {
-          const hostSection = sections[StoreCategory[host.category_id]] || [];
-          const hostExists = hostSection.find(({ id }) => id === host.id);
-
-          if (!hostExists) {
-            this.store.dispatch(fromStore.setHost({ host: null }));
-          }
-        }
         return {
           sections,
           search,
@@ -96,7 +85,7 @@ export class FeedHostSelectorComponent implements OnInit {
           .set('search_str', search === '' ? null : search)
           .set('school_id', this.session.school.id.toString())
           .set('category_ids', hostCategories.map((c) => c.toString()).join(','));
-        return this.stores.getRanged(1, 5000, params).pipe(
+        return this.stores.getRanged(1, 20, params).pipe(
           map((stores: ReadyStore[]) => {
             const requiredCategories = ({ category_id }: ReadyStore) =>
               hostCategories.includes(category_id);
