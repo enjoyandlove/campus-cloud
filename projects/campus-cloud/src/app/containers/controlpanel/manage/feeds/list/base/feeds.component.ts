@@ -12,6 +12,7 @@ import {
   switchMap,
   takeUntil,
   startWith,
+  catchError,
   debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
@@ -462,14 +463,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
-
-    if (storedHost) {
-      Promise.resolve().then(() => {
-        this.store.dispatch(fromStore.setHost({ host: JSON.parse(storedHost) }));
-      });
-    }
-
     const filters$ = this.filters$.pipe(
       /**
        * avoid mulliple emitions when switching boolean values
@@ -588,14 +581,23 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
      */
     this.results$ = merge(regularThreads$, searchResults$);
 
+    const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
+
+    let storedHost$ = of(null);
+    if (storedHost) {
+      const { id } = JSON.parse(storedHost);
+      const params = new HttpParams().set('school_id', this.session.school.id.toString());
+
+      storedHost$ = this.storeService.getStoreById(id, params).pipe(
+        catchError(() => of(null)),
+        tap((host) => this.store.dispatch(fromStore.setHost({ host }))),
+        startWith(of(null))
+      );
+    }
+
     this.fetchBannedEmails();
     this.getGroups();
-    this.view$ = combineLatest([
-      this.loading$,
-      this.results$,
-      this.selectedHost$,
-      this.filters$
-    ]).pipe(
+    this.view$ = combineLatest([this.loading$, this.results$, storedHost$, this.filters$]).pipe(
       map(([loading, results, host, { group }]) => ({
         host,
         results,
