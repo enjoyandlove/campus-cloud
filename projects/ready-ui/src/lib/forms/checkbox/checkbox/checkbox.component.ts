@@ -4,6 +4,7 @@ import {
   Output,
   Component,
   forwardRef,
+  TemplateRef,
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
@@ -33,6 +34,12 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
 
   @Input()
   label: string;
+
+  @Input()
+  labelTpl: TemplateRef<any>;
+
+  @Input()
+  context: Object;
 
   @Input()
   ariaLabelledBy: string;
