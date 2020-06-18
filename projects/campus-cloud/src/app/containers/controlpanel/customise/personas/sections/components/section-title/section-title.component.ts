@@ -61,7 +61,6 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
     }
 
     const nameChanged = this._name !== this.form.get('name').value;
-
     if (nameChanged) {
       this.state = { ...this.state, saving: true };
 
@@ -81,7 +80,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: [{ value: this._name, disabled: this.noNameChange }]
+      name: [this._name]
     });
   }
 }

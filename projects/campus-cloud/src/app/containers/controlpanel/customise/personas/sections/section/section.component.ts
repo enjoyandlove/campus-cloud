@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PersonasSectionTitleComponent } from './../components/section-title/section-title.component';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { get as _get } from 'lodash';
@@ -30,6 +31,8 @@ interface ISetSectionName {
   styleUrls: ['./section.component.scss']
 })
 export class PersonasSectionComponent implements OnInit {
+  @ViewChild(PersonasSectionTitleComponent) private titleComponent: PersonasSectionTitleComponent;
+
   @Input() tileWidth = '3';
   @Input() noTitle = false;
   @Input() personaId: number;
@@ -108,7 +111,8 @@ export class PersonasSectionComponent implements OnInit {
   goToCreateTile() {
     this.service.guide = {
       ...this.guide,
-      _featuredTile: this.guide._featuredTile
+      _featuredTile: this.guide._featuredTile,
+      name: this.titleComponent.form.value.name
     };
 
     this.service.guides = this.guides;
