@@ -7,5 +7,13 @@
          [attr.aria-labelledby]="ariaLabelledBy"
          (change)="writeValue($event.target.checked)" />
   <div class="control__indicator"></div>
-  <span>{{ label }}</span>
+  <span>
+    <ng-container
+                  *ngTemplateOutlet="labelTpl || defaultLabel; context: context">
+    </ng-container>
+  </span>
 </label>
+
+<ng-template #defaultLabel>
+  {{ label }}
+</ng-template>

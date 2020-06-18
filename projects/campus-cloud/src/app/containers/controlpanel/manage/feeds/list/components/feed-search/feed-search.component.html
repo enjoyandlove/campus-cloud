@@ -195,8 +195,9 @@
           <ready-ui-menu-item *ngFor="let student of studentMenu.selectedUsers">
             <ready-ui-stack>
               <ready-ui-checkbox checked="true"
+                                 [labelTpl]="labelTpl"
+                                 [context]="{student: student}"
                                  (changed)="handleStudent(student) "
-                                 [label]="[student.firstname + ' ' + student.lastname]"
                                  [disabled]="!studentMenu.canSelect && !studentMenu.selectedUserids.includes(student.id)">
               </ready-ui-checkbox>
             </ready-ui-stack>
@@ -207,13 +208,25 @@
 
       <ready-ui-menu-item *ngFor="let student of studentMenu.students">
         <ready-ui-stack>
-          <ready-ui-checkbox (changed)="handleStudent(student) "
-                             [label]="[student.firstname + ' ' + student.lastname]"
+          <ready-ui-checkbox (changed)="handleStudent(student)"
+                             [labelTpl]="labelTpl"
+                             [context]="{student: student}"
                              [checked]="studentMenu.selectedUserids.includes(student.id)"
                              [disabled]="!studentMenu.canSelect && !studentMenu.selectedUserids.includes(student.id)">
           </ready-ui-checkbox>
+
         </ready-ui-stack>
       </ready-ui-menu-item>
+
+      <ng-template #labelTpl
+                   let-student="student">
+        <div class="student__meta">
+          {{ student.firstname }} {{ student.lastname }}
+          <br />
+          <span class="text-muted">{{ student.email }}</span>
+        </div>
+      </ng-template>
+
 
       <ready-ui-menu-item *ngIf="!studentMenu.students.length">
         {{ 't_walls_no_users_found' | cpI18n }}
