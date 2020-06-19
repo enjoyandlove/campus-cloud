@@ -2881,8 +2881,14 @@
   "t_feeds_approve": {
     "message": "Approve"
   },
+  "t_feeds_commented_in": {
+    "message": "commented in"
+  },
   "t_feeds_delete": {
     "message": "Delete"
+  },
+  "t_feeds_deleted_post": {
+    "message": "This post has been deleted."
   },
   "t_feeds_edit": {
     "message": "Edit"
@@ -2895,6 +2901,9 @@
   },
   "t_feeds_move": {
     "message": "Move"
+  },
+  "t_feeds_open_post": {
+    "message": "Open Post"
   },
   "t_feeds_people_who_flagged": {
     "message": "People who flagged"
@@ -3646,7 +3655,7 @@
     "message": "The feed did not contain any upcoming events. Please make sure the feed contains entries that begin in the future."
   },
   "t_shared_integration_preview_error_fields": {
-    "message": "Some required fields are missing. Please make sure your feed containes the required fields."
+    "message": "Some required fields are missing. Please make sure your feed contains the required fields."
   },
   "t_shared_integration_preview_error_format": {
     "message": "The entries in the feed are not in the right format or the feed was empty. Please make sure it is in the right format and there are entries."
