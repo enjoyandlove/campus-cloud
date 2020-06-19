@@ -112,7 +112,7 @@ export class PersonasSectionComponent implements OnInit {
     this.service.guide = {
       ...this.guide,
       _featuredTile: this.guide._featuredTile,
-      name: this.titleComponent.form.value.name
+      name: this.titleComponent ? this.titleComponent.form.value.name : ''
     };
 
     this.service.guides = this.guides;
