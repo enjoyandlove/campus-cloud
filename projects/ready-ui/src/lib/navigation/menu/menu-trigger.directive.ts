@@ -165,19 +165,33 @@ export class MenuTriggerDirective implements OnDestroy {
   }
 
   private getPosition(): PositionStrategy {
+    // https://github.com/angular/components/blob/master/src/material/menu/menu-trigger.ts#L435
     const [yValue, xValue] = this.direction.split('-');
+
+    let offsetY = 4;
+    let offsetX = 4;
+    let originX: any = xValue === 'left' ? 'end' : 'start';
+    let overlayX: any = xValue === 'left' ? 'end' : 'start';
+
+    if (this.triggersSubmenu()) {
+      originX = xValue === 'left' ? 'start' : 'end';
+      overlayX = xValue === 'right' ? 'start' : 'end';
+      offsetX = originX === 'end' ? offsetX : -offsetX;
+      offsetY = 0;
+    }
+
     return this.overlay
       .position()
       .flexibleConnectedTo(this.el)
       .withPositions([
         {
-          originX: this.triggersSubmenu() || xValue === 'left' ? 'end' : 'start',
-          overlayX: xValue === 'left' ? 'end' : 'start',
+          originX,
+          overlayX,
+          offsetX,
+          offsetY,
           originY: this.triggersSubmenu() ? 'top' : 'bottom',
           overlayY: yValue === 'bottom' ? 'top' : 'bottom'
         }
-      ])
-      .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 4)
-      .withDefaultOffsetX(this.triggersSubmenu() ? 4 : 0);
+      ]);
   }
 }

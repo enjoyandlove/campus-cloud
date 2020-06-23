@@ -73,17 +73,6 @@ describe('FeedItemComponent', () => {
 
       expect(dropdown).not.toBeNull();
     });
-
-    it('should be hidden for deleted threads', () => {
-      component.feed = {
-        ...mockFeed,
-        flag: -3
-      };
-      fixture.detectChanges();
-      const dropdown = de.query(By.directive(FeedDropdownComponent));
-
-      expect(dropdown).toBeNull();
-    });
   });
 
   describe('onSelected', () => {
@@ -100,69 +89,6 @@ describe('FeedItemComponent', () => {
     it('should launch delete modal', () => {
       component.onSelected(3);
       expect(component.isDeleteModal).toBe(true);
-    });
-  });
-
-  describe('onDeletedComment', () => {
-    it('should not let you set a negative comment count', () => {
-      const spy: jasmine.Spy = spyOn(store, 'dispatch');
-      component.feed = {
-        ...component.feed,
-        comment_count: 0
-      };
-      fixture.detectChanges();
-
-      component.onDeletedComment();
-
-      const { thread } = spy.calls.mostRecent().args[0];
-      const { comment_count } = thread;
-
-      expect(comment_count).toBe(0);
-      expect(store.dispatch).toHaveBeenCalled();
-    });
-
-    it('should dispatch updateThread with updated thread', () => {
-      const spy: jasmine.Spy = spyOn(store, 'dispatch');
-      component.feed = {
-        ...component.feed,
-        comment_count: 4
-      };
-      fixture.detectChanges();
-
-      component.onDeletedComment();
-
-      const { thread } = spy.calls.mostRecent().args[0];
-      const { comment_count } = thread;
-
-      expect(comment_count).toBe(3);
-      expect(store.dispatch).toHaveBeenCalled();
-    });
-  });
-
-  describe('onExpandComments', () => {
-    it('should dispatch expandComments with thread id', () => {
-      const spy: jasmine.Spy = spyOn(store, 'dispatch');
-
-      component.onExpandComments();
-
-      const { threadId } = spy.calls.mostRecent().args[0];
-
-      expect(threadId).toBe(component.feed.id);
-      expect(store.dispatch).toHaveBeenCalled();
-    });
-  });
-
-  describe('onReplied', () => {
-    it('should dispatch updateThread with udpated comment count', () => {
-      const spy: jasmine.Spy = spyOn(store, 'dispatch');
-
-      component.onReplied();
-
-      const { thread } = spy.calls.mostRecent().args[0];
-      const { comment_count } = thread;
-
-      expect(comment_count).toBe(mockFeed.comment_count + 1);
-      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 });

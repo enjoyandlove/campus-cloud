@@ -122,6 +122,7 @@ export interface ISocialGroupThread {
   avatar_thumb: string;
   image_thumb_url: string;
   image_list: any[];
+  email: string;
 }
 
 export interface ISocialGroupThreadComment {

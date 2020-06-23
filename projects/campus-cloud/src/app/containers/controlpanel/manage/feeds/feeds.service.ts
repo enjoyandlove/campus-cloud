@@ -143,6 +143,12 @@ export class FeedsService {
     return this.api.get(url, search, true);
   }
 
+  getCampusWallCommentById(commentId: number, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/${commentId}`;
+
+    return this.api.get(url, search, true);
+  }
+
   getGroupWallCommentsByThreadId(search: HttpParams, endRage) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/1;${endRage}`;
 

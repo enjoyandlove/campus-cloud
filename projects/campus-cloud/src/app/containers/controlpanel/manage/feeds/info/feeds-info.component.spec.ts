@@ -72,13 +72,13 @@ describe('FeedsInfoComponent', () => {
 
     const expected = ['/manage/feeds'];
 
-    comp.fetch();
-
-    tick();
-    expect(spy).toHaveBeenCalled();
-    expect(navigate).toHaveBeenCalled();
-    expect(navigate).toHaveBeenCalledWith(expected);
-    expect(spy).toHaveBeenCalledWith(comp.feedId, campusParams);
+    comp.getThread().subscribe(() => {
+      tick();
+      expect(spy).toHaveBeenCalled();
+      expect(navigate).toHaveBeenCalled();
+      expect(navigate).toHaveBeenCalledWith(expected);
+      expect(spy).toHaveBeenCalledWith(comp.feedId, campusParams);
+    });
   }));
 
   it('should return error', fakeAsync(() => {
@@ -86,10 +86,9 @@ describe('FeedsInfoComponent', () => {
       throwError(new HttpErrorResponse({ status: 400 }))
     );
 
-    comp.fetch();
+    comp.getThread();
 
     tick();
-    expect(comp.error).toBe(true);
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith(comp.feedId, campusParams);
   }));

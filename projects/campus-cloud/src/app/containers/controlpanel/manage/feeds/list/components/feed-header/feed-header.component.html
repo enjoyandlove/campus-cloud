@@ -14,13 +14,26 @@
       <span class="email"
             *ngIf="feed.email && feed.email !== ''">
         {{ emailTextContent }}</span>
-      <ng-container *ngIf="!isComment && postCategoryName$ | async">
-        <span class="text-muted">
-          {{ 'feeds_posted_in' | cpI18n }}
-        </span>
-        <span class="cpbtn cpbtn--link"
-              (click)="loadCategory(feed)">
-          {{ postCategoryName$ | async }}</span>
+      <ng-container *ngIf="postCategoryName$ | async as postCategoryName">
+        <ng-container *ngIf="isComment && mode === 'search'">
+          <span class="text-muted">
+            {{ 't_feeds_commented_in' | cpI18n }}
+          </span>
+          <span class="cpbtn cpbtn--link"
+                (click)="loadCategory(feed)">
+            {{ postCategoryName }}
+          </span>
+        </ng-container>
+        <ng-container *ngIf="!isComment">
+          <span class="text-muted">
+            {{ 'feeds_posted_in' | cpI18n }}
+          </span>
+          <span class="cpbtn cpbtn--link"
+                (click)="loadCategory(feed)">
+            {{ postCategoryName }}
+          </span>
+        </ng-container>
+
       </ng-container>
     </header>
     <footer>

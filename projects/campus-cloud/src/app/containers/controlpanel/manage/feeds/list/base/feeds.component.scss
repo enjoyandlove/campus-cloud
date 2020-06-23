@@ -21,6 +21,18 @@
   &__content {
     width: 715px;
   }
+
+  &__sorting {
+    display: block;
+    padding-top: 1em;
+    text-align: right;
+    padding-bottom: 1em;
+    margin-bottom: -#{$default_margin};
+
+    cp-feed-sorting {
+      display: block;
+    }
+  }
 }
 
 

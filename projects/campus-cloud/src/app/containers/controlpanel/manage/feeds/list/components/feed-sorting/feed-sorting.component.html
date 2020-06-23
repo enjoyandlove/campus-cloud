@@ -1,0 +1,16 @@
+<button type="button"
+        ui-button
+        variant="inline"
+        [triggerFor]="menu"
+        ready-ui-menu-trigger>
+  {{ selected?.label | cpI18n }}
+  <ready-ui-icon name="keyboard_arrow_down"
+                 size="small"></ready-ui-icon>
+</button>
+
+<ready-ui-menu #menu="menu">
+  <ready-ui-menu-item (itemClick)="change.emit(opt.value)"
+                      *ngFor="let opt of options">
+    {{ opt.label | cpI18n }}
+  </ready-ui-menu-item>
+</ready-ui-menu>

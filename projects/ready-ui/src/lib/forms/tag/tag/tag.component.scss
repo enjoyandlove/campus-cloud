@@ -13,7 +13,7 @@
   &--variant-flat {
     &.tag--color-primary {
       color: white;
-      background: map-get($ready-primary,'regular');
+      background: map-get($ready-primary, 'regular');
     }
 
     &.tag--color-default {
@@ -24,8 +24,8 @@
 
   &--variant-stroked {
     &.tag--color-primary {
-      color: map-get($ready-primary,'regular');
-      border: 1px solid map-get($ready-primary,'regular');
+      color: map-get($ready-primary, 'regular');
+      border: 1px solid map-get($ready-grey, 200);
     }
 
     &.tag--color-default {

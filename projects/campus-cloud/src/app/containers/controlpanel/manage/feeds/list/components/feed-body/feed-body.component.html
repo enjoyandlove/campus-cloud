@@ -6,7 +6,9 @@
        *ngIf="!view.editMode">
     <div class="row feed__message">
       <div class="col-12 feed__content">
-        <p [innerHTML]="feed.message | cpUrlify"></p>
+        <p
+           [innerHTML]="isComment ? (feed.comment | cpUrlify) : (feed.message | cpUrlify)">
+        </p>
       </div>
     </div>
     <div ready-ui-lightbox
@@ -28,31 +30,56 @@
   <ready-ui-stack class="feed__footer"
                   alignment="between">
     <ready-ui-stack>
-      <cp-feed-interactions likeType="1"
+      <cp-feed-interactions class="likes"
+                            likeType="1"
                             [feed]="feed">
         <ready-ui-icon name="thumb_up"
                        size="small"></ready-ui-icon>
         {{ feed.likes }}
       </cp-feed-interactions>
+
       <button ui-button
               variant="inline"
               color="primary"
-              *ngIf="!replyView"
-              (click)="toggleReplies.emit(isCommentsOpen); trackEvent(isCommentsOpen)">
-        <ready-ui-icon name="mode_comment"
-                       size="small"></ready-ui-icon>
-        {{ view.commentCount }}
-        {{ view.commentCount > 1 ? ('comments' | cpI18n) : ('comment' | cpI18n) }}
+              *ngIf="mode === 'inline'">
+        <ng-container *ngIf="!isComment">
+          <ready-ui-icon name="mode_comment"
+                         size="small"></ready-ui-icon>
+          {{ feed.comment_count }}
+          {{ feed.comment_count > 1 ? ('comments' | cpI18n) : ('comment' | cpI18n) }}
+        </ng-container>
       </button>
-      <cp-feed-interactions class="flag"
-                            [feed]="feed"
-                            likeType="-1"
-                            *ngIf="feed.dislikes > 0 && feed.flag !== 2">
-        <ready-ui-icon name="flag"
-                       size="small"
-                       color="inherit"></ready-ui-icon>
-        {{ feed.dislikes }}
-      </cp-feed-interactions>
+      <a ui-button
+         variant="inline"
+         color="primary"
+         *ngIf="mode !== 'inline'"
+         [routerLink]="isComment ? ['/manage/feeds/' + parentThread + '/info'] : ['/manage/feeds/' + feed.id + '/info']"
+         [queryParams]="{groupId: feed.group_id, comment: isComment ? feed.id : undefined }">
+        <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+      </a>
     </ready-ui-stack>
+    <cp-feed-interactions class="flag"
+                          [feed]="feed"
+                          likeType="-1"
+                          *ngIf="feed.dislikes > 0 && feed.flag !== 2">
+      <ready-ui-icon name="flag"
+                     size="small"
+                     color="inherit"></ready-ui-icon>
+      {{ feed.dislikes }}
+    </cp-feed-interactions>
   </ready-ui-stack>
 </ng-container>
+
+<ng-template #buttonContent>
+  <ng-container *ngIf="isComment">
+    <ready-ui-icon name="mode_comment"
+                   size="small"></ready-ui-icon>
+    {{ 't_feeds_open_post' | cpI18n }}
+  </ng-container>
+  <ng-container *ngIf="!isComment">
+    <ready-ui-icon name="mode_comment"
+                   size="small"></ready-ui-icon>
+    {{ feed.comment_count }}
+    {{ feed.comment_count > 1 ? ('comments' | cpI18n) : ('comment' | cpI18n) }}
+  </ng-container>
+</ng-template>

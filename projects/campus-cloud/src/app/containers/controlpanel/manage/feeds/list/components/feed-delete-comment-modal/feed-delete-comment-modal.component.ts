@@ -40,7 +40,7 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
   ) {}
 
   onClose() {
-    $('#deleteFeedCommentModal').modal('hide');
+    $('#deleteFeedModal').modal('hide');
     this.teardown.emit();
   }
 
@@ -52,7 +52,7 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
     stream$.subscribe(
       () => {
         this.trackAmplitudeEvent(this.feed);
-        $('#deleteFeedCommentModal').modal('hide');
+        $('#deleteFeedModal').modal('hide');
         this.deleted.emit(this.feed.id);
         this.store.dispatch(fromStore.removeComment({ commentId: this.feed.id }));
         this.teardown.emit();

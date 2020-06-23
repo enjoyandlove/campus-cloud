@@ -25,6 +25,7 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 export class FeedHeaderComponent implements OnInit {
   @Input() feed: any;
   @Input() isComment: boolean;
+  @Input() mode: 'default' | 'search' = 'default';
 
   state: any;
   CPDate = CPDate;
