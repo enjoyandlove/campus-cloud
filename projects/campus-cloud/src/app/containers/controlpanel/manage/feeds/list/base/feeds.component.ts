@@ -263,8 +263,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
         SocialWallContentObjectType.campusComment
       );
     }
-
-    const schoolParam = new HttpParams().set('school_id', this.session.school.id.toString());
+    let schoolParam = this.getFilterParams();
+    schoolParam = schoolParam.set('school_id', this.session.school.id.toString());
 
     let searchCampusParam: HttpParams = !this.state.isCampusThread
       ? schoolParam.set('group_id', this.state.group_id.toString())
