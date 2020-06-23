@@ -96,3 +96,4 @@ None
 `add_circle`
 `add_circle_outline`
 `collections`
+`more_vert`

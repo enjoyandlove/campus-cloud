@@ -13,10 +13,42 @@
         <div class="page__content">
           <ng-container [width]="layoutWidth"
                         *ngIf="!error; else errorTpl">
-            <cp-feed-item [feed]="view.feed"
+            <ng-container *ngIf="!view.feed">
+              <ready-ui-card class="page__content__deleted">
+                <ready-ui-stack>
+                  <div class="avatar"></div>
+                  <p>{{ 't_feeds_deleted_post' | cpI18n }}</p>
+                </ready-ui-stack>
+              </ready-ui-card>
+            </ng-container>
+            <cp-feed-item mode="inline"
+                          *ngIf="view.feed"
+                          [feed]="view.feed"
+                          [readOnlyMode]="view.readOnly"
+                          (deleted)="deleteThreadHandler()"
                           [isCampusWallView]="isCampusWallView$"
-                          [readOnlyMode]="!view.host && !view.socialGroup">
+                          [class.page__content__item--no-bottom-border]="view.comments.length > 0 || !view.readOnly">
             </cp-feed-item>
+            <div class="page__content__comments"
+                 *ngIf="view.comments.length">
+              <cp-feed-item mode="inline"
+                            [comment]="comment"
+                            class="page__content__item"
+                            [readOnlyMode]="view.readOnly"
+                            (approved)="approvedHandler($event)"
+                            (deleted)="onDeletedComment(comment)"
+                            [isCampusWallView]="isCampusWallView$"
+                            *ngFor="let comment of view.comments; last as last"
+                            [class.page__content__item--last]="last && view.readOnly">
+              </cp-feed-item>
+            </div>
+            <div *ngIf="!view.readOnly"
+                 class="page__content__input">
+              <cp-feed-input-box [feed]="view.feed || {id: view.comments[0].campus_thread_id , post_type: view.comments[0].post_type }"
+                                 [replyView]="true"
+                                 (created)="onReplied($event)">
+              </cp-feed-input-box>
+            </div>
           </ng-container>
         </div>
       </div>

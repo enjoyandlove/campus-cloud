@@ -1,13 +1,29 @@
 <ng-container *ngIf="view$ | async as view">
-
-  <cp-card>
+  <ready-ui-card>
     <header>
       <ready-ui-stack spacing="tight">
+        <form [formGroup]="form"
+              class="wrapper">
+          <ready-ui-icon name="search"
+                         color="bdbdbd"></ready-ui-icon>
+          <input type="search"
+                 formControlName="query"
+                 (keyup.enter)="emitValue()"
+                 aria-label="Search Feeds Content"
+                 [placeholder]="'search' | cpI18n"
+                 (input)="input.next($event.target.value)">
+          <button type="button"
+                  class="unstyled-button"
+                  [hidden]="form.get('query').value.length < 2"
+                  (click)="query.next(''); emitValue()"
+                  [attr.aria-label]="'t_clear' | cpI18n">&times;</button>
+        </form>
         <button ui-button
                 variant="stroked"
                 overlayWidth="9.78em"
                 [triggerFor]="primary"
                 ready-ui-menu-trigger
+                direction="bottom-left"
                 class="centered-button"
                 [color]="view.hasFiltersActive ? 'primary' : 'default'">
           <ready-ui-stack spacing="tight">
@@ -17,26 +33,38 @@
                   [variant]="view.hasFiltersActive ? 'bold' : undefined">{{ 't_shared_filter' | cpI18n }}</span>
           </ready-ui-stack>
         </button>
-
-        <form [formGroup]="form"
-              class="wrapper">
-          <ready-ui-icon name="search"
-                         color="bdbdbd"></ready-ui-icon>
-          <input type="search"
-                 [value]="query.value"
-                 formControlName="query"
-                 (keyup.enter)="emitValue()"
-                 aria-label="Search Feeds Content"
-                 [placeholder]="'search' | cpI18n"
-                 (input)="input.next($event.target.value)">
-          <button type="button"
-                  class="unstyled-button"
-                  [hidden]="query.value.length < 2"
-                  (click)="query.next(''); emitValue()"
-                  [attr.aria-label]="'t_clear' | cpI18n">&times;</button>
-          <div class="wrapper__border"
-               aria-hidden="true"></div>
-        </form>
+      </ready-ui-stack>
+    </header>
+    <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
+    <ready-ui-card-divider></ready-ui-card-divider>
+    <footer>
+      <div class="counter">
+        <div class="counter__skeleton"
+             *ngIf="view.counting">
+          <ready-ui-skeleton-text
+                                  [width]="view.searchTerm === '' ? '100px' : '170px'">
+          </ready-ui-skeleton-text>
+          <ready-ui-skeleton-text width="140px"></ready-ui-skeleton-text>
+        </div>
+        <div class="counter__value"
+             *ngIf="!view.counting">
+          <ui-text-style variant="bold"
+                         class="counter__heading">
+            {{ view.searchTitle | cpI18n: view.searchTerm }}
+          </ui-text-style>
+          <ready-ui-stack>
+            <ui-text-style color="muted"
+                           variant="caption">{{ view.postCount }}
+              {{ 't_shared_posts' | cpI18n }}
+            </ui-text-style>
+            <ui-text-style color="muted"
+                           variant="caption">{{ view.commentCount }}
+              {{ 'comments' | cpI18n }}
+            </ui-text-style>
+          </ready-ui-stack>
+        </div>
+      </div>
+      <ready-ui-stack spacing="tight">
         <a ui-button
            cpTracker
            variant="stroked"
@@ -70,27 +98,9 @@
                          name="save_alt"></ready-ui-icon>
         </button>
       </ready-ui-stack>
-    </header>
-    <footer>
-      <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
-      <div class="counter">
-        <ready-ui-skeleton-text width="140px"
-                                *ngIf="view.counting">
-        </ready-ui-skeleton-text>
-        <ng-container *ngIf="!view.counting">
-          <ui-text-style color="muted"
-                         variant="semibold">{{ view.postCount }}
-            {{ 't_shared_posts' | cpI18n }}
-          </ui-text-style>
-          <ui-text-style color="muted"
-                         variant="semibold">{{ view.commentCount }}
-            {{ 'comments' | cpI18n }}
-          </ui-text-style>
-        </ng-container>
-      </div>
     </footer>
 
-  </cp-card>
+  </ready-ui-card>
 
   <ready-ui-menu #primary="menu"
                  (closed)="closeMenu.next()"
@@ -100,6 +110,7 @@
       <ready-ui-menu-item ready-ui-menu-trigger
                           [triggerFor]="users"
                           overlayWidth="300px"
+                          direction="bottom-left"
                           [suffixTpl]="primaryMenu.usersSelected ? activeItem : undefined">
         <button ui-button
                 type="button"
@@ -117,6 +128,7 @@
                           ready-ui-menu-trigger
                           overlayWidth="300px"
                           [triggerFor]="channels"
+                          direction="bottom-left"
                           [suffixTpl]="primaryMenu.channelsSelected ? activeItem : undefined">
         <button ui-button
                 type="button"
@@ -133,6 +145,7 @@
       <ready-ui-menu-item overlayWidth="200px"
                           ready-ui-menu-trigger
                           [triggerFor]="status"
+                          direction="bottom-left"
                           [suffixTpl]="primaryMenu.statusSelected ? activeItem : undefined">
         <button ui-button
                 type="button"
@@ -148,6 +161,7 @@
       </ready-ui-menu-item>
       <ready-ui-menu-item ready-ui-menu-trigger
                           [triggerFor]="date"
+                          direction="bottom-left"
                           [suffixTpl]="primaryMenu.datesSelected ? activeItem : undefined">
         <button ui-button
                 type="button"

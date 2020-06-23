@@ -15,11 +15,6 @@ export const getFeedsState = createSelector(
   ({ feeds }: IWallsState) => feeds
 );
 
-export const getExpandedThreadIds = createSelector(
-  getFeedsState,
-  ({ expandedThreadIds }: IWallsFeedsState) => expandedThreadIds
-);
-
 export const getHost = createSelector(
   getFeedsState,
   ({ host }: IWallsFeedsState) => host
@@ -33,11 +28,6 @@ export const getSocialPostCategories = createSelector(
 export const getSocialGroupIds = createSelector(
   getFeedsState,
   ({ socialGroupIds }: IWallsFeedsState) => socialGroupIds
-);
-
-export const getFilterUsers = createSelector(
-  getFeedsState,
-  ({ users }: IWallsFeedsState) => users
 );
 
 export const getComments = createSelector(
@@ -101,7 +91,6 @@ export const getResults = createSelector(
      * filter searched results by current filters state
      */
     const { results, threads, comments } = state;
-
     const filters = getFiltersToApply(state);
 
     const validThreadIds = threads
@@ -111,40 +100,20 @@ export const getResults = createSelector(
       .filter((thread) => filters.every((filterFn) => filterFn(thread, true)))
       .map((t) => t.id);
 
-    return results
-      .filter((r) => {
-        return r.type === 'THREAD' ? validThreadIds.includes(r.id) : validCommentIds.includes(r.id);
-      })
-      .map((r) => {
-        if (r.type === 'THREAD' && r.children && r.children.length) {
-          return {
-            ...r,
-            children: r.children.filter((commentId) => validCommentIds.includes(commentId))
-          };
-        }
-        return r;
-      });
+    return results.filter(({ type, id }) => {
+      if (type === 'COMMENT') {
+        return validCommentIds.includes(id);
+      }
+      return validThreadIds.includes(id);
+    });
   }
 );
-
-export const getThreadById = (threadId: number) =>
-  createSelector(
-    getFeedsState,
-    ({ threads }: IWallsFeedsState) => threads.find((t) => t.id === threadId)
-  );
-
-export const getCommentById = (commentId: number) =>
-  createSelector(
-    getFeedsState,
-    ({ comments }: IWallsFeedsState) => comments.find((t) => t.id === commentId)
-  );
 
 function getFiltersToApply({ end, start, group, postType, flaggedByUser, flaggedByModerators }) {
   const filters = [];
   // the post_type field in comments is not a Social Post Category
-  const postTypeFilter = (thread, isComment = false) =>
-    isComment ? true : thread.post_type === postType.id;
-  const flaggedByUserFilter = (thread) => thread.dislikes > 0;
+  const postTypeFilter = (thread) => thread.post_type === postType.id;
+  const flaggedByUserFilter = (thread) => thread.dislikes > 3 && thread.flag !== 2;
   const flaggedByModeratorsFilter = (thread) => thread.flag < 0;
   const groupIdFilter = (thread) => thread.group_id === group.id;
   const byDate = ({ added_time }) => added_time >= start && added_time <= end;

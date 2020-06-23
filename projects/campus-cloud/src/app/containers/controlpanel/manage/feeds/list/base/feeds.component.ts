@@ -7,6 +7,7 @@ import {
   map,
   tap,
   take,
+  share,
   filter,
   mergeMap,
   switchMap,
@@ -24,10 +25,20 @@ import { GroupType } from '../../feeds.utils.service';
 import { appStorage } from '@campus-cloud/shared/utils';
 import { FeedsUtilsService } from '../../feeds.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { FeedsSearchUtilsService } from '../../feeds-search.utils.service';
 import { UserService, StoreService, ReadyStore } from '@campus-cloud/shared/services';
-import { SocialWallContentObjectType, SocialWallContent, ISocialGroup } from './../../model';
+import {
+  ISocialGroup,
+  ICampusThread,
+  SocialWallContent,
+  ISocialGroupThread,
+  ICampusThreadComment,
+  ISocialGroupThreadComment,
+  SocialWallContentObjectType
+} from '@controlpanel/manage/feeds/model';
 
 interface IState {
+  orderBy: string;
   group_id: number;
   feeds: Array<any>;
   searchTerm: string;
@@ -49,6 +60,7 @@ const state: IState = {
   searchTerm: '',
   post_types: 1,
   group_id: null,
+  orderBy: 'score',
   is_integrated: false,
   isCampusThread: true,
   flagged_by_users_only: null,
@@ -69,6 +81,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     results: any[];
     loading: boolean;
     host: ReadyStore;
+    searching: boolean;
+    state: 'default' | 'search';
     socialGroup: ISocialGroup;
   }>;
 
@@ -100,6 +114,111 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   trackByFn(_: number, item) {
     return item.id;
+  }
+
+  hasFilters() {
+    const {
+      end,
+      start,
+      user_ids,
+      group_id,
+      post_types,
+      flagged_by_users_only,
+      removed_by_moderators_only
+    } = this.state;
+
+    return (
+      !!end ||
+      !!start ||
+      !!group_id ||
+      !!post_types ||
+      !!user_ids.length ||
+      !!flagged_by_users_only ||
+      !!removed_by_moderators_only
+    );
+  }
+
+  sortingHandler(orderBy) {
+    this.state = { ...this.state, orderBy };
+    const { searchTerm } = this.state;
+    this.searchHandler(searchTerm);
+  }
+
+  getSocialObjectsFromSocialWallContentResponse(
+    results: SocialWallContent[]
+  ): Observable<
+    (ICampusThread | ICampusThreadComment | ISocialGroupThread | ISocialGroupThreadComment)[]
+  > {
+    /**
+     * get all ids to be used to call each endpoint separately
+     */
+    const {
+      groupThreadIds,
+      campusThreadIds,
+      groupThreadCommentIds,
+      campusThreadCommentIds
+    } = FeedsSearchUtilsService.getThreadIdsBySocialWallContentResults(results);
+
+    /**
+     * dont call the api unless we have matching results
+     */
+    if (this.state.isCampusThread && !campusThreadIds.length && !campusThreadCommentIds.length) {
+      return of([]);
+    } else if (
+      !this.state.isCampusThread &&
+      !groupThreadIds.length &&
+      !groupThreadCommentIds.length
+    ) {
+      return of([]);
+    }
+    let threadSearch = this.getFilterParams();
+
+    threadSearch = this.state.isCampusThread
+      ? threadSearch
+          .set('school_id', this.session.g.get('school').id.toString())
+          .set('thread_ids', campusThreadIds.length ? campusThreadIds.join(',') : null)
+          .set(
+            'comment_ids',
+            campusThreadCommentIds.length ? campusThreadCommentIds.join(',') : null
+          )
+      : threadSearch
+          .set('group_id', this.state.group_id.toString())
+          .set('group_thread_ids', groupThreadIds.length ? groupThreadIds.join(',') : null)
+          .set(
+            'comment_ids',
+            groupThreadCommentIds.length ? groupThreadCommentIds.join(',') : null
+          );
+
+    const groupThreads$ = this.service
+      .getGroupThreadsByIds(threadSearch)
+      .pipe(filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id)));
+
+    const groupComments$ = this.service
+      .getGroupCommentsByIds(threadSearch)
+      .pipe(filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id)));
+
+    const campusThreads$ = this.service.getCampusThreadByIds(threadSearch);
+    const campusComments$ = this.service.getCampusCommentsByIds(threadSearch);
+
+    const campusWallResults$ = zip(campusThreads$, campusComments$);
+    const socialGroupResults$ = zip(groupThreads$, groupComments$);
+
+    const threads$ = this.state.isCampusThread ? campusWallResults$ : socialGroupResults$;
+
+    return threads$.pipe(
+      map(
+        ([threads, comments]: [
+          (ISocialGroupThread | ICampusThread)[],
+          (ICampusThreadComment | ISocialGroupThreadComment)[]
+        ]) => {
+          const orderedResults = FeedsSearchUtilsService.enforceSocialWallContentOrder(results, [
+            ...threads,
+            ...comments
+          ]);
+          return orderedResults;
+        }
+      )
+    );
   }
 
   searchHandler(searchTerm: string) {
@@ -153,7 +272,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     searchCampusParam = searchCampusParam
       .set('obj_types', validObjectTypes.join(','))
-      .set('search_str', searchTerm);
+      .set('search_str', searchTerm)
+      .set('order_by', this.state.orderBy.toString());
 
     /**
      * do ranged search on all valid object types
@@ -164,141 +284,11 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     const stream$ = matchingResources$.pipe(
       switchMap((results: SocialWallContent[]) => {
-        /**
-         * get all ids to be used to call each endpoint separately
-         */
-        const campusThreadIds = results
-          .filter((r: SocialWallContent) => r.obj_type === SocialWallContentObjectType.campusThread)
-          .map((r: SocialWallContent) => r.id);
-
-        const campusThreadCommentIds = results
-          .filter(
-            (r: SocialWallContent) => r.obj_type === SocialWallContentObjectType.campusComment
+        return this.getSocialObjectsFromSocialWallContentResponse(results).pipe(
+          map((threadsAndComments) =>
+            FeedsSearchUtilsService.replaceMatchedContent(threadsAndComments, results)
           )
-          .map((r: SocialWallContent) => r.id);
-
-        const groupThreadIds = results
-          .filter((r: SocialWallContent) => r.obj_type === SocialWallContentObjectType.groupThread)
-          .map((r: SocialWallContent) => r.id);
-
-        const groupThreadCommentIds = results
-          .filter((r: SocialWallContent) => r.obj_type === SocialWallContentObjectType.groupComment)
-          .map((r: SocialWallContent) => r.id);
-
-        /**
-         * dont call the api unless we have matching results
-         */
-        if (
-          this.state.isCampusThread &&
-          !campusThreadIds.length &&
-          !campusThreadCommentIds.length
-        ) {
-          return of([]);
-        } else if (
-          !this.state.isCampusThread &&
-          !groupThreadIds.length &&
-          !groupThreadCommentIds.length
-        ) {
-          return of([]);
-        }
-        let threadSearch = this.getFilterParams();
-
-        threadSearch = this.state.isCampusThread
-          ? threadSearch
-              .set('school_id', this.session.g.get('school').id.toString())
-              .set('thread_ids', campusThreadIds.length ? campusThreadIds.join(',') : null)
-              .set(
-                'comment_ids',
-                campusThreadCommentIds.length ? campusThreadCommentIds.join(',') : null
-              )
-          : threadSearch
-              .set('group_id', this.state.group_id.toString())
-              .set('group_thread_ids', groupThreadIds.length ? groupThreadIds.join(',') : null)
-              .set(
-                'comment_ids',
-                groupThreadCommentIds.length ? groupThreadCommentIds.join(',') : null
-              );
-
-        /**
-         * Convert the array of SocialWallContent into an object
-         * whose keys are the resources IDs and the value is the highlighted content
-         */
-        const replaceMatchedContent = (threads, messageKey = 'message') => {
-          const resultsAsObject = results.reduce((result, current: SocialWallContent) => {
-            result[current.id] = current.highlight;
-            return result;
-          }, {});
-
-          return threads.map((thread) => {
-            if (thread.id in resultsAsObject) {
-              const { name, description } = resultsAsObject[thread.id];
-              return {
-                ...thread,
-                display_name: name ? name[0] : thread.display_name,
-                [messageKey]: description ? description[0] : thread.description
-              };
-            }
-            return thread;
-          });
-        };
-
-        /**
-         * in order to preserve ES's ordering, we need to sort
-         * the results from GET by thread_ids request in the
-         * same order as we received them when doing the search
-         */
-        const orderBasedOnElasticSearchScore = (formattedResults) => {
-          const orderedSearchIds = results.map((r: SocialWallContent) => r.id);
-          const formattedResultsAsObject = formattedResults.reduce(
-            (result, current: SocialWallContent) => {
-              result[current.id] = current;
-              return result;
-            },
-            {}
-          );
-
-          return orderedSearchIds
-            .filter((resourceId: number) => resourceId in formattedResultsAsObject)
-            .map((resourceId: number) => formattedResultsAsObject[resourceId]);
-        };
-
-        const groupThreads$ = this.service
-          .getGroupThreadsByIds(threadSearch)
-          .pipe(
-            filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id))
-          );
-
-        const groupComments$ = this.service
-          .getGroupCommentsByIds(threadSearch)
-          .pipe(
-            filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id))
-          );
-
-        const socialGroupResults$ = zip(groupThreads$, groupComments$).pipe(
-          map(([threads, comments]) => {
-            const result = [
-              ...replaceMatchedContent(threads),
-              ...replaceMatchedContent(comments, 'comment')
-            ];
-            return orderBasedOnElasticSearchScore(result);
-          })
         );
-
-        const campusThreads$ = this.service.getCampusThreadByIds(threadSearch);
-        const campusComments$ = this.service.getCampusCommentsByIds(threadSearch);
-        const campusWallResults$ = zip(campusThreads$, campusComments$).pipe(
-          map(([threads, comments]) => {
-            const result = [
-              ...replaceMatchedContent(threads),
-              ...replaceMatchedContent(comments, 'comment')
-            ];
-            return orderBasedOnElasticSearchScore(result);
-          })
-        );
-
-        const threads$ = this.state.isCampusThread ? campusWallResults$ : socialGroupResults$;
-
-        return threads$;
       })
     );
 
@@ -365,18 +355,13 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       this.searchHandler(this.state.searchTerm);
       return;
     }
-
     this.fetch();
   }
 
   onPaginationNext() {
     super.goToNext();
 
-    if (this.state.searchTerm) {
-      this.searchHandler(this.state.searchTerm);
-    } else {
-      this.fetch();
-    }
+    this.fetch();
   }
 
   onPaginationPrevious() {
@@ -416,26 +401,42 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   private fetch() {
     let search = this.getFilterParams();
+    const hasFilters = this.hasFilters();
+
+    const validObjectTypes = [];
+
+    if (!this.state.isCampusThread) {
+      validObjectTypes.push(SocialWallContentObjectType.groupThread);
+      if (hasFilters) {
+        validObjectTypes.push(SocialWallContentObjectType.groupComment);
+      }
+    } else {
+      validObjectTypes.push(SocialWallContentObjectType.campusThread);
+      if (hasFilters) {
+        validObjectTypes.push(SocialWallContentObjectType.campusComment);
+      }
+    }
     search = this.state.isCampusThread
       ? search.append('school_id', this.session.g.get('school').id.toString())
       : search.append('group_id', this.state.group_id.toString());
 
+    search = search.set('obj_types', validObjectTypes.join(','));
+
     const stream$ = this.doAdvancedSearch(search);
+
     super
       .fetchData(stream$)
-      .then((res) => {
-        this.store.dispatch(fromStore.addThreads({ threads: res.data }));
-        this.state = Object.assign({}, this.state, { feeds: res.data });
-      })
+      .then(({ data }) => this.store.dispatch(fromStore.setResults({ results: data })))
       .catch((_) => null);
   }
 
   doAdvancedSearch(search) {
-    const groupThread$ = this.service.getGroupWallFeeds(this.startRange, this.endRange, search);
-    const campusThread$ = this.service.getCampusWallFeeds(this.startRange, this.endRange, search);
+    const results$ = this.service
+      .searchCampusWall(this.startRange, this.endRange, search)
+      .pipe(switchMap(this.getSocialObjectsFromSocialWallContentResponse.bind(this)));
 
     if (!this.state.isCampusThread) {
-      return groupThread$;
+      return results$;
     }
     // do not call the API if we have categories
     const channels$ = this.store.select(fromStore.getSocialPostCategories).pipe(
@@ -459,7 +460,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       })
     );
 
-    return combineLatest([campusThread$, channels$]).pipe(map(([trheads]) => trheads));
+    return combineLatest([results$, channels$]).pipe(map(([results]) => results));
   }
 
   ngOnInit() {
@@ -534,52 +535,25 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     this.loading$ = merge(super.isLoading(), this.searching.asObservable()).pipe(startWith(true));
 
-    const posts$ = this.store.pipe(select(fromStore.getThreads));
-    const results$ = this.store.pipe(select(fromStore.getResults));
-    const comments$ = this.store.pipe(select(fromStore.getComments));
+    const posts$ = this.store.pipe(select(fromStore.getThreads)).pipe(share());
+    const results$ = this.store.pipe(select(fromStore.getResults)).pipe(share());
+    const comments$ = this.store.pipe(select(fromStore.getComments)).pipe(share());
 
-    /**
-     * whenever either of these observables
-     * emits iterate over the results and append the
-     * correspondant object (comment, thread) as long
-     * as it is still active, clean up the potential undefined
-     * results at the end
-     */
-    const searchResults$ = combineLatest([results$, posts$, comments$, filters$]).pipe(
-      filter(([, , , { searchTerm }]) => searchTerm !== ''),
-      map(([results, posts, comments]) => {
-        return results
-          .map(({ id, type, children }) => {
-            if (type === 'COMMENT') {
-              return comments.find((c) => c.id === id);
-            }
-            const thread = posts.find((p) => p.id === id);
-            return !children
-              ? thread
-              : {
-                  ...thread,
-                  children: comments.filter((comment) => children.includes(comment.id))
-                };
-          })
-          .filter((r) => r);
+    const newPosts$ = posts$.pipe(distinctUntilChanged());
+    const resultObjs$ = combineLatest([posts$, results$, comments$]).pipe(
+      filter(() => this.hasFilters() || this.state.searchTerm !== ''),
+      map(([posts, results, comments]) => {
+        return results.map(({ id, type }) => {
+          if (type === 'COMMENT') {
+            return comments.find((c) => c.id === id);
+          }
+
+          return posts.find((c) => c.id === id);
+        });
       })
     );
 
-    const regularThreads$ = combineLatest([posts$, results$]).pipe(
-      map(([posts, results]) => {
-        if (results.length) {
-          const resultPostIds = results.filter((r) => r.type === 'THREAD').map((r) => r.id);
-          return posts.filter((p) => resultPostIds.includes(p.id));
-        }
-        return posts;
-      })
-    );
-
-    /**
-     * whenever either of these
-     * observables emits update the list
-     */
-    this.results$ = merge(regularThreads$, searchResults$);
+    this.results$ = merge(newPosts$, resultObjs$);
 
     const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
 
@@ -604,11 +578,13 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       this.filters$,
       this.selectedHost$
     ]).pipe(
-      map(([loading, results, host, { group }, selectedHost]) => ({
+      map(([loading, results, host, { group, searchTerm }, selectedHost]) => ({
         host: selectedHost ? selectedHost : host,
         results,
         loading,
-        socialGroup: group
+        socialGroup: group,
+        searching: searchTerm !== '',
+        state: this.hasFilters() || this.state.searchTerm !== '' ? 'search' : 'default'
       }))
     );
   }
@@ -616,7 +592,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    this.store.dispatch(fromStore.resetState());
   }
 
   getGroups() {

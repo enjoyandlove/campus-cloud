@@ -1,4 +1,5 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
 
 .centered-button {
   height: 36px;
@@ -17,11 +18,6 @@ ready-ui-icon[name="close"] {
 button.primary {
   display: flex;
 }
-
-cp-feed-tags {
-  flex: 1 0;
-}
-
 
 .dates {
   padding: 2em;
@@ -79,7 +75,7 @@ ready-ui-menu-item {
   }
 }
 
-cp-card {
+ready-ui-card {
   .wrapper {
     flex: 1;
     display: flex;
@@ -112,35 +108,11 @@ cp-card {
       }
     }
 
-    input,
-    button {
-
-      &:hover ~ .wrapper__border:after,
-      &:focus ~ .wrapper__border:after,
-      &:active ~ .wrapper__border:after {
-        border-color: $color-text;
-      }
-    }
-
     button {
       line-height: 1;
       font-size: 1.5em;
       margin-right: 0.4em;
       color: $color-med-grey;
-    }
-
-    &__border:after {
-      top: 0;
-      left: 0;
-      content: '';
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 4px;
-      position: absolute;
-      pointer-events: none;
-      border: 1px solid #E6E6E6;
-      transition: border 300ms ease-in;
     }
   }
 }
@@ -151,8 +123,6 @@ cp-card {
 
 footer {
   display: flex;
-  margin-top: 1em;
-  align-items: flex-start;
   justify-content: space-between;
 
   cp-feed-tags {
@@ -160,11 +130,18 @@ footer {
   }
 
   .counter {
-    display: flex;
-    justify-content: flex-end;
+    &__skeleton {
+      ready-ui-skeleton-text:not(:last-child) {
+        margin-bottom: 4px;
+      }
+    }
 
-    ui-text-style:not(:last-child) {
-      margin-right: 8px;
+    &__heading {
+      @include font-16px();
+    }
+
+    &__heading {
+      display: block;
     }
   }
 }

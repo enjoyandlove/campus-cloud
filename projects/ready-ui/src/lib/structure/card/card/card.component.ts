@@ -1,9 +1,16 @@
-import { Input, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Component,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 @Component({
   selector: 'ready-ui-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent implements OnInit {

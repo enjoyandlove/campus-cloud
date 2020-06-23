@@ -45,7 +45,8 @@ const icons = {
   arrow_back: 'arrow_back',
   add_circle: 'add_circle',
   add_circle_outline: 'add_circle_outline',
-  collections: 'collections'
+  collections: 'collections',
+  more_vert: 'more_vert'
 };
 
 storiesOf('Images and Icons/Icons', module)

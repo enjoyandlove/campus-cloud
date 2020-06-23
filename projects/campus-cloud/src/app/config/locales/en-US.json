@@ -2911,6 +2911,12 @@
   "t_feeds_people_who_liked": {
     "message": "People who liked"
   },
+  "t_feeds_results_for": {
+    "message": "Results for \"%s\""
+  },
+  "t_feeds_search_results": {
+    "message": "Search Results"
+  },
   "t_help_desk_faq": {
     "message": "Guides & FAQ"
   },
@@ -3696,6 +3702,12 @@
   "t_shared_monday": {
     "message": "Monday"
   },
+  "t_shared_most_recent": {
+    "message": "Most Recent"
+  },
+  "t_shared_most_relevant": {
+    "message": "Most Relevant"
+  },
   "t_shared_no": {
     "message": "No"
   },
@@ -3938,6 +3950,9 @@
   },
   "t_unsupported_browser_modal_header": {
     "message": "Unsupported browser detected"
+  },
+  "t_walls_all_channels": {
+    "message": "All Channels"
   },
   "t_walls_campus_walls_channels": {
     "message": "Campus Channels"

@@ -39,6 +39,11 @@
     }
   }
 
+  ready-ui-card-divider {
+    margin-left: calc(var(--padding) * -1);
+    margin-right: calc(var(--padding) * -1);
+  }
+
   &__footer {
     padding-top: 0;
     padding: var(--padding);

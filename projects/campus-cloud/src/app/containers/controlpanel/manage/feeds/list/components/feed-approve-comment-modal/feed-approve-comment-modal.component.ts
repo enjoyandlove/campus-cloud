@@ -45,7 +45,7 @@ export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
     const stream$ = this._isCampusWallView ? updateCampusWallComment$ : updateGroupWallComment$;
 
     stream$.subscribe((updatedComment) => {
-      $('#approveCommentModal').modal('hide');
+      $('#approveFeedModal').modal('hide');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.store.dispatch(fromStore.updateComment({ comment: updatedComment }));
       this.approved.emit(this.feed.id);

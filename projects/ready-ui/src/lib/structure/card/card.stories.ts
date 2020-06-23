@@ -43,4 +43,15 @@ storiesOf('Structure/Card', module)
     {
       notes: readme
     }
-  );
+  )
+  .add('With Divider', () => {
+    return {
+      template: `
+    <ready-ui-card>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse voluptates culpa iusto sed eligendi soluta tempore
+        <ready-ui-card-divider></ready-ui-card-divider>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse voluptates culpa iusto sed eligendi soluta tempore
+      </ready-ui-card>
+    `
+    };
+  });

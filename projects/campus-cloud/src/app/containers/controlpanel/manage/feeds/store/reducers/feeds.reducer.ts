@@ -101,25 +101,7 @@ const _feedsReducer = createReducer(
       end
     };
   }),
-  on(WallsActions.removeResult, (state: IWallsFeedsState, { payload }) => {
-    const { resultId, type } = payload;
-    return {
-      ...state,
-      results: state.results.filter((r) => r.id !== resultId && r.type === type)
-    };
-  }),
-  on(WallsActions.expandComments, (state: IWallsFeedsState, { threadId }) => {
-    const expanded = state.expandedThreadIds.indexOf(threadId) === -1;
 
-    const expandedThreadIds = !expanded
-      ? state.expandedThreadIds.filter((id) => id !== threadId)
-      : [...state.expandedThreadIds, threadId];
-
-    return {
-      ...state,
-      expandedThreadIds
-    };
-  }),
   on(WallsActions.resetState, (state: IWallsFeedsState) => {
     return {
       ...state,
@@ -198,13 +180,6 @@ const _feedsReducer = createReducer(
     };
   }),
 
-  on(WallsActions.addComments, (state: IWallsFeedsState, { comments }) => {
-    return {
-      ...state,
-      comments
-    };
-  }),
-
   on(WallsActions.addComment, (state: IWallsFeedsState, { comment }) => {
     return {
       ...state,
@@ -230,26 +205,15 @@ const _feedsReducer = createReducer(
     const isComment = (r) => Boolean(getParentThreadId(r));
 
     const comments = results.filter(isComment);
-    const hasComments = results.filter(isComment).length > 0;
     const threads = results.filter((r) => !isComment(r));
-
-    if (!hasComments) {
-      return {
-        ...state,
-        threads,
-        comments,
-        editing: null,
-        expandedThreadIds: [],
-        results: results.map((r) => ({ id: r.id, type: 'THREAD' }))
-      };
-    }
 
     return {
       ...state,
       threads,
       comments,
+      editing: null,
       expandedThreadIds: [],
-      results: groupThreads(results)
+      results: results.map((r) => ({ id: r.id, type: isComment(r) ? 'COMMENT' : 'THREAD' }))
     };
   })
 );

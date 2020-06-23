@@ -98,6 +98,7 @@ export class FeedSearchComponent implements OnInit {
     channelsMenu: any;
     postCount: number;
     counting: boolean;
+    searchTitle: string;
     commentCount: number;
     hasFiltersActive: boolean;
   }>;
@@ -135,9 +136,10 @@ export class FeedSearchComponent implements OnInit {
 
   ngOnInit() {
     this.input$.subscribe();
-    const viewFilters$ = this.store
-      .pipe(select(fromStore.getViewFilters))
-      .pipe(tap((filters) => this.viewFilters$.next(filters)));
+    const viewFilters$ = this.store.pipe(select(fromStore.getViewFilters)).pipe(
+      tap((filters) => this.viewFilters$.next(filters)),
+      share()
+    );
 
     this.studentsMenu$ = combineLatest([
       this.fetchStudents(),
@@ -296,6 +298,26 @@ export class FeedSearchComponent implements OnInit {
       mapTo(true)
     );
     const countisDone$ = count$.pipe(mapTo(false));
+    const searchTerm$ = viewFilters$.pipe(
+      map(({ searchTerm }) => searchTerm),
+      startWith(''),
+      tap((searchTerm) => this.form.get('query').setValue(searchTerm))
+    );
+
+    const searchTitle$ = combineLatest([viewFilters$]).pipe(
+      map(([{ postType, group, searchTerm }]) => {
+        if (searchTerm !== '') {
+          return 't_feeds_results_for';
+        } else if (postType) {
+          return `[NOTRANSLATE]${postType.name}[NOTRANSLATE]`;
+        } else if (group) {
+          return `[NOTRANSLATE]${group.name}[NOTRANSLATE]`;
+        }
+        return 't_walls_all_channels';
+      }),
+      startWith('t_walls_all_channels')
+    );
+
     const calculatingCount$ = merge(filtersChanged$, countisDone$).pipe(distinctUntilChanged());
 
     this.view$ = combineLatest([
@@ -307,7 +329,8 @@ export class FeedSearchComponent implements OnInit {
       this.channelsMenu$.pipe(startWith(false)),
       count$.pipe(startWith(false)),
       calculatingCount$.pipe(startWith(true)),
-      viewFilters$.pipe(map(({ group }) => group !== null))
+      searchTitle$,
+      searchTerm$
     ]).pipe(
       map(
         ([
@@ -319,7 +342,8 @@ export class FeedSearchComponent implements OnInit {
           channelsMenu,
           count,
           counting,
-          isHostWallView
+          searchTitle,
+          searchTerm
         ]) => ({
           hasFiltersActive,
           dateMenu,
@@ -329,7 +353,8 @@ export class FeedSearchComponent implements OnInit {
           channelsMenu,
           ...count,
           counting,
-          isHostWallView
+          searchTitle,
+          searchTerm
         })
       )
     );

@@ -21,22 +21,21 @@
         <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
         <ng-container *ngSwitchCase="false">
-          <ng-container *ngFor="let feed of view.results; trackBy: trackById">
+          <div class="page__sorting"
+               *ngIf="view.searching">
+            <cp-feed-sorting [sortingBy]="state.orderBy"
+                             (change)="sortingHandler($event)">
+            </cp-feed-sorting>
+          </div>
 
-            <cp-feed-item [feed]="feed"
-                          [groupId]="groupId"
-                          [groupType]="groupType"
+          <ng-container *ngFor="let feed of view.results; trackBy: trackById">
+            <cp-feed-item [mode]="view.state"
                           [isCampusWallView]="isCampusWallView$"
                           (filterByCategory)="onFilterByCategory($event)"
                           [readOnlyMode]="!view.host && !view.socialGroup"
-                          *ngIf="!feed.campus_thread_id && !feed.group_thread_id">
+                          [feed]="!!feed.campus_thread_id || !!feed.group_thread_id ? undefined : feed"
+                          [comment]="!feed.campus_thread_id || !feed.group_thread_id ? feed : undefined">
             </cp-feed-item>
-            <cp-feed-comment [comment]="feed"
-                             [replyView]="[true]"
-                             showParentThread="true"
-                             [isCampusWallView]="isCampusWallView$"
-                             *ngIf="!!feed.campus_thread_id || !!feed.group_thread_id">
-            </cp-feed-comment>
           </ng-container>
 
 

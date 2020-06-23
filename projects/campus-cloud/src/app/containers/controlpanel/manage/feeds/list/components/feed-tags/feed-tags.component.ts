@@ -119,15 +119,6 @@ export class FeedTagsComponent implements OnInit {
           tags.push(dateTag);
         }
 
-        if (!group && !postType) {
-          tags.unshift({
-            canClose: false,
-            icon: 'ready-app',
-            cssClass: 'default-tag',
-            label: this.cpI18nPipe.transform('t_all_walls_campus_walls_channels')
-          });
-        }
-
         return tags;
       })
     );

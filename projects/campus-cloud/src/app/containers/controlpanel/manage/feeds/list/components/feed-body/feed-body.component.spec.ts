@@ -45,22 +45,4 @@ describe('FeedBodyComponent', () => {
       eventProperties
     );
   });
-
-  it('should track viewed comment event', () => {
-    component.trackEvent(true);
-
-    const eventName = amplitudeEvents.WALL_VIEWED_COMMENT;
-    const eventProperties = {
-      wall_source: 'All Categories',
-      sub_menu_name: 'Walls',
-      post_id: 548942,
-      likes: 'No',
-      creation_source: 'Manual',
-      comments: 'No',
-      upload_image: 'No'
-    };
-
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledWith(eventName, eventProperties);
-  });
 });

@@ -458,10 +458,12 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
+    const buttonText = this.replyView ? 'comment' : 'walls_button_create_post';
+
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('walls_button_create_post')
+      text: this.cpI18n.translate(buttonText)
     };
   }
 

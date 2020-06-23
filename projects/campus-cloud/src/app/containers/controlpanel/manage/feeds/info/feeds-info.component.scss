@@ -1,17 +1,89 @@
-.page {
-  display: flex;
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
 
-  &__sticky__wrapper {
-    top: 15px;
-    position: sticky;
-  }
+@mixin last-item {
+  border-radius: 0 0 4px 4px;
+  border-bottom: 1px solid $border-color;
+}
 
-  &__sidebar {
-    width: 250px;
-    margin-right: 40px;
-  }
+.cp-feeds-info {
+  .page {
+    display: flex;
 
-  &__content {
-    width: 715px;
+    &__sticky__wrapper {
+      top: 15px;
+      position: sticky;
+    }
+
+    &__sidebar {
+      width: 250px;
+      margin-right: 40px;
+    }
+
+    &__content {
+      @include card-shadow();
+
+      width: 715px;
+      overflow: hidden;
+      border-radius: 4px;
+
+      &__item,
+      &__input,
+      &__deleted {
+
+        .cp-card,
+        .ready-ui-card {
+          box-shadow: none;
+        }
+      }
+
+      &__deleted {
+        .avatar {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: 1px solid $border-color;
+        }
+
+        .ready-ui-card {
+          border-bottom: none;
+          border-radius: 4px 4px 0 0;
+        }
+
+        p {
+          margin-bottom: 0;
+        }
+      }
+
+      &__item {
+        &--no-bottom-border {
+          .cp-card {
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+          }
+        }
+      }
+
+      &__comments {
+        .page__content__item {
+          .cp-card {
+            border-radius: 0;
+            border-bottom: none;
+          }
+
+          &--last {
+            .cp-card {
+              @include last-item();
+            }
+          }
+        }
+      }
+
+      &__input {
+        .cp-card {
+          @include last-item();
+        }
+      }
+    }
   }
 }
