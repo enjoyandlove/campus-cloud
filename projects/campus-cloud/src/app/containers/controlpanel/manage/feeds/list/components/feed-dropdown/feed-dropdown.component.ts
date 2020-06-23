@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ModalService } from '@ready-education/ready-ui/overlays/modal/modal.service';
 import { Observable, Subject, of, combineLatest, BehaviorSubject } from 'rxjs';
 import { map, tap, take, mergeMap, takeUntil } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { get as _get, isEqual } from 'lodash';
 import { Store, select } from '@ngrx/store';
-import { Router } from '@angular/router';
 
 import * as fromStore from '../../../store';
 
@@ -57,6 +57,7 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
     private router: Router,
     private session: CPSession,
     public cpI18n: CPI18nService,
+    private route: ActivatedRoute,
     private utils: FeedsUtilsService,
     private userService: UserService,
     private modalService: ModalService,
@@ -76,8 +77,8 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
             if (readOnly) {
               return false;
             }
-
-            const notSearching = searchTerm === '';
+            const { name } = this.route.routeConfig.component;
+            const notSearching = searchTerm === '' || name === 'FeedsInfoComponent';
             const notDeleted = !flaggedByModerators;
             const hostHasAccessToSocialGroup = socialGroupIds.includes(this.feed.extern_poster_id);
             return notSearching && notDeleted && hostHasAccessToSocialGroup;
