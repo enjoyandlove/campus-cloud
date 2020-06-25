@@ -76,6 +76,5 @@ describe('FeedApproveCommentModalComponent', () => {
     expect(component.buttonData.disabled).toBe(false);
     expect(component.approved.emit).toHaveBeenCalled();
     expect(component.teardown.emit).toHaveBeenCalled();
-    expect(component.approved.emit).toHaveBeenCalledWith(mockFeed.id);
   });
 });
