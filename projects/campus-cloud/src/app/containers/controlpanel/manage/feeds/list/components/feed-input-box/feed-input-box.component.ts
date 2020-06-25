@@ -365,7 +365,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   buildForm() {
     this.form = this.fb.group(
       {
-        group_id: [null],
         school_id: [this.session.g.get('school').id],
         store_id: [null, Validators.required],
         message_image_url_list: [[]],
@@ -438,10 +437,13 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
             }
             if (group) {
               this.form.removeControl('post_type');
+              this.form.registerControl('group_id', new FormControl(null, Validators.required));
               this.form.get('group_id').setValue(group.id);
               this.form.get('store_id').setValue(group.related_obj_id);
             } else {
+              this.form.removeControl('group_id');
               this.form.registerControl('post_type', new FormControl(null, Validators.required));
+              this.form.get('post_type').setValue(null);
 
               // when Channels filters is set to a Social Post Category
               if (postType && !this.replyView) {
