@@ -21,7 +21,7 @@ export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Input() isCampusWallView: Observable<{}>;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() approved: EventEmitter<number> = new EventEmitter();
+  @Output() approved: EventEmitter<any> = new EventEmitter();
 
   buttonData;
   _isCampusWallView;
@@ -48,7 +48,7 @@ export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
       $('#approveFeedModal').modal('hide');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.store.dispatch(fromStore.updateComment({ comment: updatedComment }));
-      this.approved.emit(this.feed.id);
+      this.approved.emit(updatedComment);
       this.teardown.emit();
     });
   }

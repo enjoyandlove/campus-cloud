@@ -1,5 +1,6 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { StoreModule, Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
@@ -25,7 +26,9 @@ describe('FeedItemComponent', () => {
             bannedEmails: fromStore.bannedEmailsReducer
           })
         ],
-        providers: []
+        providers: [
+          { provide: ActivatedRoute, useValue: { routeConfig: { component: 'DummyComponent' } } }
+        ]
       });
       await TestBed.compileComponents();
     })()

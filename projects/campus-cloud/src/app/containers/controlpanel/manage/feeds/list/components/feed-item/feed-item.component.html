@@ -66,6 +66,6 @@
   <cp-feed-approve-comment-modal [feed]="comment"
                                  (teardown)="isApproveModal = false"
                                  [isCampusWallView]="isCampusWallView"
-                                 (approved)="approved.emit(comment.id)">
+                                 (approved)="approved.emit($event)">
   </cp-feed-approve-comment-modal>
 </cp-modal>
