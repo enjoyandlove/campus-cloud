@@ -304,16 +304,19 @@ export class FeedSearchComponent implements OnInit {
       tap((searchTerm) => this.form.get('query').setValue(searchTerm))
     );
 
-    const searchTitle$ = combineLatest([viewFilters$]).pipe(
-      map(([{ postType, group, searchTerm }]) => {
-        if (searchTerm !== '') {
-          return 't_feeds_results_for';
+    const searchTitle$ = combineLatest([viewFilters$, this.hasFiltersActive$]).pipe(
+      map(([{ postType, group, searchTerm }, hasFilters]) => {
+        if ((hasFilters && !postType && !group) || (searchTerm !== '' && (postType || group))) {
+          return 't_feeds_search_results';
         } else if (postType) {
           return `[NOTRANSLATE]${postType.name}[NOTRANSLATE]`;
         } else if (group) {
           return `[NOTRANSLATE]${group.name}[NOTRANSLATE]`;
+        } else if (searchTerm !== '') {
+          return 't_feeds_results_for';
+        } else {
+          return 't_walls_all_channels';
         }
-        return 't_walls_all_channels';
       }),
       startWith('t_walls_all_channels')
     );

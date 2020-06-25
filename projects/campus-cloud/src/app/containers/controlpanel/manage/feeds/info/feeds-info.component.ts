@@ -140,16 +140,12 @@ export class FeedsInfoComponent implements OnInit {
     this.loadCategories();
   }
 
-  approvedHandler(commentId: number) {
+  approvedHandler(approvedComment: ICampusThreadComment | ISocialGroupThreadComment) {
+    const { id } = approvedComment;
     const comments = this.comments$.value as (ICampusThreadComment | ISocialGroupThreadComment)[];
-    const updatedComments = comments.map((c) =>
-      c.id === commentId
-        ? {
-            ...c,
-            dislikes: c.dislikes > 1 ? c.dislikes - 1 : 0
-          }
-        : c
-    ) as ICampusThreadComment[] | ISocialGroupThreadComment[];
+    const updatedComments = comments.map((c) => (c.id === id ? approvedComment : c)) as
+      | ICampusThreadComment[]
+      | ISocialGroupThreadComment[];
     this.comments$.next(updatedComments);
   }
 
