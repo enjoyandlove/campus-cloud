@@ -174,31 +174,44 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     let threadSearch = this.getFilterParams();
 
     threadSearch = this.state.isCampusThread
-      ? threadSearch
-          .set('school_id', this.session.g.get('school').id.toString())
-          .set('thread_ids', campusThreadIds.length ? campusThreadIds.join(',') : null)
-          .set(
-            'comment_ids',
-            campusThreadCommentIds.length ? campusThreadCommentIds.join(',') : null
-          )
-      : threadSearch
-          .set('group_id', this.state.group_id.toString())
-          .set('group_thread_ids', groupThreadIds.length ? groupThreadIds.join(',') : null)
-          .set(
-            'comment_ids',
-            groupThreadCommentIds.length ? groupThreadCommentIds.join(',') : null
-          );
+      ? threadSearch.set('school_id', this.session.g.get('school').id.toString())
+      : threadSearch.set('group_id', this.state.group_id.toString());
 
-    const groupThreads$ = this.service
-      .getGroupThreadsByIds(threadSearch)
-      .pipe(filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id)));
+    const campusThreadParams = threadSearch.set(
+      'thread_ids',
+      campusThreadIds.length ? campusThreadIds.join(',') : null
+    );
+    const campusCommentParams = threadSearch.set(
+      'comment_ids',
+      campusThreadCommentIds.length ? campusThreadCommentIds.join(',') : null
+    );
+    const socialGroupThreadParams = threadSearch.set(
+      'group_thread_ids',
+      groupThreadIds.length ? groupThreadIds.join(',') : null
+    );
+    const socialGroupCommentParams = threadSearch.set(
+      'comment_ids',
+      groupThreadCommentIds.length ? groupThreadCommentIds.join(',') : null
+    );
 
-    const groupComments$ = this.service
-      .getGroupCommentsByIds(threadSearch)
-      .pipe(filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id)));
+    const groupThreads$ = groupThreadIds.length
+      ? this.service
+          .getGroupThreadsByIds(socialGroupThreadParams)
+          .pipe(filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id)))
+      : of([]);
 
-    const campusThreads$ = this.service.getCampusThreadByIds(threadSearch);
-    const campusComments$ = this.service.getCampusCommentsByIds(threadSearch);
+    const groupComments$ = groupThreadCommentIds.length
+      ? this.service
+          .getGroupCommentsByIds(socialGroupCommentParams)
+          .pipe(filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id)))
+      : of([]);
+
+    const campusThreads$ = campusThreadIds.length
+      ? this.service.getCampusThreadByIds(campusThreadParams)
+      : of([]);
+    const campusComments$ = campusThreadCommentIds.length
+      ? this.service.getCampusCommentsByIds(campusCommentParams)
+      : of([]);
 
     const campusWallResults$ = zip(campusThreads$, campusComments$);
     const socialGroupResults$ = zip(groupThreads$, groupComments$);
