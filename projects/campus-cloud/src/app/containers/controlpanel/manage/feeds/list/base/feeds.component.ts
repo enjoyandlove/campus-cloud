@@ -374,7 +374,11 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   onPaginationNext() {
     super.goToNext();
 
-    this.fetch();
+    if (this.state.searchTerm) {
+      this.searchHandler(this.state.searchTerm);
+    } else {
+      this.fetch();
+    }
   }
 
   onPaginationPrevious() {
