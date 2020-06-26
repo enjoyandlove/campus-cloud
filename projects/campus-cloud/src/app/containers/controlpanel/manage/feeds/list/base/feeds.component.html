@@ -12,7 +12,7 @@
       <div class="page__content">
         <cp-feed-search [groupId]="groupId"
                         [groupType]="groupType"
-                        (feedSearch)="searchHandler($event)"
+                        (feedSearch)="searchHandler($event, true)"
                         [hideIntegrations]="hideIntegrations"></cp-feed-search>
 
         <cp-feed-input-box *ngIf="view.host || view.socialGroup">
