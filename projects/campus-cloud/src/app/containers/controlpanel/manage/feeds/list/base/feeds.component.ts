@@ -127,15 +127,15 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       removed_by_moderators_only
     } = this.state;
 
-    return (
+    const activeFilters =
       !!end ||
       !!start ||
-      !!group_id ||
       !!post_types ||
       !!user_ids.length ||
       !!flagged_by_users_only ||
-      !!removed_by_moderators_only
-    );
+      !!removed_by_moderators_only;
+
+    return this.groupId ? activeFilters : activeFilters || !!group_id;
   }
 
   sortingHandler(orderBy) {
@@ -234,8 +234,12 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     );
   }
 
-  searchHandler(searchTerm: string) {
+  searchHandler(searchTerm: string, resetPagination = false) {
     searchTerm = searchTerm.trim();
+
+    if (resetPagination) {
+      this.resetPagination();
+    }
 
     // if searchTerm is empty do regular search
     if (!searchTerm) {
