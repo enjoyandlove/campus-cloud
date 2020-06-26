@@ -113,7 +113,7 @@ export class FeedsInfoComponent implements OnInit {
       this.comments$
     ]).pipe(
       map(([loading, host, { group }, selectedHost, feed, comments]) => {
-        const feedIsDeleted = JSON.stringify(feed) === '{}';
+        const feedIsDeleted = JSON.stringify(feed) === '{}' || (feed && feed.flag === -3);
         const updatedFeed = {
           ...feed,
           comment_count: comments.length
@@ -225,17 +225,15 @@ export class FeedsInfoComponent implements OnInit {
     const updateState = (thread: ICampusThread | ISocialGroupThread) =>
       this.store.dispatch(fromStore.addThread({ thread }));
 
-    return this.groupId
-      ? this.feedService.getGroupThreadById(this.feedId, params).pipe(
-          catchError(errorHandler),
-          tap(updateState),
-          share()
-        )
-      : this.feedService.getCampusThreadById(this.feedId, params).pipe(
-          catchError(errorHandler),
-          tap(updateState),
-          share()
-        );
+    const stream$ = this.groupId
+      ? this.feedService.getGroupThreadById(this.feedId, params)
+      : this.feedService.getCampusThreadById(this.feedId, params);
+
+    return stream$.pipe(
+      catchError(errorHandler),
+      tap(updateState),
+      share()
+    );
   }
 
   fetch(): Observable<{
