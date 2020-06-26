@@ -2881,8 +2881,14 @@
   "t_feeds_approve": {
     "message": "Approuver"
   },
+  "t_feeds_commented_in": {
+    "message": "commenté dans"
+  },
   "t_feeds_delete": {
     "message": "Supprimer"
+  },
+  "t_feeds_deleted_post": {
+    "message": "Cette publication a été supprimée."
   },
   "t_feeds_edit": {
     "message": "Éditer"
@@ -2896,11 +2902,20 @@
   "t_feeds_move": {
     "message": "Déplacer"
   },
+  "t_feeds_open_post": {
+    "message": "Ouvrir publication"
+  },
   "t_feeds_people_who_flagged": {
     "message": "Personnes qui ont signalé"
   },
   "t_feeds_people_who_liked": {
     "message": "Personnes qui ont aimé"
+  },
+  "t_feeds_results_for": {
+    "message": "Résultats pour \"%s\""
+  },
+  "t_feeds_search_results": {
+    "message": "Résultats de recherche"
   },
   "t_help_desk_faq": {
     "message": "Guides et FAQ"
@@ -3687,6 +3702,12 @@
   "t_shared_monday": {
     "message": "Lundi"
   },
+  "t_shared_most_recent": {
+    "message": "Plus récent"
+  },
+  "t_shared_most_relevant": {
+    "message": "Plus pertinent"
+  },
   "t_shared_no": {
     "message": "Non"
   },
@@ -3929,6 +3950,9 @@
   },
   "t_unsupported_browser_modal_header": {
     "message": "Navigateur non supporté détecté"
+  },
+  "t_walls_all_channels": {
+    "message": "Toutes les Chaînes"
   },
   "t_walls_campus_walls_channels": {
     "message": "Chaînes du Campus"
