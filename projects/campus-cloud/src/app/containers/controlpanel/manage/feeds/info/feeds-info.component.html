@@ -42,7 +42,7 @@
                             [class.page__content__item--last]="last && view.readOnly">
               </cp-feed-item>
             </div>
-            <div *ngIf="!view.readOnly"
+            <div *ngIf="!view.readOnly && view.feed"
                  class="page__content__input">
               <cp-feed-input-box [feed]="view.feed || {id: view.comments[0].campus_thread_id , post_type: view.comments[0].post_type }"
                                  [replyView]="true"
