@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 import { flatten } from 'lodash';
 
-import { Feed } from '@controlpanel/manage/feeds/model';
+import { Feed, SocialGroupTypes } from '@controlpanel/manage/feeds/model';
+import {
+  canAccountLevelReadResource,
+  canSchoolReadResource
+} from '@campus-cloud/shared/utils';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 /**
  * @deprecated
@@ -74,6 +80,24 @@ export class FeedsUtilsService {
     });
 
     return results;
+  }
+
+  static addGroupTypesParam(params: HttpParams, session: Map<any, any>) {
+    if (canSchoolReadResource(session, CP_PRIVILEGES_MAP.orientation)) {
+      params = params.append('group_types', SocialGroupTypes.calendar.toString());
+    }
+    if (
+      canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
+      canSchoolReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
+      canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
+      canSchoolReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
+      canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.services) ||
+      canSchoolReadResource(session, CP_PRIVILEGES_MAP.services)
+    ) {
+      params = params.append('group_types', SocialGroupTypes.store.toString());
+    }
+
+    return params;
   }
 
   constructor(private router: Router) {}

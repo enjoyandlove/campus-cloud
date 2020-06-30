@@ -84,18 +84,20 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
   }
 
   updateHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: {
-        heading: 't_shared_feature_integrations',
-        subheading: null,
-        em: null,
-        crumbs: {
-          url: 'feeds',
-          label: 'feeds'
-        },
-        children: []
-      }
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: fromRoot.baseActions.HEADER_UPDATE,
+        payload: {
+          heading: 't_shared_feature_integrations',
+          subheading: null,
+          em: null,
+          crumbs: {
+            url: 'feeds',
+            label: 'feeds'
+          },
+          children: []
+        }
+      });
     });
   }
 

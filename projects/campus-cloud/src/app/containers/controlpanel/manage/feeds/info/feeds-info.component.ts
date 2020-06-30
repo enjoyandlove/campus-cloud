@@ -30,6 +30,7 @@ import {
   ICampusThreadComment,
   ISocialGroupThreadComment
 } from '@controlpanel/manage/feeds/model';
+import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 
 @Component({
   selector: 'cp-feeds-info',
@@ -290,7 +291,8 @@ export class FeedsInfoComponent implements OnInit {
   }
 
   loadGroups() {
-    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+    let params = new HttpParams().set('school_id', this.session.school.id.toString());
+    params = FeedsUtilsService.addGroupTypesParam(params, this.session.g);
 
     this.store
       .select(fromStore.getSocialGroupIds)

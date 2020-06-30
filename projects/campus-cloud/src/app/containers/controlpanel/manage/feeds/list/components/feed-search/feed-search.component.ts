@@ -27,7 +27,7 @@ import * as numeral from 'numeral';
 import * as fromStore from '../../../store';
 import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
-import { GroupType } from '../../../feeds.utils.service';
+import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
@@ -496,7 +496,8 @@ export class FeedSearchComponent implements OnInit {
   }
 
   fetchSocialGroups() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+    let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+    search = FeedsUtilsService.addGroupTypesParam(search, this.session.g);
     return this.feedsService.getSocialGroups(search) as Observable<ISocialGroup[]>;
   }
 
