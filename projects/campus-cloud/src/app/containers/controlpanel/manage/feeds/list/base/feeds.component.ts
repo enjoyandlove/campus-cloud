@@ -616,7 +616,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   getGroups() {
-    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+    let params = new HttpParams().set('school_id', this.session.school.id.toString());
+    params = FeedsUtilsService.addGroupTypesParam(params, this.session.g);
     this.service
       .getSocialGroups(params)
       .pipe(

@@ -11,6 +11,7 @@ import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
+import { SocialGroupTypes } from '@controlpanel/manage/feeds/model';
 
 const TYPE_STRINGS = {
   [GroupType.orientation]: {
@@ -68,6 +69,8 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
 
     if (this.groupType === GroupType.orientation) {
       search = search.append('calendar_id', this.groupId.toString());
+    } else {
+      search = search.set('group_types', SocialGroupTypes.store.toString())
     }
 
     this.feedsService
