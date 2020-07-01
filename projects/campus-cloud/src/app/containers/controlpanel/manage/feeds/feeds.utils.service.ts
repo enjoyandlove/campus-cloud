@@ -83,8 +83,9 @@ export class FeedsUtilsService {
   }
 
   static addGroupTypesParam(params: HttpParams, session: Map<any, any>) {
+    let group_types = []
     if (canSchoolReadResource(session, CP_PRIVILEGES_MAP.orientation)) {
-      params = params.append('group_types', SocialGroupTypes.calendar.toString());
+      group_types.push(SocialGroupTypes.calendar);
     }
     if (
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.clubs) ||
@@ -94,7 +95,11 @@ export class FeedsUtilsService {
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.services) ||
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.services)
     ) {
-      params = params.append('group_types', SocialGroupTypes.store.toString());
+      group_types.push(SocialGroupTypes.store);
+    }
+
+    if (group_types) {
+      params = params.append('group_types', group_types.join(','))
     }
 
     return params;
