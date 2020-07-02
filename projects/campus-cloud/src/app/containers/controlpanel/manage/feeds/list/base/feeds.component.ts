@@ -49,7 +49,7 @@ interface IState {
   is_integrated: boolean;
   isCampusThread: boolean;
   flagged_by_users_only: number;
-  removed_by_moderators_only: number;
+  removed_by_moderators_or_users: number;
 }
 
 const state: IState = {
@@ -64,7 +64,7 @@ const state: IState = {
   is_integrated: false,
   isCampusThread: true,
   flagged_by_users_only: null,
-  removed_by_moderators_only: null
+  removed_by_moderators_or_users: null
 };
 
 @Component({
@@ -124,7 +124,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       group_id,
       post_types,
       flagged_by_users_only,
-      removed_by_moderators_only
+      removed_by_moderators_or_users
     } = this.state;
 
     const activeFilters =
@@ -133,7 +133,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       !!post_types ||
       !!user_ids.length ||
       !!flagged_by_users_only ||
-      !!removed_by_moderators_only;
+      !!removed_by_moderators_or_users;
 
     return this.groupId ? activeFilters : activeFilters || !!group_id;
   }
@@ -339,7 +339,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       is_integrated,
       related_obj_id,
       flagged_by_users_only,
-      removed_by_moderators_only
+      removed_by_moderators_or_users
     } = data;
 
     // TODO: fix this
@@ -365,7 +365,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       is_integrated: is_integrated,
       isCampusThread: group_id === null,
       flagged_by_users_only: flagged_by_users_only,
-      removed_by_moderators_only: removed_by_moderators_only
+      removed_by_moderators_or_users: removed_by_moderators_or_users
     });
 
     if (this.state.searchTerm) {
@@ -405,8 +405,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       ? this.state.flagged_by_users_only.toString()
       : null;
 
-    const removed = this.state.removed_by_moderators_only
-      ? this.state.removed_by_moderators_only.toString()
+    const removed = this.state.removed_by_moderators_or_users
+      ? this.state.removed_by_moderators_or_users.toString()
       : null;
 
     const type = this.state.post_types ? this.state.post_types.toString() : null;
@@ -414,7 +414,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     return new HttpParams()
       .set('post_types', type)
       .set('flagged_by_users_only', flagged)
-      .set('removed_by_moderators_only', removed)
+      .set('removed_by_moderators_or_users', removed)
       .set('end', start && end ? this.state.end.toString() : null)
       .set('start', start && end ? this.state.start.toString() : null)
       .set('user_ids', this.state.user_ids.length ? this.state.user_ids.join(',') : null);
@@ -549,7 +549,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
           flagged_by_users_only: flaggedByUser ? 1 : null,
           related_obj_id: group ? group.related_obj_id : null,
           is_integrated: postType ? postType.is_integrated : false,
-          removed_by_moderators_only: flaggedByModerators ? 1 : null
+          removed_by_moderators_or_users: flaggedByModerators ? 1 : null
         };
         this.onDoFilter(filtersObj);
       });

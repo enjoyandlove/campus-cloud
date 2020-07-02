@@ -1,71 +1,77 @@
-<div class="cp-card feed">
-  <div class="feed__header">
-    <cp-feed-header [mode]="mode"
-                    [isComment]="!feed"
-                    [feed]="feed || comment"
-                    (filterByCategory)="filterByCategory.emit($event)">
-    </cp-feed-header>
-    <div class="feed__more">
-      <cp-feed-dropdown [isComment]="!feed"
-                        [feed]="feed || comment"
-                        [readOnlyMode]="readOnlyMode"
-                        (selected)="onSelected($event)"
-                        [isCampusWallView]="isCampusWallView">
-      </cp-feed-dropdown>
+<ng-container *ngIf="view$ | async as view">
+  <div class="cp-card feed">
+    <div class="feed__header">
+      <cp-feed-header [mode]="mode"
+                      [isComment]="!feed"
+                      [feed]="feed || comment"
+                      (filterByCategory)="filterByCategory.emit($event)">
+      </cp-feed-header>
+      <div class="feed__more">
+        <cp-feed-dropdown [isComment]="!feed"
+                          [feed]="feed || comment"
+                          [readOnlyMode]="readOnlyMode"
+                          (selected)="onSelected($event)"
+                          [isCampusWallView]="isCampusWallView">
+        </cp-feed-dropdown>
+      </div>
+    </div>
+
+    <div class="row feed__body">
+      <div class="col-12">
+        <cp-feed-body [mode]="mode"
+                      [isComment]="!feed"
+                      [feed]="feed || comment">
+        </cp-feed-body>
+
+        <cp-feed-deleted-by *ngIf="view.deleted"
+                            [feed]="feed || comment"></cp-feed-deleted-by>
+      </div>
     </div>
   </div>
 
-  <div class="row feed__body">
-    <div class="col-12">
-      <cp-feed-body [mode]="mode"
-                    [isComment]="!feed"
-                    [feed]="feed || comment">
-      </cp-feed-body>
-    </div>
-  </div>
-</div>
 
-<cp-modal modalId="moveFeedModal"
-          *ngIf="isMoveModal">
-  <cp-feed-move-modal [feed]="feed"
-                      (moved)="onMoved($event)"
-                      (teardown)="isMoveModal = false">
-  </cp-feed-move-modal>
-</cp-modal>
+  <cp-modal modalId="moveFeedModal"
+            *ngIf="isMoveModal">
+    <cp-feed-move-modal [feed]="feed"
+                        (moved)="onMoved($event)"
+                        (teardown)="isMoveModal = false">
+    </cp-feed-move-modal>
+  </cp-modal>
 
-<cp-modal modalId="deleteFeedModal"
-          *ngIf="isDeleteModal && !!feed">
-  <cp-feed-delete-modal [feed]="feed"
-                        (deleted)="onDeleted()"
-                        (teardown)="isDeleteModal = false"
-                        [isCampusWallView]="isCampusWallView">
-  </cp-feed-delete-modal>
-</cp-modal>
+  <cp-modal modalId="deleteFeedModal"
+            *ngIf="isDeleteModal && !!feed">
+    <cp-feed-delete-modal [feed]="feed"
+                          (deleted)="onDeleted()"
+                          (teardown)="isDeleteModal = false"
+                          [isCampusWallView]="isCampusWallView">
+    </cp-feed-delete-modal>
+  </cp-modal>
 
-<cp-modal modalId="approveFeedModal"
-          *ngIf="isApproveModal && !!feed">
-  <cp-feed-approve-modal [feed]="feed"
-                         [isCampusWallView]="isCampusWallView"
-                         (teardown)="isApproveModal = false"
-                         (approved)="onApprovedPost($event)">
-  </cp-feed-approve-modal>
-</cp-modal>
+  <cp-modal modalId="approveFeedModal"
+            *ngIf="isApproveModal && !!feed">
+    <cp-feed-approve-modal [feed]="feed"
+                           [isCampusWallView]="isCampusWallView"
+                           (teardown)="isApproveModal = false"
+                           (approved)="onApprovedPost($event)">
+    </cp-feed-approve-modal>
+  </cp-modal>
 
 
-<cp-modal modalId="deleteFeedModal"
-          *ngIf="isDeleteModal && !!comment">
-  <cp-feed-delete-comment-modal [feed]="comment"
-                                (deleted)="deleted.emit()"
-                                (teardown)="isDeleteModal = false"
-                                [isCampusWallView]="isCampusWallView">
-  </cp-feed-delete-comment-modal>
-</cp-modal>
+  <cp-modal modalId="deleteFeedModal"
+            *ngIf="isDeleteModal && !!comment">
+    <cp-feed-delete-comment-modal [feed]="comment"
+                                  (deleted)="deleted.emit()"
+                                  (teardown)="isDeleteModal = false"
+                                  [isCampusWallView]="isCampusWallView">
+    </cp-feed-delete-comment-modal>
+  </cp-modal>
 
-<cp-modal modalId="approveFeedModal"
-          *ngIf="isApproveModal && !!comment">
-  <cp-feed-approve-comment-modal [feed]="comment"
-                                 (teardown)="isApproveModal = false"
-                                 [isCampusWallView]="isCampusWallView"
-                                 (approved)="approved.emit($event)">
-  </cp-feed-approve-comment-modal>
-</cp-modal>
+  <cp-modal modalId="approveFeedModal"
+            *ngIf="isApproveModal && !!comment">
+    <cp-feed-approve-comment-modal [feed]="comment"
+                                   (teardown)="isApproveModal = false"
+                                   [isCampusWallView]="isCampusWallView"
+                                   (approved)="approved.emit($event)">
+    </cp-feed-approve-comment-modal>
+  </cp-modal>
+</ng-container>

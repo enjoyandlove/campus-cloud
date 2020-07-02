@@ -175,7 +175,7 @@ describe('FeedSearchComponent', () => {
           'school_id',
           'search_str',
           'flagged_by_users_only',
-          'removed_by_moderators_only'
+          'removed_by_moderators_or_users'
         ];
 
         expect(commentParams.keys().length).toBe(acceptedParams.length);
