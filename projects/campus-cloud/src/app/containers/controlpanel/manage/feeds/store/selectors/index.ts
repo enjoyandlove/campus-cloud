@@ -113,7 +113,7 @@ function getFiltersToApply({ end, start, group, postType, flaggedByUser, flagged
   const filters = [];
   // the post_type field in comments is not a Social Post Category
   const postTypeFilter = (thread) => thread.post_type === postType.id;
-  const flaggedByUserFilter = (thread) => thread.dislikes >= 1 && thread.flag !== 2;
+  const flaggedByUserFilter = (thread) => thread.dislikes >= 4 && thread.flag !== 2;
   const flaggedByModeratorsFilter = (thread) => thread.flag < 0;
   const groupIdFilter = (thread) => thread.group_id === group.id;
   const byDate = ({ added_time }) => added_time >= start && added_time <= end;

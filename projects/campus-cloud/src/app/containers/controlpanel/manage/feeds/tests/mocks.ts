@@ -54,7 +54,8 @@ export const mockFeed = {
   image_url_list: [''],
   is_anonymous: false,
   email: 'sebastien@oohlalamobile.com',
-  avatar_thumb: 'https://d3tlp0m01b6d9o.cloudfront.net/defaultavatar_2016.png'
+  avatar_thumb: 'https://d3tlp0m01b6d9o.cloudfront.net/defaultavatar_2016.png',
+  deleter: {}
 };
 
 export const mockDataExportWallPost: IDataExportWallsPost = {

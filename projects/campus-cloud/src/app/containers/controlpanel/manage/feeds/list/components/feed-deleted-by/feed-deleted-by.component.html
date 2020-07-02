@@ -1,0 +1,10 @@
+<ng-container *ngIf="message">
+  <ready-ui-stack spacing="tight">
+    <div ui-text-style
+         color="muted">
+      <ready-ui-icon name="delete"
+                     size="small"></ready-ui-icon>
+      <span>{{ message | cpI18n }}</span>
+    </div>
+  </ready-ui-stack>
+</ng-container>

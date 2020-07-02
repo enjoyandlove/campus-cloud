@@ -558,7 +558,7 @@ export class FeedSearchComponent implements OnInit {
       .set('school_id', this.session.school.id.toString())
       .set('flagged_by_users_only', flaggedByUser ? '1' : null)
       .set('search_str', searchTerm !== '' ? searchTerm : null)
-      .set('removed_by_moderators_only', flaggedByModerators ? '1' : null)
+      .set('removed_by_moderators_or_users', flaggedByModerators ? '1' : null)
       .set('user_ids', users.length ? users.map(({ id }) => id).join(',') : null);
   }
 

@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import * as fromStore from '@controlpanel/manage/feeds/store';
+import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 import {
   ICampusThread,
-  ISocialGroup,
   ISocialGroupThread,
   ICampusThreadComment,
   ISocialGroupThreadComment
@@ -17,6 +18,7 @@ import {
   styleUrls: ['./feed-item.component.scss']
 })
 export class FeedItemComponent implements OnInit {
+  @Input() hideDropdown = false;
   @Input() feed: ICampusThread | ISocialGroupThread;
   @Input() mode: 'default' | 'search' | 'inline' = 'default';
   @Input() comment: ICampusThreadComment | ISocialGroupThreadComment;
@@ -32,8 +34,12 @@ export class FeedItemComponent implements OnInit {
   isMoveModal;
   isDeleteModal;
   isApproveModal;
+  view$: Observable<{
+    deleted: boolean;
+  }>;
+  filters$ = this.store.select(fromStore.getViewFilters).pipe(distinctUntilChanged());
 
-  constructor(private store: Store<fromStore.IWallsState>) {}
+  constructor(private store: Store<fromStore.IWallsState>, private utils: FeedsUtilsService) {}
 
   onMoved(movedThread) {
     this.moved.emit(movedThread);
@@ -82,5 +88,11 @@ export class FeedItemComponent implements OnInit {
     this.deleted.emit();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.view$ = combineLatest([this.filters$]).pipe(
+      map(([{ flaggedByModerators }]) => ({
+        deleted: flaggedByModerators && !this.utils.isPostDetailPage()
+      }))
+    );
+  }
 }

@@ -72,6 +72,10 @@ export interface ICampusThread {
   flag: number;
   email: string;
   user_status: number;
+  deleter: {
+    name?: string,
+    email?: string
+  };
 }
 
 export interface ICampusThreadComment {
@@ -95,6 +99,10 @@ export interface ICampusThreadComment {
   flag: number;
   email: string;
   user_status: number;
+  deleter: {
+    name?: string,
+    email?: string
+  };
 }
 
 export interface ISocialGroupThread {
@@ -123,6 +131,10 @@ export interface ISocialGroupThread {
   image_thumb_url: string;
   image_list: any[];
   email: string;
+  deleter: {
+    name?: string,
+    email?: string
+  };
 }
 
 export interface ISocialGroupThreadComment {
@@ -149,6 +161,10 @@ export interface ISocialGroupThreadComment {
   avatar_thumb: string;
   image_thumb_url: string;
   image_list: any[];
+  deleter: {
+    name?: string,
+    email?: string
+  };
 }
 
 export interface IDataExportWallsComment {

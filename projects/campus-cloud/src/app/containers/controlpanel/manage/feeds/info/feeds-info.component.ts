@@ -61,6 +61,7 @@ export class FeedsInfoComponent implements OnInit {
     host: ReadyStore;
     readOnly: boolean;
     socialGroup: ISocialGroup;
+    deletedFeed: boolean;
     feed: ICampusThread | ISocialGroupThread;
     comments: ICampusThreadComment[] | ISocialGroupThreadComment[];
   }>;
@@ -114,7 +115,7 @@ export class FeedsInfoComponent implements OnInit {
       this.comments$
     ]).pipe(
       map(([loading, host, { group }, selectedHost, feed, comments]) => {
-        const feedIsDeleted = JSON.stringify(feed) === '{}' || (feed && feed.flag === -3);
+        const feedIsDeleted = JSON.stringify(feed) === '{}';
         const updatedFeed = {
           ...feed,
           comment_count: comments.length
@@ -126,7 +127,8 @@ export class FeedsInfoComponent implements OnInit {
           loading,
           comments,
           socialGroup: group,
-          readOnly: !_host && !group
+          readOnly: !_host && !group,
+          deletedFeed: feed && (feed.flag < 0)
         };
       })
     );
