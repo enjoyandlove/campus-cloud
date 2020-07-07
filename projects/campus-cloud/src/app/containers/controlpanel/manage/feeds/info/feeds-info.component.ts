@@ -90,7 +90,7 @@ export class FeedsInfoComponent implements OnInit {
     const request$ = this.fetch().pipe(share());
 
     const getFeedFromState = () =>
-      this.store.select(fromStore.getThreads).pipe(map((feeds) => feeds[0]));
+      this.store.select(fromStore.getThreadById(Number(this.feedId)));
 
     const host$ = request$.pipe(
       map(({ host }) => host),
@@ -115,20 +115,21 @@ export class FeedsInfoComponent implements OnInit {
       this.comments$
     ]).pipe(
       map(([loading, host, { group }, selectedHost, feed, comments]) => {
-        const feedIsDeleted = JSON.stringify(feed) === '{}';
+        const feedIsDeleted = feed.flag < 0;
+        const flaggedByUsers = feed.flag !== 2 && feed.dislikes >= 4
+        const _host = selectedHost ? selectedHost : host;
         const updatedFeed = {
           ...feed,
           comment_count: comments.length
         };
-        const _host = selectedHost ? selectedHost : host;
         return {
           host: _host,
           feed: feedIsDeleted ? null : updatedFeed,
           loading,
           comments,
           socialGroup: group,
-          readOnly: !_host && !group,
-          deletedFeed: feed && (feed.flag < 0)
+          readOnly: (!_host && !group) || flaggedByUsers,
+          deletedFeed: feedIsDeleted
         };
       })
     );
