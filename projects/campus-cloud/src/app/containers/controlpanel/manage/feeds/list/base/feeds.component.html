@@ -15,7 +15,7 @@
                         (feedSearch)="searchHandler($event, true)"
                         [hideIntegrations]="hideIntegrations"></cp-feed-search>
 
-        <cp-feed-input-box *ngIf="view.host || view.socialGroup">
+        <cp-feed-input-box *ngIf="(view.host || view.socialGroup) && !view.readOnly">
         </cp-feed-input-box>
 
         <cp-spinner *ngSwitchCase="true"></cp-spinner>

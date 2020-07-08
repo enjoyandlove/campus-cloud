@@ -81,6 +81,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     results: any[];
     loading: boolean;
     host: ReadyStore;
+    readOnly: boolean;
     searching: boolean;
     state: 'default' | 'search';
     socialGroup: ISocialGroup;
@@ -487,7 +488,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const filters$ = this.filters$.pipe(
       /**
-       * avoid mulliple emitions when switching boolean values
+       * avoid multiple emissions when switching boolean values
        * eg: from status Deleted to Flagged this emits once to set
        * Deleted to false and then again to set Flagged to true
        */
@@ -599,10 +600,11 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       this.filters$,
       this.selectedHost$
     ]).pipe(
-      map(([loading, results, host, { group, searchTerm }, selectedHost]) => ({
+      map(([loading, results, host, { group, searchTerm, flaggedByUser, flaggedByModerators }, selectedHost]) => ({
         host: selectedHost ? selectedHost : host,
         results,
         loading,
+        readOnly: flaggedByUser || flaggedByModerators,
         socialGroup: group,
         searching: searchTerm !== '',
         state: this.hasFilters() || this.state.searchTerm !== '' ? 'search' : 'default'
