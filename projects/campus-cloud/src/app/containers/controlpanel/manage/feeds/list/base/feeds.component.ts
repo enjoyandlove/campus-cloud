@@ -600,15 +600,23 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       this.filters$,
       this.selectedHost$
     ]).pipe(
-      map(([loading, results, host, { group, searchTerm, flaggedByUser, flaggedByModerators }, selectedHost]) => ({
-        host: selectedHost ? selectedHost : host,
-        results,
-        loading,
-        readOnly: flaggedByUser || flaggedByModerators,
-        socialGroup: group,
-        searching: searchTerm !== '',
-        state: this.hasFilters() || this.state.searchTerm !== '' ? 'search' : 'default'
-      }))
+      map(
+        ([
+          loading,
+          results,
+          host,
+          { group, searchTerm, flaggedByUser, flaggedByModerators },
+          selectedHost
+        ]) => ({
+          host: selectedHost ? selectedHost : host,
+          results,
+          loading,
+          readOnly: flaggedByUser || flaggedByModerators,
+          socialGroup: group,
+          searching: searchTerm !== '',
+          state: this.hasFilters() || this.state.searchTerm !== '' ? 'search' : 'default'
+        })
+      )
     );
   }
 

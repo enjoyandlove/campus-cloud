@@ -35,7 +35,7 @@ export class ProvidersService {
   importProvidersFromLocations(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICE_PROVIDER}/`;
 
-    return this.api.update(url, {'upsert_from_locations': true}, search);
+    return this.api.update(url, { upsert_from_locations: true }, search);
   }
 
   updateProvider(data: any, providerId: number, search?: HttpParams) {

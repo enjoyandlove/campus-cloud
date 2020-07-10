@@ -101,7 +101,7 @@ export class AssessUtilsService {
 
         let eventName = item.name;
         if (item.type === 'service') {
-          eventName += ' - ' + item.provider_name
+          eventName += ' - ' + item.provider_name;
         }
         return {
           [this.cpI18n.translate('assess_check_in_time')]: eventName,

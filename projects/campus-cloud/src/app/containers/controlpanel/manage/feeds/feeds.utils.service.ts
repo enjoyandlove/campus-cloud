@@ -4,10 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { flatten } from 'lodash';
 
 import { Feed, SocialGroupTypes } from '@controlpanel/manage/feeds/model';
-import {
-  canAccountLevelReadResource,
-  canSchoolReadResource
-} from '@campus-cloud/shared/utils';
+import { canAccountLevelReadResource, canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 /**
@@ -83,7 +80,7 @@ export class FeedsUtilsService {
   }
 
   static addGroupTypesParam(params: HttpParams, session: Map<any, any>) {
-    let group_types = []
+    let group_types = [];
     if (canSchoolReadResource(session, CP_PRIVILEGES_MAP.orientation)) {
       group_types.push(SocialGroupTypes.calendar);
     }
@@ -99,7 +96,7 @@ export class FeedsUtilsService {
     }
 
     if (group_types) {
-      params = params.append('group_types', group_types.join(','))
+      params = params.append('group_types', group_types.join(','));
     }
 
     return params;
