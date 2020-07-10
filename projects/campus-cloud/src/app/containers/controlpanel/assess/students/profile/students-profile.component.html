@@ -84,6 +84,10 @@
                                   <p class="engagement__meta__title">
                                     <strong>{{ engagement.name }}</strong>
                                   </p>
+                                  <p *ngIf="engagement.type === 'service'"
+                                     class="engagement__meta__title">
+                                    <strong><em>{{ engagement.provider_name }}</em></strong>
+                                  </p>
 
                                   <p class="text-muted engagement__meta__type">
                                     <span class="icon">
