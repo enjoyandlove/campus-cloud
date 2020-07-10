@@ -7,7 +7,6 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { CheckInMethod } from '@controlpanel/manage/events/event.status';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
-import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 
 interface IDateRange {
@@ -42,7 +41,6 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public engageService: EngagementService,
     public engageUtils: EngageUtils.EngagementUtilsService
   ) {}
 

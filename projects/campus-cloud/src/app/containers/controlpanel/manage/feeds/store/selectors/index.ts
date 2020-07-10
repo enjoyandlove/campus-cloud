@@ -68,12 +68,13 @@ export const getViewFilters = createSelector(
   })
 );
 
-export const getThreadById = (thread_id: number) => createSelector(
-  getFeedsState,
-  ({ threads }) => {
-    return threads.find((thread) => thread.id === thread_id);
-  }
-);
+export const getThreadById = (thread_id: number) =>
+  createSelector(
+    getFeedsState,
+    ({ threads }: IWallsFeedsState) => {
+      return threads.find((thread) => thread.id === thread_id);
+    }
+  );
 
 export const getThreads = createSelector(
   getFeedsState,

@@ -172,8 +172,10 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   importProvidersFromLocations() {
     let params = new HttpParams().append('service_id', this.service.id.toString());
-    this.providersService.importProvidersFromLocations(params).toPromise()
-      .then(res => {
+    this.providersService
+      .importProvidersFromLocations(params)
+      .toPromise()
+      .then((res) => {
         if (res['inserted'] > 0) {
           this.store.dispatch(
             new baseActionClass.SnackbarSuccess({
@@ -188,13 +190,14 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
           );
         }
         this.fetch();
-    }).catch(() => {
-      this.store.dispatch(
-        new baseActionClass.SnackbarError({
-          body: this.cpI18n.translate('t_import_failure')
-        })
-      );
-    });
+      })
+      .catch(() => {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({
+            body: this.cpI18n.translate('t_import_failure')
+          })
+        );
+      });
   }
 
   downloadProvidersCSV() {

@@ -126,7 +126,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   }
 
   onImportLocations() {
-    this.providersList.importProvidersFromLocations()
+    this.providersList.importProvidersFromLocations();
   }
 
   onDownload() {

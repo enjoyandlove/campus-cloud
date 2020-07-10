@@ -70,7 +70,7 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
     if (this.groupType === GroupType.orientation) {
       search = search.append('calendar_id', this.groupId.toString());
     } else {
-      search = search.set('group_types', SocialGroupTypes.store.toString())
+      search = search.set('group_types', SocialGroupTypes.store.toString());
     }
 
     this.feedsService

@@ -3753,6 +3753,9 @@
   "t_shared_preview": {
     "message": "Aperçu"
   },
+  "t_shared_processing": {
+    "message": "Traitement"
+  },
   "t_shared_ready_education": {
     "message": "Ready Education"
   },

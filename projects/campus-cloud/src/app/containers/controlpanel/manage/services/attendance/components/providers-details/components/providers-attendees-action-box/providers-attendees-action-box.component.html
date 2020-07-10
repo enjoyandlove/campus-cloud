@@ -29,7 +29,8 @@
                data-toggle="dropdown">expand_more</i>
             <ul
                 class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
-              <li class="list-as-anchor">
+              <li *ngIf="provider.qr_img_url"
+                  class="list-as-anchor">
                 <a cpTracker
                    target="_blank"
                    [eventData]="eventData"

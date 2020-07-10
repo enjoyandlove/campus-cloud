@@ -5,6 +5,8 @@ export default interface IServiceProvider {
 
   img_url: string;
 
+  qr_img_url: string;
+
   num_ratings: number;
 
   contactphone: string;

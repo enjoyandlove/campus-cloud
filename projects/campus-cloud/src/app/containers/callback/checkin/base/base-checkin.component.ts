@@ -89,8 +89,9 @@ export class BaseCheckinComponent implements OnInit {
   handlePdf() {
     const doc = new jsPDF();
     const localeFr = CPI18nService.getLocale().startsWith('fr');
-    const isFeedbackDisabled = (this.data.rating_scale_maximum === -1
-      || (this.isService && this.data.feedback_enabled_since_epoch === -1))
+    const isFeedbackDisabled =
+      this.data.rating_scale_maximum === -1 ||
+      (this.isService && this.data.feedback_enabled_since_epoch === -1);
 
     const imageFormat = decodeURIComponent(this.data.qr_img_base64)
       .split(',')[0]
@@ -109,31 +110,22 @@ export class BaseCheckinComponent implements OnInit {
     doc.setFontType('bold');
     doc.setFont('helvetica');
 
+    let resourceName;
     if (this.isService) {
-      {
-        const fontSize = this.getPDFTitleFontSize();
-        doc.setFontSize(fontSize);
-        const textHeight = PAGE_HEIGHT - 130;
-        const text = <Array<string>>doc.splitTextToSize(this.data.service_name, fullWidth);
-
-        text.forEach((line, index) => {
-          doc.text(line, 105, textHeight + index * (fontSize * CENTIMETER), 'center');
-        });
-      }
+      resourceName = this.data.service_name;
     }
-
     if (this.isEvent) {
-      {
-        const fontSize = this.getPDFTitleFontSize();
-        doc.setFontSize(fontSize);
-        const textHeight = PAGE_HEIGHT - 130;
-        const text = <Array<string>>doc.splitTextToSize(this.data.title, fullWidth);
-
-        text.forEach((line, index) => {
-          doc.text(line, 105, textHeight + index * (fontSize * CENTIMETER), 'center');
-        });
-      }
+      resourceName = this.data.title;
     }
+
+    const fontSize = this.getPDFTitleFontSize();
+    doc.setFontSize(fontSize);
+    const textHeight = PAGE_HEIGHT - 130;
+    const text = <Array<string>>doc.splitTextToSize(resourceName, fullWidth);
+
+    text.forEach((line, index) => {
+      doc.text(line, 105, textHeight + index * (fontSize * CENTIMETER), 'center');
+    });
 
     if (this.isService) {
       doc.setFontSize(34);
@@ -242,10 +234,18 @@ export class BaseCheckinComponent implements OnInit {
 
       doc.setFontSize(26);
       doc.setFontType('bold');
-      doc.text(65, 123, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_open_app'), 120));
+      doc.text(
+        65,
+        123,
+        doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_open_app'), 120)
+      );
       doc.setFontSize(18);
       doc.setFontType('normal');
-      doc.text(65, 133, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_download'), 160));
+      doc.text(
+        65,
+        133,
+        doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_download'), 160)
+      );
 
       doc.addImage(TAP_IMAGE, 'PNG', LEFT_MARGIN, 160, THUMB_HEIGHT, THUMB_WIDTH);
       doc.setFontSize(26);
@@ -254,7 +254,11 @@ export class BaseCheckinComponent implements OnInit {
 
       doc.setFontSize(18);
       doc.setFontType('normal');
-      doc.text(65, 183, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_qr'), 160));
+      doc.text(
+        65,
+        183,
+        doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_qr'), 160)
+      );
 
       doc.rect(LEFT_MARGIN, PAGE_HEIGHT - 40, fullWidth, 0.1);
 
