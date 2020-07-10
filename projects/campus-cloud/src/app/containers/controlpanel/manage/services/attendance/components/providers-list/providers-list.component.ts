@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { get as _get } from 'lodash';
+import { Store } from '@ngrx/store';
 
 import { IService } from '../../../service.interface';
 import IServiceProvider from '../../../providers.interface';
@@ -14,6 +15,7 @@ import { IFilterState, ProvidersUtilsService } from '../../../providers.utils.se
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking/tracking.directive';
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 import { AMPLITUDE_INTERVAL_MAP } from '@campus-cloud/containers/controlpanel/assess/engagement/engagement.utils.service';
+import { baseActionClass, IHeader, ISnackbar } from '@campus-cloud/store';
 
 interface IState {
   providers: Array<IServiceProvider>;
@@ -65,6 +67,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
+    private store: Store<IHeader | ISnackbar>,
     public providersService: ProvidersService,
     public providerUtils: ProvidersUtilsService
   ) {
@@ -165,6 +168,33 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
+  }
+
+  importProvidersFromLocations() {
+    let params = new HttpParams().append('service_id', this.service.id.toString());
+    this.providersService.importProvidersFromLocations(params).toPromise()
+      .then(res => {
+        if (res['inserted'] > 0) {
+          this.store.dispatch(
+            new baseActionClass.SnackbarSuccess({
+              body: this.cpI18n.translate('t_import_sp_from_locations_success')
+            })
+          );
+        } else {
+          this.store.dispatch(
+            new baseActionClass.SnackbarSuccess({
+              body: this.cpI18n.translate('t_shared_saved_update_success_message')
+            })
+          );
+        }
+        this.fetch();
+    }).catch(() => {
+      this.store.dispatch(
+        new baseActionClass.SnackbarError({
+          body: this.cpI18n.translate('t_import_failure')
+        })
+      );
+    });
   }
 
   downloadProvidersCSV() {

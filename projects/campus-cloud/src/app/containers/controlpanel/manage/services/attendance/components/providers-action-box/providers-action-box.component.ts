@@ -6,7 +6,6 @@ import { IDateRange } from '@campus-cloud/shared/components';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
-import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 
 @Component({
@@ -16,8 +15,10 @@ import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.s
 })
 export class ServicesProviderActionBoxComponent implements OnInit {
   @Input() noProviders;
+  @Input() isContactTrace;
 
   @Output() download: EventEmitter<null> = new EventEmitter();
+  @Output() importLocations: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<null> = new EventEmitter();
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
   @Output() launchAddProviderModal: EventEmitter<null> = new EventEmitter();
@@ -31,12 +32,15 @@ export class ServicesProviderActionBoxComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     private cpTracking: CPTrackingService,
-    public engageService: EngagementService,
     public engageUtils: EngageUtils.EngagementUtilsService
   ) {}
 
   onDownload() {
     this.download.emit();
+  }
+
+  onImportLocations() {
+    this.importLocations.emit();
   }
 
   onLaunchProviderAdd() {

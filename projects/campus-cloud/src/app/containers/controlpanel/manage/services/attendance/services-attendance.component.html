@@ -3,7 +3,9 @@
 
   <div *ngSwitchCase="false">
     <cp-providers-action-box [noProviders]="noProviders"
+                             [isContactTrace]="isContactTrace"
                              (search)="onSearch($event)"
+                             (importLocations)="onImportLocations()"
                              (download)="onDownload()"
                              (filterByDates)="onDateFilter($event)"
                              (updateStudentFilter)="onStudentFilter($event)"
