@@ -89,6 +89,8 @@ export class BaseCheckinComponent implements OnInit {
   handlePdf() {
     const doc = new jsPDF();
     const localeFr = CPI18nService.getLocale().startsWith('fr');
+    const isFeedbackDisabled = (this.data.rating_scale_maximum === -1
+      || (this.isService && this.data.feedback_enabled_since_epoch === -1))
 
     const imageFormat = decodeURIComponent(this.data.qr_img_base64)
       .split(',')[0]
@@ -167,92 +169,100 @@ export class BaseCheckinComponent implements OnInit {
 
     doc.setFontSize(20);
 
+    let titleTextKey;
+    if (isFeedbackDisabled) {
+      titleTextKey = 't_checkin_no_feedback_pdf_title';
+    } else {
+      titleTextKey = 't_checkin_pdf_title';
+    }
     const pageOneFooter = doc.splitTextToSize(
-      this.cpI18Pipe.transform('t_checkin_pdf_title', this.data.school_name),
-      130
+      this.cpI18Pipe.transform(titleTextKey, this.data.school_name),
+      115
     );
 
     doc.text(65, PAGE_HEIGHT - 30, pageOneFooter);
 
-    doc.setFontSize(16);
+    if (!isFeedbackDisabled) {
+      doc.setFontSize(16);
 
-    doc.addPage();
+      doc.addPage();
 
-    doc.rect(0, 0, 300, 60, 'FD');
+      doc.rect(0, 0, 300, 60, 'FD');
 
-    doc.setFontSize(30);
-    doc.setFontType('bold');
-    doc.setTextColor(255, 255, 255);
+      doc.setFontSize(30);
+      doc.setFontType('bold');
+      doc.setTextColor(255, 255, 255);
 
-    doc.text(this.cpI18Pipe.transform('t_checkin_pdf_give_feedback'), 105, 28, 'center');
+      doc.text(this.cpI18Pipe.transform('t_checkin_pdf_give_feedback'), 105, 28, 'center');
 
-    if (this.isService) {
-      const leftMargin = localeFr ? LEFT_MARGIN : LEFT_MARGIN + 13;
+      if (this.isService) {
+        const leftMargin = localeFr ? LEFT_MARGIN : LEFT_MARGIN + 13;
 
+        doc.text(
+          leftMargin,
+          40,
+          doc.splitTextToSize(
+            this.cpI18Pipe.transform('t_checkin_pdf_service_assessment'),
+            PAGE_WIDTH - LEFT_MARGIN
+          )
+        );
+      }
+
+      if (this.isEvent) {
+        const leftMargin = localeFr ? 20 : LEFT_MARGIN + 18;
+
+        doc.text(
+          leftMargin,
+          40,
+          doc.splitTextToSize(
+            this.cpI18Pipe.transform('t_checkin_pdf_event_assessment'),
+            PAGE_WIDTH - LEFT_MARGIN
+          )
+        );
+      }
+
+      doc.setFontSize(20);
+      doc.setFontType('normal');
+      doc.setFontStyle('italic');
+      doc.setTextColor(0, 0, 0);
       doc.text(
-        leftMargin,
-        40,
-        doc.splitTextToSize(
-          this.cpI18Pipe.transform('t_checkin_pdf_service_assessment'),
-          PAGE_WIDTH - LEFT_MARGIN
-        )
+        LEFT_MARGIN,
+        95,
+        doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_instructions'), 130)
       );
-    }
 
-    if (this.isEvent) {
-      const leftMargin = localeFr ? 20 : LEFT_MARGIN + 18;
-
-      doc.text(
-        leftMargin,
-        40,
-        doc.splitTextToSize(
-          this.cpI18Pipe.transform('t_checkin_pdf_event_assessment'),
-          PAGE_WIDTH - LEFT_MARGIN
-        )
+      doc.addImage(
+        decodeURIComponent(this.data.app_logo_img_base64),
+        appLogoFormat,
+        LEFT_MARGIN,
+        110,
+        THUMB_HEIGHT,
+        THUMB_WIDTH
       );
+
+      doc.setFontSize(26);
+      doc.setFontType('bold');
+      doc.text(65, 123, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_open_app'), 120));
+      doc.setFontSize(18);
+      doc.setFontType('normal');
+      doc.text(65, 133, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_download'), 160));
+
+      doc.addImage(TAP_IMAGE, 'PNG', LEFT_MARGIN, 160, THUMB_HEIGHT, THUMB_WIDTH);
+      doc.setFontSize(26);
+      doc.setFontType('bold');
+      doc.text(65, 173, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan'), 120));
+
+      doc.setFontSize(18);
+      doc.setFontType('normal');
+      doc.text(65, 183, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_qr'), 160));
+
+      doc.rect(LEFT_MARGIN, PAGE_HEIGHT - 40, fullWidth, 0.1);
+
+      const feedbackText = this.cpI18Pipe.transform('t_checkin_pdf_view_feedback');
+      const pageTwoFooter = doc.splitTextToSize(feedbackText, fullWidth);
+
+      doc.text(pageTwoFooter, 105, PAGE_HEIGHT - 20, 'center');
     }
-
-    doc.setFontSize(20);
-    doc.setFontType('normal');
-    doc.setFontStyle('italic');
-    doc.setTextColor(0, 0, 0);
-    doc.text(
-      LEFT_MARGIN,
-      95,
-      doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_instructions'), 130)
-    );
-
-    doc.addImage(
-      decodeURIComponent(this.data.app_logo_img_base64),
-      appLogoFormat,
-      LEFT_MARGIN,
-      110,
-      THUMB_HEIGHT,
-      THUMB_WIDTH
-    );
-
-    doc.setFontSize(26);
-    doc.setFontType('bold');
-    doc.text(65, 123, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_open_app'), 120));
-    doc.setFontSize(18);
-    doc.setFontType('normal');
-    doc.text(65, 133, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_download'), 160));
-
-    doc.addImage(TAP_IMAGE, 'PNG', LEFT_MARGIN, 160, THUMB_HEIGHT, THUMB_WIDTH);
-    doc.setFontSize(26);
-    doc.setFontType('bold');
-    doc.text(65, 173, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan'), 120));
-
-    doc.setFontSize(18);
-    doc.setFontType('normal');
-    doc.text(65, 183, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_qr'), 160));
-
-    doc.rect(LEFT_MARGIN, PAGE_HEIGHT - 40, fullWidth, 0.1);
-
-    const feedbackText = this.cpI18Pipe.transform('t_checkin_pdf_view_feedback');
-    const pageTwoFooter = doc.splitTextToSize(feedbackText, fullWidth);
-
-    doc.text(pageTwoFooter, 105, PAGE_HEIGHT - 20, 'center');
 
     doc.save(`${this.getFileName()}_kit.pdf`);
   }

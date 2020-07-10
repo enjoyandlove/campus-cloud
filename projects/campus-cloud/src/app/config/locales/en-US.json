@@ -2448,6 +2448,9 @@
   "t_changes_saved_ok": {
     "message": "Changes saved successfully"
   },
+  "t_checkin_no_feedback_pdf_title": {
+    "message": "Scan on the %s app to check-in"
+  },
   "t_checkin_pdf_download": {
     "message": "Download it if you don't have it"
   },
