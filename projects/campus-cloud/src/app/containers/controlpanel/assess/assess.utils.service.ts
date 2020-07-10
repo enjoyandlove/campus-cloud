@@ -99,8 +99,12 @@ export class AssessUtilsService {
         const hasCheckOutTimeSpent =
           item.check_out_time_epoch && item.check_out_time_epoch !== CheckInOutTime.empty;
 
+        let eventName = item.name;
+        if (item.type === 'service') {
+          eventName += ' - ' + item.provider_name
+        }
         return {
-          [this.cpI18n.translate('assess_check_in_time')]: item.name,
+          [this.cpI18n.translate('assess_check_in_time')]: eventName,
 
           [this.cpI18n.translate('t_shared_type')]: type[item.type],
 
