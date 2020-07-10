@@ -1108,6 +1108,9 @@
   "downloads": {
     "message": "Téléchargements"
   },
+  "download_all_qr_codes": {
+    "message": "Télécharger tous les codes QR"
+  },
   "download_csv": {
     "message": "Télécharger les données d'évaluation"
   },
@@ -1465,6 +1468,9 @@
   },
   "import_from_csv": {
     "message": "Importer depuis CSV"
+  },
+  "import_locations": {
+    "message": "Importer des lieux"
   },
   "in": {
     "message": "dans"
@@ -2922,6 +2928,12 @@
   },
   "t_help_desk_whats_new": {
     "message": "Quoi de neuf"
+  },
+  "t_import_failure": {
+    "message": "Importation échouée, veuillez essayer de nouveau ou contacter le support."
+  },
+  "t_import_sp_from_locations_success": {
+    "message": "Vos codes QR sont en cours de traitement, vous recevrez un courriel lorsque le traitement sera terminé."
   },
   "t_integration_form_required_fields": {
     "message": "Assurez-vous que votre flux contient les champs requis."

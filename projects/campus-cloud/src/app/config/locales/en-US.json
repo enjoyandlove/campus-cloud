@@ -1108,6 +1108,9 @@
   "downloads": {
     "message": "Downloads"
   },
+  "download_all_qr_codes": {
+    "message": "Download All QR Codes"
+  },
   "download_csv": {
     "message": "Download Assessment"
   },
@@ -1465,6 +1468,9 @@
   },
   "import_from_csv": {
     "message": "Import from CSV"
+  },
+  "import_locations": {
+    "message": "Import Locations"
   },
   "in": {
     "message": "in"
@@ -2922,6 +2928,12 @@
   },
   "t_help_desk_whats_new": {
     "message": "What's New"
+  },
+  "t_import_failure": {
+    "message": "Import failed, please try again or contact support."
+  },
+  "t_import_sp_from_locations_success": {
+    "message": "Your QR Codes are being processed, you will receive an email once the processing is completed."
   },
   "t_integration_form_required_fields": {
     "message": "Make sure your feed contains the required fields."

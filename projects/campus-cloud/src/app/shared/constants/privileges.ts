@@ -63,7 +63,9 @@ export const CP_PRIVILEGES_MAP = {
 
   campus_app_management: 38,
 
-  app_user_management: 39
+  app_user_management: 39,
+
+  contact_tracing: 40
 };
 
 export const CP_PRIVILEGES = {
@@ -131,5 +133,7 @@ export const CP_PRIVILEGES = {
 
   38: 'Campus App Management',
 
-  39: 'App User Management'
+  39: 'App User Management',
+
+  40: 'Contact Tracing'
 };

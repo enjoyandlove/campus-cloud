@@ -6,7 +6,7 @@
     "node": ">=12.4.0"
   },
   "scripts": {
-    "i18n": "phraseapp pull",
+    "i18n": "phrase pull",
     "precommit": "pretty-quick --staged",
     "cleanup": "rimraf dist && mv _dist dist",
     "release": "node_modules/.bin/standard-version",

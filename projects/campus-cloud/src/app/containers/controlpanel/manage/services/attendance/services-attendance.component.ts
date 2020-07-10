@@ -7,10 +7,10 @@ import { IDateRange } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
-import { STAR_SIZE } from '@campus-cloud/shared/components/cp-stars';
 import { IFilterState, ProvidersUtilsService } from '../providers.utils.service';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
 import { ServicesProvidersListComponent } from './components/providers-list/providers-list.component';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 @Component({
   selector: 'cp-services-attendance',
@@ -24,10 +24,9 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   service;
   storeId;
   noProviders;
+  isContactTrace;
   isProviderAdd;
   serviceId: number;
-  detailStarSize = STAR_SIZE.LARGE;
-  listStarSize = STAR_SIZE.DEFAULT;
 
   state: IFilterState = {
     dateRange: null,
@@ -53,6 +52,9 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   private fetch() {
     super.fetchData(this.serviceService.getServiceById(this.serviceId)).then((res) => {
       this.service = res.data;
+      if (this.utils.hasPrivilege(this.service.store_id, CP_PRIVILEGES_MAP.contact_tracing)) {
+        this.isContactTrace = this.service.is_contact_trace;
+      }
 
       if (!this.service.service_attendance) {
         this.redirectOnDisabledAttendance();
@@ -121,6 +123,10 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   onProvidersResult(data) {
     this.noProviders = !data;
+  }
+
+  onImportLocations() {
+    this.providersList.importProvidersFromLocations()
   }
 
   onDownload() {
