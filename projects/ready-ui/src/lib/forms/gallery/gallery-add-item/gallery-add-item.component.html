@@ -1,7 +1,8 @@
 <div class="widget">
   <div class="widget__input">
     <label class="file">
-      <input multiple
+      <input #fileInput
+             multiple
              type="file"
              (change)="onChange($event)"
              aria-label="Select Images"

@@ -1,4 +1,12 @@
-import { Input, Output, Component, OnInit, EventEmitter } from '@angular/core';
+import {
+  Input,
+  Output,
+  Component,
+  OnInit,
+  EventEmitter,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 
 @Component({
   selector: 'ready-ui-gallery-add-item',
@@ -6,6 +14,8 @@ import { Input, Output, Component, OnInit, EventEmitter } from '@angular/core';
   styleUrls: ['./gallery-add-item.component.scss']
 })
 export class GalleryAddItemComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   @Input()
   maxFileSize = 5e6;
 
@@ -26,6 +36,9 @@ export class GalleryAddItemComponent implements OnInit {
     if (files.length) {
       this.add.emit(files);
     }
+
+    // Clear the existing selection so that the change handler will be invoked even if the same file is selected again.
+    this.fileInput.nativeElement.value = '';
   }
 
   validateSize(file: File) {
