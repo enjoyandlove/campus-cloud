@@ -17,6 +17,7 @@ import { FeedsAmplitudeService } from './feeds.amplitude.service';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { FeedsInfoComponent } from '@controlpanel/manage/feeds/info';
 import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
+import { ProfileNameEmailPipe } from '@controlpanel/manage/feeds/list/pipes';
 
 import {
   FeedBodyComponent,
@@ -61,7 +62,8 @@ import {
     FeedHostSelectorComponent,
     FeedInteractionsComponent,
     FeedDeleteCommentModalComponent,
-    FeedApproveCommentModalComponent
+    FeedApproveCommentModalComponent,
+    ProfileNameEmailPipe
   ],
 
   imports: [

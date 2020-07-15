@@ -7,6 +7,7 @@ import { ApiService } from '@campus-cloud/base/services';
 export interface SocialContentInteractionItem {
   id: number;
   name: string;
+  email?: string; // Keeping email as optional since this field would not be present for originator type of store
   originator_type: OriginatorType;
 }
 

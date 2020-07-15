@@ -8,7 +8,7 @@
     <div class="users-content">
       <ul *ngIf="!tooltip.loading else loading">
         <li *ngFor="let profile of tooltip.profiles | slice: 0:5">
-          {{ profile.name }}
+          {{ profile | profileNameEmail }}
         </li>
         <li *ngIf="!tooltip.profiles.length">{{ 'no_results' | cpI18n }}</li>
         <li>
@@ -41,7 +41,7 @@
                           centered="false"></ready-ui-spinner>
         <ul *ngIf="!view.loading">
           <li *ngFor="let profile of view.profiles">
-            {{ profile.name }}
+            {{ profile | profileNameEmail }}
           </li>
         </ul>
       </ng-container>
