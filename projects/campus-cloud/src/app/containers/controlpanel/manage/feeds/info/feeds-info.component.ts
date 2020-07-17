@@ -31,6 +31,7 @@ import {
   ISocialGroupThreadComment
 } from '@controlpanel/manage/feeds/model';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
+import { appStorage } from '@campus-cloud/shared/utils';
 
 @Component({
   selector: 'cp-feeds-info',
@@ -91,10 +92,20 @@ export class FeedsInfoComponent implements OnInit {
 
     const getFeedFromState = () => this.store.select(fromStore.getThreadById(Number(this.feedId)));
 
-    const host$ = request$.pipe(
-      map(({ host }) => host),
-      startWith({})
-    );
+    const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
+
+    let storedHost$ = of(null);
+    if (storedHost) {
+      const { id } = JSON.parse(storedHost);
+      const params = new HttpParams().set('school_id', this.session.school.id.toString());
+
+      storedHost$ = this.storeService.getStoreById(id, params).pipe(
+        catchError(() => of(null)),
+        tap((host) => this.store.dispatch(fromStore.setHost({ host }))),
+        startWith(of(null))
+      );
+    }
+
     const feed$ = request$.pipe(
       switchMap(getFeedFromState),
       startWith({})
@@ -107,16 +118,16 @@ export class FeedsInfoComponent implements OnInit {
 
     this.view$ = combineLatest([
       loading$,
-      host$,
+      storedHost$,
       this.filters$,
       this.selectedHost$,
       feed$,
       this.comments$
     ]).pipe(
-      map(([loading, host, { group }, selectedHost, feed, comments]) => {
+      map(([loading, storedHost, { group }, selectedHost, feed, comments]) => {
         const feedIsDeleted = feed.flag < 0;
         const flaggedByUsers = feed.flag !== 2 && feed.dislikes >= 4;
-        const _host = selectedHost ? selectedHost : host;
+        const _host = selectedHost ? selectedHost : storedHost;
         const updatedFeed = {
           ...feed,
           comment_count: comments.length
@@ -179,34 +190,29 @@ export class FeedsInfoComponent implements OnInit {
   }
 
   getHost(feed: ICampusThread | ISocialGroupThread) {
-    const updateState = (host: ReadyStore) => this.store.dispatch(fromStore.setHost({ host }));
-
     const params = new HttpParams().set('school_id', this.session.school.id.toString());
     if (!this.groupId) {
       const { extern_poster_id = null } = feed || {};
       const { comment } = this.route.snapshot.queryParams;
 
       if (!extern_poster_id && comment) {
-        return this.feedService.getCampusWallCommentById(comment, params).pipe(
-          switchMap((c: ICampusThreadComment) =>
-            this.storeService.getStoreById(c.extern_poster_id, params).pipe(
-              catchError(() => of(null)),
-              tap(updateState.bind(this))
+        return this.feedService
+          .getCampusWallCommentById(comment, params)
+          .pipe(
+            switchMap((c: ICampusThreadComment) =>
+              this.storeService
+                .getStoreById(c.extern_poster_id, params)
+                .pipe(catchError(() => of(null)))
             )
-          )
-        );
+          );
       }
-      return this.storeService.getStoreById(extern_poster_id, params).pipe(
-        catchError(() => of(null)),
-        tap(updateState.bind(this))
-      );
+      return this.storeService
+        .getStoreById(extern_poster_id, params)
+        .pipe(catchError(() => of(null)));
     }
     return this.feedService.getSocialGroupById(this.groupId, params).pipe(
       catchError(() => of(null)),
-      tap(
-        (group: ISocialGroup) => this.store.dispatch(fromStore.setGroup({ group })),
-        tap(updateState.bind(this))
-      )
+      tap((group: ISocialGroup) => this.store.dispatch(fromStore.setGroup({ group })))
     );
   }
 
