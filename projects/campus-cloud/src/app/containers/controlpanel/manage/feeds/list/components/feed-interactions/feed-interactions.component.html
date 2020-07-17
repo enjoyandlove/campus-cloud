@@ -8,7 +8,7 @@
     <div class="users-content">
       <ul *ngIf="!tooltip.loading else loading">
         <li *ngFor="let profile of tooltip.profiles | slice: 0:5">
-          {{ profile | profileNameEmail }}
+          {{ profile.name }}
         </li>
         <li *ngIf="!tooltip.profiles.length">{{ 'no_results' | cpI18n }}</li>
         <li>
@@ -16,9 +16,9 @@
                   type="button"
                   color="primary"
                   variant="inline"
-                  *ngIf="total > 5"
+                  *ngIf="total > 0"
                   (click)="modalHandler(modalTpl)">
-            {{ 't_feeds_likes_tootlip' | cpI18n : total - 5 }}
+            {{ 't_feeds_likes_tootlip' | cpI18n }}
           </button>
         </li>
       </ul>
