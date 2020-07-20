@@ -2906,7 +2906,7 @@
     "message": "Select a host to post and comment on the community"
   },
   "t_feeds_likes_tootlip": {
-    "message": "and %s more..."
+    "message": "More Details"
   },
   "t_feeds_move": {
     "message": "Move"
