@@ -1,8 +1,16 @@
-import { map, startWith, catchError, switchMap, debounceTime, share } from 'rxjs/operators';
+import {
+  map,
+  startWith,
+  catchError,
+  switchMap,
+  debounceTime,
+  share,
+  distinctUntilChanged,
+  merge
+} from 'rxjs/operators';
 import { Subject, BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { groupBy, mapKeys } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../../../store';
@@ -21,6 +29,16 @@ export class FeedHostSelectorComponent implements OnInit {
   defaultImage = `${environment.root}assets/default/user.png`;
   _host: BehaviorSubject<ReadyStore> = new BehaviorSubject(null);
   _socialGroup: BehaviorSubject<ISocialGroup> = new BehaviorSubject(null);
+  storeCategory = StoreCategory;
+
+  searchTerm: string;
+  searchTermStream = new Subject<string>();
+  pageStream = new Subject<number>();
+  hasMorePages = false;
+
+  pageCounter = 1;
+  paginationCountPerPage = 20;
+  results: ReadyStore[] = [];
 
   @Input()
   set socialGroup(socialGroup: ISocialGroup) {
@@ -32,14 +50,9 @@ export class FeedHostSelectorComponent implements OnInit {
     this._host.next(host);
   }
 
-  search = new Subject<string>();
-  search$ = this.search.asObservable().pipe(startWith(''));
-
   view$: Observable<{
-    search: string;
     canOpenMenu: boolean;
     host: ReadyStore | ISocialGroup;
-    sections: { [key: string]: ReadyStore[] };
   }>;
 
   constructor(
@@ -49,21 +62,83 @@ export class FeedHostSelectorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const request$ = this.fetch().pipe(share());
-    const stores$ = request$.pipe(startWith({}));
     const selectedHost$ = this._host.asObservable();
     const socialGroup$ = this._socialGroup.asObservable();
 
-    this.view$ = combineLatest([stores$, this.search$, selectedHost$, socialGroup$]).pipe(
-      map(([sections, search, host, socialGroup]) => {
+    this.view$ = combineLatest([selectedHost$, socialGroup$]).pipe(
+      map(([host, socialGroup]) => {
         return {
-          sections,
-          search,
           canOpenMenu: !socialGroup,
           host: socialGroup ? this.socialGroupToReadyStore(socialGroup) : host
         };
       })
     );
+
+    const searchSource = this.searchTermStream.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      map((searchTerm) => {
+        this.searchTerm = searchTerm;
+        this.pageCounter = 1;
+        return { searchTerm: searchTerm, page: this.pageCounter };
+      })
+    );
+
+    const pageSource = this.pageStream.pipe(
+      map((pageNumber) => {
+        this.pageCounter = pageNumber;
+        return { searchTerm: this.searchTerm, page: pageNumber };
+      })
+    );
+
+    const combinedSource: Observable<any[]> = pageSource.pipe(
+      merge(searchSource),
+      startWith({ searchTerm: this.searchTerm, page: this.pageCounter }),
+      switchMap((args: { searchTerm: string; page: number }) => {
+        let startRecordCount = this.paginationCountPerPage * (args.page - 1) + 1;
+        // Get an extra record so that we know if there are more records left to fetch
+        let endRecordCount = this.paginationCountPerPage * args.page + 1;
+        const hostCategories = [
+          StoreCategory.services,
+          StoreCategory.clubs,
+          StoreCategory.athletics
+        ];
+        const params = new HttpParams()
+          .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
+          .set('school_id', this.session.school.id.toString())
+          .set('category_ids', hostCategories.map((c) => c.toString()).join(','));
+        return this.stores.getRanged(startRecordCount, endRecordCount, params).pipe(
+          map((stores: ReadyStore[]) => {
+            if (stores && stores.length > this.paginationCountPerPage) {
+              this.hasMorePages = true;
+              // Remove the extra record that we fetched to check if we have more records to fetch.
+              stores = stores.splice(0, this.paginationCountPerPage);
+            } else {
+              this.hasMorePages = false;
+            }
+            const requiredCategories = ({ category_id }: ReadyStore) =>
+              hostCategories.includes(category_id);
+
+            return stores.filter(requiredCategories);
+          }),
+          catchError(() => {
+            this.hasMorePages = false;
+            return of([]);
+          })
+        );
+      }),
+      share()
+    );
+
+    combinedSource.subscribe((data) => this.handleDataLoad(data));
+  }
+
+  private handleDataLoad(data: ReadyStore[]) {
+    if (this.pageCounter === 1) {
+      this.results = data;
+    } else {
+      this.results = this.results.concat(data);
+    }
   }
 
   sectionSorting(obj1: { [key: string]: any }, obj2: { [key: string]: any }) {
@@ -76,31 +151,13 @@ export class FeedHostSelectorComponent implements OnInit {
     appStorage.set(appStorage.keys.WALLS_DEFAULT_HOST, JSON.stringify(host));
   }
 
-  fetch(): Observable<{ [key: string]: ReadyStore[] }> {
-    const hostCategories = [StoreCategory.services, StoreCategory.clubs, StoreCategory.athletics];
-    return this.search$.pipe(
-      debounceTime(500),
-      switchMap((search) => {
-        const params = new HttpParams()
-          .set('search_str', search === '' ? null : search)
-          .set('school_id', this.session.school.id.toString())
-          .set('category_ids', hostCategories.map((c) => c.toString()).join(','));
-        return this.stores.getRanged(1, 20, params).pipe(
-          map((stores: ReadyStore[]) => {
-            const requiredCategories = ({ category_id }: ReadyStore) =>
-              hostCategories.includes(category_id);
+  searchTermChangeHandler(searchTerm: string): void {
+    this.searchTermStream.next(searchTerm);
+  }
 
-            const groupedStores = mapKeys(
-              groupBy(stores.filter(requiredCategories), 'category_id'),
-              (_, key) => StoreCategory[key]
-            );
-
-            return groupedStores;
-          }),
-          catchError(() => of({}))
-        );
-      })
-    );
+  loadMoreClickHandler(): void {
+    this.pageCounter++;
+    this.pageStream.next(this.pageCounter);
   }
 
   private socialGroupToReadyStore(socialGroup: ISocialGroup) {
