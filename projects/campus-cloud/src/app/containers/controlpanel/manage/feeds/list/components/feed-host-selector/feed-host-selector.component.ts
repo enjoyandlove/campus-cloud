@@ -95,42 +95,42 @@ export class FeedHostSelectorComponent implements OnInit {
       merge(searchSource),
       startWith({ searchTerm: this.searchTerm, page: this.pageCounter }),
       switchMap((args: { searchTerm: string; page: number }) => {
-        let startRecordCount = this.paginationCountPerPage * (args.page - 1) + 1;
-        // Get an extra record so that we know if there are more records left to fetch
-        let endRecordCount = this.paginationCountPerPage * args.page + 1;
-        const hostCategories = [
-          StoreCategory.services,
-          StoreCategory.clubs,
-          StoreCategory.athletics
-        ];
-        const params = new HttpParams()
-          .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
-          .set('school_id', this.session.school.id.toString())
-          .set('category_ids', hostCategories.map((c) => c.toString()).join(','));
-        return this.stores.getRanged(startRecordCount, endRecordCount, params).pipe(
-          map((stores: ReadyStore[]) => {
-            if (stores && stores.length > this.paginationCountPerPage) {
-              this.hasMorePages = true;
-              // Remove the extra record that we fetched to check if we have more records to fetch.
-              stores = stores.splice(0, this.paginationCountPerPage);
-            } else {
-              this.hasMorePages = false;
-            }
-            const requiredCategories = ({ category_id }: ReadyStore) =>
-              hostCategories.includes(category_id);
-
-            return stores.filter(requiredCategories);
-          }),
-          catchError(() => {
-            this.hasMorePages = false;
-            return of([]);
-          })
-        );
+        return this.fetch(args.page, this.paginationCountPerPage);
       }),
       share()
     );
 
     combinedSource.subscribe((data) => this.handleDataLoad(data));
+  }
+
+  fetch(pageNumber: number, paginationCountPerPage: number): Observable<ReadyStore[]> {
+    let startRecordCount = paginationCountPerPage * (pageNumber - 1) + 1;
+    // Get an extra record so that we know if there are more records left to fetch
+    let endRecordCount = paginationCountPerPage * pageNumber + 1;
+    const hostCategories = [StoreCategory.services, StoreCategory.clubs, StoreCategory.athletics];
+    const params = new HttpParams()
+      .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
+      .set('school_id', this.session.school.id.toString())
+      .set('category_ids', hostCategories.map((c) => c.toString()).join(','));
+    return this.stores.getRanged(startRecordCount, endRecordCount, params).pipe(
+      map((stores: ReadyStore[]) => {
+        if (stores && stores.length > this.paginationCountPerPage) {
+          this.hasMorePages = true;
+          // Remove the extra record that we fetched to check if we have more records to fetch.
+          stores = stores.splice(0, this.paginationCountPerPage);
+        } else {
+          this.hasMorePages = false;
+        }
+        const requiredCategories = ({ category_id }: ReadyStore) =>
+          hostCategories.includes(category_id);
+
+        return stores.filter(requiredCategories);
+      }),
+      catchError(() => {
+        this.hasMorePages = false;
+        return of([]);
+      })
+    );
   }
 
   private handleDataLoad(data: ReadyStore[]) {

@@ -57,11 +57,10 @@ describe('FeedHostSelectorComponent', () => {
     });
 
     it('should have right params', (done) => {
-      component.fetch().subscribe(() => {
+      component.fetch(1, 15).subscribe(() => {
         const [, , params] = getRangedSpy.calls.mostRecent().args as [number, number, HttpParams];
 
         expect(params.keys().length).toBe(3);
-        expect(params.get('search_str')).toBeNull();
         expect(params.get('school_id')).toBe(mockSchool.id.toString());
 
         expect(params.get('category_ids')).toBe(
@@ -75,18 +74,8 @@ describe('FeedHostSelectorComponent', () => {
       getRangedSpy.and.returnValue(throwError('Error'));
       fixture.detectChanges();
 
-      component.fetch().subscribe((response) => {
-        expect(JSON.stringify(response)).toBe('{}');
-        done();
-      });
-    });
-
-    it('should parse valid response into a sections object', (done) => {
-      component.fetch().subscribe((response) => {
-        expect(Object.keys(response).length).toBe(3);
-        Object.keys(response).forEach((section) => {
-          expect(response[section].length).toBe(1);
-        });
+      component.fetch(1, 15).subscribe((response) => {
+        expect(JSON.stringify(response)).toBe('[]');
         done();
       });
     });
@@ -94,9 +83,7 @@ describe('FeedHostSelectorComponent', () => {
 
   describe('view', () => {
     it('default value', (done) => {
-      component.view$.pipe(take(1)).subscribe(({ sections, search, host }) => {
-        expect(JSON.stringify(sections)).toBe('{}');
-        expect(search).toBe('');
+      component.view$.pipe(take(1)).subscribe(({ host }) => {
         expect(host).toBe(null);
         done();
       });
