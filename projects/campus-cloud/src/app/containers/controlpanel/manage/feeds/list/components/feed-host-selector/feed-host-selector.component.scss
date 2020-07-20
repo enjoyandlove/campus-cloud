@@ -77,3 +77,13 @@
     }
   }
 }
+
+ready-ui-menu-item {
+  &.load-more {
+    background: $color-light-grey;
+
+    button[ui-button] {
+      text-align: center;
+    }
+  }
+}
