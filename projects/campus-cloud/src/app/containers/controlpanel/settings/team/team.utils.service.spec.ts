@@ -1,6 +1,7 @@
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { TeamUtilsService } from './team.utils.service';
+import { CPSession } from '@campus-cloud/session';
 
 const privilegeSet = { r: true, w: true };
 
