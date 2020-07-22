@@ -65,7 +65,9 @@ export const CP_PRIVILEGES_MAP = {
 
   app_user_management: 39,
 
-  contact_tracing: 40
+  contact_trace_qr: 40,
+
+  contact_trace_forms: 41
 };
 
 export const CP_PRIVILEGES = {
@@ -135,5 +137,7 @@ export const CP_PRIVILEGES = {
 
   39: 'App User Management',
 
-  40: 'Contact Tracing'
+  40: 'Contact Trace QR',
+
+  41: 'Contact Trace Forms'
 };

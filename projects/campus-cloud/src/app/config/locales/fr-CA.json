@@ -80,6 +80,15 @@
   "admin_club_service_modal_title": {
     "message": "Sélectionner %s"
   },
+  "admin_contact_trace_forms": {
+    "message": "Formes"
+  },
+  "admin_contact_trace_qr": {
+    "message": "codes QR"
+  },
+  "admin_contact_trace_title": {
+    "message": "Contactez Trace"
+  },
   "admin_create_account": {
     "message": "Créer compte"
   },

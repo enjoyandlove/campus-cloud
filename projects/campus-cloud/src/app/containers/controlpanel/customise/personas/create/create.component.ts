@@ -54,9 +54,11 @@ export class PersonasCreateComponent implements OnInit {
       children: []
     };
 
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload
+      });
     });
   }
 

@@ -15,7 +15,7 @@ import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.s
 })
 export class ServicesProviderActionBoxComponent implements OnInit {
   @Input() noProviders;
-  @Input() isContactTrace;
+  @Input() allowLocationsImport;
 
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() importLocations: EventEmitter<null> = new EventEmitter();
