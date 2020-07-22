@@ -103,10 +103,8 @@ export class FeedSearchComponent implements OnInit {
     hasFiltersActive: boolean;
   }>;
 
-  loadMore = new Subject();
   closeMenu = new Subject();
   channelTerm = new Subject();
-  studentTerm = new Subject();
   primaryMenuOpened = new Subject();
 
   dateMenu$: Observable<any>;
@@ -119,6 +117,14 @@ export class FeedSearchComponent implements OnInit {
   presetDates: { [key: string]: number[] };
   viewFilters$: BehaviorSubject<any> = new BehaviorSubject({});
   locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
+
+  students: any[] = [];
+  studentsSearchTermStream = new Subject();
+  studentsPageStream = new Subject<number>();
+  studentsSearchTerm: string;
+  studentsPageCounter = 1;
+  studentsPaginationCountPerPage = 15;
+  studentsHasMorePages = false;
 
   constructor(
     private fb: FormBuilder,
@@ -141,16 +147,44 @@ export class FeedSearchComponent implements OnInit {
       share()
     );
 
+    const studentsSearchSource = this.studentsSearchTermStream.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      map((searchTerm: string) => {
+        this.studentsSearchTerm = searchTerm;
+        this.studentsPageCounter = 1;
+        return { searchTerm: searchTerm, page: this.studentsPageCounter };
+      })
+    );
+
+    const studentsPageSource = this.studentsPageStream.pipe(
+      map((pageNumber) => {
+        this.studentsPageCounter = pageNumber;
+        return { searchTerm: this.studentsSearchTerm, page: pageNumber };
+      })
+    );
+
+    const studentsSearchCombinedSource: Observable<any[]> = merge(
+      studentsPageSource,
+      studentsSearchSource
+    ).pipe(
+      startWith({ searchTerm: this.studentsSearchTerm, page: this.studentsPageCounter }),
+      switchMap((params: { searchTerm: string; page: number }) => {
+        return this.fetchStudents(params.page);
+      }),
+      share()
+    );
+
+    studentsSearchCombinedSource.subscribe((data) => this.handleStudentsDataLoad(data));
+
     this.studentsMenu$ = combineLatest([
-      this.fetchStudents(),
       viewFilters$,
-      this.studentTerm.asObservable().pipe(startWith(''))
+      this.studentsSearchTermStream.asObservable().pipe(startWith(''))
     ]).pipe(
-      map(([students, filters, searchTerm]) => {
+      map(([filters, searchTerm]) => {
         const { users } = filters;
         const selectedUserids = users.map((u) => u.id);
         return {
-          students,
           selectedUserids,
           selectedUsers: users,
           canSelect: users.length < 5,
@@ -363,6 +397,14 @@ export class FeedSearchComponent implements OnInit {
     );
   }
 
+  private handleStudentsDataLoad(data: any[]) {
+    if (this.studentsPageCounter === 1) {
+      this.students = data;
+    } else {
+      this.students = this.students.concat(data);
+    }
+  }
+
   getCount() {
     const defaultValue = {
       postCount: 0,
@@ -501,37 +543,42 @@ export class FeedSearchComponent implements OnInit {
     return this.feedsService.getSocialGroups(search) as Observable<ISocialGroup[]>;
   }
 
-  fetchStudents(): Observable<any[]> {
-    let cutOff = 15;
-    const increaseBy = 15;
+  fetchStudents(page): Observable<any[]> {
+    let startRecordCount = this.studentsPaginationCountPerPage * (page - 1) + 1;
+    // Get an extra record so that we know if there are more records left to fetch
+    let endRecordCount = this.studentsPaginationCountPerPage * page + 1;
+
     let params = new HttpParams()
       .set('sort_direction', 'asc')
       .set('sort_field', 'username')
       .set('school_id', this.session.school.id.toString())
       .set('is_sandbox', String(this.session.school.is_sandbox))
-      .set('client_id', this.session.school.client_id.toString());
+      .set('client_id', this.session.school.client_id.toString())
+      .set(
+        'search_str',
+        Boolean(this.studentsSearchTerm && this.studentsSearchTerm.trim().length)
+          ? this.studentsSearchTerm.trim()
+          : null
+      );
 
-    const fetchStudents$ = (max: number) =>
-      this.userService.getAll(params, 1, max).pipe(catchError(() => of([]))) as Observable<any[]>;
+    return this.userService.getAll(params, startRecordCount, endRecordCount).pipe(
+      map((results: any[]) => {
+        if (results && results.length > this.studentsPaginationCountPerPage) {
+          this.studentsHasMorePages = true;
+          // Remove the extra record that we fetched to check if we have more records to fetch.
+          results = results.splice(0, this.studentsPaginationCountPerPage);
+        } else {
+          this.studentsHasMorePages = false;
+        }
+        return results;
+      }),
+      catchError(() => of([]))
+    ) as Observable<any[]>;
+  }
 
-    const initialResults$ = fetchStudents$(15);
-
-    const loadMore$ = this.loadMore
-      .asObservable()
-      .pipe(tap((currentLength: number) => (cutOff = currentLength + increaseBy)));
-
-    const userSearch$ = this.studentTerm.asObservable().pipe(
-      debounceTime(400),
-      filter((term) => typeof term === 'string'),
-      tap(
-        (term: string) =>
-          (params = params.set('search_str', Boolean(term.trim().length) ? term.trim() : null))
-      )
-    );
-
-    const reload$ = merge(loadMore$, userSearch$).pipe(switchMap(() => fetchStudents$(cutOff)));
-
-    return merge(reload$, initialResults$);
+  studentsLoadMoreClickHandler(): void {
+    this.studentsPageCounter++;
+    this.studentsPageStream.next(this.studentsPageCounter);
   }
 
   emitValue() {

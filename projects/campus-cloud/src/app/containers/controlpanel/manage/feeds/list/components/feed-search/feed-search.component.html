@@ -42,7 +42,7 @@
         <div class="counter__skeleton"
              *ngIf="view.counting">
           <ready-ui-skeleton-text
-                                  [width]="view.searchTerm === '' ? '100px' : '170px'">
+                                  [width]="studentsSearchTerm === '' ? '100px' : '170px'">
           </ready-ui-skeleton-text>
           <ready-ui-skeleton-text width="140px"></ready-ui-skeleton-text>
         </div>
@@ -50,7 +50,7 @@
              *ngIf="!view.counting">
           <ui-text-style variant="bold"
                          class="counter__heading">
-            {{ view.searchTitle | cpI18n: view.searchTerm }}
+            {{ view.searchTitle | cpI18n: studentsSearchTerm }}
           </ui-text-style>
           <ready-ui-stack>
             <ui-text-style color="muted"
@@ -197,7 +197,7 @@
 
   <ready-ui-menu #users="menu"
                  maxHeight="20em">
-    <ready-ui-menu-search (search)="studentTerm.next($event)"
+    <ready-ui-menu-search (search)="studentsSearchTermStream.next($event)"
                           [placeholder]="'t_walls_search_placeholder' | cpI18n">
     </ready-ui-menu-search>
     <ng-container *ngIf="view.studentsMenu as studentMenu">
@@ -220,7 +220,7 @@
         </ready-ui-menu-section>
       </ng-container>
 
-      <ready-ui-menu-item *ngFor="let student of studentMenu.students">
+      <ready-ui-menu-item *ngFor="let student of students">
         <ready-ui-stack>
           <ready-ui-checkbox (changed)="handleStudent(student)"
                              [labelTpl]="labelTpl"
@@ -242,16 +242,16 @@
       </ng-template>
 
 
-      <ready-ui-menu-item *ngIf="!studentMenu.students.length">
+      <ready-ui-menu-item *ngIf="!students.length">
         {{ 't_walls_no_users_found' | cpI18n }}
       </ready-ui-menu-item>
       <ready-ui-menu-item class="load-more"
-                          *ngIf="studentMenu.students.length">
+                          *ngIf="studentsHasMorePages">
         <button ui-button
                 type="button"
                 variant="inline"
                 fullWidth="true"
-                (click)="loadMore.next(studentMenu.students.length)">
+                (click)="studentsLoadMoreClickHandler()">
           <ui-text-style color="muted">{{ 't_load_more' | cpI18n }}
           </ui-text-style>
         </button>
