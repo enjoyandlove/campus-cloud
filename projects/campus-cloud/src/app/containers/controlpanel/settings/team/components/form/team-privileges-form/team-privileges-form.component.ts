@@ -18,7 +18,8 @@ import {
   athleticMenu,
   manageAdminMenu,
   TeamUtilsService,
-  audienceMenuStatus
+  audienceMenuStatus,
+  contactTraceMenu
 } from '@controlpanel/settings/team/team.utils.service';
 
 @Mixin([Destroyable])
@@ -45,6 +46,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   formError;
   eventsMenu;
   audienceMenu;
+  contactTraceMenu;
   servicesMenu;
   manageAdmins;
   athleticsMenu;
@@ -58,6 +60,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   canReadEvents: boolean;
   isServiceModal = false;
   canReadAudience: boolean;
+  canReadContactTrace: boolean;
   isAthleticsModal = false;
   canReadServices: boolean;
   canReadAthletics: boolean;
@@ -404,6 +407,34 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  onContactTraceSelection(selectedActions) {
+    if (selectedActions.indexOf(contactTraceMenu.manageQR) > -1) {
+      this.schoolPrivileges = {
+        ...this.schoolPrivileges,
+        [CP_PRIVILEGES_MAP.contact_trace_qr]: {
+          r: true,
+          w: true
+        }
+      };
+    } else {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr];
+    }
+
+    if (selectedActions.indexOf(contactTraceMenu.manageForms) > -1) {
+      this.schoolPrivileges = {
+        ...this.schoolPrivileges,
+        [CP_PRIVILEGES_MAP.contact_trace_forms]: {
+          r: true,
+          w: true
+        }
+      };
+    } else {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms];
+    }
+
+    return;
+  }
+
   onAthleticsSelected(athletic) {
     if (athletic.action === athleticMenu.selectAthletic) {
       this.isAthleticsModal = true;
@@ -656,6 +687,11 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
 
     this.canReadAudience = schoolPrivileges[CP_PRIVILEGES_MAP.audience] || false;
 
+    this.canReadContactTrace =
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr] ||
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms] ||
+      false;
+
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     const clubsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
@@ -682,6 +718,12 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     const eventsAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance];
 
     this.audienceMenu = this.utils.audienceDropdown(schoolPrivileges[CP_PRIVILEGES_MAP.audience]);
+    this.contactTraceMenu = this.utils.contactTraceDropdown(
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr],
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms],
+      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr],
+      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms]
+    );
 
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
     this.clubsMenu = this.utils.clubsDropdown(clubsPrivilegeSchool, clubsPrivilegeAccount);

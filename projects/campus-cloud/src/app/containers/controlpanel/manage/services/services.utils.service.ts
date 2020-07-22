@@ -21,7 +21,8 @@ import {
   Formats,
   createSpreadSheet,
   canSchoolReadResource,
-  canStoreReadAndWriteResource
+  canStoreReadAndWriteResource,
+  canSchoolWriteResource
 } from '@campus-cloud/shared/utils';
 
 @Injectable()
@@ -225,6 +226,10 @@ export class ServicesUtilsService {
     });
 
     createSpreadSheet(assessments, columns);
+  }
+
+  hasSchoolWritePrivilege(privilege: number): boolean {
+    return canSchoolWriteResource(this.session.g, privilege);
   }
 
   hasPrivilege(storeId: number, privilege: number): boolean {

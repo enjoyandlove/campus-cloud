@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { CPSession } from '@campus-cloud/session';
 
 export enum clubAthleticStatus {
   active = 1
@@ -41,6 +42,11 @@ export enum audienceMenuStatus {
   allAccess = 1
 }
 
+export enum contactTraceMenu {
+  manageQR = 2,
+  manageForms = 3
+}
+
 export enum manageAdminMenu {
   disabled = null,
   enabled = 1
@@ -62,7 +68,7 @@ export enum PhraseAppKeys {
 
 @Injectable()
 export class TeamUtilsService {
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
 
   hasStudio(schoolPrivileges) {
     return CP_PRIVILEGES_MAP.app_customization in schoolPrivileges;
@@ -149,6 +155,45 @@ export class TeamUtilsService {
           action: audienceMenuStatus.allAccess
         }
       ];
+    }
+
+    return items;
+  }
+
+  contactTraceDropdown(
+    viewerContactTraceQRPrivilege = { r: false, w: false },
+    viewerContactTraceFormsPrivilege = { r: false, w: false },
+    adminContactTraceQRPrivilege = { r: false, w: false },
+    adminContactTraceFormsPrivilege = { r: false, w: false }
+  ): Array<any> {
+    let items = [];
+    if (!viewerContactTraceQRPrivilege.r && !viewerContactTraceFormsPrivilege.r) {
+      return items;
+    }
+
+    if (viewerContactTraceQRPrivilege.w) {
+      items = [
+        ...items,
+        {
+          label: this.cpI18n.translate('admin_contact_trace_qr'),
+          action: contactTraceMenu.manageQR,
+          selected: adminContactTraceQRPrivilege.w
+        }
+      ];
+    }
+
+    const { ct_plus_enabled } = this.session.g.get('school');
+    if (ct_plus_enabled) {
+      if (viewerContactTraceFormsPrivilege.w) {
+        items = [
+          ...items,
+          {
+            label: this.cpI18n.translate('admin_contact_trace_forms'),
+            action: contactTraceMenu.manageForms,
+            selected: adminContactTraceFormsPrivilege.w
+          }
+        ];
+      }
     }
 
     return items;

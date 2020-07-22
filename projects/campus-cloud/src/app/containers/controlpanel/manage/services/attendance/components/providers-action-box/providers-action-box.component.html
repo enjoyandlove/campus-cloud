@@ -29,7 +29,7 @@
             {{ 'services_button_add_service_provider' | cpI18n }}
           </button>
           <cp-menu>
-            <cp-menu-item *ngIf="isContactTrace">
+            <cp-menu-item *ngIf="allowLocationsImport">
               <span (click)="onImportLocations()">{{ 'import_locations' | cpI18n }}</span>
             </cp-menu-item>
             <cp-menu-item *ngIf="!noProviders">

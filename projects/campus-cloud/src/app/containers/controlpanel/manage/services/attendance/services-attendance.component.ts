@@ -24,7 +24,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   service;
   storeId;
   noProviders;
-  isContactTrace;
+  allowLocationsImport;
   isProviderAdd;
   serviceId: number;
 
@@ -52,8 +52,10 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   private fetch() {
     super.fetchData(this.serviceService.getServiceById(this.serviceId)).then((res) => {
       this.service = res.data;
-      if (this.utils.hasPrivilege(this.service.store_id, CP_PRIVILEGES_MAP.contact_tracing)) {
-        this.isContactTrace = this.service.is_contact_trace;
+      if (this.service.is_contact_trace) {
+        this.allowLocationsImport = this.utils.hasSchoolWritePrivilege(
+          CP_PRIVILEGES_MAP.contact_trace_qr
+        );
       }
 
       if (!this.service.service_attendance) {
