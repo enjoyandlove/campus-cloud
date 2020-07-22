@@ -8,7 +8,7 @@ describe('TeamUtilsService', () => {
   let service: TeamUtilsService;
 
   beforeEach(() => {
-    service = new TeamUtilsService(new CPI18nService());
+    service = new TeamUtilsService(new CPSession(), new CPI18nService());
   });
 
   it('should check if Studio privilege exists in object', () => {
