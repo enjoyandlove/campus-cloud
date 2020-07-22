@@ -42,7 +42,7 @@
         <div class="counter__skeleton"
              *ngIf="view.counting">
           <ready-ui-skeleton-text
-                                  [width]="studentsSearchTerm === '' ? '100px' : '170px'">
+                                  [width]="view.searchTerm === '' ? '100px' : '170px'">
           </ready-ui-skeleton-text>
           <ready-ui-skeleton-text width="140px"></ready-ui-skeleton-text>
         </div>
@@ -50,7 +50,7 @@
              *ngIf="!view.counting">
           <ui-text-style variant="bold"
                          class="counter__heading">
-            {{ view.searchTitle | cpI18n: studentsSearchTerm }}
+            {{ view.searchTitle | cpI18n: view.searchTerm }}
           </ui-text-style>
           <ready-ui-stack>
             <ui-text-style color="muted"
