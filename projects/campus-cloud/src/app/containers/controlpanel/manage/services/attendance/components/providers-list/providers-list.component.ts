@@ -200,6 +200,18 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       });
   }
 
+  downloadAllQR() {
+    let search = new HttpParams().set('service_id', this.service.id.toString()).set('all', '1');
+
+    search = this.providerUtils.addSearchParams(search, this.filterState);
+
+    const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
+
+    stream$.toPromise().then((providers: any) => {
+      this.providerUtils.exportQRsPdf(this.service.name, providers);
+    });
+  }
+
   downloadProvidersCSV() {
     let search = new HttpParams().set('service_id', this.service.id.toString()).set('all', '1');
 
