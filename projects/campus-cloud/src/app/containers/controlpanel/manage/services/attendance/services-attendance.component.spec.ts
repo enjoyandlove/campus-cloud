@@ -8,6 +8,7 @@ import { CPSession } from '@campus-cloud/session';
 import { MockServicesService } from '../tests/mock';
 import { ServicesService } from '../services.service';
 import { RootStoreModule } from '@campus-cloud/store';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { IDateRange } from '@campus-cloud/shared/components';
 import { ServicesUtilsService } from '../services.utils.service';
 import { mockSchool, mockUser } from '@campus-cloud/session/mock';
@@ -32,6 +33,7 @@ describe('ServicesAttendanceComponent', () => {
         declarations: [ServicesAttendanceComponent, ServicesProvidersListStubComponent],
         imports: [HttpClientModule, RouterTestingModule, RootStoreModule, CPTestModule],
         providers: [
+          CPI18nPipe,
           FormBuilder,
           ServicesUtilsService,
           ProvidersUtilsService,

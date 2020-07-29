@@ -5,6 +5,7 @@ import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
 import { RootStoreModule } from '@campus-cloud/store';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { MockProvidersService } from '../../tests/mock';
 import { MockServicesService } from '../../../tests/mock';
 import { ServicesService } from '../../../services.service';
@@ -36,6 +37,7 @@ describe('ServicesProviderDetailsComponent', () => {
         ],
         imports: [CPTestModule, HttpClientModule, RouterTestingModule, RootStoreModule],
         providers: [
+          CPI18nPipe,
           ServicesUtilsService,
           ProvidersUtilsService,
           {
