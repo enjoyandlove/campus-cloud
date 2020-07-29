@@ -131,6 +131,10 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.providersList.importProvidersFromLocations();
   }
 
+  onDownloadAllQR() {
+    this.providersList.downloadAllQR();
+  }
+
   onDownload() {
     this.providersList.downloadProvidersCSV();
   }

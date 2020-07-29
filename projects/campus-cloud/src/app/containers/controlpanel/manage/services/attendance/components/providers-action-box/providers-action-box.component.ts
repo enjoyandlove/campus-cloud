@@ -18,6 +18,7 @@ export class ServicesProviderActionBoxComponent implements OnInit {
   @Input() allowLocationsImport;
 
   @Output() download: EventEmitter<null> = new EventEmitter();
+  @Output() downloadAllQR: EventEmitter<null> = new EventEmitter();
   @Output() importLocations: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<null> = new EventEmitter();
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
@@ -37,6 +38,10 @@ export class ServicesProviderActionBoxComponent implements OnInit {
 
   onDownload() {
     this.download.emit();
+  }
+
+  onDownloadAllQR() {
+    this.downloadAllQR.emit();
   }
 
   onImportLocations() {
