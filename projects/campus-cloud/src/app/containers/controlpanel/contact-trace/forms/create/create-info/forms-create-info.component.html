@@ -1,0 +1,83 @@
+<div class="page-container">
+
+  <ready-ui-card>
+
+    <div
+      class="form-group form-name-group"
+    >
+      <ng-container *ngIf="form">
+        <label for="formName">{{ 'contact_trace_forms_name' | cpI18n }}</label>
+        <input
+          type="text"
+          id="formName"
+          class="form-control"
+          [(ngModel)]="form.name"
+          autocomplete="off"
+        />
+      </ng-container>
+    </div>
+
+    <div
+      class="form-group form-template-group"
+      *ngIf="form && !form.form_block_list"
+    >
+      <label>{{ 'contact_trace_forms_select_a_template' | cpI18n }}</label>
+
+      <div class="tiles-container">
+
+        <cp-form-template-tile
+          class="template-tile"
+          [selected]="!form?.template_form_id"
+          (click)="form.template_form_id = null"
+        >
+        </cp-form-template-tile>
+
+        <cp-form-template-tile
+          *ngFor="let templateForm of templateForms"
+          class="template-tile"
+          [selected]="form?.template_form_id === templateForm.id"
+          (click)="form.template_form_id = templateForm.id"
+          [form]="templateForm"
+        >
+        </cp-form-template-tile>
+
+      </div>
+
+    </div>
+
+  </ready-ui-card>
+
+</div>
+
+<div class="footer">
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer__wrapper">
+          <div class="sidebar-space">
+          </div>
+
+          <button
+            ui-button
+            type="button"
+            variant="flat"
+            color="primary"
+            class="action-button"
+            (click)="nextClickHandler()"
+            [disabled]="!form || !form.name || form.name.trim().length === 0"
+          >
+            {{'contact_trace_forms_next' | cpI18n}}
+          </button>
+
+          <a ui-button
+             class="action-button"
+             variant="stroked"
+             [routerLink]="'/contact-trace/forms'">
+            {{ 'contact_trace_forms_cancel' | cpI18n }}
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<ng-container *ngIf="!formBlock.is_terminal">
+
+  <cp-block-body-welcome
+    *ngIf="indexPos === 0"
+    [formBlock]="formBlock"
+    [highlightFormError]="highlightFormError"
+  >
+  </cp-block-body-welcome>
+
+  <cp-block-body-text
+    *ngIf="formBlock.block_type === blockType.text"
+    [formBlock]="formBlock"
+    [highlightFormError]="highlightFormError"
+  >
+  </cp-block-body-text>
+
+  <cp-block-body-number
+    *ngIf="formBlock.block_type === blockType.number"
+    [formBlock]="formBlock"
+    [highlightFormError]="highlightFormError"
+  >
+  </cp-block-body-number>
+
+  <cp-block-body-decimal
+    *ngIf="formBlock.block_type === blockType.decimal"
+    [formBlock]="formBlock"
+    [highlightFormError]="highlightFormError"
+  >
+  </cp-block-body-decimal>
+
+  <cp-block-body-multiple-choice
+    *ngIf="formBlock.block_type === blockType.multiple_choice"
+    [formBlock]="formBlock"
+    [highlightFormError]="highlightFormError"
+  >
+  </cp-block-body-multiple-choice>
+
+  <cp-block-body-multiple-selection
+    *ngIf="formBlock.block_type === blockType.multiple_selection"
+    [formBlock]="formBlock"
+    [highlightFormError]="highlightFormError"
+  >
+  </cp-block-body-multiple-selection>
+
+  <cp-block-body-image
+    *ngIf="formBlock.block_type === blockType.image"
+    [formBlock]="formBlock"
+    [highlightFormError]="highlightFormError"
+  >
+  </cp-block-body-image>
+
+</ng-container>
+
+<cp-block-body-result
+  *ngIf="formBlock.is_terminal"
+  [formBlock]="formBlock"
+  [highlightFormError]="highlightFormError"
+>
+</cp-block-body-result>

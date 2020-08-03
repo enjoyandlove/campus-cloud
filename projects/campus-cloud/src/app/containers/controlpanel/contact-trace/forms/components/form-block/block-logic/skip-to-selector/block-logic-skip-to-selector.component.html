@@ -1,0 +1,55 @@
+<button ui-button
+        class="skip-to-button"
+        [color]="(highlightFormError && formBlock.block_logic_list[0].next_block_index === -1) ? 'danger' : 'default'"
+        variant="stroked"
+        overlayWidth="250px"
+        [triggerFor]="primary"
+        ready-ui-menu-trigger
+        direction="bottom-right"
+>
+  <ready-ui-stack spacing="tight">
+    <div
+      class="skip-to-text"
+      [class.validation-error]="highlightFormError && formBlock.block_logic_list[0].next_block_index === -1"
+    >
+      {{ 'contact_trace_forms_skip_to' | cpI18n }}
+    </div>
+    <div class="skip-to-number">
+      {{formBlock.block_logic_list[0].next_block_index === -1 ? '' : (formBlock.block_logic_list[0].next_block_index + 1)}}
+    </div>
+  </ready-ui-stack>
+</button>
+
+<ready-ui-menu #primary="menu">
+
+  <div class="menu-items-container">
+
+    <ready-ui-menu-item
+      *ngFor="let loopBlock of form.form_block_list; let index = index;"
+      [suffixTpl]="formBlock.block_logic_list[0].next_block_index === index ? activeItem : undefined"
+    >
+      <button ui-button
+              type="button"
+              color="inherit"
+              variant="inline"
+              fullWidth="true"
+              (click)="blockLogicSelectHandler(index); primary.close();"
+      >
+        <ready-ui-stack spacing="regular">
+          <ready-ui-icon
+            [name]="index === 0 ? 'triangle_right' : (loopBlock.is_terminal ? 'square' : blockTypeToIconMap[loopBlock.block_type])"
+            size="small"
+          >
+          </ready-ui-icon>
+          <span>{{(index + 1) + ': ' + (loopBlock.text ? loopBlock.text : '')}}</span>
+        </ready-ui-stack>
+      </button>
+    </ready-ui-menu-item>
+
+  </div>
+
+</ready-ui-menu>
+
+<ng-template #activeItem>
+  <ready-ui-menu-dot></ready-ui-menu-dot>
+</ng-template>

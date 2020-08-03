@@ -1,0 +1,156 @@
+<div class="page-container">
+
+  <div class="blocks-group-container">
+    <cp-form-block
+      *ngIf="welcomeBlock"
+      [formBlock]="welcomeBlock"
+      [indexPos]="0"
+      [highlightFormError]="highlightFormError"
+    >
+    </cp-form-block>
+  </div>
+
+  <div class="blocks-group-container">
+
+    <ui-text-style variant="bold"
+                   class="blocks-group-header">
+      {{ 'contact_trace_forms_questions' | cpI18n }}
+    </ui-text-style>
+
+    <button (click)="addQuestionClickHandler(0)"
+            class="cpbtn cpbtn--cancel add-action-button">
+      <ready-ui-stack spacing="regular">
+        <ready-ui-icon
+          width="20px"
+          name="add"
+        >
+        </ready-ui-icon>
+        <span ui-text-style>
+        {{ 'contact_trace_forms_question' | cpI18n }}
+    </span>
+      </ready-ui-stack>
+    </button>
+
+    <ng-container
+      *ngFor="let questionBlock of questionBlocks; let index = index;">
+
+      <cp-form-block
+        [form]="form"
+        [formBlock]="questionBlock"
+        [indexPos]="index + 1"
+        (deleteClicked)="deleteQuestionClickHandler(index)"
+        [highlightFormError]="highlightFormError"
+      >
+      </cp-form-block>
+
+      <button (click)="addQuestionClickHandler(index + 1)"
+              class="cpbtn cpbtn--cancel add-action-button">
+        <ready-ui-stack spacing="regular">
+          <ready-ui-icon
+            width="20px"
+            name="add"
+          >
+          </ready-ui-icon>
+          <span ui-text-style>
+            {{ 'contact_trace_forms_question' | cpI18n }}
+          </span>
+        </ready-ui-stack>
+      </button>
+
+    </ng-container>
+
+  </div>
+
+  <div class="blocks-group-container">
+
+    <ui-text-style variant="bold"
+                   class="blocks-group-header">
+      {{ 'contact_trace_forms_results' | cpI18n }}
+    </ui-text-style>
+
+    <button (click)="addResultClickHandler(0)"
+            class="cpbtn cpbtn--cancel add-action-button"
+            [class.validation-error]="highlightFormErrorForPublish && (!resultBlocks || resultBlocks.length === 0)"
+    >
+      <ready-ui-stack spacing="regular">
+        <ready-ui-icon
+          width="20px"
+          name="add"
+        >
+        </ready-ui-icon>
+        <span ui-text-style>
+          {{ 'contact_trace_forms_result' | cpI18n }}
+        </span>
+      </ready-ui-stack>
+    </button>
+
+    <span class="missing-result-block-message" *ngIf="highlightFormErrorForPublish && (!resultBlocks || resultBlocks.length === 0)">
+      {{ 'contact_trace_forms_result_block_missing_message' | cpI18n }}
+    </span>
+
+    <ng-container
+      *ngFor="let resultBlock of resultBlocks; let index = index;">
+
+      <cp-form-block
+        [formBlock]="resultBlock"
+        [indexPos]="index + questionBlocks.length + 1"
+        (deleteClicked)="deleteResultClickHandler(index)"
+        [highlightFormError]="highlightFormError"
+      >
+      </cp-form-block>
+
+      <button (click)="addResultClickHandler(index + 1)"
+              class="cpbtn cpbtn--cancel add-action-button">
+        <ready-ui-stack spacing="regular">
+          <ready-ui-icon
+            width="20px"
+            name="add"
+          >
+          </ready-ui-icon>
+          <span ui-text-style>
+            {{ 'contact_trace_forms_result' | cpI18n }}
+          </span>
+        </ready-ui-stack>
+      </button>
+
+    </ng-container>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer__wrapper">
+          <div class="sidebar-space">
+          </div>
+
+          <button
+            ui-button
+            type="button"
+            variant="flat"
+            color="primary"
+            class="action-button"
+            (click)="publishClickHandler()"
+          >
+            {{'contact_trace_forms_publish' | cpI18n}}
+          </button>
+
+          <button
+            ui-button
+            type="button"
+            variant="stroked"
+            color="default"
+            class="action-button"
+            (click)="saveAsDraftClickHandler()"
+          >
+            {{'contact_trace_forms_save_as_draft' | cpI18n}}
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

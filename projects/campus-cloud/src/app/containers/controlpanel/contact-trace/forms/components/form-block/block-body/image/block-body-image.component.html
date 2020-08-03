@@ -1,0 +1,13 @@
+<input
+  type="text"
+  class="form-control"
+  [class.error]="highlightFormError && formsHelper.isNullOrEmptyString(formBlock.text)"
+  [(ngModel)]="formBlock.text"
+/>
+
+<input
+  type="text"
+  class="form-control hint-text-input"
+  [(ngModel)]="formBlock.hint_text"
+  [placeholder]="'contact_trace_forms_enter_hint_text' | cpI18n"
+/>

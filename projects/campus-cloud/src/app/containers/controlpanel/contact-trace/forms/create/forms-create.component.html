@@ -1,0 +1,23 @@
+<div class="page">
+  <div class="page__sidebar">
+    <div class="page__sticky__wrapper">
+      <a [routerLink]="'info'"
+         routerLinkActive="active"
+         class="link-button"
+      >
+        {{ 'contact_trace_forms_form_info' | cpI18n }}
+      </a>
+      <a
+        [routerLink]="'builder'"
+        [ngClass]="{'disabled-link': !(form && form.name && form.name.trim().length > 0 && form.form_block_list && form.form_block_list.length > 0)}"
+        routerLinkActive="active"
+        class="link-button"
+      >
+        {{ 'contact_trace_forms_form_builder' | cpI18n }}
+      </a>
+    </div>
+  </div>
+  <div class="page__content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

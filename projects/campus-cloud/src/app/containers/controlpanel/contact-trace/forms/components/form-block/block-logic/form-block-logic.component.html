@@ -1,0 +1,44 @@
+<div class="logic-row">
+
+  <ng-container *ngIf="!formBlock.is_terminal">
+    <cp-block-logic-skip-to-selector
+      class="skip-to-selector"
+      [form]="form"
+      [formBlock]="formBlock"
+      [highlightFormError]="highlightFormError"
+    >
+    </cp-block-logic-skip-to-selector>
+
+    <cp-selector-for-options
+      class="logic-selector"
+      *ngIf="formBlock.block_type === blockType.multiple_choice || formBlock.block_type === blockType.multiple_selection"
+      [formBlock]="formBlock"
+      [highlightFormError]="highlightFormError"
+    >
+    </cp-selector-for-options>
+
+    <cp-selector-for-text
+      class="logic-selector"
+      *ngIf="formBlock.block_type === blockType.text"
+      [formBlock]="formBlock"
+      [highlightFormError]="highlightFormError"
+    >
+    </cp-selector-for-text>
+
+    <cp-selector-for-number
+      class="logic-selector"
+      *ngIf="formBlock.block_type === blockType.number || formBlock.block_type === blockType.decimal"
+      [formBlock]="formBlock"
+      [highlightFormError]="highlightFormError"
+    >
+    </cp-selector-for-number>
+  </ng-container>
+
+  <ng-container *ngIf="formBlock.is_terminal">
+    <cp-selector-for-result
+      [formBlock]="formBlock"
+    >
+    </cp-selector-for-result>
+  </ng-container>
+
+</div>

@@ -1,0 +1,6 @@
+export enum FormType {
+  GENERIC = 0,
+  PRE_SCREENING = 101,
+  SELF_REPORTING = 102,
+  SYMPTOM_TRACKER = 103
+}

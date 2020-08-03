@@ -942,6 +942,261 @@
   "contact_details": {
     "message": "Contact Details"
   },
+  "contact_trace_forms_all_forms": {
+    "message": "All Forms"
+  },
+  "contact_trace_forms_alphabet_a": {
+    "message": "A"
+  },
+  "contact_trace_forms_alphabet_b": {
+    "message": "B"
+  },
+  "contact_trace_forms_alphabet_c": {
+    "message": "C"
+  },
+  "contact_trace_forms_alphabet_d": {
+    "message": "D"
+  },
+  "contact_trace_forms_alphabet_e": {
+    "message": "E"
+  },
+  "contact_trace_forms_alphabet_f": {
+    "message": "F"
+  },
+  "contact_trace_forms_alphabet_g": {
+    "message": "G"
+  },
+  "contact_trace_forms_alphabet_h": {
+    "message": "H"
+  },
+  "contact_trace_forms_alphabet_i": {
+    "message": "I"
+  },
+  "contact_trace_forms_alphabet_j": {
+    "message": "J"
+  },
+  "contact_trace_forms_alphabet_k": {
+    "message": "K"
+  },
+  "contact_trace_forms_alphabet_l": {
+    "message": "L"
+  },
+  "contact_trace_forms_alphabet_m": {
+    "message": "M"
+  },
+  "contact_trace_forms_alphabet_n": {
+    "message": "N"
+  },
+  "contact_trace_forms_alphabet_o": {
+    "message": "O"
+  },
+  "contact_trace_forms_block_type_decimal": {
+    "message": "Decimal"
+  },
+  "contact_trace_forms_block_type_image": {
+    "message": "Image"
+  },
+  "contact_trace_forms_block_type_multiple_choice": {
+    "message": "Multiple Choice"
+  },
+  "contact_trace_forms_block_type_multiple_selection": {
+    "message": "Multiple Selection"
+  },
+  "contact_trace_forms_block_type_number": {
+    "message": "Number"
+  },
+  "contact_trace_forms_block_type_text": {
+    "message": "Text"
+  },
+  "contact_trace_forms_cancel": {
+    "message": "Cancel"
+  },
+  "contact_trace_forms_capture_responses_app": {
+    "message": "Capture responses through the app"
+  },
+  "contact_trace_forms_capture_responses_web": {
+    "message": "Capture responses through the web"
+  },
+  "contact_trace_forms_content": {
+    "message": "Content"
+  },
+  "contact_trace_forms_create_form": {
+    "message": "Create Form"
+  },
+  "contact_trace_forms_create_form_without_template": {
+    "message": "Create a new form without a template"
+  },
+  "contact_trace_forms_daily_reminder": {
+    "message": "Daily Reminder"
+  },
+  "contact_trace_forms_decimal": {
+    "message": "Decimal"
+  },
+  "contact_trace_forms_delete": {
+    "message": "Delete"
+  },
+  "contact_trace_forms_draft": {
+    "message": "Draft"
+  },
+  "contact_trace_forms_draft_forms": {
+    "message": "Draft Forms"
+  },
+  "contact_trace_forms_edit": {
+    "message": "Edit"
+  },
+  "contact_trace_forms_edit_form": {
+    "message": "Edit Form"
+  },
+  "contact_trace_forms_enter_hint_text": {
+    "message": "Enter hint text here"
+  },
+  "contact_trace_forms_form_builder": {
+    "message": "Form Builder"
+  },
+  "contact_trace_forms_form_info": {
+    "message": "Form Info"
+  },
+  "contact_trace_forms_for_selections": {
+    "message": "For Selections"
+  },
+  "contact_trace_forms_go_to_studio": {
+    "message": "Go-To Studio"
+  },
+  "contact_trace_forms_high_risk": {
+    "message": "High Risk"
+  },
+  "contact_trace_forms_if_equals": {
+    "message": "If Equals"
+  },
+  "contact_trace_forms_if_greater_than": {
+    "message": "If Greater Than"
+  },
+  "contact_trace_forms_if_greater_than_or_equal": {
+    "message": "If Greater Than Or Equals"
+  },
+  "contact_trace_forms_if_less_than": {
+    "message": "If Less Than"
+  },
+  "contact_trace_forms_if_less_than_or_equal": {
+    "message": "If Less Than Or Equals"
+  },
+  "contact_trace_forms_if_not_equals": {
+    "message": "If Not Equals"
+  },
+  "contact_trace_forms_image": {
+    "message": "Image"
+  },
+  "contact_trace_forms_logic": {
+    "message": "Logic"
+  },
+  "contact_trace_forms_low_risk": {
+    "message": "Low Risk"
+  },
+  "contact_trace_forms_medium_risk": {
+    "message": "Medium Risk"
+  },
+  "contact_trace_forms_multiple_choice": {
+    "message": "Multiple Choice"
+  },
+  "contact_trace_forms_multiple_selection": {
+    "message": "Multiple Selection"
+  },
+  "contact_trace_forms_name": {
+    "message": "Name"
+  },
+  "contact_trace_forms_negative": {
+    "message": "Negative"
+  },
+  "contact_trace_forms_new_block": {
+    "message": "New Block"
+  },
+  "contact_trace_forms_next": {
+    "message": "Next"
+  },
+  "contact_trace_forms_no": {
+    "message": "No"
+  },
+  "contact_trace_forms_notification": {
+    "message": "Notification"
+  },
+  "contact_trace_forms_number": {
+    "message": "Number"
+  },
+  "contact_trace_forms_positive": {
+    "message": "Positive"
+  },
+  "contact_trace_forms_publish": {
+    "message": "Publish"
+  },
+  "contact_trace_forms_published_forms": {
+    "message": "Published Forms"
+  },
+  "contact_trace_forms_question": {
+    "message": "Question"
+  },
+  "contact_trace_forms_questions": {
+    "message": "Questions"
+  },
+  "contact_trace_forms_required": {
+    "message": "Required"
+  },
+  "contact_trace_forms_result": {
+    "message": "Result"
+  },
+  "contact_trace_forms_results": {
+    "message": "Results"
+  },
+  "contact_trace_forms_result_block_missing_message": {
+    "message": "Please add at least one Result Block"
+  },
+  "contact_trace_forms_result_label": {
+    "message": "Result Label"
+  },
+  "contact_trace_forms_save_as_draft": {
+    "message": "Save as Draft"
+  },
+  "contact_trace_forms_selection": {
+    "message": "Selection"
+  },
+  "contact_trace_forms_select_a_template": {
+    "message": "Select a Template"
+  },
+  "contact_trace_forms_send_reminder_text": {
+    "message": "Send a daily reminder to all students at 8AM"
+  },
+  "contact_trace_forms_share": {
+    "message": "Share"
+  },
+  "contact_trace_forms_skip_to": {
+    "message": "Skip To"
+  },
+  "contact_trace_forms_start_from_scratch": {
+    "message": "Start from Scratch"
+  },
+  "contact_trace_forms_text": {
+    "message": "Text"
+  },
+  "contact_trace_forms_text_and_numbers": {
+    "message": "Text and Numbers"
+  },
+  "contact_trace_forms_title": {
+    "message": "Title"
+  },
+  "contact_trace_forms_unpublish": {
+    "message": "Unpublish"
+  },
+  "contact_trace_forms_use_studio_text": {
+    "message": "Use Studio to add the form to your campus app"
+  },
+  "contact_trace_forms_welcome": {
+    "message": "Welcome"
+  },
+  "contact_trace_forms_yes": {
+    "message": "Yes"
+  },
+  "contact_trace_forms_yes_no": {
+    "message": "Yes/No"
+  },
   "cp_top_banner_copy": {
     "message": "Campus Cloud is live"
   },

@@ -1,0 +1,171 @@
+<label class="block-type-row-label">{{ 'contact_trace_forms_text_and_numbers' | cpI18n }}</label>
+
+<div class="block-type-button-row">
+
+  <button
+    ui-button
+    type="button"
+    variant="flat"
+    [color]="highlightFormError ? 'danger' : 'default'"
+    [class.validation-error]="highlightFormError"
+    class="block-type-button"
+    (click)="selectBlockType(blockType.text)"
+  >
+    <ready-ui-stack spacing="regular">
+      <ready-ui-icon
+        class="button-icon"
+        width="15px"
+        name="text_input"
+      >
+      </ready-ui-icon>
+      <span ui-text-style>
+        {{ 'contact_trace_forms_text' | cpI18n }}
+      </span>
+    </ready-ui-stack>
+  </button>
+
+  <button
+    ui-button
+    type="button"
+    variant="flat"
+    [color]="highlightFormError ? 'danger' : 'default'"
+    [class.validation-error]="highlightFormError"
+    class="block-type-button"
+    (click)="selectBlockType(blockType.number)"
+  >
+    <ready-ui-stack spacing="regular">
+      <ready-ui-icon
+        class="button-icon"
+        width="15px"
+        name="numeric_input"
+      >
+      </ready-ui-icon>
+      <span ui-text-style>
+        {{ 'contact_trace_forms_number' | cpI18n }}
+      </span>
+    </ready-ui-stack>
+  </button>
+
+  <button
+    ui-button
+    type="button"
+    variant="flat"
+    [color]="highlightFormError ? 'danger' : 'default'"
+    [class.validation-error]="highlightFormError"
+    class="block-type-button"
+    (click)="selectBlockType(blockType.decimal)"
+  >
+    <ready-ui-stack spacing="regular">
+      <ready-ui-icon
+        class="button-icon"
+        width="15px"
+        name="decimal_input"
+      >
+      </ready-ui-icon>
+      <span ui-text-style>
+        {{ 'contact_trace_forms_decimal' | cpI18n }}
+      </span>
+    </ready-ui-stack>
+  </button>
+
+</div>
+
+<label class="block-type-row-label">{{ 'contact_trace_forms_selection' | cpI18n }}</label>
+
+<div class="block-type-button-row">
+
+  <button
+    ui-button
+    type="button"
+    variant="flat"
+    [color]="highlightFormError ? 'danger' : 'default'"
+    [class.validation-error]="highlightFormError"
+    class="block-type-button"
+    (click)="selectBlockType(blockType.multiple_choice)"
+  >
+    <ready-ui-stack spacing="regular">
+      <ready-ui-icon
+        class="button-icon"
+        width="15px"
+        name="multiple_choice"
+      >
+      </ready-ui-icon>
+      <span ui-text-style>
+        {{ 'contact_trace_forms_multiple_choice' | cpI18n }}
+      </span>
+    </ready-ui-stack>
+  </button>
+
+  <button
+    ui-button
+    type="button"
+    variant="flat"
+    [color]="highlightFormError ? 'danger' : 'default'"
+    [class.validation-error]="highlightFormError"
+    class="block-type-button"
+    (click)="selectBlockType(blockType.multiple_selection)"
+  >
+    <ready-ui-stack spacing="regular">
+      <ready-ui-icon
+        class="button-icon"
+        width="15px"
+        name="multiple_selection"
+      >
+      </ready-ui-icon>
+      <span ui-text-style>
+        {{ 'contact_trace_forms_multiple_selection' | cpI18n }}
+      </span>
+    </ready-ui-stack>
+  </button>
+
+  <button
+    ui-button
+    type="button"
+    variant="flat"
+    [color]="highlightFormError ? 'danger' : 'default'"
+    [class.validation-error]="highlightFormError"
+    class="block-type-button"
+    (click)="selectBlockType(blockType.yes_no)"
+  >
+    <ready-ui-stack spacing="regular">
+      <ready-ui-icon
+        class="button-icon"
+        width="15px"
+        name="checkbox_checked"
+      >
+      </ready-ui-icon>
+      <span ui-text-style>
+        {{ 'contact_trace_forms_yes_no' | cpI18n }}
+      </span>
+    </ready-ui-stack>
+  </button>
+
+</div>
+
+<label class="block-type-row-label">{{ 'contact_trace_forms_image' | cpI18n }}</label>
+
+<div class="block-type-button-row">
+
+  <button
+    ui-button
+    type="button"
+    variant="flat"
+    [color]="highlightFormError ? 'danger' : 'default'"
+    [class.validation-error]="highlightFormError"
+    class="block-type-button"
+    (click)="selectBlockType(blockType.image)"
+  >
+    <ready-ui-stack spacing="regular">
+      <ready-ui-icon
+        class="button-icon"
+        width="15px"
+        name="square"
+      >
+      </ready-ui-icon>
+      <span ui-text-style>
+        {{ 'contact_trace_forms_image' | cpI18n }}
+      </span>
+    </ready-ui-stack>
+  </button>
+
+</div>

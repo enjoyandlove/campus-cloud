@@ -155,5 +155,7 @@ export const ENDPOINTS = {
 
   EXTERNAL_USER_EVENT_FEEDBACK: 'external_user_event_feedback',
 
-  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information'
+  DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
+
+  FORMS: 'form'
 };

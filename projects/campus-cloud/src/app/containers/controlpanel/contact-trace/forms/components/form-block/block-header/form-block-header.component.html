@@ -1,0 +1,111 @@
+<div class="header-row">
+
+  <ready-ui-button-group
+    class="left-button-group"
+  >
+    <button type="button"
+            class="index-display" ui-button color="white" variant="flat" (click)="null">
+      {{indexPos + 1}}
+    </button>
+
+    <button type="button"
+            class="block-type-button" ui-button color="default" variant="flat" (click)="null">
+
+      <!-- Welcome Block -->
+      <ng-container *ngIf="!formBlock.is_terminal && indexPos === 0">
+        <ready-ui-icon
+          class="block-type-icon"
+          size="small"
+          name="triangle_right"
+        >
+        </ready-ui-icon>
+        {{ 'contact_trace_forms_welcome' | cpI18n }}
+      </ng-container>
+
+      <!-- Question Block -->
+      <ng-container *ngIf="!formBlock.is_terminal && indexPos > 0">
+        <ready-ui-icon
+          class="block-type-icon"
+          [name]="blockTypeToIconMap[formBlock.block_type]"
+          size="small"
+        >
+        </ready-ui-icon>
+        {{(formBlock.block_type === null || formBlock.block_type === undefined) ? ('contact_trace_forms_new_block' | cpI18n) : (('contact_trace_forms_block_type_' + blockType[formBlock.block_type]) | cpI18n)}}
+      </ng-container>
+
+      <!-- Result Block -->
+      <ng-container *ngIf="formBlock.is_terminal">
+        <ready-ui-icon
+          class="block-type-icon"
+          name="square"
+          size="small"
+        >
+        </ready-ui-icon>
+        {{ 'contact_trace_forms_result' | cpI18n }}
+      </ng-container>
+
+    </button>
+
+  </ready-ui-button-group>
+
+  <ready-ui-button-group
+    class="right-button-group"
+    *ngIf="indexPos !== 0"
+  >
+
+    <button
+      type="button"
+      class="group-button"
+      *ngIf="!formBlock.is_terminal && formBlock.block_type !== null && formBlock.block_type !== undefined"
+      ui-button
+      [color]="formBlock.is_required ? 'primary' : 'default'"
+      [style.color]="formBlock.is_required ? '#FFFFFF' : '#000000'"
+      variant="flat"
+      (click)="formBlock.is_required = !formBlock.is_required"
+    >
+      <ready-ui-icon
+        class="block-type-icon"
+        name="star"
+        width="10px"
+      >
+      </ready-ui-icon>
+      {{ 'contact_trace_forms_required' | cpI18n }}
+    </button>
+
+    <button
+      type="button"
+      class="group-button"
+      *ngIf="formBlock.is_terminal || formBlock.block_type === blockType.multiple_choice || formBlock.block_type === blockType.multiple_selection || formBlock.block_type === blockType.text || formBlock.block_type === blockType.number || formBlock.block_type === blockType.decimal"
+      ui-button
+      [color]="((!formBlock.is_terminal && formBlock.block_logic_list && formBlock.block_logic_list.length > 0) || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)) ? 'primary' : 'default'"
+      [style.color]="((!formBlock.is_terminal && formBlock.block_logic_list && formBlock.block_logic_list.length > 0) || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)) ? '#FFFFFF' : '#000000'"
+      variant="flat"
+      (click)="logicClickHandler()"
+    >
+      <ready-ui-icon
+        class="block-type-icon"
+        name="logic"
+        width="10px"
+      >
+      </ready-ui-icon>
+      {{ 'contact_trace_forms_logic' | cpI18n }}
+    </button>
+
+    <button
+      type="button"
+      class="group-button"
+      ui-button color="default" variant="flat"
+      (click)="deleteClickHandler()"
+    >
+      <ready-ui-icon
+        class="block-type-icon"
+        name="delete"
+        size="small"
+      >
+      </ready-ui-icon>
+      {{ 'contact_trace_forms_delete' | cpI18n }}
+    </button>
+
+  </ready-ui-button-group>
+
+</div>

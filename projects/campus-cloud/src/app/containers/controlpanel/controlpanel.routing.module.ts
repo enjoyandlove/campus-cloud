@@ -42,6 +42,14 @@ const appRoutes: Routes = [
         loadChildren: () => import('./audience/audience.module').then((m) => m.AudienceModule)
       },
 
+      // ToDo: PJ: Revisit amplitude config
+      {
+        path: 'contact-trace',
+        data: { amplitude: 'Contact Trace' },
+        loadChildren: () =>
+          import('./contact-trace/contact-trace.module').then((m) => m.ContactTraceModule)
+      },
+
       {
         path: 'studio',
         data: { amplitude: 'Studio' },

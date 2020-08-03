@@ -1,0 +1,61 @@
+<ready-ui-button-group class="button-group">
+
+  <button
+    type="button"
+    class="label-button"
+    [ngClass]="{'group-button': !highlightError(), 'validation-error': highlightError()}"
+    ui-button
+    [color]="'default'"
+    variant="flat"
+    overlayWidth="150px"
+    [triggerFor]="primary"
+    ready-ui-menu-trigger
+    direction="bottom-right"
+  >
+    {{ logicOperatorToTextMap[formBlock.block_logic_list[0].logic_op] | cpI18n }}
+  </button>
+
+  <button
+    type="button"
+    class="text-box-container"
+    [ngClass]="{'group-button': !highlightError(), 'validation-error-border': highlightError()}"
+    ui-button
+    [color]="'default'"
+    variant="flat"
+  >
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="formBlock.block_logic_list[0].arbitrary_data"
+    />
+  </button>
+
+</ready-ui-button-group>
+
+<ready-ui-menu #primary="menu">
+
+  <div class="menu-items-container">
+
+    <ready-ui-menu-item
+      *ngFor="let operator of availableLogicOperators"
+      [suffixTpl]="formBlock.block_logic_list[0].logic_op === operator ? activeItem : undefined"
+    >
+      <button ui-button
+              class="menu-item-button"
+              type="button"
+              color="inherit"
+              variant="inline"
+              fullWidth="true"
+              (click)="formBlock.block_logic_list[0].logic_op = operator; primary.close();"
+      >
+        {{ logicOperatorToTextMap[operator] | cpI18n }}
+      </button>
+    </ready-ui-menu-item>
+
+  </div>
+
+</ready-ui-menu>
+
+<ng-template #activeItem>
+  <ready-ui-menu-dot></ready-ui-menu-dot>
+</ng-template>

@@ -1,0 +1,63 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.page-container {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+
+  .blocks-group-container {
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+
+    .blocks-group-header {
+      display: block;
+      @include font-16px();
+    }
+
+    .add-action-button {
+      margin: 20px 0;
+    }
+
+    .validation-error {
+      background-color: rgba(255, 96, 89, 0.25);
+      border-color: #ff6059;
+      color: #ff6059;
+      font-weight: bold;
+    }
+
+    .missing-result-block-message {
+      color: #ff6059;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+  }
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-start;
+
+    .sidebar-space {
+      width: 250px;
+      margin-right: 40px;
+    }
+
+    .action-button {
+      &:not(:first-child) {
+        margin-left: 5px;
+      }
+    }
+  }
+}

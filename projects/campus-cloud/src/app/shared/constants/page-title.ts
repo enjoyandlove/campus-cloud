@@ -61,5 +61,7 @@ export const pageTitle = {
 
   MANAGE_ORIENTATION: 'Manage | Orientation',
 
-  NOTIFY_ANNOUNCEMENT: 'Notify | Announcement'
+  NOTIFY_ANNOUNCEMENT: 'Notify | Announcement',
+
+  CONTACT_TRACE_FORMS: 'Contact Trace | Forms'
 };
