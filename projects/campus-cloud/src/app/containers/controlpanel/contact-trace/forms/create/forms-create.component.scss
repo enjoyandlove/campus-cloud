@@ -1,0 +1,39 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+
+.page {
+  display: flex;
+
+  &__sticky__wrapper {
+    top: 15px;
+    position: sticky;
+
+    .link-button {
+      display: block;
+
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
+    }
+
+    .active {
+      font-weight: bold;
+    }
+
+    .disabled-link {
+      font-weight: normal;
+      color: #acacac;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  &__sidebar {
+    width: 250px;
+    margin-right: 40px;
+  }
+
+  &__content {
+    width: 715px;
+  }
+}

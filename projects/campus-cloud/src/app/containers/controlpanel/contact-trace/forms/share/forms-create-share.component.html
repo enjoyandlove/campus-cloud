@@ -1,0 +1,86 @@
+<cp-one-column [width]="layoutWidth">
+  <cp-card>
+
+    <div class="page-container">
+
+      <div class="page-row">
+        <div class="card_title">{{ 'contact_trace_forms_capture_responses_web' | cpI18n }}</div>
+      </div>
+
+      <div class="page-row">
+        <input
+          type="text"
+          class="form-control url-txt-box"
+          readonly
+        />
+        <button
+          class="cpbtn cpbtn--primary share-button"
+        >
+          {{ 'contact_trace_forms_share' | cpI18n }}
+        </button>
+      </div>
+
+      <div class="section-row">
+        <div class="card_title">{{ 'contact_trace_forms_capture_responses_app' | cpI18n }}</div>
+      </div>
+
+      <div class="subdued-row">
+        <div class="card_title">{{ 'contact_trace_forms_use_studio_text' | cpI18n }}</div>
+      </div>
+
+      <div class="page-row">
+        <button
+          class="cpbtn cpbtn--primary go-to-button"
+          (click)="gotoStudioClickHandler()"
+        >
+          {{ 'contact_trace_forms_go_to_studio' | cpI18n }}
+        </button>
+      </div>
+
+    </div>
+
+  </cp-card>
+
+  <cp-card>
+
+    <div class="page-container">
+
+      <div class="page-row">
+        <div class="card_title">{{ 'contact_trace_forms_notification' | cpI18n }}</div>
+      </div>
+
+      <div class="reminder-tile-card">
+        <div class="daily-reminder-text">{{ 'contact_trace_forms_daily_reminder' | cpI18n }}</div>
+        <div
+          class="send-reminder-text"
+          ui-text-style
+          variant="caption"
+          color="muted"
+        >
+          {{ 'contact_trace_forms_send_reminder_text' | cpI18n }}
+        </div>
+
+        <div
+          *ngIf="!canEdit"
+          class="reminder-yes-no-text"
+        >
+          {{ (form?.daily_reminder_enabled ? 'contact_trace_forms_yes' : 'contact_trace_forms_no') | cpI18n }}
+        </div>
+
+        <cp-switch
+          *ngIf="canEdit"
+          class="reminder-switch"
+          cpTarget="switch"
+          [isChecked]="form?.daily_reminder_enabled"
+          (toggle)="reminderToggleHandler()"
+        >
+        </cp-switch>
+
+      </div>
+
+    </div>
+
+  </cp-card>
+
+</cp-one-column>
+

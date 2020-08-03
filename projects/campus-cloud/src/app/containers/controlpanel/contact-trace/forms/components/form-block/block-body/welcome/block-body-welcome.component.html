@@ -1,0 +1,12 @@
+<input
+  type="text"
+  class="form-control"
+  [class.error]="highlightFormError && formsHelper.isNullOrEmptyString(formBlock.text)"
+  [(ngModel)]="formBlock.text"
+/>
+
+<textarea
+  class="form-control text-area-control"
+  [(ngModel)]="formBlock.block_content_list[0].text"
+>
+</textarea>

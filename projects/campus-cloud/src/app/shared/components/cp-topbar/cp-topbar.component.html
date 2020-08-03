@@ -36,6 +36,11 @@
             (click)="trackMenu(amplitudeEvents.menu_audience)">
           <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
         </li>
+        <li *ngIf="canContractTrace"
+            routerLinkActive="active"
+            (click)="trackMenu(amplitudeEvents.menu_contact_trace)">
+          <a [routerLink]="['/contact-trace']">{{ 'admin_contact_trace_title' | cpI18n }}</a>
+        </li>
       </ul>
     </nav>
     <div class="right-side">

@@ -1,0 +1,28 @@
+:host {
+  display: inline-block;
+}
+
+.skip-to-button {
+  padding: 0;
+
+  .skip-to-text {
+    background-color: #efefef;
+    padding: 0 10px;
+    font-weight: bold;
+  }
+
+  .validation-error {
+    background-color: rgba(255, 96, 89, 0.25);
+  }
+
+  .skip-to-number {
+    padding: 0 10px;
+    font-weight: bold;
+    min-width: 40px;
+  }
+}
+
+.menu-items-container {
+  max-height: 200px;
+  overflow: auto;
+}

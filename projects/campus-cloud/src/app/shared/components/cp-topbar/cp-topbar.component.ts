@@ -21,7 +21,15 @@ import {
 export class CPTopBarComponent implements OnInit {
   user: IUser;
   releaseId = 3;
-  amplitudeEvents;
+  amplitudeEvents = {
+    menu_home: amplitudeEvents.BANNER,
+    menu_manage: amplitudeEvents.MENU_MANAGE,
+    menu_notify: amplitudeEvents.MENU_NOTIFY,
+    menu_assess: amplitudeEvents.MENU_ASSESS,
+    menu_studio: amplitudeEvents.MENU_STUDIO,
+    menu_audience: amplitudeEvents.MENU_AUDIENCE,
+    menu_contact_trace: amplitudeEvents.MENU_CONTACT_TRACE
+  };
   school: ISchool;
   highlight = false;
   canNotify = false;
@@ -29,6 +37,7 @@ export class CPTopBarComponent implements OnInit {
   canAssess = false;
   canAudience = false;
   canCustomise = false;
+  canContractTrace = false;
   isManageActiveRoute;
   manageHomePage: string;
   production = this.env.name === 'production';
@@ -125,6 +134,10 @@ export class CPTopBarComponent implements OnInit {
     this.canAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
     this.canCustomise = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization);
+    this.canContractTrace = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.contact_trace_forms
+    );
 
     this.isManageActiveRoute = this.isManage(this.router.url);
 
@@ -133,14 +146,5 @@ export class CPTopBarComponent implements OnInit {
         this.isManageActiveRoute = this.isManage(event.url) ? true : false;
       }
     });
-
-    this.amplitudeEvents = {
-      menu_home: amplitudeEvents.BANNER,
-      menu_manage: amplitudeEvents.MENU_MANAGE,
-      menu_notify: amplitudeEvents.MENU_NOTIFY,
-      menu_assess: amplitudeEvents.MENU_ASSESS,
-      menu_studio: amplitudeEvents.MENU_STUDIO,
-      menu_audience: amplitudeEvents.MENU_AUDIENCE
-    };
   }
 }

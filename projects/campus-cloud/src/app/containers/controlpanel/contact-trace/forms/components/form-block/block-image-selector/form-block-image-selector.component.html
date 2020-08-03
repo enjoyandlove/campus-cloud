@@ -1,0 +1,14 @@
+<ready-ui-gallery-group>
+  <ready-ui-gallery-item
+    *ngIf="formBlock.image_url"
+    [src]="formBlock.image_url"
+    (close)="removeImage()"
+  >
+  </ready-ui-gallery-item>
+  <ready-ui-gallery-add-item
+    *ngIf="!formBlock.image_url"
+    (add)="addImages($event)"
+    (error)="imageUploadError($event)"
+  >
+  </ready-ui-gallery-add-item>
+</ready-ui-gallery-group>

@@ -1,0 +1,52 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.page-container {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+
+  .form-name-group {
+    min-height: 65px;
+  }
+
+  .form-template-group {
+    margin-top: 20px;
+
+    .tiles-container {
+      margin-left: -8px; // to account for the margin in template-tile
+
+      .template-tile {
+        margin: 8px;
+        display: inline-block;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-start;
+
+    .sidebar-space {
+      width: 250px;
+      margin-right: 40px;
+    }
+
+    .action-button {
+      &:not(:first-child) {
+        margin-left: 5px;
+      }
+    }
+  }
+}

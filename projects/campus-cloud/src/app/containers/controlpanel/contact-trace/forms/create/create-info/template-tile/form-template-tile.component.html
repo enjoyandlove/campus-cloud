@@ -1,0 +1,22 @@
+<div class="template-tile-card" [ngClass]="{'selected-tile': selected}">
+
+  <img *ngIf="!form" [src]="'./assets/svg/contact-trace/forms/template-start-scratch.svg'" alt=""/>
+  <img *ngIf="form && form.form_type === formType.PRE_SCREENING" [src]="'./assets/svg/contact-trace/forms/template-pre-screening.svg'" alt=""/>
+  <img *ngIf="form && form.form_type === formType.SYMPTOM_TRACKER" [src]="'./assets/svg/contact-trace/forms/template-symptom-tracker.svg'" alt=""/>
+  <img *ngIf="form && form.form_type === formType.SELF_REPORTING" [src]="'./assets/svg/contact-trace/forms/template-self-reporting.svg'" alt=""/>
+  <!-- Generic tile for form template that we have not accounted for -->
+  <img
+    *ngIf="form && form.form_type !== formType.PRE_SCREENING && form.form_type !== formType.SYMPTOM_TRACKER && form.form_type !== formType.SELF_REPORTING"
+    [src]="'./assets/svg/contact-trace/forms/template-generic.svg'" alt=""/>
+
+  <div class="bottom-container">
+    <div class="tile-title">
+      {{ form ? form.name : ('contact_trace_forms_start_from_scratch' | cpI18n) }}
+    </div>
+
+    <div class="template-details">
+      {{ form ? form.description : ('contact_trace_forms_create_form_without_template' | cpI18n) }}
+    </div>
+  </div>
+
+</div>

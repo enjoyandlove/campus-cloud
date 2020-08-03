@@ -1,0 +1,40 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBlock } from '@controlpanel/contact-trace/forms/models';
+import { FormsHelperService } from '@controlpanel/contact-trace/forms/services/forms-helper.service';
+
+@Component({
+  selector: 'cp-block-body-multiple-selection',
+  templateUrl: './block-body-multiple-selection.component.html',
+  styleUrls: ['./block-body-multiple-selection.component.scss']
+})
+export class BlockBodyMultipleSelectionComponent implements OnInit {
+  @Input() formBlock: FormBlock;
+  @Input() highlightFormError: boolean;
+  formsHelper = FormsHelperService;
+  MAX_ANSWER_OPTIONS_LIMIT = 15;
+
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  getAlphabetForNumber(num: number): string {
+    return String.fromCharCode(num + 96);
+  }
+
+  addBlockContentClickHandler(): void {
+    if (this.formBlock.block_content_list.length < this.MAX_ANSWER_OPTIONS_LIMIT) {
+      this.formBlock.block_content_list.push({
+        text: '',
+        rank: this.formBlock.block_content_list.length
+      });
+    }
+  }
+
+  deleteContentClickHandler(index: number): void {
+    this.formBlock.block_content_list.splice(index, 1);
+    this.formBlock.block_logic_list = FormsHelperService.removeIndexFromBlockLogicList(
+      this.formBlock.block_logic_list,
+      index
+    );
+  }
+}

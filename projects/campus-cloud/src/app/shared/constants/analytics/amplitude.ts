@@ -155,6 +155,8 @@ export const amplitudeEvents = {
 
   MENU_AUDIENCE: 'Audience',
 
+  MENU_CONTACT_TRACE: 'Contact Trace',
+
   TEST_SCHOOL: 'Test School',
 
   CUSTOM_LIST: 'Custom List',

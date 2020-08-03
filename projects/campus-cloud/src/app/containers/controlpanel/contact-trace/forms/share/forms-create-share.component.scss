@@ -1,0 +1,85 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/components/tooltip';
+
+cp-card {
+  display: block;
+  margin-bottom: 25px;
+}
+
+.page-container {
+  .page-row {
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+
+    .card_title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .url-txt-box {
+      width: calc(100% - 80px);
+      background: #ffffff;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .share-button {
+      width: 80px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .section-row {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .subdued-row {
+    font-size: 13px;
+    margin-top: 5px;
+    font-weight: normal;
+  }
+
+  .go-to-button {
+    margin-top: 5px;
+  }
+}
+
+.reminder-tile-card {
+  position: relative;
+  margin-top: 12px;
+
+  vertical-align: top;
+
+  border-radius: 4px;
+  border: 1px solid #efefef;
+  background-color: #efefef;
+  padding: 15px;
+
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
+
+  .daily-reminder-text {
+    font-weight: bold;
+  }
+
+  .send-reminder-text {
+    font-size: 15px;
+  }
+
+  .reminder-yes-no-text {
+    position: absolute;
+    right: 20px;
+    top: 25px;
+  }
+
+  .reminder-switch {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+}

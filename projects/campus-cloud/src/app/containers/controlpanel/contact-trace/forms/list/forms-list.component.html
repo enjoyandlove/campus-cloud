@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-12">
+    <cp-forms-list-action-box
+      (search)="onSearch($event)"
+      (launchCreateModal)="onLaunchCreateModal()"
+      (filterChange)="filterChangeHandler($event)"
+    >
+    </cp-forms-list-action-box>
+  </div>
+</div>
+
+<cp-spinner *ngIf="webServiceCallInProgress"></cp-spinner>
+
+<ng-container *ngIf="!webServiceCallInProgress">
+
+  <cp-form-search-result-tile
+    *ngFor="let form of results"
+    class="search-result-item"
+    [form]="form"
+    (itemUpdated)="itemUpdateHandler()"
+  >
+  </cp-form-search-result-tile>
+
+  <cp-pagination
+    [pageNext]="hasMorePages"
+    [pagePrev]="pageCounter > 1"
+    [pageNumber]="pageCounter"
+    (next)="onPaginationNext()"
+    (previous)="onPaginationPrevious()">
+  </cp-pagination>
+
+</ng-container>

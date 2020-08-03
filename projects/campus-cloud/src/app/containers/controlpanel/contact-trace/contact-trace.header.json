@@ -1,0 +1,14 @@
+{
+  "heading": "admin_contact_trace_title",
+  "subheading": null,
+  "em": null,
+  "children": [
+    {
+      "privilege": 41,
+      "label": "admin_contact_trace_forms",
+      "clearParams": true,
+      "amplitude": "Forms",
+      "url": "/contact-trace/forms"
+    }
+  ]
+}

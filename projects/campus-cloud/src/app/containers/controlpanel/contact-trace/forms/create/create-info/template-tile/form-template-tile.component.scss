@@ -1,0 +1,33 @@
+.template-tile-card {
+  display: inline-block;
+  width: 198px;
+  vertical-align: top;
+
+  border-radius: 4px;
+  border: 1px solid #ddd;
+
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
+
+  img {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .bottom-container {
+    padding: 15px;
+
+    .tile-title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .template-details {
+      min-height: 100px;
+      margin-top: 10px;
+    }
+  }
+}
+
+.selected-tile {
+  border: 1px solid #2096f3;
+}

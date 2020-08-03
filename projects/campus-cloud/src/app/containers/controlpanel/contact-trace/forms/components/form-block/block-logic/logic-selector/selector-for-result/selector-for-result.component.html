@@ -1,0 +1,63 @@
+<ready-ui-button-group class="logic-button-group">
+
+  <button
+    type="button"
+    class="group-button"
+    ui-button
+    [color]="formBlock.extra_info === 'Low Risk' ? 'primary' : 'default'"
+    [style.color]="formBlock.extra_info === 'Low Risk' ? '#FFFFFF' : '#000000'"
+    variant="flat"
+    (click)="formLogicClickHandler('Low Risk')"
+  >
+    {{ 'contact_trace_forms_low_risk' | cpI18n }}
+  </button>
+
+  <button
+    type="button"
+    class="group-button"
+    ui-button
+    [color]="formBlock.extra_info === 'Medium Risk' ? 'primary' : 'default'"
+    [style.color]="formBlock.extra_info === 'Medium Risk' ? '#FFFFFF' : '#000000'"
+    variant="flat"
+    (click)="formLogicClickHandler('Medium Risk')"
+  >
+    {{ 'contact_trace_forms_medium_risk' | cpI18n }}
+  </button>
+
+  <button
+    type="button"
+    class="group-button"
+    ui-button
+    [color]="formBlock.extra_info === 'High Risk' ? 'primary' : 'default'"
+    [style.color]="formBlock.extra_info === 'High Risk' ? '#FFFFFF' : '#000000'"
+    variant="flat"
+    (click)="formLogicClickHandler('High Risk')"
+  >
+    {{ 'contact_trace_forms_high_risk' | cpI18n }}
+  </button>
+
+  <button
+    type="button"
+    class="group-button"
+    ui-button
+    [color]="formBlock.extra_info === 'Positive' ? 'primary' : 'default'"
+    [style.color]="formBlock.extra_info === 'Positive' ? '#FFFFFF' : '#000000'"
+    variant="flat"
+    (click)="formLogicClickHandler('Positive')"
+  >
+    {{ 'contact_trace_forms_positive' | cpI18n }}
+  </button>
+
+  <button
+    type="button"
+    class="group-button"
+    ui-button
+    [color]="formBlock.extra_info === 'Negative' ? 'primary' : 'default'"
+    [style.color]="formBlock.extra_info === 'Negative' ? '#FFFFFF' : '#000000'"
+    variant="flat"
+    (click)="formLogicClickHandler('Negative')"
+  >
+    {{ 'contact_trace_forms_negative' | cpI18n }}
+  </button>
+
+</ready-ui-button-group>

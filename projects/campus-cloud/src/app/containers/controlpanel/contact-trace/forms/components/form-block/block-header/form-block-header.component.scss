@@ -1,0 +1,29 @@
+.header-row {
+  .left-button-group {
+    .index-display {
+      border-color: #efefef;
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .block-type-button {
+      border-color: #efefef;
+      background-color: #f6f6f6;
+      padding: 0 20px 0 15px;
+
+      .block-type-icon {
+        color: #a8a8a8;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .right-button-group {
+    float: right;
+
+    .group-button {
+      border: 1px solid #d5d5d5;
+      padding: 0 20px 0 15px;
+    }
+  }
+}

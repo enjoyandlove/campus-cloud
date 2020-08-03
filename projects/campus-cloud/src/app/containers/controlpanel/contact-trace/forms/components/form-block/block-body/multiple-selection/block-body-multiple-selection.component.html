@@ -1,0 +1,57 @@
+<input
+  type="text"
+  class="form-control"
+  [class.error]="highlightFormError && formsHelper.isNullOrEmptyString(formBlock.text)"
+  [(ngModel)]="formBlock.text"
+/>
+
+<div class="answers-container">
+
+  <div
+    class="answer-item-container"
+    *ngFor="let blockContent of formBlock.block_content_list; let index = index;"
+  >
+    <div class="selection-control">
+    </div>
+
+    <input
+      type="text"
+      class="form-control answer-item"
+      [class.error]="highlightFormError && formsHelper.isNullOrEmptyString(blockContent.text)"
+      [(ngModel)]="blockContent.text"
+    />
+
+    <div class="right-aligned-block">
+      <div class="answer-alphabet-label">
+        {{ ('contact_trace_forms_alphabet_' + getAlphabetForNumber(index + 1)) | cpI18n }}
+      </div>
+      <ready-ui-icon
+        class="delete-icon"
+        name="close"
+        width="20px"
+        (click)="deleteContentClickHandler(index)"
+      >
+      </ready-ui-icon>
+    </div>
+
+  </div>
+
+  <div
+    class="answer-item-container"
+    *ngIf="formBlock.block_content_list.length < MAX_ANSWER_OPTIONS_LIMIT"
+    (click)="addBlockContentClickHandler()"
+  >
+
+    <input
+      type="text"
+      class="form-control add-new-item-button"
+      disabled="true"
+    />
+
+    <div class="add-icon">
+      +
+    </div>
+
+  </div>
+
+</div>

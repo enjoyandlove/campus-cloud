@@ -1,0 +1,62 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.answers-container {
+  margin-top: 20px;
+
+  .answer-item-container {
+    position: relative;
+
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+
+    .selection-control {
+      position: absolute;
+      left: 8px;
+      bottom: 12px;
+      height: 15px;
+      width: 15px;
+      border: 1px solid #adadad;
+      border-radius: 100px;
+    }
+
+    .answer-item {
+      padding: 0 65px 0 30px;
+    }
+
+    .right-aligned-block {
+      position: absolute;
+      right: 12px;
+      bottom: 6px;
+
+      .answer-alphabet-label {
+        display: inline-block;
+        font-size: 18px;
+        vertical-align: middle;
+      }
+
+      .delete-icon {
+        display: inline-block;
+        color: #adadad;
+        margin-left: 10px;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+    }
+
+    .add-new-item-button {
+      cursor: pointer;
+      background-color: #ffffff;
+    }
+
+    .add-icon {
+      cursor: pointer;
+      position: absolute;
+      left: 8px;
+      bottom: -3px;
+      font-size: 30px;
+      color: #adadad;
+    }
+  }
+}

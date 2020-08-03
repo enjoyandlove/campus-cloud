@@ -1,0 +1,83 @@
+<ready-ui-card>
+
+  <div class="top-row">
+    <div class="form-name">
+      {{form.name}}
+    </div>
+    <div *ngIf="!form.is_published" class="draft-indicator">
+      {{ 'contact_trace_forms_draft' | cpI18n }}
+    </div>
+    <div class="button-container">
+      <button
+        *ngIf="form.is_published"
+        class="action-button"
+        ui-button
+        variant="stroked"
+        color="primary"
+        type="button"
+        (click)="shareClickHandler()"
+      >
+        {{ 'contact_trace_forms_share' | cpI18n }}
+      </button>
+      <button
+        *ngIf="form.is_published"
+        class="action-button"
+        ui-button
+        variant="stroked"
+        color="primary"
+        type="button"
+        (click)="resultsClickHandler()"
+      >
+        {{ 'contact_trace_forms_results' | cpI18n }}
+      </button>
+      <button
+        *ngIf="canEdit && !form.is_published"
+        class="action-button"
+        ui-button
+        variant="stroked"
+        color="primary"
+        type="button"
+        (click)="editClickHandler()"
+      >
+        {{ 'contact_trace_forms_edit' | cpI18n }}
+      </button>
+      <button
+        *ngIf="canEdit && form.is_published"
+        ui-button
+        variant="stroked"
+        overlayWidth="9.78em"
+        [triggerFor]="primary"
+        ready-ui-menu-trigger
+        direction="bottom-left"
+        class="action-button"
+        [color]="'default'"
+      >
+        <ready-ui-stack spacing="tight">
+          <ready-ui-icon
+            width="20px"
+            name="more_horiz"
+          >
+          </ready-ui-icon>
+        </ready-ui-stack>
+      </button>
+    </div>
+  </div>
+
+</ready-ui-card>
+
+<ready-ui-menu #primary="menu">
+  <ready-ui-menu-item>
+    <button ui-button
+            type="button"
+            color="inherit"
+            variant="inline"
+            fullWidth="true"
+            (click)="unPublishClickHandler(); primary.close();"
+    >
+      <ready-ui-stack spacing="tight">
+        <span>{{ 'contact_trace_forms_unpublish' | cpI18n }}</span>
+      </ready-ui-stack>
+    </button>
+  </ready-ui-menu-item>
+</ready-ui-menu>
+
