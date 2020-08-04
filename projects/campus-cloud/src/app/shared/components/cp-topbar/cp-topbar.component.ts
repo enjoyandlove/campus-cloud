@@ -4,7 +4,7 @@ import { get as _get } from 'lodash';
 
 import { EnvService } from '@campus-cloud/config/env';
 import { appStorage, base64 } from '@campus-cloud/shared/utils';
-import { CPSession, ISchool, IUser } from '@campus-cloud/session';
+import { ContactTraceFeatureLevel, CPSession, ISchool, IUser } from '@campus-cloud/session';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -134,16 +134,26 @@ export class CPTopBarComponent implements OnInit {
     this.canAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
     this.canCustomise = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization);
-    this.canContractTrace = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.contact_trace_forms
-    );
-
+    if (this.school.contact_trace_feature_level !== ContactTraceFeatureLevel.Disabled) {
+      this.canContractTrace = canSchoolReadResource(
+        this.session.g,
+        CP_PRIVILEGES_MAP.contact_trace_qr
+      );
+      if (
+        !this.canContractTrace &&
+        this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Plus
+      ) {
+        this.canContractTrace = canSchoolReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.contact_trace_forms
+        );
+      }
+    }
     this.isManageActiveRoute = this.isManage(this.router.url);
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isManageActiveRoute = this.isManage(event.url) ? true : false;
+        this.isManageActiveRoute = !!this.isManage(event.url);
       }
     });
   }
