@@ -20,7 +20,7 @@ const linkUrlToIdMap = {
   [CampusLink.store]: 'store',
   [CampusLink.campusService]: 'campus_service',
   [CampusLink.subscribableCalendar]: 'subscribable_calendar',
-  [CampusLink.contactTraceForm]: 'forms'
+  [CampusLink.form]: 'forms'
 };
 
 @Mixin([Destroyable])
@@ -191,7 +191,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit, OnDestroy {
       .set('school_id', this.session.school.id.toString())
       .set('is_template', 'false');
     return this.tileService.getContactTraceForms(params).pipe(
-      map((stores) => this.updateValues(stores, CampusLink.contactTraceForm)),
+      map((stores) => this.updateValues(stores, CampusLink.form)),
       catchError((err) => this.handleError(err))
     );
   }

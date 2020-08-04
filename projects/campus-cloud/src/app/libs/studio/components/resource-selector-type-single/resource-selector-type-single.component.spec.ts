@@ -49,7 +49,7 @@ describe('ResourceSelectorTypeSingleComponent', () => {
     expect(component).toBeTruthy();
 
     expect(component.form).toBeDefined();
-    expect(component.items.length).toBe(3);
+    expect(component.items.length).toBe(4);
   });
 
   it('should have correct default input values', () => {
@@ -204,7 +204,7 @@ describe('ResourceSelectorTypeSingleComponent', () => {
       expect(component.loadStores).toHaveBeenCalled();
       expect(component.loadServices).toHaveBeenCalled();
       expect(component.loadCalendars).toHaveBeenCalled();
-      expect(Object.keys(component.storesByType).length).toBe(3);
+      expect(Object.keys(component.storesByType).length).toBe(4);
     });
 
     describe('valueChanges', () => {
@@ -274,11 +274,12 @@ describe('ResourceSelectorTypeSingleComponent', () => {
       expectedResources = [
         CampusLink.store,
         CampusLink.campusService,
-        CampusLink.subscribableCalendar
+        CampusLink.subscribableCalendar,
+        CampusLink.form
       ];
 
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(3);
+      expect(component.resources.length).toBe(4);
       resultResources.forEach((resource) => {
         expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
       });
@@ -306,11 +307,12 @@ describe('ResourceSelectorTypeSingleComponent', () => {
       expectedResources = [
         CampusLink.store,
         CampusLink.campusService,
-        CampusLink.subscribableCalendar
+        CampusLink.subscribableCalendar,
+        CampusLink.form
       ];
 
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(3);
+      expect(component.resources.length).toBe(4);
       resultResources.forEach((resource) => {
         expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
       });

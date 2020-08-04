@@ -125,7 +125,7 @@ export class ContentUtilsProviders {
           label: 't_personas_tile_create_resource_type_forms',
           meta: {
             link_params: {},
-            link_url: CampusLink.contactTraceForm
+            link_url: CampusLink.form
           }
         },
         {

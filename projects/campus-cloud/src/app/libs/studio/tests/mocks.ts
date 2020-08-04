@@ -24,6 +24,12 @@ export class MockTilesService {
 
     return of([]);
   }
+
+  getContactTraceForms(headers) {
+    this.placeholder = headers;
+
+    return of([]);
+  }
 }
 
 export class MockStoreService {

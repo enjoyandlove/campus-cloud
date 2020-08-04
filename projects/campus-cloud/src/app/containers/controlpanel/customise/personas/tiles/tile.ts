@@ -8,7 +8,7 @@ export class CampusLink {
 
   public static readonly subscribableCalendar = `${oohlala}subscribable_calendar`;
 
-  public static readonly contactTraceForm = `${oohlala}start_form_response`;
+  public static readonly form = `${oohlala}start_form_response`;
 
   public static readonly academicCalendarList = `${oohlala}academic_calendar_list`;
 
