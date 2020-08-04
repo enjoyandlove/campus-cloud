@@ -102,6 +102,27 @@ export class TilesService {
     );
   }
 
+  getContactTraceForms(headers) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORMS}/1;2000`;
+
+    return this.api.get(url, headers, true).pipe(
+      map((forms: any[]) => {
+        return [
+          { label: this.cpI18n.translate('t_shared_select_forms'), action: null, heading: true },
+          ...forms
+            .filter((c: any) => c.id)
+            .map((form: any) => {
+              return {
+                action: form.id,
+                label: form.name
+              };
+            })
+        ];
+      }),
+      startWith([{ label: '---' }])
+    );
+  }
+
   deleteTile(tileId, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/${tileId}`;
 

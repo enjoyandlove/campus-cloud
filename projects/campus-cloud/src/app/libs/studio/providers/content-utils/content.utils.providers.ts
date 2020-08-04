@@ -121,6 +121,14 @@ export class ContentUtilsProviders {
     return {
       [ContentUtilsProviders.contentTypes.single]: [
         {
+          id: 'forms',
+          label: 't_personas_tile_create_resource_type_forms',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.contactTraceForm
+          }
+        },
+        {
           id: 'subscribable_calendar',
           label: 't_personas_tile_create_resource_type_subscribable_calendar',
           meta: {
