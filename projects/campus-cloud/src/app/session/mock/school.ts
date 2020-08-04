@@ -1,3 +1,5 @@
+import { ContactTraceFeatureLevel } from '@campus-cloud/session';
+
 export const mockSchool = {
   app_url_android: '',
   is_configured: true,
@@ -21,5 +23,6 @@ export const mockSchool = {
   is_verified: true,
   email: '',
   is_sandbox: false,
-  client_id: 123
+  client_id: 123,
+  contact_trace_feature_level: ContactTraceFeatureLevel.Plus
 };
