@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { CPSession } from '@campus-cloud/session';
+import { ContactTraceFeatureLevel, CPSession } from '@campus-cloud/session';
 
 export enum clubAthleticStatus {
   active = 1
@@ -182,8 +182,8 @@ export class TeamUtilsService {
       ];
     }
 
-    const { ct_plus_enabled } = this.session.g.get('school');
-    if (ct_plus_enabled) {
+    const { contact_trace_feature_level } = this.session.g.get('school');
+    if (contact_trace_feature_level === ContactTraceFeatureLevel.Plus) {
       if (viewerContactTraceFormsPrivilege.w) {
         items = [
           ...items,

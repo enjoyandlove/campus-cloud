@@ -118,7 +118,7 @@
       <!-- END Audience -->
 
       <!-- Contact Trace -->
-      <fieldset [disabled]="!canReadContactTrace">
+      <fieldset *ngIf="isContactTraceEnabled" [disabled]="!canReadContactTrace">
         <div class="section__item">
           <div class="row">
             <div class="col-8">

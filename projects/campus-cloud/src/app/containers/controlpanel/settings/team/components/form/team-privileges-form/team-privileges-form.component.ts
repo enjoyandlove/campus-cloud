@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { isEmpty, get as _get } from 'lodash';
 import { FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 
-import { CPSession } from '@campus-cloud/session';
+import { ContactTraceFeatureLevel, CPSession } from '@campus-cloud/session';
 import { MODAL_TYPE } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { TEAM_ACCESS } from '@controlpanel/settings/team/utils';
@@ -61,6 +61,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   isServiceModal = false;
   canReadAudience: boolean;
   canReadContactTrace: boolean;
+  isContactTraceEnabled = false;
   isAthleticsModal = false;
   canReadServices: boolean;
   canReadAthletics: boolean;
@@ -663,6 +664,8 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     const session = this.session.g;
     this.user = this.session.g.get('user');
     this.schoolId = this.session.g.get('school').id;
+    const { contact_trace_feature_level } = this.session.g.get('school');
+    this.isContactTraceEnabled = contact_trace_feature_level !== ContactTraceFeatureLevel.Disabled;
 
     const schoolPrivileges = this.user.school_level_privileges[this.schoolId] || {};
 

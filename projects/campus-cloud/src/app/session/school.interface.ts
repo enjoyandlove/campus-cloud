@@ -20,6 +20,7 @@ export interface ISchool {
   is_sandbox: boolean;
   school_name_logo_url?: string;
   has_guide_customization: boolean;
+  contact_trace_feature_level: number;
 }
 
 export const LOGO_URL = 'logo_url';
@@ -30,4 +31,10 @@ export interface ISchoolBranding {
   [LOGO_URL]?: string;
   [BRANDING_COLOR]?: string;
   [SCHOOL_LOGO_URL]?: string;
+}
+
+export enum ContactTraceFeatureLevel {
+  Disabled = 0,
+  Basic = 1,
+  Plus = 2
 }
