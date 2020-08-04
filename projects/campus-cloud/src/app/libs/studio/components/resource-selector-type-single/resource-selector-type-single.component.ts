@@ -19,7 +19,8 @@ const placeHolder: IStudioContentResource = { id: null, label: '', meta: null };
 const linkUrlToIdMap = {
   [CampusLink.store]: 'store',
   [CampusLink.campusService]: 'campus_service',
-  [CampusLink.subscribableCalendar]: 'subscribable_calendar'
+  [CampusLink.subscribableCalendar]: 'subscribable_calendar',
+  [CampusLink.contactTraceForm]: 'forms'
 };
 
 @Mixin([Destroyable])
@@ -126,8 +127,14 @@ export class ResourceSelectorTypeSingleComponent implements OnInit, OnDestroy {
       this.filterByLoginStatus ? ContentUtilsProviders.isPublicContent : null
     ].filter((f) => f);
 
-    forkJoin([this.loadCalendars(), this.loadServices(), this.loadStores()]).subscribe(
-      ([calendars, services, stores]) => {
+    forkJoin([
+      this.loadForms(),
+      this.loadCalendars(),
+      this.loadServices(),
+      this.loadStores()
+    ]).subscribe(
+      ([forms, calendars, services, stores]) => {
+        this.storesByType['forms'] = forms;
         this.storesByType['subscribable_calendar'] = calendars;
         this.storesByType['campus_service'] = services;
         this.storesByType['store'] = stores;
@@ -143,6 +150,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit, OnDestroy {
       },
       () => {
         this.storesByType = {
+          forms: [],
           subscribable_calendar: [],
           campus_service: [],
           store: []
@@ -174,6 +182,16 @@ export class ResourceSelectorTypeSingleComponent implements OnInit, OnDestroy {
     const headers = this.defaultHeaders;
     return this.tileService.getSchoolServices(headers).pipe(
       map((stores) => this.updateValues(stores, CampusLink.campusService)),
+      catchError((err) => this.handleError(err))
+    );
+  }
+
+  loadForms() {
+    const params = new HttpParams()
+      .set('school_id', this.session.school.id.toString())
+      .set('is_template', 'false');
+    return this.tileService.getContactTraceForms(params).pipe(
+      map((stores) => this.updateValues(stores, CampusLink.contactTraceForm)),
       catchError((err) => this.handleError(err))
     );
   }

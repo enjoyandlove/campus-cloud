@@ -1,13 +1,131 @@
 <div class="template-tile-card" [ngClass]="{'selected-tile': selected}">
 
-  <img *ngIf="!form" [src]="'./assets/svg/contact-trace/forms/template-start-scratch.svg'" alt=""/>
-  <img *ngIf="form && form.form_type === formType.PRE_SCREENING" [src]="'./assets/svg/contact-trace/forms/template-pre-screening.svg'" alt=""/>
-  <img *ngIf="form && form.form_type === formType.SYMPTOM_TRACKER" [src]="'./assets/svg/contact-trace/forms/template-symptom-tracker.svg'" alt=""/>
-  <img *ngIf="form && form.form_type === formType.SELF_REPORTING" [src]="'./assets/svg/contact-trace/forms/template-self-reporting.svg'" alt=""/>
+  <ng-container
+    *ngIf="!form">
+    <svg width="195" height="90" viewBox="0 0 195 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="195" height="90" fill="#F9F9F9"/>
+      <path d="M118.5 39.25H102.75V23.5C102.75 21.5673 101.183 20 99.25 20H95.75C93.8173 20 92.25 21.5673 92.25 23.5V39.25H76.5C74.5673 39.25 73 40.8173 73 42.75V46.25C73 48.1827 74.5673 49.75 76.5 49.75H92.25V65.5C92.25 67.4327 93.8173 69 95.75 69H99.25C101.183 69 102.75 67.4327 102.75 65.5V49.75H118.5C120.433 49.75 122 48.1827 122 46.25V42.75C122 40.8173 120.433 39.25 118.5 39.25Z" fill="#C2C2C2"/>
+    </svg>
+  </ng-container>
+
+  <ng-container
+    *ngIf="form && form.form_type === formType.PRE_SCREENING">
+    <svg width="196" height="90" viewBox="0 0 196 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="196" height="90" fill="#D6FFA2"/>
+      <g filter="url(#filter0_d)">
+        <circle cx="98.5" cy="44.5" r="30.5" fill="url(#paint0_linear)"/>
+      </g>
+      <g filter="url(#filter1_d)">
+        <path d="M98.7521 28.3678C89.7079 28.3678 82.3678 35.708 82.3678 44.7521C82.3678 53.7962 89.7079 61.1364 98.7521 61.1364C107.796 61.1364 115.136 53.7962 115.136 44.7521C115.136 35.708 107.796 28.3678 98.7521 28.3678ZM95.4752 52.9442L87.2831 44.7521L89.5933 42.4419L95.4752 48.3075L107.911 35.8718L110.221 38.1984L95.4752 52.9442Z" fill="white"/>
+      </g>
+      <defs>
+        <filter id="filter0_d" x="64" y="14" width="69" height="69" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+          <feOffset dy="4"/>
+          <feGaussianBlur stdDeviation="2"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <filter id="filter1_d" x="75.0909" y="25.0909" width="47.3223" height="47.3223" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+          <feOffset dy="4"/>
+          <feGaussianBlur stdDeviation="2"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <linearGradient id="paint0_linear" x1="98.5" y1="14" x2="98.5" y2="75" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#8ECE38"/>
+          <stop offset="1" stop-color="#78C213"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </ng-container>
+
+  <ng-container
+    *ngIf="form && form.form_type === formType.SYMPTOM_TRACKER">
+    <svg width="196" height="90" viewBox="0 0 196 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="196" height="90" fill="#BED0FF"/>
+      <g filter="url(#filter0_d)">
+        <path d="M118.856 23.4188C113.183 18.2069 104.747 19.1443 99.54 24.9367L97.5008 27.2022L95.4615 24.9367C90.2652 19.1443 81.8184 18.2069 76.1459 23.4188C69.6452 29.4009 69.3036 40.1373 75.1211 46.6215L95.151 68.9202C96.4449 70.3599 98.5462 70.3599 99.8402 68.9202L119.87 46.6215C125.698 40.1373 125.356 29.4009 118.856 23.4188Z" fill="url(#paint0_linear)"/>
+      </g>
+      <defs>
+        <filter id="filter0_d" x="67" y="20" width="61" height="58" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+          <feOffset dy="4"/>
+          <feGaussianBlur stdDeviation="2"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <linearGradient id="paint0_linear" x1="97.5" y1="20" x2="97.5" y2="70" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#EE0000"/>
+          <stop offset="0.552083" stop-color="#FF2020" stop-opacity="0.75"/>
+          <stop offset="1" stop-color="#FB4949" stop-opacity="0.81"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+  </ng-container>
+
+  <ng-container
+    *ngIf="form && form.form_type === formType.SELF_REPORTING">
+    <svg width="196" height="90" viewBox="0 0 196 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="196" height="90" fill="#FFBA53"/>
+      <circle cx="102" cy="24" r="4" fill="#917618"/>
+      <rect x="88" y="39" width="28" height="23" fill="#FF2121"/>
+      <g filter="url(#filter0_d)">
+        <path d="M117.75 24.625H109C109 20.9709 105.861 18 102 18C98.1391 18 95 20.9709 95 24.625H86.25C83.3516 24.625 81 26.8506 81 29.5938V66.0312C81 68.7744 83.3516 71 86.25 71H117.75C120.648 71 123 68.7744 123 66.0312V29.5938C123 26.8506 120.648 24.625 117.75 24.625ZM102 22.1406C103.455 22.1406 104.625 23.2482 104.625 24.625C104.625 26.0018 103.455 27.1094 102 27.1094C100.545 27.1094 99.375 26.0018 99.375 24.625C99.375 23.2482 100.545 22.1406 102 22.1406ZM112.5 53.6094C112.5 54.0648 112.106 54.4375 111.625 54.4375H105.5V60.2344C105.5 60.6898 105.106 61.0625 104.625 61.0625H99.375C98.8937 61.0625 98.5 60.6898 98.5 60.2344V54.4375H92.375C91.8938 54.4375 91.5 54.0648 91.5 53.6094V48.6406C91.5 48.1852 91.8938 47.8125 92.375 47.8125H98.5V42.0156C98.5 41.5602 98.8937 41.1875 99.375 41.1875H104.625C105.106 41.1875 105.5 41.5602 105.5 42.0156V47.8125H111.625C112.106 47.8125 112.5 48.1852 112.5 48.6406V53.6094ZM112.5 33.7344C112.5 34.1898 112.106 34.5625 111.625 34.5625H92.375C91.8938 34.5625 91.5 34.1898 91.5 33.7344V32.0781C91.5 31.6227 91.8938 31.25 92.375 31.25H111.625C112.106 31.25 112.5 31.6227 112.5 32.0781V33.7344Z" fill="url(#paint0_linear)"/>
+      </g>
+      <defs>
+        <filter id="filter0_d" x="77" y="18" width="50" height="61" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+          <feOffset dy="4"/>
+          <feGaussianBlur stdDeviation="2"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <linearGradient id="paint0_linear" x1="102" y1="18" x2="102" y2="71" gradientUnits="userSpaceOnUse">
+          <stop stop-color="white"/>
+          <stop offset="1" stop-color="#FFE8D3"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+  </ng-container>
+
   <!-- Generic tile for form template that we have not accounted for -->
-  <img
-    *ngIf="form && form.form_type !== formType.PRE_SCREENING && form.form_type !== formType.SYMPTOM_TRACKER && form.form_type !== formType.SELF_REPORTING"
-    [src]="'./assets/svg/contact-trace/forms/template-generic.svg'" alt=""/>
+  <ng-container
+    *ngIf="form && form.form_type !== formType.PRE_SCREENING && form.form_type !== formType.SYMPTOM_TRACKER && form.form_type !== formType.SELF_REPORTING">
+    <svg width="196" height="90" viewBox="0 0 196 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="196" height="90" fill="#5398FF"/>
+      <g filter="url(#filter0_d)">
+        <path d="M114.333 23.7H104.58C103.6 20.974 101.033 19 98 19C94.9667 19 92.4 20.974 91.42 23.7H81.6667C79.1 23.7 77 25.815 77 28.4V61.3C77 63.885 79.1 66 81.6667 66H114.333C116.9 66 119 63.885 119 61.3V28.4C119 25.815 116.9 23.7 114.333 23.7ZM98 23.7C99.2833 23.7 100.333 24.7575 100.333 26.05C100.333 27.3425 99.2833 28.4 98 28.4C96.7167 28.4 95.6667 27.3425 95.6667 26.05C95.6667 24.7575 96.7167 23.7 98 23.7ZM102.667 56.6H86.3333V51.9H102.667V56.6ZM109.667 47.2H86.3333V42.5H109.667V47.2ZM109.667 37.8H86.3333V33.1H109.667V37.8Z" fill="url(#paint0_linear)"/>
+      </g>
+      <defs>
+        <filter id="filter0_d" x="73" y="19" width="50" height="55" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+          <feOffset dy="4"/>
+          <feGaussianBlur stdDeviation="2"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <linearGradient id="paint0_linear" x1="98" y1="19" x2="98" y2="66" gradientUnits="userSpaceOnUse">
+          <stop stop-color="white"/>
+          <stop offset="1" stop-color="#BDD8FF"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+  </ng-container>
 
   <div class="bottom-container">
     <div class="tile-title">
