@@ -91,10 +91,11 @@ describe('ResourceTypeServiceByCategoryComponent', () => {
       const resourceTypeLinkUrls = [
         CampusLink.store,
         CampusLink.campusService,
-        CampusLink.subscribableCalendar
+        CampusLink.subscribableCalendar,
+        CampusLink.form
       ];
 
-      expect(contentTypes.length).toBe(3);
+      expect(contentTypes.length).toBe(4);
 
       resultLinksUrls.forEach((linkUrl) => {
         expect(resourceTypeLinkUrls.includes(linkUrl)).toBe(true, `${linkUrl} missing`);
