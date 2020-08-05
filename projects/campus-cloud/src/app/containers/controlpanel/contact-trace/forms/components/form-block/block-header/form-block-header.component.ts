@@ -47,7 +47,7 @@ export class FormBlockHeaderComponent implements OnInit {
 
   toggleLogicForQuestionBlocks(): void {
     if (this.formBlock.block_logic_list && this.formBlock.block_logic_list.length > 0) {
-      this.formBlock.block_logic_list = null;
+      delete this.formBlock.block_logic_list;
     } else {
       let dataType: OperandType;
       if (this.formBlock.block_type === BlockType.text) {

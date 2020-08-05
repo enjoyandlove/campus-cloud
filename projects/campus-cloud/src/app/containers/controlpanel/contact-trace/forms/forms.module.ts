@@ -30,6 +30,9 @@ import {
   FormBlockImageSelectorComponent,
   FormBlockLogicComponent,
   FormBlockTypeSelectorComponent,
+  FormDeleteComponent,
+  FormPublishComponent,
+  FormUnpublishComponent,
   SelectorForNumberComponent,
   SelectorForOptionsComponent,
   SelectorForResultComponent,
@@ -69,7 +72,10 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
     FormsListActionBoxComponent,
     FormTemplateTileComponent,
     FormSearchResultTileComponent,
-    SelectorForResultComponent
+    SelectorForResultComponent,
+    FormDeleteComponent,
+    FormUnpublishComponent,
+    FormPublishComponent
   ],
   imports: [CommonModule, FormsRoutingModule, SharedModule, FormsModule, LayoutsModule],
   providers: [CPI18nPipe]

@@ -1035,6 +1035,9 @@
   "contact_trace_forms_delete": {
     "message": "Delete"
   },
+  "contact_trace_forms_delete_form": {
+    "message": "Delete Form"
+  },
   "contact_trace_forms_draft": {
     "message": "Draft"
   },
@@ -1053,8 +1056,23 @@
   "contact_trace_forms_form_builder": {
     "message": "Form Builder"
   },
+  "contact_trace_forms_form_delete_confirmation": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "contact_trace_forms_form_delete_success": {
+    "message": "Form successfully deleted"
+  },
   "contact_trace_forms_form_info": {
     "message": "Form Info"
+  },
+  "contact_trace_forms_form_publish_confirmation": {
+    "message": "Are you sure you want to publish %s?"
+  },
+  "contact_trace_forms_form_unpublish_confirmation": {
+    "message": "Are you sure you want to unpublish %s?"
+  },
+  "contact_trace_forms_form_unpublish_success": {
+    "message": "Form successfully unpublished"
   },
   "contact_trace_forms_for_selections": {
     "message": "For Selections"
@@ -1119,6 +1137,9 @@
   "contact_trace_forms_notification": {
     "message": "Notification"
   },
+  "contact_trace_forms_no_results": {
+    "message": "No forms found"
+  },
   "contact_trace_forms_number": {
     "message": "Number"
   },
@@ -1130,6 +1151,12 @@
   },
   "contact_trace_forms_published_forms": {
     "message": "Published Forms"
+  },
+  "contact_trace_forms_publish_form": {
+    "message": "Publish Form"
+  },
+  "contact_trace_forms_publish_successful": {
+    "message": "Form successfully published"
   },
   "contact_trace_forms_question": {
     "message": "Question"
@@ -1155,6 +1182,9 @@
   "contact_trace_forms_save_as_draft": {
     "message": "Save as Draft"
   },
+  "contact_trace_forms_save_draft_successful": {
+    "message": "Form successfully saved as draft"
+  },
   "contact_trace_forms_selection": {
     "message": "Selection"
   },
@@ -1162,7 +1192,7 @@
     "message": "Select a Template"
   },
   "contact_trace_forms_send_reminder_text": {
-    "message": "Send a daily reminder to all students at 8AM"
+    "message": "Send a daily reminder to all students at 7AM"
   },
   "contact_trace_forms_share": {
     "message": "Share"
@@ -1184,6 +1214,9 @@
   },
   "contact_trace_forms_unpublish": {
     "message": "Unpublish"
+  },
+  "contact_trace_forms_unpublish_form": {
+    "message": "Unpublish Form"
   },
   "contact_trace_forms_use_studio_text": {
     "message": "Use Studio to add the form to your campus app"

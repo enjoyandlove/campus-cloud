@@ -1,0 +1,44 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span><strong>{{ 'contact_trace_forms_unpublish_form' | cpI18n }}</strong></span>
+
+        <button type="button"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
+          &times;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="cpmodal__body">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-center">
+            {{ 'contact_trace_forms_form_unpublish_confirmation' | cpI18n: form.name }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__footer">
+      <div class="row">
+        <div class="col-6 offset-6 text-right">
+          <button type="button"
+                  class="cpbtn cpbtn--cancel"
+                  data-dismiss="modal">
+            {{ 'cancel' | cpI18n }}
+          </button>
+
+          <cp-button [props]="buttonData"
+                     (buttonClick)="onUnpublish()">
+          </cp-button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>

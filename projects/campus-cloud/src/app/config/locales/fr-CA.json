@@ -1035,6 +1035,9 @@
   "contact_trace_forms_delete": {
     "message": "Supprimer"
   },
+  "contact_trace_forms_delete_form": {
+    "message": "Delete Form"
+  },
   "contact_trace_forms_draft": {
     "message": "Brouillon"
   },
@@ -1053,8 +1056,23 @@
   "contact_trace_forms_form_builder": {
     "message": "Créateur de formulaire"
   },
+  "contact_trace_forms_form_delete_confirmation": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "contact_trace_forms_form_delete_success": {
+    "message": "Form successfully deleted"
+  },
   "contact_trace_forms_form_info": {
     "message": "Info du formulaire"
+  },
+  "contact_trace_forms_form_publish_confirmation": {
+    "message": "Are you sure you want to publish %s?"
+  },
+  "contact_trace_forms_form_unpublish_confirmation": {
+    "message": "Are you sure you want to unpublish %s?"
+  },
+  "contact_trace_forms_form_unpublish_success": {
+    "message": "Form successfully unpublished"
   },
   "contact_trace_forms_for_selections": {
     "message": "Pour les sélections"
@@ -1119,6 +1137,9 @@
   "contact_trace_forms_notification": {
     "message": "Notification"
   },
+  "contact_trace_forms_no_results": {
+    "message": "No forms found"
+  },
   "contact_trace_forms_number": {
     "message": "Nombre"
   },
@@ -1130,6 +1151,12 @@
   },
   "contact_trace_forms_published_forms": {
     "message": "Formulaires publiés"
+  },
+  "contact_trace_forms_publish_form": {
+    "message": "Publish Form"
+  },
+  "contact_trace_forms_publish_successful": {
+    "message": "Form successfully published"
   },
   "contact_trace_forms_question": {
     "message": "Question"
@@ -1155,6 +1182,9 @@
   "contact_trace_forms_save_as_draft": {
     "message": "Enregistrer comme brouillon"
   },
+  "contact_trace_forms_save_draft_successful": {
+    "message": "Form successfully saved as draft"
+  },
   "contact_trace_forms_selection": {
     "message": "Sélection"
   },
@@ -1162,7 +1192,7 @@
     "message": "Sélectionner un modèle"
   },
   "contact_trace_forms_send_reminder_text": {
-    "message": "Envoyer un rappel quotidien à tous les étudiants à 8h"
+    "message": "Envoyer un rappel quotidien à tous les étudiants à 7h"
   },
   "contact_trace_forms_share": {
     "message": "Partager"
@@ -1184,6 +1214,9 @@
   },
   "contact_trace_forms_unpublish": {
     "message": "Dé-publier"
+  },
+  "contact_trace_forms_unpublish_form": {
+    "message": "Unpublish Form"
   },
   "contact_trace_forms_use_studio_text": {
     "message": "Utilisez Studio pour ajouter le formulaire à votre application du campus"

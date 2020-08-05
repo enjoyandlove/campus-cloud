@@ -141,7 +141,7 @@ export class FormsListComponent implements OnInit {
     this.pageStream.next(this.pageCounter);
   }
 
-  filterChangeHandler({ action }): void {
+  filterChangeHandler({ action }: { label?: string; action?: string }): void {
     this.filterStream.next(action);
   }
 }
