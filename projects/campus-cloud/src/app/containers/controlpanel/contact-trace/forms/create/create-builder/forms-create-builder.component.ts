@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
 import { FormsHelperService } from '@controlpanel/contact-trace/forms/services/forms-helper.service';
-import { baseActions } from '@campus-cloud/store';
+import { baseActionClass, baseActions } from '@campus-cloud/store';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Store } from '@ngrx/store';
 
@@ -24,6 +24,7 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
   resultBlocks: FormBlock[];
   highlightFormError: boolean;
   highlightFormErrorForPublish: boolean;
+  showFormPublishModal: boolean;
 
   constructor(
     private formsService: FormsService,
@@ -118,17 +119,8 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
       this.highlightFormError = true;
       this.highlightFormErrorForPublish = true;
     } else {
-      const formCopy: Form = { ...this.form, is_published: true };
-      if (!formCopy.id) {
-        this.formsService.createForm(formCopy).subscribe((form) => {
-          this.handleFormPublishSuccess(form);
-        });
-      } else {
-        const params = new HttpParams().set('school_id', this.session.g.get('school').id);
-        this.formsService.updateForm(formCopy, params).subscribe((form) => {
-          this.handleFormPublishSuccess(form);
-        });
-      }
+      this.showFormPublishModal = true;
+      setTimeout(() => $('#formPublishModal').modal('show'));
     }
   }
 
@@ -140,12 +132,12 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
       this.showWarning();
       this.highlightFormError = true;
     } else {
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
       if (!this.form.id) {
-        this.formsService.createForm(this.form).subscribe((form) => {
+        this.formsService.createForm(this.form, params).subscribe((form) => {
           this.handleFormSaveAsDraftSuccess(form);
         });
       } else {
-        const params = new HttpParams().set('school_id', this.session.g.get('school').id);
         this.formsService.updateForm(this.form, params).subscribe((form) => {
           this.handleFormSaveAsDraftSuccess(form);
         });
@@ -153,16 +145,26 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleFormPublishSuccess(form: Form): void {
+  onPublishedForm(form: Form): void {
+    this.handleSuccess('contact_trace_forms_publish_successful');
     if (form && form.id) {
       this.router.navigate(['/contact-trace/forms/share', form.id]);
     }
   }
 
   private handleFormSaveAsDraftSuccess(form: Form): void {
+    this.handleSuccess('contact_trace_forms_save_draft_successful');
     if (form && form.id) {
       this.router.navigate(['/contact-trace/forms/edit', form.id, 'builder']);
     }
+  }
+
+  private handleSuccess(key) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate(key)
+      })
+    );
   }
 
   private showWarning() {

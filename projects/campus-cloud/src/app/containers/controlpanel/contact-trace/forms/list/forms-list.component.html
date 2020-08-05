@@ -13,20 +13,28 @@
 
 <ng-container *ngIf="!webServiceCallInProgress">
 
-  <cp-form-search-result-tile
-    *ngFor="let form of results"
-    class="search-result-item"
-    [form]="form"
-    (itemUpdated)="itemUpdateHandler()"
-  >
-  </cp-form-search-result-tile>
+  <cp-no-content
+    class="no-content"
+    *ngIf="!results.length"
+    [noContentText]="'contact_trace_forms_no_results' | cpI18n">
+  </cp-no-content>
 
-  <cp-pagination
-    [pageNext]="hasMorePages"
-    [pagePrev]="pageCounter > 1"
-    [pageNumber]="pageCounter"
-    (next)="onPaginationNext()"
-    (previous)="onPaginationPrevious()">
-  </cp-pagination>
+  <ng-container *ngIf="results && results.length">
+    <cp-form-search-result-tile
+      *ngFor="let form of results"
+      class="search-result-item"
+      [form]="form"
+      (itemUpdated)="itemUpdateHandler()"
+    >
+    </cp-form-search-result-tile>
+
+    <cp-pagination
+      [pageNext]="hasMorePages"
+      [pagePrev]="pageCounter > 1"
+      [pageNumber]="pageCounter"
+      (next)="onPaginationNext()"
+      (previous)="onPaginationPrevious()">
+    </cp-pagination>
+  </ng-container>
 
 </ng-container>

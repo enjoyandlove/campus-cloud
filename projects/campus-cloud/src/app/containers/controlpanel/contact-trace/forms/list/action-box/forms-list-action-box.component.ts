@@ -13,7 +13,7 @@ import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 export class FormsListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
-  @Output() filterChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() filterChange: EventEmitter<{ label?: string; action?: string }> = new EventEmitter();
   createFormEventData: IEventData;
   canCreate: boolean;
   types: { label?: string; action?: string }[];

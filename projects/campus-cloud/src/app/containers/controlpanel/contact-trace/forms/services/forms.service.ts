@@ -56,12 +56,12 @@ export class FormsService {
     );
   }
 
-  createForm(form: Form): Observable<Form> {
+  createForm(form: Form, params: HttpParams): Observable<Form> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORMS}/`;
 
     FormsHelperService.formatObjectBeforeSave(form);
 
-    return this.api.post(url, form).pipe(
+    return this.api.post(url, form, params).pipe(
       catchError((error) => {
         this.handleError();
         return of(null);
@@ -92,6 +92,12 @@ export class FormsService {
         return of(error);
       })
     );
+  }
+
+  deleteForm(formId: number, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORMS}/${formId}`;
+
+    return this.api.delete(url, search);
   }
 
   private handleError() {

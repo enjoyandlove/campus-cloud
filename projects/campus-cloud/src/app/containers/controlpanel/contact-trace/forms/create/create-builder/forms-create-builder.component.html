@@ -149,8 +149,26 @@
             {{'contact_trace_forms_save_as_draft' | cpI18n}}
           </button>
 
+          <a ui-button
+             class="action-button"
+             variant="stroked"
+             [routerLink]="'/contact-trace/forms'">
+            {{ 'contact_trace_forms_cancel' | cpI18n }}
+          </a>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<cp-modal
+  modalId="formPublishModal"
+  *ngIf="showFormPublishModal"
+>
+  <cp-form-publish
+    [form]="form"
+    (publishForm)="onPublishedForm($event)"
+  >
+  </cp-form-publish>
+</cp-modal>
