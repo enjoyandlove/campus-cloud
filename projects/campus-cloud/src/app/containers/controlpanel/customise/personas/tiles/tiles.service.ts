@@ -108,7 +108,7 @@ export class TilesService {
     return this.api.get(url, headers, true).pipe(
       map((forms: any[]) => {
         return [
-          { label: this.cpI18n.translate('t_shared_select_forms'), action: null, heading: true },
+          { label: this.cpI18n.translate('t_shared_select_form'), action: null, heading: true },
           ...forms
             .filter((c: any) => c.id)
             .map((form: any) => {
