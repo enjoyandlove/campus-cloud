@@ -1,13 +1,16 @@
-<cp-one-column [width]="layoutWidth">
+<cp-spinner *ngIf="!form"></cp-spinner>
+
+<ng-container *ngIf="form">
+
   <cp-card>
 
-    <div class="page-container">
+    <div class="card-container">
 
-      <div class="page-row">
+      <div class="card-row">
         <div class="card_title">{{ 'contact_trace_forms_capture_responses_web' | cpI18n }}</div>
       </div>
 
-      <div class="page-row">
+      <div class="card-row">
         <input
           type="text"
           class="form-control url-txt-box"
@@ -31,7 +34,7 @@
         <div class="card_title">{{ 'contact_trace_forms_use_studio_text' | cpI18n }}</div>
       </div>
 
-      <div class="page-row">
+      <div class="card-row">
         <button
           class="cpbtn cpbtn--primary go-to-button"
           (click)="gotoStudioClickHandler()"
@@ -46,9 +49,9 @@
 
   <cp-card>
 
-    <div class="page-container">
+    <div class="card-container">
 
-      <div class="page-row">
+      <div class="card-row">
         <div class="card_title">{{ 'contact_trace_forms_notification' | cpI18n }}</div>
       </div>
 
@@ -85,5 +88,5 @@
 
   </cp-card>
 
-</cp-one-column>
+</ng-container>
 

@@ -2,10 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { baseActions, IHeader } from '@campus-cloud/store';
-import { ActivatedRoute } from '@angular/router';
 import { FormsService } from '@controlpanel/contact-trace/forms/services';
-import { takeUntil } from 'rxjs/operators';
-import { Form } from '@controlpanel/contact-trace/forms/models';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Form } from '../../models';
 
 @Component({
   selector: 'cp-forms-create-results',
@@ -14,12 +13,9 @@ import { Form } from '@controlpanel/contact-trace/forms/models';
 })
 export class FormsCreateResultsComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
+  form: Form;
 
-  constructor(
-    public store: Store<IHeader>,
-    private activatedRoute: ActivatedRoute,
-    private formsService: FormsService
-  ) {}
+  constructor(public store: Store<IHeader>, private formsService: FormsService) {}
 
   ngOnDestroy() {
     // Do this to un-subscribe all subscriptions on this page
@@ -28,12 +24,16 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.pipe(takeUntil(this.unsubscribe)).subscribe((params) => {
-      const formId = Number(params['formId']);
-      return this.formsService.getForm(formId, null).subscribe((form) => {
-        this.buildHeader(form);
+    this.formsService
+      .getFormBeingEdited()
+      .pipe(
+        takeUntil(this.unsubscribe),
+        filter((form, i) => !!form)
+      )
+      .subscribe((form) => {
+        this.form = form;
+        setTimeout(() => this.buildHeader(form));
       });
-    });
   }
 
   public buildHeader(form: Form) {

@@ -49,12 +49,33 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
       )
       .subscribe((form) => {
         this.form = form;
+        this.buildHeader();
         if (!this.form.name) {
           this.router.navigate(['/contact-trace/forms']);
         } else {
           this.initializeScreenFields();
         }
       });
+  }
+
+  private buildHeader() {
+    const payload = {
+      heading: this.form.id ? 'contact_trace_forms_edit_form' : 'contact_trace_forms_create_form',
+      subheading: `[NOTRANSLATE]${this.form.name}[NOTRANSLATE]`,
+      em: null,
+      crumbs: {
+        url: 'forms',
+        label: 'admin_contact_trace_forms'
+      },
+      children: []
+    };
+
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload
+      });
+    });
   }
 
   private initializeScreenFields(): void {
@@ -155,9 +176,6 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
 
   private handleFormSaveAsDraftSuccess(form: Form): void {
     this.handleSuccess('contact_trace_forms_save_draft_successful');
-    if (form && form.id) {
-      this.router.navigate(['/contact-trace/forms/edit', form.id, 'builder']);
-    }
   }
 
   private handleSuccess(key) {

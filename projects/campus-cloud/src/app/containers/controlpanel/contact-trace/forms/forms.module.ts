@@ -12,6 +12,8 @@ import {
   FormsCreateBuilderComponent,
   FormsCreateComponent,
   FormsCreateInfoComponent,
+  FormsCreateResultsComponent,
+  FormsCreateShareComponent,
   FormTemplateTileComponent
 } from './create';
 import {
@@ -39,8 +41,6 @@ import {
   SelectorForTextComponent
 } from './components';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { FormsCreateShareComponent } from './share';
-import { FormsCreateResultsComponent } from './results';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 
 @NgModule({

@@ -9,11 +9,27 @@
       </a>
       <a
         [routerLink]="'builder'"
-        [ngClass]="{'disabled-link': !(form && form.name && form.name.trim().length > 0 && form.form_block_list && form.form_block_list.length > 0)}"
+        [ngClass]="{'disabled-link': !form || form.is_published || !(form.name && form.name.trim().length > 0 && form.form_block_list && form.form_block_list.length > 0)}"
         routerLinkActive="active"
         class="link-button"
       >
         {{ 'contact_trace_forms_form_builder' | cpI18n }}
+      </a>
+      <a
+        [routerLink]="'share'"
+        [ngClass]="{'disabled-link': !form || !form.is_published}"
+        routerLinkActive="active"
+        class="link-button"
+      >
+        {{ 'contact_trace_forms_share' | cpI18n }}
+      </a>
+      <a
+        [routerLink]="'results'"
+        [ngClass]="{'disabled-link': !form || !form.is_published}"
+        routerLinkActive="active"
+        class="link-button"
+      >
+        {{ 'contact_trace_forms_results' | cpI18n }}
       </a>
     </div>
   </div>

@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { baseActions, IHeader } from '@campus-cloud/store';
-import { Store } from '@ngrx/store';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormsService } from '../services';
 import { Form } from '../models';
 import { CPSession } from '@campus-cloud/session';
 import { ActivatedRoute } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'cp-forms-create',
@@ -20,7 +17,6 @@ export class FormsCreateComponent implements OnInit {
   formId: number;
 
   constructor(
-    private store: Store<IHeader>,
     private formsService: FormsService,
     private session: CPSession,
     private activatedRoute: ActivatedRoute
@@ -35,7 +31,6 @@ export class FormsCreateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.unsubscribe)).subscribe((params) => {
       this.formId = Number(params['formId']);
-      this.buildHeader();
       this.getItemForEdit(this.formId).subscribe((form) =>
         this.formsService.setFormBeingEdited(form)
       );
@@ -57,21 +52,5 @@ export class FormsCreateComponent implements OnInit {
       return of(newObj);
     }
     return this.formsService.getForm(formId, null);
-  }
-
-  buildHeader() {
-    const payload = {
-      heading: this.formId ? 'contact_trace_forms_edit_form' : 'contact_trace_forms_create_form',
-      subheading: null,
-      em: null,
-      children: []
-    };
-
-    Promise.resolve().then(() => {
-      this.store.dispatch({
-        type: baseActions.HEADER_UPDATE,
-        payload
-      });
-    });
   }
 }

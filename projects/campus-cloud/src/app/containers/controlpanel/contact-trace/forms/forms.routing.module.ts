@@ -6,10 +6,10 @@ import { FormsListComponent } from './list';
 import {
   FormsCreateBuilderComponent,
   FormsCreateComponent,
-  FormsCreateInfoComponent
+  FormsCreateInfoComponent,
+  FormsCreateResultsComponent,
+  FormsCreateShareComponent
 } from './create';
-import { FormsCreateShareComponent } from './share';
-import { FormsCreateResultsComponent } from './results';
 
 // ToDo: PJ: Revisit complete code on this page including zendesk, pagetitle, AMPLITUDE
 
@@ -33,18 +33,18 @@ const appRoutes: Routes = [
         path: 'builder',
         data: { zendesk: 'forms', amplitude: 'IGNORE', title: pageTitle.CONTACT_TRACE_FORMS },
         component: FormsCreateBuilderComponent
+      },
+      {
+        path: 'share',
+        data: { zendesk: 'forms', amplitude: 'IGNORE', title: pageTitle.CONTACT_TRACE_FORMS },
+        component: FormsCreateShareComponent
+      },
+      {
+        path: 'results',
+        data: { zendesk: 'forms', amplitude: 'IGNORE', title: pageTitle.CONTACT_TRACE_FORMS },
+        component: FormsCreateResultsComponent
       }
     ]
-  },
-  {
-    path: 'share/:formId',
-    data: { zendesk: 'forms', amplitude: 'IGNORE', title: pageTitle.CONTACT_TRACE_FORMS },
-    component: FormsCreateShareComponent
-  },
-  {
-    path: 'results/:formId',
-    data: { zendesk: 'forms', amplitude: 'IGNORE', title: pageTitle.CONTACT_TRACE_FORMS },
-    component: FormsCreateResultsComponent
   }
 ];
 @NgModule({

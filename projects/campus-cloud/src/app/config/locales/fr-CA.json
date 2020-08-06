@@ -1188,6 +1188,9 @@
   "contact_trace_forms_save_draft_successful": {
     "message": "Formulaire enregistré comme brouillon avec succès"
   },
+  "contact_trace_forms_save_successful": {
+    "message": "Form successfully saved"
+  },
   "contact_trace_forms_selection": {
     "message": "Sélection"
   },

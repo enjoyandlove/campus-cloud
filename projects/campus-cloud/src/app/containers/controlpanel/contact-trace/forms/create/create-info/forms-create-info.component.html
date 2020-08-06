@@ -1,4 +1,6 @@
-<div class="page-container">
+<cp-spinner *ngIf="!form"></cp-spinner>
+
+<div class="page-container" *ngIf="form">
 
   <ready-ui-card>
 
@@ -49,7 +51,7 @@
 
 </div>
 
-<div class="footer">
+<div class="footer" *ngIf="form">
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
       <div class="col-12">
@@ -58,6 +60,7 @@
           </div>
 
           <button
+            *ngIf="!(!form || form.is_published || !(form.name && form.name.trim().length > 0 && form.form_block_list && form.form_block_list.length > 0))"
             ui-button
             type="button"
             variant="flat"
@@ -67,6 +70,19 @@
             [disabled]="!form || !form.name || form.name.trim().length === 0"
           >
             {{'contact_trace_forms_next' | cpI18n}}
+          </button>
+
+          <button
+            *ngIf="form.is_published"
+            ui-button
+            type="button"
+            variant="flat"
+            color="primary"
+            class="action-button"
+            (click)="saveClickHandler()"
+            [disabled]="!form || !form.name || form.name.trim().length === 0"
+          >
+            {{'save' | cpI18n}}
           </button>
 
           <a ui-button
