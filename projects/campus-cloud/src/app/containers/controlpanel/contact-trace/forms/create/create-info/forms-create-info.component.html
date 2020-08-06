@@ -60,7 +60,7 @@
           </div>
 
           <button
-            *ngIf="!(!form || form.is_published || !(form.name && form.name.trim().length > 0 && form.form_block_list && form.form_block_list.length > 0))"
+            *ngIf="form && !form.is_published"
             ui-button
             type="button"
             variant="flat"
