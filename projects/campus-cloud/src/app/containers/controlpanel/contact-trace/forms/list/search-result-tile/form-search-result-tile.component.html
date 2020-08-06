@@ -85,6 +85,19 @@
             color="inherit"
             variant="inline"
             fullWidth="true"
+            (click)="editClickHandler(); primary.close();"
+    >
+      <ready-ui-stack spacing="tight">
+        <span>{{ 'contact_trace_forms_edit' | cpI18n }}</span>
+      </ready-ui-stack>
+    </button>
+  </ready-ui-menu-item>
+  <ready-ui-menu-item>
+    <button ui-button
+            type="button"
+            color="inherit"
+            variant="inline"
+            fullWidth="true"
             data-toggle="modal"
             data-target="#formDeleteModal"
             (click)="deleteClickHandler(); primary.close();"

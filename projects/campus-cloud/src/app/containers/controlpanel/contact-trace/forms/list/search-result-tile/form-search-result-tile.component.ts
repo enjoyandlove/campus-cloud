@@ -40,11 +40,11 @@ export class FormSearchResultTileComponent implements OnInit {
   }
 
   shareClickHandler(): void {
-    this.router.navigate(['/contact-trace/forms/share', this.form.id]);
+    this.router.navigate(['/contact-trace/forms/edit', this.form.id, 'share']);
   }
 
   resultsClickHandler(): void {
-    this.router.navigate(['/contact-trace/forms/results', this.form.id]);
+    this.router.navigate(['/contact-trace/forms/edit', this.form.id, 'results']);
   }
 
   unpublishClickHandler(): void {
