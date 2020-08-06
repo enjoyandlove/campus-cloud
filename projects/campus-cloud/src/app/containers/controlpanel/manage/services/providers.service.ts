@@ -2,10 +2,12 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '@campus-cloud/base/services';
+import { baseActions } from '@campus-cloud/store';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ProvidersService {
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private store: Store<any>) {}
 
   addOrientationCheckIn() {
     // overriding this method in event service DO NOT delete
@@ -81,5 +83,12 @@ export class ProvidersService {
     const url = `${common}/${attendeeId}`;
 
     return this.api.delete(url, search);
+  }
+
+  setModalProviders(providers: any[]): void {
+    this.store.dispatch({
+      type: baseActions.PROVIDERS_MODAL_SET,
+      payload: providers
+    });
   }
 }

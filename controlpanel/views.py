@@ -37,7 +37,7 @@ Parse Mass Event Invite
 '''
 @csrf_exempt
 def import_events(request):
-    time_zone = request.POST['tz'];
+    time_zone = request.POST['tz']
     csv_file = request.FILES['file']
     column_names = ['Title', 'Description', 'Start_Date', 'End_Date', 'Location', 'Room']
 
@@ -172,5 +172,62 @@ def import_services(request):
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)
+
+    return JsonResponse(json.dumps(parsed_data), safe=False)
+
+'''
+Parse Service Providers Mass Upload
+'''
+@csrf_exempt
+def import_service_providers(request):
+    csv_file = request.FILES['file']
+
+    csv_as_string = []
+
+    for index, row in enumerate(csv_file):
+        try:
+            csv_as_string.append(UnicodeDammit(row).unicode_markup)
+        except UnicodeError as e:
+            return JsonResponse({"error": DECODE_ERROR + '. At line {}'.format(index + 1)}, safe=False, status=400)
+
+    parser = CSVParser(csv_as_string)
+
+    try:
+        parsed_data = parser.all_fields_required('provider_name', 'email')
+    except KeyError as e:
+        return JsonResponse({"error": e.args[0]}, safe=False, status=400)
+
+    for item in parsed_data:
+        if 'has_checkout' in item:
+            item['has_checkout'] = item['has_checkout'].lower() == 'true'
+
+    return JsonResponse(json.dumps(parsed_data), safe=False)
+
+'''
+Parse QR Codes Mass Upload
+'''
+@csrf_exempt
+def import_qr_codes(request):
+    csv_file = request.FILES['file']
+
+    csv_as_string = []
+
+    for index, row in enumerate(csv_file):
+        try:
+            csv_as_string.append(UnicodeDammit(row).unicode_markup)
+        except UnicodeError as e:
+            return JsonResponse({"error": DECODE_ERROR + '. At line {}'.format(index + 1)}, safe=False, status=400)
+
+    parser = CSVParser(csv_as_string)
+
+    try:
+        parsed_data = parser.all_fields_required('name')
+    except KeyError as e:
+        return JsonResponse({"error": e.args[0]}, safe=False, status=400)
+
+    for item in parsed_data:
+        item['provider_name'] = item.pop('name')
+        if 'has_checkout' in item:
+            item['has_checkout'] = item['has_checkout'].lower() == 'true'
 
     return JsonResponse(json.dumps(parsed_data), safe=False)

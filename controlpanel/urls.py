@@ -12,6 +12,10 @@ urlpatterns = [
 
     url(r'^services/excel$', views.import_services),
 
+    url(r'^service_providers/excel$', views.import_service_providers),
+
+    url(r'^qr_codes/excel$', views.import_qr_codes),
+
     url(r'^announcements/import$', views.import_lists),
 
     url(r'^calendars/items/import$', views.import_events),

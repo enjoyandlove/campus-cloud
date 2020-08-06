@@ -6,3 +6,4 @@ export * from './providers-stats';
 export * from './providers-delete';
 export * from './providers-details';
 export * from './providers-action-box';
+export * from './providers-excel';

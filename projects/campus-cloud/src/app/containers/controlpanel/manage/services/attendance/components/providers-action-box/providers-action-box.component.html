@@ -29,6 +29,9 @@
             {{ 'services_button_add_service_provider' | cpI18n }}
           </button>
           <cp-menu>
+            <cp-menu-item *ngIf="allowServiceProvidersImport">
+              <span (click)="launchImportModal()">{{ 'import_from_csv' | cpI18n }}</span>
+            </cp-menu-item>
             <cp-menu-item *ngIf="allowLocationsImport">
               <span (click)="onImportLocations()">{{ 'import_locations' | cpI18n }}</span>
             </cp-menu-item>

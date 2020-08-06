@@ -4,6 +4,7 @@
   <div *ngSwitchCase="false">
     <cp-providers-action-box [noProviders]="noProviders"
                              [allowLocationsImport]="allowLocationsImport"
+                             [allowServiceProvidersImport]="allowServiceProvidersImport"
                              (search)="onSearch($event)"
                              (importLocations)="onImportLocations()"
                              (download)="onDownload()"

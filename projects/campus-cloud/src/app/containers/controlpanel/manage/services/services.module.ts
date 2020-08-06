@@ -38,7 +38,8 @@ import {
   ServicesProvidersListComponent,
   ServicesProviderDeleteComponent,
   ServicesProviderDetailsComponent,
-  ServicesProviderActionBoxComponent
+  ServicesProviderActionBoxComponent,
+  ServicesProvidersExcelModalComponent, ServicesProvidersExcelComponent
 } from './attendance/components';
 
 import {
@@ -83,7 +84,9 @@ import { ServicesFormComponent, ServicesAssessmentFormComponent } from './compon
     ServicesProvidersCheckInDeleteComponent,
     ServicesProvidersCheckInCreateComponent,
     ServicesProvidersAttendeesStatsComponent,
-    ServicesProvidersAttendeesActionBoxComponent
+    ServicesProvidersAttendeesActionBoxComponent,
+    ServicesProvidersExcelModalComponent,
+    ServicesProvidersExcelComponent
   ],
 
   imports: [
