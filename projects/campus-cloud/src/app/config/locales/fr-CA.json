@@ -1039,7 +1039,7 @@
     "message": "Supprimer"
   },
   "contact_trace_forms_delete_form": {
-    "message": "Delete Form"
+    "message": "Supprimer formulaire"
   },
   "contact_trace_forms_draft": {
     "message": "Brouillon"
@@ -1063,19 +1063,19 @@
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "contact_trace_forms_form_delete_success": {
-    "message": "Form successfully deleted"
+    "message": "Formulaire supprimé avec succès"
   },
   "contact_trace_forms_form_info": {
     "message": "Info du formulaire"
   },
   "contact_trace_forms_form_publish_confirmation": {
-    "message": "Are you sure you want to publish %s?"
+    "message": "Êtes-vous sûr de vouloir publier %s ?"
   },
   "contact_trace_forms_form_unpublish_confirmation": {
-    "message": "Are you sure you want to unpublish %s?"
+    "message": "Êtes-vous sûr de vouloir dé-publier %s ?"
   },
   "contact_trace_forms_form_unpublish_success": {
-    "message": "Form successfully unpublished"
+    "message": "Formulaire dé-publié avec succès"
   },
   "contact_trace_forms_for_selections": {
     "message": "Pour les sélections"
@@ -1141,7 +1141,7 @@
     "message": "Notification"
   },
   "contact_trace_forms_no_results": {
-    "message": "No forms found"
+    "message": "Aucun formulaire trouvé"
   },
   "contact_trace_forms_number": {
     "message": "Nombre"
@@ -1156,10 +1156,10 @@
     "message": "Formulaires publiés"
   },
   "contact_trace_forms_publish_form": {
-    "message": "Publish Form"
+    "message": "Publier formulaire"
   },
   "contact_trace_forms_publish_successful": {
-    "message": "Form successfully published"
+    "message": "Formulaire publié avec succès"
   },
   "contact_trace_forms_question": {
     "message": "Question"
@@ -1186,7 +1186,7 @@
     "message": "Enregistrer comme brouillon"
   },
   "contact_trace_forms_save_draft_successful": {
-    "message": "Form successfully saved as draft"
+    "message": "Formulaire enregistré comme brouillon avec succès"
   },
   "contact_trace_forms_selection": {
     "message": "Sélection"
@@ -1219,7 +1219,7 @@
     "message": "Dé-publier"
   },
   "contact_trace_forms_unpublish_form": {
-    "message": "Unpublish Form"
+    "message": "Dé-publier formulaire"
   },
   "contact_trace_forms_use_studio_text": {
     "message": "Utilisez Studio pour ajouter le formulaire à votre application du campus"

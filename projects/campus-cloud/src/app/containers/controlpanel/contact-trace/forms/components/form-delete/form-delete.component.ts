@@ -62,6 +62,7 @@ export class FormDeleteComponent implements OnInit {
         });
       },
       (err) => {
+        $('#formDeleteModal').modal('hide');
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });
