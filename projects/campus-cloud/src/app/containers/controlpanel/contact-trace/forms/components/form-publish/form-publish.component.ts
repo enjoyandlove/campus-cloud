@@ -82,6 +82,7 @@ export class FormPublishComponent implements OnInit {
   }
 
   private handleFormPublishError(): void {
+    $('#formPublishModal').modal('hide');
     this.buttonData = Object.assign({}, this.buttonData, {
       disabled: false
     });

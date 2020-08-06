@@ -64,6 +64,7 @@ export class FormUnpublishComponent implements OnInit {
         });
       },
       (err) => {
+        $('#formUnpublishModal').modal('hide');
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });

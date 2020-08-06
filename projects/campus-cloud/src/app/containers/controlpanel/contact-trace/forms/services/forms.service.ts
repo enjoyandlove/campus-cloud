@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Form } from '../models';
 import { catchError, distinctUntilChanged, tap } from 'rxjs/operators';
 import { ApiService } from '@campus-cloud/base';
@@ -31,18 +31,18 @@ export class FormsService {
     this.formBeingEdited.next(form);
   }
 
-  searchForms(start: number, end: number, params: HttpParams): Observable<Form[]> {
+  searchForms(start: number, end: number, params: HttpParams): Observable<Form[] | any> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORMS}/${start};${end}`;
 
     return this.api.get(url, params).pipe(
       catchError((error) => {
         this.handleError();
-        return of(null);
+        return throwError(error);
       })
     );
   }
 
-  getTemplateForms(): Observable<Form[]> {
+  getTemplateForms(): Observable<Form[] | any> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORMS}/`;
     const params = new HttpParams()
       .set('school_id', this.session.g.get('school').id)
@@ -51,7 +51,7 @@ export class FormsService {
     return this.api.get(url, params).pipe(
       catchError((error) => {
         this.handleError();
-        return of(null);
+        return throwError(error);
       })
     );
   }
@@ -64,7 +64,7 @@ export class FormsService {
     return this.api.post(url, form, params).pipe(
       catchError((error) => {
         this.handleError();
-        return of(null);
+        return throwError(error);
       })
     );
   }
@@ -77,7 +77,7 @@ export class FormsService {
     return this.api.update(url, form, params).pipe(
       catchError((error) => {
         this.handleError();
-        return of(null);
+        return throwError(error);
       })
     );
   }
@@ -89,7 +89,7 @@ export class FormsService {
       tap((form) => FormsHelperService.convertIdsInFormFromServerToIndexes(form)),
       catchError((error) => {
         this.handleError();
-        return of(error);
+        return throwError(error);
       })
     );
   }
@@ -97,7 +97,12 @@ export class FormsService {
   deleteForm(formId: number, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORMS}/${formId}`;
 
-    return this.api.delete(url, search);
+    return this.api.delete(url, search).pipe(
+      catchError((error) => {
+        this.handleError();
+        return throwError(error);
+      })
+    );
   }
 
   private handleError() {
