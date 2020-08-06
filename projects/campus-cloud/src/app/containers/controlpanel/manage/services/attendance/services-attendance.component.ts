@@ -25,6 +25,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   storeId;
   noProviders;
   allowLocationsImport;
+  allowServiceProvidersImport;
   isProviderAdd;
   serviceId: number;
 
@@ -57,6 +58,10 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
           CP_PRIVILEGES_MAP.contact_trace_qr
         );
       }
+
+      this.allowServiceProvidersImport = this.utils.hasSchoolWritePrivilege(
+        CP_PRIVILEGES_MAP.services
+      );
 
       if (!this.service.service_attendance) {
         this.redirectOnDisabledAttendance();

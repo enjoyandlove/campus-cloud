@@ -9,6 +9,7 @@ import * as fromSnackbar from './snackbar.reducer';
 import * as fromAudience from './audience.reducer';
 import * as fromEvents from './events-modal.reducer';
 import * as fromServices from './services-modal.reducer';
+import * as fromProviders from './providers-modal.reducer';
 
 export const baseReducers: ActionReducerMap<IBaseState> = {
   ROUTER: routerReducer,
@@ -18,7 +19,8 @@ export const baseReducers: ActionReducerMap<IBaseState> = {
   SNACKBAR: fromSnackbar.reducer,
   AUDIENCE: fromAudience.reducer,
   EVENTS_MODAL: fromEvents.reducer,
-  SERVICES_MODAL: fromServices.reducer
+  SERVICES_MODAL: fromServices.reducer,
+  PROVIDERS_MODAL: fromProviders.reducer
 };
 
 export const baseActions = {
@@ -35,7 +37,9 @@ export const baseActions = {
   SERVICES_MODAL_SET: fromServices.SERVICES_MODAL_SET,
   SERVICES_MODAL_RESET: fromServices.SERVICES_MODAL_RESET,
   SNACKBAR_SHOW: fromSnackbar.SNACKBAR_SHOW,
-  SNACKBAR_HIDE: fromSnackbar.SNACKBAR_HIDE
+  SNACKBAR_HIDE: fromSnackbar.SNACKBAR_HIDE,
+  PROVIDERS_MODAL_SET: fromProviders.PROVIDERS_MODAL_SET,
+  PROVIDERS_MODAL_RESET: fromProviders.PROVIDERS_MODAL_RESET
 };
 
 export const baseActionClass = {

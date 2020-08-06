@@ -16,6 +16,7 @@ import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.s
 export class ServicesProviderActionBoxComponent implements OnInit {
   @Input() noProviders;
   @Input() allowLocationsImport;
+  @Input() allowServiceProvidersImport;
 
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() downloadAllQR: EventEmitter<null> = new EventEmitter();
@@ -80,5 +81,9 @@ export class ServicesProviderActionBoxComponent implements OnInit {
 
     this.studentFilter$ = this.engageUtils.getStudentFilter();
     this.dateRanges = this.engageUtils.dateFilter();
+  }
+
+  launchImportModal() {
+    $('#providersExcelModal').modal({ keyboard: true, focus: true });
   }
 }

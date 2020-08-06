@@ -21,7 +21,10 @@ import {
   ServicesEventsAttendanceComponent
 } from './events/components';
 
-import { ServicesProviderDetailsComponent } from './attendance/components';
+import {
+  ServicesProviderDetailsComponent,
+  ServicesProvidersExcelComponent
+} from './attendance/components';
 
 /**
  * Excel
@@ -117,7 +120,12 @@ const appRoutes: Routes = [
     component: ServicesAttendanceComponent,
     data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES, amplitude: 'Service Provider' }
   },
-
+  {
+    canActivate: [PrivilegesGuard],
+    path: ':serviceId/import/excel',
+    component: ServicesProvidersExcelComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES, amplitude: 'IGNORE' }
+  },
   {
     path: ':serviceId/provider/:providerId',
     canActivate: [PrivilegesGuard],

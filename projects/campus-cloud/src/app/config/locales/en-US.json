@@ -2402,6 +2402,15 @@
   "service_provider": {
     "message": "Service Provider"
   },
+  "service_providers": {
+    "message": "Service Providers"
+  },
+  "service_providers_import": {
+    "message": "Import Service Providers"
+  },
+  "service_providers_import_items_to_import": {
+    "message": "File contains data for %s service provider(s)."
+  },
   "service_provider_name": {
     "message": "Service Provider Name"
   },
