@@ -307,12 +307,11 @@ describe('ResourceSelectorTypeSingleComponent', () => {
       expectedResources = [
         CampusLink.store,
         CampusLink.campusService,
-        CampusLink.subscribableCalendar,
-        CampusLink.form
+        CampusLink.subscribableCalendar
       ];
 
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(4);
+      expect(component.resources.length).toBe(3);
       resultResources.forEach((resource) => {
         expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
       });
