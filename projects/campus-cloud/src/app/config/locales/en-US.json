@@ -3554,8 +3554,8 @@
   "t_personas_tile_create_resource_type_external_web_app": {
     "message": "Authenticated Web App"
   },
-  "t_personas_tile_create_resource_type_forms": {
-    "message": "Forms"
+  "t_personas_tile_create_resource_type_form": {
+    "message": "Form"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
@@ -4095,8 +4095,8 @@
   "t_shared_select_calendar": {
     "message": "Select Calendar"
   },
-  "t_shared_select_forms": {
-    "message": "Select Forms"
+  "t_shared_select_form": {
+    "message": "Select Form"
   },
   "t_shared_select_group_and_club": {
     "message": "Select Organization"

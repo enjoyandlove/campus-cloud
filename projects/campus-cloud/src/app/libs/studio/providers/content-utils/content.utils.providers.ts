@@ -122,7 +122,7 @@ export class ContentUtilsProviders {
       [ContentUtilsProviders.contentTypes.single]: [
         {
           id: 'forms',
-          label: 't_personas_tile_create_resource_type_forms',
+          label: 't_personas_tile_create_resource_type_form',
           meta: {
             link_params: {},
             link_url: CampusLink.form
