@@ -12,9 +12,12 @@
           type="text"
           class="form-control url-txt-box"
           readonly
+          [(ngModel)]="url"
         />
         <button
           class="cpbtn cpbtn--primary share-button"
+          (copied)="notifyCopySuccess()"
+          [cpCopyClipboard]="url"
         >
           {{ 'contact_trace_forms_share' | cpI18n }}
         </button>

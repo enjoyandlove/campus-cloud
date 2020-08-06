@@ -48,6 +48,7 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
             {
               block_type: BlockType.no_input,
               name: 'welcome',
+              is_required: false,
               block_content_list: [
                 {
                   rank: 0,
