@@ -78,7 +78,7 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
   }
 
   addQuestionClickHandler(index: number): void {
-    this.questionBlocks.splice(index, 0, {});
+    this.questionBlocks.splice(index, 0, { is_required: true });
     this.updateBlocksListOnFormObject();
     this.updateSkipToForInserts(1 + index); // Add one for Welcome block
   }
@@ -87,6 +87,7 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
     this.resultBlocks.splice(index, 0, {
       block_type: BlockType.no_input,
       is_terminal: true,
+      is_required: false,
       block_content_list: [
         {
           rank: 0,

@@ -1020,6 +1020,9 @@
   "contact_trace_forms_content": {
     "message": "Content"
   },
+  "contact_trace_forms_copied_clipboard": {
+    "message": "Copied to clipboard"
+  },
   "contact_trace_forms_create_form": {
     "message": "Create Form"
   },
