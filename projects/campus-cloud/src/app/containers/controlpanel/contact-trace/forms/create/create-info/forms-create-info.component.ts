@@ -82,7 +82,6 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
           this.form.form_block_list = [
             {
               block_type: BlockType.no_input,
-              name: 'welcome',
               is_required: false,
               block_content_list: [
                 {
@@ -107,8 +106,9 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
     };
     const params = new HttpParams().set('school_id', this.session.g.get('school').id);
     this.formsService.updateForm(formCopyForSave, params).subscribe((form) => {
+      FormsHelperService.formatFormFromDatabaseForUI(form);
+      this.formsService.setFormBeingEdited(form);
       this.handleSuccess('contact_trace_forms_save_successful');
-      this.buildHeader();
     });
   }
 

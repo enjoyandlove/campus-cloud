@@ -46,7 +46,6 @@ export class FormsCreateComponent implements OnInit {
   private getItemForEdit(formId: number): Observable<Form> {
     if (!formId) {
       const newObj: Form = {
-        name: '',
         is_confirmation_required: true,
         school_id: this.session.g.get('school').id,
         status: FormStatus.draft

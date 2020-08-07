@@ -86,7 +86,7 @@ export class FormsService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORMS}/${formId}`;
 
     return this.api.get(url, params).pipe(
-      tap((form) => FormsHelperService.convertIdsInFormFromServerToIndexes(form)),
+      tap((form) => FormsHelperService.formatFormFromDatabaseForUI(form)),
       catchError((error) => {
         this.handleError();
         return throwError(error);

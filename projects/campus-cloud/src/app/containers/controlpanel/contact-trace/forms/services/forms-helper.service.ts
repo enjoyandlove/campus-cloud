@@ -49,6 +49,29 @@ export class FormsHelperService {
     }
   }
 
+  static formatFormFromDatabaseForUI(form: Form): void {
+    FormsHelperService.convertIdsInFormFromServerToIndexes(form);
+    FormsHelperService.prepareResultBlockExternalInfoForUI(form);
+  }
+
+  static prepareResultBlockExternalInfoForUI(form: Form): void {
+    if (form && form.form_block_list) {
+      form.form_block_list.forEach((formBlock) => {
+        if (
+          formBlock.is_terminal &&
+          formBlock.extra_info !== null &&
+          formBlock.extra_info !== undefined &&
+          formBlock.extra_info.trim().length === 0
+        ) {
+          // The UI uses this property to determine if logic is enabled or not for the Result block
+          // If it is empty string, the UI still considers it as a valid selection.
+          // So, we need to set it to null.
+          formBlock.extra_info = null;
+        }
+      });
+    }
+  }
+
   static convertIdsInFormFromServerToIndexes(form: Form): void {
     const blockIdToIndexMap: { [key: number]: number } = {};
     const blockIdToContentIdToIndexMap: { [key: number]: { [key: number]: number } } = {};
