@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsService } from '../../services';
 import { filter, takeUntil } from 'rxjs/operators';
-import { BlockType, Form, FormStatus } from '../../models';
+import { BlockType, Form, FormStatus, FormType } from '../../models';
 import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormsHelperService } from '@controlpanel/contact-trace/forms/services/forms-helper.service';
@@ -79,6 +79,7 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
     } else {
       this.getTemplateForm(this.form.template_form_id).subscribe((templateForm) => {
         if (!templateForm) {
+          this.form.form_type = FormType.GENERIC_CONTACT_TRACE;
           this.form.form_block_list = [
             {
               block_type: BlockType.no_input,
