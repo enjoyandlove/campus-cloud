@@ -233,4 +233,10 @@ export class FormsHelperService {
   static isNullOrEmptyString(str: string): boolean {
     return !str || str.trim().length === 0;
   }
+
+  static generateShareUrl(form: Form): string {
+    // ToDo: PJ: Update logic to generate the URL
+    const origin: string = window.origin; // Looks like this: https://campuscloud.readyeducation.com
+    return `${origin}/#/not-ready/${form.external_id}`;
+  }
 }
