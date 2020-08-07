@@ -63,5 +63,7 @@ export const pageTitle = {
 
   NOTIFY_ANNOUNCEMENT: 'Notify | Announcement',
 
-  CONTACT_TRACE_FORMS: 'Contact Trace | Forms'
+  CONTACT_TRACE_FORMS: 'Contact Trace | Forms',
+
+  CONTACT_TRACE_QR: 'Contact Trace | QR Code'
 };

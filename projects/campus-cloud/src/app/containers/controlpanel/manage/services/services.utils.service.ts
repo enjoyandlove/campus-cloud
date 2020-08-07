@@ -123,6 +123,18 @@ export class ServicesUtilsService {
     );
   }
 
+  getQrProviderForm(formData: IServiceProvider) {
+    const verificationMethods = formData
+      ? formData.checkin_verification_methods
+      : [CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app];
+
+    return this.fb.group({
+      checkin_verification_methods: [verificationMethods],
+      has_checkout: [formData ? formData.has_checkout : attendanceType.checkInOnly],
+      provider_name: [formData ? formData.provider_name : null, Validators.required]
+    });
+  }
+
   getCustomFeedbackLabel(formData: IServiceProvider) {
     return formData
       ? formData.custom_basic_feedback_label

@@ -1,0 +1,33 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/core/colors';
+
+:host {
+  width: 100%;
+  margin-top: 18px;
+  display: inline-block;
+}
+
+.content {
+  padding: 30px 10px;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: $color-text;
+  }
+
+  h4 {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: normal;
+    color: $color-text;
+  }
+
+  button {
+    margin-top: 8px;
+  }
+}

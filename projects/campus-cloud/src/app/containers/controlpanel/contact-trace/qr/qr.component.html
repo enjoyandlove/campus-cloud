@@ -1,0 +1,51 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div *ngSwitchCase="false">  
+    <div *ngIf="!noProviders || filterExistance() || listLoading">
+      <cp-qr-list-action-box  [noProviders]="noProviders"
+                              [allowLocationsImport]="allowLocationsImport"
+                              [allowServiceProvidersImport]="allowServiceProvidersImport"
+                              (search)="onSearch($event)"
+                              (importLocations)="onImportLocations()"
+                              (download)="onDownload()"
+                              (downloadAllQR)="onDownloadAllQR()"
+                              (filterByDates)="onDateFilter($event)"
+                              (updateStudentFilter)="onStudentFilter($event)"
+                              (launchAddProviderModal)="onLaunchProviderAdd()"
+                              >
+      </cp-qr-list-action-box>
+    </div>  
+    <div *ngIf="noProviders && !filterExistance() && !listLoading">
+      <cp-qr-list-no-content (importLocations)="onImportLocations()"
+                              (launchAddProviderModal)="onLaunchProviderAdd()">
+      </cp-qr-list-no-content>
+    </div> 
+    <div class="row">
+      <div class="col-12">
+        <cp-qr-list #providersList
+                    [service]="service"
+                    [filterState]="state"
+                    (filterExistance)="filterExistance()"
+                    (updateStats)="onUpdateStats()"              
+                    (hasProviders)="onProvidersResult($event)"
+                    (onLoading)="onListLoading($event)">
+        </cp-qr-list>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="excelQrModal">
+  <cp-qr-excel-modal></cp-qr-excel-modal>
+</cp-modal>
+
+<cp-modal *ngIf="isProviderAdd"
+          modalId="createProvider"
+          (modalClose)="isProviderAdd = false">
+  <cp-qr-create [service]="service"
+                (created)="onProviderAdded()"
+                (teardown)="isProviderAdd = false">
+  </cp-qr-create>
+</cp-modal>
+
+

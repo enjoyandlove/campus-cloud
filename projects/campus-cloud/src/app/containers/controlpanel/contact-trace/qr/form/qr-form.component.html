@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+  <div class="row form-group">
+    <div class="col-12">
+      <label>{{ 'name' | cpI18n }}</label>
+      <input type="text"
+             class="form-control"
+             formControlName="provider_name"
+             [class.error]="formErrors && form.controls['provider_name'].hasError('required')" />
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 't_services_attendance_type' | cpI18n }}</label>
+      <cp-dropdown [items]="attendanceTypes"
+                   [selectedItem]="selectedAttendanceType"
+                   (selected)="onSelectedAttendanceType($event.action)">
+      </cp-dropdown>
+    </div>
+    <div class="col-6">
+      <label>{{ 't_services_service_qr_enabled' | cpI18n }}</label>
+      <cp-dropdown [items]="serviceQRCodes"
+                   [selectedItem]="selectedQrCode"
+                   (selected)="onSelectedQRCode($event.action)">
+      </cp-dropdown>
+    </div>
+  </div>
+</form>

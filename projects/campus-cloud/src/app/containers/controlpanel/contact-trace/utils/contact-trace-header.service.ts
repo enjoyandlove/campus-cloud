@@ -31,10 +31,10 @@ export class ContactTraceHeaderService {
 
     _children = this.privileges.children.filter((child) => {
       if (child.privilege === CP_PRIVILEGES_MAP.contact_trace_forms) {
-        return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms)
-          ? child
-          : null;
-      }
+        return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms) ? child : null;
+      } else if (child.privilege === CP_PRIVILEGES_MAP.contact_trace_qr) {
+        return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_qr) ? child : null;
+      } 
     });
 
     return Object.assign({}, this.privileges, { children: _children });

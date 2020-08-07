@@ -1,0 +1,56 @@
+<ng-container [ngSwitch]="isFormReady">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+  <ng-container *ngSwitchCase="true">
+    <div class="row margin-bottom">
+      <div class="col-12">
+        <form [formGroup]="form"
+              class="form">
+          <div formArrayName="providers">
+            <div class="row">
+              <div class="col-12">
+                <cp-no-content noContentText="No QR Codes to Add..."
+                               *ngIf="!form['controls'].providers['controls'].length">
+                </cp-no-content>
+              </div>
+            </div>
+            <div class="row form__wrapper"
+                 *ngFor="let provider of form['controls'].providers['controls']; let i = index">
+              <div [formGroupName]="i"
+                   class="col-12">
+                <div class="row form__item">
+                  <div class="col-12 text-truncate">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-11">
+                      <span class="service__title">
+                        <strong>{{ provider.controls.provider_name.value }}</strong>
+                      </span>
+                    </div>
+                  </div>                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="row">
+          <div class="col-12">
+            <div class="float-right">
+              <a [routerLink]="['/contact-trace/qr']"
+                 class="cpbtn cpbtn--cancel">
+                {{ 'cancel' | cpI18n }}
+              </a>
+              <cp-button [props]="buttonData"
+                         (buttonClick)="onSubmit()"> </cp-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

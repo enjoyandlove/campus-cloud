@@ -1,0 +1,10 @@
+[
+  {
+    "provider_name": "Student Financial Support",
+    "has_checkout": false
+  },
+  {
+    "provider_name": "Student Financial Support",
+    "has_checkout": true
+  }
+]
