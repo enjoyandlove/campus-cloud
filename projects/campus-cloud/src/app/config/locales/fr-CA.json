@@ -1245,6 +1245,9 @@
   "contact_trace_forms_yes_no": {
     "message": "Oui/Non"
   },
+  "contact_trace_no_qr_found": {
+    "message": "Aucun code QR trouvé"
+  },
   "cp_top_banner_copy": {
     "message": "Campus Cloud a été mis à jour"
   },
@@ -2170,8 +2173,38 @@
   "profile": {
     "message": "Profil"
   },
+  "qr_button_add": {
+    "message": "Ajouter code QR"
+  },
+  "qr_button_create": {
+    "message": "Créer code QR"
+  },
   "qr_code": {
     "message": "Code QR"
+  },
+  "qr_codes_no_results": {
+    "message": "Il n'y a pas de codes QR. Utilisez \"Créer un code QR\" pour en créer un."
+  },
+  "qr_delete_modal_title": {
+    "message": "Supprimer code QR"
+  },
+  "qr_edit_modal_title": {
+    "message": "Éditer code QR"
+  },
+  "qr_import_button": {
+    "message": "Importer des codes QR"
+  },
+  "qr_import_heading": {
+    "message": "Importer des codes QR"
+  },
+  "qr_import_items_to_import": {
+    "message": "Le fichier contient des données pour %s code (s) QR."
+  },
+  "qr_no_content_message": {
+    "message": "Importer vos lieux ou ajouter des codes QR manuellement"
+  },
+  "qr_no_content_title": {
+    "message": "Commencer avec les codes QR"
   },
   "rating": {
     "message": "Note"

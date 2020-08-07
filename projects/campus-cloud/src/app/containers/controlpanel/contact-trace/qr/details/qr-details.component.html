@@ -1,0 +1,29 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <cp-qr-attendees-action-box [provider]="provider"
+                                       [updateQrCode]="updateQrCode"
+                                       [hasAttendees]="providerAttendees.hasAttendees"
+                                       (download)="onDownload()"
+                                       (search)="onSearch($event)"
+                                       (addCheckIn)="onAddCheckIn()"
+                                       (toggleQr)="onToggleQr($event)"
+                                       (filterByDates)="onDateFilter($event)"
+                                       (updateStudentFilter)="onStudentFilter($event)">
+    </cp-qr-attendees-action-box>
+
+    <div class="row">
+      <div class="col-12">
+        <cp-qr-attendees-list #providerAttendees
+                                     [service]="service"
+                                     [provider]="provider"
+                                     [filterState]="state"
+                                     [serviceId]="serviceId"
+                                     [providerId]="providerId"
+                                     (addRemoveAttendee)="onAddRemoveAttendee($event)">
+        </cp-qr-attendees-list>
+      </div>
+    </div>
+  </ng-container>
+</div>

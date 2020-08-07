@@ -9,6 +9,13 @@
       "clearParams": true,
       "amplitude": "Forms",
       "url": "/contact-trace/forms"
+    },
+    {
+      "privilege": 40,
+      "label": "admin_contact_trace_qr",
+      "clearParams": true,
+      "amplitude": "Qr",
+      "url": "/contact-trace/qr"
     }
   ]
 }

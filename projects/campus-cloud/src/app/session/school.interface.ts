@@ -21,6 +21,7 @@ export interface ISchool {
   school_name_logo_url?: string;
   has_guide_customization: boolean;
   contact_trace_feature_level: number;
+  ct_service_id: number;
 }
 
 export const LOGO_URL = 'logo_url';

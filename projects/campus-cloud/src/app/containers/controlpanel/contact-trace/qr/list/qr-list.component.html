@@ -1,0 +1,105 @@
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  
+  <div *ngSwitchCase="false">
+    <cp-no-content *ngIf="!state.providers.length && filterExistance"
+                    [noContentText]="hasRecords ? noProviderMessage : noProviderAddProviderMessage">
+    </cp-no-content>
+    <ng-container *ngIf="state.providers.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('provider_name')"
+                [sorting]="state.sort_field === 'provider_name'"
+                [sortDirection]="state.sort_direction">
+              {{ 'qr_code' | cpI18n }}
+            </th>
+            <th ui-table-cell>
+              {{ 't_services_total_visits' | cpI18n }}
+            </th>
+            <th ui-table-cell>
+              {{ 'checkin_download_qr_code' | cpI18n }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let provider of state.providers">
+            <td ui-table-cell>
+              <a cpTracker
+                 [eventData]="eventData"
+                 [routerLink]="[provider.id]">
+                <span>
+                  <strong>{{ provider.provider_name }}</strong>
+                </span>
+              </a>
+            </td>
+            <td ui-table-cell>
+              {{ provider.total_visits }}
+            </td>
+            <td ui-table-cell>
+              <a *ngIf="provider.qr_img_url"
+                 ui-button
+                 variant="inline"
+                 target="_blank"
+                 [href]="provider.qr_img_url"
+                 download
+                 >
+                {{ 'download' | cpI18n }}
+              </a>
+            </td>
+            <td ui-table-cell
+                align="right">
+              <ready-ui-stack>
+                <button ui-button
+                        type="button"
+                        variant="inline"
+                        aria-label="Edit Provider"
+                        (click)="showEditModal(provider)">
+                  <ready-ui-icon name="edit"></ready-ui-icon>
+                </button>
+                <button ui-button
+                        type="button"
+                        variant="inline"
+                        aria-label="Delete Provider"
+                        data-toggle="modal"
+                        data-target="#deleteProvider"
+                        (click)="deleteProvider = provider">
+                  <ready-ui-icon name="close"></ready-ui-icon>
+                </button>
+              </ready-ui-stack>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <cp-pagination [pageNext]="pageNext"
+                     [pagePrev]="pagePrev"
+                     [pageNumber]="pageNumber"
+                     (next)="onPaginationNext()"
+                     (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </ng-container>
+
+    <cp-modal modalId="deleteProvider">
+      <cp-qr-delete [serviceId]="service.id"
+                    [provider]="deleteProvider"
+                    (deleted)="onDeleted($event)">
+      </cp-qr-delete>
+    </cp-modal>
+
+    <cp-modal *ngIf="showEditProviderModal"
+              modalId="editProvider"
+              (modalClose)="showEditProviderModal = false">
+      <cp-qr-edit [service]="service"
+                  [provider]="provider"
+                  (edited)="onEdited($event)"
+                  (teardown)="showEditProviderModal = false">
+      </cp-qr-edit>
+    </cp-modal>
+  </div>
+</div>

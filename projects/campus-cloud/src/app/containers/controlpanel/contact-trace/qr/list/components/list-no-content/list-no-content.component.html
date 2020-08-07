@@ -1,0 +1,28 @@
+<div class="cp-card">
+  <div class="content">
+    <h2>{{ 'qr_no_content_title' | cpI18n }}</h2>
+    <h4>{{ 'qr_no_content_message' | cpI18n }}</h4>
+    <div class="row justify-content-center">
+      <button cpTracker
+              (click)="onImportLocations()"
+              [eventData]="eventData"
+              class="cpbtn cpbtn--primary">
+        {{ 'import_locations' | cpI18n }}
+      </button>
+
+      <button cpTracker
+              (click)="launchModal()"
+              [eventData]="eventData"
+              class="cpbtn cpbtn--primary ml-4">
+        {{ 'import_from_csv' | cpI18n }}
+      </button>
+
+      <button cpTracker
+              (click)="onLaunchProviderAdd()"
+              [eventData]="eventData"
+              class="cpbtn cpbtn--primary ml-4">
+        {{ 'qr_button_add' | cpI18n }}
+      </button>
+    </div>        
+  </div>
+</div>

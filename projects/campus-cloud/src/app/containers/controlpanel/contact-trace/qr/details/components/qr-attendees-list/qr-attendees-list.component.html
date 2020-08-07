@@ -1,0 +1,137 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content *ngIf="!assessments.length"
+                   noContentText="No attendees found...">
+    </cp-no-content>
+
+    <ng-container *ngIf="assessments.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell>
+              {{ 'services_label_attendee_name' | cpI18n }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('check_in_time_epoch')"
+                [sorting]="state.sort_field === 'check_in_time_epoch'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.checkin_time }}
+            </th>
+            <th ui-table-cell
+                *ngIf="provider.has_checkout"
+                (sort)="doSort('check_out_time_epoch')"
+                [sorting]="state.sort_field === 'check_out_time_epoch'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.checkout_time }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('check_in_method')"
+                [sorting]="state.sort_field === 'check_in_method'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.checkin_method }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <ng-container *ngFor="let assessment of assessments; index as i">
+            <tr ui-table-row>
+              <td ui-table-cell>
+                <ready-ui-stack>
+                  <ready-ui-avatar [alt]="'t_shared_img_alt' | cpI18n: i + 1"
+                                   [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage">
+                  </ready-ui-avatar>
+                  <div class="meta">
+                    <strong>
+                      {{ assessment.attendee_type !== deletedAttendee ? assessment.firstname + ' ' + assessment.lastname : ('t_shared_closed_account' | cpI18n) }}
+                    </strong>
+                    <br />
+                    <small class="text-muted">
+                      {{ assessment.attendee_type !== deletedAttendee ? assessment.email : '-'}}
+                    </small>
+                  </div>
+                </ready-ui-stack>
+              </td>
+              <td ui-table-cell>
+                {{ assessment.check_in_time_epoch | cpDatePipe: dateFormat }}
+              </td>
+              <td ui-table-cell
+                  *ngIf="provider.has_checkout">
+                <ng-container *ngIf="
+                    assessment.check_out_time_epoch &&
+                    assessment.check_out_time_epoch !== emptyCheckOutTime
+                  ">
+                  {{ assessment.check_out_time_epoch | cpDatePipe: dateFormat }}
+                </ng-container>
+              </td>
+              <td ui-table-cell>
+                <ready-ui-icon
+                               [name]="[assessment.check_in_method === webCheckInMethod ? 'computer' : 'smartphone']">
+                </ready-ui-icon>
+
+              </td>         
+              <td ui-table-cell
+                  align="right">
+                <ng-container
+                              *ngIf="assessment.check_in_method === webCheckInMethod">
+                  <button type="button"
+                          ui-button
+                          variant="inline"
+                          aria-label="Edit Checkin"
+                          (click)="onEditCheckIn(assessment)">
+                    <ready-ui-icon name="edit"></ready-ui-icon>
+                  </button>
+                  <button type="button"
+                          ui-button
+                          variant="inline"
+                          aria-label="Delete Checkin"
+                          (click)="onDeleteCheckIn(assessment)">
+                    <ready-ui-icon name="close"></ready-ui-icon>
+                  </button>
+                </ng-container>
+              </td>
+            </tr>           
+          </ng-container>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <cp-pagination [pageNext]="pageNext"
+                   [pagePrev]="pagePrev"
+                   [pageNumber]="pageNumber"
+                   (next)="onPaginationNext()"
+                   (previous)="onPaginationPrevious()">
+    </cp-pagination>
+  </div>
+</div>
+
+<cp-modal [centered]="true"
+          modalId="addCheckInModal"
+          *ngIf="isAddCheckInModal">
+  <cp-qr-create-check-in [data]="provider"
+                                       (created)="onCreated($event)"
+                                       (teardown)="isAddCheckInModal = false">
+  </cp-qr-create-check-in>
+</cp-modal>
+
+<cp-modal [centered]="true"
+          modalId="editCheckInModal"
+          *ngIf="isEditCheckInModal">
+  <cp-qr-edit-check-in [data]="provider"
+                                     [checkIn]="checkInData"
+                                     (edited)="onEdited($event)"
+                                     (teardown)="isEditCheckInModal = false">
+  </cp-qr-edit-check-in>
+</cp-modal>
+
+<cp-modal modalId="deleteCheckInModal"
+          *ngIf="isDeleteCheckInModal">
+  <cp-qr-delete-check-in [data]="provider"
+                                       [checkIn]="checkInData"
+                                       (deleted)="onDeleted($event)"
+                                       (teardown)="isDeleteCheckInModal = false">
+  </cp-qr-delete-check-in>
+</cp-modal>

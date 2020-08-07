@@ -1,0 +1,23 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+
+.delete-provider {
+  font-size: 2em;
+}
+
+.actions {
+  @include card-margin();
+
+  margin-top: 0;
+}
+
+cp-menu {
+  margin-left: -3px;
+
+  cp-menu-item {
+    span {
+      width: 200px;
+      padding: 12px;
+      cursor: pointer;
+    }
+  }
+}
