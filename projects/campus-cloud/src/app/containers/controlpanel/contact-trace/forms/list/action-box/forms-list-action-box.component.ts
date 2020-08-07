@@ -4,6 +4,7 @@ import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constan
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CPSession } from '@campus-cloud/session';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { FormStatus } from '@controlpanel/contact-trace/forms/models';
 
 @Component({
   selector: 'cp-forms-list-action-box',
@@ -16,7 +17,7 @@ export class FormsListActionBoxComponent implements OnInit {
   @Output() filterChange: EventEmitter<{ label?: string; action?: string }> = new EventEmitter();
   createFormEventData: IEventData;
   canCreate: boolean;
-  types: { label?: string; action?: string }[];
+  types: { label?: string; action?: FormStatus }[];
 
   constructor(
     private cpTracking: CPTrackingService,
@@ -40,12 +41,16 @@ export class FormsListActionBoxComponent implements OnInit {
         action: null
       },
       {
-        label: this.cpI18n.translate('contact_trace_forms_published_forms'),
-        action: 'published'
+        label: this.cpI18n.translate('contact_trace_forms_published'),
+        action: FormStatus.published
       },
       {
-        label: this.cpI18n.translate('contact_trace_forms_draft_forms'),
-        action: 'draft'
+        label: this.cpI18n.translate('contact_trace_forms_draft'),
+        action: FormStatus.draft
+      },
+      {
+        label: this.cpI18n.translate('contact_trace_forms_expired'),
+        action: FormStatus.expired
       }
     ];
   }

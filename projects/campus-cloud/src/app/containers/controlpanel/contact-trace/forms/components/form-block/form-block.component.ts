@@ -23,7 +23,6 @@ export class FormBlockComponent implements OnInit {
 
   blockTypeSelectionHandler(blockType: BlockType): void {
     this.formBlock.block_type = blockType;
-    this.formBlock.name = BlockType[blockType];
     switch (blockType) {
       case BlockType.text:
       case BlockType.number:

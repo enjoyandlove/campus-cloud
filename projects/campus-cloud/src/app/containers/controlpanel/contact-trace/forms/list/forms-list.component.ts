@@ -3,7 +3,7 @@ import { StoreCategory } from '@campus-cloud/shared/services';
 import { CPSession } from '@campus-cloud/session';
 import { ContactTraceHeaderService } from '@controlpanel/contact-trace/utils';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { Form } from '../models';
+import { Form, FormStatus } from '../models';
 import {
   catchError,
   debounceTime,
@@ -29,10 +29,10 @@ export class FormsListComponent implements OnInit {
   searchTerm: string;
   searchTermStream = new Subject<string>();
   pageStream = new Subject<number>();
-  filterStream = new Subject<string>();
+  filterStream = new Subject<FormStatus>();
   hasMorePages = false;
 
-  filter: string;
+  filter: FormStatus;
   pageCounter = 1;
   paginationCountPerPage = 25;
   results: Form[] = [];
@@ -92,7 +92,7 @@ export class FormsListComponent implements OnInit {
     const params = new HttpParams()
       .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
       .set('school_id', this.session.school.id.toString())
-      .set('is_published', !this.filter ? null : this.filter === 'published' ? 'true' : 'false')
+      .set('status', this.filter === null || this.filter === undefined ? null : '' + this.filter)
       .set('is_template', 'false');
     this.webServiceCallInProgress = true;
     return this.formsService.searchForms(startRecordCount, endRecordCount, params).pipe(
@@ -141,7 +141,7 @@ export class FormsListComponent implements OnInit {
     this.pageStream.next(this.pageCounter);
   }
 
-  filterChangeHandler({ action }: { label?: string; action?: string }): void {
+  filterChangeHandler({ action }: { label?: string; action?: FormStatus }): void {
     this.filterStream.next(action);
   }
 }

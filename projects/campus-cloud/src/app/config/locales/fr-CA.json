@@ -1036,7 +1036,7 @@
     "message": "Rappel quotidien"
   },
   "contact_trace_forms_daily_results": {
-    "message": "Daily Result"
+    "message": "Daily Results"
   },
   "contact_trace_forms_decimal": {
     "message": "Décimal"
@@ -1049,9 +1049,6 @@
   },
   "contact_trace_forms_draft": {
     "message": "Brouillon"
-  },
-  "contact_trace_forms_draft_forms": {
-    "message": "Formulaires brouillons"
   },
   "contact_trace_forms_edit": {
     "message": "Éditer"
@@ -1161,8 +1158,8 @@
   "contact_trace_forms_publish": {
     "message": "Publier"
   },
-  "contact_trace_forms_published_forms": {
-    "message": "Formulaires publiés"
+  "contact_trace_forms_published": {
+    "message": "Published"
   },
   "contact_trace_forms_publish_form": {
     "message": "Publier formulaire"

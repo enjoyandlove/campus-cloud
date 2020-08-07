@@ -90,11 +90,6 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
         (formBlock, index) => index > 0 && !formBlock.is_terminal
       );
       this.resultBlocks = this.form.form_block_list.filter((formBlock) => formBlock.is_terminal);
-      this.resultBlocks.forEach((resultBlock) => {
-        if (!resultBlock.extra_info || resultBlock.extra_info.length === 0) {
-          resultBlock.extra_info = null;
-        }
-      });
     }
   }
 
@@ -169,15 +164,18 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
 
   onPublishedForm(form: Form): void {
     this.handleSuccess('contact_trace_forms_publish_successful');
-    if (form && form.id) {
-      this.router.navigate(['/contact-trace/forms/edit', form.id, 'share']);
-    }
+    FormsHelperService.formatFormFromDatabaseForUI(form);
+    this.formsService.setFormBeingEdited(form);
+    this.router.navigate(['/contact-trace/forms/edit', form.id, 'share']);
   }
 
   private handleFormSaveAsDraftSuccess(form: Form): void {
-    FormsHelperService.convertIdsInFormFromServerToIndexes(form);
-    this.formsService.setFormBeingEdited(form);
     this.handleSuccess('contact_trace_forms_save_draft_successful');
+    FormsHelperService.formatFormFromDatabaseForUI(form);
+    this.formsService.setFormBeingEdited(form);
+    // This routing is needed when a form is being created for the first time.
+    // In that case, the formId in the url needs to be updated to the newly created formId.
+    this.router.navigate(['/contact-trace/forms/edit', form.id, 'builder']);
   }
 
   private handleSuccess(key) {
