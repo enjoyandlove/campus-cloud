@@ -1,4 +1,4 @@
-import { FormBlock, FormDailyStats, FormStatus } from '.';
+import { FormBlock, FormDailyStats, FormStatus, FormType } from '.';
 
 export interface Form {
   id?: number;
@@ -8,7 +8,7 @@ export interface Form {
   form_block_list?: FormBlock[];
   init_form_block_id?: number;
   template_form_id?: number;
-  form_type?: number;
+  form_type?: FormType;
   is_published?: boolean;
   open_from_epoch?: number;
   open_until_epoch?: number;
