@@ -1,4 +1,4 @@
-import { FormBlock } from '.';
+import { FormBlock, FormDailyStats, FormStatus } from '.';
 
 export interface Form {
   id?: number;
@@ -21,7 +21,6 @@ export interface Form {
   date_last_modified?: number;
   school_id?: number;
   daily_reminder_enabled?: boolean;
-
-  // hidden_field_data?: any;
-  // user_response_count?: number;
+  status?: FormStatus;
+  daily_stats?: FormDailyStats;
 }

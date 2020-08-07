@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Form } from '@controlpanel/contact-trace/forms/models';
+import { Form, FormStatus } from '../../models';
 import { Router } from '@angular/router';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { CPSession } from '@campus-cloud/session';
-import { HttpParams } from '@angular/common/http';
 import { FormsService } from '../../services';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
@@ -22,6 +21,9 @@ export class FormSearchResultTileComponent implements OnInit {
   canEdit: boolean;
   showFormDeleteModal: boolean;
   showFormUnpublishModal: boolean;
+  completionPercentStr: string;
+  resultLabels: string[];
+  formStatus = FormStatus;
 
   constructor(
     private router: Router,
@@ -33,6 +35,10 @@ export class FormSearchResultTileComponent implements OnInit {
 
   ngOnInit(): void {
     this.canEdit = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms);
+    this.calculateCompletionPercent();
+    if (this.form && this.form.daily_stats && this.form.daily_stats.terminal_blocks) {
+      this.resultLabels = Object.keys(this.form.daily_stats.terminal_blocks);
+    }
   }
 
   editClickHandler(): void {
@@ -71,5 +77,20 @@ export class FormSearchResultTileComponent implements OnInit {
         body: this.cpI18n.translate(key)
       })
     );
+  }
+
+  private calculateCompletionPercent(): void {
+    let completionPercent = '';
+    if (this.form && this.form.daily_stats) {
+      if (this.form.daily_stats.unique_views) {
+        // Denominator cannot be null;
+        const views: number = this.form.daily_stats.unique_views;
+        const submissions: number = this.form.daily_stats.unique_submissions
+          ? this.form.daily_stats.unique_submissions
+          : 0;
+        completionPercent = `${submissions} (${Math.round((submissions / views) * 100)}%)`;
+      }
+    }
+    this.completionPercentStr = completionPercent;
   }
 }

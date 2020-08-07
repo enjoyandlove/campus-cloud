@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsService } from '../../services';
 import { filter, takeUntil } from 'rxjs/operators';
-import { BlockType, Form } from '../../models';
+import { BlockType, Form, FormStatus } from '../../models';
 import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormsHelperService } from '@controlpanel/contact-trace/forms/services/forms-helper.service';
@@ -20,6 +20,7 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
   form: Form;
   templateForms: Form[];
+  formStatus = FormStatus;
 
   constructor(
     private formsService: FormsService,

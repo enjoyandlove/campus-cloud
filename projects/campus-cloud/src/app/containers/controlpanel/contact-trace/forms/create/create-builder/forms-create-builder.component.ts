@@ -170,11 +170,13 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
   onPublishedForm(form: Form): void {
     this.handleSuccess('contact_trace_forms_publish_successful');
     if (form && form.id) {
-      this.router.navigate(['/contact-trace/forms/share', form.id]);
+      this.router.navigate(['/contact-trace/forms/edit', form.id, 'share']);
     }
   }
 
   private handleFormSaveAsDraftSuccess(form: Form): void {
+    FormsHelperService.convertIdsInFormFromServerToIndexes(form);
+    this.formsService.setFormBeingEdited(form);
     this.handleSuccess('contact_trace_forms_save_draft_successful');
   }
 

@@ -1017,6 +1017,9 @@
   "contact_trace_forms_capture_responses_web": {
     "message": "Récoltez les réponses par le web"
   },
+  "contact_trace_forms_completed": {
+    "message": "Completed"
+  },
   "contact_trace_forms_content": {
     "message": "Contenu"
   },
@@ -1031,6 +1034,9 @@
   },
   "contact_trace_forms_daily_reminder": {
     "message": "Rappel quotidien"
+  },
+  "contact_trace_forms_daily_results": {
+    "message": "Daily Result"
   },
   "contact_trace_forms_decimal": {
     "message": "Décimal"
@@ -1055,6 +1061,9 @@
   },
   "contact_trace_forms_enter_hint_text": {
     "message": "Entrez le texte d'indice ici"
+  },
+  "contact_trace_forms_expired": {
+    "message": "Expired"
   },
   "contact_trace_forms_form_builder": {
     "message": "Créateur de formulaire"
@@ -1189,7 +1198,7 @@
     "message": "Formulaire enregistré comme brouillon avec succès"
   },
   "contact_trace_forms_save_successful": {
-    "message": "Form successfully saved"
+    "message": "Formulaire enregistré avec succès"
   },
   "contact_trace_forms_selection": {
     "message": "Sélection"
@@ -1217,6 +1226,9 @@
   },
   "contact_trace_forms_title": {
     "message": "Titre"
+  },
+  "contact_trace_forms_unique_views": {
+    "message": "Unique Views"
   },
   "contact_trace_forms_unpublish": {
     "message": "Dé-publier"
