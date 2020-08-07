@@ -24,5 +24,6 @@ export const mockSchool = {
   email: '',
   is_sandbox: false,
   client_id: 123,
-  contact_trace_feature_level: ContactTraceFeatureLevel.Plus
+  contact_trace_feature_level: ContactTraceFeatureLevel.Plus,
+  ct_service_id: 4869
 };
