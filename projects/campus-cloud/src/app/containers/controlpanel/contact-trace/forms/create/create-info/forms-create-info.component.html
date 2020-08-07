@@ -60,7 +60,7 @@
           </div>
 
           <button
-            *ngIf="form && !form.is_published"
+            *ngIf="form && form.status === formStatus.draft"
             ui-button
             type="button"
             variant="flat"
@@ -73,7 +73,7 @@
           </button>
 
           <button
-            *ngIf="form.is_published"
+            *ngIf="form.status !== formStatus.draft"
             ui-button
             type="button"
             variant="flat"

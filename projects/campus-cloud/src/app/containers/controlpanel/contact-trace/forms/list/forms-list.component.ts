@@ -34,7 +34,7 @@ export class FormsListComponent implements OnInit {
 
   filter: string;
   pageCounter = 1;
-  paginationCountPerPage = 10;
+  paginationCountPerPage = 25;
   results: Form[] = [];
 
   constructor(

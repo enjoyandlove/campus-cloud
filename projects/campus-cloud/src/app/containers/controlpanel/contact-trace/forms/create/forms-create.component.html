@@ -9,7 +9,7 @@
       </a>
       <a
         [routerLink]="'builder'"
-        [ngClass]="{'disabled-link': !form || form.is_published || !form.name || form.name.trim().length === 0}"
+        [ngClass]="{'disabled-link': !form || form.status !== formStatus.draft || !form.name || form.name.trim().length === 0 || !form.form_block_list || form.form_block_list.length === 0}"
         routerLinkActive="active"
         class="link-button"
       >
@@ -17,7 +17,7 @@
       </a>
       <a
         [routerLink]="'share'"
-        [ngClass]="{'disabled-link': !form || !form.is_published}"
+        [ngClass]="{'disabled-link': !form || form.status === formStatus.draft}"
         routerLinkActive="active"
         class="link-button"
       >
@@ -25,7 +25,7 @@
       </a>
       <a
         [routerLink]="'results'"
-        [ngClass]="{'disabled-link': !form || !form.is_published}"
+        [ngClass]="{'disabled-link': !form || form.status === formStatus.draft}"
         routerLinkActive="active"
         class="link-button"
       >

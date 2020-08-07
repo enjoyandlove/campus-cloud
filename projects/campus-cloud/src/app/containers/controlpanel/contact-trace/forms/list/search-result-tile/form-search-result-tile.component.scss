@@ -7,11 +7,12 @@
 .top-row {
   .form-name {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: bold;
     display: inline-block;
+    line-height: 35px;
   }
 
-  .draft-indicator {
+  .status-indicator {
     display: inline-block;
     font-size: 11px;
     font-weight: 600;
@@ -21,14 +22,71 @@
     vertical-align: top;
     border-radius: 4px;
     background-color: #f6f6f6;
+    vertical-align: middle;
   }
 
   .button-container {
     float: right;
 
     .action-button {
+      vertical-align: top; // this is needed to make the alignment look reasonable in IE, even though we do not support IE.
+
       &:not(:first-child) {
         margin-left: 10px;
+      }
+    }
+  }
+}
+
+.results-row {
+  border-top: 1px solid #bfbfbf;
+  margin-top: 10px;
+  padding-top: 10px;
+
+  .value-item-display-block {
+    display: inline-block;
+    vertical-align: top;
+
+    &:not(:first-child) {
+      margin-left: 20px;
+    }
+
+    .item-label {
+      font-weight: 600;
+    }
+
+    .item-value {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+  }
+
+  .daily-results-block {
+    padding-left: 100px;
+
+    .block-result-row {
+      .block-result-tile {
+        display: inline-block;
+        margin-top: 8px;
+        border-radius: 4px;
+        background-color: #eaeaea;
+        padding: 0 10px;
+
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+
+        .block-value {
+          display: inline-block;
+          font-weight: bold;
+          padding: 5px 10px;
+        }
+
+        .block-label {
+          display: inline-block;
+          padding: 5px 10px;
+        }
       }
     }
   }

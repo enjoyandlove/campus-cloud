@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormsService } from '../services';
-import { Form } from '../models';
+import { Form, FormStatus } from '../models';
 import { CPSession } from '@campus-cloud/session';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,6 +15,7 @@ export class FormsCreateComponent implements OnInit {
   private unsubscribe: Subject<void> = new Subject();
   form: Form;
   formId: number;
+  formStatus = FormStatus;
 
   constructor(
     private formsService: FormsService,
@@ -47,7 +48,8 @@ export class FormsCreateComponent implements OnInit {
       const newObj: Form = {
         name: '',
         is_confirmation_required: true,
-        school_id: this.session.g.get('school').id
+        school_id: this.session.g.get('school').id,
+        status: FormStatus.draft
       };
       return of(newObj);
     }
