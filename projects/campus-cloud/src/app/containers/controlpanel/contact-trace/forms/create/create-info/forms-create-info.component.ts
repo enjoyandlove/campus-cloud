@@ -56,7 +56,7 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
   private buildHeader() {
     const payload = {
       heading: this.form.id ? 'contact_trace_forms_edit_form' : 'contact_trace_forms_create_form',
-      subheading: `[NOTRANSLATE]${this.form.name}[NOTRANSLATE]`,
+      subheading: `[NOTRANSLATE]${this.form.name ? this.form.name : ''}[NOTRANSLATE]`,
       em: null,
       crumbs: {
         url: 'forms',
