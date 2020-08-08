@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { FormsService } from '@controlpanel/contact-trace/forms/services';
+import { FormsHelperService, FormsService } from '../../services';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
@@ -48,8 +48,8 @@ export class FormsCreateShareComponent implements OnInit, OnDestroy {
       )
       .subscribe((form) => {
         this.form = form;
-        // ToDo: PJ: Add logic to generate the URL
-        this.url = ' ';
+        this.url = FormsHelperService.generateShareUrl(form);
+        console.log('this.url', this.url);
         setTimeout(() => this.buildHeader(form));
       });
 

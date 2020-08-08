@@ -23,4 +23,5 @@ export interface Form {
   daily_reminder_enabled?: boolean;
   status?: FormStatus;
   daily_stats?: FormDailyStats;
+  external_id?: string;
 }
