@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, finalize, takeUntil } from 'rxjs/operators';
 import { BlockType, Form, FormBlock } from '../../models';
 import { FormsService } from '../../services';
 import { Router } from '@angular/router';
@@ -25,6 +25,7 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
   highlightFormError: boolean;
   highlightFormErrorForPublish: boolean;
   showFormPublishModal: boolean;
+  webServiceCallInProgress: boolean;
 
   constructor(
     private formsService: FormsService,
@@ -149,15 +150,18 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
       this.showWarning();
       this.highlightFormError = true;
     } else {
+      this.webServiceCallInProgress = true;
       const params = new HttpParams().set('school_id', this.session.g.get('school').id);
       if (!this.form.id) {
-        this.formsService.createForm(this.form, params).subscribe((form) => {
-          this.handleFormSaveAsDraftSuccess(form);
-        });
+        this.formsService
+          .createForm(this.form, params)
+          .pipe(finalize(() => (this.webServiceCallInProgress = false)))
+          .subscribe((form) => this.handleFormSaveAsDraftSuccess(form));
       } else {
-        this.formsService.updateForm(this.form, params).subscribe((form) => {
-          this.handleFormSaveAsDraftSuccess(form);
-        });
+        this.formsService
+          .updateForm(this.form, params)
+          .pipe(finalize(() => (this.webServiceCallInProgress = false)))
+          .subscribe((form) => this.handleFormSaveAsDraftSuccess(form));
       }
     }
   }

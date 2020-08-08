@@ -135,6 +135,7 @@
             variant="flat"
             color="primary"
             class="action-button"
+            [disabled]="webServiceCallInProgress"
             (click)="publishClickHandler()"
           >
             {{'contact_trace_forms_publish' | cpI18n}}
@@ -146,6 +147,7 @@
             variant="stroked"
             color="default"
             class="action-button"
+            [disabled]="webServiceCallInProgress"
             (click)="saveAsDraftClickHandler()"
           >
             {{'contact_trace_forms_save_as_draft' | cpI18n}}

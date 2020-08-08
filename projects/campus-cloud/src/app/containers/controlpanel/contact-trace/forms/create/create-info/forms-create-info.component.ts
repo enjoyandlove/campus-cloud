@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsService } from '../../services';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, finalize, takeUntil } from 'rxjs/operators';
 import { BlockType, Form, FormStatus, FormType } from '../../models';
 import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -21,6 +21,7 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
   form: Form;
   templateForms: Form[];
   formStatus = FormStatus;
+  webServiceCallInProgress: boolean;
 
   constructor(
     private formsService: FormsService,
@@ -106,11 +107,15 @@ export class FormsCreateInfoComponent implements OnInit, OnDestroy {
       name: this.form.name
     };
     const params = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.formsService.updateForm(formCopyForSave, params).subscribe((form) => {
-      FormsHelperService.formatFormFromDatabaseForUI(form);
-      this.formsService.setFormBeingEdited(form);
-      this.handleSuccess('contact_trace_forms_save_successful');
-    });
+    this.webServiceCallInProgress = true;
+    this.formsService
+      .updateForm(formCopyForSave, params)
+      .pipe(finalize(() => (this.webServiceCallInProgress = false)))
+      .subscribe((form) => {
+        FormsHelperService.formatFormFromDatabaseForUI(form);
+        this.formsService.setFormBeingEdited(form);
+        this.handleSuccess('contact_trace_forms_save_successful');
+      });
   }
 
   private handleSuccess(key) {
