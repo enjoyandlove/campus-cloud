@@ -523,6 +523,8 @@ export const amplitudeEvents = {
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider',
 
+  CONTACT_TRACE_CREATED_QR_CODE: 'Contact Trace - Created QR Code',
+
   STUDIO_VIEWED_CUSTOMIZATION_EXPERIENCE: 'Studio -  Viewed App Customization',
 
   MANAGE_DOWNLOAD_EVENT_ASSESS_DATA: 'Manage - Downloaded Event Assessment Data',

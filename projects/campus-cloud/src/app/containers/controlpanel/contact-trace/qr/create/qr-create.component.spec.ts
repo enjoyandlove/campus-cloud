@@ -37,6 +37,12 @@ describe('QrCreateComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(QrCreateComponent);
 
+        component = fixture.componentInstance;
+        component.service = {
+          ...component.service,
+          id: 4869
+        };
+
         fixture.detectChanges();
       });
   }));
@@ -45,7 +51,7 @@ describe('QrCreateComponent', () => {
     expect(component.form.valid).toBe(false);
   });
 
-  it('should add service provider', () => {
+  it('should add qr code', () => {
     spyOn(component, 'trackEvent');
     spyOn(component.created, 'emit');
     spy = spyOn(component.providersService, 'createProvider').and.returnValue(
