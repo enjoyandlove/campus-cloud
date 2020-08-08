@@ -2,8 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 
 import { IDateRange } from '@campus-cloud/shared/components';
-import IServiceProvider from '../../../manage/services/providers.interface';
-import { IFilterState } from '../../../manage/services/providers.utils.service';
+import IServiceProvider from '@controlpanel/manage/services/providers.interface';
+import { IFilterState } from '@controlpanel/manage/services/providers.utils.service';
 
 export const mockProvider: IServiceProvider = {
   avg_rating_percent: 83,
@@ -11,11 +11,11 @@ export const mockProvider: IServiceProvider = {
   checkin_verification_methods: [1, 2, 3],
   contactphone: '',
   custom_basic_feedback_label: 'Were you able to check-in and out? Hope those burgers were good!',
-  email: 'test@gotoohlala.com',
+  email: '',
   encrypted_campus_service_id: 'WEgSG6jznW3RxLvv4Mb9IA',
   encrypted_id: 'T3TSXclbUEmXMKxBpDsrbg',
   has_checkout: true,
-  has_feedback: true,
+  has_feedback: false,
   id: 4869,
   qr_img_url: '',
   img_url: '',

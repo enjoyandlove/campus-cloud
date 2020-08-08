@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { EnvService } from '@campus-cloud/config/env';
 import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
-import { ProvidersService } from '../../../../../manage/services/providers.service';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
 
 @Component({
   selector: 'cp-qr-excel-modal',

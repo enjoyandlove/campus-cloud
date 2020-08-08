@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 
-import IServiceProvider from '../../../manage/services/providers.interface';
+import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { IFilterState } from '@controlpanel/manage/services/providers.utils.service';
 
 export const mockFilterState: IFilterState = {

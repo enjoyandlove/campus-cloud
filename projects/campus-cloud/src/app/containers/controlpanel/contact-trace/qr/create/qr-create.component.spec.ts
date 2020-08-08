@@ -5,8 +5,8 @@ import { of as observableOf } from 'rxjs';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { QrCreateComponent } from './qr-create.component';
 import { QrModule } from '../qr.module';
-import { ServicesUtilsService } from '@campus-cloud/containers/controlpanel/manage/services/services.utils.service';
-import { ProvidersService } from '../../../manage/services/providers.service';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
 
 class MockService {
   dummy;

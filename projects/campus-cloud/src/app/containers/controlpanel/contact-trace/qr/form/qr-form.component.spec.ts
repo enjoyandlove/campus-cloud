@@ -5,9 +5,9 @@ import { CPSession } from '@campus-cloud/session';
 import { QrModule } from '../qr.module';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { EventUtilService } from '../../../manage/events/events.utils.service';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 import { QrFormComponent } from './qr-form.component';
-import { ServicesUtilsService } from '@campus-cloud/containers/controlpanel/manage/services/services.utils.service';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 
 describe('QrFormComponent', () => {
   let component: QrFormComponent;
