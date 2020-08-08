@@ -80,7 +80,7 @@
             color="primary"
             class="action-button"
             (click)="saveClickHandler()"
-            [disabled]="!form || !form.name || form.name.trim().length === 0"
+            [disabled]="webServiceCallInProgress || !form || !form.name || form.name.trim().length === 0"
           >
             {{'save' | cpI18n}}
           </button>
