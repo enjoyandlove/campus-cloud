@@ -72,7 +72,7 @@ export class QrCreateComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CREATED_SERVICE_PROVIDER,
+      amplitudeEvents.CONTACT_TRACE_CREATED_QR_CODE,
       this.eventProperties
     );
   }

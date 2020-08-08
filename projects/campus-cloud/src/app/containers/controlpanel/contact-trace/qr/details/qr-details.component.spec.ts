@@ -29,7 +29,7 @@ class QrAttendeesListStubComponent {
   }
 }
 
-describe('ServicesProviderDetailsComponent', () => {
+describe('QrDetailsComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
@@ -86,8 +86,8 @@ describe('ServicesProviderDetailsComponent', () => {
     spyOn(component, 'onDateFilter').and.callThrough();
     spyOn(component.providersService, 'getProviderByProviderId').and.callThrough();
 
-    component.serviceId = 11997;
-    component.providerId = 545;
+    component.serviceId = 4869;
+    component.providerId = 44140;
     component.loading = false;
     fixture.detectChanges();
     tick();
