@@ -3,11 +3,11 @@ import { HttpParams } from '@angular/common/http';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
-import { IService } from '../../../manage/services/service.interface';
-import IServiceProvider from '../../../manage/services/providers.interface';
-import { ProvidersService } from '../../../manage/services/providers.service';
+import { IService } from '@controlpanel/manage/services/service.interface';
+import IServiceProvider from '@controlpanel/manage/services/providers.interface';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { ServicesUtilsService } from '../../../manage/services/services.utils.service';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 import { DEFAULT, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import {

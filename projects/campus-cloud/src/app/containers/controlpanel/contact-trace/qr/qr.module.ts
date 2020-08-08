@@ -21,19 +21,19 @@ import {
 import { QrAttendeesActionBoxComponent, QrAttendeesListComponent } from './details/components';
 
 import { ModalService, AdminService } from '@campus-cloud/shared/services';
-import { ProvidersService } from '../../manage/services/providers.service';
-import { ServicesService } from '../../manage/services/services.service';
-import { ServicesUtilsService } from '../../manage/services/services.utils.service';
-import { ProvidersUtilsService } from '../../manage/services/providers.utils.service';
-import { EventUtilService } from '../../manage/events/events.utils.service';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
+import { ServicesService } from '@controlpanel/manage/services/services.service';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
+import { ProvidersUtilsService } from '@controlpanel/manage/services/providers.utils.service';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
-import { EngagementModule } from '../../assess/engagement/engagement.module';
+import { EngagementModule } from '@controlpanel/assess/engagement/engagement.module';
 import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { QrRoutingModule } from './qr.routing.module';
-import { CheckInModule } from '../../manage/events/attendance/check-in/check-in.module';
+import { CheckInModule } from '@controlpanel/manage/events/attendance/check-in/check-in.module';
 @NgModule({
   declarations: [
     QrComponent,

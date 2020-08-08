@@ -15,10 +15,10 @@ import {
   mockFilterState,
   serviceProviderAttendeesListSearch
 } from '@controlpanel/manage/services/attendance/tests/utils';
-import { ProvidersService } from '../../../../../manage/services/providers.service';
-import { ServicesModule } from '../../../../../manage/services/services.module';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
+import { ServicesModule } from '@controlpanel/manage/services/services.module';
 import { QrAttendeesListComponent } from './qr-attendees-list.component';
-import { mockProvider } from '../../../../../manage/services/attendance/tests/mock';
+import { mockProvider } from '@controlpanel/manage/services/attendance/tests/mock';
 
 class MockService {
   getProviderAssessments() {

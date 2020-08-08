@@ -12,7 +12,7 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { baseActions, getProvidersModalState, baseActionClass } from '@campus-cloud/store/base';
 import { EnvService } from '@projects/campus-cloud/src/app/config/env';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
-import { ProvidersService } from '../../../manage/services/providers.service';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
 import { HttpParams } from '@angular/common/http';
 
 @Mixin([Destroyable])

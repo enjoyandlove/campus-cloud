@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
 
-import { ServicesModule } from '../../../services.module';
+import { ServicesModule } from '@controlpanel/manage/services/services.module';
 import { CPTestModule } from '@campus-cloud/shared/tests';
-import { ProvidersService } from '../../../providers.service';
-import { ServicesUtilsService } from '../../../services.utils.service';
-import { ServiceProvidersEditComponent } from './providers-edit.component';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
+import { QrEditComponent } from './qr-edit.component';
 
 class MockService {
   dummy;
@@ -20,17 +20,14 @@ class MockService {
 
 const mockProvider = {
   has_checkout: false,
-  has_feedback: true,
   provider_name: 'Hello World!',
-  email: 'helloworld@gmail.com',
   checkin_verification_methods: [1, 2, 3],
-  custom_basic_feedback_label: 'hello world'
 };
 
-describe('ServicesProviderUpdateComponent', () => {
+describe('QrEditComponent', () => {
   let spy;
-  let component: ServiceProvidersEditComponent;
-  let fixture: ComponentFixture<ServiceProvidersEditComponent>;
+  let component: QrEditComponent;
+  let fixture: ComponentFixture<QrEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -39,7 +36,7 @@ describe('ServicesProviderUpdateComponent', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(ServiceProvidersEditComponent);
+        fixture = TestBed.createComponent(QrEditComponent);
 
         component = fixture.componentInstance;
         component.service = {
@@ -57,7 +54,6 @@ describe('ServicesProviderUpdateComponent', () => {
   }));
 
   it('form validation should fail required fields missing', () => {
-    component.form.controls['email'].setValue(null);
     component.form.controls['provider_name'].setValue(null);
 
     expect(component.form.valid).toBe(false);

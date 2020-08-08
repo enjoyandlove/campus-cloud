@@ -13,12 +13,12 @@ import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 import { QrDetailsComponent } from './qr-details.component';
 
-import { ServicesUtilsService } from '../../../manage/services/services.utils.service';
-import { ProvidersUtilsService } from '../../../manage/services/providers.utils.service';
-import { ServicesService } from '../../../manage/services/services.service';
-import { MockServicesService } from '../../../manage/services/tests/mock';
-import { ProvidersService } from '../../../manage/services/providers.service';
-import { MockProvidersService } from '../../../manage/services/attendance/tests/mock';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
+import { ProvidersUtilsService } from '@controlpanel/manage/services/providers.utils.service';
+import { ServicesService } from '@controlpanel/manage/services/services.service';
+import { MockServicesService } from '@controlpanel/manage/services/tests/mock';
+import { ProvidersService } from '@controlpanel/manage/services/providers.service';
+import { MockProvidersService } from '@controlpanel/manage/services/attendance/tests/mock';
 
 const school = mockSchool;
 
@@ -62,13 +62,12 @@ describe('QrDetailsComponent', () => {
   let fixture: ComponentFixture<QrDetailsComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QrDetailsComponent);
-    component = fixture.componentInstance;
     session = TestBed.get(CPSession);
-
     session.g.set('user', mockUser);
     session.g.set('school', mockSchool);
 
+    fixture = TestBed.createComponent(QrDetailsComponent);
+    component = fixture.componentInstance;
     component.loading = false;
     fixture.detectChanges();
   });
