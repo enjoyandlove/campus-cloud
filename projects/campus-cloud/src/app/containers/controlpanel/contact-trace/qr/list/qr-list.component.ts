@@ -48,7 +48,6 @@ export class QrListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  @Output() updateStats: EventEmitter<null> = new EventEmitter();
   @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
   @Output() filterExistance: EventEmitter<boolean> = new EventEmitter();
   @Output() onLoading: EventEmitter<boolean> = new EventEmitter();
@@ -121,11 +120,12 @@ export class QrListComponent extends BaseComponent implements OnInit {
   }
 
   onDeleted(providerId) {
-    this.state = Object.assign({}, this.state, {
+    
+    this.state = {
+      ...this.state,
       providers: this.state.providers.filter((provider) => provider.id !== providerId)
-    });
+    };
 
-    this.updateStats.emit();
     this.hasRecords = !!this.state.providers.length;
     this.hasProviders.emit(this.state.providers.length > 0);
   }

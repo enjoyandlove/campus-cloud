@@ -32,7 +32,6 @@ export class QrComponent extends BaseComponent implements OnInit {
   allowServiceProvidersImport;
   isProviderAdd;
   serviceId: number;
-  isFilterApplied: boolean;
 
   state: IFilterState = {
     dateRange: null,
@@ -141,10 +140,6 @@ export class QrComponent extends BaseComponent implements OnInit {
 
   onDownload() {
     this.providersList.downloadProvidersCSV();
-  }
-
-  onUpdateStats() {
-    this.fetch();
   }
 
   ngOnInit() {
