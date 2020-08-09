@@ -10,6 +10,11 @@
     font-weight: bold;
     display: inline-block;
     line-height: 35px;
+
+    max-width: 800px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .status-indicator {
@@ -19,7 +24,6 @@
     text-transform: uppercase;
     margin-left: 10px;
     padding: 5px;
-    vertical-align: top;
     border-radius: 4px;
     background-color: #f6f6f6;
     vertical-align: middle;
@@ -43,23 +47,32 @@
   margin-top: 10px;
   padding-top: 10px;
 
-  .value-item-display-block {
-    display: inline-block;
-    vertical-align: top;
+  .daily-summary-text {
+    font-weight: bold;
+  }
 
-    &:not(:first-child) {
-      margin-left: 20px;
+  .value-display-row {
+    margin-top: 5px;
+
+    .value-item-display-block {
+      display: inline-block;
+      vertical-align: top;
+
+      &:not(:first-child) {
+        margin-left: 20px;
+      }
+
+      .item-label {
+        font-weight: 600;
+      }
+
+      .item-value {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 5px;
+      }
     }
 
-    .item-label {
-      font-weight: 600;
-    }
-
-    .item-value {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
   }
 
   .daily-results-block {
