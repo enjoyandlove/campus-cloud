@@ -1,0 +1,149 @@
+<div *ngIf="showSubmitConfirmation">
+  <div class="overlay d-flex justify-content-center align-items-center">
+    <div class="confirmation-modal">
+      <h3 class="text-center mb-3">{{ 'web_form_do_you_want_to_submit' | cpI18n }}</h3>
+      <p class="text-center mb-4">{{ 'web_form_completed_all_questions' | cpI18n }}</p>
+      <div class="actions">
+        <div class="mr-1">
+          <button class="btn btn-primary web-form-btn" (click)="submit()">
+            {{ 'web_form_submit' | cpI18n }}
+          </button>
+        </div>
+        <button class="btn btn-primary web-form-btn-contained" (click)="closeConfirmationModal()">
+          {{ 'cancel' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <div class="form-block">
+    <form [formGroup]="formBlock" (ngSubmit)="next($event)">
+      <div *ngIf="currentFormBlock.image_url">
+        <img
+          class="form-block-image"
+          [src]="currentFormBlock.image_url"
+          [alt]="currentFormBlock.name"
+        />
+      </div>
+      <p class="form-block-heading">{{ currentFormBlock.text }}</p>
+
+      <div *ngIf="currentFormBlock.block_type === 0" class="form-block-content">
+        <div *ngFor="let blockContent of currentFormBlock.block_content_list">
+          <p>{{ blockContent.text }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="currentFormBlock.block_type === 1" class="form-block-content">
+        <div *ngFor="let blockContent of currentFormBlock.block_content_list">
+          <div class="form-group form-check d-flex align-items-center form-check-custom">
+            <input
+              type="radio"
+              class="form-check-input form-check-input-custom"
+              [id]="blockContent.id"
+              [value]="blockContent.id.toString()"
+              formControlName="answer"
+            />
+            <label class="form-check-label" [for]="blockContent.id">
+              {{ blockContent.text }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentFormBlock.block_type === 2" class="form-block-content">
+        <div *ngFor="let blockContent of currentFormBlock.block_content_list">
+          <div class="form-group form-check d-flex align-items-center form-check-custom">
+            <input
+              type="checkbox"
+              class="form-check-input form-check-input-custom"
+              [id]="blockContent.id"
+              [name]="blockContent.form_block_id"
+              [value]="blockContent.id"
+              (change)="onCheckBoxChange($event)"
+            />
+            <label class="form-check-label" [for]="blockContent.id">
+              {{ blockContent.text }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="currentFormBlock.block_type === 3" class="form-block-content">
+        <div *ngFor="let blockContent of currentFormBlock.block_content_list">
+          <p>{{ blockContent.text }}</p>
+          <div class="form-group">
+            <input
+              type="text"
+              [id]="blockContent.id"
+              class="form-control"
+              formControlName="answer"
+            />
+            <div class="error-wrapper"></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="currentFormBlock.block_type === 4" class="form-block-content">
+        <div *ngFor="let blockContent of currentFormBlock.block_content_list">
+          <p>{{ blockContent.text }}</p>
+          <div class="form-group">
+            <input
+              type="text"
+              [id]="blockContent.id"
+              class="form-control"
+              formControlName="answer"
+            />
+            <div class="error-wrapper">
+              <div *ngIf="answer.invalid && answer.touched">
+                <div *ngIf="answer.errors.pattern" class="error-text">
+                  {{ 'web_form_numeric_expected_error' | cpI18n }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="currentFormBlock.block_type === 5" class="form-block-content">
+        <div class="alert alert-warning">
+          {{ 'web_form_image_upload_not_supported' | cpI18n }}
+        </div>
+        <div *ngFor="let blockContent of currentFormBlock.block_content_list">
+          <p>{{ blockContent.text }}</p>
+          <div class="form-group">
+            <input type="file" [id]="blockContent.id" formControlName="answer" disabled />
+            <div class="error-wrapper"></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="currentFormBlock.block_type === 6" class="form-block-content">
+        <div *ngFor="let blockContent of currentFormBlock.block_content_list">
+          <p>{{ blockContent.text }}</p>
+          <div class="form-group">
+            <input
+              type="text"
+              [id]="blockContent.id"
+              class="form-control"
+              formControlName="answer"
+            />
+            <div class="error-wrapper">
+              <div *ngIf="answer.invalid && answer.touched">
+                <div *ngIf="answer.errors.pattern" class="error-text">
+                  {{ 'web_form_integer_expected_error' | cpI18n }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!currentFormBlock.is_terminal">
+        <button
+          class="btn btn-primary web-form-btn"
+          [disabled]="currentFormBlock.is_required && formBlock.value.answer === ''"
+        >
+          {{ 'contact_trace_forms_next' | cpI18n }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

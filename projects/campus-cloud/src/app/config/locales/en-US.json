@@ -945,6 +945,12 @@
   "contact_trace_forms_all_forms": {
     "message": "All Forms"
   },
+  "contact_trace_forms_all_questions": {
+    "message": "All Questions"
+  },
+  "contact_trace_forms_all_responses": {
+    "message": "All Responses"
+  },
   "contact_trace_forms_alphabet_a": {
     "message": "A"
   },
@@ -989,6 +995,9 @@
   },
   "contact_trace_forms_alphabet_o": {
     "message": "O"
+  },
+  "contact_trace_forms_app": {
+    "message": "App"
   },
   "contact_trace_forms_block_type_decimal": {
     "message": "Decimal"
@@ -1038,6 +1047,9 @@
   "contact_trace_forms_daily_results": {
     "message": "Daily Results"
   },
+  "contact_trace_forms_date": {
+    "message": "Date"
+  },
   "contact_trace_forms_decimal": {
     "message": "Decimal"
   },
@@ -1076,6 +1088,9 @@
   },
   "contact_trace_forms_form_publish_confirmation": {
     "message": "Are you sure you want to publish %s?"
+  },
+  "contact_trace_forms_form_result": {
+    "message": "Form Result"
   },
   "contact_trace_forms_form_unpublish_confirmation": {
     "message": "Are you sure you want to unpublish %s?"
@@ -1146,6 +1161,9 @@
   "contact_trace_forms_notification": {
     "message": "Notification"
   },
+  "contact_trace_forms_no_responses_found": {
+    "message": "No responses found"
+  },
   "contact_trace_forms_no_results": {
     "message": "No forms found"
   },
@@ -1175,6 +1193,12 @@
   },
   "contact_trace_forms_required": {
     "message": "Required"
+  },
+  "contact_trace_forms_responder": {
+    "message": "Responder"
+  },
+  "contact_trace_forms_responses": {
+    "message": "Responses"
   },
   "contact_trace_forms_result": {
     "message": "Result"
@@ -1235,6 +1259,9 @@
   },
   "contact_trace_forms_use_studio_text": {
     "message": "Use Studio to add the form to your campus app"
+  },
+  "contact_trace_forms_web": {
+    "message": "Web"
   },
   "contact_trace_forms_welcome": {
     "message": "Welcome"
@@ -4423,6 +4450,39 @@
   },
   "website": {
     "message": "Website"
+  },
+  "web_form_action_not_successful": {
+    "message": "The action was not successful. Please try again later"
+  },
+  "web_form_completed_all_questions": {
+    "message": "You've completed all the questions."
+  },
+  "web_form_continue": {
+    "message": "Continue"
+  },
+  "web_form_do_you_want_to_submit": {
+    "message": "Do you want to submit the form?"
+  },
+  "web_form_email_invalid": {
+    "message": "Please enter a valid email"
+  },
+  "web_form_image_upload_not_supported": {
+    "message": "Image upload is not supported. Please skip to the next step"
+  },
+  "web_form_integer_expected_error": {
+    "message": "Expected an integer value"
+  },
+  "web_form_numeric_expected_error": {
+    "message": "Expected a numeric value"
+  },
+  "web_form_required_field": {
+    "message": "This field is required"
+  },
+  "web_form_start_page_intro": {
+    "message": "Scan from the App or Enter the Student Email to Begin"
+  },
+  "web_form_submit": {
+    "message": "Submit"
   },
   "welcome": {
     "message": "Welcome"

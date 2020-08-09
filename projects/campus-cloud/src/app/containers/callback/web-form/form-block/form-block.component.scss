@@ -1,0 +1,92 @@
+.error-wrapper {
+  height: 20px;
+  padding-top: 2px;
+  .error-text {
+    font-size: 12px;
+    color: red;
+  }
+}
+
+// Meant to extend bootstrap button component
+.web-form-btn {
+  border-radius: 19px;
+  min-width: 180px;
+  background: #009ceb;
+  border: 1px solid #009ceb;
+  padding: 8px 0;
+}
+
+.web-form-btn-contained {
+  border-radius: 19px;
+  min-width: 180px;
+  background: transparent;
+  border: 1px solid #009ceb;
+  color: #009ceb;
+  padding: 8px 0;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.19);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 90210;
+  .confirmation-modal {
+    background: #fff;
+    max-width: 450px;
+    width: 100%;
+    padding: 30px;
+    h3 {
+      font-family: 'Open Sans', sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.form-block {
+  width: 100%;
+  max-width: 735px;
+  background: #fff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 54px;
+  margin-top: 125px;
+  .form-block-image {
+    display: block;
+    margin-bottom: 37px;
+    min-width: 183px;
+    min-height: 183px;
+  }
+
+  .form-block-heading {
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .form-block-content {
+    margin-bottom: 40px;
+    .form-check-custom {
+      input.form-check-input-custom {
+        transform: scale(1.2);
+      }
+      label {
+        font-family: 'Open Sans', sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        padding-left: 10px;
+      }
+    }
+  }
+}

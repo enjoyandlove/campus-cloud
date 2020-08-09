@@ -17,6 +17,8 @@ import {
   FeedbackServiceComponent,
   FeedbackOrientationEventComponent
 } from './feedback';
+import { WebFormComponent } from './web-form';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -65,7 +67,14 @@ const appRoutes: Routes = [
         component: CheckinServiceComponent,
         data: { zendesk: 'assessment', title: pageTitle.WEB_CHECK_IN }
       },
-
+      {
+        path: 'web-form/:formId/start',
+        component: WebFormComponent
+      },
+      {
+        path: 'web-form/:formId/:formBlockId',
+        component: WebFormComponent
+      },
       { path: '**', redirectTo: '/login' }
     ]
   }
