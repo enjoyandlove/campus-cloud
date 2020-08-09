@@ -157,14 +157,15 @@ export const ENDPOINTS = {
 
   DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
 
+  FORMS: 'form',
+
+  FORM_RESPONSE: 'form_response',
+
   NON_SESSION_WEB_FORM: 'ns_form',
 
   NON_SESSION_WEB_FORM_RESPONSE: 'ns_form_response',
 
   NON_SESSION_FORM_BLOCK: 'ns_form_block',
 
-  NON_SESSION_FORM_BLOCK_RESPONSE: 'ns_form_block_response',
-
-  FORMS: 'form'
-
+  NON_SESSION_FORM_BLOCK_RESPONSE: 'ns_form_block_response'
 };

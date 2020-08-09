@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+.page-container {
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+
+  .top-row {
+    .name-cell {
+      display: inline-block;
+      font-weight: bold;
+      max-width: 480px;
+      text-align: justify;
+    }
+    .collection-method-cell {
+      font-weight: bold;
+      float: right;
+    }
+  }
+
+  .bottom-row {
+    margin-top: 3px;
+
+    .label-cell {
+      display: inline-block;
+      max-width: 450px;
+      text-align: justify;
+    }
+    .date-cell {
+      float: right;
+    }
+  }
+}

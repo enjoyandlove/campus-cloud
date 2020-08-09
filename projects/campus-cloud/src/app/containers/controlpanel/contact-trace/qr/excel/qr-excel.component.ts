@@ -118,10 +118,9 @@ export class QrExcelComponent extends BaseComponent implements OnInit, OnDestroy
       this.session.g.get('school').ct_service_id
     );
 
-    this.providersService.createProvider(this.form.value.providers, search).subscribe(
-      (_) => this.router.navigate(['/contact-trace/qr']),
-      () => this.handleError()
-    );
+    this.providersService
+      .createProvider(this.form.value.providers, search)
+      .subscribe((_) => this.router.navigate(['/contact-trace/qr']), () => this.handleError());
   }
 
   handleError(err?: string) {

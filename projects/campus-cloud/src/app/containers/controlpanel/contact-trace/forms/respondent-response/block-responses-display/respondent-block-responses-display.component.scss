@@ -1,0 +1,17 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.value-input-box {
+  margin-top: 10px;
+  min-height: 36px;
+
+  input {
+    background-color: #ffffff;
+    color: #000000;
+
+    &:hover {
+      border: 1px solid #bdbdbd;
+    }
+  }
+}

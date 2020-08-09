@@ -1,0 +1,27 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.page-container {
+  .responses-card {
+    display: block;
+    margin-top: 20px;
+
+    .response-list-container {
+      margin-top: 20px;
+
+      .response-tile {
+        cursor: pointer;
+
+        &:not(:first-child) {
+          margin-top: 20px;
+        }
+      }
+
+      .pagination-item {
+        display: block;
+        margin-top: 25px;
+      }
+    }
+  }
+}

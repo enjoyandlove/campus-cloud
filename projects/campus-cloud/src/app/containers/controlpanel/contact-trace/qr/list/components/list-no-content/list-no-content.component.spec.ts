@@ -13,10 +13,7 @@ describe('QrListNoContentComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [
-        CPTrackingService,
-        { provide: EnvService, useClass: MockEnvService }
-      ],
+      providers: [CPTrackingService, { provide: EnvService, useClass: MockEnvService }],
       declarations: [QrListNoContentComponent, CPI18nPipe]
     }).compileComponents();
   }));

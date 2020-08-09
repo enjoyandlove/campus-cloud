@@ -1,0 +1,65 @@
+<cp-spinner *ngIf="!response"></cp-spinner>
+
+<ng-container  *ngIf="response">
+
+  <ready-ui-card class="page-card">
+
+    <div class="page-title">
+      {{ 'contact_trace_forms_responder' | cpI18n }}
+    </div>
+
+    <div class="label-text">
+      {{ 'contact_trace_forms_name' | cpI18n }}
+    </div>
+    <div class="value-text">
+      {{response | respondentNameFromFormResponse}}
+    </div>
+
+    <div class="label-text">
+      {{ 'contact_trace_forms_date' | cpI18n }}
+    </div>
+    <div class="value-text">
+      {{ response.response_completed_epoch | cpDatePipe: dateFormat }}
+    </div>
+
+  </ready-ui-card>
+
+  <cp-spinner *ngIf="!form"></cp-spinner>
+
+  <ready-ui-card *ngIf="form" class="page-card">
+
+    <div class="page-title">
+      {{ 'contact_trace_forms_responses' | cpI18n }}
+    </div>
+
+    <ng-container *ngFor="let block of form.form_block_list; let index = index;">
+
+      <ng-container *ngIf="index > 0 && !block.is_terminal">
+        <!-- Question Block -->
+        <div class="label-text">
+          {{ index + '. ' + block.text }}
+        </div>
+        <cp-respondent-question-response
+          [formBlock]="block"
+          [response]="response"
+        >
+        </cp-respondent-question-response>
+      </ng-container>
+
+      <ng-container *ngIf="block.is_terminal && block.id === response.terminal_form_block_id">
+        <!-- Result Block -->
+        <div class="label-text">
+          {{ (totalNumberOfQuestionsInForm + 1) + '. ' + block.text }}
+        </div>
+        <cp-respondent-question-response
+          [formBlock]="block"
+          [response]="response"
+        >
+        </cp-respondent-question-response>
+      </ng-container>
+
+    </ng-container>
+
+  </ready-ui-card>
+
+</ng-container>

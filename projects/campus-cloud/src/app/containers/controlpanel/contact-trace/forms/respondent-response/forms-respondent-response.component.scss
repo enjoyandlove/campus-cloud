@@ -1,0 +1,23 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.page-card {
+  display: block;
+  margin-bottom: 25px;
+
+  .page-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .label-text {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  .value-text {
+    margin-top: 5px;
+    min-height: 21px;
+  }
+}

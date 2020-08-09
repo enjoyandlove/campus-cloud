@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { pageTitle } from '@campus-cloud/shared/constants';
-import { FormsListComponent } from './list';
 import {
+  FormsListComponent,
   FormsCreateBuilderComponent,
   FormsCreateComponent,
   FormsCreateInfoComponent,
   FormsCreateResultsComponent,
-  FormsCreateShareComponent
-} from './create';
+  FormsCreateShareComponent,
+  FormsRespondentResponseComponent
+} from '.';
 
 // ToDo: PJ: Revisit complete code on this page including zendesk, pagetitle, AMPLITUDE
 
@@ -45,6 +46,11 @@ const appRoutes: Routes = [
         component: FormsCreateResultsComponent
       }
     ]
+  },
+  {
+    path: ':formId/response/:responseId',
+    data: { zendesk: 'forms', title: pageTitle.CONTACT_TRACE_FORMS, amplitude: 'IGNORE' },
+    component: FormsRespondentResponseComponent
   }
 ];
 @NgModule({

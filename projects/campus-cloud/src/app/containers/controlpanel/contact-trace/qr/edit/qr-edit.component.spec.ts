@@ -21,7 +21,7 @@ class MockService {
 const mockProvider = {
   has_checkout: false,
   provider_name: 'Hello World!',
-  checkin_verification_methods: [1, 2, 3],
+  checkin_verification_methods: [1, 2, 3]
 };
 
 describe('QrEditComponent', () => {
