@@ -237,6 +237,6 @@ export class FormsHelperService {
   static generateShareUrl(form: Form): string {
     // ToDo: PJ: Update logic to generate the URL
     const origin: string = window.origin; // Looks like this: https://campuscloud.readyeducation.com
-    return `${origin}/#/not-ready/${form.external_id}`;
+    return `${origin}/#/cb/web-form/${form.external_id}/start`;
   }
 }
