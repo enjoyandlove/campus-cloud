@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BlockLogic, BlockType, Form, FormBlock } from '../models';
+import { BlockLogic, BlockType, Form, FormBlock, FormResponse } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -234,8 +234,44 @@ export class FormsHelperService {
     return !str || str.trim().length === 0;
   }
 
+  static generateRespondentResponsesForQuestion(
+    response: FormResponse,
+    questionBlock: FormBlock
+  ): string[] {
+    const userResponses: string[] = [];
+    if (questionBlock && response && response.form_block_response_list) {
+      if (
+        questionBlock.block_type === BlockType.multiple_choice ||
+        questionBlock.block_type === BlockType.multiple_selection
+      ) {
+        if (questionBlock.block_content_list) {
+          questionBlock.block_content_list.forEach((content) => {
+            response.form_block_response_list.forEach((blockResponse) => {
+              if (
+                blockResponse.form_block_id === questionBlock.id &&
+                blockResponse.response_form_block_content_id === content.id
+              ) {
+                userResponses.push(content.text);
+              }
+            });
+          });
+        }
+      } else {
+        // Handle text, number and decimal types here
+        response.form_block_response_list.forEach((blockResponse) => {
+          if (blockResponse.form_block_id === questionBlock.id) {
+            userResponses.push(blockResponse.response_data);
+          }
+        });
+      }
+    }
+    if (userResponses.length === 0) {
+      userResponses.push('');
+    }
+    return userResponses;
+  }
+
   static generateShareUrl(form: Form): string {
-    // ToDo: PJ: Update logic to generate the URL
     const origin: string = window.origin; // Looks like this: https://campuscloud.readyeducation.com
     return `${origin}/#/cb/web-form/${form.external_id}/start`;
   }

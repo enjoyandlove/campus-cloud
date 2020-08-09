@@ -1,0 +1,22 @@
+<div class="page-container">
+
+  <div class="top-row">
+    <div class="name-cell">
+      {{response | respondentNameFromFormResponse}}
+    </div>
+    <div class="collection-method-cell">
+      {{ collectionMethod | cpI18n }}
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="label-cell">
+      {{responseLabel}}
+    </div>
+    <div class="date-cell">
+      {{ response.response_completed_epoch | cpDatePipe: dateFormat }}
+    </div>
+  </div>
+
+
+</div>

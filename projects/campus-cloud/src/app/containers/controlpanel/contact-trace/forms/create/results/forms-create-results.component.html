@@ -1,1 +1,73 @@
-Results Page
+<cp-spinner *ngIf="!form"></cp-spinner>
+
+<div class="page-container" *ngIf="form">
+
+  <ready-ui-card>
+
+    <div class="row">
+      <div class="col-6">
+        <cp-dropdown
+          [items]="questionOptions"
+          (selected)="onSelectedQuestion($event)"
+        >
+        </cp-dropdown>
+      </div>
+    </div>
+
+  </ready-ui-card>
+
+  <ready-ui-card class="responses-card">
+
+    <div class="row">
+      <div class="col-4">
+        <cp-dropdown
+          [items]="resultOptions"
+          (selected)="onSelectedResult($event)"
+        >
+        </cp-dropdown>
+      </div>
+    </div>
+
+    <cp-spinner *ngIf="webServiceCallInProgress"></cp-spinner>
+
+    <div
+      class="response-list-container"
+      *ngIf="!webServiceCallInProgress"
+    >
+
+      <cp-no-content
+        class="no-content"
+        *ngIf="!responses || !responses.length"
+        [noContentText]="'contact_trace_forms_no_responses_found' | cpI18n">
+      </cp-no-content>
+
+      <ng-container
+        *ngIf="responses && responses.length > 0"
+      >
+
+        <cp-form-response-tile
+          class="response-tile"
+          *ngFor="let response of responses"
+          [response]="response"
+          [blockIdToBlockMap]="blockIdToBlockMap"
+          [filterQuestionBlockId]="filterQuestionBlockId"
+          (click)="responseTileClickHandler(form.id, response.id)"
+        >
+        </cp-form-response-tile>
+
+        <cp-pagination
+          class="pagination-item"
+          [pageNext]="hasMorePages"
+          [pagePrev]="pageCounter > 1"
+          [pageNumber]="pageCounter"
+          (next)="onPaginationNext()"
+          (previous)="onPaginationPrevious()">
+        </cp-pagination>
+
+      </ng-container>
+
+    </div>
+
+  </ready-ui-card>
+
+</div>

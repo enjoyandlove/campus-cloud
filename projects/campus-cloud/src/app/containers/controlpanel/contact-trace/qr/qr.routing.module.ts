@@ -19,7 +19,7 @@ const appRoutes: Routes = [
     path: ':providerId',
     canActivate: [PrivilegesGuard],
     component: QrDetailsComponent,
-    data: { zendesk: 'qr',  amplitude: 'IGNORE', title: pageTitle.CONTACT_TRACE_QR }
+    data: { zendesk: 'qr', amplitude: 'IGNORE', title: pageTitle.CONTACT_TRACE_QR }
   },
   {
     path: 'import/excel',

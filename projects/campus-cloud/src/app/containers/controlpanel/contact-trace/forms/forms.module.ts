@@ -2,21 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsRoutingModule } from './forms.routing.module';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 import {
   FormSearchResultTileComponent,
   FormsListActionBoxComponent,
-  FormsListComponent
-} from './list';
-import { FormsModule } from '@angular/forms';
-import {
+  FormsListComponent,
+  FormResponseTileComponent,
   FormsCreateBuilderComponent,
   FormsCreateComponent,
   FormsCreateInfoComponent,
   FormsCreateResultsComponent,
   FormsCreateShareComponent,
-  FormTemplateTileComponent
-} from './create';
-import {
+  FormTemplateTileComponent,
   BlockBodyDecimalComponent,
   BlockBodyImageComponent,
   BlockBodyMultipleChoiceComponent,
@@ -38,8 +35,11 @@ import {
   SelectorForNumberComponent,
   SelectorForOptionsComponent,
   SelectorForResultComponent,
-  SelectorForTextComponent
-} from './components';
+  SelectorForTextComponent,
+  FormsRespondentResponseComponent,
+  RespondentNameFromFormResponsePipe,
+  RespondentBlockResponsesDisplayComponent
+} from './';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 
@@ -75,7 +75,11 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
     SelectorForResultComponent,
     FormDeleteComponent,
     FormUnpublishComponent,
-    FormPublishComponent
+    FormPublishComponent,
+    FormResponseTileComponent,
+    FormsRespondentResponseComponent,
+    RespondentNameFromFormResponsePipe,
+    RespondentBlockResponsesDisplayComponent
   ],
   imports: [CommonModule, FormsRoutingModule, SharedModule, FormsModule, LayoutsModule],
   providers: [CPI18nPipe]

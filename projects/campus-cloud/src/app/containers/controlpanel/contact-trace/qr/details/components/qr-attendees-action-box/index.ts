@@ -1,1 +1,1 @@
-export  * from './qr-attendees-action-box.component';
+export * from './qr-attendees-action-box.component';
