@@ -2,7 +2,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-
+import { StoreModule } from '@ngrx/store';
 import { ApiService } from '@campus-cloud/base';
 import { AuthService } from '../auth/auth.service';
 import { CallbackService } from './callback.service';
@@ -41,6 +41,15 @@ import {
   CheckinOrientationEventsComponent
 } from './checkin';
 
+import {
+  WebFormComponent,
+  StartComponent,
+  FormBlockComponent,
+  WebFormService,
+  webFormReducer,
+  webFormErrorReducer
+} from './web-form';
+
 @NgModule({
   declarations: [
     CallbackComponent,
@@ -64,7 +73,10 @@ import {
     CallbackPasswordResetComponent,
     CheckinOrientationEventsComponent,
     FeedbackOrientationEventComponent,
-    FeedbackAlreadySubmittedComponent
+    FeedbackAlreadySubmittedComponent,
+    WebFormComponent,
+    StartComponent,
+    FormBlockComponent
   ],
 
   imports: [
@@ -73,7 +85,9 @@ import {
     RouterModule,
     LayoutsModule,
     ReactiveFormsModule,
-    CallbackRoutingModule
+    CallbackRoutingModule,
+    StoreModule.forFeature('webForm', webFormReducer),
+    StoreModule.forFeature('webFormError', webFormErrorReducer)
   ],
 
   providers: [
@@ -81,6 +95,7 @@ import {
     CheckinService,
     FeedbackService,
     CheckinUtilsService,
+    WebFormService,
     { provide: ApiService, useClass: CallbackService }
   ]
 })

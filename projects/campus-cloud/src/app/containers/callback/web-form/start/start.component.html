@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="start-sheet">
+    <h1>{{ 'web_form_start_page_intro' | cpI18n }}</h1>
+    <div class="row">
+      <div class="col-12 col-sm-5">
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="qr">
+            <h2>{{ 't_shared_app' | cpI18n }} {{ 'qr_code' | cpI18n }}</h2>
+            <p>{{ 't_checkin_pdf_scan_qr' | cpI18n }}</p>
+            <img src="" alt="QR Code" />
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-7">
+        <form [formGroup]="startForm" (ngSubmit)="continue($event)">
+          <div class="email">
+            <h2>{{ 't_data_export_csv_posts_student_email' | cpI18n }}</h2>
+            <div class="form-group mb-5">
+              <label for="email">{{ 't_data_export_csv_posts_student_email' | cpI18n }}</label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                class="form-control"
+                required
+              />
+              <div class="error-wrapper">
+                <div *ngIf="email.invalid && email.touched">
+                  <div *ngIf="email.errors.required" class="error-text">
+                    {{ 'web_form_required_field' | cpI18n }}
+                  </div>
+                  <div *ngIf="email.errors.pattern" class="error-text">
+                    {{ 'web_form_email_invalid' | cpI18n }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-danger btn-continue" [disabled]="!startForm.valid">
+              {{ 'web_form_continue' | cpI18n }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

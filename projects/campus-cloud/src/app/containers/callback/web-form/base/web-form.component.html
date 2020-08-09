@@ -1,0 +1,12 @@
+<div *ngIf="errorMessage" class="errorMessage">{{ errorMessage }}</div>
+<div *ngIf="webFormData">
+  <div *ngIf="currentFormBlock; else start">
+    <app-form-block
+      [webFormData]="webFormData"
+      [currentFormBlock]="currentFormBlock"
+    ></app-form-block>
+  </div>
+  <ng-template #start>
+    <app-web-form-start [webFormData]="webFormData"></app-web-form-start>
+  </ng-template>
+</div>
