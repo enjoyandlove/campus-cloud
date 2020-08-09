@@ -1,7 +1,7 @@
 <ready-ui-card>
 
   <div class="top-row">
-    <div class="form-name">
+    <div class="form-name" [title]="form.name">
       {{form.name}}
     </div>
     <div *ngIf="form.status === formStatus.draft" class="status-indicator">
@@ -84,41 +84,49 @@
     *ngIf="form.is_published && form.daily_stats"
   >
 
-    <div class="value-item-display-block">
-      <div class="item-label">
-        {{ 'contact_trace_forms_unique_views' | cpI18n }}
-      </div>
-      <div class="item-value">
-        {{form.daily_stats.unique_views ? form.daily_stats.unique_views : 0}}
-      </div>
+    <div class="daily-summary-text">
+      {{ 'contact_trace_forms_daily_summary' | cpI18n }}
     </div>
 
-    <div class="value-item-display-block">
-      <div class="item-label">
-        {{ ('contact_trace_forms_completed' | cpI18n) + ' (%)' }}
-      </div>
-      <div class="item-value">
-        {{completionPercentStr}}
-      </div>
-    </div>
+    <div class="value-display-row">
 
-    <div class="value-item-display-block daily-results-block">
-      <div class="item-label">
-        {{ 'contact_trace_forms_daily_results' | cpI18n }}
+      <div class="value-item-display-block">
+        <div class="item-label">
+          {{ 'contact_trace_forms_unique_views' | cpI18n }}
+        </div>
+        <div class="item-value">
+          {{form.daily_stats.unique_views ? form.daily_stats.unique_views : 0}}
+        </div>
       </div>
-      <div class="block-result-row" *ngIf="resultLabels">
-        <div
-          class="block-result-tile"
-          *ngFor="let label of resultLabels"
-        >
-          <div class="block-value">
-            {{form.daily_stats.terminal_blocks[label]}}
-          </div>
-          <div class="block-label">
-            {{label}}
+
+      <div class="value-item-display-block">
+        <div class="item-label">
+          {{ ('contact_trace_forms_completed' | cpI18n) + ' (%)' }}
+        </div>
+        <div class="item-value">
+          {{completionPercentStr}}
+        </div>
+      </div>
+
+      <div class="value-item-display-block daily-results-block">
+        <div class="item-label">
+          {{ 'contact_trace_forms_results' | cpI18n }}
+        </div>
+        <div class="block-result-row" *ngIf="resultLabels">
+          <div
+            class="block-result-tile"
+            *ngFor="let label of resultLabels"
+          >
+            <div class="block-value">
+              {{form.daily_stats.terminal_blocks[label]}}
+            </div>
+            <div class="block-label">
+              {{label}}
+            </div>
           </div>
         </div>
       </div>
+
     </div>
 
   </div>

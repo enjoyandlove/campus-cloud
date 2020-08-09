@@ -1044,8 +1044,8 @@
   "contact_trace_forms_daily_reminder": {
     "message": "Daily Reminder"
   },
-  "contact_trace_forms_daily_results": {
-    "message": "Daily Results"
+  "contact_trace_forms_daily_summary": {
+    "message": "Daily Summary"
   },
   "contact_trace_forms_date": {
     "message": "Date"
