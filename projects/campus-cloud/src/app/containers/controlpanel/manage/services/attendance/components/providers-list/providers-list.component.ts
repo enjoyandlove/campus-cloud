@@ -47,7 +47,6 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
-  @Output() updateStats: EventEmitter<null> = new EventEmitter();
   @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
 
   loading;
@@ -115,11 +114,11 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   onDeleted(providerId) {
-    this.state = Object.assign({}, this.state, {
+    this.state = {
+      ...this.state,
       providers: this.state.providers.filter((provider) => provider.id !== providerId)
-    });
+    };
 
-    this.updateStats.emit();
     this.hasRecords = !!this.state.providers.length;
     this.hasProviders.emit(this.state.providers.length > 0);
   }
