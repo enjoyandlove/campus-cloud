@@ -19,7 +19,7 @@
 
 <div class="d-flex justify-content-center">
   <div class="form-block">
-    <form [formGroup]="formBlock" (ngSubmit)="next($event)">
+    <form [formGroup]="formBlock" (ngSubmit)="next()">
       <div *ngIf="currentFormBlock.image_url">
         <img
           class="form-block-image"
