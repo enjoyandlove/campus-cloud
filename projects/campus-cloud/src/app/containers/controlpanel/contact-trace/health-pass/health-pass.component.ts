@@ -30,7 +30,7 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
     private headerService: ContactTraceHeaderService,
     public cpI18n: CPI18nService,
     private store: Store<ISnackbar>,
-    private service: HealthPassService,
+    public service: HealthPassService,
     private cpTracking: CPTrackingService,
     private fb: FormBuilder
   ) {
@@ -60,17 +60,17 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
         });
       })
       .catch(() => {
-        this.handleError();
+        this.handleError(this.cpI18n.translate('something_went_wrong'));
       })
       .finally(() => {
         this.loading = false;
       });
   }
 
-  handleError() {
+  handleError(body) {
     this.store.dispatch(
       new baseActionClass.SnackbarError({
-        body: this.cpI18n.translate('something_went_wrong')
+        body
       })
     );
   }
@@ -87,11 +87,9 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
     if (!this.form.valid) {
       this.formErrors = true;
       this.isDisabled = false;
-      this.store.dispatch(
-        new baseActionClass.SnackbarError({
-          body: this.cpI18n.translate('error_fill_out_marked_fields')
-        })
-      );
+
+      this.handleError(this.cpI18n.translate('error_fill_out_marked_fields'));
+
       return;
     }
 
@@ -116,7 +114,7 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
         );
       })
       .catch(() => {
-        this.handleError();
+        this.handleError(this.cpI18n.translate('something_went_wrong'));
       })
       .finally(() => {
         this.isDisabled = false;

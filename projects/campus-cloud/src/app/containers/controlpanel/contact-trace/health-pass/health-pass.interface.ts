@@ -8,7 +8,7 @@ export default interface IHealthPass {
   name: string;
   title: string;
   description: string;
-  url_image: string;
+  image_url: string;
   state: EState;
   icon: string;
 }
