@@ -14,6 +14,7 @@ import { ServicesUtilsService } from '@controlpanel/manage/services/services.uti
 import { ProvidersUtilsService } from '@controlpanel/manage/services/providers.utils.service';
 import { QrListComponent } from './qr-list.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { CPNoContentComponent } from '@projects/campus-cloud/src/app/shared/components';
 
 class MockService {
   dummy;
@@ -50,7 +51,8 @@ const mockProvider = [
     provider_name: 'Hello World!',
     email: '',
     checkin_verification_methods: [1, 2, 3],
-    custom_basic_feedback_label: ''
+    custom_basic_feedback_label: '',
+    ct_service_id: 4869
   }
 ];
 
@@ -83,9 +85,15 @@ describe('QrListComponent', () => {
   let component: QrListComponent;
   let fixture: ComponentFixture<QrListComponent>;
 
+  let childFixture: ComponentFixture<CPNoContentComponent>;
+  let noResultComponent: CPNoContentComponent;
+
   beforeEach(async(() => {
     fixture = TestBed.createComponent(QrListComponent);
     component = fixture.componentInstance;
+
+    childFixture = TestBed.createComponent(CPNoContentComponent);
+    noResultComponent = childFixture.componentInstance;
 
     session = TestBed.get(CPSession);
     session.g.set('user', mockUser);
@@ -175,5 +183,10 @@ describe('QrListComponent', () => {
 
     expect(assessSpy).toHaveBeenCalledTimes(1);
     expect(assessSpy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+  });
+
+  it('should show no result', () => {
+    component.state.providers = [];
+    expect(noResultComponent).toBeTruthy;
   });
 });
