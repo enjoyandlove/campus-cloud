@@ -5,7 +5,7 @@
       {{response | respondentNameFromFormResponse}}
     </div>
     <div class="collection-method-cell">
-      {{ collectionMethod | cpI18n }}
+      {{ (response.collection_method | collectionMethodCodeToDisplayString) | cpI18n }}
     </div>
   </div>
 

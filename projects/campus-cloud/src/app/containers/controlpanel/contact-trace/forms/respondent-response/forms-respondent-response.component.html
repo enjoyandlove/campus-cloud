@@ -8,18 +8,40 @@
       {{ 'contact_trace_forms_responder' | cpI18n }}
     </div>
 
-    <div class="label-text">
-      {{ 'contact_trace_forms_name' | cpI18n }}
-    </div>
-    <div class="value-text">
-      {{response | respondentNameFromFormResponse}}
+    <div class="row form-row">
+      <div class="col-3 label-text">
+        {{ 'contact_trace_forms_name' | cpI18n }}
+      </div>
+      <div class="col-9">
+        {{response | respondentNameFromFormResponse}}
+      </div>
     </div>
 
-    <div class="label-text">
-      {{ 'contact_trace_forms_date' | cpI18n }}
+    <div class="row form-row">
+      <div class="col-3 label-text">
+        {{ 'contact_trace_forms_email' | cpI18n }} <!-- ToDo: PJ: Localize -->
+      </div>
+      <div class="col-9">
+        {{response.email}}
+      </div>
     </div>
-    <div class="value-text">
-      {{ response.response_completed_epoch | cpDatePipe: dateFormat }}
+
+    <div class="row form-row">
+      <div class="col-3 label-text">
+        {{ 'contact_trace_forms_date' | cpI18n }}
+      </div>
+      <div class="col-9">
+        {{ response.response_completed_epoch | cpDatePipe: dateFormat }}
+      </div>
+    </div>
+
+    <div class="row form-row">
+      <div class="col-3 label-text">
+        {{ 'contact_trace_forms_collection_method' | cpI18n }} <!-- ToDo: PJ: Localize -->
+      </div>
+      <div class="col-9">
+        {{ (response.collection_method | collectionMethodCodeToDisplayString) | cpI18n }}
+      </div>
     </div>
 
   </ready-ui-card>
@@ -34,7 +56,7 @@
 
     <ng-container *ngFor="let block of form.form_block_list; let index = index;">
 
-      <ng-container *ngIf="index > 0 && !block.is_terminal">
+      <div class="block-row" *ngIf="index > 0 && !block.is_terminal">
         <!-- Question Block -->
         <div class="label-text">
           {{ index + '. ' + block.text }}
@@ -44,9 +66,9 @@
           [response]="response"
         >
         </cp-respondent-question-response>
-      </ng-container>
+      </div>
 
-      <ng-container *ngIf="block.is_terminal && block.id === response.terminal_form_block_id">
+      <div class="block-row" *ngIf="block.is_terminal && block.id === response.terminal_form_block_id">
         <!-- Result Block -->
         <div class="label-text">
           {{ (totalNumberOfQuestionsInForm + 1) + '. ' + block.text }}
@@ -56,7 +78,7 @@
           [response]="response"
         >
         </cp-respondent-question-response>
-      </ng-container>
+      </div>
 
     </ng-container>
 

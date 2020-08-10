@@ -1,5 +1,12 @@
 .header-row {
   .left-button-group {
+    .index-display,
+    .block-type-button {
+      // Disable click action
+      cursor: default;
+      pointer-events: none;
+    }
+
     .index-display {
       border-color: #efefef;
       color: #000000;
