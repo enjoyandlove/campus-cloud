@@ -5,7 +5,7 @@ import { HttpParams, HttpClient } from '@angular/common/http';
 import { concatMap, map, mergeMap, switchMap, first } from 'rxjs/operators';
 
 import { CPSession } from '@campus-cloud/session';
-import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes/i18n/i18n.pipe';
 import { IDateRange } from '@campus-cloud/shared/components';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { IStudentFilter } from '../../assess/engagement/engagement.utils.service';

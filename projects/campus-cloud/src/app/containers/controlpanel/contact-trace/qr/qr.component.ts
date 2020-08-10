@@ -53,13 +53,12 @@ export class QrComponent extends BaseComponent implements OnInit {
     private session: CPSession
   ) {
     super();
-    this.serviceId = this.session.g.get('school').ct_service_id;
     super.isLoading().subscribe((res) => (this.loading = res));
-
-    this.fetch();
   }
 
   private fetch() {
+    this.serviceId = this.session.g.get('school').ct_service_id;
+
     super.fetchData(this.serviceService.getServiceById(this.serviceId)).then((res) => {
       this.service = res.data;
       this.allowLocationsImport = this.utils.hasSchoolWritePrivilege(
@@ -144,5 +143,6 @@ export class QrComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.headerService.updateHeader();
+    this.fetch();
   }
 }
