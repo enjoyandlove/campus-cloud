@@ -1793,6 +1793,21 @@
   "from": {
     "message": "From"
   },
+  "health_pass_green": {
+    "message": "Green Health Pass"
+  },
+  "health_pass_no": {
+    "message": "No Health Pass"
+  },
+  "health_pass_red": {
+    "message": "Red Health Pass"
+  },
+  "health_pass_settings": {
+    "message": "Health Pass Settings"
+  },
+  "health_pass_yellow": {
+    "message": "Yellow Health Pass"
+  },
   "hello": {
     "message": "Hello"
   },
@@ -2485,6 +2500,9 @@
   },
   "service_provider_name": {
     "message": "Service Provider Name"
+  },
+  "settings": {
+    "message": "Settings"
   },
   "show": {
     "message": "Show"

@@ -1,0 +1,32 @@
+<svg width="86" height="86" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d)">
+<path d="M4 8C4 3.58172 7.58172 0 12 0H74C78.4183 0 82 3.58172 82 8V70C82 74.4183 78.4183 78 74 78H12C7.58172 78 4 74.4183 4 70V8Z" fill="url(#paint0_linear)"/>
+</g>
+<g filter="url(#filter1_d)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M43.0001 21.1592C32.3992 21.1592 23.7955 29.7628 23.7955 40.3637C23.7955 50.9646 32.3992 59.5683 43.0001 59.5683C53.601 59.5683 62.2046 50.9646 62.2046 40.3637C62.2046 29.7628 53.601 21.1592 43.0001 21.1592ZM39.4311 40.5553L32.9546 34.0788L36.7151 30.3183L43.1916 36.7947L49.6681 30.3183L53.4286 34.0788L46.9521 40.5553L53.4286 47.0317L49.668 50.7922L43.1916 44.3158L36.7152 50.7922L32.9546 47.0317L39.4311 40.5553Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d" x="0" y="0" width="86" height="86" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<filter id="filter1_d" x="15.9546" y="17.3182" width="54.0909" height="54.0909" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear" x1="82" y1="44.285" x2="4" y2="44.285" gradientUnits="userSpaceOnUse">
+<stop stop-color="#CE3838"/>
+<stop offset="1" stop-color="#C21313"/>
+</linearGradient>
+</defs>
+</svg>
