@@ -169,6 +169,8 @@ export const ENDPOINTS = {
 
   NON_SESSION_FORM_BLOCK: 'ns_form_block',
 
-  NON_SESSION_FORM_BLOCK_RESPONSE: 'ns_form_block_response'
+  NON_SESSION_FORM_BLOCK_RESPONSE: 'ns_form_block_response',
+
+  NON_SESSION_IMAGE: 'ns_image'
 
 };

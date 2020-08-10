@@ -19,7 +19,7 @@
 
 <div class="d-flex justify-content-center">
   <div class="form-block">
-    <form [formGroup]="formBlock" (ngSubmit)="next()">
+    <form [formGroup]="formBlock" (ngSubmit)="next()" enctype="multipart/form-data">
       <div *ngIf="currentFormBlock.image_url">
         <img
           class="form-block-image"
@@ -105,13 +105,10 @@
         </div>
       </div>
       <div *ngIf="currentFormBlock.block_type === 5" class="form-block-content">
-        <div class="alert alert-warning">
-          {{ 'web_form_image_upload_not_supported' | cpI18n }}
-        </div>
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
           <p>{{ blockContent.text }}</p>
           <div class="form-group">
-            <input type="file" [id]="blockContent.id" formControlName="answer" disabled />
+            <input type="file" (change)="onFileAdd($event)" />
             <div class="error-wrapper"></div>
           </div>
         </div>

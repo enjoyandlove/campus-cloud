@@ -20,6 +20,7 @@ import { setError } from '../web-form-error.actions';
 export class FormBlockComponent extends BaseComponent implements OnInit {
   formBlock: FormGroup;
   formState: FormState;
+  file: any;
 
   formId: string;
   formBlockId: number;
@@ -40,24 +41,6 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     super();
     this.store.pipe(select('webForm')).subscribe((formState: FormState) => {
       this.formState = formState;
-    });
-  }
-
-  // Intercept and update the responseData (uncontrolled)
-  onCheckBoxChange(e) {
-    const { value, checked } = e.target;
-    const { answer } = this.formBlock.value;
-    let values = answer === '' ? [] : answer.split(',');
-    if (checked) {
-      values.push(value);
-    } else {
-      const index = values.indexOf(value);
-      if (index > -1) {
-        values.splice(index, 1);
-      }
-    }
-    this.formBlock.patchValue({
-      answer: values.join(',')
     });
   }
 
@@ -92,6 +75,28 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     this.clearResponse(this.nextFormBlockId);
   }
 
+  // Intercept and update the responseData (uncontrolled)
+  onCheckBoxChange(e: any) {
+    const { value, checked } = e.target;
+    const { answer } = this.formBlock.value;
+    let values = answer === '' ? [] : answer.split(',');
+    if (checked) {
+      values.push(value);
+    } else {
+      const index = values.indexOf(value);
+      if (index > -1) {
+        values.splice(index, 1);
+      }
+    }
+    this.formBlock.patchValue({
+      answer: values.join(',')
+    });
+  }
+
+  onFileAdd(e: any) {
+    this.file = e.target.files[0];
+  }
+
   submit() {
     // Close the modal
     this.showSubmitConfirmation = false;
@@ -99,8 +104,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     const { formId, formBlockId } = this;
     const { formResponseId, externalUserId, formBlockResponses } = this.formState;
     this.webFormService.submit(formResponseId, externalUserId, formBlockResponses).subscribe(
-      (response) => {
-        console.log(response);
+      (response: any) => {
         this.router.navigate([`cb/web-form/${formId}/${this.nextFormBlockId}`]);
       },
       () => {
@@ -111,9 +115,10 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     );
   }
 
-  next() {
-    // Get the Form answer
+  processNextFormBlock() {
     const { formId, formBlockId } = this;
+
+    // Get the Form answer
     const { answer } = this.formBlock.value;
 
     let responseFormBlockContentIds: string = '';
@@ -145,7 +150,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
           );
 
           // Check if the next block is a terminal block
-          const nextFormBlock = this.webFormData.form_block_list.find((formBlock) => {
+          const nextFormBlock = this.webFormData.form_block_list.find((formBlock: any) => {
             return formBlock.id === this.nextFormBlockId;
           });
 
@@ -174,6 +179,27 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
           this.setError();
         }
       );
+  }
+
+  next() {
+    // Upload the file
+    if (this.currentFormBlock.block_type === 5 && this.file) {
+      const { formResponseId } = this.formState;
+      this.webFormService.uploadImage(7, formResponseId, this.file).subscribe(
+        (response: any) => {
+          this.formBlock.patchValue({
+            answer: response.image_url
+          });
+
+          this.processNextFormBlock();
+        },
+        () => {
+          this.setError();
+        }
+      );
+    } else {
+      this.processNextFormBlock();
+    }
   }
 
   ngOnInit() {
