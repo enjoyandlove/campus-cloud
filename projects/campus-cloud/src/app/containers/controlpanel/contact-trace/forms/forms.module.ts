@@ -38,7 +38,8 @@ import {
   SelectorForTextComponent,
   FormsRespondentResponseComponent,
   RespondentNameFromFormResponsePipe,
-  RespondentBlockResponsesDisplayComponent
+  RespondentBlockResponsesDisplayComponent,
+  CollectionMethodCodeToDisplayStringPipe
 } from './';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
@@ -79,7 +80,8 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
     FormResponseTileComponent,
     FormsRespondentResponseComponent,
     RespondentNameFromFormResponsePipe,
-    RespondentBlockResponsesDisplayComponent
+    RespondentBlockResponsesDisplayComponent,
+    CollectionMethodCodeToDisplayStringPipe
   ],
   imports: [CommonModule, FormsRoutingModule, SharedModule, FormsModule, LayoutsModule],
   providers: [CPI18nPipe]

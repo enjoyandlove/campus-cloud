@@ -1026,6 +1026,9 @@
   "contact_trace_forms_capture_responses_web": {
     "message": "Capture responses through the web"
   },
+  "contact_trace_forms_collection_method": {
+    "message": "Collection Method"
+  },
   "contact_trace_forms_completed": {
     "message": "Completed"
   },
@@ -1067,6 +1070,9 @@
   },
   "contact_trace_forms_edit_form": {
     "message": "Edit Form"
+  },
+  "contact_trace_forms_email": {
+    "message": "Email"
   },
   "contact_trace_forms_enter_hint_text": {
     "message": "Enter hint text here"

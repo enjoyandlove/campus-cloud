@@ -11,13 +11,18 @@
     font-weight: bold;
   }
 
-  .label-text {
+  .form-row {
     margin-top: 15px;
-    font-weight: bold;
   }
 
-  .value-text {
-    margin-top: 5px;
-    min-height: 21px;
+  .block-row {
+    margin-top: 15px;
+  }
+
+  .form-row,
+  .block-row {
+    .label-text {
+      font-weight: bold;
+    }
   }
 }
