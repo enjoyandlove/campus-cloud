@@ -17,7 +17,7 @@
                   <input
                         type="text"
                         class="form-control"
-                        maxlength="120"
+                        maxlength="255"
                         [(ngModel)]="healthPass.name"
                         [ngModelOptions]="{standalone: true}"
                         autocomplete="off" 
@@ -27,7 +27,7 @@
                   <textarea
                         class="form-control"
                         row="5"
-                        maxlength="512"
+                        maxlength="1024"
                         [(ngModel)]="healthPass.description"
                         autocomplete="off"
                         [ngModelOptions]="{standalone: true}"
