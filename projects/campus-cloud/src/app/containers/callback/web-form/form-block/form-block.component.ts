@@ -104,7 +104,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     const { formId, formBlockId } = this;
     const { formResponseId, externalUserId, formBlockResponses } = this.formState;
     this.webFormService.submit(formResponseId, externalUserId, formBlockResponses).subscribe(
-      (response: any) => {
+      () => {
         this.router.navigate([`cb/web-form/${formId}/${this.nextFormBlockId}`]);
       },
       () => {

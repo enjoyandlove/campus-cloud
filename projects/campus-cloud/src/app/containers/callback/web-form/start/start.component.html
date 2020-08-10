@@ -15,7 +15,7 @@
         <form [formGroup]="startForm" (ngSubmit)="continue($event)">
           <div class="email">
             <h2>{{ 't_data_export_csv_posts_student_email' | cpI18n }}</h2>
-            <div class="form-group mb-5">
+            <div class="form-group mb-4">
               <label for="email">{{ 't_data_export_csv_posts_student_email' | cpI18n }}</label>
               <input
                 id="email"
@@ -35,7 +35,7 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-danger btn-continue" [disabled]="!startForm.valid">
+            <button class="btn btn-danger btn-continue">
               {{ 'web_form_continue' | cpI18n }}
             </button>
           </div>

@@ -13,7 +13,7 @@
   min-width: 180px;
   background: #009ceb;
   border: 1px solid #009ceb;
-  padding: 8px 0;
+  padding: 6px 0;
 }
 
 .web-form-btn-contained {
@@ -22,7 +22,7 @@
   background: transparent;
   border: 1px solid #009ceb;
   color: #009ceb;
-  padding: 8px 0;
+  padding: 6px 0;
 }
 
 .overlay {
@@ -62,8 +62,8 @@
   .form-block-image {
     display: block;
     margin-bottom: 37px;
-    min-width: 183px;
-    min-height: 183px;
+    width: 183px;
+    height: auto;
   }
 
   .form-block-heading {

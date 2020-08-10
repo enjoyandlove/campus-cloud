@@ -19,7 +19,7 @@
 
 <div class="d-flex justify-content-center">
   <div class="form-block">
-    <form [formGroup]="formBlock" (ngSubmit)="next()" enctype="multipart/form-data">
+    <form [formGroup]="formBlock" (ngSubmit)="next()">
       <div *ngIf="currentFormBlock.image_url">
         <img
           class="form-block-image"
@@ -28,7 +28,6 @@
         />
       </div>
       <p class="form-block-heading">{{ currentFormBlock.text }}</p>
-
       <div *ngIf="currentFormBlock.block_type === 0" class="form-block-content">
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
           <p>{{ blockContent.text }}</p>
@@ -37,7 +36,7 @@
 
       <div *ngIf="currentFormBlock.block_type === 1" class="form-block-content">
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
-          <div class="form-group form-check d-flex align-items-center form-check-custom">
+          <div class="form-group form-check form-check-custom">
             <input
               type="radio"
               class="form-check-input form-check-input-custom"
@@ -54,7 +53,7 @@
 
       <div *ngIf="currentFormBlock.block_type === 2" class="form-block-content">
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
-          <div class="form-group form-check d-flex align-items-center form-check-custom">
+          <div class="form-group form-check form-check-custom">
             <input
               type="checkbox"
               class="form-check-input form-check-input-custom"
@@ -136,7 +135,9 @@
       <div *ngIf="!currentFormBlock.is_terminal">
         <button
           class="btn btn-primary web-form-btn"
-          [disabled]="currentFormBlock.is_required && formBlock.value.answer === ''"
+          [disabled]="
+            currentFormBlock.is_required && (formBlock.value.answer === '' || !formBlock.valid)
+          "
         >
           {{ 'contact_trace_forms_next' | cpI18n }}
         </button>
