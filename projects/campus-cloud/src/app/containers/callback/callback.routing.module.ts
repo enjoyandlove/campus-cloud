@@ -67,10 +67,7 @@ const appRoutes: Routes = [
         component: CheckinServiceComponent,
         data: { zendesk: 'assessment', title: pageTitle.WEB_CHECK_IN }
       },
-      {
-        path: 'web-form/:formId/start',
-        component: WebFormComponent
-      },
+
       {
         path: 'web-form/:formId/:formBlockId',
         component: WebFormComponent

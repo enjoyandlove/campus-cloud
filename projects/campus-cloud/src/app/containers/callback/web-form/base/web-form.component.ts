@@ -13,6 +13,7 @@ import { FormState } from '../form-state.interface';
 export class WebFormComponent extends BaseComponent implements OnInit {
   webFormData: any;
   formState: FormState;
+  formBlockId: string;
   currentFormBlock: any;
   errorMessage: string;
 
@@ -32,14 +33,17 @@ export class WebFormComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
+      this.formBlockId = params['formBlockId'];
+      this.currentFormBlock = null;
+
       this.webFormService.getForm(params['formId']).subscribe(
-        (webFormData) => {
+        (webFormData: any) => {
           this.webFormData = webFormData;
           this.currentFormBlock = webFormData['form_block_list'].find(
-            (formBlock) => formBlock.id === parseInt(params['formBlockId'], 10)
+            (formBlock: any) => formBlock.id === parseInt(params['formBlockId'], 10)
           );
         },
-        (error) => {
+        (error: any) => {
           console.log(error);
         }
       );
