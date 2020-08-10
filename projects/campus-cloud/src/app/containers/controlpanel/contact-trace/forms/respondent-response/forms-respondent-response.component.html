@@ -8,7 +8,7 @@
       {{ 'contact_trace_forms_responder' | cpI18n }}
     </div>
 
-    <div class="row form-row">
+    <div class="row form-row" *ngIf="!response.extern_user_id">
       <div class="col-3 label-text">
         {{ 'contact_trace_forms_name' | cpI18n }}
       </div>
@@ -22,7 +22,12 @@
         {{ 'contact_trace_forms_email' | cpI18n }} <!-- ToDo: PJ: Localize -->
       </div>
       <div class="col-9">
-        {{response.email}}
+        <ng-container *ngIf="response.extern_user_id">
+          {{response.extern_user_id}}
+        </ng-container>
+        <ng-container *ngIf="!response.extern_user_id">
+          {{response.email}}
+        </ng-container>
       </div>
     </div>
 

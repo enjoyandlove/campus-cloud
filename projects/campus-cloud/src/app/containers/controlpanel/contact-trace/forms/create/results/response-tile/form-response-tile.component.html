@@ -2,7 +2,12 @@
 
   <div class="top-row">
     <div class="name-cell">
-      {{response | respondentNameFromFormResponse}}
+      <ng-container *ngIf="response.extern_user_id">
+        {{response.extern_user_id}}
+      </ng-container>
+      <ng-container *ngIf="!response.extern_user_id">
+        {{response | respondentNameFromFormResponse}}
+      </ng-container>
     </div>
     <div class="collection-method-cell">
       {{ (response.collection_method | collectionMethodCodeToDisplayString) | cpI18n }}
