@@ -16,6 +16,13 @@
       "clearParams": true,
       "amplitude": "Qr",
       "url": "/contact-trace/qr"
+    },
+    {
+      "privilege": 41,
+      "label": "settings",
+      "clearParams": true,
+      "amplitude": "Settings",
+      "url": "/contact-trace/health-pass"
     }
   ]
 }

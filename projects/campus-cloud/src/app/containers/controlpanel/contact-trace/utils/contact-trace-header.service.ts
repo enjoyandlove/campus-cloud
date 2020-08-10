@@ -40,7 +40,6 @@ export class ContactTraceHeaderService {
           : null;
       }
     });
-
     return Object.assign({}, this.privileges, { children: _children });
   }
 }

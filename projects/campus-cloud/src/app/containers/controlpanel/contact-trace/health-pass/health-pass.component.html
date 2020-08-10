@@ -1,0 +1,73 @@
+<div [ngSwitch] = "loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div *ngSwitchCase="false">
+    <div class="page-container">
+      <ready-ui-card>
+        <h1>{{ 'health_pass_settings' | cpI18n }}</h1>
+        <form [formGroup]="form">
+          <div *ngFor = "let healthPass of healthPassData; index as i; last as isLast">
+            <div class='col-12 mt-4'>
+              <div class='row'>
+                <div class='col-4'>
+                  <h2>{{healthPass.title}}</h2>
+                  <img [src]="healthPass.icon">
+                </div>
+                <div class='col-8 mt-1'>
+                  <p>{{ 'contact_trace_forms_title' | cpI18n }}</p>
+                  <input
+                        type="text"
+                        class="form-control"
+                        maxlength="120"
+                        [(ngModel)]="healthPass.name"
+                        [ngModelOptions]="{standalone: true}"
+                        autocomplete="off" 
+                        [class.error]="formErrors && form.controls['name-'+i].hasError('required')" 
+                  />
+                  <p class="mt-4">{{ 'contact_trace_forms_content' | cpI18n }}</p>
+                  <textarea
+                        class="form-control"
+                        row="5"
+                        maxlength="512"
+                        [(ngModel)]="healthPass.description"
+                        autocomplete="off"
+                        [ngModelOptions]="{standalone: true}"
+                        [class.error]="formErrors && form.controls['description-'+i].hasError('required')">
+                  </textarea>        
+                </div>
+              </div>  
+            </div>
+            <hr class="mt-4" *ngIf="!isLast"/>   
+          </div>
+        </form>
+      </ready-ui-card>
+    </div>
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="row">
+          <div class="col-12">
+            <button
+              ui-button          
+              type="button"
+              variant="flat"
+              color="primary"
+              class="action-button"
+              [disabled]="isDisabled"
+              (click)="onSubmit()">
+              {{'save' | cpI18n}}
+            </button>
+
+            <button
+              ui-button
+              type="button"
+              variant="flat"
+              color="secondary"
+              class="action-button"
+              (click)="onCancel()">          
+              {{'cancel' | cpI18n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

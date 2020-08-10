@@ -157,6 +157,8 @@ export const ENDPOINTS = {
 
   DASHBOARD_GENERAL_INFORMATION: 'analytics/general_information',
 
+  HEALTH_PASS_SETTING: 'ct_health_pass_setting',
+
   FORMS: 'form',
 
   FORM_RESPONSE: 'form_response',
@@ -168,4 +170,5 @@ export const ENDPOINTS = {
   NON_SESSION_FORM_BLOCK: 'ns_form_block',
 
   NON_SESSION_FORM_BLOCK_RESPONSE: 'ns_form_block_response'
+
 };
