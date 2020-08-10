@@ -42,7 +42,7 @@ export class StartComponent extends BaseComponent implements OnInit {
         );
         this.router.navigate([`cb/web-form/${this.formId}/${this.webFormData.init_form_block_id}`]);
       },
-      (error) => {
+      (error: any) => {
         console.log(error);
       }
     );
