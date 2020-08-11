@@ -1800,19 +1800,19 @@
     "message": "Depuis"
   },
   "health_pass_green": {
-    "message": "Green Health Pass"
+    "message": "Passe santé vert"
   },
   "health_pass_no": {
-    "message": "No Health Pass"
+    "message": "Pas de passe santé"
   },
   "health_pass_red": {
-    "message": "Red Health Pass"
+    "message": "Passe santé rouge"
   },
   "health_pass_settings": {
-    "message": "Health Pass Settings"
+    "message": "Réglages passe santé"
   },
   "health_pass_yellow": {
-    "message": "Yellow Health Pass"
+    "message": "Passe santé jaune"
   },
   "hello": {
     "message": "Bonjour"
@@ -2055,6 +2055,9 @@
   },
   "locations_label_acronym": {
     "message": "Acronyme"
+  },
+  "location_name": {
+    "message": "Location Name"
   },
   "login": {
     "message": "Connexion",
@@ -4476,37 +4479,37 @@
     "message": "Site web"
   },
   "web_form_action_not_successful": {
-    "message": "The action was not successful. Please try again later"
+    "message": "Cette action a échoué. Veuillez essayer de nouveau."
   },
   "web_form_completed_all_questions": {
-    "message": "You've completed all the questions."
+    "message": "Vous avez complété toutes les questions."
   },
   "web_form_continue": {
-    "message": "Continue"
+    "message": "Continuer"
   },
   "web_form_do_you_want_to_submit": {
-    "message": "Do you want to submit the form?"
+    "message": "Voulez-vous soumettre le formulaire ?"
   },
   "web_form_email_invalid": {
-    "message": "Please enter a valid email"
+    "message": "Veuillez entrer un courriel valide"
   },
   "web_form_image_upload_not_supported": {
-    "message": "Image upload is not supported. Please skip to the next step"
+    "message": "Le téléversement de l'image n'est pas supporté. Veuillez passer à l'étape suivante."
   },
   "web_form_integer_expected_error": {
-    "message": "Expected an integer value"
+    "message": "Attendait une valeur entière"
   },
   "web_form_numeric_expected_error": {
-    "message": "Expected a numeric value"
+    "message": "Attendait une valeur numérique"
   },
   "web_form_required_field": {
-    "message": "This field is required"
+    "message": "Ce champs est requis"
   },
   "web_form_start_page_intro": {
-    "message": "Scan from the App or Enter the Student Email to Begin"
+    "message": "Scannez depuis l'application ou entrez le courriel étudiant pour commencer"
   },
   "web_form_submit": {
-    "message": "Submit"
+    "message": "Soumettre"
   },
   "welcome": {
     "message": "Bienvenue"

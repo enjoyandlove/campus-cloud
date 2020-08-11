@@ -259,7 +259,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     if (this.assessments.length) {
       this.trackAmplitudeEvent();
       this.fetchAllRecords().then((attendees) =>
-        this.utils.exportServiceProvidersAttendees(attendees)
+        this.utils.exportServiceProvidersAttendees(attendees, false)
       );
     }
   }
