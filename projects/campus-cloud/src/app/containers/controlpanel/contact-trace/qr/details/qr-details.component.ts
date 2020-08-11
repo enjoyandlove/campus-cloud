@@ -33,7 +33,6 @@ export class QrDetailsComponent extends BaseComponent implements OnInit {
   eventData;
   serviceId;
   providerId;
-  MAX_RATE = 5;
   eventRating;
   updateQrCode = new BehaviorSubject(null);
 
@@ -155,7 +154,6 @@ export class QrDetailsComponent extends BaseComponent implements OnInit {
     }
 
     const data = {
-      ...this.provider,
       attend_verification_methods: verificationMethods
     };
 
