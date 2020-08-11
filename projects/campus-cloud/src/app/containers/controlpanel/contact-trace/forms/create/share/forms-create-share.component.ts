@@ -49,7 +49,6 @@ export class FormsCreateShareComponent implements OnInit, OnDestroy {
       .subscribe((form) => {
         this.form = form;
         this.url = FormsHelperService.generateShareUrl(form);
-        console.log('this.url', this.url);
         setTimeout(() => this.buildHeader(form));
       });
 
@@ -79,8 +78,24 @@ export class FormsCreateShareComponent implements OnInit, OnDestroy {
 
   reminderToggleHandler(): void {
     this.form.daily_reminder_enabled = !this.form.daily_reminder_enabled;
+    const formCopyForSave: Form = {
+      id: this.form.id,
+      daily_reminder_enabled: this.form.daily_reminder_enabled
+    };
     const params = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.formsService.updateForm(this.form, params).subscribe();
+    this.formsService.updateForm(formCopyForSave, params).subscribe((form) => {
+      FormsHelperService.formatFormFromDatabaseForUI(form);
+      this.formsService.setFormBeingEdited(form);
+      this.handleSuccess('contact_trace_forms_save_successful');
+    });
+  }
+
+  private handleSuccess(key) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate(key)
+      })
+    );
   }
 
   notifyCopySuccess() {
