@@ -1,3 +1,18 @@
 <div *ngFor="let userResponseString of userResponseStrings" class="value-input-box">
-  <input type="text" [value]="userResponseString" disabled/>
+
+  <input *ngIf="!isImageBlock" type="text" [value]="userResponseString" disabled/>
+
+  <div
+    *ngIf="isImageBlock"
+    ready-ui-lightbox
+    class="image-cell"
+  >
+    <img
+      alt=""
+      ready-ui-image
+      [dataSrc]="userResponseString"
+      ready-ui-lighbox-item
+    />
+  </div>
+
 </div>

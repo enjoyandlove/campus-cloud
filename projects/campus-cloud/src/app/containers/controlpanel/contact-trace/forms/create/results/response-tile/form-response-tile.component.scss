@@ -28,6 +28,23 @@
       max-width: 450px;
       text-align: justify;
     }
+
+    .image-cell {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      position: relative;
+      border-radius: 4px;
+      margin-top: 5px;
+      overflow: hidden;
+
+      img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+      }
+    }
+
     .date-cell {
       float: right;
     }

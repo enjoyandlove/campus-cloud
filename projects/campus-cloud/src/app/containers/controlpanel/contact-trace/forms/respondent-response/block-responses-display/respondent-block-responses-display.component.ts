@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBlock, FormResponse } from '../../../forms';
+import { BlockType, FormBlock, FormResponse } from '../../../forms';
 import { FormsHelperService } from '../../services';
 
 @Component({
@@ -11,11 +11,13 @@ export class RespondentBlockResponsesDisplayComponent implements OnInit {
   @Input() formBlock: FormBlock;
   @Input() response: FormResponse;
   userResponseStrings: string[];
+  isImageBlock: boolean;
 
   constructor() {}
 
   ngOnInit(): void {
     this.initializeResponseStrings();
+    this.initializeIsImageFlag();
   }
 
   private initializeResponseStrings(): void {
@@ -29,5 +31,9 @@ export class RespondentBlockResponsesDisplayComponent implements OnInit {
         this.formBlock
       );
     }
+  }
+
+  private initializeIsImageFlag(): void {
+    this.isImageBlock = this.formBlock && this.formBlock.block_type === BlockType.image;
   }
 }
