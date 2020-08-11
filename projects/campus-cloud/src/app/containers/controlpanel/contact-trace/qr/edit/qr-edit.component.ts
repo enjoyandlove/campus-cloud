@@ -1,13 +1,15 @@
 import { Input, OnInit, Output, Component, ViewChild, EventEmitter } from '@angular/core';
-
 import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
 import { IService } from '@controlpanel/manage/services/service.interface';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { ProvidersService } from '@controlpanel/manage/services/providers.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
+import { ISnackbar, baseActionClass } from '@projects/campus-cloud/src/app/store';
+import { CheckInMethod } from '../../../manage/events/event.status';
 
 declare var $: any;
 
@@ -27,8 +29,8 @@ export class QrEditComponent implements OnInit {
 
   formErrors;
   buttonData;
-  errorMessage;
   form: FormGroup;
+  lastCheckinState;
 
   eventProperties = {
     service_id: null,
@@ -39,7 +41,8 @@ export class QrEditComponent implements OnInit {
     public fb: FormBuilder,
     public cpI18n: CPI18nService,
     public utils: ServicesUtilsService,
-    public providersService: ProvidersService
+    public providersService: ProvidersService,
+    private store: Store<ISnackbar>
   ) {}
 
   onSubmit() {
@@ -59,12 +62,45 @@ export class QrEditComponent implements OnInit {
         this.form.reset();
         this.resetModal();
         this.edited.emit(res);
+        this.showSuccessMessage();
       },
       () => {
         this.formErrors = true;
         this.enableSaveButton();
-        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+        this.showErrorMessage();
       }
+    );
+  }
+
+  showSuccessMessage() {
+    const isCodeChanged =
+      this.provider.checkin_verification_methods.length === this.lastCheckinState.length
+        ? false
+        : true;
+    if (isCodeChanged) {
+      const message = this.provider.checkin_verification_methods.includes(CheckInMethod.app)
+        ? this.cpI18n.translate('t_event_assessment_qr_code_enable_success_message')
+        : this.cpI18n.translate('t_event_assessment_qr_code_disabled_success_message');
+
+      this.store.dispatch(
+        new baseActionClass.SnackbarSuccess({
+          body: message
+        })
+      );
+    } else {
+      this.store.dispatch(
+        new baseActionClass.SnackbarSuccess({
+          body: this.cpI18n.translate('t_changes_saved_ok')
+        })
+      );
+    }
+  }
+
+  showErrorMessage() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
     );
   }
 
@@ -81,6 +117,7 @@ export class QrEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.lastCheckinState = [...this.provider.checkin_verification_methods];
     this.form = this.utils.getQrProviderForm(this.provider);
 
     this.buttonData = {
