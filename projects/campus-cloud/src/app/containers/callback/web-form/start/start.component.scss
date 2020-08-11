@@ -38,7 +38,12 @@ label {
 }
 
 .qr {
+  text-align: center;
   margin-bottom: 40px;
+  .qr-code-image {
+    width: 175px;
+    height: auto;
+  }
 }
 
 .error-wrapper {

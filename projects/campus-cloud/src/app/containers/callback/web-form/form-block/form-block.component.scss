@@ -62,7 +62,9 @@
   .form-block-image {
     display: block;
     margin-bottom: 37px;
-    width: 183px;
+    min-width: 100px;
+    width: 100%;
+    max-width: 183px;
     height: auto;
   }
 

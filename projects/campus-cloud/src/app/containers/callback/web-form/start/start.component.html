@@ -2,12 +2,12 @@
   <div class="start-sheet">
     <h1>{{ 'web_form_start_page_intro' | cpI18n }}</h1>
     <div class="row">
-      <div class="col-12 col-sm-5">
+      <div *ngIf="webFormData.qr_img_url !== ''" class="col-12 col-sm-5">
         <div class="d-flex justify-content-center align-items-center">
           <div class="qr">
             <h2>{{ 't_shared_app' | cpI18n }} {{ 'qr_code' | cpI18n }}</h2>
             <p>{{ 't_checkin_pdf_scan_qr' | cpI18n }}</p>
-            <img src="" alt="QR Code" />
+            <img class="qr-code-image" [src]="webFormData.qr_img_url" alt="QR Code" />
           </div>
         </div>
       </div>
