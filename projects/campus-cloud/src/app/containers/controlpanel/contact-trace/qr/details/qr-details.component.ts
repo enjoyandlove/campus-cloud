@@ -154,7 +154,7 @@ export class QrDetailsComponent extends BaseComponent implements OnInit {
     }
 
     const data = {
-      attend_verification_methods: verificationMethods
+      checkin_verification_methods: verificationMethods
     };
 
     const search = new HttpParams().append('service_id', this.serviceId.toString());
