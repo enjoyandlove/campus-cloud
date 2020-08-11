@@ -5,4 +5,9 @@ li {
 
   display: flex;
   color: $color-text;
+
+  &:hover {
+    background: $color-brand;
+    color: $color-white;
+  }
 }
