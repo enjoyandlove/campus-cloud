@@ -21,6 +21,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
   formBlock: FormGroup;
   formState: FormState;
   file: any;
+  loadingFile: boolean = false;
 
   formId: string;
   formBlockId: number;
@@ -53,10 +54,10 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     );
   }
 
-  setError() {
+  setError(message: string = this.cpI18n.translate('web_form_action_not_successful')) {
     this.store.dispatch(
       setError({
-        message: this.cpI18n.translate('web_form_action_not_successful')
+        message
       })
     );
   }
@@ -94,13 +95,29 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
   }
 
   onFileAdd(e: any) {
-    this.file = e.target.files[0];
+    const { formResponseId } = this.formState;
+    this.formBlock.patchValue({
+      answer: ''
+    });
+    this.clearError();
+    this.loadingFile = true;
+    this.webFormService.uploadImage(7, formResponseId, e.target.files[0]).subscribe(
+      (response: any) => {
+        this.formBlock.patchValue({
+          answer: response.image_url
+        });
+        this.loadingFile = false;
+      },
+      () => {
+        this.loadingFile = false;
+        this.setError(this.cpI18n.translate('customization_image_upload_error'));
+      }
+    );
   }
 
   submit() {
     // Close the modal
     this.showSubmitConfirmation = false;
-
     const { formId, formBlockId } = this;
     const { formResponseId, externalUserId, formBlockResponses } = this.formState;
     this.webFormService.submit(formResponseId, externalUserId, formBlockResponses).subscribe(
@@ -115,7 +132,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     );
   }
 
-  processNextFormBlock() {
+  next() {
     const { formId, formBlockId } = this;
 
     // Get the Form answer
@@ -179,27 +196,6 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
           this.setError();
         }
       );
-  }
-
-  next() {
-    // Upload the file
-    if (this.currentFormBlock.block_type === 5 && this.file) {
-      const { formResponseId } = this.formState;
-      this.webFormService.uploadImage(7, formResponseId, this.file).subscribe(
-        (response: any) => {
-          this.formBlock.patchValue({
-            answer: response.image_url
-          });
-
-          this.processNextFormBlock();
-        },
-        () => {
-          this.setError();
-        }
-      );
-    } else {
-      this.processNextFormBlock();
-    }
   }
 
   ngOnInit() {
