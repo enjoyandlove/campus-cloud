@@ -73,14 +73,18 @@
           {{ (form?.daily_reminder_enabled ? 'contact_trace_forms_yes' : 'contact_trace_forms_no') | cpI18n }}
         </div>
 
-        <cp-switch
-          *ngIf="canEdit"
-          class="reminder-switch"
-          cpTarget="switch"
-          [isChecked]="form?.daily_reminder_enabled"
-          (toggle)="reminderToggleHandler()"
-        >
-        </cp-switch>
+        <div class="reminder-switch-container">
+          <cp-switch
+            *ngIf="canEdit"
+            cpTarget="switch"
+            [isChecked]="form?.daily_reminder_enabled"
+            (toggle)="reminderToggleHandler($event)"
+          >
+          </cp-switch>
+          <div *ngIf="webServiceCallInProgress" class="reminder-switch-disable-overlay">
+            <!-- This overlay will cover the switch to prevent the user from clicking on it again when a webservice call is in progress -->
+          </div>
+        </div>
 
       </div>
 
