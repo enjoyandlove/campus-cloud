@@ -120,7 +120,6 @@ export class QrListComponent extends BaseComponent implements OnInit {
   }
 
   onDeleted(providerId) {
-    
     this.state = {
       ...this.state,
       providers: this.state.providers.filter((provider) => provider.id !== providerId)
@@ -220,7 +219,7 @@ export class QrListComponent extends BaseComponent implements OnInit {
     );
 
     stream$.toPromise().then((providers: any) => {
-      this.utils.exportServiceProvidersAttendees(providers);
+      this.utils.exportServiceProvidersAttendees(providers, true);
       this.trackDownloadProviders();
     });
   }

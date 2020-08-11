@@ -259,7 +259,7 @@ export class QrAttendeesListComponent extends BaseComponent implements OnInit {
     if (this.assessments.length) {
       this.trackAmplitudeEvent();
       this.fetchAllRecords().then((attendees) =>
-        this.utils.exportServiceProvidersAttendees(attendees)
+        this.utils.exportServiceProvidersAttendees(attendees, true)
       );
     }
   }

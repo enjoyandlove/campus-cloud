@@ -143,8 +143,8 @@ export class ServicesUtilsService {
       : this.cpI18n.translate('t_events_default_feedback_question');
   }
 
-  exportServiceProvidersAttendees(assessments) {
-    const columns = [
+  exportServiceProvidersAttendees(assessments, isQR: boolean) {
+    let columns = [
       this.cpI18n.translate('t_service_provider_csv_column_provider_name'),
       this.cpI18n.translate('t_service_provider_csv_column_first_name'),
       this.cpI18n.translate('t_service_provider_csv_column_last_name'),
@@ -160,6 +160,16 @@ export class ServicesUtilsService {
       this.cpI18n.translate('feedback'),
       this.cpI18n.translate('student_id')
     ];
+
+    if (isQR) {
+      columns = columns.filter((val) => {
+        return (
+          val != this.cpI18n.translate('t_service_provider_csv_column_ratings') &&
+          val != this.cpI18n.translate('feedback')
+        );
+      });
+      columns[0] = this.cpI18n.translate('location_name');
+    }
 
     const check_in_method = {
       1: 'Web check-in',
@@ -180,7 +190,7 @@ export class ServicesUtilsService {
         ? item.firstname
         : this.cpI18n.translate('t_shared_closed_account');
 
-      return {
+      const assess = {
         [this.cpI18n.translate(
           't_service_provider_csv_column_provider_name'
         )]: item.service_provider_name,
@@ -235,6 +245,23 @@ export class ServicesUtilsService {
 
         [this.cpI18n.translate('student_id')]: item.student_identifier
       };
+
+      const qr_assess = {};
+
+      if (isQR) {
+        Object.keys(assess).map((key) => {
+          if (key === this.cpI18n.translate('t_service_provider_csv_column_provider_name')) {
+            qr_assess[this.cpI18n.translate('location_name')] = assess[key];
+          } else if (
+            key !== this.cpI18n.translate('t_service_provider_csv_column_ratings') &&
+            key !== this.cpI18n.translate('feedback')
+          ) {
+            qr_assess[key] = assess[key];
+          }
+        });
+      }
+
+      return isQR ? qr_assess : assess;
     });
 
     createSpreadSheet(assessments, columns);

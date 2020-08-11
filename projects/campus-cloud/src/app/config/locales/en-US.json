@@ -2056,6 +2056,9 @@
   "locations_label_acronym": {
     "message": "Acronym"
   },
+  "location_name": {
+    "message": "Location Name"
+  },
   "login": {
     "message": "Login",
     "description": "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
@@ -4476,7 +4479,7 @@
     "message": "Website"
   },
   "web_form_action_not_successful": {
-    "message": "The action was not successful. Please try again later"
+    "message": "The action was not successful. Please try again later."
   },
   "web_form_completed_all_questions": {
     "message": "You've completed all the questions."
@@ -4491,7 +4494,7 @@
     "message": "Please enter a valid email"
   },
   "web_form_image_upload_not_supported": {
-    "message": "Image upload is not supported. Please skip to the next step"
+    "message": "Image upload is not supported. Please skip to the next step."
   },
   "web_form_integer_expected_error": {
     "message": "Expected an integer value"

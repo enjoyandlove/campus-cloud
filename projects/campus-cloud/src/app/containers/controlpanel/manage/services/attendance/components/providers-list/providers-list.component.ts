@@ -223,7 +223,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     );
 
     stream$.toPromise().then((providers: any) => {
-      this.utils.exportServiceProvidersAttendees(providers);
+      this.utils.exportServiceProvidersAttendees(providers, false);
       this.trackDownloadProviders();
     });
   }
