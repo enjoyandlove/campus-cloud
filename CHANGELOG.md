@@ -1,4 +1,17 @@
 # Campus Cloud Changelog
+## [1.9.0](https://gitlab.com/oohlalamobile-web/cc_front_end/compare/v1.8.0...v1.9.0) (2020-08-11)
+
+
+### Features
+
+* **community:** #WEB-5307 Community Host Selector ([b1dfec3](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/b1dfec386bccdcc814d8288e7ae72d8bbcf79119)), closes [#WEB-5307](https://oohlalaproduct.atlassian.net/browse/WEB-5307)
+* **community:** #WEB-5352 Deprecate Inline View ([9f6a7ca](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/9f6a7ca31a24d8c0f8f93ea4ecd109b9b5d7169d)), closes [#WEB-5352](https://oohlalaproduct.atlassian.net/browse/WEB-5352)
+
+
+### Bug Fixes
+
+* #WEB-4939 ([d975dbf](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/d975dbfa709a3d8cdd03a34f8499a30aab9a978a)), closes [#WEB-4939](https://oohlalaproduct.atlassian.net/browse/WEB-4939)
+
 ### [1.8.1](https://gitlab.com/oohlalamobile-web/cc_front_end/compare/v1.8.0...v1.8.1) (2020-05-13)
 
 
