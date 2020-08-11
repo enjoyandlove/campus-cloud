@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, finalize, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { FormsHelperService, FormsService } from '../../services';
@@ -24,6 +24,7 @@ export class FormsCreateShareComponent implements OnInit, OnDestroy {
   form: Form;
   canEdit: boolean;
   url: string;
+  webServiceCallInProgress: boolean;
 
   constructor(
     public store: Store<IHeader>,
@@ -76,18 +77,22 @@ export class FormsCreateShareComponent implements OnInit, OnDestroy {
     this.router.navigate(['/studio/experiences']);
   }
 
-  reminderToggleHandler(): void {
-    this.form.daily_reminder_enabled = !this.form.daily_reminder_enabled;
+  reminderToggleHandler(enabled: boolean): void {
+    this.webServiceCallInProgress = true;
+    this.form.daily_reminder_enabled = enabled;
     const formCopyForSave: Form = {
       id: this.form.id,
       daily_reminder_enabled: this.form.daily_reminder_enabled
     };
     const params = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.formsService.updateForm(formCopyForSave, params).subscribe((form) => {
-      FormsHelperService.formatFormFromDatabaseForUI(form);
-      this.formsService.setFormBeingEdited(form);
-      this.handleSuccess('contact_trace_forms_save_successful');
-    });
+    this.formsService
+      .updateForm(formCopyForSave, params)
+      .pipe(finalize(() => (this.webServiceCallInProgress = false)))
+      .subscribe((form) => {
+        FormsHelperService.formatFormFromDatabaseForUI(form);
+        this.formsService.setFormBeingEdited(form);
+        this.handleSuccess('contact_trace_forms_save_successful');
+      });
   }
 
   private handleSuccess(key) {
