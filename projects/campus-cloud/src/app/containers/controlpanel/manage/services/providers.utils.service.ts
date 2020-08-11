@@ -20,6 +20,7 @@ const THUMB_HEIGHT = 30;
 const PAGE_HEIGHT = 296;
 const CENTIMETER = 0.352778;
 const fullWidth = PAGE_WIDTH - LEFT_MARGIN * 2;
+const corsParam = new HttpParams().append('x-cors', '1');
 
 export interface IFilterState {
   searchText: string;
@@ -70,7 +71,8 @@ export class ProvidersUtilsService {
     this.http
       .get(this.session.g.get('school').app_logo_url, {
         responseType: 'blob',
-        headers: { 'Access-Control-Allow-Origin': '*' }
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        params: corsParam
       })
       .pipe(
         switchMap((blob) => this.loadImage(0, blob)),
@@ -116,7 +118,11 @@ export class ProvidersUtilsService {
 
   fetchQRCode(provider) {
     return this.http
-      .get(provider.qr_img_url, { responseType: 'blob' })
+      .get(provider.qr_img_url, {
+        responseType: 'blob',
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        params: corsParam
+      })
       .pipe(map((blob) => ({ providerId: provider.id, blob: blob })));
   }
 
