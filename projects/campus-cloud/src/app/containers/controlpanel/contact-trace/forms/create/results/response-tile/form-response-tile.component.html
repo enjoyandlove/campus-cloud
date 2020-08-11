@@ -15,8 +15,21 @@
   </div>
 
   <div class="bottom-row">
-    <div class="label-cell">
+    <div class="label-cell" *ngIf="!isImageBlock">
       {{responseLabel}}
+    </div>
+    <div
+      *ngIf="isImageBlock"
+      ready-ui-lightbox
+      class="image-cell"
+      (click)="$event.stopPropagation()"
+    >
+      <img
+        alt=""
+        ready-ui-image
+        [dataSrc]="responseLabel"
+        ready-ui-lighbox-item
+      />
     </div>
     <div class="date-cell">
       {{ response.response_completed_epoch | cpDatePipe: dateFormat }}

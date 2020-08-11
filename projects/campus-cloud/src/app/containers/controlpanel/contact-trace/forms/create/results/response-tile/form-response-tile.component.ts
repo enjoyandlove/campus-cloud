@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBlock, FormResponse } from '@controlpanel/contact-trace/forms/models';
+import { BlockType, FormBlock, FormResponse } from '../../../models';
 import { FORMAT } from '@campus-cloud/shared/pipes';
-import { FormsHelperService } from '@controlpanel/contact-trace/forms/services/forms-helper.service';
+import { FormsHelperService } from '../../../services';
 
 @Component({
   selector: 'cp-form-response-tile',
@@ -14,11 +14,13 @@ export class FormResponseTileComponent implements OnInit {
   @Input() filterQuestionBlockId: number;
   responseLabel = '';
   dateFormat = FORMAT.DATETIME;
+  isImageBlock: boolean;
 
   constructor() {}
 
   ngOnInit(): void {
     this.initializeResponseLabel(this.response);
+    this.initializeIsImageFlag();
   }
 
   private initializeResponseLabel(response: FormResponse) {
@@ -39,5 +41,13 @@ export class FormResponseTileComponent implements OnInit {
         }
       }
     }
+  }
+
+  private initializeIsImageFlag(): void {
+    this.isImageBlock =
+      this.filterQuestionBlockId &&
+      this.blockIdToBlockMap &&
+      this.blockIdToBlockMap[this.filterQuestionBlockId] &&
+      this.blockIdToBlockMap[this.filterQuestionBlockId].block_type === BlockType.image;
   }
 }
