@@ -7,7 +7,8 @@
     {{icon}}</i>
   <ul *ngIf="visible"
       class="dropdown-menu"
-      [ngStyle]="{'left': leftPosition + 'px'}">
+      [ngStyle]="{'left': leftPosition + 'px'}"
+      (click)="itemClicked()">
     <ng-content></ng-content>
   </ul>
 </div>
