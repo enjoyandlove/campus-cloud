@@ -1,3 +1,4 @@
+import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import { from, fromEvent } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -7,6 +8,7 @@ import { concatMap, map, mergeMap, switchMap, first } from 'rxjs/operators';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes/i18n/i18n.pipe';
 import { IDateRange } from '@campus-cloud/shared/components';
+import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { IStudentFilter } from '../../assess/engagement/engagement.utils.service';
 
@@ -27,7 +29,12 @@ export interface IFilterState {
 
 @Injectable()
 export class ProvidersUtilsService {
-  constructor(private session: CPSession, public cpI18Pipe: CPI18nPipe, public http: HttpClient) {}
+  constructor(
+    private session: CPSession,
+    public cpI18Pipe: CPI18nPipe,
+    public http: HttpClient,
+    private store: Store<ISnackbar>
+  ) {}
 
   addSearchParams(search: HttpParams, state: IFilterState): HttpParams {
     if (!state) {
@@ -76,8 +83,12 @@ export class ProvidersUtilsService {
           ({ providerId, imgData }) => {
             providerQRCode[providerId] = imgData;
           },
-          (error) => {
-            console.log('Error: ', error);
+          () => {
+            this.store.dispatch(
+              new baseActionClass.SnackbarError({
+                body: this.cpI18Pipe.transform('something_went_wrong')
+              })
+            );
           },
           () => {
             const doc = new jsPDF();
