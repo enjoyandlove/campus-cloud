@@ -2057,7 +2057,7 @@
     "message": "Acronyme"
   },
   "location_name": {
-    "message": "Location Name"
+    "message": "Nom du lieu"
   },
   "login": {
     "message": "Connexion",
@@ -4506,7 +4506,7 @@
     "message": "Ce champs est requis"
   },
   "web_form_start_page_intro": {
-    "message": "Scannez depuis l'application ou entrez le courriel étudiant pour commencer"
+    "message": "Scannez depuis l'application ou entrez le courriel pour commencer"
   },
   "web_form_submit": {
     "message": "Soumettre"

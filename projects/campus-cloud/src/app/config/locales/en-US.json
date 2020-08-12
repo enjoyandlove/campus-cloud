@@ -4506,7 +4506,7 @@
     "message": "This field is required"
   },
   "web_form_start_page_intro": {
-    "message": "Scan from the App or Enter the Student Email to Begin"
+    "message": "Scan from the App or enter the email to begin"
   },
   "web_form_submit": {
     "message": "Submit"

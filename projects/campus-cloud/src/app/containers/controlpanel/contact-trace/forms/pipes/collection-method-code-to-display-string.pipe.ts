@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CollectionMethod } from '@controlpanel/contact-trace/forms';
+import { CollectionMethod } from '@controlpanel/contact-trace/forms/models';
 
 @Pipe({
   name: 'collectionMethodCodeToDisplayString'
