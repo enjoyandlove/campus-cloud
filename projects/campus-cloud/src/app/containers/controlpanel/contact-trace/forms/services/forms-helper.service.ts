@@ -210,21 +210,20 @@ export class FormsHelperService {
             formBlock.block_type === BlockType.multiple_selection
           ) {
             formBlock.blockLogicRows = [];
-            const nextBlockIndexToBlockLogicRowMap: { [key: number]: BlockLogicRowItem } = {};
+            let currentBlockLogicRow: BlockLogicRowItem = null;
             formBlock.block_logic_list.forEach((blockLogic) => {
-              if (!nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index]) {
-                nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index] = {
+              if (
+                !currentBlockLogicRow ||
+                currentBlockLogicRow.nextBlockIndex !== blockLogic.next_block_index
+              ) {
+                currentBlockLogicRow = {
                   nextBlockIndex: blockLogic.next_block_index,
                   logicOp: blockLogic.logic_op,
                   selectionsArray: formBlock.block_content_list.map(() => false)
                 };
-                formBlock.blockLogicRows.push(
-                  nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index]
-                );
+                formBlock.blockLogicRows.push(currentBlockLogicRow);
               }
-              nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index].selectionsArray[
-                blockLogic.block_content_index
-              ] = true;
+              currentBlockLogicRow.selectionsArray[blockLogic.block_content_index] = true;
             });
           }
         }
