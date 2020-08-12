@@ -30,7 +30,8 @@
   </cp-form-block-body>
 
   <cp-form-block-logic
-    *ngIf="(!formBlock.is_terminal && formBlock.block_logic_list && formBlock.block_logic_list.length > 0) || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)"
+    *ngIf="(!formBlock.is_terminal && formBlock.blockLogicRows)
+    || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)"
     [form]="form"
     [formBlock]="formBlock"
     [highlightFormError]="highlightFormError"

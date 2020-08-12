@@ -27,14 +27,12 @@ export class BlockBodyMultipleChoiceComponent implements OnInit {
         text: '',
         rank: this.formBlock.block_content_list.length
       });
+      FormsHelperService.addContentIndexToBlockLogicRows(this.formBlock.blockLogicRows);
     }
   }
 
   deleteContentClickHandler(index: number): void {
     this.formBlock.block_content_list.splice(index, 1);
-    this.formBlock.block_logic_list = FormsHelperService.removeIndexFromBlockLogicList(
-      this.formBlock.block_logic_list,
-      index
-    );
+    FormsHelperService.removeContentIndexFromBlockLogicRows(this.formBlock.blockLogicRows, index);
   }
 }

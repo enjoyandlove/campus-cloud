@@ -75,10 +75,10 @@
     <button
       type="button"
       class="group-button"
-      *ngIf="formBlock.is_terminal || formBlock.block_type === blockType.multiple_choice || formBlock.block_type === blockType.multiple_selection || formBlock.block_type === blockType.text || formBlock.block_type === blockType.number || formBlock.block_type === blockType.decimal"
       ui-button
-      [color]="((!formBlock.is_terminal && formBlock.block_logic_list && formBlock.block_logic_list.length > 0) || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)) ? 'primary' : 'default'"
-      [style.color]="((!formBlock.is_terminal && formBlock.block_logic_list && formBlock.block_logic_list.length > 0) || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)) ? '#FFFFFF' : '#000000'"
+      *ngIf="formBlock.is_terminal || formBlock.block_type === blockType.multiple_choice || formBlock.block_type === blockType.multiple_selection || formBlock.block_type === blockType.text || formBlock.block_type === blockType.number || formBlock.block_type === blockType.decimal || formBlock.block_type === blockType.image"
+      [color]="((!formBlock.is_terminal && formBlock.blockLogicRows) || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)) ? 'primary' : 'default'"
+      [style.color]="((!formBlock.is_terminal && formBlock.blockLogicRows) || (formBlock.is_terminal && formBlock.extra_info !== null && formBlock.extra_info !== undefined)) ? '#FFFFFF' : '#000000'"
       variant="flat"
       (click)="logicClickHandler()"
     >

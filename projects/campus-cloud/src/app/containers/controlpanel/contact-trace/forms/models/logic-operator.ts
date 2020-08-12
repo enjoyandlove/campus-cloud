@@ -4,5 +4,6 @@ export enum LogicOperator {
   greater_than = 'gt',
   greater_than_or_equal = 'gte',
   less_than = 'lt',
-  less_than_or_equal = 'lte'
+  less_than_or_equal = 'lte',
+  always = 'always'
 }

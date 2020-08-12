@@ -1,4 +1,4 @@
-import { BlockContent, BlockLogic } from '.';
+import { BlockContent, BlockLogic, BlockLogicRowItem } from '.';
 
 export interface FormBlock {
   id?: number;
@@ -13,4 +13,7 @@ export interface FormBlock {
   extra_info?: string;
   block_content_list?: BlockContent[];
   block_logic_list?: BlockLogic[];
+
+  // This is an attribute that is only used by the UI. The API does not support this attribute.
+  blockLogicRows?: BlockLogicRowItem[];
 }

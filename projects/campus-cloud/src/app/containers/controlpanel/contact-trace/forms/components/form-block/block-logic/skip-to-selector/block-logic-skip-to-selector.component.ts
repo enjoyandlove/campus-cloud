@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BlockType, Form, FormBlock } from '../../../../models';
+import { BlockLogicRowItem, BlockType, Form } from '../../../../models';
 
 @Component({
   selector: 'cp-block-logic-skip-to-selector',
@@ -8,8 +8,8 @@ import { BlockType, Form, FormBlock } from '../../../../models';
 })
 export class BlockLogicSkipToSelectorComponent implements OnInit {
   @Input() form: Form;
-  @Input() formBlock: FormBlock;
   @Input() highlightFormError: boolean;
+  @Input() blockLogicRow: BlockLogicRowItem;
   blockTypeToIconMap: {} = {
     [BlockType.text]: 'text_input',
     [BlockType.number]: 'numeric_input',
@@ -25,8 +25,6 @@ export class BlockLogicSkipToSelectorComponent implements OnInit {
   ngOnInit(): void {}
 
   blockLogicSelectHandler(index: number): void {
-    this.formBlock.block_logic_list.forEach((blockLogic) => {
-      blockLogic.next_block_index = index;
-    });
+    this.blockLogicRow.nextBlockIndex = index;
   }
 }

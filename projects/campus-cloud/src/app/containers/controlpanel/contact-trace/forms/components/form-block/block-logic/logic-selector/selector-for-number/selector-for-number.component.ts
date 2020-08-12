@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBlock, LogicOperator } from '@controlpanel/contact-trace/forms/models';
+import { BlockLogicRowItem, BlockType, FormBlock, LogicOperator } from '../../../../../models';
 
 @Component({
   selector: 'cp-selector-for-number',
@@ -7,8 +7,9 @@ import { FormBlock, LogicOperator } from '@controlpanel/contact-trace/forms/mode
   styleUrls: ['./selector-for-number.component.scss']
 })
 export class SelectorForNumberComponent implements OnInit {
-  @Input() formBlock: FormBlock;
   @Input() highlightFormError: boolean;
+  @Input() blockLogicRow: BlockLogicRowItem;
+  @Input() formBlock: FormBlock;
   logicOperatorToTextMap = {
     [LogicOperator.equal]: 'contact_trace_forms_if_equals',
     [LogicOperator.not_equal]: 'contact_trace_forms_if_not_equals',
@@ -25,16 +26,32 @@ export class SelectorForNumberComponent implements OnInit {
     LogicOperator.less_than,
     LogicOperator.less_than_or_equal
   ];
+  logicText: string;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.logicText = this.blockLogicRow.arbitraryData;
+  }
 
   highlightError(): boolean {
     return (
       this.highlightFormError &&
-      (!this.formBlock.block_logic_list[0].arbitrary_data ||
-        this.formBlock.block_logic_list[0].arbitrary_data.trim().length === 0)
+      (!this.blockLogicRow.arbitraryData || this.blockLogicRow.arbitraryData.trim().length === 0)
     );
+  }
+
+  validateInput(): void {
+    let matcher;
+    if (this.formBlock.block_type === BlockType.number) {
+      matcher = /^[0-9]*$/;
+    } else if (this.formBlock.block_type === BlockType.decimal) {
+      matcher = /^\d*\.?\d*$/;
+    }
+    if ((this.logicText ? this.logicText : '').match(matcher)) {
+      this.blockLogicRow.arbitraryData = this.logicText;
+    } else {
+      this.logicText = this.blockLogicRow.arbitraryData;
+    }
   }
 }

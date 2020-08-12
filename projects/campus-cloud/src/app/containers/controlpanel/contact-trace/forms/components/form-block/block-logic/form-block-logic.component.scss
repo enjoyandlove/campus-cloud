@@ -1,14 +1,43 @@
-.logic-row {
+.page-container {
   border-top: 1px solid #adadad;
   margin-top: 20px;
-  padding-top: 20px;
 
-  .skip-to-selector {
-    vertical-align: top;
+  .logic-header {
+    margin: 10px 0;
+    font-weight: bold;
   }
 
-  .logic-selector {
-    vertical-align: top;
-    margin-left: 20px;
+  .logic-row {
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+    position: relative;
+
+    .skip-to-selector {
+      vertical-align: top;
+    }
+
+    .logic-selector {
+      vertical-align: top;
+      margin-left: 20px;
+    }
+
+    .delete-button {
+      padding: 0 4px;
+      float: right;
+
+      .delete-button-stack {
+        margin-top: -4px;
+      }
+    }
+  }
+
+  .add-button {
+    margin-top: 10px;
+    .add-button-stack {
+      line-height: 30px;
+      font-size: 30px;
+      color: #adadad;
+    }
   }
 }

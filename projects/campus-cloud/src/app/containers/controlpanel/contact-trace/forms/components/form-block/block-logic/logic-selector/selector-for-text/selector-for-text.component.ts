@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBlock, LogicOperator } from '../../../../../models';
+import { BlockLogicRowItem, LogicOperator } from '../../../../../models';
 
 @Component({
   selector: 'cp-selector-for-text',
@@ -7,8 +7,8 @@ import { FormBlock, LogicOperator } from '../../../../../models';
   styleUrls: ['./selector-for-text.component.scss']
 })
 export class SelectorForTextComponent implements OnInit {
-  @Input() formBlock: FormBlock;
   @Input() highlightFormError: boolean;
+  @Input() blockLogicRow: BlockLogicRowItem;
   logicOperatorToTextMap = {
     [LogicOperator.equal]: 'contact_trace_forms_if_equals',
     [LogicOperator.not_equal]: 'contact_trace_forms_if_not_equals'
@@ -22,8 +22,7 @@ export class SelectorForTextComponent implements OnInit {
   highlightError(): boolean {
     return (
       this.highlightFormError &&
-      (!this.formBlock.block_logic_list[0].arbitrary_data ||
-        this.formBlock.block_logic_list[0].arbitrary_data.trim().length === 0)
+      (!this.blockLogicRow.arbitraryData || this.blockLogicRow.arbitraryData.trim().length === 0)
     );
   }
 }
