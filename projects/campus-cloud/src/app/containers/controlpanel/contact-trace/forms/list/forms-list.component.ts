@@ -69,6 +69,7 @@ export class FormsListComponent implements OnInit {
     const filterSource = this.filterStream.pipe(
       map((filter) => {
         this.filter = filter;
+        this.pageCounter = 1;
         return { searchTerm: this.searchTerm, page: this.pageCounter };
       })
     );
