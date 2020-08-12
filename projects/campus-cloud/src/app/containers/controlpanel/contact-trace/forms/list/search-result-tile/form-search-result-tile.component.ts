@@ -20,6 +20,7 @@ export class FormSearchResultTileComponent implements OnInit {
   @Output() itemUpdated = new EventEmitter<Form>();
   canEdit: boolean;
   showFormDeleteModal: boolean;
+  showFormPublishModal: boolean;
   showFormUnpublishModal: boolean;
   completionPercentStr: string;
   resultLabels: string[];
@@ -53,6 +54,10 @@ export class FormSearchResultTileComponent implements OnInit {
     this.router.navigate(['/contact-trace/forms/edit', this.form.id, 'results']);
   }
 
+  publishClickHandler(): void {
+    this.showFormPublishModal = true;
+  }
+
   unpublishClickHandler(): void {
     this.showFormUnpublishModal = true;
   }
@@ -63,6 +68,11 @@ export class FormSearchResultTileComponent implements OnInit {
 
   onDeletedForm(): void {
     this.handleSuccess('contact_trace_forms_form_delete_success');
+    this.itemUpdated.emit();
+  }
+
+  onPublishedForm(): void {
+    this.handleSuccess('contact_trace_forms_publish_successful');
     this.itemUpdated.emit();
   }
 

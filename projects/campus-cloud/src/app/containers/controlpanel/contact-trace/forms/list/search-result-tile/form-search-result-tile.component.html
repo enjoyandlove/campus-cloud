@@ -81,8 +81,8 @@
 
   <div
     class="results-row"
-    *ngIf="form.is_published && form.daily_stats"
-  >
+    *ngIf="(form.status === formStatus.published || form.status === formStatus.expired) && form.daily_stats"
+  > <!-- As per PRD, the daily results section will only be shown for published or expired forms -->
 
     <div class="daily-summary-text">
       {{ 'contact_trace_forms_daily_summary' | cpI18n }}
@@ -162,6 +162,21 @@
       </ready-ui-stack>
     </button>
   </ready-ui-menu-item>
+  <ready-ui-menu-item *ngIf="form.status === formStatus.expired">
+    <button ui-button
+            type="button"
+            color="inherit"
+            variant="inline"
+            fullWidth="true"
+            data-toggle="modal"
+            data-target="#formPublishModal"
+            (click)="publishClickHandler(); primary.close();"
+    >
+      <ready-ui-stack spacing="tight">
+        <span>{{ 'contact_trace_forms_publish' | cpI18n }}</span>
+      </ready-ui-stack>
+    </button>
+  </ready-ui-menu-item>
   <ready-ui-menu-item *ngIf="form.status === formStatus.published">
     <button ui-button
             type="button"
@@ -188,6 +203,17 @@
     (deleteForm)="onDeletedForm()"
   >
   </cp-form-delete>
+</cp-modal>
+
+<cp-modal
+  modalId="formPublishModal"
+  *ngIf="showFormPublishModal"
+>
+  <cp-form-publish
+    [form]="form"
+    (publishForm)="onPublishedForm()"
+  >
+  </cp-form-publish>
 </cp-modal>
 
 <cp-modal
