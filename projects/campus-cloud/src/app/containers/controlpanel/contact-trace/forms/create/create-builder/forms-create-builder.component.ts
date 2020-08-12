@@ -216,35 +216,29 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
 
   private updateSkipToForInserts(index: number): void {
     this.form.form_block_list.forEach((formBlock) => {
-      if (
-        formBlock &&
-        formBlock.block_logic_list &&
-        formBlock.block_logic_list.length > 0 &&
-        formBlock.block_logic_list[0].next_block_index >= index
-      ) {
-        formBlock.block_logic_list.forEach(
-          (blockLogic) => (blockLogic.next_block_index = blockLogic.next_block_index + 1)
-        );
+      if (formBlock && formBlock.blockLogicRows && formBlock.blockLogicRows.length > 0) {
+        formBlock.blockLogicRows.forEach((blockLogicRow) => {
+          if (blockLogicRow.nextBlockIndex >= index) {
+            blockLogicRow.nextBlockIndex++;
+          }
+        });
       }
     });
   }
 
   private updateSkipToForDeletes(index: number): void {
     this.form.form_block_list.forEach((formBlock) => {
-      if (
-        formBlock &&
-        formBlock.block_logic_list &&
-        formBlock.block_logic_list.length > 0 &&
-        formBlock.block_logic_list[0].next_block_index !== -1
-      ) {
-        if (formBlock.block_logic_list[0].next_block_index === index) {
-          formBlock.block_logic_list.forEach((blockLogic) => (blockLogic.next_block_index = -1));
-        }
-        if (formBlock.block_logic_list[0].next_block_index > index) {
-          formBlock.block_logic_list.forEach(
-            (blockLogic) => (blockLogic.next_block_index = blockLogic.next_block_index - 1)
-          );
-        }
+      if (formBlock && formBlock.blockLogicRows && formBlock.blockLogicRows.length > 0) {
+        formBlock.blockLogicRows.forEach((blockLogicRow) => {
+          if (blockLogicRow.nextBlockIndex !== -1) {
+            if (blockLogicRow.nextBlockIndex === index) {
+              // The block that we were skipping to got deleted. So, set it to -1.
+              blockLogicRow.nextBlockIndex = -1;
+            } else if (blockLogicRow.nextBlockIndex > index) {
+              blockLogicRow.nextBlockIndex--;
+            }
+          }
+        });
       }
     });
   }

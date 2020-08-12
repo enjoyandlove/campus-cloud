@@ -12,7 +12,7 @@
     ready-ui-menu-trigger
     direction="bottom-right"
   >
-    {{ logicOperatorToTextMap[formBlock.block_logic_list[0].logic_op] | cpI18n }}
+    {{ logicOperatorToTextMap[blockLogicRow.logicOp] | cpI18n }}
   </button>
 
   <button
@@ -27,7 +27,9 @@
       type="text"
       class="form-control"
       maxlength="15"
-      [(ngModel)]="formBlock.block_logic_list[0].arbitrary_data"
+      [(ngModel)]="logicText"
+      (keydown)="validateInput()"
+      (keyup)="validateInput()"
     />
   </button>
 
@@ -39,7 +41,7 @@
 
     <ready-ui-menu-item
       *ngFor="let operator of availableLogicOperators"
-      [suffixTpl]="formBlock.block_logic_list[0].logic_op === operator ? activeItem : undefined"
+      [suffixTpl]="blockLogicRow.logicOp === operator ? activeItem : undefined"
     >
       <button ui-button
               class="menu-item-button"
@@ -47,7 +49,7 @@
               color="inherit"
               variant="inline"
               fullWidth="true"
-              (click)="formBlock.block_logic_list[0].logic_op = operator; primary.close();"
+              (click)="blockLogicRow.logicOp = operator; primary.close();"
       >
         {{ logicOperatorToTextMap[operator] | cpI18n }}
       </button>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BlockType, Form, FormBlock } from '../../../models';
+import { FormsHelperService } from '@controlpanel/contact-trace/forms';
 
 @Component({
   selector: 'cp-form-block-logic',
@@ -15,4 +16,15 @@ export class FormBlockLogicComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  deleteBlockLogicRowClickHandler(index: number): void {
+    this.formBlock.blockLogicRows.splice(index, 1);
+    if (this.formBlock.blockLogicRows.length === 0) {
+      this.formBlock.blockLogicRows = null;
+    }
+  }
+
+  addBlockLogicRowClickHandler(): void {
+    this.formBlock.blockLogicRows.push(FormsHelperService.generateNewBlockLogicRow(this.formBlock));
+  }
 }

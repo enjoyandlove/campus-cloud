@@ -16,6 +16,8 @@
 
     .selections-button {
       padding: 0 15px;
+      cursor: default;
+      pointer-events: none;
     }
 
     .alphabet-button {

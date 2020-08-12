@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BlockLogic, BlockType, Form, FormBlock, FormResponse } from '../models';
+import {
+  BlockLogic,
+  BlockLogicRowItem,
+  BlockType,
+  Form,
+  FormBlock,
+  FormResponse,
+  LogicOperator,
+  OperandType
+} from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +39,25 @@ export class FormsHelperService {
     return blockLogicList;
   }
 
+  static addContentIndexToBlockLogicRows(blockLogicRows: BlockLogicRowItem[]): void {
+    if (blockLogicRows) {
+      blockLogicRows.forEach((blockLogicRow) => {
+        blockLogicRow.selectionsArray.push(false);
+      });
+    }
+  }
+
+  static removeContentIndexFromBlockLogicRows(
+    blockLogicRows: BlockLogicRowItem[],
+    index: number
+  ): void {
+    if (blockLogicRows) {
+      blockLogicRows.forEach((blockLogicRow) => {
+        blockLogicRow.selectionsArray.splice(index, 1);
+      });
+    }
+  }
+
   static formatObjectBeforeSave(form: Form): void {
     if (form) {
       if (form.form_block_list) {
@@ -44,6 +72,50 @@ export class FormsHelperService {
               delete blockContent['form_block_id'];
             });
           }
+
+          if (formBlock.blockLogicRows && formBlock.blockLogicRows.length > 0) {
+            if (
+              formBlock.block_type === BlockType.text ||
+              formBlock.block_type === BlockType.number ||
+              formBlock.block_type === BlockType.decimal
+            ) {
+              formBlock.block_logic_list = formBlock.blockLogicRows.map((blockLogicRow) => ({
+                logic_op: blockLogicRow.logicOp,
+                next_block_index: blockLogicRow.nextBlockIndex,
+                arbitrary_data_type: blockLogicRow.arbitraryDataType,
+                arbitrary_data: blockLogicRow.arbitraryData
+              }));
+            } else if (formBlock.block_type === BlockType.image) {
+              const blockLogicRow: BlockLogicRowItem = formBlock.blockLogicRows[0];
+              formBlock.block_logic_list = [
+                {
+                  logic_op: blockLogicRow.logicOp,
+                  next_block_index: blockLogicRow.nextBlockIndex,
+                  block_content_index: 0
+                }
+              ];
+            } else if (
+              formBlock.block_type === BlockType.multiple_choice ||
+              formBlock.block_type === BlockType.multiple_selection
+            ) {
+              formBlock.block_logic_list = [];
+              formBlock.blockLogicRows.forEach((blockLogicRow) => {
+                if (blockLogicRow.selectionsArray) {
+                  blockLogicRow.selectionsArray.forEach((selected: boolean, index) => {
+                    if (selected) {
+                      formBlock.block_logic_list.push({
+                        next_block_index: blockLogicRow.nextBlockIndex,
+                        logic_op: blockLogicRow.logicOp,
+                        block_content_index: index
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          } else {
+            formBlock.block_logic_list = [];
+          }
         });
       }
     }
@@ -52,6 +124,7 @@ export class FormsHelperService {
   static formatFormFromDatabaseForUI(form: Form): void {
     FormsHelperService.convertIdsInFormFromServerToIndexes(form);
     FormsHelperService.prepareResultBlockExternalInfoForUI(form);
+    FormsHelperService.prepareBlockLogicDataStructureForUI(form);
   }
 
   static prepareResultBlockExternalInfoForUI(form: Form): void {
@@ -108,6 +181,57 @@ export class FormsHelperService {
     }
   }
 
+  static prepareBlockLogicDataStructureForUI(form: Form): void {
+    if (form && form.form_block_list) {
+      form.form_block_list.forEach((formBlock) => {
+        if (formBlock.block_logic_list && formBlock.block_logic_list.length > 0) {
+          if (
+            formBlock.block_type === BlockType.text ||
+            formBlock.block_type === BlockType.number ||
+            formBlock.block_type === BlockType.decimal
+          ) {
+            formBlock.blockLogicRows = formBlock.block_logic_list.map((blockLogic) => ({
+              logicOp: blockLogic.logic_op,
+              arbitraryData: blockLogic.arbitrary_data,
+              nextBlockIndex: blockLogic.next_block_index,
+              arbitraryDataType: blockLogic.arbitrary_data_type
+            }));
+          } else if (formBlock.block_type === BlockType.image) {
+            const blockLogic: BlockLogic = formBlock.block_logic_list[0];
+            formBlock.blockLogicRows = [
+              {
+                logicOp: blockLogic.logic_op,
+                nextBlockIndex: blockLogic.next_block_index,
+                selectionsArray: [true]
+              }
+            ];
+          } else if (
+            formBlock.block_type === BlockType.multiple_choice ||
+            formBlock.block_type === BlockType.multiple_selection
+          ) {
+            formBlock.blockLogicRows = [];
+            const nextBlockIndexToBlockLogicRowMap: { [key: number]: BlockLogicRowItem } = {};
+            formBlock.block_logic_list.forEach((blockLogic) => {
+              if (!nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index]) {
+                nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index] = {
+                  nextBlockIndex: blockLogic.next_block_index,
+                  logicOp: blockLogic.logic_op,
+                  selectionsArray: formBlock.block_content_list.map(() => false)
+                };
+                formBlock.blockLogicRows.push(
+                  nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index]
+                );
+              }
+              nextBlockIndexToBlockLogicRowMap[blockLogic.next_block_index].selectionsArray[
+                blockLogic.block_content_index
+              ] = true;
+            });
+          }
+        }
+      });
+    }
+  }
+
   static formatFormCreatedFromTemplate(form: Form, template: Form): Form {
     const formNameBackup: string = form.name;
     Object.assign(form, template);
@@ -159,9 +283,9 @@ export class FormsHelperService {
               errorMessages.push('Block Text');
             }
 
-            if (formBlock.block_logic_list) {
-              formBlock.block_logic_list.forEach((blockLogic) => {
-                if (blockLogic.next_block_index === -1) {
+            if (formBlock.blockLogicRows) {
+              formBlock.blockLogicRows.forEach((blockLogicRow) => {
+                if (blockLogicRow.nextBlockIndex === -1) {
                   errorMessages.push('Skip To');
                 }
               });
@@ -181,13 +305,12 @@ export class FormsHelperService {
                   }
                 });
               }
-              if (formBlock.block_logic_list && formBlock.block_logic_list.length > 0) {
-                if (
-                  formBlock.block_logic_list[0].block_content_index === null ||
-                  formBlock.block_logic_list[0].block_content_index === undefined
-                ) {
-                  errorMessages.push('For Selections');
-                }
+              if (formBlock.blockLogicRows) {
+                formBlock.blockLogicRows.forEach((blockLogicRow) => {
+                  if (blockLogicRow.selectionsArray.filter((selection) => selection).length === 0) {
+                    errorMessages.push('For Selections');
+                  }
+                });
               }
             }
 
@@ -197,13 +320,15 @@ export class FormsHelperService {
               formBlock.block_type === BlockType.decimal
             ) {
               // Text, Number or Decimal
-              if (formBlock.block_logic_list && formBlock.block_logic_list.length > 0) {
-                if (
-                  !formBlock.block_logic_list[0].arbitrary_data ||
-                  formBlock.block_logic_list[0].arbitrary_data.trim().length === 0
-                ) {
-                  errorMessages.push('For Selections');
-                }
+              if (formBlock.blockLogicRows) {
+                formBlock.blockLogicRows.forEach((blockLogicRow) => {
+                  if (
+                    !blockLogicRow.arbitraryData ||
+                    blockLogicRow.arbitraryData.trim().length === 0
+                  ) {
+                    errorMessages.push('For Selections');
+                  }
+                });
               }
             }
 
@@ -274,5 +399,30 @@ export class FormsHelperService {
   static generateShareUrl(form: Form): string {
     const origin: string = window.origin; // Looks like this: https://campuscloud.readyeducation.com
     return `${origin}/#/cb/web-form/${form.external_id}/start`;
+  }
+
+  static generateNewBlockLogicRow(formBlock: FormBlock): BlockLogicRowItem {
+    const blockLogicRow: BlockLogicRowItem = {
+      nextBlockIndex: -1,
+      logicOp: formBlock.block_type === BlockType.image ? LogicOperator.always : LogicOperator.equal
+    };
+
+    switch (formBlock.block_type) {
+      case BlockType.multiple_choice:
+      case BlockType.multiple_selection:
+        blockLogicRow.selectionsArray = formBlock.block_content_list.map(() => false);
+        break;
+      case BlockType.text:
+        blockLogicRow.arbitraryDataType = OperandType.str;
+        break;
+      case BlockType.number:
+        blockLogicRow.arbitraryDataType = OperandType.int;
+        break;
+      case BlockType.decimal:
+        blockLogicRow.arbitraryDataType = OperandType.decimal;
+        break;
+    }
+
+    return blockLogicRow;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlockType, FormBlock, LogicOperator, OperandType } from '../../../models';
+import { FormsHelperService } from '@controlpanel/contact-trace/forms';
 
 @Component({
   selector: 'cp-form-block-header',
@@ -46,24 +47,10 @@ export class FormBlockHeaderComponent implements OnInit {
   }
 
   toggleLogicForQuestionBlocks(): void {
-    if (this.formBlock.block_logic_list && this.formBlock.block_logic_list.length > 0) {
-      delete this.formBlock.block_logic_list;
+    if (this.formBlock.blockLogicRows) {
+      this.formBlock.blockLogicRows = null;
     } else {
-      let dataType: OperandType;
-      if (this.formBlock.block_type === BlockType.text) {
-        dataType = OperandType.str;
-      } else if (this.formBlock.block_type === BlockType.number) {
-        dataType = OperandType.int;
-      } else if (this.formBlock.block_type === BlockType.decimal) {
-        dataType = OperandType.decimal;
-      }
-      this.formBlock.block_logic_list = [
-        {
-          next_block_index: -1,
-          logic_op: LogicOperator.equal,
-          arbitrary_data_type: dataType
-        }
-      ];
+      this.formBlock.blockLogicRows = [FormsHelperService.generateNewBlockLogicRow(this.formBlock)];
     }
   }
 }

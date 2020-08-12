@@ -1,44 +1,94 @@
-<div class="logic-row">
+<div class="page-container">
+
+  <div class="logic-header">
+    {{ 'contact_trace_forms_logic' | cpI18n }}
+  </div>
 
   <ng-container *ngIf="!formBlock.is_terminal">
-    <cp-block-logic-skip-to-selector
-      class="skip-to-selector"
-      [form]="form"
-      [formBlock]="formBlock"
-      [highlightFormError]="highlightFormError"
-    >
-    </cp-block-logic-skip-to-selector>
 
-    <cp-selector-for-options
-      class="logic-selector"
-      *ngIf="formBlock.block_type === blockType.multiple_choice || formBlock.block_type === blockType.multiple_selection"
-      [formBlock]="formBlock"
-      [highlightFormError]="highlightFormError"
-    >
-    </cp-selector-for-options>
+    <div class="logic-row" *ngFor="let blockLogicRow of formBlock.blockLogicRows; let blockLogicRowIndex = index;">
 
-    <cp-selector-for-text
-      class="logic-selector"
-      *ngIf="formBlock.block_type === blockType.text"
-      [formBlock]="formBlock"
-      [highlightFormError]="highlightFormError"
-    >
-    </cp-selector-for-text>
+      <cp-block-logic-skip-to-selector
+        class="skip-to-selector"
+        [form]="form"
+        [highlightFormError]="highlightFormError"
+        [blockLogicRow]="blockLogicRow"
+      >
+      </cp-block-logic-skip-to-selector>
 
-    <cp-selector-for-number
-      class="logic-selector"
-      *ngIf="formBlock.block_type === blockType.number || formBlock.block_type === blockType.decimal"
-      [formBlock]="formBlock"
-      [highlightFormError]="highlightFormError"
+      <cp-selector-for-options
+        class="logic-selector"
+        *ngIf="formBlock.block_type === blockType.multiple_choice || formBlock.block_type === blockType.multiple_selection"
+        [formBlock]="formBlock"
+        [highlightFormError]="highlightFormError"
+        [blockLogicRow]="blockLogicRow"
+      >
+      </cp-selector-for-options>
+
+      <cp-selector-for-text
+        class="logic-selector"
+        *ngIf="formBlock.block_type === blockType.text"
+        [highlightFormError]="highlightFormError"
+        [blockLogicRow]="blockLogicRow"
+      >
+      </cp-selector-for-text>
+
+      <cp-selector-for-number
+        class="logic-selector"
+        *ngIf="formBlock.block_type === blockType.number || formBlock.block_type === blockType.decimal"
+        [highlightFormError]="highlightFormError"
+        [blockLogicRow]="blockLogicRow"
+        [formBlock]="formBlock"
+      >
+      </cp-selector-for-number>
+
+      <cp-selector-for-image
+        class="logic-selector"
+        *ngIf="formBlock.block_type === blockType.image"
+        [highlightFormError]="highlightFormError"
+        [blockLogicRow]="blockLogicRow"
+      >
+      </cp-selector-for-image>
+
+      <button
+        ui-button
+        variant="stroked"
+        class="delete-button"
+        [color]="'default'"
+        (click)="deleteBlockLogicRowClickHandler(blockLogicRowIndex);"
+      >
+        <ready-ui-stack class="delete-button-stack" spacing="tight">
+          <ready-ui-icon
+            width="25px"
+            name="close"
+          >
+          </ready-ui-icon>
+        </ready-ui-stack>
+      </button>
+
+    </div>
+
+    <button
+      *ngIf="formBlock.blockLogicRows.length < 5  && formBlock.block_type !== blockType.image"
+      ui-button
+      variant="stroked"
+      class="add-button"
+      [color]="'default'"
+      (click)="addBlockLogicRowClickHandler()"
     >
-    </cp-selector-for-number>
+      <ready-ui-stack class="add-button-stack" spacing="tight">
+        +
+      </ready-ui-stack>
+    </button>
+
   </ng-container>
 
-  <ng-container *ngIf="formBlock.is_terminal">
+  <div class="logic-row" *ngIf="formBlock.is_terminal">
     <cp-selector-for-result
       [formBlock]="formBlock"
     >
     </cp-selector-for-result>
-  </ng-container>
+  </div>
+
 
 </div>
