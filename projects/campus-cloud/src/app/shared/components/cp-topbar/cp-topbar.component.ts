@@ -44,6 +44,7 @@ export class CPTopBarComponent implements OnInit {
   logo = `${environment.root}assets/svg/logo.svg`;
   helpIcon = `${environment.root}assets/svg/help/help.svg`;
   defaultImage = `${environment.root}assets/default/user.png`;
+  contactTraceRouterLink: string[] = [];
 
   constructor(
     public router: Router,
@@ -134,21 +135,28 @@ export class CPTopBarComponent implements OnInit {
     this.canAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
     this.canCustomise = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization);
-    if (this.school.contact_trace_feature_level !== ContactTraceFeatureLevel.Disabled) {
-      this.canContractTrace = canSchoolReadResource(
+
+    const serviceId: number = this.session.g.get('school').ct_service_id;
+    if (serviceId === -1 || this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Disabled) {
+      this.canContractTrace = false;
+    } else {
+      const canContactTraceQR = canSchoolReadResource(
         this.session.g,
         CP_PRIVILEGES_MAP.contact_trace_qr
       );
-      if (
-        !this.canContractTrace &&
-        this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Plus
-      ) {
-        this.canContractTrace = canSchoolReadResource(
-          this.session.g,
-          CP_PRIVILEGES_MAP.contact_trace_forms
-        );
+      const canContactTraceForms =
+        (this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Plus)
+        ? canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms)
+        : false
+      this.canContractTrace = canContactTraceQR || canContactTraceForms;
+
+      if (canContactTraceForms) {
+        this.contactTraceRouterLink = ['/contact-trace'];
+      } else if (canContactTraceQR) {
+        this.contactTraceRouterLink = ['/contact-trace/qr'];
       }
     }
+
     this.isManageActiveRoute = this.isManage(this.router.url);
 
     this.router.events.subscribe((event) => {
