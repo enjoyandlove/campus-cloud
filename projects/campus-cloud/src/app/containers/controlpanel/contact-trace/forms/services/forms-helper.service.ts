@@ -6,6 +6,7 @@ import {
   Form,
   FormBlock,
   FormResponse,
+  FormStatus,
   LogicOperator,
   OperandType
 } from '../models';
@@ -60,6 +61,10 @@ export class FormsHelperService {
 
   static formatObjectBeforeSave(form: Form): void {
     if (form) {
+      if (form.is_published) {
+        form.open_until_epoch = -1;
+      }
+
       if (form.form_block_list) {
         form.form_block_list.forEach((formBlock) => {
           if (!formBlock.extra_info) {

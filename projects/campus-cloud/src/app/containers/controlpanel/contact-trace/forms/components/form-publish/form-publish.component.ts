@@ -7,7 +7,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { Form } from '@controlpanel/contact-trace/forms/models';
+import { Form, FormStatus } from '@controlpanel/contact-trace/forms/models';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { FormsService } from '@controlpanel/contact-trace/forms/services';
@@ -46,7 +46,12 @@ export class FormPublishComponent implements OnInit {
 
   onPublish() {
     const params = new HttpParams().set('school_id', this.session.g.get('school').id);
-    const formCopyForSave: Form = { ...this.form, is_published: true };
+    let formCopyForSave: Form;
+    if (this.form.status === FormStatus.expired) {
+      formCopyForSave = { id: this.form.id, is_published: true };
+    } else {
+      formCopyForSave = { ...this.form, is_published: true };
+    }
     if (!formCopyForSave.id) {
       this.formsService.createForm(formCopyForSave, params).subscribe(
         (form) => {
