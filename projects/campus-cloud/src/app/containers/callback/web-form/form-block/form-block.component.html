@@ -67,7 +67,6 @@
           </div>
         </div>
       </div>
-
       <div *ngIf="currentFormBlock.block_type === 3" class="form-block-content">
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
           <p>{{ blockContent.text }}</p>
@@ -106,8 +105,14 @@
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
           <p>{{ blockContent.text }}</p>
           <div class="form-group">
-            <input type="file" (change)="onFileAdd($event)" />
-            <div class="error-wrapper"></div>
+            <div class="mb-1">
+              <input type="file" (change)="onFileAdd($event)" />
+            </div>
+            <div class="error-wrapper">
+              <div *ngIf="fileError !== ''" class="error-text">
+                {{ fileError }}
+              </div>
+            </div>
           </div>
         </div>
       </div>

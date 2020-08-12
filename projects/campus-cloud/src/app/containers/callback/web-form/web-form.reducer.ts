@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { start, reset, addResponse, removeResponse } from './web-form.actions';
 import { FormState } from './form-state.interface';
+import { FormBlockResponse } from './form-block.interface';
 
 const initialState: FormState = {
   formResponseId: null,
@@ -22,10 +23,11 @@ const _webFormReducer = createReducer(
     formBlockResponses: []
   })),
   on(addResponse, (state, currentFormBlockResponse) => {
-    const newResponse = {
-      form_block_id: currentFormBlockResponse.formBlockId,
-      response_form_block_content_ids: currentFormBlockResponse.responseFormBlockContentIds,
-      response_data: currentFormBlockResponse.responseData
+    const { formBlockId, responseFormBlockContentIds, responseData } = currentFormBlockResponse;
+    let newResponse: FormBlockResponse = {
+      form_block_id: formBlockId,
+      response_form_block_content_ids: responseFormBlockContentIds,
+      response_data: responseData
     };
 
     // Remove falsy values

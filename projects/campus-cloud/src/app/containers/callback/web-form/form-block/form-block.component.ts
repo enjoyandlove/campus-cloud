@@ -5,7 +5,8 @@ import { Store, select } from '@ngrx/store';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { MAX_UPLOAD_SIZE } from '@campus-cloud/shared/constants';
 import { FormState } from '../form-state.interface';
 import { WebFormService } from '../web-form.service';
 
@@ -15,13 +16,15 @@ import { setError } from '../web-form-error.actions';
 @Component({
   selector: 'app-form-block',
   templateUrl: './form-block.component.html',
-  styleUrls: ['./form-block.component.scss']
+  styleUrls: ['./form-block.component.scss'],
+  providers: [CPI18nPipe]
 })
 export class FormBlockComponent extends BaseComponent implements OnInit {
   formBlock: FormGroup;
   formState: FormState;
   file: any;
   loadingFile: boolean = false;
+  fileError: string = '';
 
   formId: string;
   formBlockId: number;
@@ -33,7 +36,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
   @Input() currentFormBlock: any;
 
   constructor(
-    public cpI18n: CPI18nService,
+    public cpI18nPipe: CPI18nPipe,
     private router: Router,
     private store: Store<{ webForm: FormState; webFormError: string }>,
     private webFormService: WebFormService,
@@ -54,7 +57,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
     );
   }
 
-  setError(message: string = this.cpI18n.translate('web_form_action_not_successful')) {
+  setError(message: string = this.cpI18nPipe.transform('web_form_action_not_successful')) {
     this.store.dispatch(
       setError({
         message
@@ -95,24 +98,36 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
   }
 
   onFileAdd(e: any) {
+    const file = e.target.files[0];
     const { formResponseId } = this.formState;
     this.formBlock.patchValue({
       answer: ''
     });
-    this.clearError();
-    this.loadingFile = true;
-    this.webFormService.uploadImage(7, formResponseId, e.target.files[0]).subscribe(
-      (response: any) => {
-        this.formBlock.patchValue({
-          answer: response.image_url
-        });
+    this.fileError = '';
+
+    if (file) {
+      this.loadingFile = true;
+      // Evaluate file errors.
+      if (file.size > MAX_UPLOAD_SIZE) {
+        this.fileError = this.cpI18nPipe.transform('t_shared_image_upload_error_size', file.name);
         this.loadingFile = false;
-      },
-      () => {
-        this.loadingFile = false;
-        this.setError(this.cpI18n.translate('customization_image_upload_error'));
       }
-    );
+
+      if (this.fileError === '') {
+        this.webFormService.uploadImage(7, formResponseId, file).subscribe(
+          (response: any) => {
+            this.formBlock.patchValue({
+              answer: response.image_url
+            });
+            this.loadingFile = false;
+          },
+          () => {
+            this.loadingFile = false;
+            this.fileError = this.cpI18nPipe.transform('customization_image_upload_error');
+          }
+        );
+      }
+    }
   }
 
   submit() {
@@ -147,6 +162,8 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
       responseFormBlockContentIds = answer;
       responseFormBlockContentIdsArray = answer === '' ? [] : answer.split(',');
     } else {
+      responseFormBlockContentIdsArray =
+        answer === '' ? [] : [this.currentFormBlock.block_content_list[0].id];
       responseData = answer;
     }
 
