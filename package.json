@@ -1,6 +1,6 @@
 {
   "name": "oohlalamobile_control_panel",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Control Panel",
   "engines": {
     "node": ">=12.4.0"
