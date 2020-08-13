@@ -1,4 +1,5 @@
 @import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/colors';
 
 .delete-provider {
   font-size: 2em;
@@ -18,6 +19,14 @@ cp-menu {
       width: 200px;
       padding: 12px;
       cursor: pointer;
+    }
+
+    .disabled {
+      color: $color-med-grey;
+      cursor: not-allowed !important;
+      &:hover {
+        background-color: $color-white;
+      }
     }
   }
 }

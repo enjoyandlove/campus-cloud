@@ -17,6 +17,7 @@ export class QrListActionBoxComponent implements OnInit {
   @Input() noProviders;
   @Input() allowLocationsImport;
   @Input() allowServiceProvidersImport;
+  @Input() isDownloading;
 
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() downloadAllQR: EventEmitter<null> = new EventEmitter();
@@ -50,7 +51,9 @@ export class QrListActionBoxComponent implements OnInit {
   }
 
   onDownloadAllQR() {
-    this.downloadAllQR.emit();
+    if (!this.isDownloading) {
+      this.downloadAllQR.emit();
+    }
   }
 
   onImportLocations() {

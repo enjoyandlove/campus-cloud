@@ -11,7 +11,8 @@
                              (downloadAllQR)="onDownloadAllQR()"
                              (filterByDates)="onDateFilter($event)"
                              (updateStudentFilter)="onStudentFilter($event)"
-                             (launchAddProviderModal)="onLaunchProviderAdd()">
+                             (launchAddProviderModal)="onLaunchProviderAdd()"
+                             [isDownloading]="providersList.isDownloading">
     </cp-providers-action-box>
 
     <cp-providers-stats *ngIf="!state.searchText"

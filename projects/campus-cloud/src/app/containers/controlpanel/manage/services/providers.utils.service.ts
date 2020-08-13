@@ -62,7 +62,11 @@ export class ProvidersUtilsService {
     return search;
   }
 
-  exportQRsPdf(serviceName: string, allProviders: Array<IServiceProvider>) {
+  exportQRsPdf(
+    serviceName: string,
+    allProviders: Array<IServiceProvider>,
+    callbackFinished?: () => void
+  ) {
     let fetchQRs$ = from(allProviders).pipe(
       mergeMap((provider) => this.fetchQRCode(provider), 10),
       concatMap(({ providerId, blob }) => this.loadImage(providerId, blob))
@@ -91,6 +95,9 @@ export class ProvidersUtilsService {
                 body: this.cpI18Pipe.transform('something_went_wrong')
               })
             );
+            if (callbackFinished) {
+              callbackFinished();
+            }
           },
           () => {
             const doc = new jsPDF();
@@ -101,6 +108,9 @@ export class ProvidersUtilsService {
             // delete blank page at the end of pdf
             doc.deletePage(doc.internal.getNumberOfPages());
             doc.save(`${this.getFileName(serviceName)}_kit.pdf`);
+            if (callbackFinished) {
+              callbackFinished();
+            }
           }
         );
       });
