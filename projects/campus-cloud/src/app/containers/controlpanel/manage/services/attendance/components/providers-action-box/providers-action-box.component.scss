@@ -10,7 +10,7 @@
   margin-top: 0;
 }
 
-cp-menu {  
+cp-menu {
   margin-left: -3px;
 
   cp-menu-item {
@@ -18,6 +18,14 @@ cp-menu {
       width: 200px;
       padding: 12px;
       cursor: pointer;
+    }
+
+    .disabled {
+      color: $color-med-grey;
+      cursor: not-allowed !important;
+      &:hover {
+        background-color: $color-white;
+      }
     }
   }
 }

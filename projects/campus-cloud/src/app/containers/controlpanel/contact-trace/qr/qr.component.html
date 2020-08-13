@@ -12,6 +12,7 @@
                               (filterByDates)="onDateFilter($event)"
                               (updateStudentFilter)="onStudentFilter($event)"
                               (launchAddProviderModal)="onLaunchProviderAdd()"
+                              [isDownloading] = "providersList.isDownloading"
                               >
       </cp-qr-list-action-box>
     </div>  

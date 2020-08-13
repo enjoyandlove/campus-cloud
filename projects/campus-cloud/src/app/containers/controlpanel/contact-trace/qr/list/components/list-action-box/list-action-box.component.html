@@ -36,7 +36,7 @@
               <span (click)="launchModal()">{{ 'import_from_csv' | cpI18n }}</span>
             </cp-menu-item>
             <cp-menu-item *ngIf="!noProviders">
-              <span (click)="onDownloadAllQR()">{{ 'download_all_qr_codes' | cpI18n }}</span>
+              <span [class.disabled]="isDownloading" (click)="onDownloadAllQR()">{{ 'download_all_qr_codes' | cpI18n }}</span>
             </cp-menu-item>
             <cp-menu-item *ngIf="!noProviders">
               <span (click)="onDownload()">{{ 'services_button_download_assessment_data' | cpI18n }}</span>

@@ -61,6 +61,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   noProviderAddProviderMessage;
   showEditProviderModal = false;
   listStarSize = STAR_SIZE.DEFAULT;
+  isDownloading: boolean = false;
 
   constructor(
     private cpI18n: CPI18nService,
@@ -200,6 +201,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   downloadAllQR() {
+    this.isDownloading = true;
     let search = new HttpParams().set('service_id', this.service.id.toString()).set('all', '1');
 
     search = this.providerUtils.addSearchParams(search, this.filterState);
@@ -207,7 +209,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
 
     stream$.toPromise().then((providers: any) => {
-      this.providerUtils.exportQRsPdf(this.service.name, providers);
+      this.providerUtils.exportQRsPdf(this.service.name, providers, () => {
+        this.isDownloading = false;
+      });
     });
   }
 
