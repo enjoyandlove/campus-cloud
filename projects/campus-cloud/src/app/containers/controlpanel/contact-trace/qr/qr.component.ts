@@ -26,6 +26,7 @@ export class QrComponent extends BaseComponent implements OnInit {
   loading;
   service;
   listLoading: boolean;
+  firstLoading: boolean = true;
   storeId;
   noProviders;
   allowLocationsImport;
@@ -37,10 +38,6 @@ export class QrComponent extends BaseComponent implements OnInit {
     dateRange: null,
     searchText: null,
     studentFilter: null
-  };
-
-  filterExistance = () => {
-    return this.state.dateRange || this.state.searchText || this.state.studentFilter;
   };
 
   constructor(
@@ -70,21 +67,14 @@ export class QrComponent extends BaseComponent implements OnInit {
     });
   }
 
-  updateAssessment() {
-    if (!this.state.searchText) {
-      this.fetchAttendanceSummary();
-    }
+  hasFilter() {
+    return !!this.state.dateRange || !!this.state.searchText || !!this.state.studentFilter;
   }
 
-  fetchAttendanceSummary() {
-    let search = new HttpParams();
-
-    search = this.providerUtils.addSearchParams(search, this.state);
-    this.serviceService
-      .getServiceAttendanceSummary(this.serviceId, search)
-      .subscribe((res: any) => {
-        this.service = { ...this.service, ...res };
-      });
+  updateAssessment() {
+    if (this.noProviders && !this.hasFilter()) {
+      this.firstLoading = true;
+    }
   }
 
   onProviderAdded() {
@@ -98,16 +88,17 @@ export class QrComponent extends BaseComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  onFirstLoading($_childLoading) {
+    this.firstLoading = $_childLoading;
+    this.cdr.detectChanges();
+  }
+
   onLaunchProviderAdd() {
     this.isProviderAdd = true;
 
-    setTimeout(
-      () => {
-        $('#createProvider').modal({ keyboard: true, focus: true });
-      },
-
-      1
-    );
+    setTimeout(() => {
+      $('#createProvider').modal({ keyboard: true, focus: true });
+    }, 1);
   }
 
   onSearch(searchText) {
