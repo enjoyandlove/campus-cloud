@@ -162,37 +162,22 @@
       </ready-ui-stack>
     </button>
   </ready-ui-menu-item>
-  <ready-ui-menu-item>
-      <button ui-button
-              type="button"
-              color="inherit"
-              variant="inline"
-              fullWidth="true"
-              data-toggle="modal"
-              data-target="#formDuplicateModal"
-              (click)="duplicateClickHandler(); primary.close();"
-      >
-          <ready-ui-stack spacing="tight">
-              <span>{{ 'contact_trace_forms_duplicate' | cpI18n }}</span>
-          </ready-ui-stack>
-      </button>
+  <ready-ui-menu-item *ngIf="form.status === formStatus.expired">
+    <button ui-button
+            type="button"
+            color="inherit"
+            variant="inline"
+            fullWidth="true"
+            data-toggle="modal"
+            data-target="#formPublishModal"
+            (click)="publishClickHandler(); primary.close();"
+    >
+      <ready-ui-stack spacing="tight">
+        <span>{{ 'contact_trace_forms_publish' | cpI18n }}</span>
+      </ready-ui-stack>
+    </button>
   </ready-ui-menu-item>
-    <ready-ui-menu-item *ngIf="form.status === formStatus.expired">
-        <button ui-button
-                type="button"
-                color="inherit"
-                variant="inline"
-                fullWidth="true"
-                data-toggle="modal"
-                data-target="#formPublishModal"
-                (click)="publishClickHandler(); primary.close();"
-        >
-            <ready-ui-stack spacing="tight">
-                <span>{{ 'contact_trace_forms_publish' | cpI18n }}</span>
-            </ready-ui-stack>
-        </button>
-    </ready-ui-menu-item>
-    <ready-ui-menu-item *ngIf="form.status === formStatus.published">
+  <ready-ui-menu-item *ngIf="form.status === formStatus.published">
     <button ui-button
             type="button"
             color="inherit"
@@ -240,14 +225,4 @@
     (unpublishForm)="onUnpublishedForm()"
   >
   </cp-form-unpublish>
-</cp-modal>
-
-<cp-modal
-        modalId="formDuplicateModal"
-        *ngIf="showFormDuplicateModal"
-        (modalClose)="duplicationFormCloseHandler()">
-  <cp-form-duplicate
-          [form]="form"
-          (duplicateForm)="onDuplicateForm($event)">
-  </cp-form-duplicate>
 </cp-modal>

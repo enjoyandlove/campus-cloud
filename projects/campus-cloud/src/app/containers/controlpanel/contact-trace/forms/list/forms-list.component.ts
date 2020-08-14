@@ -145,10 +145,4 @@ export class FormsListComponent implements OnInit {
   filterChangeHandler({ action }: { label?: string; action?: FormStatus }): void {
     this.filterStream.next(action);
   }
-
-  itemDuplicatedHandler(newDraftForm: any) {
-    const parentFormId = newDraftForm.parentForm;
-    const parentIndex = this.results.findIndex(form => form.id === parentFormId);
-    this.results.splice(parentIndex + 1, 0,  newDraftForm.duplicatedForm);
-  }
 }
