@@ -155,6 +155,14 @@ export class ContentUtilsProviders {
       ],
       [ContentUtilsProviders.contentTypes.list]: [
         {
+          id: 'health_pass',
+          label: 't_personas_tile_create_resource_type_health_pass',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.healthPass
+          }
+        },
+        {
           id: 'academic_calendar',
           label: 't_personas_tile_create_resource_type_academic_calendar',
           meta: {
