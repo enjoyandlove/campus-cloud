@@ -24,7 +24,7 @@
       *ngFor="let form of results"
       class="search-result-item"
       [form]="form"
-      (itemUpdated)="itemUpdateHandler()"
+      (itemUpdated)="itemUpdateHandler()" (itemDuplicated)="itemDuplicatedHandler($event)"
     >
     </cp-form-search-result-tile>
 

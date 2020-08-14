@@ -1260,6 +1260,15 @@
   "contact_trace_forms_unpublish": {
     "message": "Dé-publier"
   },
+  "contact_trace_forms_duplicate": {
+    "message": "Dupliquer"
+  },
+  "contact_trace_forms_duplicate_form": {
+    "message": "Dupliquer le formulaire"
+  },
+  "contact_trace_forms_duplicate_new_name": {
+    "message": "(Copie) %s"
+  },
   "contact_trace_forms_unpublish_form": {
     "message": "Dé-publier formulaire"
   },
