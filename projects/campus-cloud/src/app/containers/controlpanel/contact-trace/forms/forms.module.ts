@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsRoutingModule } from './forms.routing.module';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import {
   FormSearchResultTileComponent,
   FormsListActionBoxComponent,
@@ -31,7 +31,6 @@ import {
   FormBlockTypeSelectorComponent,
   FormDeleteComponent,
   FormPublishComponent,
-  FormDuplicateComponent,
   FormUnpublishComponent,
   SelectorForNumberComponent,
   SelectorForOptionsComponent,
@@ -78,14 +77,13 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
     FormDeleteComponent,
     FormUnpublishComponent,
     FormPublishComponent,
-    FormDuplicateComponent,
     FormResponseTileComponent,
     FormsRespondentResponseComponent,
     RespondentNameFromFormResponsePipe,
     RespondentBlockResponsesDisplayComponent,
     CollectionMethodCodeToDisplayStringPipe
   ],
-  imports: [CommonModule, FormsRoutingModule, SharedModule, FormsModule, LayoutsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsRoutingModule, SharedModule, FormsModule, LayoutsModule],
   providers: [CPI18nPipe]
 })
 export class CTFormsModule {}
