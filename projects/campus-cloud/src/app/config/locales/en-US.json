@@ -3620,6 +3620,9 @@
   "t_personas_tile_create_header": {
     "message": "New Tile"
   },
+  "t_personas_tile_create_resource_type_health_pass": {
+    "message": "Health Pass"
+  },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Calendars"
   },

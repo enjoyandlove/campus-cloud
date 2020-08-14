@@ -76,6 +76,8 @@ export class CampusLink {
 
   public static readonly integration = `${inapp}integration`;
 
+  public static readonly healthPass = `${inapp}open_health_pass`;
+
   public static readonly linkType = {
     appOpen: 4,
     inAppLink: 3,
