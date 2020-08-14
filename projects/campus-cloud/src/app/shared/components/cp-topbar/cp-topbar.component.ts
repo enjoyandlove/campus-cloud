@@ -20,7 +20,7 @@ import {
 })
 export class CPTopBarComponent implements OnInit {
   user: IUser;
-  releaseId = 3;
+  releaseId = 4;
   amplitudeEvents = {
     menu_home: amplitudeEvents.BANNER,
     menu_manage: amplitudeEvents.MENU_MANAGE,
