@@ -3,7 +3,7 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   
   <div *ngSwitchCase="false">
-    <cp-no-content *ngIf="!state.providers.length && filterExistance"
+    <cp-no-content *ngIf="!state.providers.length && hasFilter()"
                     [noContentText]="hasRecords ? noProviderMessage : noProviderAddProviderMessage">
     </cp-no-content>
     <ng-container *ngIf="state.providers.length">

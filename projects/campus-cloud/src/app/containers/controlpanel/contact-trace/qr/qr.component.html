@@ -1,7 +1,7 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <div *ngSwitchCase="false">  
-    <div *ngIf="!noProviders || filterExistance() || listLoading">
+    <div *ngIf="(!noProviders || hasFilter() || listLoading) && !firstLoading">
       <cp-qr-list-action-box  [noProviders]="noProviders"
                               [allowLocationsImport]="allowLocationsImport"
                               [allowServiceProvidersImport]="allowServiceProvidersImport"
@@ -16,7 +16,7 @@
                               >
       </cp-qr-list-action-box>
     </div>  
-    <div *ngIf="noProviders && !filterExistance() && !listLoading">
+    <div *ngIf="noProviders && !hasFilter() && !listLoading && firstLoading">
       <cp-qr-list-no-content (importLocations)="onImportLocations()"
                               (launchAddProviderModal)="onLaunchProviderAdd()">
       </cp-qr-list-no-content>
@@ -26,9 +26,9 @@
         <cp-qr-list #providersList
                     [service]="service"
                     [filterState]="state"
-                    (filterExistance)="filterExistance()"
                     (hasProviders)="onProvidersResult($event)"
-                    (onLoading)="onListLoading($event)">
+                    (onLoading)="onListLoading($event)"
+                    (onFirstLoading)="onFirstLoading($event)">
         </cp-qr-list>
       </div>
     </div>

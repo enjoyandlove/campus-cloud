@@ -49,8 +49,8 @@ export class QrListComponent extends BaseComponent implements OnInit {
   }
 
   @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
-  @Output() filterExistance: EventEmitter<boolean> = new EventEmitter();
   @Output() onLoading: EventEmitter<boolean> = new EventEmitter();
+  @Output() onFirstLoading: EventEmitter<boolean> = new EventEmitter();
 
   loading;
   eventData;
@@ -77,6 +77,14 @@ export class QrListComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => {
       this.loading = res;
     });
+  }
+
+  hasFilter() {
+    return (
+      !!this.filterState.dateRange ||
+      !!this.filterState.searchText ||
+      !!this.filterState.studentFilter
+    );
   }
 
   onPaginationNext() {
@@ -117,6 +125,10 @@ export class QrListComponent extends BaseComponent implements OnInit {
           this.hasRecords = res.data.length > 0;
         }
         this.onLoading.emit(false);
+
+        if (this.state.providers.length) {
+          this.onFirstLoading.emit(false);
+        }
       });
   }
 
@@ -128,6 +140,10 @@ export class QrListComponent extends BaseComponent implements OnInit {
 
     this.hasRecords = !!this.state.providers.length;
     this.hasProviders.emit(this.state.providers.length > 0);
+
+    if (!this.state.providers.length && !this.hasFilter()) {
+      this.onFirstLoading.emit(true);
+    }
   }
 
   showEditModal(provider: IServiceProvider) {
@@ -142,12 +158,11 @@ export class QrListComponent extends BaseComponent implements OnInit {
     this.trackQrCode(editedProvider);
     this.showEditProviderModal = false;
 
-    this.state = {
-      ...this.state,
-      providers: this.state.providers.map((provider) => {
-        return provider.id === editedProvider.id ? editedProvider : provider;
-      })
-    };
+    this.fetch();
+
+    if (!this.state.providers.length && !this.hasFilter()) {
+      this.onFirstLoading.emit(true);
+    }
   }
 
   trackQrCode(serviceProvider: IServiceProvider) {
