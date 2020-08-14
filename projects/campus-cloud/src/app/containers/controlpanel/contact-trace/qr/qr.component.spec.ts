@@ -83,7 +83,6 @@ describe('QrComponent', () => {
       label
     };
     spyOn(component, 'onDateFilter').and.callThrough();
-    spyOn(component.serviceService, 'getServiceAttendanceSummary').and.callThrough();
 
     component.onDateFilter(dateRange);
 
@@ -91,11 +90,6 @@ describe('QrComponent', () => {
       .append('school_id', schoolId.toString())
       .append('start', start.toString())
       .append('end', end.toString());
-
-    expect(component.serviceService.getServiceAttendanceSummary).toHaveBeenCalledWith(
-      component.serviceId,
-      search
-    );
   });
 
   it(' should show no content in case of no providers ', () => {

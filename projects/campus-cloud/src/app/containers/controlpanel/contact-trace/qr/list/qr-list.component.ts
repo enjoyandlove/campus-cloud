@@ -80,11 +80,11 @@ export class QrListComponent extends BaseComponent implements OnInit {
   }
 
   hasFilter() {
-    return (
-      !!this.filterState.dateRange ||
-      !!this.filterState.searchText ||
-      !!this.filterState.studentFilter
-    );
+    return this.filterState
+      ? !!this.filterState.dateRange ||
+          !!this.filterState.searchText ||
+          !!this.filterState.studentFilter
+      : false;
   }
 
   onPaginationNext() {
