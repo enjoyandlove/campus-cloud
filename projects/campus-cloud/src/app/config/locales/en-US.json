@@ -1260,6 +1260,15 @@
   "contact_trace_forms_unpublish": {
     "message": "Unpublish"
   },
+  "contact_trace_forms_duplicate": {
+    "message": "Duplicate"
+  },
+  "contact_trace_forms_duplicate_form": {
+    "message": "Duplicate form"
+  },
+  "contact_trace_forms_duplicate_new_name": {
+    "message": "(Copy) %s"
+  },
   "contact_trace_forms_unpublish_form": {
     "message": "Unpublish Form"
   },
