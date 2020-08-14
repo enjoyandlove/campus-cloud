@@ -18,10 +18,13 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 export class FormSearchResultTileComponent implements OnInit {
   @Input() form: Form;
   @Output() itemUpdated = new EventEmitter<Form>();
+  @Output() itemDuplicated = new EventEmitter<any>();
+
   canEdit: boolean;
   showFormDeleteModal: boolean;
   showFormPublishModal: boolean;
   showFormUnpublishModal: boolean;
+  showFormDuplicateModal: boolean;
   completionPercentStr: string;
   resultLabels: string[];
   formStatus = FormStatus;
@@ -58,6 +61,10 @@ export class FormSearchResultTileComponent implements OnInit {
     this.showFormPublishModal = true;
   }
 
+  duplicateClickHandler(): void {
+    this.showFormDuplicateModal = true;
+  }
+
   unpublishClickHandler(): void {
     this.showFormUnpublishModal = true;
   }
@@ -81,6 +88,10 @@ export class FormSearchResultTileComponent implements OnInit {
     this.itemUpdated.emit();
   }
 
+  onDuplicateForm(duplicatedForm: any) {
+    this.itemDuplicated.emit(duplicatedForm);
+  }
+
   private handleSuccess(key) {
     this.store.dispatch(
       new baseActionClass.SnackbarSuccess({
@@ -102,5 +113,9 @@ export class FormSearchResultTileComponent implements OnInit {
       }
     }
     this.completionPercentStr = completionPercent;
+  }
+
+  duplicationFormCloseHandler() {
+    this.showFormDuplicateModal = false;
   }
 }
