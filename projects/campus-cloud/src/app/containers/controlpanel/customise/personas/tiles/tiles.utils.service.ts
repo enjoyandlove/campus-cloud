@@ -47,6 +47,7 @@ export class TilesUtilsService {
     CampusLink.follett,
     CampusLink.timetable,
     CampusLink.enrollment,
+    CampusLink.healthPass,
     CampusLink.integration,
     CampusLink.courseSearch,
     CampusLink.campusLinkList,

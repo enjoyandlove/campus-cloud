@@ -66,6 +66,7 @@ describe('ResourceTypeServiceByCategoryComponent', () => {
         CampusLink.directory,
         CampusLink.timetable,
         CampusLink.enrollment,
+        CampusLink.healthPass,
         CampusLink.integration,
         CampusLink.courseSearch,
         CampusLink.dealStoreList,
@@ -76,7 +77,7 @@ describe('ResourceTypeServiceByCategoryComponent', () => {
         CampusLink.userOrientationCalendarList
       ];
 
-      expect(contentTypes.length).toBe(27);
+      expect(contentTypes.length).toBe(28);
 
       resultLinksUrls.forEach((linkUrl) => {
         expect(resourceTypeLinkUrls.includes(linkUrl)).toBe(true, `${linkUrl} missing`);
