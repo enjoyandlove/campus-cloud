@@ -170,6 +170,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
         CampusLink.timetable,
         CampusLink.directory,
         CampusLink.eventList,
+        CampusLink.healthPass,
         CampusLink.courseSearch,
         CampusLink.dealStoreList,
         CampusLink.campusPoiList,
@@ -188,7 +189,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
       tick();
 
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(14);
+      expect(component.resources.length).toBe(15);
       resultResources.forEach((resource) => {
         expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
       });
@@ -228,6 +229,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
         CampusLink.storeList,
         CampusLink.directory,
         CampusLink.eventList,
+        CampusLink.healthPass,
         CampusLink.dealStoreList,
         CampusLink.campusPoiList,
         CampusLink.campusServiceList,
