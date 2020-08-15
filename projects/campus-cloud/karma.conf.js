@@ -40,7 +40,7 @@ module.exports = function(config) {
       thresholds: {
         emitWarning: false,
         global: {
-          statements: 56.4,
+          statements: 55,
           branches: 40, // TODO increase one percent
           functions: 44,
           lines: 56
