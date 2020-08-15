@@ -1,3 +1,5 @@
+import { ExposureNotificationStatus } from '.';
+
 export interface ExposureNotification {
   id?: number;
   is_external: boolean;
@@ -10,7 +12,7 @@ export interface ExposureNotification {
   notify_at_epoch: number;
   is_school_wide: boolean;
   store_name: string;
-  // status: AnnouncementStatus;
+  status: ExposureNotificationStatus;
   // user_details: IUserDetail[];
   // list_details: IListDetail[];
 }
