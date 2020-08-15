@@ -43,6 +43,19 @@ const appRoutes: Routes = [
         },
         loadChildren: () =>
           import('./health-pass/health-pass.module').then((m) => m.HealthPassModule)
+      },
+      {
+        path: 'exposure-notification',
+        canActivate: [PrivilegesGuard],
+        data: {
+          zendesk: 'exposure notification',
+          amplitude: 'Exposure Notification',
+          privilege: CP_PRIVILEGES_MAP.contact_trace_exposure_notification
+        },
+        loadChildren: () =>
+          import('./exposure-notification/exposure-notification-routing.module').then(
+            (m) => m.ExposureNotificationRoutingModule
+          )
       }
     ]
   }

@@ -23,6 +23,13 @@
       "clearParams": true,
       "amplitude": "Settings",
       "url": "/contact-trace/health-pass"
+    },
+    {
+      "privilege": 41,
+      "label": "contact_trace_forms_exposure_notification",
+      "clearParams": true,
+      "amplitude": "Exposure Notification",
+      "url": "/contact-trace/exposure-notification"
     }
   ]
 }

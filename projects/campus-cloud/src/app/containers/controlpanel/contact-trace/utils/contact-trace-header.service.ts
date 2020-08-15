@@ -14,6 +14,7 @@ export class ContactTraceHeaderService {
   privileges;
 
   constructor(private session: CPSession, private store: Store<fromStore.IHeader>) {
+    // ToDo: PJ: IMP: Replace with proper privilege
     this.privileges = require('../contact-trace.header.json'); // ToDo: PJ: revisit amplitude
   }
 

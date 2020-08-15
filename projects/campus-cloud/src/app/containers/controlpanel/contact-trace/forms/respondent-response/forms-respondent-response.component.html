@@ -19,7 +19,7 @@
 
     <div class="row form-row">
       <div class="col-3 label-text">
-        {{ 'contact_trace_forms_email' | cpI18n }} <!-- ToDo: PJ: Localize -->
+        {{ 'contact_trace_forms_email' | cpI18n }}
       </div>
       <div class="col-9">
         <ng-container *ngIf="response.extern_user_id">
@@ -42,7 +42,7 @@
 
     <div class="row form-row">
       <div class="col-3 label-text">
-        {{ 'contact_trace_forms_collection_method' | cpI18n }} <!-- ToDo: PJ: Localize -->
+        {{ 'contact_trace_forms_collection_method' | cpI18n }}
       </div>
       <div class="col-9">
         {{ (response.collection_method | collectionMethodCodeToDisplayString) | cpI18n }}
