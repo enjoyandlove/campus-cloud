@@ -25,6 +25,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
   file: any;
   loadingFile: boolean = false;
   fileError: string = '';
+  newImagePreview: string;
 
   formId: string;
   formBlockId: number;
@@ -120,6 +121,7 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
               answer: response.image_url
             });
             this.loadingFile = false;
+            this.newImagePreview = response.image_url;
           },
           () => {
             this.loadingFile = false;
@@ -256,5 +258,9 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
 
   get answer() {
     return this.formBlock.get('answer');
+  }
+
+  getAddedOrCurrentImageUrl() {
+    return this.newImagePreview ? this.newImagePreview : this.currentFormBlock.image_url;
   }
 }
