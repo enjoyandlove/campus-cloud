@@ -1,6 +1,6 @@
 // import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from '@campus-cloud/base/services';
 import { FileUploadService } from '@campus-cloud/shared/services';
 import { CallbackService } from '../callback.service';
@@ -17,7 +17,7 @@ export class WebFormService {
 
   getForm(formId: string) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.NON_SESSION_WEB_FORM}/${formId}`;
-    return this.api.get(url);
+    return this.api.get(url, null, true);
   }
 
   getNextFormBlock(
