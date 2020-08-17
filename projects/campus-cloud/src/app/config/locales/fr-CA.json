@@ -4508,6 +4508,9 @@
   "web_form_start_page_intro": {
     "message": "Scannez depuis l'application ou entrez le courriel pour commencer"
   },
+  "web_form_unavailable_form_message": {
+    "message": "Le formulaire est maintenant fermé et n'accepte plus les réponses"
+  },
   "web_form_submit": {
     "message": "Soumettre"
   },
