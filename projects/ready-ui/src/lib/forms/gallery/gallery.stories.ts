@@ -22,8 +22,21 @@ storiesOf('Form/Gallery', module)
         removeImage: (index: number) => {
           images.splice(index, 1);
         },
+        validateSize: (file: File)  => {
+          /* this business logic was defined before on ready-ui-gallery-add-item */
+          return file.size <= 5e6;
+        },
         addImage: (files: File[]) => {
+          files = Array.from(files).filter((file: File) =>
+            this.validateSize(file) ? file : this.errorHandler({file: file})
+          );
+
+          if (!files.length) {
+            return;
+          }
+
           const _images = files.map((file) => URL.createObjectURL(file));
+
           images.push(..._images);
         },
         errorHandler: ({ file }) => alert(`File too big ${file.name}`)
@@ -37,8 +50,7 @@ storiesOf('Form/Gallery', module)
           *ngFor="let image of images; index as index">
         </ready-ui-gallery-item>
         <ready-ui-gallery-add-item
-          (add)="addImage($event)"
-          (error)="errorHandler($event)">
+          (add)="addImage($event)">
         </ready-ui-gallery-add-item>
       </ready-ui-gallery-group>`
     };

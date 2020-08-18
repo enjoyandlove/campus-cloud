@@ -162,20 +162,20 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   addImageInputHandler(event: Event) {
-    let files = Array.from((event.target as HTMLInputElement).files);
-
-    files = files.filter((file: File) =>
-      file.size > MAX_UPLOAD_SIZE ? this.imageUploadError({ file }) : file
-    );
-
-    if (!files.length) {
-      return;
-    }
+    const files = Array.from((event.target as HTMLInputElement).files);
 
     return this.addImages(files);
   }
 
   addImages(files: File[]) {
+    const {validFiles, errors} = this.imageService.getValidFilesAndErrors(files);
+    if (errors.length) {
+      errors.forEach(error => this.imageUploadError(error));
+    }
+    if (!validFiles.length) {
+      return;
+    }
+
     const imageCtrl = this.form.get('message_image_url_list');
 
     // should be taken care of by the UI, just in case
@@ -232,11 +232,10 @@ export class FeedEditComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  imageUploadError({ file }) {
+  imageUploadError(errorMessage: string) {
     const error = new HttpErrorResponse({ status: 400 });
-    const message = this.cpI18nPipe.transform('t_shared_image_upload_error_size', file.name);
 
-    this.handleError(error, message);
+    this.handleError(error, errorMessage);
   }
 
   submitHandler() {
