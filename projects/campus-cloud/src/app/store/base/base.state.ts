@@ -40,6 +40,7 @@ export interface IBaseState {
   EVENTS_MODAL: any;
   SERVICES_MODAL: any;
   PROVIDERS_MODAL: any;
+  LOCATIONS_MODAL: any;
   SNACKBAR: ISnackbar;
   AUDIENCE: IAudience;
   ROUTER: RouterReducerState<RouterStateUrl>;

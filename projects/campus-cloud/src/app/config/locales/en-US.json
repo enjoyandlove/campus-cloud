@@ -734,6 +734,9 @@
   "cancel": {
     "message": "Cancel"
   },
+  "cases": {
+    "message": "Cases"
+  },
   "category": {
     "message": "Category"
   },
@@ -2061,6 +2064,9 @@
   },
   "locations_edit_modal_title": {
     "message": "Edit Location"
+  },
+  "locations_import_items_to_import": {
+    "message": "File contains data for %s location(s)."
   },
   "locations_label_acronym": {
     "message": "Acronym"

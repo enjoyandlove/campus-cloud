@@ -203,6 +203,15 @@ export function reducer(state = initialState, action: fromLocations.LocationsAct
       };
     }
 
+    case fromLocations.locationActions.IMPORT_LOCATIONS: {
+      return {
+        ...state,
+        error: false,
+        loaded: false,
+        loading: false
+      };
+    }
+
     default: {
       return state;
     }
