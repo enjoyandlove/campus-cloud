@@ -32,6 +32,10 @@ export class LocationsListTopBarComponent implements OnInit {
     this.selectedCategory.emit(category.action);
   }
 
+  launchModal() {
+    $('#excelLocationsModal').modal({ keyboard: true, focus: true });
+  }
+
   ngOnInit() {
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,

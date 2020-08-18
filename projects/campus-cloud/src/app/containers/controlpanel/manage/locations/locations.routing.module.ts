@@ -7,6 +7,7 @@ import { LocationsInfoComponent } from './info';
 import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsCreateComponent } from './create';
+import { LocationsExcelComponent } from './excel';
 
 const appRoutes: Routes = [
   {
@@ -35,6 +36,11 @@ const appRoutes: Routes = [
     path: 'categories',
     data: { zendesk: 'categories' },
     loadChildren: () => import('./categories/categories.module').then((m) => m.CategoriesModule)
+  },
+  {
+    path: 'import/excel',
+    component: LocationsExcelComponent,
+    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS, amplitude: 'IGNORE' }
   }
 ];
 @NgModule({

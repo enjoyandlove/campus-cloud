@@ -39,6 +39,7 @@ const state: IState = {
 export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   state: IState = state;
   showDeleteModal = false;
+  showLocationModal = false;
   deleteLocation: ILocation;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;

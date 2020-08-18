@@ -3,10 +3,12 @@ import { Injectable } from '@angular/core';
 
 import { ApiService } from '@campus-cloud/base';
 import { protocolCheck } from '@campus-cloud/shared/utils';
+import { Store } from '@ngrx/store';
+import { baseActions } from '@campus-cloud/store';
 
 @Injectable()
 export class LocationsService {
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private store: Store<any>) {}
 
   getLocations(startRange: number, endRange: number, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${startRange};${endRange}`;

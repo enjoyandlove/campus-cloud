@@ -23,7 +23,6 @@ class CSVParser:
 
         column_titles = [title.lower().replace(" ", "_") for title in column_titles]
 
-
         if not data:
             raise KeyError('File is Empty')
 

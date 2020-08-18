@@ -16,6 +16,8 @@ urlpatterns = [
 
     url(r'^qr_codes/excel$', views.import_qr_codes),
 
+    url(r'^locations/excel$', views.import_locations),
+    
     url(r'^announcements/import$', views.import_lists),
 
     url(r'^calendars/items/import$', views.import_events),
