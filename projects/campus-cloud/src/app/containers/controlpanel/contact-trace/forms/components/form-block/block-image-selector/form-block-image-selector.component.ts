@@ -17,6 +17,7 @@ import * as fromStore from '@controlpanel/manage/feeds/store';
 export class FormBlockImageSelectorComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
   @Input() formBlock: FormBlock;
+  loadingFile = false;
 
   constructor(
     private imageService: ImageService,
@@ -34,7 +35,16 @@ export class FormBlockImageSelectorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   addImages(files: File[]) {
-    const fileUploads$ = merge(...files.map((f: File) => this.imageService.upload(f)));
+    const {validFiles, errors} = this.imageService.getValidFilesAndErrors(files)
+    if (errors.length) {
+      errors.forEach(error  =>  this.imageUploadError(error));
+    }
+
+    if (!validFiles.length) {
+      return;
+    }
+
+    const fileUploads$ = merge(...validFiles.map((f: File) => this.imageService.upload(f)));
 
     fileUploads$
       .pipe(
@@ -43,7 +53,8 @@ export class FormBlockImageSelectorComponent implements OnInit, OnDestroy {
           this.formBlock.image_url = image_url;
         })
       )
-      .subscribe(() => {}, (err) => this.handleError(err));
+      .subscribe(() => {
+      }, (err) => this.handleError(err));
   }
 
   handleError(
@@ -65,10 +76,9 @@ export class FormBlockImageSelectorComponent implements OnInit, OnDestroy {
     this.formBlock.image_url = null;
   }
 
-  imageUploadError({ file }) {
+  imageUploadError(errorMessage) {
     const error = new HttpErrorResponse({ status: 400 });
-    const message = this.cpI18nPipe.transform('customization_image_upload_error', file.name);
 
-    this.handleError(error, message);
+    this.handleError(error, errorMessage);
   }
 }

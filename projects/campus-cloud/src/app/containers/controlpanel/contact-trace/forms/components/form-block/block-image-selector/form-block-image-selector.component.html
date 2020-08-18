@@ -7,8 +7,6 @@
   </ready-ui-gallery-item>
   <ready-ui-gallery-add-item
     *ngIf="!formBlock.image_url"
-    (add)="addImages($event)"
-    (error)="imageUploadError($event)"
-  >
+    (add)="addImages($event)">
   </ready-ui-gallery-add-item>
 </ready-ui-gallery-group>

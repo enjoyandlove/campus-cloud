@@ -58,4 +58,19 @@ export class ImageService {
       })
     );
   }
+
+  getValidFilesAndErrors(files: File[]): {validFiles: File[], errors?: string[]} {
+    const errors: string[] = [];
+    const validFiles = Array.from(files).filter((file: File) => {
+        const currentFileErrors = this.validator.validate(file);
+        if (currentFileErrors) {
+          currentFileErrors.forEach(value => errors.push(value));
+        } else {
+          return file;
+        }
+      }
+    );
+
+    return {validFiles, errors};
+  }
 }

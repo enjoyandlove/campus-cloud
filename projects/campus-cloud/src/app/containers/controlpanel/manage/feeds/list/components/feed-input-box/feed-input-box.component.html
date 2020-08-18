@@ -35,7 +35,6 @@
                                          *ngFor="let image of form.get('message_image_url_list').value">
                   </ready-ui-gallery-item>
                   <ready-ui-gallery-add-item (add)="addImages($event)"
-                                             (error)="imageUploadError($event)"
                                              *ngIf="form.get('message_image_url_list').value.length < maxImages">
                   </ready-ui-gallery-add-item>
                 </ready-ui-gallery-group>

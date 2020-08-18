@@ -1,18 +1,10 @@
-import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { map, tap, take, startWith, takeUntil, withLatestFrom, catchError } from 'rxjs/operators';
-import { BehaviorSubject, Subject, merge, combineLatest, of } from 'rxjs';
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { Store, select } from '@ngrx/store';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { catchError, map, startWith, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, of, Subject } from 'rxjs';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { select, Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
-import {
-  Input,
-  OnInit,
-  Output,
-  Component,
-  OnDestroy,
-  ViewChild,
-  EventEmitter
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 import * as fromStore from '../../../store';
 
@@ -22,21 +14,14 @@ import { validThread } from '../../../validators';
 import { FeedsService } from '../../../feeds.service';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { IItem } from '@campus-cloud/shared/components';
-import { baseActionClass } from '@campus-cloud/store/base';
+import { baseActionClass, baseActions, ISnackbar } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
-import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { TextEditorDirective } from '@campus-cloud/shared/directives';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { amplitudeEvents, MAX_UPLOAD_SIZE } from '@campus-cloud/shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ICampusThread, ISocialGroupThread } from '@controlpanel/manage/feeds/model';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
-import {
-  ReadyStore,
-  ImageService,
-  CPI18nService,
-  CPTrackingService,
-  CPAmplitudeService
-} from '@campus-cloud/shared/services';
+import { CPAmplitudeService, CPI18nService, CPTrackingService, ImageService, ReadyStore } from '@campus-cloud/shared/services';
 
 interface IState {
   postType: any;
@@ -99,20 +84,19 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   }
 
   addImageInputHandler(event: Event) {
-    let files = Array.from((event.target as HTMLInputElement).files);
-
-    files = files.filter((file: File) =>
-      file.size > MAX_UPLOAD_SIZE ? this.imageUploadError({ file }) : file
-    );
-
-    if (!files.length) {
-      return;
-    }
+    const files = Array.from((event.target as HTMLInputElement).files);
 
     return this.addImages(files);
   }
 
   addImages(files: File[]) {
+    const {validFiles, errors} = this.imageService.getValidFilesAndErrors(files);
+    if (errors.length) {
+      errors.forEach(error => this.imageUploadError(error));
+    }
+    if (!validFiles.length) {
+      return;
+    }
     const imageCtrl = this.form.get('message_image_url_list');
 
     // should be taken care of by the UI, just in case
@@ -159,11 +143,10 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     imagesCtrl.setValue(images);
   }
 
-  imageUploadError({ file }) {
+  imageUploadError(errorMessage: string) {
     const error = new HttpErrorResponse({ status: 400 });
-    const message = this.cpI18nPipe.transform('t_shared_image_upload_error_size', file.name);
 
-    this.handleError(error, message);
+    this.handleError(error, errorMessage);
   }
 
   replyToThread({ message, message_image_url_list, school_id, store_id }): Promise<any> {
