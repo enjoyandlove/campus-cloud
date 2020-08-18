@@ -13,7 +13,7 @@ export class TextareaDynamicResizeComponent implements OnInit {
   @Input()
   minHeight;
 
-  private numberOfLines = 1;
+  numberOfLines = 1;
 
   constructor() { }
 
