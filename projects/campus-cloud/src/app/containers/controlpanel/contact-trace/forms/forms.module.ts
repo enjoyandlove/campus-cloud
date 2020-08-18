@@ -40,7 +40,8 @@ import {
   FormsRespondentResponseComponent,
   RespondentNameFromFormResponsePipe,
   RespondentBlockResponsesDisplayComponent,
-  CollectionMethodCodeToDisplayStringPipe
+  CollectionMethodCodeToDisplayStringPipe,
+  TextareaDynamicResizeComponent
 } from './';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
@@ -83,7 +84,8 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
     FormsRespondentResponseComponent,
     RespondentNameFromFormResponsePipe,
     RespondentBlockResponsesDisplayComponent,
-    CollectionMethodCodeToDisplayStringPipe
+    CollectionMethodCodeToDisplayStringPipe,
+    TextareaDynamicResizeComponent
   ],
   imports: [CommonModule, FormsRoutingModule, SharedModule, FormsModule, LayoutsModule, ReactiveFormsModule],
   providers: [CPI18nPipe]

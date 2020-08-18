@@ -1,9 +1,7 @@
-<input
-  type="text"
-  class="form-control"
-  [class.error]="highlightFormError && formsHelper.isNullOrEmptyString(formBlock.text)"
-  [(ngModel)]="formBlock.text"
-/>
+<cp-textarea-dynamic-resize
+        [classErrorCondition]="highlightFormError && formsHelper.isNullOrEmptyString(formBlock.text)"
+        [form]="formBlock" [minHeight]="26"
+></cp-textarea-dynamic-resize>
 
 <div class="answers-container">
 
