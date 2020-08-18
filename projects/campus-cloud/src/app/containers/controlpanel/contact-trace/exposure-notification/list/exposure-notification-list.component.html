@@ -20,13 +20,47 @@
   </cp-no-content>
 
   <ng-container *ngIf="results && results.length">
-<!--    <cp-form-search-result-tile-->
-<!--      *ngFor="let form of results"-->
-<!--      class="search-result-item"-->
-<!--      [form]="form"-->
-<!--      (itemUpdated)="itemUpdateHandler()"-->
-<!--    >-->
-<!--    </cp-form-search-result-tile>-->
+    <table ui-table>
+      <thead>
+      <tr ui-table-row>
+        <th ui-table-cell>{{ 'To' | cpI18n }}</th> <!-- ToDo: PJ: Localize -->
+        <th ui-table-cell>{{ 'Subject' | cpI18n }}</th> <!-- ToDo: PJ: Localize -->
+        <th ui-table-cell>{{ 'Date Sent' | cpI18n }}</th> <!-- ToDo: PJ: Localize -->
+        <th ui-table-cell></th> <!-- ToDo: PJ: Localize -->
+        <th ui-table-cell></th> <!-- ToDo: PJ: Localize -->
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr ui-table-row
+          [cpTarget]="['feed_' + i]"
+          *ngFor="let result of results; let i = index">
+        <td ui-table-cell
+            [cpTarget]="['feed_title_' + i]">
+          to goes here
+        </td>
+        <td ui-table-cell>
+          {{result.subject}}
+        </td>
+        <td ui-table-cell>
+          {{ result.notify_at_epoch | cpDatePipe: dateFormat }}
+        </td>
+        <td ui-table-cell>
+          {{ 'View Message' | cpI18n }} <!-- ToDo: PJ: Localize -->
+        </td>
+        <td ui-table-cell
+            align="right">
+          <button ui-button
+                  type="button"
+                  variant="inline"
+                  aria-label="close"
+                  (click)="null">
+            <ready-ui-icon name="close"></ready-ui-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
     <cp-pagination
       [pageNext]="hasMorePages"

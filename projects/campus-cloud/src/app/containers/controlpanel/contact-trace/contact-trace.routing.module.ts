@@ -53,8 +53,8 @@ const appRoutes: Routes = [
           privilege: CP_PRIVILEGES_MAP.contact_trace_exposure_notification
         },
         loadChildren: () =>
-          import('./exposure-notification/exposure-notification-routing.module').then(
-            (m) => m.ExposureNotificationRoutingModule
+          import('./exposure-notification/exposure-notification.module').then(
+            (m) => m.ExposureNotificationModule
           )
       }
     ]

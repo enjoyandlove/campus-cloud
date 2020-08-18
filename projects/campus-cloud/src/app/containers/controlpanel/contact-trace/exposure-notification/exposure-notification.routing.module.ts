@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
 import { pageTitle } from '@campus-cloud/shared/constants';
-import { ExposureNotificationListComponent } from '.';
+import { ExposureNotificationListComponent } from '@controlpanel/contact-trace/exposure-notification/list';
+
+// ToDo: PJ: Revisit complete code on this page including zendesk, pagetitle, AMPLITUDE
 
 const appRoutes: Routes = [
   {

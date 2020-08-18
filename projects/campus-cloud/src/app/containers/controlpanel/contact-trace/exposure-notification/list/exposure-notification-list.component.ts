@@ -14,9 +14,9 @@ import {
   startWith,
   switchMap
 } from 'rxjs/operators';
-import { StoreCategory } from '@campus-cloud/shared/services';
 import { HttpParams } from '@angular/common/http';
 import { ExposureNotification, ExposureNotificationService } from '../.';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 
 @Component({
   selector: 'cp-exposure-notification-list',
@@ -36,6 +36,7 @@ export class ExposureNotificationListComponent implements OnInit {
   pageCounter = 1;
   paginationCountPerPage = 25;
   results: ExposureNotification[] = [];
+  dateFormat = FORMAT.DATETIME;
 
   constructor(
     private session: CPSession,
@@ -90,12 +91,11 @@ export class ExposureNotificationListComponent implements OnInit {
     let startRecordCount = paginationCountPerPage * (pageNumber - 1) + 1;
     // Get an extra record so that we know if there are more records left to fetch
     let endRecordCount = paginationCountPerPage * pageNumber + 1;
-    const hostCategories = [StoreCategory.services, StoreCategory.clubs, StoreCategory.athletics];
     const params = new HttpParams()
+      .set('type', '0') // ToDo: PJ: IMP: Replace with type 1
       .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
       .set('school_id', this.session.school.id.toString())
-      .set('status', this.filter === null || this.filter === undefined ? null : '' + this.filter)
-      .set('is_template', 'false');
+      .set('status', this.filter === null || this.filter === undefined ? null : '' + this.filter);
     this.webServiceCallInProgress = true;
     return this.notificationService
       .searchNotifications(startRecordCount, endRecordCount, params)
@@ -119,7 +119,6 @@ export class ExposureNotificationListComponent implements OnInit {
   }
 
   private handleDataLoad(data: ExposureNotification[]) {
-    console.log('data', data);
     this.results = data;
   }
 
