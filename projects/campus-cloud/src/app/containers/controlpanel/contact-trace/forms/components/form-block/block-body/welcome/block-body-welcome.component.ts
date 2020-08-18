@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBlock } from '@controlpanel/contact-trace/forms/models';
 import { FormsHelperService } from '@controlpanel/contact-trace/forms/services/forms-helper.service';
 
@@ -7,12 +7,10 @@ import { FormsHelperService } from '@controlpanel/contact-trace/forms/services/f
   templateUrl: './block-body-welcome.component.html',
   styleUrls: ['./block-body-welcome.component.scss']
 })
-export class BlockBodyWelcomeComponent implements OnInit {
+export class BlockBodyWelcomeComponent {
   @Input() formBlock: FormBlock;
   @Input() highlightFormError: boolean;
   formsHelper = FormsHelperService;
 
   constructor() {}
-
-  ngOnInit(): void {}
 }

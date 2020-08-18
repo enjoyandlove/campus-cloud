@@ -70,7 +70,6 @@ export class FormDuplicateComponent implements OnInit {
   }
 
   onDuplicate() {
-    console.log('duplicate this form : ', this.inputForm.value.formId);
     this.formsService.getForm(this.inputForm.value.formId, null).pipe(map((res: Form) => {
       const form: Form = this.pick<Form>(res, this.FORM_PROPERTIES) as Form;
       return form;

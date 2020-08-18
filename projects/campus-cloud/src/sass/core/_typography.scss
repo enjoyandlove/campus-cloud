@@ -169,3 +169,11 @@ input.flatpickr-input[readonly] {
 strong {
   @include font-semi-bold();
 }
+
+.form-block {
+  pre {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: $color-text;
+  }
+}
