@@ -15,7 +15,7 @@
                         (feedSearch)="searchHandler($event, true)"
                         [hideIntegrations]="hideIntegrations"></cp-feed-search>
 
-        <cp-feed-input-box *ngIf="(view.host || view.socialGroup) && !view.readOnly">
+        <cp-feed-input-box *ngIf="(view.host || view.socialGroup) && !view.readOnly" [isDefaultView]="true">
         </cp-feed-input-box>
 
         <cp-spinner *ngSwitchCase="true"></cp-spinner>
@@ -37,7 +37,6 @@
                           [comment]="!feed.campus_thread_id || !feed.group_thread_id ? feed : undefined">
             </cp-feed-item>
           </ng-container>
-
 
           <cp-no-content class="no-content"
                          *ngIf="!view.results.length"

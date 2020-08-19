@@ -6,8 +6,9 @@
        *ngIf="!view.editMode">
     <div class="row feed__message">
       <div class="col-12 feed__content">
+        
         <p
-           [innerHTML]="isComment ? (feed.comment | cpUrlify) : (feed.message | cpUrlify)">
+           [innerHTML]="feed.message ? (feed.message | cpUrlify) : (feed.comment | cpUrlify)">
         </p>
       </div>
     </div>
@@ -39,20 +40,21 @@
       </cp-feed-interactions>
 
       <button ui-button
-              variant="inline"
-              color="primary"
-              *ngIf="mode === 'inline'">
-        <ng-container *ngIf="!isComment">
-          <ready-ui-icon name="mode_comment"
-                         size="small"></ready-ui-icon>
-          {{ feed.comment_count }}
+        variant="inline"
+        color="primary"
+        *ngIf = "mode !== 'search' && (feed.message && !isComment)"
+        (click)="toggleReplies.emit(view.isCommentsOpen); trackEvent(view.isCommentsOpen)">
+        <ready-ui-icon name="mode_comment"
+                       size="small" 
+                       ></ready-ui-icon>
+          {{ feed.comment_count ? feed.comment_count : 0 }}
           {{ feed.comment_count > 1 ? ('comments' | cpI18n) : ('comment' | cpI18n) }}
-        </ng-container>
       </button>
+
       <a ui-button
          variant="inline"
          color="primary"
-         *ngIf="mode !== 'inline'"
+         *ngIf="mode === 'search'"
          [routerLink]="isComment ? ['/manage/feeds/' + parentThread + '/info'] : ['/manage/feeds/' + feed.id + '/info']"
          [queryParams]="{groupId: feed.group_id, comment: isComment ? feed.id : undefined }">
         <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
@@ -79,7 +81,7 @@
   <ng-container *ngIf="!isComment">
     <ready-ui-icon name="mode_comment"
                    size="small"></ready-ui-icon>
-    {{ feed.comment_count }}
+    {{ feed.comment_count ? feed.comment_count : 0 }}
     {{ feed.comment_count > 1 ? ('comments' | cpI18n) : ('comment' | cpI18n) }}
   </ng-container>
 </ng-template>
