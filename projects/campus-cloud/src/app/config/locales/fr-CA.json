@@ -1290,6 +1290,12 @@
   "contact_trace_forms_yes_no": {
     "message": "Oui/Non"
   },
+  "contact_trace_notification_delete_confirmation": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "contact_trace_notification_delete_notification": {
+    "message": "Delete Notification"
+  },
   "contact_trace_no_qr_found": {
     "message": "Aucun code QR trouvé"
   },
