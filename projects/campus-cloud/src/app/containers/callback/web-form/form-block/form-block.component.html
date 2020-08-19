@@ -19,10 +19,10 @@
 <div class="d-flex justify-content-center">
   <div class="form-block">
     <form [formGroup]="formBlock" (ngSubmit)="next()">
-      <div *ngIf="getAddedOrCurrentImageUrl()">
+      <div *ngIf="currentFormBlock.image_url">
         <img
           class="form-block-image"
-          [src]="getAddedOrCurrentImageUrl()"
+          [src]="currentFormBlock.image_url"
           [alt]="currentFormBlock.name"
         />
       </div>
@@ -112,6 +112,12 @@
               <div *ngIf="fileError !== ''" class="error-text">
                 {{ fileError }}
               </div>
+            </div>
+            <div *ngIf="newImagePreview">
+              <img
+                      class="form-block-image"
+                      [src]="newImagePreview"
+              />
             </div>
           </div>
         </div>
