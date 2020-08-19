@@ -17,6 +17,9 @@ import {
 import { HttpParams } from '@angular/common/http';
 import { ExposureNotification, ExposureNotificationService } from '../.';
 import { FORMAT } from '@campus-cloud/shared/pipes';
+import { baseActionClass, ISnackbar } from '@campus-cloud/store';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'cp-exposure-notification-list',
@@ -39,13 +42,17 @@ export class ExposureNotificationListComponent implements OnInit {
   dateFormat = FORMAT.DATETIME;
   showViewMessageModal: boolean;
   notificationForView: ExposureNotification;
+  showNotificationDeleteModal: boolean;
+  notificationForDelete: ExposureNotification;
 
   constructor(
     private session: CPSession,
     private headerService: ContactTraceHeaderService,
     private formsService: FormsService,
     private notificationService: ExposureNotificationService,
-    private router: Router
+    private router: Router,
+    private cpI18n: CPI18nService,
+    private store: Store<ISnackbar>
   ) {}
 
   ngOnInit(): void {
@@ -149,5 +156,19 @@ export class ExposureNotificationListComponent implements OnInit {
 
   filterChangeHandler({ action }: { label?: string; action?: FormStatus }): void {
     this.filterStream.next(action);
+  }
+
+  onDeletedNotification(): void {
+    this.handleSuccess('contact_trace_forms_form_delete_success'); // ToDo: PJ: IMP: Replace with proper message
+    // Refresh items on current page
+    this.pageStream.next(this.pageCounter);
+  }
+
+  private handleSuccess(key) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate(key)
+      })
+    );
   }
 }

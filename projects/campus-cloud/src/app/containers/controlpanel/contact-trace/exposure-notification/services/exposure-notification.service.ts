@@ -36,6 +36,17 @@ export class ExposureNotificationService {
     );
   }
 
+  deleteNotification(notificationId: number, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ANNOUNCEMENT}/${notificationId}`;
+
+    return this.api.delete(url, search).pipe(
+      catchError((error) => {
+        this.handleError();
+        return throwError(error);
+      })
+    );
+  }
+
   private handleError() {
     this.store.dispatch(
       new baseActionClass.SnackbarError({

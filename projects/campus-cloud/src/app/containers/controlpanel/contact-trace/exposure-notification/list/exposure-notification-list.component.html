@@ -58,7 +58,9 @@
                   type="button"
                   variant="inline"
                   aria-label="close"
-                  (click)="null">
+                  data-toggle="modal"
+                  data-target="#notificationDeleteModal"
+                  (click)="notificationForDelete = result; showNotificationDeleteModal = true;">
             <ready-ui-icon name="close"></ready-ui-icon>
           </button>
         </td>
@@ -85,4 +87,15 @@
     [notification]="notificationForView"
   >
   </cp-exposure-notification-view-message>
+</cp-modal>
+
+<cp-modal
+  modalId="notificationDeleteModal"
+  *ngIf="showNotificationDeleteModal"
+>
+  <cp-exposure-notification-delete
+    [notification]="notificationForDelete"
+    (deleteForm)="onDeletedNotification()"
+  >
+  </cp-exposure-notification-delete>
 </cp-modal>
