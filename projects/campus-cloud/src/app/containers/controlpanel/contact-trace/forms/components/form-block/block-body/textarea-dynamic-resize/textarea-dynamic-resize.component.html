@@ -1,5 +1,5 @@
 <textarea
-        [style]="{'min-height' : minHeight * numberOfLines + 'px'}"
+        [style]="{'min-height' : 12 + minHeight * numberOfLines + 'px'}"
         class="form-control question-title"
         (ngModelChange)="keyDown($event)"
         [class.error]="classErrorCondition"
