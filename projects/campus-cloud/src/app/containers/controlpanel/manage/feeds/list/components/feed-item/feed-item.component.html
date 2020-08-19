@@ -19,16 +19,46 @@
     <div class="row feed__body">
       <div class="col-12">
         <cp-feed-body [mode]="mode"
-                      [isComment]="!feed"
-                      [feed]="feed || comment">
+                      [feed]="feed || comment"
+                      [isComment]="!!feedIsAComment"
+                      (viewComments)="onExpandComments()"
+                      (toggleReplies)="onExpandComments()">
         </cp-feed-body>
 
         <cp-feed-deleted-by *ngIf="view.deleted"
                             [feed]="feed || comment"></cp-feed-deleted-by>
       </div>
     </div>
+    <div class="feed__extras feed__comments"
+        *ngIf="view.mode !== 'search' && view.matchedComments.length">
+      <div class="row"
+          *ngFor="let comment of view.matchedComments; let last = last">
+        <div class="col-12">
+          <cp-feed-comment  [last]="last"
+                            [comment]="comment"
+                            [replyView]="[true]"
+                            [isCampusWallView]="isCampusWallView">
+          </cp-feed-comment>
+        </div>
+      </div>
+    </div>
+  
+    <div class="feed__comments"
+        *ngIf="view.commentsOpen">
+      <div class="row">
+        <div class="col-12">
+          <cp-feed-comments [feed]="feed"
+                            [groupId]="groupId"
+                            (replied)="onReplied()"
+                            [groupType]="groupType"
+                            (deleted)="onDeletedComment()"
+                            [readOnlyMode]="readOnlyMode"
+                            [isCampusWallView]="isCampusWallView">
+          </cp-feed-comments>
+        </div>
+      </div>
+    </div>
   </div>
-
 
   <cp-modal modalId="moveFeedModal"
             *ngIf="isMoveModal">

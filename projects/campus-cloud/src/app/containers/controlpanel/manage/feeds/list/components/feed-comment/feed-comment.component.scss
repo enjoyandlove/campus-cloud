@@ -1,0 +1,61 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.cp-feed-comment {
+  cp-feed-body {
+    margin-top: 1em;
+    display: block;
+  }
+
+  .nested {
+    padding-top: 2em;
+  }
+
+  &.nested-item {
+    overflow: hidden;
+    border-radius: 4px;
+
+    .parent-thread__body {
+      margin-top: -1em;
+    }
+
+    cp-feed-item .cp-card {
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  .comment {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid darken($color: $color-text-alt, $amount: 8);
+
+    &__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  .parent-thread {
+    overflow: hidden;
+    background: white;
+    margin-left: -$default_padding;
+    margin-right: -$default_padding;
+    border-bottom: 1px solid $color-med-grey;
+
+    &--expanded {
+      border-bottom: 1px solid transparent;
+    }
+
+    &__header {
+      height: 4em;
+      display: flex;
+      align-content: center;
+      justify-content: flex-start;
+      padding-left: $default_padding;
+      padding-right: $default_padding;
+    }
+  }
+}

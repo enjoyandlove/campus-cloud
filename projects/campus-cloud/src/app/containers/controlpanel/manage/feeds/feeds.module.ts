@@ -18,7 +18,6 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { FeedsInfoComponent } from '@controlpanel/manage/feeds/info';
 import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 import { ProfileNameEmailPipe } from '@controlpanel/manage/feeds/list/pipes';
-
 import {
   FeedBodyComponent,
   FeedItemComponent,
@@ -37,7 +36,9 @@ import {
   FeedHostSelectorComponent,
   FeedApproveModalComponent,
   FeedDeleteCommentModalComponent,
-  FeedApproveCommentModalComponent
+  FeedApproveCommentModalComponent,
+  FeedCommentsComponent,
+  FeedCommentComponent
 } from './list/components';
 
 @NgModule({
@@ -63,6 +64,8 @@ import {
     FeedInteractionsComponent,
     FeedDeleteCommentModalComponent,
     FeedApproveCommentModalComponent,
+    FeedCommentsComponent,
+    FeedCommentComponent,
     ProfileNameEmailPipe
   ],
 
@@ -101,7 +104,9 @@ import {
     FeedHostSelectorComponent,
     FeedApproveModalComponent,
     FeedDeleteCommentModalComponent,
-    FeedApproveCommentModalComponent
+    FeedApproveCommentModalComponent,
+    FeedCommentsComponent,
+    FeedCommentComponent
   ]
 })
 export class FeedsModule {}

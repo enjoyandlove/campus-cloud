@@ -57,6 +57,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   @Input() replyView: boolean;
   @Input() feed: ICampusThread | ISocialGroupThread;
+  @Input() isDefaultView: boolean;
 
   @Output() created: EventEmitter<null> = new EventEmitter();
 
