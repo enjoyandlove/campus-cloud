@@ -40,7 +40,7 @@ export class LocationsExcelComponent extends BaseComponent implements OnInit, On
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private evn: EnvService,
+    private env: EnvService,
     private store: Store<any>,
     private session: CPSession,
     private i18nPipe: CPI18nPipe,
@@ -58,7 +58,7 @@ export class LocationsExcelComponent extends BaseComponent implements OnInit, On
       .select(getLocationsModalState)
       .pipe(take(1))
       .subscribe((res) => {
-        this.locations = this.evn.name !== 'development' ? res : require('./mock.json');
+        this.locations = this.env.name !== 'development' ? res : require('./mock.json');
         this.buildForm();
         this.buildHeader();
       });
@@ -139,9 +139,13 @@ export class LocationsExcelComponent extends BaseComponent implements OnInit, On
   }
 
   buildLocationControl(location) {
+    const current_category = this.categories.filter((el) => el.label == location.category_name);
+
+    this.selectedCategory.push(current_category[0]);
+
     return this.fb.group({
       name: [location.name, Validators.required],
-      category_id: [null, Validators.required],
+      category_id: [current_category[0].action, Validators.required],
       short_name: [location.acronym],
       address: [location.address],
       description: [location.description],
