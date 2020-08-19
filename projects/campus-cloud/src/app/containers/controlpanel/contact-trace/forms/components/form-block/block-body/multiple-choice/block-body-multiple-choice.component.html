@@ -1,9 +1,7 @@
-<input
-  type="text"
-  class="form-control"
-  [class.error]="highlightFormError && formsHelper.isNullOrEmptyString(formBlock.text)"
-  [(ngModel)]="formBlock.text"
-/>
+<cp-textarea-dynamic-resize
+        [classErrorCondition]="highlightFormError && formsHelper.isNullOrEmptyString(formBlock.text)"
+        [form]="formBlock"
+></cp-textarea-dynamic-resize>
 
 <div class="answers-container">
 
@@ -37,7 +35,7 @@
   </div>
 
   <div
-    class="answer-item-container"
+    class="answer-item-container add-btn-bloc"
     *ngIf="formBlock.block_content_list.length < MAX_ANSWER_OPTIONS_LIMIT"
     (click)="addBlockContentClickHandler()"
   >

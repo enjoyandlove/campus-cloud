@@ -231,3 +231,29 @@ def import_qr_codes(request):
             item['has_checkout'] = item['has_checkout'].lower() == 'true'
 
     return JsonResponse(json.dumps(parsed_data), safe=False)
+
+'''
+Parse Locations Mass Upload
+'''
+@csrf_exempt
+def import_locations(request):
+    csv_file = request.FILES['file']
+
+    csv_as_string = []
+
+    for index, row in enumerate(csv_file):
+        try:
+            csv_as_string.append(UnicodeDammit(row).unicode_markup)
+        except UnicodeError as e:
+            return JsonResponse({"error": DECODE_ERROR + '. At line {}'.format(index + 1)}, safe=False, status=400)
+
+    parser = CSVParser(csv_as_string)
+    try:
+        parsed_data = parser.all_fields_required('location_name', 'category', 'latitude', 'longitude')
+    except KeyError as e:
+        return JsonResponse({"error": e.args[0]}, safe=False, status=400)
+    
+    for item in parsed_data:
+        item['name'] = item.pop('location_name')
+        
+    return JsonResponse(json.dumps(parsed_data), safe=False)

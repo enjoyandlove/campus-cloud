@@ -9,7 +9,7 @@
       </a>
       <a
         [routerLink]="'builder'"
-        [ngClass]="{'disabled-link': !form || form.status !== formStatus.draft || !form.name || form.name.trim().length === 0 || !form.form_block_list || form.form_block_list.length === 0}"
+        [ngClass]="{'disabled-link': !form || !form.name || form.name.trim().length === 0 || !form.form_block_list || form.form_block_list.length === 0}"
         routerLinkActive="active"
         class="link-button"
       >

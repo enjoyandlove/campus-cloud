@@ -734,6 +734,9 @@
   "cancel": {
     "message": "Cancel"
   },
+  "cases": {
+    "message": "Cases"
+  },
   "category": {
     "message": "Category"
   },
@@ -2070,6 +2073,9 @@
   },
   "locations_edit_modal_title": {
     "message": "Edit Location"
+  },
+  "locations_import_items_to_import": {
+    "message": "File contains data for %s location(s)."
   },
   "locations_label_acronym": {
     "message": "Acronym"
@@ -4531,6 +4537,9 @@
   },
   "web_form_start_page_intro": {
     "message": "Scan from the Campus App or enter your email to begin"
+  },
+  "web_form_unavailable_form_message": {
+    "message": "The form is now closed and is no longer accepting responses"
   },
   "web_form_submit": {
     "message": "Submit"

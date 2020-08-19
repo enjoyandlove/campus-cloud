@@ -35,7 +35,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 
 // pipes
-import { CPUrlify, CPDatePipe, CPFilterPipe, CPFIlterByLength, CPBoldifyPipe } from './pipes';
+import { CPUrlify, CPDatePipe, CPFilterPipe, CPFIlterByLength, CPBoldifyPipe, BreakLinesPipe, InlineLinksPipe } from './pipes';
 
 // components
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
@@ -153,7 +153,9 @@ import {
     CPUploadModalHeaderComponent,
     CPPlaceAutoCompleteComponent,
     CPDropdownMultiSelectComponent,
-    CPUnsavedChangesModalComponent
+    CPUnsavedChangesModalComponent,
+    BreakLinesPipe,
+    InlineLinksPipe
   ],
 
   entryComponents: [CPLightboxComponent, CPImageCropperComponent],
@@ -246,7 +248,9 @@ import {
     CPUploadModalHeaderComponent,
     CPUploadModalFooterComponent,
     CPDropdownMultiSelectComponent,
-    CPUnsavedChangesModalComponent
+    CPUnsavedChangesModalComponent,
+    BreakLinesPipe,
+    InlineLinksPipe
   ]
 })
 export class SharedModule {}

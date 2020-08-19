@@ -47,6 +47,7 @@
                  class="page__content__input">
               <cp-feed-input-box [feed]="view.feed || {id: view.comments[0].campus_thread_id , post_type: view.comments[0].post_type }"
                                  [replyView]="true"
+                                 [isDefaultView]="true"
                                  (created)="onReplied($event)">
               </cp-feed-input-box>
             </div>

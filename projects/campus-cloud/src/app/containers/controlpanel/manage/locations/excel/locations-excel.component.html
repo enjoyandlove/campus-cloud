@@ -1,0 +1,88 @@
+<ng-container [ngSwitch]="isFormReady">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+  <ng-container *ngSwitchCase="true">
+    <div class="row">
+      <div class="col-12">
+        <cp-locations-import-top-bar [categories]="categories"
+                                    [isChecked]="isParentCheckBoxChecked"
+                                    [categoryDropDownStatus]="categoryDropDownStatus"
+                                    (checkAll)="onCheckAll($event)"
+                                    (categoryChange)="onCategoryBulkChange($event)">
+        </cp-locations-import-top-bar>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-12">
+        <form [formGroup]="form"
+              class="form">
+          <div formArrayName="locations">
+            <div class="row">
+              <div class="col-12">
+                <cp-no-content noContentText="No Locations to Add..."
+                               *ngIf="!form['controls'].locations['controls'].length">
+                </cp-no-content>
+              </div>
+            </div>
+            <div class="row form__wrapper"
+                 *ngFor="let location of form['controls'].locations['controls']; let i = index">
+              <div [formGroupName]="i"
+                   class="col-12">
+                <div class="row form__item">
+                  <div class="col-4 text-truncate">
+                    <div class="row margin-top">
+                      <div class="col-3">
+                        <div class="row">
+                          <div class="col-1">
+                            <cp-checkbox class="checkbox float-left"
+                                         [isChecked]="isChecked[i].checked"
+                                         (toggle)="onSingleCheck($event, i)">
+                            </cp-checkbox>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-8 text-truncate">
+                        <span class="locations__title">
+                          <strong>{{ location.controls.name.value }}</strong>
+                        </span>
+                        <br />
+                        <span class="location__description">
+                          {{ location.controls.address.value }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <label>{{ 'category' | cpI18n }}</label>
+                    <cp-dropdown [items]="categories"
+                                 [selectedItem]="selectedCategory[i]"
+                                 (selected)="onSingleCategorySelected($event, i)">
+                    </cp-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="row">
+          <div class="col-12">
+            <div class="float-right">
+              <a [routerLink]="['/manage/locations']"
+                 class="cpbtn cpbtn--cancel">
+                {{ 'cancel' | cpI18n }}
+              </a>
+              <cp-button [props]="buttonData"
+                         (buttonClick)="onSubmit()"> </cp-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

@@ -7,3 +7,4 @@ export * from './number';
 export * from './decimal';
 export * from './image';
 export * from './result';
+export * from './textarea-dynamic-resize';

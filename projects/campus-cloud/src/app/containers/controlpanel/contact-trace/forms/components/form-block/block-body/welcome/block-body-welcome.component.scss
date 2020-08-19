@@ -4,3 +4,11 @@
 .text-area-control {
   margin-top: 10px;
 }
+
+textarea.input-title {
+  min-height: 36px;
+  resize: none;
+  overflow: hidden;
+  line-height: 28px;
+  padding-top: 2px;
+}

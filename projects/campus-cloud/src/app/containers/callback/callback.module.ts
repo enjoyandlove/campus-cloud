@@ -45,6 +45,7 @@ import {
   WebFormComponent,
   StartComponent,
   FormBlockComponent,
+  UnavailableFormComponent,
   WebFormService,
   webFormReducer,
   webFormErrorReducer
@@ -76,7 +77,8 @@ import {
     FeedbackAlreadySubmittedComponent,
     WebFormComponent,
     StartComponent,
-    FormBlockComponent
+    FormBlockComponent,
+    UnavailableFormComponent
   ],
 
   imports: [

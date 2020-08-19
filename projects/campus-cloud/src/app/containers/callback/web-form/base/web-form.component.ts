@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { WebFormService } from '../web-form.service';
 import { FormState } from '../form-state.interface';
@@ -16,6 +16,7 @@ export class WebFormComponent extends BaseComponent implements OnInit {
   formBlockId: string;
   currentFormBlock: any;
   errorMessage: string;
+  unAvailable: Boolean = false;
 
   constructor(
     private store: Store<{ webForm: FormState; webFormError: string }>,
@@ -44,7 +45,7 @@ export class WebFormComponent extends BaseComponent implements OnInit {
           );
         },
         (error: any) => {
-          console.log(error);
+          this.unAvailable = error.status === 404;
         }
       );
     });

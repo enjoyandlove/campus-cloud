@@ -102,6 +102,19 @@ const _feedsReducer = createReducer(
     };
   }),
 
+  on(WallsActions.expandComments, (state: IWallsFeedsState, { threadId }) => {
+    const expanded = state.expandedThreadIds.indexOf(threadId) === -1;
+
+    const expandedThreadIds = !expanded
+      ? state.expandedThreadIds.filter((id) => id !== threadId)
+      : [...state.expandedThreadIds, threadId];
+
+    return {
+      ...state,
+      expandedThreadIds
+    };
+  }),
+
   on(WallsActions.resetState, (state: IWallsFeedsState) => {
     return {
       ...state,

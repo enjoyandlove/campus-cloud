@@ -16,3 +16,5 @@ export * from './feed-approve-modal';
 export * from './feed-settings-modal';
 export * from './feed-delete-comment-modal';
 export * from './feed-approve-comment-modal';
+export * from './feed-comments';
+export * from './feed-comment';

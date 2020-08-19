@@ -734,6 +734,9 @@
   "cancel": {
     "message": "Annuler"
   },
+  "cases": {
+    "message": "Cases"
+  },
   "category": {
     "message": "Catégorie"
   },
@@ -2070,6 +2073,9 @@
   },
   "locations_edit_modal_title": {
     "message": "Éditer lieu"
+  },
+  "locations_import_items_to_import": {
+    "message": "File contains data for %s location(s)."
   },
   "locations_label_acronym": {
     "message": "Acronyme"
@@ -4531,6 +4537,9 @@
   },
   "web_form_start_page_intro": {
     "message": "Scannez depuis l'application ou entrez votre courriel pour commencer"
+  },
+  "web_form_unavailable_form_message": {
+    "message": "Le formulaire est maintenant fermé et n'accepte plus les réponses"
   },
   "web_form_submit": {
     "message": "Soumettre"

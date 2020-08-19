@@ -41,3 +41,8 @@ export const getProvidersModalState = createSelector(
   getBaseState,
   (state: IBaseState) => state.PROVIDERS_MODAL
 );
+
+export const getLocationsModalState = createSelector(
+  getBaseState,
+  (state: IBaseState) => state.LOCATIONS_MODAL
+);

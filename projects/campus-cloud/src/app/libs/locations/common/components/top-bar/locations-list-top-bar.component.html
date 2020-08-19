@@ -15,13 +15,21 @@
       </div>
     </div>
     <div class="col-6 float-right">
+      <button
+            class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown float-right">
+        <i class="material-icons"
+            data-toggle="dropdown">expand_more</i>
+        <ul
+            class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
+          <li (click)="launchModal()">{{ 'import_from_csv' | cpI18n }}</li>
+        </ul>
+      </button>
       <button cpTracker
               [eventData]="eventData"
               (click)="createClick.emit()"
-              class="cpbtn cpbtn--primary float-right">
+              class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding  float-right">
         {{ createLocationLabel }}
       </button>
-
       <button (click)="categoriesClick.emit()"
               class="cpbtn cpbtn--cancel float-right margin-right">
         {{ 't_locations_manage_categories' | cpI18n }}

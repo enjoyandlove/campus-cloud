@@ -1,4 +1,7 @@
 <div *ngIf="errorMessage" class="errorMessage">{{ errorMessage }}</div>
+<div *ngIf="unAvailable" >
+    <cp-unavailable-form></cp-unavailable-form>
+</div>
 <div *ngIf="webFormData">
   <div *ngIf="formBlockId === 'start'; else formBlock">
     <app-web-form-start [webFormData]="webFormData"></app-web-form-start>
