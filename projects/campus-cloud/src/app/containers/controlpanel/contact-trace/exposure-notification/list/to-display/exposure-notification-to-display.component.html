@@ -1,0 +1,11 @@
+<ng-container *ngIf="notification.user_details && notification.user_details.length > 0">
+  <div *ngFor="let user of notification.user_details">
+    {{(user.firstname || user.lastname) ? ((user.firstname ? (user.firstname + ' ') : '') + (user.lastname ? user.lastname : '')) : (user.email ? user.email : '')}}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="notification.list_details && notification.list_details.length > 0">
+  <div *ngFor="let list of notification.list_details">
+    {{list.name}}
+  </div>
+</ng-container>

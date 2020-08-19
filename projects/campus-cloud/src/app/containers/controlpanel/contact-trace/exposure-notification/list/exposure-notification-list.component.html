@@ -35,6 +35,10 @@
       <tr ui-table-row
           *ngFor="let result of results; let i = index">
         <td ui-table-cell>
+          <cp-exposure-notification-to-display
+            [notification]="result"
+          >
+          </cp-exposure-notification-to-display>
         </td>
         <td ui-table-cell>
           {{result.subject}}

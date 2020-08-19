@@ -1,4 +1,5 @@
 import { ExposureNotificationStatus } from '.';
+import { IListDetail, IUserDetail } from '@controlpanel/notify/announcements/model';
 
 export interface ExposureNotification {
   id?: number;
@@ -13,6 +14,6 @@ export interface ExposureNotification {
   is_school_wide: boolean;
   store_name: string;
   status: ExposureNotificationStatus;
-  // user_details: IUserDetail[];
-  // list_details: IListDetail[];
+  user_details: IUserDetail[];
+  list_details: IListDetail[];
 }
