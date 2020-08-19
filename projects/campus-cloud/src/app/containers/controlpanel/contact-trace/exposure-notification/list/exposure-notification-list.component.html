@@ -33,11 +33,8 @@
 
       <tbody>
       <tr ui-table-row
-          [cpTarget]="['feed_' + i]"
           *ngFor="let result of results; let i = index">
-        <td ui-table-cell
-            [cpTarget]="['feed_title_' + i]">
-          to goes here
+        <td ui-table-cell>
         </td>
         <td ui-table-cell>
           {{result.subject}}
@@ -46,7 +43,14 @@
           {{ result.notify_at_epoch | cpDatePipe: dateFormat }}
         </td>
         <td ui-table-cell>
-          {{ 'View Message' | cpI18n }} <!-- ToDo: PJ: Localize -->
+          <div
+            class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary"
+            data-toggle="modal"
+            data-target="#viewMessageModal"
+            (click)="notificationForView = result; showViewMessageModal = true;"
+          >
+            {{ 'View Message' | cpI18n }} <!-- ToDo: PJ: Localize -->
+          </div>
         </td>
         <td ui-table-cell
             align="right">
@@ -72,3 +76,13 @@
   </ng-container>
 
 </ng-container>
+
+<cp-modal
+  modalId="viewMessageModal"
+  *ngIf="showViewMessageModal"
+>
+  <cp-exposure-notification-view-message
+    [notification]="notificationForView"
+  >
+  </cp-exposure-notification-view-message>
+</cp-modal>

@@ -37,6 +37,8 @@ export class ExposureNotificationListComponent implements OnInit {
   paginationCountPerPage = 25;
   results: ExposureNotification[] = [];
   dateFormat = FORMAT.DATETIME;
+  showViewMessageModal: boolean;
+  notificationForView: ExposureNotification;
 
   constructor(
     private session: CPSession,
