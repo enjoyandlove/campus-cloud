@@ -1,6 +1,6 @@
 <cp-spinner *ngIf="!form"></cp-spinner>
 
-<div class="page-container" *ngIf="form">
+<div class="page-container" *ngIf="form" [ngClass]="{'not-editable' : form && form.status !== formStatus.draft}" #pageContent>
 
   <div class="blocks-group-container">
     <cp-form-block
@@ -121,7 +121,7 @@
 
 </div>
 
-<div class="footer" *ngIf="form">
+<div class="footer" *ngIf="form" [ngClass]="{'d-none' : form && form.status !== formStatus.draft}">
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
       <div class="col-12">

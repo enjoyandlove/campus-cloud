@@ -61,3 +61,29 @@
     }
   }
 }
+
+
+/*Not editable style*/
+:host /deep/ .not-editable {
+  .ready-ui-card--spacing-regular {
+    margin-top: 35px;
+  }
+
+  button.group-button.button-group-item,
+  button.add-new-item-button,
+  button.add-action-button,
+  div.answer-item-container.add-btn-bloc {
+    display: none;
+  }
+
+  .delete-icon, ready-ui-icon[name="add_circle_outline"], ready-ui-icon[name="add_circle"] {
+    display: none !important;
+  }
+
+  .form-control:disabled {
+    background-color: white;
+  }
+  textarea:disabled, input:disabled, button:disabled {
+    color: #000000;;
+  }
+}

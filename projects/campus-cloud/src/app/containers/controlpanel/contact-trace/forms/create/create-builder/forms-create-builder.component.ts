@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter, finalize, takeUntil } from 'rxjs/operators';
-import { BlockType, Form, FormBlock } from '../../models';
+import { BlockType, Form, FormBlock, FormStatus } from '../../models';
 import { FormsService } from '../../services';
 import { Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './forms-create-builder.component.html',
   styleUrls: ['./forms-create-builder.component.scss']
 })
-export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
+export class FormsCreateBuilderComponent implements OnInit, OnDestroy, AfterViewChecked {
   private unsubscribe: Subject<void> = new Subject();
   form: Form;
   welcomeBlock: FormBlock;
@@ -26,6 +26,10 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
   highlightFormErrorForPublish: boolean;
   showFormPublishModal: boolean;
   webServiceCallInProgress: boolean;
+  formStatus = FormStatus;
+  alreadyDisabled = false;
+
+  @ViewChild('pageContent') notEditableBloc: ElementRef;
 
   constructor(
     private formsService: FormsService,
@@ -241,5 +245,17 @@ export class FormsCreateBuilderComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.alreadyDisabled && this.notEditableBloc && this.notEditableBloc.nativeElement.classList.contains('not-editable')) {
+      this.alreadyDisabled = true;
+
+      const inputs: NodeList = this.notEditableBloc.nativeElement.querySelectorAll('button, textarea, input');
+      inputs.forEach((elementRef, key, parent) => {
+          // @ts-ignore
+          elementRef.setAttribute('disabled', 'true');
+      });
+    }
   }
 }
