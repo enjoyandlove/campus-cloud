@@ -1302,6 +1302,9 @@
   "contact_trace_notification_delete_notification": {
     "message": "Delete Notification"
   },
+  "contact_trace_notification_delete_success": {
+    "message": "Notification successfully deleted"
+  },
   "contact_trace_notification_subject": {
     "message": "Subject"
   },

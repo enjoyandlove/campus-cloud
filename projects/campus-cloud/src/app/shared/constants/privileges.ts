@@ -71,7 +71,7 @@ export const CP_PRIVILEGES_MAP = {
 
   forms: 42,
 
-  contact_trace_exposure_notification: 41 // ToDo: PJ: IMP: Replace with proper privilege
+  contact_trace_exposure_notification: 43
 };
 
 export const CP_PRIVILEGES = {

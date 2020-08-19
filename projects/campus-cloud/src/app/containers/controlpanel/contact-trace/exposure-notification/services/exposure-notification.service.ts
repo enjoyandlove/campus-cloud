@@ -25,7 +25,6 @@ export class ExposureNotificationService {
     end: number,
     params: HttpParams
   ): Observable<ExposureNotification[] | any> {
-    // ToDo: PJ: IMP: Replace with correct endpoint
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ANNOUNCEMENT}/${start};${end}`;
 
     return this.api.get(url, params).pipe(

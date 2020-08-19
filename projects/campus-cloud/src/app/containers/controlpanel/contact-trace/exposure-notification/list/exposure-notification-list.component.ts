@@ -159,7 +159,7 @@ export class ExposureNotificationListComponent implements OnInit {
   }
 
   onDeletedNotification(): void {
-    this.handleSuccess('contact_trace_forms_form_delete_success'); // ToDo: PJ: IMP: Replace with proper message
+    this.handleSuccess('contact_trace_notification_delete_success');
     // Refresh items on current page
     this.pageStream.next(this.pageCounter);
   }
