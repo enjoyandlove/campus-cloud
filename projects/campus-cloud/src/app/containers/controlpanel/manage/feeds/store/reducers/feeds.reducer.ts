@@ -172,6 +172,13 @@ const _feedsReducer = createReducer(
     };
   }),
 
+  on(WallsActions.addThreadToResult, (state: IWallsFeedsState, { thread }) => {
+    return {
+      ...state,
+      results: [{id: thread.id, type: 'THREAD'}, ...state.results]
+    };
+  }),
+
   on(WallsActions.updateThread, (state: IWallsFeedsState, { thread }) => {
     const searching = state.searchTerm !== '';
     const nonEditableFields = ['display_name'];
