@@ -259,8 +259,4 @@ export class FormBlockComponent extends BaseComponent implements OnInit {
   get answer() {
     return this.formBlock.get('answer');
   }
-
-  getAddedOrCurrentImageUrl() {
-    return this.newImagePreview ? this.newImagePreview : this.currentFormBlock.image_url;
-  }
 }
