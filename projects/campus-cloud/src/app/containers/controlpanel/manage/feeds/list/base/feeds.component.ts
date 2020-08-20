@@ -1,39 +1,38 @@
-import { BehaviorSubject, combineLatest, of, zip, Observable, merge, Subject } from 'rxjs';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subject, zip } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { isEqual } from 'lodash';
 import {
-  map,
-  tap,
-  take,
-  share,
-  filter,
-  mergeMap,
-  switchMap,
-  takeUntil,
-  startWith,
   catchError,
   debounceTime,
-  distinctUntilChanged
+  distinctUntilChanged,
+  filter,
+  map,
+  mergeMap,
+  share,
+  startWith,
+  switchMap,
+  take,
+  takeUntil,
+  tap
 } from 'rxjs/operators';
 
 import * as fromStore from '../../store';
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
-import { GroupType } from '../../feeds.utils.service';
+import { FeedsUtilsService, GroupType } from '../../feeds.utils.service';
 import { appStorage } from '@campus-cloud/shared/utils';
-import { FeedsUtilsService } from '../../feeds.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { FeedsSearchUtilsService } from '../../feeds-search.utils.service';
-import { UserService, StoreService, ReadyStore } from '@campus-cloud/shared/services';
+import { ReadyStore, StoreService, UserService } from '@campus-cloud/shared/services';
 import {
-  ISocialGroup,
   ICampusThread,
-  SocialWallContent,
-  ISocialGroupThread,
   ICampusThreadComment,
+  ISocialGroup,
+  ISocialGroupThread,
   ISocialGroupThreadComment,
+  SocialWallContent,
   SocialWallContentObjectType
 } from '@controlpanel/manage/feeds/model';
 
@@ -574,7 +573,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
         });
       })
     );
-
     this.results$ = merge(newPosts$, resultObjs$);
 
     const storedHost = appStorage.get(appStorage.keys.WALLS_DEFAULT_HOST);
@@ -657,5 +655,15 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
         (emails) => this.store.dispatch(fromStore.setBannedEmails({ emails })),
         () => this.store.dispatch(fromStore.setBannedEmails({ emails: [] }))
       );
+  }
+
+  /**
+   We have to update the result by the added post (thread),
+   this missing action was causing an issue with new post display when filter is selected
+   **/
+  addToResult(thread: ICampusThread) {
+    this.store.dispatch(
+      fromStore.addThreadToResult({ thread })
+    );
   }
 }

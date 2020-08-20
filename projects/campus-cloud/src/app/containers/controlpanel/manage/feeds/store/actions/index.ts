@@ -9,6 +9,7 @@ enum FeedsActions {
 
   ADD_THREADS = '[manage.walls] add threads',
   ADD_THREAD = '[manage.walls] add thread',
+  ADD_THREAD_TO_RESULT = '[manage.walls] add thread to result',
   UPDATE_THREAD = '[manage.walls] update thread',
   REMOVE_THREAD = '[manage.walls] remove thread',
 
@@ -103,6 +104,7 @@ export const setFlaggedByModerator = createAction(
 
 export const addThreads = createAction(FeedsActions.ADD_THREADS, props<{ threads: any[] }>());
 export const addThread = createAction(FeedsActions.ADD_THREAD, props<{ thread: any }>());
+export const addThreadToResult = createAction(FeedsActions.ADD_THREAD_TO_RESULT, props<{ thread: any }>());
 export const updateThread = createAction(FeedsActions.UPDATE_THREAD, props<{ thread: any }>());
 export const removeThread = createAction(FeedsActions.REMOVE_THREAD, props<{ threadId: number }>());
 

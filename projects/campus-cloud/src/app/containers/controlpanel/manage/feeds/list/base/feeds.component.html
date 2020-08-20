@@ -15,7 +15,7 @@
                         (feedSearch)="searchHandler($event, true)"
                         [hideIntegrations]="hideIntegrations"></cp-feed-search>
 
-        <cp-feed-input-box *ngIf="(view.host || view.socialGroup) && !view.readOnly" [isDefaultView]="true">
+        <cp-feed-input-box *ngIf="(view.host || view.socialGroup) && !view.readOnly" [isDefaultView]="true" (created)="addToResult($event)">
         </cp-feed-input-box>
 
         <cp-spinner *ngSwitchCase="true"></cp-spinner>
