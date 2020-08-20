@@ -1,9 +1,17 @@
-<ng-container *ngIf="notification.user_details && notification.user_details.length > 0">
-  <div *ngFor="let user of notification.user_details">
+<ng-container *ngIf="notification.user_details">
+
+  <ng-container *ngIf="notification.user_details.length === 1">
     <div class="name-label">
-      {{(user.firstname || user.lastname) ? ((user.firstname ? (user.firstname + ' ') : '') + (user.lastname ? user.lastname : '')) : (user.email ? user.email : '')}}
+      {{(notification.user_details[0].firstname || notification.user_details[0].lastname) ? ((notification.user_details[0].firstname ? (notification.user_details[0].firstname + ' ') : '') + (notification.user_details[0].lastname ? notification.user_details[0].lastname : '')) : (notification.user_details[0].email ? notification.user_details[0].email : '')}}
     </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="notification.user_details.length > 1">
+    <div class="name-label">
+      {{ 'contact_trace_notification_custom_list' | cpI18n }}
+    </div>
+  </ng-container>
+
 </ng-container>
 
 <ng-container *ngIf="notification.list_details && notification.list_details.length > 0">
