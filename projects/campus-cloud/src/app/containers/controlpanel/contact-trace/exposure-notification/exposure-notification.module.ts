@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import {
+  ExposureNotificationListActionBoxComponent,
   ExposureNotificationListComponent,
   ExposureNotificationToDisplayComponent
 } from '@controlpanel/contact-trace/exposure-notification/list';
@@ -19,7 +20,8 @@ import {
     ExposureNotificationListComponent,
     ExposureNotificationViewMessageComponent,
     ExposureNotificationDeleteComponent,
-    ExposureNotificationToDisplayComponent
+    ExposureNotificationToDisplayComponent,
+    ExposureNotificationListActionBoxComponent
   ],
   imports: [CommonModule, ExposureNotificationRoutingModule, SharedModule, LayoutsModule],
   providers: [CPI18nPipe]

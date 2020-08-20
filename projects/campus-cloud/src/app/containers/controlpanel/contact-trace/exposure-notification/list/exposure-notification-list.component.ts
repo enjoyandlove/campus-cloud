@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { FormsService, FormStatus } from '@controlpanel/contact-trace/forms';
 import { CPSession } from '@campus-cloud/session';
 import { ContactTraceHeaderService } from '@controlpanel/contact-trace/utils';
 import { Router } from '@angular/router';
@@ -15,7 +14,11 @@ import {
   switchMap
 } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { ExposureNotification, ExposureNotificationService } from '../.';
+import {
+  ExposureNotification,
+  ExposureNotificationService,
+  ExposureNotificationStatus
+} from '../.';
 import { FORMAT } from '@campus-cloud/shared/pipes';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import { CPI18nService } from '@campus-cloud/shared/services';
@@ -32,10 +35,10 @@ export class ExposureNotificationListComponent implements OnInit {
   searchTerm: string;
   searchTermStream = new Subject<string>();
   pageStream = new Subject<number>();
-  filterStream = new Subject<FormStatus>();
+  filterStream = new Subject<ExposureNotificationStatus>();
   hasMorePages = false;
 
-  filter: FormStatus;
+  filter: ExposureNotificationStatus;
   pageCounter = 1;
   paginationCountPerPage = 25;
   results: ExposureNotification[] = [];
@@ -48,7 +51,6 @@ export class ExposureNotificationListComponent implements OnInit {
   constructor(
     private session: CPSession,
     private headerService: ContactTraceHeaderService,
-    private formsService: FormsService,
     private notificationService: ExposureNotificationService,
     private router: Router,
     private cpI18n: CPI18nService,
@@ -57,8 +59,6 @@ export class ExposureNotificationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.headerService.updateHeader();
-
-    this.formsService.setFormBeingEdited(null);
 
     const searchSource = this.searchTermStream.pipe(
       debounceTime(500),
@@ -104,7 +104,7 @@ export class ExposureNotificationListComponent implements OnInit {
       .set('type', '0') // ToDo: PJ: IMP: Replace with type 1
       .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
       .set('school_id', this.session.school.id.toString())
-      .set('status', this.filter === null || this.filter === undefined ? null : '' + this.filter);
+      .set('statuses', this.filter === null || this.filter === undefined ? null : '' + this.filter);
     this.webServiceCallInProgress = true;
     return this.notificationService
       .searchNotifications(startRecordCount, endRecordCount, params)
@@ -154,7 +154,7 @@ export class ExposureNotificationListComponent implements OnInit {
     this.pageStream.next(this.pageCounter);
   }
 
-  filterChangeHandler({ action }: { label?: string; action?: FormStatus }): void {
+  filterChangeHandler({ action }: { label?: string; action?: ExposureNotificationStatus }): void {
     this.filterStream.next(action);
   }
 

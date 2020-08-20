@@ -1293,6 +1293,9 @@
   "contact_trace_forms_yes_no": {
     "message": "Yes/No"
   },
+  "contact_trace_notification_all_statuses": {
+    "message": "All Statuses"
+  },
   "contact_trace_notification_date_sent": {
     "message": "Date Sent"
   },
@@ -1305,8 +1308,20 @@
   "contact_trace_notification_delete_success": {
     "message": "Notification successfully deleted"
   },
+  "contact_trace_notification_error": {
+    "message": "Error"
+  },
   "contact_trace_notification_no_results": {
     "message": "No notifications found"
+  },
+  "contact_trace_notification_pending": {
+    "message": "Pending"
+  },
+  "contact_trace_notification_processing": {
+    "message": "Processing"
+  },
+  "contact_trace_notification_sent": {
+    "message": "Sent"
   },
   "contact_trace_notification_subject": {
     "message": "Subject"
