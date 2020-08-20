@@ -1,1 +1,40 @@
-<p>exposure-notification-edit works!</p>
+<cp-spinner *ngIf="webServiceCallInProgress"></cp-spinner>
+
+<div *ngIf="!webServiceCallInProgress">
+
+  <div class="page-container">
+    <ready-ui-card>
+      Coming Soon...
+    </ready-ui-card>
+  </div>
+
+  <div class="footer">
+    <div class="cp-wrapper cp-wrapper--outer">
+      <div class="row">
+        <div class="col-12">
+          <button
+            ui-button
+            type="button"
+            variant="flat"
+            color="primary"
+            class="action-button"
+            [disabled]="webServiceCallInProgress"
+            (click)="null">
+            {{'send' | cpI18n}}
+          </button>
+
+          <button
+            ui-button
+            type="button"
+            variant="flat"
+            color="secondary"
+            class="action-button"
+            (click)="cancelClickHandler()">
+            {{'cancel' | cpI18n}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

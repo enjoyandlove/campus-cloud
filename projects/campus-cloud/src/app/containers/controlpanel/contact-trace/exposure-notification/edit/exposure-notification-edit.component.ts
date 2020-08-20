@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
 import {
   ExposureNotification,
@@ -17,11 +17,13 @@ import { Store } from '@ngrx/store';
 export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
   notification: ExposureNotification;
+  webServiceCallInProgress: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private notificationService: ExposureNotificationService,
-    private store: Store<IHeader>
+    private store: Store<IHeader>,
+    private router: Router
   ) {}
 
   ngOnDestroy() {
@@ -67,5 +69,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         payload
       });
     });
+  }
+
+  cancelClickHandler(): void {
+    this.router.navigate(['/contact-trace/exposure-notification']);
   }
 }
