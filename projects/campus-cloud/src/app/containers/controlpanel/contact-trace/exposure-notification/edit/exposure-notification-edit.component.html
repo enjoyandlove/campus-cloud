@@ -4,7 +4,87 @@
 
   <div class="page-container">
     <ready-ui-card>
-      Coming Soon...
+      <header>
+        <h2 class="section__name">{{ 'message' | cpI18n }}</h2>
+<!--        <cp-datetime-picker-->
+<!--          (dateSet)="onSchedule($event)"-->
+<!--          [clearable]="isScheduledAnnouncement"-->
+<!--          [label]="isScheduledAnnouncement ? (form.get('notify_at_epoch').value | cpDatePipe:dateTimeFormat) : 't_notify_send_later' | cpI18n">-->
+
+<!--        </cp-datetime-picker>-->
+      </header>
+      <div class="row">
+        <div class="col-12">
+<!--          <form [formGroup]="form">-->
+<!--            <div class="form-group">-->
+<!--              <div class="row">-->
+<!--                <div class="col-6">-->
+<!--                  <div class="row">-->
+<!--                    <div class="col-12">-->
+<!--                      <label>{{ 'from' | cpI18n }}</label>-->
+<!--                      <cp-dropdown [items]="stores$ | async"-->
+<!--                                   [selectedItem]="session.defaultHost"-->
+<!--                                   (selected)="onSelectedStore($event)">-->
+<!--                      </cp-dropdown>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                  <label>{{ 'announcements_type' | cpI18n }}</label>-->
+<!--                  <div class="row">-->
+<!--                    <div class="col-12">-->
+<!--                      <cp-check-dropdown [items]="types"-->
+<!--                                         [selectedItem]="selectedType"-->
+<!--                                         buttonClass="cpbtn cpbtn&#45;&#45;cancel"-->
+<!--                                         (selected)="onTypeChanged($event)">-->
+<!--                      </cp-check-dropdown>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--              <label>-->
+<!--                {{ 'subject' | cpI18n }}-->
+<!--                <cp-char-counter class="float-right"-->
+<!--                                 [limit]="128"-->
+<!--                                 [charCount]="form.get('subject').value">-->
+<!--                </cp-char-counter>-->
+<!--              </label>-->
+<!--              <div class="cpInput subject-input">-->
+<!--                <div class="row">-->
+<!--                  <div class="col-2 no-right-padding"-->
+<!--                       *ngIf="subject_prefix.label">-->
+<!--                    <span-->
+<!--                      [ngClass]="'subject-input__label text-center ' + subject_prefix.type">-->
+<!--                      {{ subject_prefix.label }}-->
+<!--                    </span>-->
+<!--                  </div>-->
+<!--                  <div-->
+<!--                    [ngClass]="subject_prefix.label ? 'col-10 no-left-padding' : 'col-12'">-->
+<!--                    <input type="text"-->
+<!--                           formControlName="subject"-->
+<!--                           class="form-control transparent subject-input__input" />-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--              <label>-->
+<!--                {{ 'message_noun' | cpI18n }}-->
+<!--                <cp-char-counter class="float-right"-->
+<!--                                 [limit]="1024"-->
+<!--                                 [charCount]="form.controls.message.value">-->
+<!--                </cp-char-counter>-->
+<!--              </label>-->
+<!--              <textarea class="form-control"-->
+<!--                        formControlName="message"> </textarea>-->
+<!--            </div>-->
+<!--          </form>-->
+        </div>
+      </div>
     </ready-ui-card>
   </div>
 

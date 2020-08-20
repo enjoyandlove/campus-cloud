@@ -59,7 +59,8 @@ import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common
   exports: [
     AnnouncementsComposeComponent,
     AnnouncementsConfirmComponent,
-    AnnouncementsListRecipientsComponent
+    AnnouncementsListRecipientsComponent,
+    AnnouncementsDatetimePickerComponent
   ],
 
   imports: [

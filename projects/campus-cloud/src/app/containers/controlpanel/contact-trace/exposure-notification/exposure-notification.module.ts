@@ -15,6 +15,7 @@ import {
   ExposureNotificationListComponent,
   ExposureNotificationToDisplayComponent
 } from '@controlpanel/contact-trace/exposure-notification/list';
+import { AnnouncementsModule } from '@controlpanel/notify/announcements/announcements.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,13 @@ import {
     ExposureNotificationListActionBoxComponent,
     ExposureNotificationEditComponent
   ],
-  imports: [CommonModule, ExposureNotificationRoutingModule, SharedModule, LayoutsModule],
+  imports: [
+    CommonModule,
+    ExposureNotificationRoutingModule,
+    SharedModule,
+    LayoutsModule,
+    AnnouncementsModule
+  ],
   providers: [CPI18nPipe]
 })
 export class ExposureNotificationModule {}
