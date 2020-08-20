@@ -26,10 +26,10 @@
           [alt]="currentFormBlock.name"
         />
       </div>
-      <p class="form-block-heading" [innerHTML]="currentFormBlock.text | breakLines | inlineLinks"></p>
+      <p class="form-block-heading" [innerHTML]="currentFormBlock.text | inlineLinks | breakLines"></p>
       <div *ngIf="currentFormBlock.block_type === 0" class="form-block-content">
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
-          <pre>{{ blockContent.text | inlineLinks }}</pre>
+          <p [innerHTML]="blockContent.text | inlineLinks | breakLines"></p>
         </div>
       </div>
 
