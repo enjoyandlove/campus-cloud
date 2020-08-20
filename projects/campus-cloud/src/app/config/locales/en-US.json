@@ -1314,6 +1314,9 @@
   "contact_trace_notification_error": {
     "message": "Error"
   },
+  "contact_trace_notification_notify": {
+    "message": "Notify"
+  },
   "contact_trace_notification_no_results": {
     "message": "No notifications found"
   },

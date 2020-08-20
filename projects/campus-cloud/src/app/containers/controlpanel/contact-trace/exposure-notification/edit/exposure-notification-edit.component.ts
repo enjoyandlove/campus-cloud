@@ -6,6 +6,8 @@ import {
   ExposureNotification,
   ExposureNotificationService
 } from '@controlpanel/contact-trace/exposure-notification';
+import { baseActions, IHeader } from '@campus-cloud/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'cp-exposure-notification-edit',
@@ -14,12 +16,12 @@ import {
 })
 export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
-  notificationId: number;
   notification: ExposureNotification;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private notificationService: ExposureNotificationService
+    private notificationService: ExposureNotificationService,
+    private store: Store<IHeader>
   ) {}
 
   ngOnDestroy() {
@@ -30,10 +32,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(takeUntil(this.unsubscribe)).subscribe((params) => {
-      this.notificationId = Number(params['notificationId']);
-      this.getItemForEdit(this.notificationId).subscribe((notification) => {
+      const notificationId: number = Number(params['notificationId']);
+      this.getItemForEdit(notificationId).subscribe((notification) => {
         this.notification = notification;
-        console.log('this.notification', this.notification);
+        this.buildHeader();
       });
     });
   }
@@ -46,5 +48,24 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       return of(newObj);
     }
     return this.notificationService.getNotification(notificationId);
+  }
+
+  private buildHeader() {
+    const payload = {
+      heading: 'contact_trace_notification_notify',
+      em: null,
+      crumbs: {
+        url: 'exposure-notification',
+        label: 'contact_trace_forms_exposure_notification'
+      },
+      children: []
+    };
+
+    Promise.resolve().then(() => {
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload
+      });
+    });
   }
 }
