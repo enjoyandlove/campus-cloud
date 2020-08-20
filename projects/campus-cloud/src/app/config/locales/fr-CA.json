@@ -1296,6 +1296,9 @@
   "contact_trace_notification_all_statuses": {
     "message": "All Statuses"
   },
+  "contact_trace_notification_contact_tracing_service": {
+    "message": "Contact Tracing Service"
+  },
   "contact_trace_notification_create_notification": {
     "message": "Create Notification"
   },

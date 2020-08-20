@@ -16,6 +16,7 @@ import {
   ExposureNotificationToDisplayComponent
 } from '@controlpanel/contact-trace/exposure-notification/list';
 import { AnnouncementsModule } from '@controlpanel/notify/announcements/announcements.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { AnnouncementsModule } from '@controlpanel/notify/announcements/announce
     ExposureNotificationRoutingModule,
     SharedModule,
     LayoutsModule,
-    AnnouncementsModule
+    AnnouncementsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [CPI18nPipe]
 })

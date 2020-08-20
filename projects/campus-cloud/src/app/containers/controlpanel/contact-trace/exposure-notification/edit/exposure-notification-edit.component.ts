@@ -8,7 +8,8 @@ import {
 } from '@controlpanel/contact-trace/exposure-notification';
 import { baseActions, IHeader } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
-import { notifyAtEpochNow } from '@controlpanel/notify/announcements/model';
+import { AnnouncementPriority } from '@controlpanel/notify/announcements/model';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-exposure-notification-edit',
@@ -19,12 +20,41 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
   notification: ExposureNotification;
   webServiceCallInProgress: boolean;
+  types = [
+    {
+      action: AnnouncementPriority.regular,
+      disabled: false,
+      label: this.cpI18n.translate('regular'),
+      description: this.cpI18n.translate('announcements_regular_help')
+    },
+    {
+      action: AnnouncementPriority.urgent,
+      disabled: false,
+      label: this.cpI18n.translate('urgent'),
+      description: this.cpI18n.translate('announcements_urgent_help')
+    },
+    {
+      action: AnnouncementPriority.emergency,
+      disabled: false,
+      label: this.cpI18n.translate('emergency'),
+      description: this.cpI18n.translate('announcements_emergency_help')
+    }
+  ];
+  selectedType;
+  subject_prefix = {
+    label: null,
+    type: null
+  };
+  URGENT_TYPE = 1;
+  REGULAR_TYPE = 2;
+  EMERGENCY_TYPE = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private notificationService: ExposureNotificationService,
     private store: Store<IHeader>,
-    private router: Router
+    private router: Router,
+    private cpI18n: CPI18nService
   ) {}
 
   ngOnDestroy() {
@@ -78,5 +108,41 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   onSchedule(scheduledAt: number) {
     this.notification.notify_at_epoch = scheduledAt;
+  }
+
+  onTypeChanged(type): void {
+    this.subject_prefix = {
+      label: null,
+      type: null
+    };
+
+    if (type.action === this.EMERGENCY_TYPE) {
+      this.subject_prefix = {
+        label: this.cpI18n.translate('emergency'),
+        type: 'danger'
+      };
+    }
+
+    if (type.action === this.URGENT_TYPE) {
+      this.subject_prefix = {
+        label: this.cpI18n.translate('urgent'),
+        type: 'warning'
+      };
+    }
+
+    this.notification.priority = type.action;
+    this.selectedType = this.getObjectFromTypesArray(type.action);
+  }
+
+  private getObjectFromTypesArray(id) {
+    let result;
+
+    this.types.forEach((type) => {
+      if (type.action === id) {
+        result = type;
+      }
+    });
+
+    return result;
   }
 }
