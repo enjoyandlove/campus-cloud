@@ -101,7 +101,7 @@ export class ExposureNotificationListComponent implements OnInit {
     // Get an extra record so that we know if there are more records left to fetch
     let endRecordCount = paginationCountPerPage * pageNumber + 1;
     const params = new HttpParams()
-      .set('type', '0') // ToDo: PJ: IMP: Replace with type 1
+      .set('type', '1')
       .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
       .set('school_id', this.session.school.id.toString())
       .set('statuses', this.filter === null || this.filter === undefined ? null : '' + this.filter);

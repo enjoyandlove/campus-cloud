@@ -6,7 +6,6 @@ import { ApiService } from '@campus-cloud/base';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { CPSession } from '@campus-cloud/session';
 import { ExposureNotification } from '../.';
 
 @Injectable({
@@ -16,8 +15,7 @@ export class ExposureNotificationService {
   constructor(
     private api: ApiService,
     private store: Store<ISnackbar>,
-    private cpI18n: CPI18nService,
-    private session: CPSession
+    private cpI18n: CPI18nService
   ) {}
 
   searchNotifications(
