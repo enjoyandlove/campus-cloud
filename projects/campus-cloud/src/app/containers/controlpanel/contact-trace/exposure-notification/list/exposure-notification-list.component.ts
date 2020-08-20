@@ -143,7 +143,7 @@ export class ExposureNotificationListComponent implements OnInit {
   }
 
   onLaunchCreateModal(): void {
-    // this.router.navigate(['/contact-trace/forms/edit', 0, 'info']);
+    this.router.navigate(['/contact-trace/exposure-notification/edit', 0]);
   }
 
   onSearch(search_str) {

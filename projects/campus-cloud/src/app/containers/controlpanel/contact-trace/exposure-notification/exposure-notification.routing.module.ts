@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { pageTitle } from '@campus-cloud/shared/constants';
 import { ExposureNotificationListComponent } from '@controlpanel/contact-trace/exposure-notification/list';
+import { ExposureNotificationEditComponent } from '@controlpanel/contact-trace/exposure-notification/edit';
 
 // ToDo: PJ: Revisit complete code on this page including zendesk, pagetitle, AMPLITUDE
 
@@ -15,6 +16,15 @@ const appRoutes: Routes = [
       amplitude: 'IGNORE'
     },
     component: ExposureNotificationListComponent
+  },
+  {
+    path: 'edit/:notificationId',
+    data: {
+      zendesk: 'exposure notification',
+      amplitude: 'IGNORE',
+      title: pageTitle.CONTACT_TRACE_EXPOSURE_NOTIFICATION
+    },
+    component: ExposureNotificationEditComponent
   }
 ];
 @NgModule({

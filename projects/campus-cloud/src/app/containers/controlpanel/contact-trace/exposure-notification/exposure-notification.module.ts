@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import {
   ExposureNotificationDeleteComponent,
+  ExposureNotificationEditComponent,
   ExposureNotificationRoutingModule,
   ExposureNotificationViewMessageComponent
 } from '.';
@@ -21,7 +22,8 @@ import {
     ExposureNotificationViewMessageComponent,
     ExposureNotificationDeleteComponent,
     ExposureNotificationToDisplayComponent,
-    ExposureNotificationListActionBoxComponent
+    ExposureNotificationListActionBoxComponent,
+    ExposureNotificationEditComponent
   ],
   imports: [CommonModule, ExposureNotificationRoutingModule, SharedModule, LayoutsModule],
   providers: [CPI18nPipe]
