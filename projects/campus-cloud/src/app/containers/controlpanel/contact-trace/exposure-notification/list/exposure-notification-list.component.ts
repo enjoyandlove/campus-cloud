@@ -47,6 +47,7 @@ export class ExposureNotificationListComponent implements OnInit {
   notificationForView: ExposureNotification;
   showNotificationDeleteModal: boolean;
   notificationForDelete: ExposureNotification;
+  notificationStatus = ExposureNotificationStatus;
 
   constructor(
     private session: CPSession,

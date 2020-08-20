@@ -58,7 +58,8 @@
         </td>
         <td ui-table-cell
             align="right">
-          <button ui-button
+          <button *ngIf="result.status !== notificationStatus.sent"
+                  ui-button
                   type="button"
                   variant="inline"
                   aria-label="close"
