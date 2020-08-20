@@ -163,6 +163,8 @@ export class CPTopBarComponent implements OnInit {
         this.contactTraceRouterLink = ['/contact-trace'];
       } else if (canContactTraceQR) {
         this.contactTraceRouterLink = ['/contact-trace/qr'];
+      } else if (canContactTraceExposureNotification) {
+        this.contactTraceRouterLink = ['/contact-trace/exposure-notification'];
       }
     }
 
