@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ApiService } from '@campus-cloud/base';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
@@ -52,6 +52,31 @@ export class ExposureNotificationService {
     const params = new HttpParams().set('school_id', this.session.school.id.toString());
 
     return this.api.get(url, params).pipe(
+      catchError((error) => {
+        this.handleError();
+        return throwError(error);
+      })
+    );
+  }
+
+  createNotification(notification: ExposureNotification): Observable<ExposureNotification> {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ANNOUNCEMENT}/`;
+
+    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+
+    return this.api.post(url, notification, params).pipe(
+      catchError((error) => {
+        this.handleError();
+        return throwError(error);
+      })
+    );
+  }
+
+  getStoreId(serviceId: number): Observable<number | any> {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/${serviceId}`;
+
+    return this.api.get(url).pipe(
+      map((service) => service['store_id']),
       catchError((error) => {
         this.handleError();
         return throwError(error);

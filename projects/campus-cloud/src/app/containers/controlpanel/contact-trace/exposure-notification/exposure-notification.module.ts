@@ -17,6 +17,7 @@ import {
 } from '@controlpanel/contact-trace/exposure-notification/list';
 import { AnnouncementsModule } from '@controlpanel/notify/announcements/announcements.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AudienceSharedModule } from '@controlpanel/audience/shared/audience.shared.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LayoutsModule,
     AnnouncementsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AudienceSharedModule
   ],
   providers: [CPI18nPipe]
 })

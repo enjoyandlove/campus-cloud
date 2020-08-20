@@ -1,6 +1,6 @@
 <cp-spinner *ngIf="webServiceCallInProgress"></cp-spinner>
 
-<div *ngIf="!webServiceCallInProgress">
+<div *ngIf="!webServiceCallInProgress && notification">
 
   <div class="page-container">
     <ready-ui-card>
@@ -43,6 +43,19 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>
+              {{ 'users' | cpI18n }}
+            </label>
+            <div class="subject-input">
+              <cp-audience-users-typeahead
+                [withChips]="[]"
+                (users)="usersChanged($event)"
+              >
+              </cp-audience-users-typeahead>
             </div>
           </div>
 
@@ -105,7 +118,7 @@
             color="primary"
             class="action-button"
             [disabled]="webServiceCallInProgress"
-            (click)="null">
+            (click)="sendClickHandler()">
             {{'send' | cpI18n}}
           </button>
 

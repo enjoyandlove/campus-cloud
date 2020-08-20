@@ -20,4 +20,6 @@ export interface ExposureNotification {
   status?: ExposureNotificationStatus;
   user_details?: ExposureNotificationUserDetail[];
   list_details?: ExposureNotificationListDetail[];
+  list_ids?: number[];
+  user_ids?: number[];
 }
