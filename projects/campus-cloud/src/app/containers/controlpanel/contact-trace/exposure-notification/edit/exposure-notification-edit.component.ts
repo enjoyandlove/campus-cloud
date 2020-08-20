@@ -8,6 +8,7 @@ import {
 } from '@controlpanel/contact-trace/exposure-notification';
 import { baseActions, IHeader } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
+import { notifyAtEpochNow } from '@controlpanel/notify/announcements/model';
 
 @Component({
   selector: 'cp-exposure-notification-edit',
@@ -73,5 +74,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   cancelClickHandler(): void {
     this.router.navigate(['/contact-trace/exposure-notification']);
+  }
+
+  onSchedule(scheduledAt: number) {
+    this.notification.notify_at_epoch = scheduledAt;
   }
 }

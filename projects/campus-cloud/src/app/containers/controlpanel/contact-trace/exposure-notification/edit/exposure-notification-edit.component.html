@@ -6,12 +6,12 @@
     <ready-ui-card>
       <header>
         <h2 class="section__name">{{ 'message' | cpI18n }}</h2>
-<!--        <cp-datetime-picker-->
-<!--          (dateSet)="onSchedule($event)"-->
-<!--          [clearable]="isScheduledAnnouncement"-->
-<!--          [label]="isScheduledAnnouncement ? (form.get('notify_at_epoch').value | cpDatePipe:dateTimeFormat) : 't_notify_send_later' | cpI18n">-->
+        <cp-datetime-picker
+          (dateSet)="onSchedule($event)"
+          [clearable]="false"
+          [label]="'t_notify_send_later' | cpI18n">
 
-<!--        </cp-datetime-picker>-->
+        </cp-datetime-picker>
       </header>
       <div class="row">
         <div class="col-12">
