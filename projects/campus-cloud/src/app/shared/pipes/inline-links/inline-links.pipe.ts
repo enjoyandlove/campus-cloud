@@ -11,20 +11,20 @@ export class InlineLinksPipe implements PipeTransform {
   EMAIL_REGX: RegExp = new RegExp('\\S+@\\S+\\.\\S+', 'g');
 
   transform(value: string, ...args: unknown[]): string {
-    value = this.hyperLinking(value, this.WEB_SITE_REGX, '');
-    value = this.hyperLinking(value, this.PHONE_NUMBER_REGX, 'tel:');
-    value = this.hyperLinking(value, this.EMAIL_REGX, 'mailto:');
+    value = this.hyperLinking(value, this.WEB_SITE_REGX, 'http://', (link) => link.startsWith('www'));
+    value = this.hyperLinking(value, this.PHONE_NUMBER_REGX, 'tel:', () => true);
+    value = this.hyperLinking(value, this.EMAIL_REGX, 'mailto:', () => true);
 
     return value;
   }
 
-  hyperLinking(text: string, regex: RegExp, prefix: string) {
+  hyperLinking(text: string, regex: RegExp, prefix: string, prefixValidation: (link: string) => boolean) {
     const matches: RegExpMatchArray = (text.match(regex) || []);
 
     if (matches.length) {
       matches.forEach(match => {
         text = this.replaceAll(text, match,
-          '<a href="' + prefix + match + '" target="_blank">' + match + '</a>');
+          '<a href="' + (prefixValidation(match) ? prefix : '') + match + '" target="_blank">' + match + '</a>');
       });
     }
     return text;
