@@ -1341,6 +1341,9 @@
   "contact_trace_notification_subject": {
     "message": "Subject"
   },
+  "contact_trace_notification_successfully_saved": {
+    "message": "Notification successfully saved"
+  },
   "contact_trace_notification_to": {
     "message": "To"
   },

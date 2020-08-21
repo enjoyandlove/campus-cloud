@@ -175,7 +175,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   private handleSaveSuccess(notification: ExposureNotification): void {
-    this.handleSuccess('contact_trace_forms_save_draft_successful'); // ToDo: PJ: IMP: Replace with correct message
+    this.handleSuccess('contact_trace_notification_successfully_saved');
     this.router.navigate(['/contact-trace/exposure-notification']);
   }
 
