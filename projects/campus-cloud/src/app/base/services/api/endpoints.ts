@@ -171,6 +171,7 @@ export const ENDPOINTS = {
 
   NON_SESSION_FORM_BLOCK_RESPONSE: 'ns_form_block_response',
 
-  NON_SESSION_IMAGE: 'ns_image'
+  NON_SESSION_IMAGE: 'ns_image',
 
+  CONTACT_TRACE_ANNOUNCEMENT_TEMPLATE: 'ct_announcement_template'
 };

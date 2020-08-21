@@ -53,13 +53,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       label: this.cpI18n.translate('contact_trace_notification_custom_list')
     }
   ];
-  templates = [
-    {
-      action: null,
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_none')
-    }
-  ];
+  templates = [];
   filterOptions = [
     {
       action: 1, // ToDo: PJ: IMP: Replace with proper value
@@ -99,6 +93,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   REGULAR_TYPE = 2;
   EMERGENCY_TYPE = 0;
   highlightFormError: boolean;
+  templateTypeToTemplateMap;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -122,6 +117,25 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         this.notification = notification;
         this.buildHeader();
       });
+    });
+
+    this.getNotificationTemplates().subscribe((templates) => {
+      this.templateTypeToTemplateMap = {};
+      this.templates = [
+        {
+          action: null,
+          label: this.cpI18n.translate('contact_trace_notification_none')
+        }
+      ];
+      if (templates) {
+        templates.forEach((template) => {
+          this.templateTypeToTemplateMap[template.type] = template;
+          this.templates.push({
+            action: template.type,
+            label: template.name
+          });
+        });
+      }
     });
   }
 
@@ -192,8 +206,18 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.selectedType = this.getObjectFromTypesArray(type.action);
   }
 
-  onToOptionChanged(toOption): void {
-    this.selectedToOption = toOption;
+  onToOptionChanged(option): void {
+    this.selectedToOption = option;
+  }
+
+  onTemplateOptionChanged(option): void {
+    this.selectedTemplate = option;
+    const selectedTemplate = this.templateTypeToTemplateMap[option.action];
+    if (selectedTemplate) {
+      this.notification.priority = selectedTemplate.priority;
+      this.notification.subject = selectedTemplate.subject;
+      this.notification.message = selectedTemplate.message;
+    }
   }
 
   onFilterOptionChanged(option): void {
@@ -219,7 +243,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   sendClickHandler(): void {
     this.highlightFormError = false;
     const errorMessages: string[] = this.validateBeforeSave(this.notification);
-    console.log('errorMessages', errorMessages);
     if (errorMessages && errorMessages.length > 0) {
       this.showWarning();
       this.highlightFormError = true;
@@ -289,5 +312,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         autoClose: true
       }
     });
+  }
+
+  private getNotificationTemplates(): Observable<any> {
+    return this.notificationService.searchNotificationTemplates();
   }
 }

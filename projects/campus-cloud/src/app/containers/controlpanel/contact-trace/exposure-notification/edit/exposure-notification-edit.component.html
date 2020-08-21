@@ -73,7 +73,7 @@
                       [items]="templates"
                       [selectedItem]="selectedTemplate"
                       buttonClass="cpbtn cpbtn--cancel"
-                      (selected)="selectedTemplate = $event">
+                      (selected)="onTemplateOptionChanged($event)">
                     </cp-check-dropdown>
                   </div>
                 </div>
