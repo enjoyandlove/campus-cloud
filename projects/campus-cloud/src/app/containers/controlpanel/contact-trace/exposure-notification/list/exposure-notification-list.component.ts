@@ -172,4 +172,8 @@ export class ExposureNotificationListComponent implements OnInit {
       })
     );
   }
+
+  caseLinkClickHandler(userId: number): void {
+    console.log('Navigate to case for userId: ', userId);
+  }
 }

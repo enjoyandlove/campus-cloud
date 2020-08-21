@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification';
 
 @Component({
@@ -8,6 +8,7 @@ import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notif
 })
 export class ExposureNotificationToDisplayComponent implements OnInit {
   @Input() notification: ExposureNotification;
+  @Output() caseLinkClicked: EventEmitter<number> = new EventEmitter();
 
   constructor() {}
 

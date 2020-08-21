@@ -4,6 +4,12 @@
     <div class="name-label">
       {{(notification.user_details[0].firstname || notification.user_details[0].lastname) ? ((notification.user_details[0].firstname ? (notification.user_details[0].firstname + ' ') : '') + (notification.user_details[0].lastname ? notification.user_details[0].lastname : '')) : (notification.user_details[0].email ? notification.user_details[0].email : '')}}
     </div>
+    <div
+      class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary popup-link"
+      (click)="caseLinkClicked.emit(notification.user_details[0].id)"
+    >
+      {{ '(' + ('contact_trace_notification_case' | cpI18n) + ')' }}
+    </div>
   </ng-container>
 
   <ng-container *ngIf="notification.user_details.length > 1">
