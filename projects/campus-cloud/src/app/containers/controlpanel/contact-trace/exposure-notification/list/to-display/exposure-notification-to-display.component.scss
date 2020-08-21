@@ -1,4 +1,14 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+
 .name-label {
   display: inline-block;
+  vertical-align: top;
   font-weight: bold;
+}
+
+.popup-link {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 5px;
+  font-weight: 600;
 }

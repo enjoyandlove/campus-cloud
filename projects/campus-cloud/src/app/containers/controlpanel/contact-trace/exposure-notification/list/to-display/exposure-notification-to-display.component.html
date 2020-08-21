@@ -10,6 +10,9 @@
     <div class="name-label">
       {{ 'contact_trace_notification_custom_list' | cpI18n }}
     </div>
+    <div class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary popup-link">
+      {{ '(' + ('contact_trace_notification_x_users' | cpI18n : notification.user_details.length) + ')' }}
+    </div>
   </ng-container>
 
 </ng-container>

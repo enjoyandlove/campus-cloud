@@ -1344,6 +1344,9 @@
   "contact_trace_notification_view_message": {
     "message": "View Message"
   },
+  "contact_trace_notification_x_users": {
+    "message": "%s Users"
+  },
   "contact_trace_no_qr_found": {
     "message": "No QR Code Found"
   },
