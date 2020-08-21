@@ -45,46 +45,46 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     {
       action: 'case_status',
       disabled: false,
-      label: this.cpI18n.translate('case status') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_case_status')
     },
     {
       action: 'custom_list',
       disabled: false,
-      label: this.cpI18n.translate('custom list') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_custom_list')
     }
   ];
   templates = [
     {
       action: null,
       disabled: false,
-      label: this.cpI18n.translate('none') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_none')
     }
   ];
   filterOptions = [
     {
       action: 1, // ToDo: PJ: IMP: Replace with proper value
       disabled: false,
-      label: this.cpI18n.translate('Clear') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_clear')
     },
     {
       action: 2, // ToDo: PJ: IMP: Replace with proper value
       disabled: false,
-      label: this.cpI18n.translate('Exposed') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_exposed')
     },
     {
       action: 3, // ToDo: PJ: IMP: Replace with proper value
       disabled: false,
-      label: this.cpI18n.translate('Symptomatic') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_symptomatic')
     },
     {
       action: 4, // ToDo: PJ: IMP: Replace with proper value
       disabled: false,
-      label: this.cpI18n.translate('Self-Reported') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_self_reported')
     },
     {
       action: 5, // ToDo: PJ: IMP: Replace with proper value
       disabled: false,
-      label: this.cpI18n.translate('Confirmed') // ToDo: PJ: Localize
+      label: this.cpI18n.translate('contact_trace_notification_confirmed')
     }
   ];
   selectedType;

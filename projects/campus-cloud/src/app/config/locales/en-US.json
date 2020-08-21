@@ -1299,6 +1299,15 @@
   "contact_trace_notification_case": {
     "message": "Case"
   },
+  "contact_trace_notification_case_status": {
+    "message": "Case Status"
+  },
+  "contact_trace_notification_clear": {
+    "message": "Clear"
+  },
+  "contact_trace_notification_confirmed": {
+    "message": "Confirmed"
+  },
   "contact_trace_notification_contact_tracing_service": {
     "message": "Contact Tracing Service"
   },
@@ -1323,8 +1332,17 @@
   "contact_trace_notification_error": {
     "message": "Error"
   },
+  "contact_trace_notification_exposed": {
+    "message": "Exposed"
+  },
+  "contact_trace_notification_filter": {
+    "message": "Filter"
+  },
   "contact_trace_notification_message": {
     "message": "Message"
+  },
+  "contact_trace_notification_none": {
+    "message": "None"
   },
   "contact_trace_notification_notify": {
     "message": "Notify"
@@ -1338,6 +1356,9 @@
   "contact_trace_notification_processing": {
     "message": "Processing"
   },
+  "contact_trace_notification_self_reported": {
+    "message": "Self-Reported"
+  },
   "contact_trace_notification_sent": {
     "message": "Sent"
   },
@@ -1346,6 +1367,12 @@
   },
   "contact_trace_notification_successfully_saved": {
     "message": "Notification successfully saved"
+  },
+  "contact_trace_notification_symptomatic": {
+    "message": "Symptomatic"
+  },
+  "contact_trace_notification_template": {
+    "message": "Template"
   },
   "contact_trace_notification_to": {
     "message": "To"
