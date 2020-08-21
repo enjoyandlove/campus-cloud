@@ -945,6 +945,9 @@
   "contact_details": {
     "message": "Détails du contact"
   },
+  "contact_trace_exposure_notification": {
+    "message": "Notification d'exposition"
+  },
   "contact_trace_forms_all_forms": {
     "message": "Tous les formulaires"
   },
@@ -1082,9 +1085,6 @@
   },
   "contact_trace_forms_expired": {
     "message": "Expiré"
-  },
-  "contact_trace_forms_exposure_notification": {
-    "message": "Notification d'exposition"
   },
   "contact_trace_forms_form_builder": {
     "message": "Créateur de formulaire"
@@ -1302,12 +1302,6 @@
   "contact_trace_notification_case_status": {
     "message": "Statut du cas"
   },
-  "contact_trace_notification_clear": {
-    "message": "OK"
-  },
-  "contact_trace_notification_confirmed": {
-    "message": "Confirmé"
-  },
   "contact_trace_notification_contact_tracing_service": {
     "message": "Service de traçage de contact"
   },
@@ -1332,9 +1326,6 @@
   "contact_trace_notification_error": {
     "message": "Erreur"
   },
-  "contact_trace_notification_exposed": {
-    "message": "Exposé"
-  },
   "contact_trace_notification_filter": {
     "message": "Filtrer"
   },
@@ -1356,9 +1347,6 @@
   "contact_trace_notification_processing": {
     "message": "Traitement"
   },
-  "contact_trace_notification_self_reported": {
-    "message": "Auto-déclaré"
-  },
   "contact_trace_notification_sent": {
     "message": "Envoyé"
   },
@@ -1367,9 +1355,6 @@
   },
   "contact_trace_notification_successfully_saved": {
     "message": "Notification enregistrée avec succès"
-  },
-  "contact_trace_notification_symptomatic": {
-    "message": "Symptomatique"
   },
   "contact_trace_notification_template": {
     "message": "Modèle"

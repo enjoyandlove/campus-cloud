@@ -104,4 +104,17 @@ export class ExposureNotificationService {
       })
     );
   }
+
+  searchCaseStatuses(): Observable<ExposureNotification[] | any> {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE_STATUS}/`;
+
+    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+
+    return this.api.get(url, params).pipe(
+      catchError((error) => {
+        this.handleError();
+        return throwError(error);
+      })
+    );
+  }
 }

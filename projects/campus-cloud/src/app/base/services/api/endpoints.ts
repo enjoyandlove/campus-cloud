@@ -173,5 +173,7 @@ export const ENDPOINTS = {
 
   NON_SESSION_IMAGE: 'ns_image',
 
-  CONTACT_TRACE_ANNOUNCEMENT_TEMPLATE: 'ct_announcement_template'
+  CONTACT_TRACE_ANNOUNCEMENT_TEMPLATE: 'ct_announcement_template',
+
+  CASE_STATUS: 'case_status'
 };

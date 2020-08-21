@@ -26,7 +26,7 @@
     },
     {
       "privilege": 43,
-      "label": "contact_trace_forms_exposure_notification",
+      "label": "contact_trace_exposure_notification",
       "clearParams": true,
       "amplitude": "Exposure Notification",
       "url": "/contact-trace/exposure-notification"

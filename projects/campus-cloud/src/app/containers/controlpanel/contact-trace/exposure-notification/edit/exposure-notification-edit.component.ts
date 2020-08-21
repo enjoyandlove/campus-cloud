@@ -53,34 +53,8 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       label: this.cpI18n.translate('contact_trace_notification_custom_list')
     }
   ];
-  templates = [];
-  filterOptions = [
-    {
-      action: 1, // ToDo: PJ: IMP: Replace with proper value
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_clear')
-    },
-    {
-      action: 2, // ToDo: PJ: IMP: Replace with proper value
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_exposed')
-    },
-    {
-      action: 3, // ToDo: PJ: IMP: Replace with proper value
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_symptomatic')
-    },
-    {
-      action: 4, // ToDo: PJ: IMP: Replace with proper value
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_self_reported')
-    },
-    {
-      action: 5, // ToDo: PJ: IMP: Replace with proper value
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_confirmed')
-    }
-  ];
+  templates;
+  filterOptions;
   selectedType;
   selectedToOption;
   selectedTemplate;
@@ -119,24 +93,8 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.getNotificationTemplates().subscribe((templates) => {
-      this.templateTypeToTemplateMap = {};
-      this.templates = [
-        {
-          action: null,
-          label: this.cpI18n.translate('contact_trace_notification_none')
-        }
-      ];
-      if (templates) {
-        templates.forEach((template) => {
-          this.templateTypeToTemplateMap[template.type] = template;
-          this.templates.push({
-            action: template.type,
-            label: template.name
-          });
-        });
-      }
-    });
+    this.getNotificationTemplates();
+    this.getCaseStatuses();
   }
 
   private getItemForEdit(notificationId: number): Observable<ExposureNotification> {
@@ -161,7 +119,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       em: null,
       crumbs: {
         url: 'exposure-notification',
-        label: 'contact_trace_forms_exposure_notification'
+        label: 'contact_trace_exposure_notification'
       },
       children: []
     };
@@ -183,27 +141,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   onTypeChanged(type): void {
-    this.subject_prefix = {
-      label: null,
-      type: null
-    };
-
-    if (type.action === this.EMERGENCY_TYPE) {
-      this.subject_prefix = {
-        label: this.cpI18n.translate('emergency'),
-        type: 'danger'
-      };
-    }
-
-    if (type.action === this.URGENT_TYPE) {
-      this.subject_prefix = {
-        label: this.cpI18n.translate('urgent'),
-        type: 'warning'
-      };
-    }
-
-    this.notification.priority = type.action;
-    this.selectedType = this.getObjectFromTypesArray(type.action);
+    this.setPriority(type.action);
   }
 
   onToOptionChanged(option): void {
@@ -214,10 +152,34 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.selectedTemplate = option;
     const selectedTemplate = this.templateTypeToTemplateMap[option.action];
     if (selectedTemplate) {
-      this.notification.priority = selectedTemplate.priority;
+      this.setPriority(selectedTemplate.priority);
       this.notification.subject = selectedTemplate.subject;
       this.notification.message = selectedTemplate.message;
     }
+  }
+
+  private setPriority(priority): void {
+    this.subject_prefix = {
+      label: null,
+      type: null
+    };
+
+    if (priority === this.EMERGENCY_TYPE) {
+      this.subject_prefix = {
+        label: this.cpI18n.translate('emergency'),
+        type: 'danger'
+      };
+    }
+
+    if (priority === this.URGENT_TYPE) {
+      this.subject_prefix = {
+        label: this.cpI18n.translate('urgent'),
+        type: 'warning'
+      };
+    }
+
+    this.notification.priority = priority;
+    this.selectedType = this.getObjectFromTypesArray(priority);
   }
 
   onFilterOptionChanged(option): void {
@@ -314,7 +276,38 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getNotificationTemplates(): Observable<any> {
-    return this.notificationService.searchNotificationTemplates();
+  private getNotificationTemplates(): void {
+    this.notificationService.searchNotificationTemplates().subscribe((templates) => {
+      this.templateTypeToTemplateMap = {};
+      this.templates = [
+        {
+          action: null,
+          label: this.cpI18n.translate('contact_trace_notification_none')
+        }
+      ];
+      if (templates) {
+        templates.forEach((template) => {
+          this.templateTypeToTemplateMap[template.type] = template;
+          this.templates.push({
+            action: template.type,
+            label: template.name
+          });
+        });
+      }
+    });
+  }
+
+  private getCaseStatuses(): void {
+    this.notificationService.searchCaseStatuses().subscribe((statuses) => {
+      this.filterOptions = [];
+      if (statuses) {
+        statuses.forEach((status) => {
+          this.filterOptions.push({
+            action: status.id,
+            label: status.name
+          });
+        });
+      }
+    });
   }
 }
