@@ -1,0 +1,21 @@
+<div>
+  <table ui-table>
+    <thead>
+      <tr ui-table-row>
+        <th ui-table-cell>{{ 't_shared_status' | cpI18n }}</th>
+        <th ui-table-cell>{{ 'cases' | cpI18n }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ui-table-row
+          *ngFor="let status of caseStatus$ | async; index as i">
+        <td ui-table-cell>
+          <cp-dot color="#{{status.color}}"></cp-dot>{{ status.name }}
+        </td>
+        <td ui-table-cell class="float-right">
+          <span>{{ status.case_count }}</span>
+        </td>      
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -525,6 +525,16 @@ export const amplitudeEvents = {
 
   CONTACT_TRACE_CREATED_QR_CODE: 'Contact Trace - Created QR Code',
 
+  CONTACT_TRACE_CREATED_CASE: 'Contact Trace - Created Case',
+
+  CONTACT_TRACE_UPDATED_CASE: 'Contact Trace - Updated Case',
+
+  CONTACT_TRACE_DELETED_CASE: 'Contact Trace - Deleted Case',
+
+  CONTACT_TRACE_CREATED_ITEM: 'Contact Trace - Created Item',
+
+  CONTACT_TRACE_UPDATED_ITEM: 'Contact Trace - Updated Item',
+
   STUDIO_VIEWED_CUSTOMIZATION_EXPERIENCE: 'Studio -  Viewed App Customization',
 
   MANAGE_DOWNLOAD_EVENT_ASSESS_DATA: 'Manage - Downloaded Event Assessment Data',

@@ -737,6 +737,24 @@
   "cases": {
     "message": "Cases"
   },
+  "cases_button_create": {
+    "message": "Create Cases"
+  },
+  "cases_delete_modal_title": {
+    "message": "Delete Case"
+  },
+  "cases_import_items_to_import": {
+    "message": "File contains data for %s case(s)."
+  },
+  "case_details": {
+    "message": "Case Details"
+  },
+  "case_pending_action": {
+    "message": "Pending Action"
+  },
+  "case_status_all": {
+    "message": "All Cases"
+  },
   "category": {
     "message": "Category"
   },
@@ -1083,6 +1101,9 @@
   "contact_trace_forms_expired": {
     "message": "Expired"
   },
+  "contact_trace_forms_exposure_notification": {
+    "message": "Exposure Notification"
+  },
   "contact_trace_forms_form_builder": {
     "message": "Form Builder"
   },
@@ -1263,15 +1284,6 @@
   "contact_trace_forms_unpublish": {
     "message": "Unpublish"
   },
-  "contact_trace_forms_duplicate": {
-    "message": "Duplicate"
-  },
-  "contact_trace_forms_duplicate_form": {
-    "message": "Duplicate form"
-  },
-  "contact_trace_forms_duplicate_new_name": {
-    "message": "(Copy) %s"
-  },
   "contact_trace_forms_unpublish_form": {
     "message": "Unpublish Form"
   },
@@ -1289,6 +1301,54 @@
   },
   "contact_trace_forms_yes_no": {
     "message": "Yes/No"
+  },
+  "contact_trace_notification_all_statuses": {
+    "message": "All Statuses"
+  },
+  "contact_trace_notification_contact_tracing_service": {
+    "message": "Contact Tracing Service"
+  },
+  "contact_trace_notification_create_notification": {
+    "message": "Create Notification"
+  },
+  "contact_trace_notification_date_sent": {
+    "message": "Date Sent"
+  },
+  "contact_trace_notification_delete_confirmation": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "contact_trace_notification_delete_notification": {
+    "message": "Delete Notification"
+  },
+  "contact_trace_notification_delete_success": {
+    "message": "Notification successfully deleted"
+  },
+  "contact_trace_notification_error": {
+    "message": "Error"
+  },
+  "contact_trace_notification_notify": {
+    "message": "Notify"
+  },
+  "contact_trace_notification_no_results": {
+    "message": "No notifications found"
+  },
+  "contact_trace_notification_pending": {
+    "message": "Pending"
+  },
+  "contact_trace_notification_processing": {
+    "message": "Processing"
+  },
+  "contact_trace_notification_sent": {
+    "message": "Sent"
+  },
+  "contact_trace_notification_subject": {
+    "message": "Subject"
+  },
+  "contact_trace_notification_to": {
+    "message": "To"
+  },
+  "contact_trace_notification_view_message": {
+    "message": "View Message"
   },
   "contact_trace_no_qr_found": {
     "message": "No QR Code Found"
@@ -1467,6 +1527,9 @@
   },
   "downloads": {
     "message": "Downloads"
+  },
+  "download_all_cases": {
+    "message": "Download All Cases"
   },
   "download_all_qr_codes": {
     "message": "Download All QR Codes"
@@ -1841,6 +1904,9 @@
   "import": {
     "message": "Import"
   },
+  "import_cases": {
+    "message": "Import Cases"
+  },
   "import_from_csv": {
     "message": "Import from CSV"
   },
@@ -2149,6 +2215,9 @@
   },
   "no": {
     "message": "No"
+  },
+  "notes": {
+    "message": "Notes"
   },
   "notify": {
     "message": "Notify"
@@ -2846,6 +2915,18 @@
   },
   "t_campus_app_management": {
     "message": "Campus App Management"
+  },
+  "t_cases_no_record_found": {
+    "message": "No cases found..."
+  },
+  "t_case_all_statuses": {
+    "message": "All Statuses"
+  },
+  "t_case_history": {
+    "message": "Case History"
+  },
+  "t_case_status": {
+    "message": "Case Status"
   },
   "t_categories_can_not_be_delete": {
     "message": "Categories with locations cannot be deleted."
@@ -3635,9 +3716,6 @@
   "t_personas_tile_create_header": {
     "message": "New Tile"
   },
-  "t_personas_tile_create_resource_type_health_pass": {
-    "message": "Health Pass"
-  },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Calendars"
   },
@@ -3924,6 +4002,9 @@
   "t_service_provider_feedback_yes": {
     "message": "Yes"
   },
+  "t_shared_action": {
+    "message": "Action"
+  },
   "t_shared_add": {
     "message": "Add"
   },
@@ -4073,6 +4154,9 @@
   },
   "t_shared_icon": {
     "message": "Icon"
+  },
+  "t_shared_identifier": {
+    "message": "Identifier"
   },
   "t_shared_image": {
     "message": "Image"
@@ -4226,6 +4310,9 @@
   },
   "t_shared_show": {
     "message": "Show"
+  },
+  "t_shared_source": {
+    "message": "Source"
   },
   "t_shared_status": {
     "message": "Status"
@@ -4529,11 +4616,12 @@
   "web_form_start_page_intro": {
     "message": "Scan from the Campus App or enter your email to begin"
   },
-  "web_form_unavailable_form_message": {
-    "message": "The form is now closed and is no longer accepting responses"
-  },
   "web_form_submit": {
     "message": "Submit"
+  },
+  "web_form_unavailable_form_message": {
+    "message": "The form is now closed and is no longer accepting responses\n\nMy suggestion for FR value : Le formulaire est maintenant fermé et n'accepte plus les réponses",
+    "description": "https://oohlalaproduct.atlassian.net/browse/FES-7617"
   },
   "welcome": {
     "message": "Welcome"

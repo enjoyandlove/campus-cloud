@@ -137,7 +137,10 @@ export class CPTopBarComponent implements OnInit {
     this.canCustomise = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization);
 
     const serviceId: number = this.session.g.get('school').ct_service_id;
-    if (serviceId === -1 || this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Disabled) {
+    if (
+      serviceId === -1 ||
+      this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Disabled
+    ) {
       this.canContractTrace = false;
     } else {
       const canContactTraceQR = canSchoolReadResource(
@@ -145,15 +148,23 @@ export class CPTopBarComponent implements OnInit {
         CP_PRIVILEGES_MAP.contact_trace_qr
       );
       const canContactTraceForms =
-        (this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Plus)
-        ? canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms)
-        : false
-      this.canContractTrace = canContactTraceQR || canContactTraceForms;
+        this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Plus
+          ? canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms)
+          : false;
+
+      const canContactTraceCases =
+        this.school.contact_trace_feature_level === ContactTraceFeatureLevel.Plus
+          ? canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_cases)
+          : false;
+
+      this.canContractTrace = canContactTraceQR || canContactTraceForms || canContactTraceCases;
 
       if (canContactTraceForms) {
         this.contactTraceRouterLink = ['/contact-trace'];
       } else if (canContactTraceQR) {
         this.contactTraceRouterLink = ['/contact-trace/qr'];
+      } else if (canContactTraceCases) {
+        this.contactTraceRouterLink = ['/contact-trace/cases'];
       }
     }
 
