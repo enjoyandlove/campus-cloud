@@ -10,6 +10,8 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import IHealthPass, { EState } from './health-pass.interface';
+import { HealthPassEditComponent } from '@controlpanel/contact-trace/health-pass/edit/health-pass-edit.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'cp-health-pass',
@@ -32,7 +34,8 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
     private store: Store<ISnackbar>,
     public service: HealthPassService,
     private cpTracking: CPTrackingService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) {
     super();
   }
@@ -158,5 +161,19 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.headerService.updateHeader();
     this.fetch();
+  }
+
+  openEditModal(healthPass: IHealthPass) {
+    const dialogRef = this.dialog.open(HealthPassEditComponent, {
+      width: '500px',
+      data: healthPass
+    });
+
+
+    //dialogRef.
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //
+    // });
   }
 }

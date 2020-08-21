@@ -1,0 +1,58 @@
+<div class="cpmodal">
+    <div class="cpmodal__header">
+        <div class="row">
+            <div class="col-12 text-center">
+                <span><strong>{{ 'contact_trace_forms_duplicate_form' | cpI18n }}</strong></span>
+
+                <button type="button"
+                        data-dismiss="modal"
+                        class="float-right hover cpmodal__header__close unstyled-button">
+                    &times;
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <ng-container>
+        <div class="cpmodal__body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group form-name-group" >
+                        <ng-container [formGroup]="form">
+                            <label for="formSubject">{{ 'contact_trace_forms_name' | cpI18n }}</label>
+                            <input
+                                    type="text"
+                                    id="formSubject"
+                                    class="form-control"
+                                    formControlName="subject"
+                                    autocomplete="off"
+                            />
+                            <label for="message">{{ 'contact_trace_forms_name' | cpI18n }}</label>
+                            <textarea id="message" class="form-control" formControlName="message"></textarea>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cpmodal__footer">
+            <div class="row">
+                <div class="col-6 offset-6 text-right">
+                    <button type="button"
+                            class="cpbtn cpbtn--cancel"
+                            data-dismiss="modal">
+                        {{ 'cancel' | cpI18n }}
+                    </button>
+
+                    <cp-button [props]="{
+                                          class: 'primary',
+                                          text: 'save' | cpI18n,
+                                          disabled: !form.valid
+                                        }"
+                               (buttonClick)="onSave()"> </cp-button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+</div>
