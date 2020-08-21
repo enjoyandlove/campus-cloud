@@ -4,6 +4,7 @@ import {
   ExposureNotificationDeleteComponent,
   ExposureNotificationEditComponent,
   ExposureNotificationRoutingModule,
+  ExposureNotificationUserListModalComponent,
   ExposureNotificationViewMessageComponent
 } from '.';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
@@ -26,7 +27,8 @@ import { AudienceSharedModule } from '@controlpanel/audience/shared/audience.sha
     ExposureNotificationDeleteComponent,
     ExposureNotificationToDisplayComponent,
     ExposureNotificationListActionBoxComponent,
-    ExposureNotificationEditComponent
+    ExposureNotificationEditComponent,
+    ExposureNotificationUserListModalComponent
   ],
   imports: [
     CommonModule,

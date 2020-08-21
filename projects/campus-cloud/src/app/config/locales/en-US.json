@@ -1344,6 +1344,12 @@
   "contact_trace_notification_to": {
     "message": "To"
   },
+  "contact_trace_notification_users": {
+    "message": "Users"
+  },
+  "contact_trace_notification_view_case": {
+    "message": "View Case"
+  },
   "contact_trace_notification_view_message": {
     "message": "View Message"
   },

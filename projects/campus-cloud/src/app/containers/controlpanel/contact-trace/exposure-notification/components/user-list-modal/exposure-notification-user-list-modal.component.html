@@ -1,0 +1,47 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span><strong>{{ 'contact_trace_notification_users' | cpI18n }}</strong></span>
+
+        <button type="button"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
+          &times;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="cpmodal__body">
+
+      <div class="page-container">
+        <div
+          class="row user-row"
+          *ngFor="let user of notification.user_details"
+        >
+          <div class="left-col">
+            <div class="user-name-cell">
+              {{(user.firstname ? (user.firstname + ' ') : '') + (user.lastname ? user.lastname : '')}}
+            </div>
+            <div class="email-cell">
+              {{user.email}}
+            </div>
+          </div>
+          <div class="right-col">
+            <div
+              class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button"
+              (click)="caseLinkClicked.emit(user.id); resetModal();"
+            >
+              {{ 'contact_trace_notification_view_case' | cpI18n }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

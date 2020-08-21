@@ -5,7 +5,7 @@
       {{(notification.user_details[0].firstname || notification.user_details[0].lastname) ? ((notification.user_details[0].firstname ? (notification.user_details[0].firstname + ' ') : '') + (notification.user_details[0].lastname ? notification.user_details[0].lastname : '')) : (notification.user_details[0].email ? notification.user_details[0].email : '')}}
     </div>
     <div
-      class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary popup-link"
+      class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button"
       (click)="caseLinkClicked.emit(notification.user_details[0].id)"
     >
       {{ '(' + ('contact_trace_notification_case' | cpI18n) + ')' }}
@@ -16,7 +16,12 @@
     <div class="name-label">
       {{ 'contact_trace_notification_custom_list' | cpI18n }}
     </div>
-    <div class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary popup-link">
+    <div
+      class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button"
+      data-toggle="modal"
+      data-target="#notificationUsersModal"
+      (click)="showNotificationUsersModal = true;"
+    >
       {{ '(' + ('contact_trace_notification_x_users' | cpI18n : notification.user_details.length) + ')' }}
     </div>
   </ng-container>
@@ -30,3 +35,14 @@
     </div>
   </div>
 </ng-container>
+
+<cp-modal
+  modalId="notificationUsersModal"
+  *ngIf="showNotificationUsersModal"
+>
+    <cp-exposure-notification-user-list-modal
+      [notification]="notification"
+      (caseLinkClicked)="caseLinkClicked.emit($event)"
+    >
+    </cp-exposure-notification-user-list-modal>
+</cp-modal>
