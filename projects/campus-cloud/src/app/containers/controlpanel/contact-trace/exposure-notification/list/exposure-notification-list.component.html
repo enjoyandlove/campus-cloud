@@ -45,7 +45,7 @@
           {{result.subject}}
         </td>
         <td ui-table-cell>
-          {{ result.notify_at_epoch | cpDatePipe: dateFormat }}
+          {{ (result.notify_at_epoch > -1 ? result.notify_at_epoch : result.created_on_epoch) | cpDatePipe: dateFormat }}
         </td>
         <td ui-table-cell>
           <div

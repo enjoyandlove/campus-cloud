@@ -15,6 +15,7 @@ export interface ExposureNotification {
   message?: string;
   priority?: number;
   notify_at_epoch?: number;
+  created_on_epoch?: number;
   is_school_wide?: boolean;
   store_name?: string;
   status?: ExposureNotificationStatus;
