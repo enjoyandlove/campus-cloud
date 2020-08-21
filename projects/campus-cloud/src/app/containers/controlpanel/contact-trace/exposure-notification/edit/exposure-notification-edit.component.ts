@@ -41,7 +41,56 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       description: this.cpI18n.translate('announcements_emergency_help')
     }
   ];
+  toOptions = [
+    {
+      action: 'case_status',
+      disabled: false,
+      label: this.cpI18n.translate('case status') // ToDo: PJ: Localize
+    },
+    {
+      action: 'custom_list',
+      disabled: false,
+      label: this.cpI18n.translate('custom list') // ToDo: PJ: Localize
+    }
+  ];
+  templates = [
+    {
+      action: null,
+      disabled: false,
+      label: this.cpI18n.translate('none') // ToDo: PJ: Localize
+    }
+  ];
+  filterOptions = [
+    {
+      action: 1, // ToDo: PJ: IMP: Replace with proper value
+      disabled: false,
+      label: this.cpI18n.translate('Clear') // ToDo: PJ: Localize
+    },
+    {
+      action: 2, // ToDo: PJ: IMP: Replace with proper value
+      disabled: false,
+      label: this.cpI18n.translate('Exposed') // ToDo: PJ: Localize
+    },
+    {
+      action: 3, // ToDo: PJ: IMP: Replace with proper value
+      disabled: false,
+      label: this.cpI18n.translate('Symptomatic') // ToDo: PJ: Localize
+    },
+    {
+      action: 4, // ToDo: PJ: IMP: Replace with proper value
+      disabled: false,
+      label: this.cpI18n.translate('Self-Reported') // ToDo: PJ: Localize
+    },
+    {
+      action: 5, // ToDo: PJ: IMP: Replace with proper value
+      disabled: false,
+      label: this.cpI18n.translate('Confirmed') // ToDo: PJ: Localize
+    }
+  ];
   selectedType;
+  selectedToOption;
+  selectedTemplate;
+  selectedFilterOption;
   subject_prefix = {
     label: null,
     type: null
@@ -141,6 +190,14 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
     this.notification.priority = type.action;
     this.selectedType = this.getObjectFromTypesArray(type.action);
+  }
+
+  onToOptionChanged(toOption): void {
+    this.selectedToOption = toOption;
+  }
+
+  onFilterOptionChanged(option): void {
+    this.selectedFilterOption = option;
   }
 
   private getObjectFromTypesArray(id) {
