@@ -1084,7 +1084,7 @@
     "message": "Expiré"
   },
   "contact_trace_forms_exposure_notification": {
-    "message": "Exposure Notification"
+    "message": "Notification d'exposition"
   },
   "contact_trace_forms_form_builder": {
     "message": "Créateur de formulaire"
@@ -1294,25 +1294,25 @@
     "message": "Oui/Non"
   },
   "contact_trace_notification_all_statuses": {
-    "message": "All Statuses"
+    "message": "Tous les statuts"
   },
   "contact_trace_notification_case": {
-    "message": "Case"
+    "message": "Cas"
   },
   "contact_trace_notification_case_status": {
-    "message": "Case Status"
+    "message": "Statut du cas"
   },
   "contact_trace_notification_clear": {
-    "message": "Clear"
+    "message": "OK"
   },
   "contact_trace_notification_confirmed": {
-    "message": "Confirmed"
+    "message": "Confirmé"
   },
   "contact_trace_notification_contact_tracing_service": {
-    "message": "Contact Tracing Service"
+    "message": "Service de traçage de contact"
   },
   "contact_trace_notification_create_notification": {
-    "message": "Create Notification"
+    "message": "Créer notification"
   },
   "contact_trace_notification_custom_list": {
     "message": "Liste customisée"
@@ -1324,70 +1324,70 @@
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "contact_trace_notification_delete_notification": {
-    "message": "Delete Notification"
+    "message": "Supprimer notification"
   },
   "contact_trace_notification_delete_success": {
-    "message": "Notification successfully deleted"
+    "message": "Notification supprimée avec succès"
   },
   "contact_trace_notification_error": {
-    "message": "Error"
+    "message": "Erreur"
   },
   "contact_trace_notification_exposed": {
-    "message": "Exposed"
+    "message": "Exposé"
   },
   "contact_trace_notification_filter": {
-    "message": "Filter"
+    "message": "Filtrer"
   },
   "contact_trace_notification_message": {
     "message": "Message"
   },
   "contact_trace_notification_none": {
-    "message": "None"
+    "message": "Aucun"
   },
   "contact_trace_notification_notify": {
-    "message": "Notify"
+    "message": "Notifier"
   },
   "contact_trace_notification_no_results": {
-    "message": "No notifications found"
+    "message": "Aucune notification trouvée"
   },
   "contact_trace_notification_pending": {
-    "message": "Pending"
+    "message": "En attente"
   },
   "contact_trace_notification_processing": {
-    "message": "Processing"
+    "message": "Traitement"
   },
   "contact_trace_notification_self_reported": {
-    "message": "Self-Reported"
+    "message": "Auto-déclaré"
   },
   "contact_trace_notification_sent": {
-    "message": "Sent"
+    "message": "Envoyé"
   },
   "contact_trace_notification_subject": {
-    "message": "Subject"
+    "message": "Sujet"
   },
   "contact_trace_notification_successfully_saved": {
-    "message": "Notification successfully saved"
+    "message": "Notification enregistrée avec succès"
   },
   "contact_trace_notification_symptomatic": {
-    "message": "Symptomatic"
+    "message": "Symptomatique"
   },
   "contact_trace_notification_template": {
-    "message": "Template"
+    "message": "Modèle"
   },
   "contact_trace_notification_to": {
-    "message": "To"
+    "message": "Vers"
   },
   "contact_trace_notification_users": {
-    "message": "Users"
+    "message": "Utilisateurs"
   },
   "contact_trace_notification_view_case": {
-    "message": "View Case"
+    "message": "Voir cas"
   },
   "contact_trace_notification_view_message": {
-    "message": "View Message"
+    "message": "Voir message"
   },
   "contact_trace_notification_x_users": {
-    "message": "%s Users"
+    "message": "%s utilisateurs"
   },
   "contact_trace_no_qr_found": {
     "message": "Aucun code QR trouvé"
