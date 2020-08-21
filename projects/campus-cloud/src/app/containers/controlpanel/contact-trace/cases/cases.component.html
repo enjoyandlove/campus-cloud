@@ -1,0 +1,44 @@
+<div class="row">    
+  <div class="col-12">
+    <cp-cases-list-action-box (launchCreateCaseModal)="onLaunchCaseCreate()"
+                              (search)="onSearch($event)">
+    </cp-cases-list-action-box>
+  </div>
+</div>
+<div [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div *ngSwitchCase="false">
+    
+    <cp-no-content class="margin-top"
+                    *ngIf="!(cases$ | async).length"
+                    [noContentText]="'t_cases_no_record_found' | cpI18n">
+    </cp-no-content>
+    <div class="row" *ngIf="(cases$ | async).length">
+      <div class="col-9">
+        <cp-cases-list  [data$]="cases$"
+                        (deleteClick)="onLaunchDeleteModal($event)">
+        </cp-cases-list>
+
+        <cp-pagination [pageNext]="pageNext"
+                      [pagePrev]="pagePrev"
+                      [pageNumber]="pageNumber"
+                      (next)="onPaginationNext()"
+                      (previous)="onPaginationPrevious()">
+        </cp-pagination>
+      </div>
+
+      <div class="col-3">
+        <cp-case-total-count-view></cp-case-total-count-view>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cp-modal *ngIf="isCaseCreate"
+          modalId="createCase"
+          (modalClose)="isCaseCreate = false">
+  <cp-case-create
+                (created)="onLaunchCaseCreate()"
+                (teardown)="isCaseCreate = false">
+  </cp-case-create>
+</cp-modal>

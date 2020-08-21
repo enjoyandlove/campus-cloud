@@ -159,6 +159,10 @@ export const ENDPOINTS = {
 
   HEALTH_PASS_SETTING: 'ct_health_pass_setting',
 
+  CASE: 'case',
+
+  CASE_STATUS: 'case_status',
+
   FORMS: 'form',
 
   FORM_RESPONSE: 'form_response',
@@ -172,5 +176,4 @@ export const ENDPOINTS = {
   NON_SESSION_FORM_BLOCK_RESPONSE: 'ns_form_block_response',
 
   NON_SESSION_IMAGE: 'ns_image'
-
 };

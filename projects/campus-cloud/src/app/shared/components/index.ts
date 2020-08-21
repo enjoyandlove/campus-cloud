@@ -40,3 +40,4 @@ export * from './cp-form-fixed-footer';
 export * from './cp-place-autocomplete';
 export * from './cp-dropdown-multiselect';
 export * from './cp-unsaved-changes-modal';
+export * from './cp-dot';

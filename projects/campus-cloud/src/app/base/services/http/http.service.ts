@@ -75,7 +75,6 @@ export abstract class HTTPService {
     }
 
     data = CPObj.cleanNullValues(data);
-
     const headers = this.getHeaders();
 
     return this.http.post(url, this.sanitizeEntries(data), { headers, params }).pipe(

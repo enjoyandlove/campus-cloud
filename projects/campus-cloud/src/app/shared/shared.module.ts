@@ -89,7 +89,8 @@ import {
   CPUploadModalFooterComponent,
   CPUploadModalHeaderComponent,
   CPDropdownMultiSelectComponent,
-  CPUnsavedChangesModalComponent
+  CPUnsavedChangesModalComponent,
+  CPDotComponent
 } from './components';
 
 @NgModule({
@@ -154,6 +155,7 @@ import {
     CPPlaceAutoCompleteComponent,
     CPDropdownMultiSelectComponent,
     CPUnsavedChangesModalComponent,
+    CPDotComponent,
     BreakLinesPipe,
     InlineLinksPipe
   ],
@@ -249,6 +251,7 @@ import {
     CPUploadModalFooterComponent,
     CPDropdownMultiSelectComponent,
     CPUnsavedChangesModalComponent,
+    CPDotComponent,
     BreakLinesPipe,
     InlineLinksPipe
   ]
