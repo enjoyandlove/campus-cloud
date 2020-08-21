@@ -1323,6 +1323,9 @@
   "contact_trace_notification_error": {
     "message": "Error"
   },
+  "contact_trace_notification_message": {
+    "message": "Message"
+  },
   "contact_trace_notification_notify": {
     "message": "Notify"
   },
