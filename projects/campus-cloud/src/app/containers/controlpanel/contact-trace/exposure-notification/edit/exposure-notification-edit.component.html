@@ -117,6 +117,7 @@
             </label>
             <div class="subject-input">
               <cp-audience-users-typeahead
+                [ngClass]="{'typeahead-validation-error': highlightFormError && (!notification.user_ids || notification.user_ids.length === 0)}"
                 [withChips]="[]"
                 (users)="usersChanged($event)"
               >
@@ -128,7 +129,7 @@
             <label>
               {{ 'subject' | cpI18n }}
               <cp-char-counter class="float-right"
-                               [limit]="128"
+                               [limit]="255"
                                [charCount]="notification.subject">
               </cp-char-counter>
             </label>
@@ -146,7 +147,9 @@
                   <input
                     type="text"
                     class="form-control transparent subject-input__input"
+                    [class.error]="highlightFormError && isNullOrEmptyString(notification.subject)"
                     [(ngModel)]="notification.subject"
+                    [maxLength]="255"
                   />
                 </div>
               </div>
@@ -157,13 +160,15 @@
             <label>
               {{ 'message_noun' | cpI18n }}
               <cp-char-counter class="float-right"
-                               [limit]="1024"
+                               [limit]="2048"
                                [charCount]="notification.message">
               </cp-char-counter>
             </label>
             <textarea
               class="form-control"
+              [class.error]="highlightFormError && isNullOrEmptyString(notification.message)"
               [(ngModel)]="notification.message"
+              [maxLength]="2048"
             >
             </textarea>
           </div>

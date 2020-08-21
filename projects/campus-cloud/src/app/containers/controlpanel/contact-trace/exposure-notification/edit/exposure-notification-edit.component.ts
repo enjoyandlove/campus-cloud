@@ -219,6 +219,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   sendClickHandler(): void {
     this.highlightFormError = false;
     const errorMessages: string[] = this.validateBeforeSave(this.notification);
+    console.log('errorMessages', errorMessages);
     if (errorMessages && errorMessages.length > 0) {
       this.showWarning();
       this.highlightFormError = true;
@@ -231,6 +232,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  isNullOrEmptyString(str: string): boolean {
+    return !str || str.trim().length === 0;
+  }
+
   private handleSaveSuccess(notification: ExposureNotification): void {
     this.handleSuccess('contact_trace_notification_successfully_saved');
     this.router.navigate(['/contact-trace/exposure-notification']);
@@ -240,8 +245,18 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     const errorMessages: string[] = [];
 
     if (notification) {
+      if (
+        this.selectedToOption &&
+        this.selectedToOption.action === 'custom_list' &&
+        (!notification.user_ids || notification.user_ids.length === 0)
+      ) {
+        errorMessages.push('User Ids');
+      }
       if (!notification.subject || notification.subject.trim().length === 0) {
         errorMessages.push('Subject');
+      }
+      if (!notification.message || notification.message.trim().length === 0) {
+        errorMessages.push('Message');
       }
     }
 

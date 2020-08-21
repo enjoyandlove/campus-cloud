@@ -74,3 +74,13 @@
     }
   }
 }
+
+.typeahead-validation-error {
+  ::ng-deep input {
+    width: 100%;
+    background-color: rgba(255, 96, 89, 0.25);
+    border-color: #ff6059;
+    color: #ff6059;
+    font-weight: bold;
+  }
+}
