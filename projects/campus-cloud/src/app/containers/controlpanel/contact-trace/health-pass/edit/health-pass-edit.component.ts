@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import IHealthPass from '@controlpanel/contact-trace/health-pass/health-pass.interface';
+import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays';
 
 @Component({
   selector: 'cp-health-pass-edit',
@@ -11,14 +11,21 @@ import IHealthPass from '@controlpanel/contact-trace/health-pass/health-pass.int
 export class HealthPassEditComponent implements OnInit {
 
   form: FormGroup;
+  private healthPass: IHealthPass;
 
   constructor(private formBuilder: FormBuilder,
-              private dialogRef: MatDialogRef<HealthPassEditComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: IHealthPass) {
+              @Inject(READY_MODAL_DATA) public modal) {
 
+    this.healthPass = modal.data;
     this.form = this.formBuilder.group({
-        name: this.formBuilder.control(this.data.name, Validators.required),
-        description: this.formBuilder.control(this.data.description, Validators.required)
+        name: this.formBuilder.control(this.modal.data.name, Validators.compose([
+          Validators.required,
+          Validators.maxLength(255)
+        ])),
+        description: this.formBuilder.control(this.modal.data.description, Validators.compose([
+          Validators.required,
+          Validators.maxLength(2048)
+        ]))
       }
     );
   }
@@ -27,6 +34,7 @@ export class HealthPassEditComponent implements OnInit {
   }
 
   onSave() {
-
+    this.healthPass = { ...this.healthPass, ...this.form.value};
+    this.modal.onAction(this.healthPass);
   }
 }

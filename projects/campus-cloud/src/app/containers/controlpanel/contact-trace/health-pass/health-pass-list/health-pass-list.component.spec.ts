@@ -1,26 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotificationTemplatesComponent } from './notification-templates.component';
+import { HealthPassListComponent } from './health-pass-list.component';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
-describe('NotificationTemplatesComponent', () => {
-  let component: NotificationTemplatesComponent;
-  let fixture: ComponentFixture<NotificationTemplatesComponent>;
+describe('HealthPassListComponent', () => {
+  let component: HealthPassListComponent;
+  let fixture: ComponentFixture<HealthPassListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationTemplatesComponent ],
+      declarations: [ HealthPassListComponent ],
       imports: [CPTestModule],
-      providers: [CPI18nPipe],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotificationTemplatesComponent);
+    fixture = TestBed.createComponent(HealthPassListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

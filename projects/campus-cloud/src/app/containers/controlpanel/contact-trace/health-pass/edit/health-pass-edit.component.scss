@@ -1,2 +1,66 @@
 @import '~projects/campus-cloud/src/sass/components/modal';
 @import '~projects/campus-cloud/src/sass/components/button';
+
+.cpmodal {
+  border-radius: 8px;
+}
+.invalid-feedback {
+  display: block;
+}
+label, .cp-counter{
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #212121;
+}
+.header-modal {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  color: #212121;
+}
+
+#description, input {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #212121;
+}
+
+#description {
+  height: 95px;
+  resize: none;
+}
+
+/* width */
+#description::-webkit-scrollbar {
+  width: 10px;
+  margin-right: 2px;
+}
+
+/* Track */
+#description::-webkit-scrollbar-track {
+  background: none;
+}
+
+/* Handle */
+#description::-webkit-scrollbar-thumb {
+  background: #eaeaea;
+  border-radius: 5px;
+  border: 3px solid white;
+  border-top: 5px solid white;
+  border-bottom: 5px solid white;
+}
+
+/* Handle on hover */
+#description::-webkit-scrollbar-thumb:hover {
+  background: #8e8e8e;
+}
+

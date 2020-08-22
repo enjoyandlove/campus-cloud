@@ -1,33 +1,37 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { INotificationTemplate } from '@controlpanel/contact-trace/health-pass/notification-templates/notification-template';
+import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays';
 
 @Component({
   selector: 'cp-notification-template-edit',
   templateUrl: './notification-template-edit.component.html',
   styleUrls: ['./notification-template-edit.component.scss']
 })
-export class NotificationTemplateEditComponent implements OnInit {
+export class NotificationTemplateEditComponent {
 
   form: FormGroup;
+  private template: INotificationTemplate;
 
   constructor(private formBuilder: FormBuilder,
-              private dialogRef: MatDialogRef<NotificationTemplateEditComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: INotificationTemplate) {
-
+              @Inject(READY_MODAL_DATA) public modal: any) {
+    this.template = this.modal.data;
     this.form = this.formBuilder.group({
-        subject: this.formBuilder.control(this.data.subject, Validators.required),
-        message: this.formBuilder.control(this.data.message, Validators.required)
+        subject: this.formBuilder.control(this.modal.data.subject, Validators.compose([
+          Validators.required,
+          Validators.maxLength(2048)
+        ])),
+        message: this.formBuilder.control(this.modal.data.message, Validators.compose([
+          Validators.required,
+          Validators.maxLength(2048)
+        ]))
       }
     );
   }
 
-  ngOnInit(): void {
-  }
-
   onSave() {
-
+    this.template = { ...this.template, ...this.form.value};
+    this.modal.onAction(this.template);
   }
 
 }

@@ -1359,6 +1359,9 @@
   "contact_trace_notification_template": {
     "message": "Template"
   },
+  "contact_trace_notification_template_header": {
+    "message": "Notification Templates"
+  },
   "contact_trace_notification_to": {
     "message": "To"
   },

@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ContactTraceHeaderService } from '@controlpanel/contact-trace/utils';
 import { BaseComponent } from '@projects/campus-cloud/src/app/base';
-import { CPI18nService, CPTrackingService } from '@projects/campus-cloud/src/app/shared/services';
-import { HealthPassService } from './health-pass.service';
 import { Store } from '@ngrx/store';
-import { ISnackbar, baseActionClass } from '@projects/campus-cloud/src/app/store';
-import { HttpParams } from '@angular/common/http';
+import { baseActionClass, ISnackbar } from '@projects/campus-cloud/src/app/store';
 import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import IHealthPass, { EState } from './health-pass.interface';
 import { HealthPassEditComponent } from '@controlpanel/contact-trace/health-pass/edit/health-pass-edit.component';
-import { MatDialog } from '@angular/material/dialog';
+import { ModalService } from '@ready-education/ready-ui/overlays';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { Observable } from 'rxjs';
+import {
+  selectAllHealthPass,
+  selectDisplayErrorMessage,
+  selectDisplaySuccessMessage,
+  State
+} from '@controlpanel/contact-trace/health-pass/store/selectors/health-pass.selector';
+import { HealthPassPageActions } from '@controlpanel/contact-trace/health-pass/store/actions';
+import { map } from 'rxjs/operators';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+
 
 @Component({
   selector: 'cp-health-pass',
@@ -21,134 +30,79 @@ import { MatDialog } from '@angular/material/dialog';
 export class HealthPassComponent extends BaseComponent implements OnInit {
   form: FormGroup;
   formErrors;
-  lastHealthPassData: Array<IHealthPass> = [];
-  healthPassData: Array<IHealthPass> = [];
+  healthPassData$: Observable<IHealthPass[]>;
+  shouldDisplaySuccessMessage$: Observable<boolean>;
+  shouldDisplayErrorMessage$: Observable<boolean>;
+  currentHealthPassData: IHealthPass[];
 
-  isDisabled: boolean = false;
-  loading: boolean;
+  isDisabled = false;
+
+  editModal: OverlayRef;
 
   constructor(
     private session: CPSession,
     private headerService: ContactTraceHeaderService,
-    public cpI18n: CPI18nService,
+    public cpI18n: CPI18nPipe,
     private store: Store<ISnackbar>,
-    public service: HealthPassService,
-    private cpTracking: CPTrackingService,
-    private fb: FormBuilder,
-    private dialog: MatDialog
+    private healthPassStore: Store<State>,
+    private modalService: ModalService
   ) {
     super();
-  }
 
-  private fetch() {
-    this.loading = true;
-    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+    this.healthPassData$  = this.healthPassStore.select(selectAllHealthPass).pipe(map((list) => this.assignIcons(list)));
 
-    this.service
-      .getHealthPass(params)
-      .toPromise()
-      .then((res) => {
-        this.healthPassData = this.assignIcons(res);
-        this.lastHealthPassData = this.healthPassData.map((item) => ({ ...item }));
-
-        this.form = this.fb.group({
-          'name-0': [this.healthPassData[0].name, Validators.required],
-          'description-0': [this.healthPassData[0].description, Validators.required],
-          'name-1': [this.healthPassData[1].name, Validators.required],
-          'description-1': [this.healthPassData[1].description, Validators.required],
-          'name-2': [this.healthPassData[2].name, Validators.required],
-          'description-2': [this.healthPassData[2].description, Validators.required],
-          'name-3': [this.healthPassData[3].name, Validators.required],
-          'description-3': [this.healthPassData[3].description, Validators.required]
-        });
-      })
-      .catch(() => {
-        this.handleError(this.cpI18n.translate('something_went_wrong'));
-      })
-      .finally(() => {
-        this.loading = false;
-      });
-  }
-
-  handleError(body) {
-    this.store.dispatch(
-      new baseActionClass.SnackbarError({
-        body
-      })
-    );
-  }
-
-  onSubmit() {
-    this.formErrors = false;
-    this.isDisabled = true;
-
-    this.healthPassData.forEach((e, i) => {
-      this.form.controls[`name-${i}`].setValue(e.name);
-      this.form.controls[`description-${i}`].setValue(e.description);
+    this.healthPassData$.subscribe(list => {
+      this.currentHealthPassData = list;
     });
 
-    if (!this.form.valid) {
-      this.formErrors = true;
-      this.isDisabled = false;
-
-      this.handleError(this.cpI18n.translate('error_fill_out_marked_fields'));
-
-      return;
-    }
-
-    const params = new HttpParams().set('school_id', this.session.school.id.toString());
-
-    this.service
-      .updateHealthPass(
-        this.healthPassData.map(({ name, description, state }) => {
-          return { name, description, state };
-        }),
-        params
-      )
-      .toPromise()
-      .then((res) => {
-        this.healthPassData = this.assignIcons(res);
-        this.lastHealthPassData = this.healthPassData.map((item) => ({ ...item }));
-
+    this.shouldDisplaySuccessMessage$ = this.healthPassStore.select(selectDisplaySuccessMessage);
+    this.shouldDisplaySuccessMessage$.subscribe(hasSuccessMessage => {
+      if (hasSuccessMessage) {
+        this.resetModal();
         this.store.dispatch(
           new baseActionClass.SnackbarSuccess({
-            body: this.cpI18n.translate('t_changes_saved_ok')
+            body: this.cpI18n.transform('t_changes_saved_ok')
           })
         );
-      })
-      .catch(() => {
-        this.handleError(this.cpI18n.translate('something_went_wrong'));
-      })
-      .finally(() => {
-        this.isDisabled = false;
-      });
-  }
 
-  onCancel() {
-    this.formErrors = false;
-    this.healthPassData = this.lastHealthPassData.map((item) => ({ ...item }));
+        this.healthPassStore.dispatch(HealthPassPageActions.initSuccessMessage());
+      }
+    });
+
+    this.shouldDisplayErrorMessage$ = this.healthPassStore.select(selectDisplayErrorMessage);
+    this.shouldDisplayErrorMessage$.subscribe(hasErrorMessage => {
+      if (hasErrorMessage) {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({
+            body: this.cpI18n.transform('something_went_wrong')
+          })
+        );
+
+        this.healthPassStore.dispatch(HealthPassPageActions.initErrorMessage());
+      }
+    });
   }
 
   assignIcons(res) {
     const pathToAsset = `${environment.root}assets/svg/contact-trace/health-pass`;
-    let result = res.map((item) => {
-      let obj = Object.assign({}, item);
+    const result = res.map((item) => {
+      const obj = Object.assign({}, item);
       switch (item.state) {
         case EState.green:
           obj.icon = `${pathToAsset}/health-pass-green.svg`;
-          obj.title = this.cpI18n.translate('health_pass_green');
+          obj.title = this.cpI18n.transform('health_pass_green');
           break;
         case EState.yellow:
           obj.icon = `${pathToAsset}/health-pass-yellow.svg`;
-          obj.title = this.cpI18n.translate('health_pass_yellow');
+          obj.title = this.cpI18n.transform('health_pass_yellow');
           break;
         case EState.red:
           obj.icon = `${pathToAsset}/health-pass-red.svg`;
-          obj.title = this.cpI18n.translate('health_pass_red');
+          obj.title = this.cpI18n.transform('health_pass_red');
           break;
         case EState.no:
           obj.icon = `${pathToAsset}/health-pass-no.svg`;
-          obj.title = this.cpI18n.translate('health_pass_no');
+          obj.title = this.cpI18n.transform('health_pass_no');
           break;
         default:
           break;
@@ -159,21 +113,32 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.healthPassStore.dispatch(HealthPassPageActions.enter({school_id: this.session.school.id.toString()}));
+
     this.headerService.updateHeader();
-    this.fetch();
   }
 
   openEditModal(healthPass: IHealthPass) {
-    const dialogRef = this.dialog.open(HealthPassEditComponent, {
-      width: '500px',
-      data: healthPass
+
+    this.editModal = this.modalService.open(HealthPassEditComponent, {
+      data: healthPass,
+      onAction: this.onEdited.bind(this),
+      onClose: this.resetModal.bind(this)
     });
 
-
-    //dialogRef.
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //
-    // });
   }
+
+  onEdited(healthPass: IHealthPass): void {
+    this.healthPassStore.dispatch(HealthPassPageActions.edit({
+      healthPassList: this.currentHealthPassData.map(({ name, description, state }) => {
+        return state === healthPass.state ?
+          {name: healthPass.name, description: healthPass.description, state} :
+          { name, description, state };
+      }), school_id: this.session.school.id.toString()}));
+  }
+
+  resetModal() {
+    this.editModal.dispose();
+  }
+
 }

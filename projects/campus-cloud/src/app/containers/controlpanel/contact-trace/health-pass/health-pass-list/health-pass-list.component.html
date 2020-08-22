@@ -1,0 +1,18 @@
+<div class="container my-4">
+    <div class="row mb-4">
+        <h1>{{ 'health_pass_settings' | cpI18n }}</h1>
+    </div>
+    <div class='row list-item-border ml-2' *ngFor="let healthPass of list; last as isLast"
+         [ngClass]="{'mb-2': !isLast}">
+        <div>
+            <img class="pass-icon" [src]="healthPass.icon">
+        </div>
+        <div class='col d-flex'>
+            <h2 class="float-left align-self-center mb-0">{{healthPass.title}}</h2>
+            <img (click)="select.emit(healthPass)"
+                    src="/assets/svg/contact-trace/health-pass/edit-icon.svg"
+                 class="ml-auto cursor-pointer"/>
+        </div>
+    </div>
+</div>
+
