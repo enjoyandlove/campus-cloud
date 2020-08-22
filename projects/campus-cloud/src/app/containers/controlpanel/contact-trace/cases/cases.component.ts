@@ -12,11 +12,7 @@ import { ICase, ICaseStatus } from './cases.interface';
 
 import * as fromStore from './store';
 import * as fromRoot from '@campus-cloud/store';
-import { CPSession } from '@campus-cloud/session';
-import { Router } from '@angular/router';
 import { ContactTraceHeaderService } from '../utils';
-import { CasesService } from './cases.service';
-import { CasesUtilsService } from './cases.utils.service';
 
 interface IState {
   search_str: string;
@@ -50,14 +46,10 @@ export class CasesComponent extends BaseComponent implements OnInit {
   private destroy$ = new Subject();
 
   constructor(
-    public router: Router,
-    public session: CPSession,
     public cpI18nPipe: CPI18nPipe,
     public cpTracking: CPTrackingService,
     public headerService: ContactTraceHeaderService,
-    public service: CasesService,
     public store: Store<fromStore.ICasesState>,
-    public utils: CasesUtilsService,
     private actionsSubject$: ActionsSubject
   ) {
     super();

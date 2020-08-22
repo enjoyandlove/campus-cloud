@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CaseTotalCountViewComponent } from './case-total-count-view-component.component';
+import { CaseTotalCountViewComponent } from './case-total-count-view.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../../../store';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('CaseTotalCountViewComponent', () => {
   let component: CaseTotalCountViewComponent;
@@ -8,7 +12,14 @@ describe('CaseTotalCountViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CaseTotalCountViewComponent]
+      imports: [
+        RouterTestingModule,
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('casesModule', reducers),
+        CPTestModule
+      ],
+      declarations: [CaseTotalCountViewComponent],
+      providers: [CPI18nService]
     }).compileComponents();
   }));
 
