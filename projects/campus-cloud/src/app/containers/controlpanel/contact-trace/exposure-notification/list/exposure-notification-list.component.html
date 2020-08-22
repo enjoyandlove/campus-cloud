@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-12">
+    <cp-exposure-notification-list-action-box
+      (search)="onSearch($event)"
+      (launchCreateModal)="onLaunchCreateModal()"
+      (filterChange)="filterChangeHandler($event)"
+    >
+    </cp-exposure-notification-list-action-box>
+  </div>
+</div>
+
+<cp-spinner *ngIf="webServiceCallInProgress"></cp-spinner>
+
+<ng-container *ngIf="!webServiceCallInProgress">
+
+  <cp-no-content
+    class="no-content"
+    *ngIf="!results.length"
+    [noContentText]="'contact_trace_notification_no_results' | cpI18n">
+  </cp-no-content>
+
+  <ng-container *ngIf="results && results.length">
+    <table ui-table>
+      <thead>
+      <tr ui-table-row>
+        <th ui-table-cell>{{ 'contact_trace_notification_to' | cpI18n }}</th>
+        <th ui-table-cell>{{ 'contact_trace_notification_subject' | cpI18n }}</th>
+        <th ui-table-cell>{{ 'contact_trace_notification_date_sent' | cpI18n }}</th>
+        <th ui-table-cell></th>
+        <th ui-table-cell></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr ui-table-row
+          *ngFor="let result of results; let i = index">
+        <td ui-table-cell>
+          <cp-exposure-notification-to-display
+            [notification]="result"
+            (caseLinkClicked)="caseLinkClickHandler($event)"
+          >
+          </cp-exposure-notification-to-display>
+        </td>
+        <td ui-table-cell>
+          {{result.subject}}
+        </td>
+        <td ui-table-cell>
+          {{ (result.notify_at_epoch > -1 ? result.notify_at_epoch : result.created_on_epoch) | cpDatePipe: dateFormat }}
+        </td>
+        <td ui-table-cell>
+          <div
+            class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary"
+            data-toggle="modal"
+            data-target="#viewMessageModal"
+            (click)="notificationForView = result; showViewMessageModal = true;"
+          >
+            {{ 'contact_trace_notification_view_message' | cpI18n }}
+          </div>
+        </td>
+        <td ui-table-cell
+            align="right">
+          <button *ngIf="result.status !== notificationStatus.sent"
+                  ui-button
+                  type="button"
+                  variant="inline"
+                  aria-label="close"
+                  data-toggle="modal"
+                  data-target="#notificationDeleteModal"
+                  (click)="notificationForDelete = result; showNotificationDeleteModal = true;">
+            <ready-ui-icon name="close"></ready-ui-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <cp-pagination
+      [pageNext]="hasMorePages"
+      [pagePrev]="pageCounter > 1"
+      [pageNumber]="pageCounter"
+      (next)="onPaginationNext()"
+      (previous)="onPaginationPrevious()">
+    </cp-pagination>
+  </ng-container>
+
+</ng-container>
+
+<cp-modal
+  modalId="viewMessageModal"
+  *ngIf="showViewMessageModal"
+>
+  <cp-exposure-notification-view-message
+    [notification]="notificationForView"
+  >
+  </cp-exposure-notification-view-message>
+</cp-modal>
+
+<cp-modal
+  modalId="notificationDeleteModal"
+  *ngIf="showNotificationDeleteModal"
+>
+  <cp-exposure-notification-delete
+    [notification]="notificationForDelete"
+    (deleteForm)="onDeletedNotification()"
+  >
+  </cp-exposure-notification-delete>
+</cp-modal>

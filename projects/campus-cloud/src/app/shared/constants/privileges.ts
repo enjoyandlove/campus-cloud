@@ -69,7 +69,9 @@ export const CP_PRIVILEGES_MAP = {
 
   contact_trace_forms: 41,
 
-  forms: 42
+  forms: 42,
+
+  contact_trace_exposure_notification: 43
 };
 
 export const CP_PRIVILEGES = {

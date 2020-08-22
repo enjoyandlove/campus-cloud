@@ -945,6 +945,9 @@
   "contact_details": {
     "message": "Détails du contact"
   },
+  "contact_trace_exposure_notification": {
+    "message": "Notification d'exposition"
+  },
   "contact_trace_forms_all_forms": {
     "message": "Tous les formulaires"
   },
@@ -1289,6 +1292,87 @@
   },
   "contact_trace_forms_yes_no": {
     "message": "Oui/Non"
+  },
+  "contact_trace_notification_all_statuses": {
+    "message": "Tous les statuts"
+  },
+  "contact_trace_notification_case": {
+    "message": "Cas"
+  },
+  "contact_trace_notification_case_status": {
+    "message": "Statut du cas"
+  },
+  "contact_trace_notification_contact_tracing_service": {
+    "message": "Service de traçage de contact"
+  },
+  "contact_trace_notification_create_notification": {
+    "message": "Créer notification"
+  },
+  "contact_trace_notification_custom_list": {
+    "message": "Liste customisée"
+  },
+  "contact_trace_notification_date_sent": {
+    "message": "Date d'envoi"
+  },
+  "contact_trace_notification_delete_confirmation": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "contact_trace_notification_delete_notification": {
+    "message": "Supprimer notification"
+  },
+  "contact_trace_notification_delete_success": {
+    "message": "Notification supprimée avec succès"
+  },
+  "contact_trace_notification_error": {
+    "message": "Erreur"
+  },
+  "contact_trace_notification_filter": {
+    "message": "Filtrer"
+  },
+  "contact_trace_notification_message": {
+    "message": "Message"
+  },
+  "contact_trace_notification_none": {
+    "message": "Aucun"
+  },
+  "contact_trace_notification_notify": {
+    "message": "Notifier"
+  },
+  "contact_trace_notification_no_results": {
+    "message": "Aucune notification trouvée"
+  },
+  "contact_trace_notification_pending": {
+    "message": "En attente"
+  },
+  "contact_trace_notification_processing": {
+    "message": "Traitement"
+  },
+  "contact_trace_notification_sent": {
+    "message": "Envoyé"
+  },
+  "contact_trace_notification_subject": {
+    "message": "Sujet"
+  },
+  "contact_trace_notification_successfully_saved": {
+    "message": "Notification enregistrée avec succès"
+  },
+  "contact_trace_notification_template": {
+    "message": "Modèle"
+  },
+  "contact_trace_notification_to": {
+    "message": "Vers"
+  },
+  "contact_trace_notification_users": {
+    "message": "Utilisateurs"
+  },
+  "contact_trace_notification_view_case": {
+    "message": "Voir cas"
+  },
+  "contact_trace_notification_view_message": {
+    "message": "Voir message"
+  },
+  "contact_trace_notification_x_users": {
+    "message": "%s utilisateurs"
   },
   "contact_trace_no_qr_found": {
     "message": "Aucun code QR trouvé"
