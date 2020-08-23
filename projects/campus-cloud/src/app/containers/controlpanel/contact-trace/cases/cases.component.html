@@ -36,6 +36,10 @@
   </div>
 </div>
 
+<cp-modal *ngIf="showDeleteModal"
+          modalId="deleteCase">
+  <cp-case-delete [case]="deleteCase"></cp-case-delete>
+</cp-modal>
 <cp-modal *ngIf="isCaseCreate"
           modalId="createCase"
           (modalClose)="isCaseCreate = false">

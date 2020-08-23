@@ -157,19 +157,9 @@ export class CasesComponent extends BaseComponent implements OnInit {
   }
 
   onLaunchCaseCreate() {
-    this.actionsSubject$
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((action) => action.type === fromStore.caseActions.CREATE_CASE_SUCCESS)
-      )
-      .subscribe(() => {
-        this.store.dispatch(new fromStore.GetCaseStatus());
-        this.getCasesStatus();
-      });
-
     this.cases$ = this.getCases();
-
     this.isCaseCreate = true;
+
     setTimeout(() => {
       $('#createCase').modal({ keyboard: true, focus: true });
     }, 1);
@@ -179,7 +169,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
     this.showDeleteModal = true;
     this.deleteCase = _case;
 
-    setTimeout(() => $('#casesDelete').modal({ keyboard: true, focus: true }));
+    setTimeout(() => $('#deleteCase').modal({ keyboard: true, focus: true }));
   }
 
   loadCases() {
@@ -201,6 +191,22 @@ export class CasesComponent extends BaseComponent implements OnInit {
   loadCaseStatus() {
     this.store.dispatch(new fromStore.GetCaseStatus());
     this.caseStatus$ = this.getCasesStatus();
+  }
+
+  listenForUpdateCase() {
+    this.actionsSubject$
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(
+          (action) =>
+            action.type === fromStore.caseActions.CREATE_CASE_SUCCESS ||
+            action.type === fromStore.caseActions.DELETE_CASE_SUCCESS
+        )
+      )
+      .subscribe(() => {
+        this.store.dispatch(new fromStore.GetCaseStatus());
+        this.getCasesStatus();
+      });
   }
 
   listenForErrors() {
@@ -230,8 +236,11 @@ export class CasesComponent extends BaseComponent implements OnInit {
     this.headerService.updateHeader();
     this.loadCases();
     this.loadCaseStatus();
+    this.listenForUpdateCase();
     this.listenForErrors();
-    this.loading$ = this.store.select(fromStore.getCasesLoading) || this.store.select(fromStore.getCaseStatusLoading);
+    this.loading$ =
+      this.store.select(fromStore.getCasesLoading) ||
+      this.store.select(fromStore.getCaseStatusLoading);
   }
 
   ngOnDestroy() {

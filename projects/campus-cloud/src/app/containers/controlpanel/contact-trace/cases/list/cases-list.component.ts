@@ -16,8 +16,6 @@ export class CasesListComponent implements OnInit {
   @Input() data$: Observable<ICase[]>;
   @Output() deleteClick: EventEmitter<ICase> = new EventEmitter();
 
-  showDeleteModal = false;
-  deleteCase: ICase;
   eventData;
   dateFormat = FORMAT.SHORT;
 

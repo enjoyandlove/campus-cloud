@@ -21,6 +21,7 @@ import { CaseFormComponent } from './form/case-form.component';
 import { CasesUtilsService } from './cases.utils.service';
 import { CasesService } from './cases.service';
 import { CasesListComponent } from './list';
+import { CaseDeleteComponent } from './delete';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CasesListComponent } from './list';
     CasesListComponent,
     CaseCreateComponent,
     CaseFormComponent,
-    CaseTotalCountViewComponent
+    CaseTotalCountViewComponent,
+    CaseDeleteComponent
   ],
 
   imports: [
