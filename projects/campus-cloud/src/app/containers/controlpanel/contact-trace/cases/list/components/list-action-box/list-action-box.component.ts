@@ -4,7 +4,7 @@ import { CPSession } from '@campus-cloud/session';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IItem } from '@campus-cloud/shared/components';
+import { IItem, IDateRange } from '@campus-cloud/shared/components';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
@@ -22,8 +22,8 @@ import * as fromStore from '../../../store';
 export class CasesListActionBoxComponent implements OnInit {
   @Output() launchCreateCaseModal: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<string> = new EventEmitter();
-  @Output() selectedCategory: EventEmitter<number> = new EventEmitter();
-
+  @Output() selectedFilter: EventEmitter<number> = new EventEmitter();
+  @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
   eventData;
   caseStatus$: Observable<IItem[]>;
   dateRanges: EngageUtils.IDateFilter[];
@@ -54,7 +54,7 @@ export class CasesListActionBoxComponent implements OnInit {
   }
 
   onCasesFilter(filter) {
-    this.selectedCategory.emit(filter.action);
+    this.selectedFilter.emit(filter.action);
   }
 
   onDateChange(dateRange) {
@@ -65,6 +65,8 @@ export class CasesListActionBoxComponent implements OnInit {
         end: dateRange.payload.range.end
       };
     }
+
+    this.filterByDates.emit(dateRange);
   }
 
   onCreateCases() {

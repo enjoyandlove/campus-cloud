@@ -1,7 +1,6 @@
 import { Input, OnInit, Output, Component, ViewChild, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Store, ActionsSubject } from '@ngrx/store';
-import { ofType, Actions } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
@@ -9,7 +8,6 @@ import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { CasesUtilsService } from '../cases.utils.service';
 import * as fromStore from '../store';
 import { ICase } from '../cases.interface';
-import { tap, take, takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -38,8 +36,7 @@ export class CaseCreateComponent implements OnInit {
     public cpI18nPipe: CPI18nPipe,
     public cpTracking: CPTrackingService,
     public utils: CasesUtilsService,
-    public store: Store<fromStore.ICasesState>,
-    private actionsSubject$: ActionsSubject
+    public store: Store<fromStore.ICasesState>
   ) {}
 
   onSubmit() {

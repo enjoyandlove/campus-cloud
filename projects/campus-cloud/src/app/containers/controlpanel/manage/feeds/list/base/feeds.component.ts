@@ -662,8 +662,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
    this missing action was causing an issue with new post display when filter is selected
    **/
   addToResult(thread: ICampusThread) {
-    this.store.dispatch(
-      fromStore.addThreadToResult({ thread })
-    );
+    this.store.dispatch(fromStore.addThreadToResult({ thread }));
   }
 }

@@ -13,15 +13,20 @@ import { ICase, ICaseStatus } from './cases.interface';
 import * as fromStore from './store';
 import * as fromRoot from '@campus-cloud/store';
 import { ContactTraceHeaderService } from '../utils';
+import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
 
 interface IState {
   search_str: string;
-  status_id: string;
+  current_status_ids: string;
+  start: number;
+  end: number;
 }
 
 const state: IState = {
   search_str: null,
-  status_id: null
+  current_status_ids: null,
+  start: null,
+  end: null
 };
 
 @Component({
@@ -61,7 +66,6 @@ export class CasesComponent extends BaseComponent implements OnInit {
       startRange: this.startRange,
       endRange: this.endRange
     };
-
     this.store.dispatch(new fromStore.GetCases(payload));
 
     this.cases$ = this.getCases();
@@ -98,6 +102,31 @@ export class CasesComponent extends BaseComponent implements OnInit {
 
     this.resetPagination();
 
+    this.fetchFilteredCases();
+  }
+
+  onSelectedFilter(statusID) {
+    this.state = {
+      ...this.state,
+      current_status_ids: statusID
+    };
+
+    if (this.state.current_status_ids == '0') {
+      delete this.state.current_status_ids;
+    }
+
+    this.resetPagination();
+    this.fetchFilteredCases();
+  }
+
+  onDateFilter(dateRange: IDateRange) {
+    this.state = {
+      ...this.state,
+      start: dateRange.start,
+      end: dateRange.end
+    };
+
+    this.resetPagination();
     this.fetchFilteredCases();
   }
 
@@ -202,7 +231,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
     this.loadCases();
     this.loadCaseStatus();
     this.listenForErrors();
-    this.loading$ = this.store.select(fromStore.getCaseStatusLoading);
+    this.loading$ = this.store.select(fromStore.getCasesLoading) || this.store.select(fromStore.getCaseStatusLoading);
   }
 
   ngOnDestroy() {

@@ -175,7 +175,7 @@ const _feedsReducer = createReducer(
   on(WallsActions.addThreadToResult, (state: IWallsFeedsState, { thread }) => {
     return {
       ...state,
-      results: [{id: thread.id, type: 'THREAD'}, ...state.results]
+      results: [{ id: thread.id, type: 'THREAD' }, ...state.results]
     };
   }),
 

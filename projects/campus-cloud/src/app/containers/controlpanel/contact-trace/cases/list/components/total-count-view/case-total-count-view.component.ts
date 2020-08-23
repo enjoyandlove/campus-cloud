@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+
 import { ICaseStatus } from '../../../cases.interface';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import * as fromStore from '../../../store';
-import { CPI18nService } from '@campus-cloud/shared/services';
 @Component({
   selector: 'cp-case-total-count-view',
   templateUrl: './case-total-count-view.component.html',
@@ -13,7 +13,7 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 export class CaseTotalCountViewComponent implements OnInit {
   caseStatus$: Observable<ICaseStatus[]>;
 
-  constructor(public store: Store<fromStore.ICasesState>, public cpI18n: CPI18nService) {}
+  constructor(public store: Store<fromStore.ICasesState>) {}
 
   getCaseStatus() {
     this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
