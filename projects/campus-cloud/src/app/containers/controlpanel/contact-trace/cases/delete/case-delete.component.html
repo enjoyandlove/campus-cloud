@@ -1,0 +1,50 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span>
+          <strong>
+            {{ 'cases_delete_modal_title' | cpI18n }}
+          </strong>
+        </span>
+
+        <button type="button"
+                aria-label="close"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-12">
+        <p class="text-center">
+          {{ 't_shared_delete_confirmation' | cpI18n: (case.firstname + " " + case.lastname) }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
+        <button type="button"
+                cpTarget="cancel"
+                class="cpbtn cpbtn--cancel"
+                data-dismiss="modal">
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <button type="button"
+                cpTarget="delete"
+                (click)="onDelete()"
+                class="cpbtn cpbtn--danger">
+          {{ 'delete' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
