@@ -74,7 +74,9 @@ export class CasesListActionBoxComponent implements OnInit {
     this.launchCreateCaseModal.emit();
   }
 
-  onImportCSV() {}
+  onImportCSV() {
+    $('#excelCasesModal').modal({ keyboard: true, focus: true });
+  }
 
   onDownloadCases() {}
 

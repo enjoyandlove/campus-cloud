@@ -188,6 +188,15 @@ export function reducer(state = initialState, action: fromCases.CasesAction) {
       };
     }
 
+    case fromCases.caseActions.IMPORT_CASES: {
+      return {
+        ...state,
+        error: false,
+        loaded: false,
+        loading: false
+      };
+    }
+
     case fromCases.caseActions.RESET_ERROR: {
       return {
         ...state,
