@@ -1,7 +1,9 @@
 <div class="row">    
   <div class="col-12">
     <cp-cases-list-action-box (launchCreateCaseModal)="onLaunchCaseCreate()"
-                              (search)="onSearch($event)">
+                              (search)="onSearch($event)"
+                              (selectedFilter)="onSelectedFilter($event)"
+                              (filterByDates)="onDateFilter($event)">
     </cp-cases-list-action-box>
   </div>
 </div>

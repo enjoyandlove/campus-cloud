@@ -50,7 +50,6 @@ export class CasesEffect {
     mergeMap((action: fromActions.GetFilteredCases) => {
       const { startRange, endRange, state } = action.payload;
       const params = this.defaultParams(state);
-
       return this.service.getCases(startRange, endRange, params).pipe(
         map((data: ICase[]) => new fromActions.GetFilteredCasesSuccess(data)),
         catchError((error) => of(new fromActions.GetFilteredCasesFail(parseErrorResponse(error))))
@@ -178,6 +177,9 @@ export class CasesEffect {
   private defaultParams(state): HttpParams {
     return new HttpParams()
       .append('search_str', state.search_str)
+      .append('current_status_ids', state.current_status_ids)
+      .append('start', state.start)
+      .append('end', state.end)
       .append('school_id', this.session.g.get('school').id);
   }
 }
