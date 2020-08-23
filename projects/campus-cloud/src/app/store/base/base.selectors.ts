@@ -46,3 +46,8 @@ export const getLocationsModalState = createSelector(
   getBaseState,
   (state: IBaseState) => state.LOCATIONS_MODAL
 );
+
+export const getCasesModalState = createSelector(
+  getBaseState,
+  (state: IBaseState) => state.CASES_MODAL
+);

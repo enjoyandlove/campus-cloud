@@ -21,6 +21,9 @@ import { CaseFormComponent } from './form/case-form.component';
 import { CasesUtilsService } from './cases.utils.service';
 import { CasesService } from './cases.service';
 import { CasesListComponent } from './list';
+import { CasesExcelModalComponent, CasesImportTopBarComponent } from './excel/components';
+import { CasesExcelComponent } from './excel';
+
 import { CaseDeleteComponent } from './delete';
 
 @NgModule({
@@ -31,6 +34,9 @@ import { CaseDeleteComponent } from './delete';
     CaseCreateComponent,
     CaseFormComponent,
     CaseTotalCountViewComponent,
+    CasesExcelModalComponent,
+    CasesImportTopBarComponent,
+    CasesExcelComponent,
     CaseDeleteComponent
   ],
 

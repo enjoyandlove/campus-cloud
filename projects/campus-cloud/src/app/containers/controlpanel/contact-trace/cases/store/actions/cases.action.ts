@@ -27,6 +27,7 @@ export enum caseActions {
   DELETE_CASE_FAIL = '[contact_trace.cases] delete case fail',
   DELETE_CASE_SUCCESS = '[contact_trace.cases] delete case success',
 
+  IMPORT_CASES = '[contact_trace.cases] import cases',
   GET_CASE_STATUS = '[contact_trace.cases] get case status',
   GET_CASE_STATUS_FAIL = '[contact_trace.cases] get case status fail',
   GET_CASE_STATUS_SUCCESS = '[contact_trace.cases] get case status success',
@@ -130,6 +131,10 @@ export class DeleteCaseSuccess implements Action {
   readonly type = caseActions.DELETE_CASE_SUCCESS;
   constructor(public payload: { deletedId: number }) {}
 }
+export class ImportCases implements Action {
+  readonly type = caseActions.IMPORT_CASES;
+  constructor(public payload: any) {}
+}
 
 export class GetCaseStatus implements Action {
   readonly type = caseActions.GET_CASE_STATUS;
@@ -173,6 +178,7 @@ export type CasesAction =
   | GetFilteredCases
   | GetFilteredCasesFail
   | GetFilteredCasesSuccess
+  | ImportCases
   | GetCaseStatus
   | GetCaseStatusSuccess
   | GetCaseStatusFail
