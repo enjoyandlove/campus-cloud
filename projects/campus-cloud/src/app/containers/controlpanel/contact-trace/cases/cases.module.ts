@@ -21,6 +21,8 @@ import { CaseFormComponent } from './form/case-form.component';
 import { CasesUtilsService } from './cases.utils.service';
 import { CasesService } from './cases.service';
 import { CasesListComponent } from './list';
+import { CaseDetailsComponent } from './details';
+import { CaseViewComponent } from './details/components';
 import { CasesExcelModalComponent, CasesImportTopBarComponent } from './excel/components';
 import { CasesExcelComponent } from './excel';
 
@@ -33,6 +35,8 @@ import { CaseDeleteComponent } from './delete';
     CasesListComponent,
     CaseCreateComponent,
     CaseFormComponent,
+    CaseDetailsComponent,
+    CaseViewComponent,
     CaseTotalCountViewComponent,
     CasesExcelModalComponent,
     CasesImportTopBarComponent,

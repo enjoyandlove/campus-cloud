@@ -66,7 +66,7 @@ export class CasesEffect {
       const { id } = action.payload;
       const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-      return this.service.getCaseById(id, params).pipe(
+      return this.service.getCaseById(params, id).pipe(
         map((data: ICase) => new fromActions.GetCaseByIdSuccess(data)),
         catchError((error) => of(new fromActions.GetCaseByIdFail(parseErrorResponse(error))))
       );
@@ -125,7 +125,7 @@ export class CasesEffect {
           );
           return new fromActions.EditCaseSuccess({ data: data, id: id });
         }),
-        tap(() => this.router.navigate([`/contact-trace/cases/${id}/info`])),
+        tap(() => this.router.navigate([`/contact-trace/cases/${id}`])),
         catchError((error) => of(new fromActions.EditCaseFail(parseErrorResponse(error))))
       );
     })

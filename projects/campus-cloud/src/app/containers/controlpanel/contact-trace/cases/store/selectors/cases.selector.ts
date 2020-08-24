@@ -40,8 +40,3 @@ export const getFilteredCases = createSelector(
   getCaseState,
   fromCases.getFilteredCases
 );
-
-export const getSelectedCase = createSelector(
-  getRouterState,
-  (routeterState) => getCasesById(+routeterState.params.caseId)
-);

@@ -1,0 +1,8 @@
+<div>
+  <cp-case-view *ngIf="!loading"
+    [isEditing]="isEditing"
+    (onEditing)="onEditing($event)"
+    [case]="case"
+  >
+  </cp-case-view>
+</div>
