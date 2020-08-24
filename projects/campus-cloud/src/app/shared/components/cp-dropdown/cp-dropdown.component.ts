@@ -13,6 +13,7 @@ import {
 export interface IItem {
   label: string;
   action: string | number;
+
   heading?: boolean;
 }
 

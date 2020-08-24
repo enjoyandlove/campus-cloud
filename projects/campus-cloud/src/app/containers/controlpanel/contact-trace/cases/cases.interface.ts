@@ -1,6 +1,7 @@
 export interface ICase {
   id: number;
   current_status_id: number;
+  current_status: ICaseStatus;
   current_action: ICaseAction;
   notes: string;
   date_last_modified: number;

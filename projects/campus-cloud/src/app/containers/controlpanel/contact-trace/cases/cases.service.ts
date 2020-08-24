@@ -17,8 +17,10 @@ export class CasesService {
     return this.api.get(url, search);
   }
 
-  getCaseById(caseId: number, search: HttpParams) {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/${caseId}`;
+  getCaseById(search: HttpParams, caseId?: number) {
+    const url = caseId
+      ? `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/${caseId}`
+      : `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/`;
 
     return this.api.get(url, search);
   }

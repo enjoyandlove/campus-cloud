@@ -1,0 +1,148 @@
+<div>
+  <div class="row">
+    <div class="col-12">
+      <div class="cp-card actions">
+        <div class="row">
+          <div class="col-3">
+            <h4>Case {{ newCase.id }}</h4>
+          </div>
+          <div class="col-9 text-right" *ngIf="!isEditing">
+            <button
+              ui-button
+              type="button"
+              class="edit-button"
+              (click)="onEdit()">   
+              <ready-ui-icon name="edit"></ready-ui-icon>       
+              {{'edit' | cpI18n}}
+            </button>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-3">
+            <p class="title">{{ 'first_name' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <p class="description" *ngIf="!isEditing else inputFirstName">{{ newCase.firstname }}</p>
+            <ng-template #inputFirstName>
+              <input
+                    type="text"
+                    class="form-control"
+                    autocomplete="off"
+                    [(ngModel)]="newCase.firstname"
+              />
+            </ng-template>
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-3">
+            <p class="title">{{ 'last_name' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <p class="description" *ngIf="!isEditing else inputLastName">{{ newCase.lastname }}</p>
+            <ng-template #inputLastName>
+              <input
+                    type="text"
+                    class="form-control"
+                    autocomplete="off"
+                    [(ngModel)]="newCase.lastname"
+              />
+            </ng-template>
+          </div>
+        </div>
+        <div class="row mt-1">
+          <div class="col-3">
+            <p class="title">{{ 'email' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <p class="description" *ngIf="!isEditing else inputDescription">{{ newCase.extern_user_id }}</p>
+            <ng-template #inputDescription>
+              <input
+                    type="text"
+                    class="form-control"
+                    autocomplete="off"
+                    [(ngModel)]="newCase.extern_user_id"
+              />
+            </ng-template>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p class="title">{{ 'student_id' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <p class="description">{{ newCase.user_id }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p class="title">{{ 't_shared_status' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <div *ngIf="!isEditing else inputStatus" class="d-inline-flex">
+              <cp-dot color="#{{newCase.current_status.color}}"></cp-dot>
+              <p class="description ml-2">{{ newCase.current_status.name }}</p>
+            </div>
+            <ng-template #inputStatus>
+              <cp-dropdown class="topbar--dropdown"
+                         [items]="statusFilter"
+                         [selectedItem]="selectedStatusFilter"
+                         (selected)="onStatusFilter($event)">
+              </cp-dropdown>
+            </ng-template>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p class="title">{{ 'case_pending_action' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <p class="description">{{ newCase.current_action.name }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p class="title">{{ 'notes' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <p class="description" *ngIf="!isEditing else inputNotes">{{ newCase.notes }}</p>
+            <ng-template #inputNotes>
+              <textarea [(ngModel)]="newCase.notes"
+                       class="form-control"
+                       row="5"
+                       maxlength="1024"
+                       autocomplete="off"></textarea>  
+          </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer" *ngIf="isEditing">
+    <div class="cp-wrapper cp-wrapper--outer">
+      <div class="row">
+        <div class="col-12">
+          <button
+            ui-button          
+            type="button"
+            variant="flat"
+            color="primary"
+            class="action-button"
+            [disabled]="isDisabled"
+            (click)="onSubmit()">
+            {{'save' | cpI18n}}
+          </button>
+  
+          <button
+            ui-button
+            type="button"
+            variant="flat"
+            color="secondary"
+            class="action-button"
+            (click)="onCancel()">          
+            {{'cancel' | cpI18n}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

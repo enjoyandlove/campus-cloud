@@ -1,0 +1,66 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+
+.actions {
+  @include card-margin();
+
+  margin-top: 0;
+}
+
+h4 {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.edit-button {
+  border: 1px solid #bdbdbd;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: white;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+p.title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+p.description {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+cp-dot {
+  margin-top: 5px;
+}
+
+textarea {
+  resize: none;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  .action-button {
+    &:first-child {
+      margin-left: calc(50% - 375px);
+    }
+
+    &:not(:first-child) {
+      margin-left: 5px;
+    }
+  }
+}
