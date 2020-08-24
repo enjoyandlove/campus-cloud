@@ -111,11 +111,18 @@ export function reducer(state = initialState, action: fromCases.CasesAction) {
     }
 
     case fromCases.caseActions.CREATE_CASE_SUCCESS: {
-      return caseAdapter.addOne(action.payload, {
+      const data = caseAdapter.addOne(action.payload, {
         ...state,
         error: false,
         loading: false
       });
+
+      return {
+        ...data,
+        ids: [action.payload.id].concat(state.ids),
+        error: false,
+        loading: false
+      };
     }
 
     case fromCases.caseActions.CREATE_CASE_FAIL: {
