@@ -42,7 +42,8 @@ import {
   CPFIlterByLength,
   CPBoldifyPipe,
   BreakLinesPipe,
-  InlineLinksPipe
+  InlineLinksPipe,
+  FullNamePipe
 } from './pipes';
 
 // components
@@ -165,7 +166,8 @@ import {
     CPUnsavedChangesModalComponent,
     CPDotComponent,
     BreakLinesPipe,
-    InlineLinksPipe
+    InlineLinksPipe,
+    FullNamePipe
   ],
 
   entryComponents: [CPLightboxComponent, CPImageCropperComponent],
@@ -261,7 +263,8 @@ import {
     CPUnsavedChangesModalComponent,
     CPDotComponent,
     BreakLinesPipe,
-    InlineLinksPipe
+    InlineLinksPipe,
+    FullNamePipe
   ]
 })
 export class SharedModule {}

@@ -63,9 +63,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     label: null,
     type: null
   };
-  URGENT_TYPE = 1;
-  REGULAR_TYPE = 2;
-  EMERGENCY_TYPE = 0;
   highlightFormError: boolean;
   templateTypeToTemplateMap;
 
@@ -164,14 +161,14 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       type: null
     };
 
-    if (priority === this.EMERGENCY_TYPE) {
+    if (priority === AnnouncementPriority.emergency) {
       this.subject_prefix = {
         label: this.cpI18n.translate('emergency'),
         type: 'danger'
       };
     }
 
-    if (priority === this.URGENT_TYPE) {
+    if (priority === AnnouncementPriority.urgent) {
       this.subject_prefix = {
         label: this.cpI18n.translate('urgent'),
         type: 'warning'

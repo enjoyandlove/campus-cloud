@@ -1104,9 +1104,6 @@
   "contact_trace_forms_expired": {
     "message": "Expired"
   },
-  "contact_trace_forms_exposure_notification": {
-    "message": "Exposure Notification"
-  },
   "contact_trace_forms_form_builder": {
     "message": "Form Builder"
   },
@@ -1326,20 +1323,14 @@
   "contact_trace_notification_delete_success": {
     "message": "Notification successfully deleted"
   },
-  "contact_trace_notification_error": {
-    "message": "Error"
-  },
   "contact_trace_notification_notify": {
     "message": "Notify"
   },
   "contact_trace_notification_no_results": {
     "message": "No notifications found"
   },
-  "contact_trace_notification_pending": {
-    "message": "Pending"
-  },
-  "contact_trace_notification_processing": {
-    "message": "Processing"
+  "contact_trace_notification_scheduled": {
+    "message": "Scheduled"
   },
   "contact_trace_notification_sent": {
     "message": "Sent"
@@ -1380,9 +1371,6 @@
   "contact_trace_notification_delete_success": {
     "message": "Notification successfully deleted"
   },
-  "contact_trace_notification_error": {
-    "message": "Error"
-  },
   "contact_trace_notification_filter": {
     "message": "Filter"
   },
@@ -1397,12 +1385,6 @@
   },
   "contact_trace_notification_no_results": {
     "message": "No notifications found"
-  },
-  "contact_trace_notification_pending": {
-    "message": "Pending"
-  },
-  "contact_trace_notification_processing": {
-    "message": "Processing"
   },
   "contact_trace_notification_sent": {
     "message": "Sent"

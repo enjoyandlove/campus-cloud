@@ -30,6 +30,8 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./exposure-notification-list.component.scss']
 })
 export class ExposureNotificationListComponent implements OnInit {
+  CONTACT_TRACE_TYPE = '1';
+
   webServiceCallInProgress: boolean;
 
   searchTerm: string;
@@ -98,11 +100,11 @@ export class ExposureNotificationListComponent implements OnInit {
   }
 
   fetch(pageNumber: number, paginationCountPerPage: number): Observable<ExposureNotification[]> {
-    let startRecordCount = paginationCountPerPage * (pageNumber - 1) + 1;
+    const startRecordCount = paginationCountPerPage * (pageNumber - 1) + 1;
     // Get an extra record so that we know if there are more records left to fetch
-    let endRecordCount = paginationCountPerPage * pageNumber + 1;
+    const endRecordCount = paginationCountPerPage * pageNumber + 1;
     const params = new HttpParams()
-      .set('type', '1')
+      .set('type', this.CONTACT_TRACE_TYPE)
       .set('search_str', this.searchTerm === '' ? null : this.searchTerm)
       .set('school_id', this.session.school.id.toString())
       .set('statuses', this.filter === null || this.filter === undefined ? null : '' + this.filter);

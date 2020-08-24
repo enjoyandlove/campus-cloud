@@ -23,7 +23,7 @@
         >
           <div class="left-col">
             <div class="user-name-cell">
-              {{(user.firstname ? (user.firstname + ' ') : '') + (user.lastname ? user.lastname : '')}}
+              {{user | fullName}}
             </div>
             <div class="email-cell">
               {{user.email}}

@@ -8,12 +8,13 @@ import {
   Output
 } from '@angular/core';
 import { CPSession } from '@campus-cloud/session';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { HttpParams } from '@angular/common/http';
 import {
   ExposureNotification,
   ExposureNotificationService
 } from '@controlpanel/contact-trace/exposure-notification';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 @Component({
   selector: 'cp-exposure-notification-delete',
@@ -29,7 +30,7 @@ export class ExposureNotificationDeleteComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private session: CPSession,
-    private cpI18n: CPI18nService,
+    private cpI18n: CPI18nPipe,
     private cpTracking: CPTrackingService,
     private notificationService: ExposureNotificationService
   ) {}
@@ -71,7 +72,7 @@ export class ExposureNotificationDeleteComponent implements OnInit {
   ngOnInit() {
     this.buttonData = {
       class: 'danger',
-      text: this.cpI18n.translate('delete')
+      text: this.cpI18n.transform('delete')
     };
   }
 }

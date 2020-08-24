@@ -51,16 +51,8 @@ export class ExposureNotificationListActionBoxComponent implements OnInit {
         action: ExposureNotificationStatus.sent
       },
       {
-        label: this.cpI18n.translate('contact_trace_notification_error'),
-        action: ExposureNotificationStatus.error
-      },
-      {
-        label: this.cpI18n.translate('contact_trace_notification_processing'),
-        action: ExposureNotificationStatus.processing
-      },
-      {
-        label: this.cpI18n.translate('contact_trace_notification_pending'),
-        action: ExposureNotificationStatus.pending
+        label: this.cpI18n.translate('contact_trace_notification_scheduled'),
+        action: ExposureNotificationStatus.scheduled
       }
     ];
   }
