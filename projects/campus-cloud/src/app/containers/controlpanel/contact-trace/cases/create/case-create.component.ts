@@ -27,6 +27,7 @@ export class CaseCreateComponent implements OnInit {
   buttonData;
   errorMessage;
   form: FormGroup;
+  isSubmitClicked: boolean = false;
 
   private destroy$ = new Subject();
   eventProperties = {
@@ -40,6 +41,7 @@ export class CaseCreateComponent implements OnInit {
   ) {}
 
   onSubmit() {
+    this.isSubmitClicked = true;
     this.formErrors = false;
 
     if (!this.form.valid) {
@@ -55,6 +57,17 @@ export class CaseCreateComponent implements OnInit {
 
     this.store.dispatch(new fromStore.CreateCase(payload));
     $('#createCase').modal('hide');
+  }
+
+  onInputChange() {
+    if (this.isSubmitClicked) {
+      this.formErrors = false;
+
+      if (!this.form.valid) {
+        this.formErrors = true;
+        this.enableSaveButton();
+      }
+    }
   }
 
   trackEvent(data) {
