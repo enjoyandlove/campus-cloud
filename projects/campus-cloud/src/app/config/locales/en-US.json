@@ -1419,6 +1419,21 @@
   "contact_trace_notification_template_header": {
     "message": "Notification Templates"
   },
+  "contact_trace_notification_template_title_clear": {
+    "message": "Clear"
+  },
+  "contact_trace_notification_template_title_exposed": {
+    "message": "Exposed"
+  },
+  "contact_trace_notification_template_title_symptomatic": {
+    "message": "Symptomatic"
+  },
+  "contact_trace_notification_template_title_self_reported": {
+    "message": "Self-Reported"
+  },
+  "contact_trace_notification_template_title_confirmed": {
+    "message": "Confirmed"
+  },
   "contact_trace_notification_to": {
     "message": "To"
   },

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { INotificationTemplate } from '@controlpanel/contact-trace/health-pass/notification-templates/notification-template';
+import {
+  INotificationTemplate,
+  NotificationTemplateType
+} from '@controlpanel/contact-trace/health-pass/notification-templates/notification-template';
 import { ModalService } from '@ready-education/ready-ui/overlays';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { NotificationTemplateEditComponent } from '@controlpanel/contact-trace/health-pass/notification-templates/edit';
@@ -70,5 +73,10 @@ export class NotificationTemplatesComponent implements OnInit {
 
   resetModal() {
     this.editModal.dispose();
+  }
+
+  templateTypeTitleProperty(type: number) {
+    return 'contact_trace_notification_template_title_' +
+      NotificationTemplateType[type].toLowerCase();
   }
 }
