@@ -1,0 +1,39 @@
+@import '~projects/campus-cloud/src/sass/components/modal';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.page-container {
+  padding: 0 20px;
+  max-height: 200px;
+  overflow: auto;
+
+  .user-row {
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+
+    .left-col {
+      display: inline-block;
+      width: calc(100% - 150px);
+
+      .user-name-cell {
+        font-weight: bold;
+      }
+
+      .email-cell {
+      }
+    }
+
+    .right-col {
+      display: inline-block;
+      width: 150px;
+      text-align: right;
+
+      .item-link-button {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 5px;
+        font-weight: 600;
+      }
+    }
+  }
+}

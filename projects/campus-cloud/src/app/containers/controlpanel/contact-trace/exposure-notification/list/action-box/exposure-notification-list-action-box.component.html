@@ -1,0 +1,33 @@
+<div class="cp-card">
+  <div class="row justify-content-between">
+    <div class="col">
+      <div class="row">
+        <div class="col-7">
+          <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+        </div>
+        <div class="col-5">
+          <cp-dropdown
+            [items]="types"
+            (selected)="onSelectedType($event)"
+          >
+          </cp-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-12 text-right">
+          <button
+            cpTracker
+            *ngIf="canCreate"
+            [eventData]="createFormEventData"
+            (click)="onLaunchCreateModal()"
+            class="cpbtn cpbtn--primary"
+          >
+            {{ 'contact_trace_notification_create_notification' | cpI18n }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -42,6 +42,13 @@ export class ContactTraceHeaderService {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_cases)
           ? child
           : null;
+      } else if (child.privilege === CP_PRIVILEGES_MAP.contact_trace_exposure_notification) {
+        return canSchoolReadResource(
+          this.session.g,
+          CP_PRIVILEGES_MAP.contact_trace_exposure_notification
+        )
+          ? child
+          : null;
       }
     });
     return Object.assign({}, this.privileges, { children: _children });

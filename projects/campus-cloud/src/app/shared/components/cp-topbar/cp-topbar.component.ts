@@ -157,7 +157,12 @@ export class CPTopBarComponent implements OnInit {
           ? canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_cases)
           : false;
 
-      this.canContractTrace = canContactTraceQR || canContactTraceForms || canContactTraceCases;
+      const canContactTraceExposureNotification = canSchoolReadResource(
+        this.session.g,
+        CP_PRIVILEGES_MAP.contact_trace_exposure_notification
+      );
+
+      this.canContractTrace = canContactTraceQR || canContactTraceForms || canContactTraceCases || canContactTraceExposureNotification;
 
       if (canContactTraceForms) {
         this.contactTraceRouterLink = ['/contact-trace'];
@@ -165,6 +170,8 @@ export class CPTopBarComponent implements OnInit {
         this.contactTraceRouterLink = ['/contact-trace/qr'];
       } else if (canContactTraceCases) {
         this.contactTraceRouterLink = ['/contact-trace/cases'];
+      } else if (canContactTraceExposureNotification) {
+        this.contactTraceRouterLink = ['/contact-trace/exposure-notification'];
       }
     }
 
