@@ -3,10 +3,13 @@ import { ICase, ICaseStatus } from './cases.interface';
 import { FormBuilder, Validators } from '@angular/forms';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { getItem } from '@campus-cloud/shared/components';
+import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
+import { CPDate, Formats, createSpreadSheet } from '@campus-cloud/shared/utils';
+import { CPSession } from '@projects/campus-cloud/src/app/session';
 
 @Injectable()
 export class CasesUtilsService {
-  constructor(public fb: FormBuilder) {}
+  constructor(public fb: FormBuilder, public cpI18nPipe: CPI18nPipe, public session: CPSession) {}
 
   getCaseForm(formData: ICase) {
     return this.fb.group({
@@ -48,5 +51,36 @@ export class CasesUtilsService {
     });
 
     return [..._heading, ..._statuses];
+  }
+
+  exportCases(cases) {
+    let columns = [
+      this.cpI18nPipe.transform('first_name'),
+      this.cpI18nPipe.transform('last_name'),
+      this.cpI18nPipe.transform('email'),
+      this.cpI18nPipe.transform('student_id'),
+      this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
+      this.cpI18nPipe.transform('t_case_status')
+    ];
+
+    cases = cases.map((item) => {
+      return {
+        [this.cpI18nPipe.transform('first_name')]: item.firstname,
+
+        [this.cpI18nPipe.transform('last_name')]: item.lastname,
+
+        [this.cpI18nPipe.transform('email')]: item.extern_user_id,
+
+        [this.cpI18nPipe.transform('student_id')]: item.student_id,
+
+        [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
+          item.date_last_modified,
+          this.session.tz
+        ).format(Formats.dateFormat),
+
+        [this.cpI18nPipe.transform('t_case_status')]: item.current_status.name
+      };
+    });
+    createSpreadSheet(cases, columns);
   }
 }
