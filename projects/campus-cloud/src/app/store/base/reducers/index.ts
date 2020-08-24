@@ -11,6 +11,7 @@ import * as fromEvents from './events-modal.reducer';
 import * as fromServices from './services-modal.reducer';
 import * as fromProviders from './providers-modal.reducer';
 import * as fromLocations from './locations-modal.reducer';
+import * as fromCases from './cases-modal.reducer';
 
 export const baseReducers: ActionReducerMap<IBaseState> = {
   ROUTER: routerReducer,
@@ -22,7 +23,8 @@ export const baseReducers: ActionReducerMap<IBaseState> = {
   EVENTS_MODAL: fromEvents.reducer,
   SERVICES_MODAL: fromServices.reducer,
   PROVIDERS_MODAL: fromProviders.reducer,
-  LOCATIONS_MODAL: fromLocations.reducer
+  LOCATIONS_MODAL: fromLocations.reducer,
+  CASES_MODAL: fromCases.reducer
 };
 
 export const baseActions = {
@@ -43,7 +45,9 @@ export const baseActions = {
   PROVIDERS_MODAL_SET: fromProviders.PROVIDERS_MODAL_SET,
   PROVIDERS_MODAL_RESET: fromProviders.PROVIDERS_MODAL_RESET,
   LOCATIONS_MODAL_SET: fromLocations.LOCATIONS_MODAL_SET,
-  LOCATIONS_MODAL_RESET: fromLocations.LOCATIONS_MODAL_RESET
+  LOCATIONS_MODAL_RESET: fromLocations.LOCATIONS_MODAL_RESET,
+  CASES_MODAL_SET: fromCases.CASES_MODAL_SET,
+  CASES_MODAL_RESET: fromCases.CASES_MODAL_RESET
 };
 
 export const baseActionClass = {

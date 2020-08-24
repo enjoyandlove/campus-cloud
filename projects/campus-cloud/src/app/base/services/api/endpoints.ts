@@ -159,6 +159,10 @@ export const ENDPOINTS = {
 
   HEALTH_PASS_SETTING: 'ct_health_pass_setting',
 
+  CASE: 'case',
+
+  CASE_STATUS: 'case_status',
+
   FORMS: 'form',
 
   FORM_RESPONSE: 'form_response',

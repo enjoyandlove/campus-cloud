@@ -737,6 +737,24 @@
   "cases": {
     "message": "Cases"
   },
+  "cases_button_create": {
+    "message": "Create Cases"
+  },
+  "cases_delete_modal_title": {
+    "message": "Delete Case"
+  },
+  "cases_import_items_to_import": {
+    "message": "File contains data for %s case(s)."
+  },
+  "case_details": {
+    "message": "Case Details"
+  },
+  "case_pending_action": {
+    "message": "Pending Action"
+  },
+  "case_status_all": {
+    "message": "All Cases"
+  },
   "category": {
     "message": "Catégorie"
   },
@@ -1086,6 +1104,9 @@
   "contact_trace_forms_expired": {
     "message": "Expiré"
   },
+  "contact_trace_forms_exposure_notification": {
+    "message": "Exposure Notification"
+  },
   "contact_trace_forms_form_builder": {
     "message": "Créateur de formulaire"
   },
@@ -1266,15 +1287,6 @@
   "contact_trace_forms_unpublish": {
     "message": "Dé-publier"
   },
-  "contact_trace_forms_duplicate": {
-    "message": "Dupliquer"
-  },
-  "contact_trace_forms_duplicate_form": {
-    "message": "Dupliquer le formulaire"
-  },
-  "contact_trace_forms_duplicate_new_name": {
-    "message": "(Copie) %s"
-  },
   "contact_trace_forms_unpublish_form": {
     "message": "Dé-publier formulaire"
   },
@@ -1294,7 +1306,52 @@
     "message": "Oui/Non"
   },
   "contact_trace_notification_all_statuses": {
-    "message": "Tous les statuts"
+    "message": "All Statuses"
+  },
+  "contact_trace_notification_contact_tracing_service": {
+    "message": "Contact Tracing Service"
+  },
+  "contact_trace_notification_create_notification": {
+    "message": "Create Notification"
+  },
+  "contact_trace_notification_date_sent": {
+    "message": "Date d'envoi"
+  },
+  "contact_trace_notification_delete_confirmation": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "contact_trace_notification_delete_notification": {
+    "message": "Delete Notification"
+  },
+  "contact_trace_notification_delete_success": {
+    "message": "Notification successfully deleted"
+  },
+  "contact_trace_notification_error": {
+    "message": "Error"
+  },
+  "contact_trace_notification_notify": {
+    "message": "Notify"
+  },
+  "contact_trace_notification_no_results": {
+    "message": "No notifications found"
+  },
+  "contact_trace_notification_pending": {
+    "message": "Pending"
+  },
+  "contact_trace_notification_processing": {
+    "message": "Processing"
+  },
+  "contact_trace_notification_sent": {
+    "message": "Sent"
+  },
+  "contact_trace_notification_subject": {
+    "message": "Subject"
+  },
+  "contact_trace_notification_to": {
+    "message": "To"
+  },
+  "contact_trace_notification_view_message": {
+    "message": "View Message"
   },
   "contact_trace_notification_case": {
     "message": "Cas"
@@ -1551,6 +1608,9 @@
   },
   "downloads": {
     "message": "Téléchargements"
+  },
+  "download_all_cases": {
+    "message": "Download All Cases"
   },
   "download_all_qr_codes": {
     "message": "Télécharger tous les codes QR"
@@ -1925,6 +1985,9 @@
   "import": {
     "message": "Importer"
   },
+  "import_cases": {
+    "message": "Import Cases"
+  },
   "import_from_csv": {
     "message": "Importer depuis CSV"
   },
@@ -2233,6 +2296,9 @@
   },
   "no": {
     "message": "Non"
+  },
+  "notes": {
+    "message": "Notes"
   },
   "notify": {
     "message": "Notifier"
@@ -2930,6 +2996,18 @@
   },
   "t_campus_app_management": {
     "message": "Gestion de l'Application du Campus"
+  },
+  "t_cases_no_record_found": {
+    "message": "No cases found..."
+  },
+  "t_case_all_statuses": {
+    "message": "All Statuses"
+  },
+  "t_case_history": {
+    "message": "Case History"
+  },
+  "t_case_status": {
+    "message": "Case Status"
   },
   "t_categories_can_not_be_delete": {
     "message": "Les catégories avec des lieux ne peuvent pas être supprimées."
@@ -3719,9 +3797,6 @@
   "t_personas_tile_create_header": {
     "message": "Nouvelle tuile"
   },
-  "t_personas_tile_create_resource_type_health_pass": {
-    "message": "Health Pass"
-  },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Calendriers académique"
   },
@@ -4008,6 +4083,9 @@
   "t_service_provider_feedback_yes": {
     "message": "Oui"
   },
+  "t_shared_action": {
+    "message": "Action"
+  },
   "t_shared_add": {
     "message": "Ajouter"
   },
@@ -4157,6 +4235,9 @@
   },
   "t_shared_icon": {
     "message": "Icône"
+  },
+  "t_shared_identifier": {
+    "message": "Identifier"
   },
   "t_shared_image": {
     "message": "Image"
@@ -4310,6 +4391,9 @@
   },
   "t_shared_show": {
     "message": "Montrer"
+  },
+  "t_shared_source": {
+    "message": "Source"
   },
   "t_shared_status": {
     "message": "Statut"
@@ -4613,11 +4697,12 @@
   "web_form_start_page_intro": {
     "message": "Scannez depuis l'application ou entrez votre courriel pour commencer"
   },
-  "web_form_unavailable_form_message": {
-    "message": "Le formulaire est maintenant fermé et n'accepte plus les réponses"
-  },
   "web_form_submit": {
     "message": "Soumettre"
+  },
+  "web_form_unavailable_form_message": {
+    "message": "The form is now closed and is no longer accepting responses\n\nMy suggestion for FR value : Le formulaire est maintenant fermé et n'accepte plus les réponses",
+    "description": "https://oohlalaproduct.atlassian.net/browse/FES-7617"
   },
   "welcome": {
     "message": "Bienvenue"

@@ -104,7 +104,10 @@ export const setFlaggedByModerator = createAction(
 
 export const addThreads = createAction(FeedsActions.ADD_THREADS, props<{ threads: any[] }>());
 export const addThread = createAction(FeedsActions.ADD_THREAD, props<{ thread: any }>());
-export const addThreadToResult = createAction(FeedsActions.ADD_THREAD_TO_RESULT, props<{ thread: any }>());
+export const addThreadToResult = createAction(
+  FeedsActions.ADD_THREAD_TO_RESULT,
+  props<{ thread: any }>()
+);
 export const updateThread = createAction(FeedsActions.UPDATE_THREAD, props<{ thread: any }>());
 export const removeThread = createAction(FeedsActions.REMOVE_THREAD, props<{ threadId: number }>());
 

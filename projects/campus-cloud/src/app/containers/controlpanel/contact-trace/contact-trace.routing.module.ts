@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ContactTraceComponent } from './contact-trace.component';
@@ -13,6 +12,16 @@ const appRoutes: Routes = [
     component: ContactTraceComponent,
     data: { amplitude: 'IGNORE' },
     children: [
+      {
+        path: 'cases',
+        canActivate: [PrivilegesGuard],
+        data: {
+          zendesk: 'cases',
+          amplitude: 'Cases',
+          privilege: CP_PRIVILEGES_MAP.contact_trace_cases
+        },
+        loadChildren: () => import('./cases/cases.module').then((m) => m.CasesModule)
+      },
       {
         path: 'forms',
         canActivate: [PrivilegesGuard],

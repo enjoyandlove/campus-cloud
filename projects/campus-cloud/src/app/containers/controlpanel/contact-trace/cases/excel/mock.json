@@ -1,0 +1,44 @@
+[
+  {
+    "current_action": { "name": "", "id": 0 },
+    "current_action_id": 0,
+    "current_status": { "name": "Symptomatic", "color": "FF7A00", "id": 2 },
+    "current_status_id": 2,
+    "date_last_modified": 1597879214,
+    "extern_user_id": "testtest1@test.com",
+    "firstname": "test1",
+    "id": 12,
+    "lastname": "test1",
+    "notes": "test notes for a test case kangaroo",
+    "type": 1,
+    "user_id": 0
+  },
+  {
+    "current_action": { "name": "", "id": 0 },
+    "current_action_id": 0,
+    "current_status": { "name": "Exposed", "color": "FFD600", "id": 1 },
+    "current_status_id": 1,
+    "date_last_modified": 1597879214,
+    "extern_user_id": "testtest2@test.com",
+    "firstname": "test2",
+    "id": 12,
+    "lastname": "test2",
+    "notes": "test notes for a test case kangaroo",
+    "type": 1,
+    "user_id": 0
+  },
+  {
+    "current_action": { "name": "", "id": 0 },
+    "current_action_id": 0,
+    "current_status": { "name": "Symptomatic", "color": "FF7A00", "id": 2 },
+    "current_status_id": 2,
+    "date_last_modified": 1597879214,
+    "extern_user_id": "testtest3@test.com",
+    "firstname": "test3",
+    "id": 12,
+    "lastname": "test3",
+    "notes": "test notes for a test case kangaroo",
+    "type": 1,
+    "user_id": 0
+  }
+]

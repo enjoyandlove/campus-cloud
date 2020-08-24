@@ -69,5 +69,7 @@ export const pageTitle = {
 
   CONTACT_TRACE_SETTINGS: 'Contact Trace | Settings',
 
+  CONTACT_TRACE_CASES: 'Contact Trace | Cases',
+
   CONTACT_TRACE_EXPOSURE_NOTIFICATION: 'Contact Trace | Exposure Notification'
 };
