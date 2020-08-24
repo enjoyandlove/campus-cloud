@@ -21,7 +21,8 @@
       <div class="col-12">
         <cp-case-form #createCase
                     [form]="form"
-                    [formErrors]="formErrors">
+                    [formErrors]="formErrors"
+                    (inputChanged)="onInputChange()">
         </cp-case-form>
       </div>
     </div>

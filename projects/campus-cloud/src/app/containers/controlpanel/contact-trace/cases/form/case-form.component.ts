@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ import * as fromStore from '../store';
 export class CaseFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() formErrors;
-
+  @Output() inputChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   caseStatus$: Observable<IItem[]>;
   selectedStatus: ICaseStatus;
 
@@ -38,6 +38,10 @@ export class CaseFormComponent implements OnInit {
 
   onSelectedStatus(status): void {
     this.form.controls['current_status_id'].setValue(status.action);
+  }
+
+  onInputChange(status): void {
+    this.inputChanged.emit(true);
   }
 
   ngOnInit() {
