@@ -159,6 +159,10 @@ export const ENDPOINTS = {
 
   HEALTH_PASS_SETTING: 'ct_health_pass_setting',
 
+  CASE: 'case',
+
+  CASE_STATUS: 'case_status',
+
   FORMS: 'form',
 
   FORM_RESPONSE: 'form_response',
@@ -173,7 +177,5 @@ export const ENDPOINTS = {
 
   NON_SESSION_IMAGE: 'ns_image',
 
-  CONTACT_TRACE_ANNOUNCEMENT_TEMPLATE: 'ct_announcement_template',
-
-  CASE_STATUS: 'case_status'
+  CONTACT_TRACE_ANNOUNCEMENT_TEMPLATE: 'ct_announcement_template'
 };

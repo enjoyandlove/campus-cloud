@@ -174,7 +174,6 @@ export class ExposureNotificationListComponent implements OnInit {
   }
 
   caseLinkClickHandler(userId: number): void {
-    // ToDo: PJ: IMP: Add link to Case here
-    console.log('Navigate to case for userId: ', userId);
+    this.router.navigate(['/contact-trace/cases/caseInfo/', userId]);
   }
 }

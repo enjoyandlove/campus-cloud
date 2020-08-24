@@ -1,0 +1,15 @@
+<div class="row header">
+  <div class="col-2">
+    <cp-checkbox [isChecked]="isChecked"
+                  class="checkbox float-left"
+                  (toggle)="checkAll.emit($event)">
+    </cp-checkbox>
+  </div>
+  
+  <div class="col-2 no-left-padding">
+    <cp-dropdown [items]="caseStatus$ | async"
+                  [disabled]="statusDropDownStatus"
+                  (selected)="statusChange.emit($event)">
+    </cp-dropdown>
+  </div>
+</div>

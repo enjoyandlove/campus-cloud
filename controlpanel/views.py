@@ -257,3 +257,32 @@ def import_locations(request):
         item['name'] = item.pop('location_name')
         
     return JsonResponse(json.dumps(parsed_data), safe=False)
+
+'''
+Parse Cases Mass Upload
+'''
+@csrf_exempt
+def import_cases(request):
+    csv_file = request.FILES['file']
+
+    csv_as_string = []
+
+    for index, row in enumerate(csv_file):
+        try:
+            csv_as_string.append(UnicodeDammit(row).unicode_markup)
+        except UnicodeError as e:
+            return JsonResponse({"error": DECODE_ERROR + '. At line {}'.format(index + 1)}, safe=False, status=400)
+
+    parser = CSVParser(csv_as_string)
+    try:
+        parsed_data = parser.all_fields_required('identifier', 'current_status', 'first_name', 'last_name')
+    except KeyError as e:
+        return JsonResponse({"error": e.args[0]}, safe=False, status=400)
+    
+    for item in parsed_data:
+        item['extern_user_id'] = item.pop('identifier')
+        item['firstname'] = item.pop('first_name')
+        item['lastname'] = item.pop('last_name')
+        
+    return JsonResponse(json.dumps(parsed_data), safe=False)
+

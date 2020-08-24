@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'first_name' | cpI18n }}</label>
+      <input type="text"
+             class="form-control"
+             formControlName="firstname"
+             [class.error]="formErrors && form.controls['firstname'].hasError('required')" />
+    </div>
+    <div class="col-6">
+      <label>{{ 'last_name' | cpI18n }}</label>
+      <input type="text"
+             class="form-control"
+             formControlName="lastname"
+             [class.error]="formErrors && form.controls['lastname'].hasError('required')" />
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'email' | cpI18n }}</label>
+      <input type="text"
+             class="form-control"
+             formControlName="extern_user_id"
+             [class.error]="formErrors && form.controls['extern_user_id'].hasError('required')" />
+    </div>
+    <div class="col-6">
+      <label>{{ 't_shared_status' | cpI18n }}</label>
+      <cp-dropdown [items]="caseStatus$ | async"
+                   [selectedItem]="selectedStatus"
+                   (selected)="onSelectedStatus($event)">
+      </cp-dropdown>
+    </div>
+  </div>
+</form>

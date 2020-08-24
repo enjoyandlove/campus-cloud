@@ -1,0 +1,88 @@
+<ng-container [ngSwitch]="isFormReady">
+  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+  <ng-container *ngSwitchCase="true">
+    <div class="row">
+      <div class="col-12">
+        <cp-cases-import-top-bar [caseStatus$]="caseStatus$"
+                                    [isChecked]="isParentCheckBoxChecked"
+                                    [statusDropDownStatus]="statusDropDownStatus"
+                                    (checkAll)="onCheckAll($event)"
+                                    (statusChange)="onStatusBulkChange($event)">
+        </cp-cases-import-top-bar>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-12">
+        <form [formGroup]="form"
+              class="form">
+          <div formArrayName="cases">
+            <div class="row">
+              <div class="col-12">
+                <cp-no-content noContentText="No Cases to Add..."
+                               *ngIf="!form['controls'].cases['controls'].length">
+                </cp-no-content>
+              </div>
+            </div>
+            <div class="row form__wrapper"
+                 *ngFor="let case of form['controls'].cases['controls']; let i = index">
+              <div [formGroupName]="i"
+                   class="col-12">
+                <div class="row form__item">
+                  <div class="col-4 text-truncate">
+                    <div class="row margin-top">
+                      <div class="col-3">
+                        <div class="row">
+                          <div class="col-1">
+                            <cp-checkbox class="checkbox float-left"
+                                         [isChecked]="isChecked[i].checked"
+                                         (toggle)="onSingleCheck($event, i)">
+                            </cp-checkbox>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-8 text-truncate">
+                        <span class="cases__title">
+                          <strong>{{ case.controls.firstname.value }} {{ case.controls.lastname.value }}</strong>
+                        </span>
+                        <br />
+                        <span class="cases__description">
+                          {{ case.controls.extern_user_id.value }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <label>{{ 'athletics_label_athletic_status' | cpI18n }}</label>
+                    <cp-dropdown [items]="caseStatus$ | async"
+                                 [selectedItem]="selectedStatus[i]"
+                                 (selected)="onSingleStatusSelected($event, i)">
+                    </cp-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="row">
+          <div class="col-12">
+            <div class="float-right">
+              <a [routerLink]="['/contact-trace/cases']"
+                 class="cpbtn cpbtn--cancel">
+                {{ 'cancel' | cpI18n }}
+              </a>
+              <cp-button [props]="buttonData"
+                         (buttonClick)="onSubmit()"> </cp-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

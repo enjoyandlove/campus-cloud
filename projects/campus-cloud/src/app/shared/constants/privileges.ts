@@ -71,7 +71,9 @@ export const CP_PRIVILEGES_MAP = {
 
   forms: 42,
 
-  contact_trace_exposure_notification: 43
+  contact_trace_exposure_notification: 43,
+
+  contact_trace_cases: 44
 };
 
 export const CP_PRIVILEGES = {
@@ -143,5 +145,11 @@ export const CP_PRIVILEGES = {
 
   40: 'Contact Trace QR',
 
-  41: 'Contact Trace Forms'
+  41: 'Contact Trace Forms',
+
+  42: 'Forms',
+
+  43: 'Contact Trace Exposure Notification',
+
+  44: 'Contact Trace Cases'
 };

@@ -4,6 +4,13 @@
   "em": null,
   "children": [
     {
+      "privilege": 44,
+      "label": "cases",
+      "clearParams": true,
+      "amplitude": "Cases",
+      "url": "/contact-trace/cases"
+    },
+    {
       "privilege": 41,
       "label": "admin_contact_trace_forms",
       "clearParams": true,
