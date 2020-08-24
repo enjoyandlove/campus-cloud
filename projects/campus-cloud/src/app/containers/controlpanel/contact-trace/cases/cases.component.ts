@@ -14,6 +14,7 @@ import * as fromStore from './store';
 import * as fromRoot from '@campus-cloud/store';
 import { ContactTraceHeaderService } from '../utils';
 import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
+import { CasesUtilsService } from './cases.utils.service';
 
 interface IState {
   search_str: string;
@@ -55,7 +56,8 @@ export class CasesComponent extends BaseComponent implements OnInit {
     public cpTracking: CPTrackingService,
     public headerService: ContactTraceHeaderService,
     public store: Store<fromStore.ICasesState>,
-    private actionsSubject$: ActionsSubject
+    private actionsSubject$: ActionsSubject,
+    private util: CasesUtilsService
   ) {
     super();
   }
@@ -128,6 +130,10 @@ export class CasesComponent extends BaseComponent implements OnInit {
 
     this.resetPagination();
     this.fetchFilteredCases();
+  }
+
+  onDownload() {
+    this.cases$.subscribe((data) => this.util.exportCases(data));
   }
 
   getCases(isFiltered?: boolean) {

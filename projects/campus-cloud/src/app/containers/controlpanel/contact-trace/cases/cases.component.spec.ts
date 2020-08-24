@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ContactTraceHeaderService } from '../utils';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { CasesUtilsService } from './cases.utils.service';
 
 describe('CasesComponent', () => {
   let component: CasesComponent;
@@ -16,7 +17,7 @@ describe('CasesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CPTestModule, HttpClientModule, RouterTestingModule],
-      providers: [ContactTraceHeaderService, provideMockStore(), CPI18nPipe],
+      providers: [ContactTraceHeaderService, CasesUtilsService, provideMockStore(), CPI18nPipe],
       declarations: [CasesComponent]
     }).compileComponents();
   }));

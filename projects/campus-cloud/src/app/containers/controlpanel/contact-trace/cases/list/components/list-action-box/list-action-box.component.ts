@@ -24,6 +24,7 @@ export class CasesListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() selectedFilter: EventEmitter<number> = new EventEmitter();
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
+  @Output() download: EventEmitter<null> = new EventEmitter();
   eventData;
   caseStatus$: Observable<IItem[]>;
   dateRanges: EngageUtils.IDateFilter[];
@@ -78,7 +79,9 @@ export class CasesListActionBoxComponent implements OnInit {
     $('#excelCasesModal').modal({ keyboard: true, focus: true });
   }
 
-  onDownloadCases() {}
+  onDownloadCases() {
+    this.download.emit();
+  }
 
   launchCreateModal() {
     $('#createCase').modal({ keyboard: true, focus: true });
