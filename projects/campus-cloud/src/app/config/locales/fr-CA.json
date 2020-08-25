@@ -735,25 +735,28 @@
     "message": "Annuler"
   },
   "cases": {
-    "message": "Cases"
+    "message": "Cas"
   },
   "cases_button_create": {
-    "message": "Create Cases"
+    "message": "Créer cas"
   },
   "cases_delete_modal_title": {
-    "message": "Delete Case"
+    "message": "Supprimer cas"
   },
   "cases_import_items_to_import": {
     "message": "File contains data for %s case(s)."
   },
   "case_details": {
-    "message": "Case Details"
+    "message": "Détails du cas"
+  },
+  "case_message_duplicate_email": {
+    "message": "Duplicate Email"
   },
   "case_pending_action": {
-    "message": "Pending Action"
+    "message": "Action en attente"
   },
   "case_status_all": {
-    "message": "All Cases"
+    "message": "Tous les cas"
   },
   "category": {
     "message": "Catégorie"
@@ -1303,13 +1306,22 @@
     "message": "Oui/Non"
   },
   "contact_trace_notification_all_statuses": {
-    "message": "All Statuses"
+    "message": "Tous les statuts"
+  },
+  "contact_trace_notification_case": {
+    "message": "Cas"
+  },
+  "contact_trace_notification_case_status": {
+    "message": "Statut du cas"
   },
   "contact_trace_notification_contact_tracing_service": {
-    "message": "Contact Tracing Service"
+    "message": "Service de traçage de contact"
   },
   "contact_trace_notification_create_notification": {
-    "message": "Create Notification"
+    "message": "Créer notification"
+  },
+  "contact_trace_notification_custom_list": {
+    "message": "Liste customisée"
   },
   "contact_trace_notification_date_sent": {
     "message": "Date d'envoi"
@@ -1318,16 +1330,16 @@
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "contact_trace_notification_delete_notification": {
-    "message": "Delete Notification"
+    "message": "Supprimer notification"
   },
   "contact_trace_notification_delete_success": {
-    "message": "Notification successfully deleted"
+    "message": "Notification supprimée avec succès"
   },
   "contact_trace_notification_notify": {
-    "message": "Notify"
+    "message": "Notifier"
   },
   "contact_trace_notification_no_results": {
-    "message": "No notifications found"
+    "message": "Aucune notification trouvée"
   },
   "contact_trace_notification_subject": {
     "message": "Subject"
@@ -1589,7 +1601,7 @@
     "message": "Téléchargements"
   },
   "download_all_cases": {
-    "message": "Download All Cases"
+    "message": "Télécharger tous les cas"
   },
   "download_all_qr_codes": {
     "message": "Télécharger tous les codes QR"
@@ -1965,7 +1977,7 @@
     "message": "Importer"
   },
   "import_cases": {
-    "message": "Import Cases"
+    "message": "Importer cas"
   },
   "import_from_csv": {
     "message": "Importer depuis CSV"
@@ -2977,16 +2989,16 @@
     "message": "Gestion de l'Application du Campus"
   },
   "t_cases_no_record_found": {
-    "message": "No cases found..."
+    "message": "Aucun cas trouvé..."
   },
   "t_case_all_statuses": {
-    "message": "All Statuses"
+    "message": "Tous les statuts"
   },
   "t_case_history": {
-    "message": "Case History"
+    "message": "Historique du cas"
   },
   "t_case_status": {
-    "message": "Case Status"
+    "message": "Statut du cas"
   },
   "t_categories_can_not_be_delete": {
     "message": "Les catégories avec des lieux ne peuvent pas être supprimées."
@@ -4216,7 +4228,7 @@
     "message": "Icône"
   },
   "t_shared_identifier": {
-    "message": "Identifier"
+    "message": "Identifiant"
   },
   "t_shared_image": {
     "message": "Image"
@@ -4680,7 +4692,7 @@
     "message": "Soumettre"
   },
   "web_form_unavailable_form_message": {
-    "message": "The form is now closed and is no longer accepting responses\n\nMy suggestion for FR value : Le formulaire est maintenant fermé et n'accepte plus les réponses",
+    "message": "Le formulaire est maintenant fermé et n'accepte plus les réponses",
     "description": "https://oohlalaproduct.atlassian.net/browse/FES-7617"
   },
   "welcome": {
