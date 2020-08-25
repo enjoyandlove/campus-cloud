@@ -11,7 +11,7 @@ import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays';
 export class NotificationTemplateEditComponent {
 
   form: FormGroup;
-  private template: INotificationTemplate;
+  template: INotificationTemplate;
 
   constructor(private formBuilder: FormBuilder,
               @Inject(READY_MODAL_DATA) public modal: any) {

@@ -11,7 +11,7 @@ import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays';
 export class HealthPassEditComponent implements OnInit {
 
   form: FormGroup;
-  private healthPass: IHealthPass;
+  healthPass: IHealthPass;
 
   constructor(private formBuilder: FormBuilder,
               @Inject(READY_MODAL_DATA) public modal) {

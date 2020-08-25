@@ -1,6 +1,6 @@
 <cp-spinner *ngIf="!form"></cp-spinner>
 
-<div class="page-container" *ngIf="form" [ngClass]="{'not-editable' : form && form.status !== formStatus.draft}" #pageContent>
+<div class="page-container form-create-builder" *ngIf="form" [ngClass]="{'not-editable' : form && form.status !== formStatus.draft}" #pageContent>
 
   <div class="blocks-group-container">
     <cp-form-block
