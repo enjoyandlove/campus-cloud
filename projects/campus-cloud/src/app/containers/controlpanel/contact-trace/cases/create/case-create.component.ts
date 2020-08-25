@@ -37,7 +37,7 @@ export class CaseCreateComponent implements OnInit {
     public cpI18nPipe: CPI18nPipe,
     public cpTracking: CPTrackingService,
     public utils: CasesUtilsService,
-    public store: Store<fromStore.ICasesState>
+    public store: Store<fromStore.State>
   ) {}
 
   onSubmit() {

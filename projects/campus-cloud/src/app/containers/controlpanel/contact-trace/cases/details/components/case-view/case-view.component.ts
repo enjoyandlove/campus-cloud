@@ -20,7 +20,7 @@ export class CaseViewComponent implements OnInit {
   caseStatus: ICaseStatus[];
   statusFilter: IItem[];
 
-  constructor(public store: Store<fromStore.ICasesState>, public utils: CasesUtilsService) {}
+  constructor(public store: Store<fromStore.State>, public utils: CasesUtilsService) {}
 
   onEdit() {
     this.onEditing.emit(true);

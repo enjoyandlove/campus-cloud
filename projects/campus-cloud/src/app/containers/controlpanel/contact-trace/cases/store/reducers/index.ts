@@ -8,7 +8,7 @@ export interface ICasesState {
 }
 
 export interface State {
-  casesModule: ICasesState;
+  caseModule: ICasesState;
 }
 
 export const reducers: ActionReducerMap<ICasesState> = {

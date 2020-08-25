@@ -33,7 +33,7 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit, OnDes
 
   constructor(
     private route: ActivatedRoute,
-    public store: Store<fromStore.ICasesState | fromRoot.IHeader>,
+    public store: Store<fromStore.State | fromRoot.IHeader>,
     public service: CasesService,
     private session: CPSession
   ) {
