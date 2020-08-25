@@ -68,7 +68,8 @@ export class NotificationTemplatesComponent implements OnInit {
   }
 
   onEdited(updatedTemplate: INotificationTemplate) {
-    this.healthPassStore.dispatch(NotificationTemplatePageActions.edit({updatedTemplate}));
+    const updatedTemplates = this.currentTemplates.map((template) => template.type === updatedTemplate.type ? updatedTemplate : template);
+    this.healthPassStore.dispatch(NotificationTemplatePageActions.edit({updatedTemplates}));
   }
 
   resetModal() {

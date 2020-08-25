@@ -43,7 +43,7 @@ export class NotificationTemplateSettingsService {
     );
   }
 
-  update(template: INotificationTemplate) {
+  update(template: INotificationTemplate[]) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CONTACT_TRACE_ANNOUNCEMENT_TEMPLATE}/`;
 
     const params = new HttpParams().set('school_id', this.session.school.id.toString());

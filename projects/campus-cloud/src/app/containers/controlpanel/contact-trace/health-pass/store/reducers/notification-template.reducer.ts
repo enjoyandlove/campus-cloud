@@ -23,7 +23,8 @@ export const notificationTemplateReducer = createReducer(
   }),
   on(NotificationTemplatePageActions.edit, (state, action) => {
     return {
-      ...state
+      ...state,
+      templates: action.updatedTemplates
     };
   }),
   on(NotificationTemplateApiActions.notificationTemplateLoadedSuccess, (state, action) => {

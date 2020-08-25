@@ -12,7 +12,6 @@ import { Injectable } from '@angular/core';
 export class HealthPassApiEffects {
   constructor(private healthPassService: HealthPassService, private actions$: Actions) {
   }
-  @Effect()
   loadHealthPass$ = createEffect(() =>
     this.actions$.pipe(
       ofType(HealthPassPageActions.enter),
@@ -26,7 +25,6 @@ export class HealthPassApiEffects {
       )
     )
   );
-  @Effect()
   updateHealthPass$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(HealthPassPageActions.edit),

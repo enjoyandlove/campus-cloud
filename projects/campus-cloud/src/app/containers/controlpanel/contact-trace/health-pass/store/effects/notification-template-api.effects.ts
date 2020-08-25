@@ -3,7 +3,6 @@ import { NotificationTemplateApiActions, NotificationTemplatePageActions } from 
 import { catchError, concatMap, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ExposureNotificationService } from '@controlpanel/contact-trace/exposure-notification';
 import { INotificationTemplate } from '@controlpanel/contact-trace/health-pass/notification-templates/notification-template';
 import { NotificationTemplateSettingsService } from '@controlpanel/contact-trace/health-pass/services/notification-template-settings.service';
 import { parseErrorResponse } from '@campus-cloud/shared/utils';
@@ -14,7 +13,6 @@ export class NotificationTemplateApiEffects {
   constructor(private notificationService: NotificationTemplateSettingsService, private actions$: Actions) {
   }
 
-  @Effect()
   loadNotificationTemplates$ = createEffect(() => {
 
     return this.actions$.pipe(
@@ -29,15 +27,15 @@ export class NotificationTemplateApiEffects {
     );
   });
 
-  @Effect()
   updateHealthPass$ = createEffect(() => {
       return this.actions$.pipe(
         ofType(NotificationTemplatePageActions.edit),
-        concatMap((action) =>
-          this.notificationService.update(action.updatedTemplate)
+        concatMap((action) => {
+          return this.notificationService.update(action.updatedTemplates)
             .pipe(map((templates: INotificationTemplate[]) =>
                 NotificationTemplateApiActions.notificationTemplateUpdatedSuccess({ templates })),
-              catchError((error) => of(NotificationTemplateApiActions.notificationTemplatesUpdatedFail(parseErrorResponse(error)))))
+              catchError((error) => of(NotificationTemplateApiActions.notificationTemplatesUpdatedFail(parseErrorResponse(error)))));
+        }
         )
       );
     }

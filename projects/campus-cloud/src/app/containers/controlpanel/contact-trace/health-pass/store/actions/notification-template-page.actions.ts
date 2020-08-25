@@ -14,7 +14,7 @@ export const enter = createAction(
 
 export const edit = createAction(
   NotificationTemplatePageActionsTypes.EDIT_NOTIFICATION_TEMPLATE_SETTING,
-  props<{ updatedTemplate: INotificationTemplate }>()
+  props<{ updatedTemplates: INotificationTemplate[] }>()
 );
 
 
