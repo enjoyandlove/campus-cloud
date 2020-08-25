@@ -1407,6 +1407,24 @@
   "contact_trace_notification_template": {
     "message": "Modèle"
   },
+  "contact_trace_notification_template_header": {
+    "message": "Modèles de Notification"
+  },
+  "contact_trace_notification_template_title_clear": {
+    "message": "Clair"
+  },
+  "contact_trace_notification_template_title_exposed": {
+    "message": "Exposé"
+  },
+  "contact_trace_notification_template_title_symptomatic": {
+    "message": "Symptomatique"
+  },
+  "contact_trace_notification_template_title_self_reported": {
+    "message": "Autodéclaré"
+  },
+  "contact_trace_notification_template_title_confirmed": {
+    "message": "Confirmé"
+  },
   "contact_trace_notification_to": {
     "message": "Vers"
   },

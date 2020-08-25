@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ContactTraceComponent } from './contact-trace.component';
 import { ContactTraceRoutingModule } from './contact-trace.routing.module';
 import { ManageHeaderService } from '@controlpanel/manage/utils';
-import { HealthPassService } from './health-pass/health-pass.service';
+import { HealthPassService } from './health-pass/services/health-pass.service';
 
 @NgModule({
   declarations: [ContactTraceComponent],

@@ -1,0 +1,13 @@
+<div class="container my-4">
+    <div class="row mb-4">
+        <h1>{{ 'contact_trace_notification_template_header' | cpI18n }}</h1>
+    </div>
+    <div class='row list-item-border ml-2' *ngFor="let template of templates$ | async; last as isLast" [ngClass]="{'mb-2': !isLast}">
+        <div class='col d-flex'>
+            <h2 class="float-left align-self-center mb-0">{{templateTypeTitleProperty(template.type) | cpI18n}}</h2>
+            <img (click)="openEditModal(template)"
+                 src="/assets/svg/contact-trace/health-pass/edit-icon.svg"
+                 class="ml-auto cursor-pointer"/>
+        </div>
+    </div>
+</div>

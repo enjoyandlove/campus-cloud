@@ -1,0 +1,30 @@
+h1 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 33px;
+  margin-left: 16px;
+}
+
+h2 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+}
+
+.container {
+  padding-right: 17px !important;
+}
+
+.list-item-border {
+  border: 1px solid #F1F1F1;
+  box-sizing: border-box;
+  border-radius: 2px;
+
+  .pass-icon {
+    height: 40px;
+  }
+}

@@ -1,0 +1,86 @@
+<div class="cpmodal">
+    <div class="cpmodal__header">
+        <div class="row">
+            <div class="col-12 text-center">
+                <span class="header-modal"><strong>{{template.name}}</strong></span>
+
+                <button type="button"
+                        data-dismiss="modal"
+                        (click)="modal.onClose()"
+                        class="float-right hover cpmodal__header__close unstyled-button">
+                    <img src="/assets/svg/contact-trace/health-pass/close-icon.svg">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <ng-container>
+        <div class="cpmodal__body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group form-name-group" >
+                        <ng-container [formGroup]="form">
+                            <label for="formName" class="w-100">{{ 'subject' | cpI18n }}
+                                <cp-char-counter [limit]="255"
+                                                 [charCount]="form.value.subject"
+                                                 class="float-right cp-counter"
+                                >
+                                </cp-char-counter>
+                            </label>
+                            <input
+                                    type="text"
+                                    id="formName"
+                                    class="form-control"
+                                    formControlName="subject"
+                                    autocomplete="off"
+                                    [maxLength]="255"
+                            />
+                            <div class="invalid-feedback">
+                                <span *ngIf="form.get('subject').hasError('required')
+                                && (form.get('subject').dirty && form.get('subject').touched)">
+                                {{ 'web_form_required_field' | cpI18n }}
+                                </span>
+                            </div>
+                            <label for="message" class="w-100 mt-3">
+                                {{ 'contact_trace_notification_message' | cpI18n }}
+                                <cp-char-counter [limit]="2048"
+                                                 [charCount]="form.value.message"
+                                                 class="float-right"
+                                >
+                                </cp-char-counter>
+                            </label>
+                            <textarea id="message" class="form-control" formControlName="message" [maxLength]="2048"></textarea>
+                            <div class="invalid-feedback">
+                                <span *ngIf="form.get('message').hasError('required')
+                                && (form.get('message').dirty && form.get('message').touched)">
+                                {{ 'web_form_required_field' | cpI18n }}
+                                </span>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cpmodal__footer">
+            <div class="row">
+                <div class="col-6 offset-6 text-right">
+                    <button type="button"
+                            class="cpbtn cpbtn--cancel"
+                            (click)="modal.onClose()"
+                            data-dismiss="modal">
+                        {{ 'cancel' | cpI18n }}
+                    </button>
+
+                    <cp-button [props]="{
+                                          class: 'primary',
+                                          text: 'save' | cpI18n,
+                                          disabled: !form.valid
+                                        }"
+                               (buttonClick)="onSave()"> </cp-button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+</div>
