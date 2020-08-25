@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock/school';
@@ -7,9 +6,8 @@ import { HealthPassComponent } from './health-pass.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { EState } from '@controlpanel/contact-trace/health-pass/health-pass.interface';
-import { HealthPassModule } from '@controlpanel/contact-trace/health-pass/health-pass.module';
-import { EffectsModule } from '@ngrx/effects';
 import { HealthPassService } from '@controlpanel/contact-trace/health-pass/services/health-pass.service';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('HealthPassComponent', () => {
   configureTestSuite();
@@ -18,9 +16,19 @@ describe('HealthPassComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         declarations: [HealthPassComponent],
-        imports: [CPTestModule, EffectsModule.forRoot([]), HealthPassModule],
-        providers: [CPI18nPipe, HealthPassService],
-        schemas: [NO_ERRORS_SCHEMA]
+        imports: [CPTestModule],
+        providers: [CPI18nPipe, HealthPassService, provideMockStore({
+          initialState: {
+            healthPassSettings: {
+              healthPass: {
+                healthPassList: []
+              },
+              notificationTemplate: {
+                templates: []
+              }
+            }
+          }
+        })]
       });
       await TestBed.compileComponents();
     })()

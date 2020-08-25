@@ -4,6 +4,7 @@ import { NotificationTemplatesComponent } from './notification-templates.compone
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('NotificationTemplatesComponent', () => {
   let component: NotificationTemplatesComponent;
@@ -13,7 +14,18 @@ describe('NotificationTemplatesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NotificationTemplatesComponent ],
       imports: [CPTestModule],
-      providers: [CPI18nPipe],
+      providers: [CPI18nPipe, provideMockStore({
+        initialState: {
+          healthPassSettings: {
+            healthPass: {
+              healthPassList: []
+            },
+            notificationTemplate: {
+              templates: []
+            }
+          }
+        }
+      })],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
