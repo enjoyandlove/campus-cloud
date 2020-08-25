@@ -15,8 +15,10 @@ import { ICase, ICaseStatus } from '../../cases.interface';
 import { CasesUtilsService } from '../../cases.utils.service';
 import { CasesAmplitudeService } from '../../cases.amplitude.service';
 
+
 @Injectable()
 export class CasesEffect {
+  school_id: number;
   constructor(
     private router: Router,
     private actions$: Actions,
@@ -24,7 +26,9 @@ export class CasesEffect {
     private service: CasesService,
     private utils: CasesUtilsService,
     private cpTracking: CPTrackingService
-  ) {}
+  ) {
+     this.school_id = this.session.g.get('school')? this.session.g.get('school').id: 0;
+  }
 
   @Effect()
   getCases$: Observable<
@@ -64,7 +68,7 @@ export class CasesEffect {
     ofType(fromActions.caseActions.GET_CASE_BY_ID),
     mergeMap((action: fromActions.GetCaseById) => {
       const { id } = action.payload;
-      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
+      const params = new HttpParams().set('school_id', this.school_id.toString());
 
       return this.service.getCaseById(params, id).pipe(
         map((data: ICase) => new fromActions.GetCaseByIdSuccess(data)),
@@ -80,7 +84,7 @@ export class CasesEffect {
     ofType(fromActions.caseActions.CREATE_CASE),
     mergeMap((action: fromActions.CreateCase) => {
       const { body } = action.payload;
-      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
+      const params = new HttpParams().set('school_id', this.school_id.toString());
       return this.service.createCase(body, params).pipe(
         map((data: ICase) => {
           const eventName = amplitudeEvents.CONTACT_TRACE_CREATED_CASE;
@@ -108,7 +112,7 @@ export class CasesEffect {
     ofType(fromActions.caseActions.EDIT_CASE),
     mergeMap((action: fromActions.EditCase) => {
       const { id, body } = action.payload;
-      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
+      const params = new HttpParams().set('school_id', this.school_id.toString());
 
       return this.service.updateCase(body, id, params).pipe(
         map((data: ICase) => {
@@ -138,7 +142,7 @@ export class CasesEffect {
     ofType(fromActions.caseActions.DELETE_CASE),
     mergeMap((action: fromActions.DeleteCase) => {
       const id = action.payload.id;
-      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
+      const params = new HttpParams().set('school_id', this.school_id.toString());
 
       return this.service.deleteCaseById(id, params).pipe(
         map(() => {
@@ -166,7 +170,7 @@ export class CasesEffect {
   > = this.actions$.pipe(
     ofType(fromActions.caseActions.GET_CASE_STATUS),
     mergeMap(() => {
-      const params = new HttpParams().append('school_id', this.session.g.get('school').id);
+      const params = new HttpParams().append('school_id', this.school_id.toString());
       return this.service.getCaseStatus(params).pipe(
         map((data: ICaseStatus[]) => new fromActions.GetCaseStatusSuccess(data)),
         catchError((error) => of(new fromActions.GetCaseStatusFail(parseErrorResponse(error))))
@@ -180,6 +184,6 @@ export class CasesEffect {
       .append('current_status_ids', state.current_status_ids)
       .append('start', state.start)
       .append('end', state.end)
-      .append('school_id', this.session.g.get('school').id);
+      .append('school_id', this.school_id.toString());
   }
 }

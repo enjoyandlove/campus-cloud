@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
 import { CasesUtilsService } from '../../../cases.utils.service';
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async, inject } from '@angular/core/testing';
 import * as fromStore from '../../../store';
 
 describe('CaseViewComponent', () => {
@@ -46,6 +46,10 @@ describe('CaseViewComponent', () => {
 
     fixture.detectChanges();
   });
+  
+  it('should create', inject([Store], (store) => {
+    expect(store).toBeTruthy();
+  }));
 
   afterAll(() => store.resetSelectors());
 });
