@@ -14,7 +14,7 @@ declare var $: any;
 export class CaseDeleteComponent implements OnInit {
   @Input() case: ICase;
 
-  constructor(public store: Store<fromStore.ICasesState | fromRoot.IHeader>) {}
+  constructor(public store: Store<fromStore.State | fromRoot.IHeader>) {}
 
   onDelete() {
     this.store.dispatch(new fromStore.DeleteCase(this.case));

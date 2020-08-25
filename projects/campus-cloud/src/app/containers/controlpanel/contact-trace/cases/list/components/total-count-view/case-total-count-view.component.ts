@@ -13,7 +13,7 @@ import * as fromStore from '../../../store';
 export class CaseTotalCountViewComponent implements OnInit {
   caseStatus$: Observable<ICaseStatus[]>;
 
-  constructor(public store: Store<fromStore.ICasesState>) {}
+  constructor(public store: Store<fromStore.State>) {}
 
   getCaseStatus() {
     this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(

@@ -42,7 +42,7 @@ export class CasesExcelComponent extends BaseComponent implements OnInit, OnDest
     private router: Router,
     private fb: FormBuilder,
     private env: EnvService,
-    private store: Store<fromStore.ICasesState>,
+    public store: Store<fromStore.State>,
     private session: CPSession,
     private cpI18nPipe: CPI18nPipe,
     private casesService: CasesService,

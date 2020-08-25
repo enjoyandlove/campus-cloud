@@ -37,7 +37,7 @@ export class CasesListActionBoxComponent implements OnInit {
     private cpTracking: CPTrackingService,
     public engageUtils: EngageUtils.EngagementUtilsService,
     public utils: CasesUtilsService,
-    public store: Store<fromStore.ICasesState>
+    public store: Store<fromStore.State>
   ) {}
 
   getCaseStatus() {

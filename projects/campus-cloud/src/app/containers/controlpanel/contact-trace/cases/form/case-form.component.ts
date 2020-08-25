@@ -24,7 +24,7 @@ export class CaseFormComponent implements OnInit {
   constructor(
     public utils: CasesUtilsService,
     public session: CPSession,
-    public store: Store<fromStore.ICasesState>
+    public store: Store<fromStore.State>
   ) {}
 
   getCaseStatus() {
