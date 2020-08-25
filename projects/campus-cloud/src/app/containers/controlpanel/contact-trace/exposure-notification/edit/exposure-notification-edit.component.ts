@@ -33,12 +33,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       disabled: false,
       label: this.cpI18n.translate('urgent'),
       description: this.cpI18n.translate('announcements_urgent_help')
-    },
-    {
-      action: AnnouncementPriority.emergency,
-      disabled: false,
-      label: this.cpI18n.translate('emergency'),
-      description: this.cpI18n.translate('announcements_emergency_help')
     }
   ];
   toOptions = [

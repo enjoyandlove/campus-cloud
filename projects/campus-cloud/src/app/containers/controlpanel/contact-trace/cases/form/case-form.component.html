@@ -6,7 +6,7 @@
              class="form-control"
              formControlName="firstname"
              [class.error]="formErrors && form.controls['firstname'].hasError('required')" 
-             (input)="onInputChange()"/>
+             (input)="onInputChange($event)"/>
     </div>
     <div class="col-6">
       <label>{{ 'last_name' | cpI18n }}</label>
@@ -14,7 +14,7 @@
              class="form-control"
              formControlName="lastname"
              [class.error]="formErrors && form.controls['lastname'].hasError('required')"
-             (input)="onInputChange()" />
+             (input)="onInputChange($event)" />
     </div>
   </div>
 
@@ -25,7 +25,7 @@
              class="form-control"
              formControlName="extern_user_id"
              [class.error]="formErrors && form.controls['extern_user_id'].hasError('required')"
-             (input)="onInputChange()" />
+             (input)="onInputChange($event)" />
     </div>
     <div class="col-6">
       <label>{{ 't_shared_status' | cpI18n }}</label>

@@ -1287,6 +1287,15 @@
   "contact_trace_forms_unpublish": {
     "message": "Unpublish"
   },
+  "contact_trace_forms_duplicate": {
+    "message": "Duplicate"
+  },
+  "contact_trace_forms_duplicate_form": {
+    "message": "Duplicate form"
+  },
+  "contact_trace_forms_duplicate_new_name": {
+    "message": "(Copy) %s"
+  },
   "contact_trace_forms_unpublish_form": {
     "message": "Unpublish Form"
   },
@@ -3808,6 +3817,9 @@
   },
   "t_personas_tile_create_header": {
     "message": "New Tile"
+  },
+  "t_personas_tile_create_resource_type_health_pass": {
+    "message": "Health Pass"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Calendars"
