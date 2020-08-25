@@ -222,8 +222,17 @@ export class CasesComponent extends BaseComponent implements OnInit {
         takeUntil(this.destroy$),
         filter((error) => error),
         tap(() => {
+          let err_message;
+          this.store
+            .select(fromStore.getCasesErrorMessage)
+            .pipe(
+              tap((message) => {
+                err_message = message;
+              })
+            )
+            .subscribe();
           const payload = {
-            body: this.cpI18nPipe.transform('something_went_wrong'),
+            body: err_message ? err_message : this.cpI18nPipe.transform('something_went_wrong'),
             sticky: true,
             autoClose: true,
             class: 'danger'

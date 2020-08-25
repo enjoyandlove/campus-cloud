@@ -1,7 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
-import { getRouterState } from '@campus-cloud/store';
 import { getFeatureState } from './feature.selector';
 import * as fromCases from '../reducers/cases.reducer';
 
@@ -18,6 +17,11 @@ export const getCases = createSelector(
 export const getCasesError = createSelector(
   getCaseState,
   fromCases.getCasesError
+);
+
+export const getCasesErrorMessage = createSelector(
+  getCaseState,
+  fromCases.getCasesErrorMessage
 );
 
 export const getCasesLoading = createSelector(

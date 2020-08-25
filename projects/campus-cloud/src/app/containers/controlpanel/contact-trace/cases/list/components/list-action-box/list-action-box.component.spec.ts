@@ -13,11 +13,12 @@ import { CPSession } from '@projects/campus-cloud/src/app/session';
 import mockSession from '@projects/campus-cloud/src/app/session/mock/session';
 import { EnvService, MockEnvService } from '@projects/campus-cloud/src/app/config/env';
 import { configureTestSuite } from '@projects/campus-cloud/src/app/shared/tests';
+import { CasesListActionBoxComponent } from './list-action-box.component';
 
 @Component({ selector: 'cp-range-picker', template: '' })
 export class CPRangePickerStubComponent {}
 
-describe('CasesComponent', () => {
+describe('CasesListActionBoxComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
@@ -26,7 +27,7 @@ describe('CasesComponent', () => {
        * result in an error trying to resolve `cp-range-picker`
        */
       await TestBed.configureTestingModule({
-        declarations: [CasesComponent, CPRangePickerStubComponent, CPI18nPipe],
+        declarations: [CasesListActionBoxComponent, CPRangePickerStubComponent, CPI18nPipe],
         imports: [HttpClientModule, RouterTestingModule],
         providers: [
           ApiService,
@@ -47,11 +48,11 @@ describe('CasesComponent', () => {
       .catch(done.fail);
   });
 
-  let component: CasesComponent;
-  let fixture: ComponentFixture<CasesComponent>;
+  let component: CasesListActionBoxComponent;
+  let fixture: ComponentFixture<CasesListActionBoxComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CasesComponent);
+    fixture = TestBed.createComponent(CasesListActionBoxComponent);
     component = fixture.componentInstance;
   });
 });

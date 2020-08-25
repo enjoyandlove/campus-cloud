@@ -749,6 +749,9 @@
   "case_details": {
     "message": "Case Details"
   },
+  "case_message_duplicate_email": {
+    "message": "Duplicate Email"
+  },
   "case_pending_action": {
     "message": "Pending Action"
   },
@@ -1305,11 +1308,20 @@
   "contact_trace_notification_all_statuses": {
     "message": "All Statuses"
   },
+  "contact_trace_notification_case": {
+    "message": "Case"
+  },
+  "contact_trace_notification_case_status": {
+    "message": "Case Status"
+  },
   "contact_trace_notification_contact_tracing_service": {
     "message": "Contact Tracing Service"
   },
   "contact_trace_notification_create_notification": {
     "message": "Create Notification"
+  },
+  "contact_trace_notification_custom_list": {
+    "message": "Custom List"
   },
   "contact_trace_notification_date_sent": {
     "message": "Date Sent"
@@ -4683,7 +4695,7 @@
     "message": "Submit"
   },
   "web_form_unavailable_form_message": {
-    "message": "The form is now closed and is no longer accepting responses\n\nMy suggestion for FR value : Le formulaire est maintenant fermé et n'accepte plus les réponses",
+    "message": "The form is now closed and is no longer accepting responses",
     "description": "https://oohlalaproduct.atlassian.net/browse/FES-7617"
   },
   "welcome": {

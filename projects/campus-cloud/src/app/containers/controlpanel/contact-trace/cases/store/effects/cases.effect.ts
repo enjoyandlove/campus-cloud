@@ -96,7 +96,7 @@ export class CasesEffect {
           );
           return new fromActions.CreateCaseSuccess(data);
         }),
-        catchError((error) => of(new fromActions.CreateCaseFail(parseErrorResponse(error))))
+        catchError((error) => of(new fromActions.CreateCaseFail(error.status.toString())))
       );
     })
   );

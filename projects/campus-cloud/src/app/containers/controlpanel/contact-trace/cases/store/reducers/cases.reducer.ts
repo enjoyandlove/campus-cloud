@@ -2,9 +2,11 @@ import { EntityState, createEntityAdapter, EntityAdapter, Dictionary } from '@ng
 
 import * as fromCases from '../actions';
 import { ICase } from '../../cases.interface';
+import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
 
 export interface ICaseState extends EntityState<ICase> {
   error: boolean;
+  err_message: string;
   loading: boolean;
   loaded: boolean;
   ids: Array<number>;
@@ -16,10 +18,13 @@ const defaultCase: ICaseState = {
   ids: [],
   entities: {},
   error: false,
+  err_message: '',
   loading: false,
   loaded: false,
   filteredCases: []
 };
+
+const cpI18nPipe: CPI18nPipe = new CPI18nPipe();
 
 export const caseAdapter: EntityAdapter<ICase> = createEntityAdapter<ICase>();
 export const initialState: ICaseState = caseAdapter.getInitialState(defaultCase);
@@ -130,7 +135,9 @@ export function reducer(state = initialState, action: fromCases.CasesAction) {
         ...state,
         error: true,
         loading: false,
-        loaded: true
+        loaded: true,
+        err_message:
+          action.payload == '409' ? cpI18nPipe.transform('case_message_duplicate_email') : null
       };
     }
 
@@ -229,6 +236,7 @@ export const { selectAll, selectEntities } = caseAdapter.getSelectors();
 export const getCases = selectAll;
 export const getCaseEntities = selectEntities;
 export const getCasesError = (state: ICaseState) => state.error;
+export const getCasesErrorMessage = (state: ICaseState) => state.err_message;
 export const getCasesLoading = (state: ICaseState) => state.loading;
 export const getCasesLoaded = (state: ICaseState) => state.loaded;
 export const getFilteredCases = (state: ICaseState) => state.filteredCases;
