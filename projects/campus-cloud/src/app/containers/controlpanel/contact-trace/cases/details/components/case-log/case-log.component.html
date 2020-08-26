@@ -40,8 +40,11 @@
         </div>
       </div>
 
-      <div class="row mt-4">
-        <div class="col-12">
+      <div class="row mt-4" [ngSwitch]=loading>
+        <div class="col-12" *ngSwitchCase="true">
+          <cp-spinner class="float-center"></cp-spinner>
+        </div>        
+        <div class="col-12" *ngSwitchCase="false">
           <table ui-table>
             <thead>
               <tr ui-table-row>
@@ -53,7 +56,7 @@
               </tr>
             </thead>
         
-            <tbody *ngIf="!loading">
+            <tbody>
               <tr ui-table-row
                   *ngFor="let log of caseLog; index as i">
                 <td ui-table-cell>
@@ -69,10 +72,10 @@
                 </td>
         
                 <td ui-table-cell>
-                  <div *ngIf="log.source_activity_name == sourceActivityName[1].tag">
-                    <img [src]="noteSvgPath" (click)="launchNoteModal()"> <span class="note-link" (click)="launchNoteModal()">{{ log.source }}</span>
+                  <div *ngIf="log.source_activity_name == sourceActivityName[sourceActivityType.Manual_Notes].tag" (click)="launchNoteModal(log.new_notes)">
+                    <img [src]="noteSvgPath"> <span class="note-link">{{ log.source }}</span>
                   </div>
-                  <div *ngIf="log.source_activity_name != sourceActivityName[1].tag">
+                  <div *ngIf="log.source_activity_name != sourceActivityName[sourceActivityType.Manual_Notes].tag">
                     {{ log.source }}
                   </div>
                 </td>
@@ -87,3 +90,6 @@
     </div>
   </div>
 </div>  
+<cp-modal modalId="viewNote">
+  <cp-note-view-modal [note]="modalNote"></cp-note-view-modal>
+</cp-modal>

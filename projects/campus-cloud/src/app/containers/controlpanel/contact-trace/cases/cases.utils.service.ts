@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ICase, ICaseStatus } from './cases.interface';
+import {
+  ICase,
+  ICaseStatus,
+  ICaseLog,
+  ISourceActivityName,
+  SourceActivityType
+} from './cases.interface';
 import { FormBuilder, Validators } from '@angular/forms';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { getItem } from '@campus-cloud/shared/components';
@@ -9,7 +15,26 @@ import { CPSession } from '@projects/campus-cloud/src/app/session';
 
 @Injectable()
 export class CasesUtilsService {
-  constructor(public fb: FormBuilder, public cpI18nPipe: CPI18nPipe, public session: CPSession) {}
+  sourceActivityName: ISourceActivityName[];
+  constructor(public fb: FormBuilder, public cpI18nPipe: CPI18nPipe, public session: CPSession) {
+    this.sourceActivityName = [
+      {
+        tag: '%creation%',
+        name: cpI18nPipe.transform('case_event_creation'),
+        source: cpI18nPipe.transform('case_source_creation')
+      },
+      {
+        tag: '%manual_notes%',
+        name: cpI18nPipe.transform('case_event_manual_notes'),
+        source: cpI18nPipe.transform('notes')
+      },
+      {
+        tag: '%manual_status%',
+        name: cpI18nPipe.transform('case_event_manual_status'),
+        source: cpI18nPipe.transform('case_source_manual_status')
+      }
+    ];
+  }
 
   getCaseForm(formData: ICase) {
     return this.fb.group({
@@ -40,7 +65,7 @@ export class CasesUtilsService {
     const heading = [
       {
         label,
-        action: null
+        action: 0
       }
     ];
 
@@ -51,6 +76,34 @@ export class CasesUtilsService {
     });
 
     return [..._heading, ..._statuses];
+  }
+
+  public serializeCaseLog(res) {
+    const caseLog: ICaseLog[] = res.map((item) => {
+      const newItem = { ...item, event: '', source: '' };
+      const matchedSource = this.sourceActivityName.filter((name) => {
+        return item.source_activity_name.includes(name.tag);
+      })[0];
+      if (matchedSource) {
+        switch (matchedSource.tag) {
+          case this.sourceActivityName[SourceActivityType.Creation].tag:
+            newItem.event = item.source_activity_name.replace(matchedSource.tag, this.sourceActivityName[SourceActivityType.Creation].name + " -");
+            newItem.source = this.sourceActivityName[0].source;
+            break;
+          case this.sourceActivityName[SourceActivityType.Manual_Notes].tag:
+            newItem.event = matchedSource.name;
+            newItem.source = matchedSource.source;
+            break;
+          case this.sourceActivityName[SourceActivityType.Manual_Status].tag:
+            newItem.event = item.source_activity_name.replace(matchedSource.tag, this.sourceActivityName[SourceActivityType.Manual_Status].name + " -");
+            newItem.source = `${matchedSource.source} ${item.admin_name}`;
+        }
+      } else {
+        newItem.event = item.source_activity_name;
+      }
+      return newItem;
+    });
+    return caseLog;
   }
 
   exportCases(cases) {

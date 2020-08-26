@@ -32,11 +32,10 @@ export const getCasesLoaded = createSelector(
   fromCases.getCasesLoaded
 );
 
-export const getCasesById = (id: number) =>
-  createSelector(
-    getCaseState,
-    (cases) => cases.entities[id]
-  );
+export const getCasesById = createSelector(
+  getCaseState,
+  (cases) => cases.entities[cases.selectedCaseId]
+);
 
 export const getFilteredCases = createSelector(
   getCaseState,

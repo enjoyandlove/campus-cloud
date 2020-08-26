@@ -749,11 +749,26 @@
   "case_details": {
     "message": "Détails du cas"
   },
+  "case_event_creation": {
+    "message": "Status Added"
+  },
+  "case_event_manual_notes": {
+    "message": "Notes Changes"
+  },
+  "case_event_manual_status": {
+    "message": "Status Change"
+  },
   "case_message_duplicate_email": {
     "message": "Duplicate Email"
   },
   "case_pending_action": {
     "message": "Action en attente"
+  },
+  "case_source_creation": {
+    "message": "Manual Import"
+  },
+  "case_source_manual_status": {
+    "message": "Escalated by"
   },
   "case_status_all": {
     "message": "Tous les cas"
@@ -1107,9 +1122,6 @@
   "contact_trace_forms_expired": {
     "message": "Expiré"
   },
-  "contact_trace_forms_exposure_notification": {
-    "message": "Exposure Notification"
-  },
   "contact_trace_forms_form_builder": {
     "message": "Créateur de formulaire"
   },
@@ -1290,15 +1302,6 @@
   "contact_trace_forms_unpublish": {
     "message": "Dé-publier"
   },
-  "contact_trace_forms_duplicate": {
-    "message": "Dupliquer"
-  },
-  "contact_trace_forms_duplicate_form": {
-    "message": "Dupliquer le formulaire"
-  },
-  "contact_trace_forms_duplicate_new_name": {
-    "message": "(Copie) %s"
-  },
   "contact_trace_forms_unpublish_form": {
     "message": "Dé-publier formulaire"
   },
@@ -1347,47 +1350,8 @@
   "contact_trace_notification_delete_success": {
     "message": "Notification supprimée avec succès"
   },
-  "contact_trace_notification_notify": {
-    "message": "Notifier"
-  },
-  "contact_trace_notification_no_results": {
-    "message": "Aucune notification trouvée"
-  },
-  "contact_trace_notification_subject": {
-    "message": "Subject"
-  },
-  "contact_trace_notification_to": {
-    "message": "To"
-  },
-  "contact_trace_notification_view_message": {
-    "message": "View Message"
-  },
-  "contact_trace_notification_case": {
-    "message": "Cas"
-  },
-  "contact_trace_notification_case_status": {
-    "message": "Statut du cas"
-  },
-  "contact_trace_notification_contact_tracing_service": {
-    "message": "Service de traçage de contact"
-  },
-  "contact_trace_notification_create_notification": {
-    "message": "Créer notification"
-  },
-  "contact_trace_notification_custom_list": {
-    "message": "Liste customisée"
-  },
-  "contact_trace_notification_date_sent": {
-    "message": "Date d'envoi"
-  },
-  "contact_trace_notification_delete_confirmation": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
-  },
-  "contact_trace_notification_delete_notification": {
-    "message": "Supprimer notification"
-  },
-  "contact_trace_notification_delete_success": {
-    "message": "Notification supprimée avec succès"
+  "contact_trace_notification_error": {
+    "message": "Erreur"
   },
   "contact_trace_notification_filter": {
     "message": "Filtrer"
@@ -1404,8 +1368,11 @@
   "contact_trace_notification_no_results": {
     "message": "Aucune notification trouvée"
   },
-  "contact_trace_notification_scheduled": {
-    "message": "Planifié"
+  "contact_trace_notification_pending": {
+    "message": "En attente"
+  },
+  "contact_trace_notification_processing": {
+    "message": "Traitement"
   },
   "contact_trace_notification_sent": {
     "message": "Envoyé"
@@ -1418,24 +1385,6 @@
   },
   "contact_trace_notification_template": {
     "message": "Modèle"
-  },
-  "contact_trace_notification_template_header": {
-    "message": "Modèles de Notification"
-  },
-  "contact_trace_notification_template_title_clear": {
-    "message": "Clair"
-  },
-  "contact_trace_notification_template_title_exposed": {
-    "message": "Exposé"
-  },
-  "contact_trace_notification_template_title_symptomatic": {
-    "message": "Symptomatique"
-  },
-  "contact_trace_notification_template_title_self_reported": {
-    "message": "Autodéclaré"
-  },
-  "contact_trace_notification_template_title_confirmed": {
-    "message": "Confirmé"
   },
   "contact_trace_notification_to": {
     "message": "Vers"
@@ -1629,6 +1578,9 @@
   },
   "downloads": {
     "message": "Téléchargements"
+  },
+  "download_activity": {
+    "message": "Download_Activity"
   },
   "download_all_cases": {
     "message": "Télécharger tous les cas"
@@ -3817,9 +3769,6 @@
   },
   "t_personas_tile_create_header": {
     "message": "Nouvelle tuile"
-  },
-  "t_personas_tile_create_resource_type_health_pass": {
-    "message": "Health Pass"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Calendriers académique"

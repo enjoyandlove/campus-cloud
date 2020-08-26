@@ -12,6 +12,7 @@ export interface ICaseState extends EntityState<ICase> {
   ids: Array<number>;
   filteredCases: ICase[];
   entities: Dictionary<ICase>;
+  selectedCaseId: number;
 }
 
 const defaultCase: ICaseState = {
@@ -21,7 +22,8 @@ const defaultCase: ICaseState = {
   err_message: '',
   loading: false,
   loaded: false,
-  filteredCases: []
+  filteredCases: [],
+  selectedCaseId: null
 };
 
 const cpI18nPipe: CPI18nPipe = new CPI18nPipe();
@@ -84,6 +86,13 @@ export function reducer(state = initialState, action: fromCases.CasesAction) {
       };
     }
 
+    case fromCases.caseActions.SET_SELECTED_CASE_ID: {
+      return {
+        ...state,
+        selectedCaseId: action.payload.id
+      };
+    }
+
     case fromCases.caseActions.GET_CASE_BY_ID: {
       return {
         ...state,
@@ -137,7 +146,7 @@ export function reducer(state = initialState, action: fromCases.CasesAction) {
         loading: false,
         loaded: true,
         err_message:
-          action.payload == '409' ? cpI18nPipe.transform('case_message_duplicate_email') : null
+          action.payload === '409' ? cpI18nPipe.transform('case_message_duplicate_email') : null
       };
     }
 
@@ -240,3 +249,4 @@ export const getCasesErrorMessage = (state: ICaseState) => state.err_message;
 export const getCasesLoading = (state: ICaseState) => state.loading;
 export const getCasesLoaded = (state: ICaseState) => state.loaded;
 export const getFilteredCases = (state: ICaseState) => state.filteredCases;
+export const getSelectedCaseId = (state: ICaseState) => state.selectedCaseId;
