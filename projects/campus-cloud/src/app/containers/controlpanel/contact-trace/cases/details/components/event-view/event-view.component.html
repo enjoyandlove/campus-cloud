@@ -1,0 +1,72 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span>
+          <strong>{{ 'cases' | cpI18n }}</strong>
+        </span>        
+        <button type="button"
+                aria-label="close"
+                (click)="resetModal()"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="body-container">
+      <div [ngSwitch]="loading">
+        <cp-spinner *ngSwitchCase="true"></cp-spinner>
+        <div *ngSwitchCase="false">
+          <cp-no-content class="margin-top"
+                    *ngIf="!cases.length"
+                    [noContentText]="'t_cases_no_record_found' | cpI18n">
+          </cp-no-content>
+          <div *ngIf="!!cases.length">
+            <table ui-table>
+              <thead>
+                <tr ui-table-row>
+                  <th ui-table-cell>
+                    {{ 'name' | cpI18n }}
+                  </th>
+                  <th ui-table-cell>
+                    {{ 'email' | cpI18n }}
+                  </th>
+                  <th ui-table-cell></th>
+                </tr>
+              </thead>
+          
+              <tbody>
+                <tr ui-table-row
+                    *ngFor="let case of cases; index as i">
+                  <td ui-table-cell>
+                    <ready-ui-stack direction="vertical">
+                      {{ case.firstname }} {{ case.lastname }}
+                    </ready-ui-stack>
+                  </td>
+                  <td ui-table-cell>
+                    {{ case.extern_user_id }}
+                  </td>
+                  <td ui-table-cell>
+                    <strong>
+                      <a ui-button
+                          cpTracker
+                          variant="inline"
+                          cpTarget="view_info"
+                          [eventData]="eventData"
+                          [routerLink]="[case.id]">
+                        {{ case.id }}
+                      </a>
+                    </strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

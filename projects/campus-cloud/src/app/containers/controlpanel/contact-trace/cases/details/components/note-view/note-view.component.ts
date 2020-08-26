@@ -1,5 +1,4 @@
-import { Input, OnInit, Component, ViewChild, Output, EventEmitter } from '@angular/core';
-import { ICase } from '../../../cases.interface';
+import { Input, OnInit, Component } from '@angular/core';
 
 @Component({
   selector: 'cp-note-view-modal',

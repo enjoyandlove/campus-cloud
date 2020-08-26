@@ -749,14 +749,23 @@
   "case_details": {
     "message": "Case Details"
   },
+  "case_event_action_contact_trace": {
+    "message": "students have been exposed"
+  },
+  "case_event_action_notify": {
+    "message": "Instructions have been successfully sent"
+  },
   "case_event_creation": {
-    "message": "Status Added"
+    "message": "Status Added -"
+  },
+  "case_event_exposure_alert": {
+    "message": "Exposure Alert"
   },
   "case_event_manual_notes": {
     "message": "Notes Changes"
   },
   "case_event_manual_status": {
-    "message": "Status Change"
+    "message": "Status Change -"
   },
   "case_message_duplicate_email": {
     "message": "Duplicate Email"

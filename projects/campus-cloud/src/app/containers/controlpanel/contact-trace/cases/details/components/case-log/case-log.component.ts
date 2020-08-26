@@ -13,6 +13,9 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-case-log',
@@ -30,12 +33,15 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
   caseLog: ICaseLog[];
   dateFormat = FORMAT.SHORT;
   loading = true;
+  eventModalLoading = true;
   filterCasesStatus;
   caseStatus$: Observable<IItem[]>;
   noteSvgPath: string;
   modalNote: string;
   isNoteModalOpened = false;
   sourceActivityName;
+  eventCases: ICase[];
+  eventData;
 
   public get sourceActivityType(): typeof SourceActivityType {
     return SourceActivityType;
@@ -52,7 +58,8 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     private service: CasesService,
     private cpI18nPipe: CPI18nPipe,
     private utils: CasesUtilsService,
-    private store: Store<fromStore.State>
+    private store: Store<fromStore.State>,
+    public cpTracking: CPTrackingService
   ) {
     super();
   }
@@ -113,6 +120,21 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     $('#viewNote').modal({ keyboard: true, focus: true });
   }
 
+  launchCaseEventModal(event_id) {
+    this.eventModalLoading = true;
+
+    const search = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('contact_trace_event_id', event_id);
+
+    super.fetchData(this.service.getCases(this.startRange, this.endRange, search)).then((res) => {
+      this.eventCases = res.data;
+      this.eventModalLoading = false;
+    });
+
+    $('#viewEvent').modal({ keyboard: true, focus: true });
+  }
+
   onUpdatedCase(updated) {
     this.loadCaseActivityLog();
   }
@@ -125,5 +147,16 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     this.noteSvgPath = `${environment.root}assets/svg/contact-trace/cases/external-link.svg`;
     this.getCasesStatus();
     this.loadCaseActivityLog();
+
+    const eventProperties = {
+      ...this.cpTracking.getAmplitudeMenuProperties(),
+      page_name: amplitudeEvents.INFO
+    };
+
+    this.eventData = {
+      eventProperties,
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM
+    };
   }
 }

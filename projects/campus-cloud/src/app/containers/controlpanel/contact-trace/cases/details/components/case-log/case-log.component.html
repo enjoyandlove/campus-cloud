@@ -72,12 +72,31 @@
                 </td>
         
                 <td ui-table-cell>
-                  <div *ngIf="log.source_activity_name == sourceActivityName[sourceActivityType.Manual_Notes].tag" (click)="launchNoteModal(log.new_notes)">
+                  <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ManualNotes].tag; else actionCell" 
+                        (click)="launchNoteModal(log.new_notes)">
                     <img [src]="noteSvgPath"> <span class="note-link">{{ log.source }}</span>
                   </div>
-                  <div *ngIf="log.source_activity_name != sourceActivityName[sourceActivityType.Manual_Notes].tag">
-                    {{ log.source }}
-                  </div>
+                  <ng-template #actionCell>
+                    <div *ngIf="log.source_activity_name.includes(sourceActivityName[sourceActivityType.ActionContactTrace].tag); else exposureCell" 
+                          (click)="launchCaseEventModal(log.contact_trace_event_id)">
+                      <span class="note-link">{{ log.source }}</span>
+                    </div>
+                    <ng-template #exposureCell>
+                      <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ExposureAlerts].tag; else normalCell">
+                        <a ui-button
+                          cpTracker
+                          variant="inline"
+                          cpTarget="view_info"
+                          [eventData]="eventData"
+                          [routerLink]="['/contact-trace', 'cases', log.source_obj_id]">
+                          {{ log.source_obj_id }}
+                        </a>
+                      </div>
+                      <ng-template #normalCell>
+                        <div>{{ log.source }}</div>
+                      </ng-template>
+                    </ng-template>
+                  </ng-template>
                 </td>
                 
                 <td ui-table-cell align="right">
@@ -92,4 +111,8 @@
 </div>  
 <cp-modal modalId="viewNote">
   <cp-note-view-modal [note]="modalNote"></cp-note-view-modal>
+</cp-modal>
+
+<cp-modal modalId="viewEvent">
+  <cp-event-view-modal [cases]="eventCases" [loading]="eventModalLoading"></cp-event-view-modal>
 </cp-modal>
