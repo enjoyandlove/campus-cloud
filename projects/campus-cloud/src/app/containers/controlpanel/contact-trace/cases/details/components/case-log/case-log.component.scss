@@ -1,0 +1,18 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.actions {
+  @include card-margin();
+
+  margin-top: 0;
+}
+
+cp-dot {
+  margin-right: 8px;
+}
+
+.note-link {
+  cursor: pointer;
+  color: #0085ff;
+  margin-left: 8px;
+}

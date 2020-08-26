@@ -25,6 +25,21 @@ export interface ICaseAction {
   name: string;
 }
 
+export interface ICaseLog {
+  id: number;
+  source_obj_id: number;
+  source_type: number;
+  source_activity_name: string;
+  activity_time_epoch: number;
+  new_status: ICaseStatus;
+  source_case_action_id: number;
+  new_notes: string;
+  form_name: string;
+  admin_name: string;
+  source: string;
+  event: string;
+}
+
 export enum CaseTypes {
   CtCase = 1
 }

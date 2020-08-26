@@ -5,4 +5,10 @@
     [case]="case"
   >
   </cp-case-view>
+
+  <cp-case-log [caseId]="caseId"></cp-case-log>
+
+  <cp-modal modalId="viewNote">
+    <cp-note-view-modal [case]="case"></cp-note-view-modal>
+  </cp-modal>
 </div>

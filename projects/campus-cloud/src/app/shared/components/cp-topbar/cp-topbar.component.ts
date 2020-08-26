@@ -162,7 +162,11 @@ export class CPTopBarComponent implements OnInit {
         CP_PRIVILEGES_MAP.contact_trace_exposure_notification
       );
 
-      this.canContractTrace = canContactTraceQR || canContactTraceForms || canContactTraceCases || canContactTraceExposureNotification;
+      this.canContractTrace =
+        canContactTraceQR ||
+        canContactTraceForms ||
+        canContactTraceCases ||
+        canContactTraceExposureNotification;
 
       if (canContactTraceForms) {
         this.contactTraceRouterLink = ['/contact-trace'];

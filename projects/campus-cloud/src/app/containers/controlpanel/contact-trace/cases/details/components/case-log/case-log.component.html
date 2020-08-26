@@ -1,0 +1,90 @@
+<div class = "row">
+  <div class="col-12">
+    <div class="cp-card actions">
+
+      <div class="row">
+        <div class="col-6">
+          <h4>{{ 't_case_history' | cpI18n }}</h4>
+        </div>
+        <div class="col-3 float-right">
+          <cp-range-picker [class]="'cancel'"
+                            [icon]="'date_range'"
+                            [dateRanges]="dateRanges"
+                            (rangeChange)="onDateChange($event)">
+          </cp-range-picker>
+        </div>
+        <div class="col-2">
+          <cp-dropdown class="topbar--dropdown"
+                        [items]="caseStatus$ | async"
+                        (selected)="onLogFilter($event)">
+          </cp-dropdown>
+        </div>
+        <div class="col-1">
+          <button          
+            ui-button
+            variant="stroked"
+            overlayWidth="9.78em"
+            [triggerFor]="primary"
+            ready-ui-menu-trigger
+            direction="bottom-left"
+            class="action-button"
+            [color]="'default'"
+          >
+            <ready-ui-stack spacing="tight">
+              <ready-ui-icon
+                width="20px"
+                name="more_horiz"
+              >
+              </ready-ui-icon>
+            </ready-ui-stack>
+          </button>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-12">
+          <table ui-table>
+            <thead>
+              <tr ui-table-row>
+                <th ui-table-cell>{{ 't_shared_date' | cpI18n }}</th>                                                     
+                <th ui-table-cell>{{ 'event' | cpI18n }}</th>
+                <th ui-table-cell>{{ 't_case_status' | cpI18n }}</th>
+                <th ui-table-cell>{{ 't_shared_source' | cpI18n }}</th>
+                <th ui-table-cell></th>
+              </tr>
+            </thead>
+        
+            <tbody *ngIf="!loading">
+              <tr ui-table-row
+                  *ngFor="let log of caseLog; index as i">
+                <td ui-table-cell>
+                  {{ log.activity_time_epoch | cpDatePipe: dateFormat }}
+                </td>
+                
+                <td ui-table-cell>
+                  {{ log.event }}
+                </td>
+        
+                <td ui-table-cell>
+                  <cp-dot color="#{{log.new_status.color}}"></cp-dot>{{ log.new_status.name }}
+                </td>
+        
+                <td ui-table-cell>
+                  <div *ngIf="log.source_activity_name == sourceActivityName[1].tag">
+                    <img [src]="noteSvgPath" (click)="launchNoteModal()"> <span class="note-link" (click)="launchNoteModal()">{{ log.source }}</span>
+                  </div>
+                  <div *ngIf="log.source_activity_name != sourceActivityName[1].tag">
+                    {{ log.source }}
+                  </div>
+                </td>
+                
+                <td ui-table-cell align="right">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
