@@ -2,12 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CasesComponent } from './cases.component';
 
-import { CPTestModule, configureTestSuite } from '@campus-cloud/shared/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { CasesUtilsService } from './cases.utils.service';
-import { CasesModule } from './cases.module';
-import { EffectsModule } from '@ngrx/effects';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('CasesComponent', () => {
   let component: CasesComponent;
@@ -18,8 +17,15 @@ describe('CasesComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         declarations: [CasesComponent],
-        imports: [CPTestModule, EffectsModule.forRoot([]), CasesModule],
-        providers: [CPI18nPipe, CasesUtilsService, CPI18nPipe]
+        imports: [CPTestModule],
+        providers: [CPI18nPipe, CasesUtilsService, CPI18nPipe, provideMockStore({
+          initialState: {
+            caseModule: {
+              cases: {},
+              caseStatus: {}
+            }
+          }
+        })]
       });
 
       await TestBed.compileComponents();
