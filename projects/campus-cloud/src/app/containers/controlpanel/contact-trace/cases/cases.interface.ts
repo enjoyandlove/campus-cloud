@@ -40,6 +40,12 @@ export interface ICaseLog {
   event: string;
 }
 
+export interface ISourceActivityName {
+  tag: string;
+  name: string;
+  source: string;
+}
+
 export enum CaseTypes {
   CtCase = 1
 }
@@ -54,4 +60,10 @@ export enum CreationMethod {
   ByCsv,
   ByForm,
   ByApi
+}
+
+export enum SourceActivityType {
+  Creation = 0,
+  Manual_Notes,
+  Manual_Status
 }

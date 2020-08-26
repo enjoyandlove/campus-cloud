@@ -1,14 +1,21 @@
-<div>
-  <cp-case-view *ngIf="!loading"
-    [isEditing]="isEditing"
-    (onEditing)="onEditing($event)"
-    [case]="case"
-  >
-  </cp-case-view>
+<div [ngSwitch]="pageLoading">
+  <div class="col-12" *ngSwitchCase="true">
+    <cp-spinner class="float-center"></cp-spinner>
+  </div>
+  <div class="col-12" *ngSwitchCase="false">
+    <cp-case-view *ngIf="!loading"
+      (onSubmitted)="onSubmitted($event)"
+      (onEditing)="onEditing($event)"
+      [case]="case"
+    >
+    </cp-case-view>
 
-  <cp-case-log [caseId]="caseId" *ngIf="!isEditing"></cp-case-log>
-
-  <cp-modal modalId="viewNote">
-    <cp-note-view-modal [case]="case"></cp-note-view-modal>
-  </cp-modal>
+    <cp-case-log #caseLogList
+          *ngIf="!isEditing && isSubmitted"
+          [case]="case" 
+          [isSubmitted]="isSubmitted"        
+    >
+    </cp-case-log>
+  </div>
 </div>
+

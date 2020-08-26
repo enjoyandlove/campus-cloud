@@ -749,11 +749,26 @@
   "case_details": {
     "message": "Case Details"
   },
+  "case_event_creation": {
+    "message": "Status Added"
+  },
+  "case_event_manual_notes": {
+    "message": "Notes Changes"
+  },
+  "case_event_manual_status": {
+    "message": "Status Change"
+  },
   "case_message_duplicate_email": {
     "message": "Duplicate Email"
   },
   "case_pending_action": {
     "message": "Pending Action"
+  },
+  "case_source_creation": {
+    "message": "Manual Import"
+  },
+  "case_source_manual_status": {
+    "message": "Escalated by"
   },
   "case_status_all": {
     "message": "All Cases"
@@ -1107,9 +1122,6 @@
   "contact_trace_forms_expired": {
     "message": "Expired"
   },
-  "contact_trace_forms_exposure_notification": {
-    "message": "Exposure Notification"
-  },
   "contact_trace_forms_form_builder": {
     "message": "Form Builder"
   },
@@ -1290,15 +1302,6 @@
   "contact_trace_forms_unpublish": {
     "message": "Unpublish"
   },
-  "contact_trace_forms_duplicate": {
-    "message": "Duplicate"
-  },
-  "contact_trace_forms_duplicate_form": {
-    "message": "Duplicate form"
-  },
-  "contact_trace_forms_duplicate_new_name": {
-    "message": "(Copy) %s"
-  },
   "contact_trace_forms_unpublish_form": {
     "message": "Unpublish Form"
   },
@@ -1347,53 +1350,8 @@
   "contact_trace_notification_delete_success": {
     "message": "Notification successfully deleted"
   },
-  "contact_trace_notification_notify": {
-    "message": "Notify"
-  },
-  "contact_trace_notification_no_results": {
-    "message": "No notifications found"
-  },
-  "contact_trace_notification_scheduled": {
-    "message": "Scheduled"
-  },
-  "contact_trace_notification_sent": {
-    "message": "Sent"
-  },
-  "contact_trace_notification_subject": {
-    "message": "Subject"
-  },
-  "contact_trace_notification_to": {
-    "message": "To"
-  },
-  "contact_trace_notification_view_message": {
-    "message": "View Message"
-  },
-  "contact_trace_notification_case": {
-    "message": "Case"
-  },
-  "contact_trace_notification_case_status": {
-    "message": "Case Status"
-  },
-  "contact_trace_notification_contact_tracing_service": {
-    "message": "Contact Tracing Service"
-  },
-  "contact_trace_notification_create_notification": {
-    "message": "Create Notification"
-  },
-  "contact_trace_notification_custom_list": {
-    "message": "Custom List"
-  },
-  "contact_trace_notification_date_sent": {
-    "message": "Date Sent"
-  },
-  "contact_trace_notification_delete_confirmation": {
-    "message": "Are you sure you want to delete %s?"
-  },
-  "contact_trace_notification_delete_notification": {
-    "message": "Delete Notification"
-  },
-  "contact_trace_notification_delete_success": {
-    "message": "Notification successfully deleted"
+  "contact_trace_notification_error": {
+    "message": "Error"
   },
   "contact_trace_notification_filter": {
     "message": "Filter"
@@ -1410,6 +1368,12 @@
   "contact_trace_notification_no_results": {
     "message": "No notifications found"
   },
+  "contact_trace_notification_pending": {
+    "message": "Pending"
+  },
+  "contact_trace_notification_processing": {
+    "message": "Processing"
+  },
   "contact_trace_notification_sent": {
     "message": "Sent"
   },
@@ -1421,24 +1385,6 @@
   },
   "contact_trace_notification_template": {
     "message": "Template"
-  },
-  "contact_trace_notification_template_header": {
-    "message": "Notification Templates"
-  },
-  "contact_trace_notification_template_title_clear": {
-    "message": "Clear"
-  },
-  "contact_trace_notification_template_title_exposed": {
-    "message": "Exposed"
-  },
-  "contact_trace_notification_template_title_symptomatic": {
-    "message": "Symptomatic"
-  },
-  "contact_trace_notification_template_title_self_reported": {
-    "message": "Self-Reported"
-  },
-  "contact_trace_notification_template_title_confirmed": {
-    "message": "Confirmed"
   },
   "contact_trace_notification_to": {
     "message": "To"
@@ -1632,6 +1578,9 @@
   },
   "downloads": {
     "message": "Downloads"
+  },
+  "download_activity": {
+    "message": "Download_Activity"
   },
   "download_all_cases": {
     "message": "Download All Cases"
@@ -3820,9 +3769,6 @@
   },
   "t_personas_tile_create_header": {
     "message": "New Tile"
-  },
-  "t_personas_tile_create_resource_type_health_pass": {
-    "message": "Health Pass"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Calendars"

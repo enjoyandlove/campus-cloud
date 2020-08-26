@@ -11,6 +11,8 @@ export enum caseActions {
   GET_FILTERED_CASES_FAIL = '[contact_trace.cases] get filtered cases fail',
   GET_FILTERED_CASES_SUCCESS = '[contact_trace.cases] get filtered cases success',
 
+  SET_SELECTED_CASE_ID = '[contact_trace.cases] set selected case id',
+
   GET_CASE_BY_ID = '[contact_trace.cases] get case by id',
   GET_CASE_BY_ID_FAIL = '[contact_trace.cases] get case by id fail',
   GET_CASE_BY_ID_SUCCESS = '[contact_trace.cases] get case by id success',
@@ -69,6 +71,11 @@ export class GetFilteredCasesSuccess implements Action {
 
 export class GetCaseById implements Action {
   readonly type = caseActions.GET_CASE_BY_ID;
+  constructor(public payload: { id: number }) {}
+}
+
+export class SetSelectedCaseId implements Action {
+  readonly type = caseActions.SET_SELECTED_CASE_ID;
   constructor(public payload: { id: number }) {}
 }
 
@@ -162,6 +169,7 @@ export type CasesAction =
   | GetCases
   | GetCasesFail
   | GetCasesSuccess
+  | SetSelectedCaseId
   | GetCaseById
   | GetCaseByIdFail
   | GetCaseByIdSuccess

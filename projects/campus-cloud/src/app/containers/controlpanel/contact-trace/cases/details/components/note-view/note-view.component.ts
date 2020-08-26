@@ -1,4 +1,4 @@
-import { Input, OnInit, Component, ViewChild } from '@angular/core';
+import { Input, OnInit, Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ICase } from '../../../cases.interface';
 
 @Component({
@@ -7,7 +7,7 @@ import { ICase } from '../../../cases.interface';
   styleUrls: ['./note-view.component.scss']
 })
 export class NoteViewComponent implements OnInit {
-  @Input() case: ICase;
+  @Input() note: String;
 
   constructor() {}
 

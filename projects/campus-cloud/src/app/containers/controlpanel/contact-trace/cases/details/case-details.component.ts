@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { map, filter, takeUntil } from 'rxjs/operators';
 
 import * as fromStore from '../store';
@@ -13,6 +13,7 @@ import { ICase } from '../cases.interface';
 import { CasesService } from '../cases.service';
 import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
+import { CaseLogComponent } from './components';
 
 @Mixin([Destroyable])
 @Component({
@@ -20,13 +21,18 @@ import { CPSession } from '@campus-cloud/session';
   templateUrl: './case-details.component.html',
   styleUrls: ['./case-details.component.scss']
 })
-export class CaseDetailsComponent extends BaseComponent implements OnInit, OnDestroy, Destroyable {
+export class CaseDetailsComponent extends BaseComponent implements OnInit {
+  @ViewChild('caseLogList') caseLogList: CaseLogComponent;
+
+  isSubmitted: boolean = true;
   isEditing: boolean = false;
   caseId;
   userId;
   case_status;
   case: ICase;
   loading: boolean;
+  pageLoading: boolean;
+  getCasesById$: Observable<any>;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -66,17 +72,20 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit, OnDes
 
   loadCaseDetails() {
     if (this.caseId) {
-      this.store
-        .select(fromStore.getCasesById(this.caseId))
-        .pipe(
-          takeUntil(this.destroy$),
-          filter((res: ICase) => !!res),
-          map((res: ICase) => {
-            this.case = res;
-            this.buildHeader();
-          })
-        )
-        .subscribe();
+      this.pageLoading = true;
+
+      this.getCasesById$ = this.store.select(fromStore.getCasesById).pipe(
+        takeUntil(this.destroy$),
+        filter((res: ICase) => !!res)
+      );
+
+      this.getCasesById$.subscribe((res: ICase) => {
+        if (res) {
+          this.case = res;
+        }
+        this.pageLoading = false;
+        this.buildHeader();
+      });
     } else {
       this.loading = true;
       const params = new HttpParams()
@@ -92,15 +101,21 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit, OnDes
     }
   }
 
+  onSubmitted(submitted) {
+    this.isSubmitted = true;
+    this.isEditing = false;
+  }
+
   onEditing(editing) {
     this.isEditing = editing;
   }
 
   ngOnInit() {
-    this.loadCaseDetails();
-  }
+    if (this.caseId) {
+      this.store.dispatch(new fromStore.SetSelectedCaseId({ id: this.caseId }));
+      this.store.dispatch(new fromStore.GetCaseById({ id: this.caseId }));
+    }
 
-  ngOnDestroy() {
-    this.emitDestroy();
+    this.loadCaseDetails();
   }
 }

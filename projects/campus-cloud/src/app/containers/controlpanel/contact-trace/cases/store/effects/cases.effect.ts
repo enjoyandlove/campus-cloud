@@ -1,5 +1,5 @@
-import { map, tap, mergeMap, catchError, filter, withLatestFrom } from 'rxjs/operators';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { map, tap, mergeMap, catchError } from 'rxjs/operators';
+import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -57,20 +57,19 @@ export class CasesEffect {
     })
   );
 
-  @Effect()
-  getCaseById$: Observable<
-    fromActions.GetCaseByIdSuccess | fromActions.GetCaseByIdFail
-  > = this.actions$.pipe(
-    ofType(fromActions.caseActions.GET_CASE_BY_ID),
-    mergeMap((action: fromActions.GetCaseById) => {
-      const { id } = action.payload;
-      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
+  getCaseById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.caseActions.GET_CASE_BY_ID),
+      mergeMap((action: fromActions.GetCaseById) => {
+        const { id } = action.payload;
+        const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-      return this.service.getCaseById(params, id).pipe(
-        map((data: ICase) => new fromActions.GetCaseByIdSuccess(data)),
-        catchError((error) => of(new fromActions.GetCaseByIdFail(parseErrorResponse(error))))
-      );
-    })
+        return this.service.getCaseById(params, id).pipe(
+          map((data: ICase) => new fromActions.GetCaseByIdSuccess(data)),
+          catchError((error) => of(new fromActions.GetCaseByIdFail(parseErrorResponse(error))))
+        );
+      })
+    )
   );
 
   @Effect()
