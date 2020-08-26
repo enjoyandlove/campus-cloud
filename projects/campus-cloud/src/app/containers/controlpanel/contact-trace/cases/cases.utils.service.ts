@@ -32,6 +32,21 @@ export class CasesUtilsService {
         tag: '%manual_status%',
         name: cpI18nPipe.transform('case_event_manual_status'),
         source: cpI18nPipe.transform('case_source_manual_status')
+      },
+      {
+        tag: '%action_notify%',
+        name: cpI18nPipe.transform('case_event_action_notify'),
+        source: ''
+      },
+      {
+        tag: '%action_contact_trace%',
+        name: cpI18nPipe.transform('case_event_action_contact_trace'),
+        source: ''
+      },
+      {
+        tag: '%exposure_alert%',
+        name: cpI18nPipe.transform('case_event_exposure_alert'),
+        source: cpI18nPipe.transform('case_source_exposure_alert')
       }
     ];
   }
@@ -87,16 +102,47 @@ export class CasesUtilsService {
       if (matchedSource) {
         switch (matchedSource.tag) {
           case this.sourceActivityName[SourceActivityType.Creation].tag:
-            newItem.event = item.source_activity_name.replace(matchedSource.tag, this.sourceActivityName[SourceActivityType.Creation].name + " -");
+            newItem.event = item.source_activity_name.replace(
+              matchedSource.tag,
+              this.sourceActivityName[SourceActivityType.Creation].name
+            );
             newItem.source = this.sourceActivityName[0].source;
             break;
-          case this.sourceActivityName[SourceActivityType.Manual_Notes].tag:
+          case this.sourceActivityName[SourceActivityType.ManualNotes].tag:
             newItem.event = matchedSource.name;
             newItem.source = matchedSource.source;
             break;
-          case this.sourceActivityName[SourceActivityType.Manual_Status].tag:
-            newItem.event = item.source_activity_name.replace(matchedSource.tag, this.sourceActivityName[SourceActivityType.Manual_Status].name + " -");
+          case this.sourceActivityName[SourceActivityType.ManualStatus].tag:
+            newItem.event = item.source_activity_name.replace(
+              matchedSource.tag,
+              this.sourceActivityName[SourceActivityType.ManualStatus].name
+            );
             newItem.source = `${matchedSource.source} ${item.admin_name}`;
+            break;
+          case this.sourceActivityName[SourceActivityType.ActionNotify].tag:
+            newItem.event = item.source_activity_name.replace(
+              matchedSource.tag,
+              this.sourceActivityName[SourceActivityType.ActionNotify].name
+            );
+            newItem.source = '';
+            break;
+          case this.sourceActivityName[SourceActivityType.ActionContactTrace].tag:
+            newItem.event = item.source_activity_name.replace(
+              matchedSource.tag,
+              this.sourceActivityName[SourceActivityType.ActionContactTrace].name
+            );
+            newItem.source = item.source_activity_name.substring(
+              0,
+              item.source_activity_name.indexOf('%') - 1
+            );
+            break;
+          case this.sourceActivityName[SourceActivityType.ExposureAlerts].tag:
+            newItem.event = item.source_activity_name.replace(
+              matchedSource.tag,
+              this.sourceActivityName[SourceActivityType.ExposureAlerts].name
+            );
+            newItem.source = '';
+            break;
         }
       } else {
         newItem.event = item.source_activity_name;

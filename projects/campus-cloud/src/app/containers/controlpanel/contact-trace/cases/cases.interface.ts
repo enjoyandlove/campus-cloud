@@ -64,6 +64,9 @@ export enum CreationMethod {
 
 export enum SourceActivityType {
   Creation = 0,
-  Manual_Notes,
-  Manual_Status
+  ManualNotes,
+  ManualStatus,
+  ActionNotify,
+  ActionContactTrace,
+  ExposureAlerts
 }
