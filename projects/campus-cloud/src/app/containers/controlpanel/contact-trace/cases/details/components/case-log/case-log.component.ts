@@ -55,7 +55,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     private service: CasesService,
     private cpI18nPipe: CPI18nPipe,
     private utils: CasesUtilsService,
-    private store: Store<fromStore.ICasesState>
+    private store: Store<fromStore.State>
   ) {
     super();
   }
