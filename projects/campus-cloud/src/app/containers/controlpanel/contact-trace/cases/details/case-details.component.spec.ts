@@ -2,11 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CaseDetailsComponent } from './case-details.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RootStoreModule } from '@projects/campus-cloud/src/app/store';
 import { CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
 import { CasesService } from '../cases.service';
 import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { mockSchool } from '@campus-cloud/session/mock/school';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('CaseDetailsComponent', () => {
   let component: CaseDetailsComponent;
@@ -15,8 +15,15 @@ describe('CaseDetailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CaseDetailsComponent],
-      imports: [RouterTestingModule, RootStoreModule, CPTestModule],
-      providers: [CasesService]
+      imports: [RouterTestingModule, CPTestModule],
+      providers: [CasesService, provideMockStore({
+        initialState: {
+          caseModule: {
+            cases: {},
+            caseStatus: {}
+          }
+        }
+      })]
     }).compileComponents();
   }));
 
