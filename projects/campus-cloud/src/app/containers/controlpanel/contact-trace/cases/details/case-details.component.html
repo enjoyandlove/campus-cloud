@@ -6,7 +6,7 @@
   >
   </cp-case-view>
 
-  <cp-case-log [caseId]="caseId"></cp-case-log>
+  <cp-case-log [caseId]="caseId" *ngIf="!isEditing"></cp-case-log>
 
   <cp-modal modalId="viewNote">
     <cp-note-view-modal [case]="case"></cp-note-view-modal>
