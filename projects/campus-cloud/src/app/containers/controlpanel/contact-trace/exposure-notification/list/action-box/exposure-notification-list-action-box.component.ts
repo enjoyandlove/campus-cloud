@@ -1,14 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CP_TRACK_TO, IEventData } from '@campus-cloud/shared/directives';
-import {
-  CPI18nService,
-  CPTrackingService
-} from '@campus-cloud/shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CPSession } from '@campus-cloud/session';
-import {
-  amplitudeEvents,
-  CP_PRIVILEGES_MAP
-} from '@campus-cloud/shared/constants';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { ExposureNotificationStatus } from '@controlpanel/contact-trace/exposure-notification';
 
@@ -68,5 +62,4 @@ export class ExposureNotificationListActionBoxComponent implements OnInit {
   onSelectedType(selection): void {
     this.filterChange.emit(selection);
   }
-
 }

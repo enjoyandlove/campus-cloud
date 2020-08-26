@@ -163,6 +163,8 @@ export const ENDPOINTS = {
 
   CASE_STATUS: 'case_status',
 
+  CASE_ACTIVITY_LOG: 'case_activity_log',
+
   FORMS: 'form',
 
   FORM_RESPONSE: 'form_response',

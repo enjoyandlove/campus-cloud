@@ -1107,6 +1107,9 @@
   "contact_trace_forms_expired": {
     "message": "Expiré"
   },
+  "contact_trace_forms_exposure_notification": {
+    "message": "Exposure Notification"
+  },
   "contact_trace_forms_form_builder": {
     "message": "Créateur de formulaire"
   },

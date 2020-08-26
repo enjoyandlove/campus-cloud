@@ -22,10 +22,9 @@ import { CasesUtilsService } from './cases.utils.service';
 import { CasesService } from './cases.service';
 import { CasesListComponent } from './list';
 import { CaseDetailsComponent } from './details';
-import { CaseViewComponent } from './details/components';
+import { CaseViewComponent, CaseLogComponent, NoteViewComponent } from './details/components';
 import { CasesExcelModalComponent, CasesImportTopBarComponent } from './excel/components';
 import { CasesExcelComponent } from './excel';
-
 import { CaseDeleteComponent } from './delete';
 
 @NgModule({
@@ -41,7 +40,9 @@ import { CaseDeleteComponent } from './delete';
     CasesExcelModalComponent,
     CasesImportTopBarComponent,
     CasesExcelComponent,
-    CaseDeleteComponent
+    CaseDeleteComponent,
+    CaseLogComponent,
+    NoteViewComponent
   ],
 
   imports: [
