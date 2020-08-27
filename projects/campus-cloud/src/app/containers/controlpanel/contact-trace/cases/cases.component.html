@@ -1,6 +1,6 @@
 <div class="row">    
   <div class="col-12">
-    <cp-cases-list-action-box (launchCreateCaseModal)="onLaunchCaseCreate()"
+    <cp-cases-list-action-box (launchCreateCaseModal)="onLaunchCaseCreate($event)"
                               (search)="onSearch($event)"
                               (selectedFilter)="onSelectedFilter($event)"
                               (filterByDates)="onDateFilter($event)"
@@ -45,7 +45,7 @@
           modalId="createCase"
           (modalClose)="isCaseCreate = false">
   <cp-case-create
-                (created)="onLaunchCaseCreate()"
+                (created)="onLaunchCaseCreate($event)"
                 (teardown)="isCaseCreate = false">
   </cp-case-create>
 </cp-modal>
