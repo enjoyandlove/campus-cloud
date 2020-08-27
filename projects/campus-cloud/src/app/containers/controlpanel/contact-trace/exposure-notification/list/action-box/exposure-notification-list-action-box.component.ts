@@ -4,7 +4,7 @@ import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services'
 import { CPSession } from '@campus-cloud/session';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
-import { ExposureNotificationStatus } from '@controlpanel/contact-trace/exposure-notification';
+import { ExposureNotificationStatus } from '@controlpanel/contact-trace/exposure-notification/models';
 
 @Component({
   selector: 'cp-exposure-notification-list-action-box',
@@ -33,7 +33,7 @@ export class ExposureNotificationListActionBoxComponent implements OnInit {
       eventProperties: this.cpTracking.getAmplitudeMenuProperties()
     };
 
-    this.canCreate = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms);
+    this.canCreate = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_exposure_notification);
 
     this.types = [
       {

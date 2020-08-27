@@ -18,7 +18,7 @@ describe('CaseDetailsComponent', () => {
       imports: [RouterTestingModule, CPTestModule],
       providers: [CasesService, provideMockStore({
         initialState: {
-          caseModule: {
+          casesModule: {
             cases: {},
             caseStatus: {}
           }

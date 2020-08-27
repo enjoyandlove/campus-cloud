@@ -10,10 +10,8 @@ import {
 import { CPSession } from '@campus-cloud/session';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { HttpParams } from '@angular/common/http';
-import {
-  ExposureNotification,
-  ExposureNotificationService
-} from '@controlpanel/contact-trace/exposure-notification';
+import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification/models';
+import { ExposureNotificationService } from '@controlpanel/contact-trace/exposure-notification/services';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 @Component({

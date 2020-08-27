@@ -61,7 +61,7 @@ import { CaseDeleteComponent } from './delete';
     FormsModule,
     EngagementModule,
     EffectsModule.forFeature(effects),
-    StoreModule.forFeature('caseModule', reducers)
+    StoreModule.forFeature('casesModule', reducers)
   ],
 
   providers: [CPI18nPipe, AdminService, ModalService, CasesService, CasesUtilsService]

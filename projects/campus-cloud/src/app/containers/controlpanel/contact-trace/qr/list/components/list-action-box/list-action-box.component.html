@@ -21,7 +21,8 @@
           </cp-range-picker>
         </div>
         <div class="col-3 text-right float-right">
-          <button type="button"
+          <button *ngIf="allowServiceProvidersImport"
+                  type="button"
                   cpTracker
                   [eventData]="eventData"
                   class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding"

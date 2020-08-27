@@ -161,9 +161,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
   getCasesStatus() {
     return this.store.select(fromStore.getCaseStatus).pipe(
       map((statuses: ICaseStatus[]) => {
-        const responseCopy = [...statuses];
-
-        return responseCopy;
+        return [...statuses];
       })
     );
   }

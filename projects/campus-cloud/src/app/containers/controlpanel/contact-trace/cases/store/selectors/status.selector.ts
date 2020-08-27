@@ -4,7 +4,7 @@ import * as fromFeature from '../reducers';
 import * as fromCaseStatus from '../reducers/status.reducer';
 
 export const getCaseStatusState = (state: fromFeature.State) => {
-  return state.caseModule.caseStatus;
+  return state.casesModule.caseStatus;
 };
 
 export const getCaseStatus = createSelector(

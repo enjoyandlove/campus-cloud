@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { Form, FormsService } from '@controlpanel/contact-trace/forms';
+import { Form } from '@controlpanel/contact-trace/forms/models';
+import { FormsService } from '@controlpanel/contact-trace/forms/services';
 import { map } from 'rxjs/operators';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';

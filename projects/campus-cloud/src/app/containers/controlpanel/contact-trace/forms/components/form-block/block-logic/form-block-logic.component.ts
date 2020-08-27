@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BlockType, Form, FormBlock } from '../../../models';
-import { FormsHelperService } from '@controlpanel/contact-trace/forms';
+import { FormsHelperService } from '@controlpanel/contact-trace/forms/services';
 
 @Component({
   selector: 'cp-form-block-logic',

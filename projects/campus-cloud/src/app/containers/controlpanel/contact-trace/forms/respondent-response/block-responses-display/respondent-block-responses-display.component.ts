@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BlockType, FormBlock, FormResponse } from '../../../forms';
+import { BlockType, FormBlock, FormResponse } from '../../models';
 import { FormsHelperService } from '../../services';
 
 @Component({

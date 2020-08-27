@@ -433,6 +433,30 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms];
     }
 
+    if (selectedActions.indexOf(contactTraceMenu.manageCases) > -1) {
+      this.schoolPrivileges = {
+        ...this.schoolPrivileges,
+        [CP_PRIVILEGES_MAP.contact_trace_cases]: {
+          r: true,
+          w: true
+        }
+      };
+    } else {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_cases];
+    }
+
+    if (selectedActions.indexOf(contactTraceMenu.manageNotifications) > -1) {
+      this.schoolPrivileges = {
+        ...this.schoolPrivileges,
+        [CP_PRIVILEGES_MAP.contact_trace_exposure_notification]: {
+          r: true,
+          w: true
+        }
+      };
+    } else {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification];
+    }
+
     return;
   }
 
@@ -693,6 +717,8 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     this.canReadContactTrace =
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr] ||
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms] ||
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_cases] ||
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification] ||
       false;
 
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
@@ -724,8 +750,12 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     this.contactTraceMenu = this.utils.contactTraceDropdown(
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr],
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms],
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_cases],
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification],
       this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr],
-      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms]
+      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms],
+      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_cases],
+      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification]
     );
 
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);

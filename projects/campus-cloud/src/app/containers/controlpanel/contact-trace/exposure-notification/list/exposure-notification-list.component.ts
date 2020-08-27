@@ -14,11 +14,8 @@ import {
   switchMap
 } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import {
-  ExposureNotification,
-  ExposureNotificationService,
-  ExposureNotificationStatus
-} from '../.';
+import { ExposureNotification, ExposureNotificationStatus } from '../models';
+import { ExposureNotificationService } from '../services';
 import { FORMAT } from '@campus-cloud/shared/pipes';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import { CPI18nService } from '@campus-cloud/shared/services';

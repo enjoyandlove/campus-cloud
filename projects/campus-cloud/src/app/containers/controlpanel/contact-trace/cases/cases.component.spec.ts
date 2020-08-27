@@ -20,7 +20,7 @@ describe('CasesComponent', () => {
         imports: [CPTestModule],
         providers: [CPI18nPipe, CasesUtilsService, CPI18nPipe, provideMockStore({
           initialState: {
-            caseModule: {
+            casesModule: {
               cases: {},
               caseStatus: {}
             }
