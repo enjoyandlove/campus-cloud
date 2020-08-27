@@ -1116,6 +1116,15 @@
   "contact_trace_forms_draft": {
     "message": "Brouillon"
   },
+  "contact_trace_forms_duplicate": {
+    "message": "Dupliquer"
+  },
+  "contact_trace_forms_duplicate_form": {
+    "message": "Dupliquer le formulaire"
+  },
+  "contact_trace_forms_duplicate_new_name": {
+    "message": "(Copie) %s"
+  },
   "contact_trace_forms_edit": {
     "message": "Éditer"
   },
@@ -1383,6 +1392,9 @@
   "contact_trace_notification_processing": {
     "message": "Traitement"
   },
+  "contact_trace_notification_scheduled": {
+    "message": "Planifié"
+  },
   "contact_trace_notification_sent": {
     "message": "Envoyé"
   },
@@ -1394,6 +1406,24 @@
   },
   "contact_trace_notification_template": {
     "message": "Modèle"
+  },
+  "contact_trace_notification_template_header": {
+    "message": "Modèles de Notification"
+  },
+  "contact_trace_notification_template_title_clear": {
+    "message": "Clair"
+  },
+  "contact_trace_notification_template_title_confirmed": {
+    "message": "Confirmé"
+  },
+  "contact_trace_notification_template_title_exposed": {
+    "message": "Exposé"
+  },
+  "contact_trace_notification_template_title_self_reported": {
+    "message": "Autodéclaré"
+  },
+  "contact_trace_notification_template_title_symptomatic": {
+    "message": "Symptomatique"
   },
   "contact_trace_notification_to": {
     "message": "Vers"
@@ -3814,6 +3844,9 @@
   },
   "t_personas_tile_create_resource_type_form": {
     "message": "Formulaire"
+  },
+  "t_personas_tile_create_resource_type_health_pass": {
+    "message": "‪Passe santé"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Emplois"
