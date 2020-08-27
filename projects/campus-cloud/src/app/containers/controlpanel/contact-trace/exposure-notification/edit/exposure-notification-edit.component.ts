@@ -2,10 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { filter, finalize, map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import {
-  ExposureNotification,
-  ExposureNotificationService
-} from '@controlpanel/contact-trace/exposure-notification';
+import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification/models';
+import { ExposureNotificationService } from '@controlpanel/contact-trace/exposure-notification/services';
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
 import { AnnouncementPriority } from '@controlpanel/notify/announcements/model';

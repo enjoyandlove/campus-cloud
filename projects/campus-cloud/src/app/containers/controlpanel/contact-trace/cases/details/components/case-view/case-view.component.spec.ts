@@ -17,7 +17,14 @@ describe('CaseViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CPTestModule, HttpClientModule, RouterTestingModule],
-      providers: [CasesUtilsService, provideMockStore(), CPI18nPipe],
+      providers: [CasesUtilsService, provideMockStore({
+        initialState: {
+          casesModule: {
+            cases: {},
+            caseStatus: {}
+          }
+        }
+      }), CPI18nPipe],
       declarations: [CaseViewComponent]
     }).compileComponents();
   }));

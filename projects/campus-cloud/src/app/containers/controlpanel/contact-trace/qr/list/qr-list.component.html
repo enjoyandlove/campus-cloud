@@ -1,7 +1,7 @@
 
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  
+
   <div *ngSwitchCase="false">
     <cp-no-content *ngIf="!state.providers.length && hasFilter()"
                     [noContentText]="hasRecords ? noProviderMessage : noProviderAddProviderMessage">

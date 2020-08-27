@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BlockType, FormBlock, LogicOperator, OperandType } from '../../../models';
-import { FormsHelperService } from '@controlpanel/contact-trace/forms';
+import { BlockType, FormBlock } from '../../../models';
+import { FormsHelperService } from '@controlpanel/contact-trace/forms/services';
 
 @Component({
   selector: 'cp-form-block-header',

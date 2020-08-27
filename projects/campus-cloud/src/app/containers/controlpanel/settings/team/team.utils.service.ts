@@ -44,7 +44,9 @@ export enum audienceMenuStatus {
 
 export enum contactTraceMenu {
   manageQR = 2,
-  manageForms = 3
+  manageForms = 3,
+  manageCases = 4,
+  manageNotifications = 5
 }
 
 export enum manageAdminMenu {
@@ -163,11 +165,18 @@ export class TeamUtilsService {
   contactTraceDropdown(
     viewerContactTraceQRPrivilege = { r: false, w: false },
     viewerContactTraceFormsPrivilege = { r: false, w: false },
+    viewerContactTraceCasesPrivilege = { r: false, w: false },
+    viewerContactTraceNotificationsPrivilege = { r: false, w: false },
     adminContactTraceQRPrivilege = { r: false, w: false },
-    adminContactTraceFormsPrivilege = { r: false, w: false }
+    adminContactTraceFormsPrivilege = { r: false, w: false },
+    adminContactTraceCasesPrivilege = { r: false, w: false },
+    adminContactTraceNotificationsPrivilege = { r: false, w: false }
   ): Array<any> {
     let items = [];
-    if (!viewerContactTraceQRPrivilege.r && !viewerContactTraceFormsPrivilege.r) {
+    if (!viewerContactTraceQRPrivilege.r
+      && !viewerContactTraceFormsPrivilege.r
+      && !viewerContactTraceCasesPrivilege.r
+      && !viewerContactTraceNotificationsPrivilege.r) {
       return items;
     }
 
@@ -191,6 +200,28 @@ export class TeamUtilsService {
             label: this.cpI18n.translate('admin_contact_trace_forms'),
             action: contactTraceMenu.manageForms,
             selected: adminContactTraceFormsPrivilege.w
+          }
+        ];
+      }
+
+      if (viewerContactTraceCasesPrivilege.w) {
+        items = [
+          ...items,
+          {
+            label: this.cpI18n.translate('cases'),
+            action: contactTraceMenu.manageCases,
+            selected: adminContactTraceCasesPrivilege.w
+          }
+        ];
+      }
+
+      if (viewerContactTraceNotificationsPrivilege.w) {
+        items = [
+          ...items,
+          {
+            label: this.cpI18n.translate('contact_trace_exposure_notification'),
+            action: contactTraceMenu.manageNotifications,
+            selected: adminContactTraceNotificationsPrivilege.w
           }
         ];
       }

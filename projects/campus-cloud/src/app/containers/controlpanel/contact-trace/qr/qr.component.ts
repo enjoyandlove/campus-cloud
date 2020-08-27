@@ -58,12 +58,11 @@ export class QrComponent extends BaseComponent implements OnInit {
 
     super.fetchData(this.serviceService.getServiceById(this.serviceId)).then((res) => {
       this.service = res.data;
-      this.allowLocationsImport = this.utils.hasSchoolWritePrivilege(
+      const hasWritePrivilege = this.utils.hasSchoolWritePrivilege(
         CP_PRIVILEGES_MAP.contact_trace_qr
       );
-      this.allowServiceProvidersImport = this.utils.hasSchoolWritePrivilege(
-        CP_PRIVILEGES_MAP.services
-      );
+      this.allowLocationsImport = hasWritePrivilege;
+      this.allowServiceProvidersImport = hasWritePrivilege;
     });
   }
 

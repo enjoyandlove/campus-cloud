@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification';
+import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification/models';
 
 @Component({
   selector: 'cp-exposure-notification-to-display',
