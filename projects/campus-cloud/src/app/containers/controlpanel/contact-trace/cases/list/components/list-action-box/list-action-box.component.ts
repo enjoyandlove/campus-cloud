@@ -13,6 +13,7 @@ import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.s
 import { CasesUtilsService } from '../../../cases.utils.service';
 import { ICaseStatus } from '../../../cases.interface';
 import * as fromStore from '../../../store';
+import { CPDate } from '@projects/campus-cloud/src/app/shared/utils';
 
 @Component({
   selector: 'cp-cases-list-action-box',
@@ -28,6 +29,7 @@ export class CasesListActionBoxComponent implements OnInit {
   eventData;
   caseStatus$: Observable<IItem[]>;
   dateRanges: EngageUtils.IDateFilter[];
+  dateFilterOpts;
 
   private destroy$ = new Subject();
 
@@ -94,6 +96,15 @@ export class CasesListActionBoxComponent implements OnInit {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
       eventProperties: this.cpTracking.getAmplitudeMenuProperties()
+    };
+
+    this.dateRanges = this.engageUtils.dateFilter();
+
+    this.dateFilterOpts = {
+      inline: true,
+      mode: 'range',
+      maxDate: CPDate.now(this.session.tz).format(),
+      minDate: null
     };
   }
 
