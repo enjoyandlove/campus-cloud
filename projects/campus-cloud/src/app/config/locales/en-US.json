@@ -1116,6 +1116,15 @@
   "contact_trace_forms_draft": {
     "message": "Draft"
   },
+  "contact_trace_forms_duplicate": {
+    "message": "Duplicate"
+  },
+  "contact_trace_forms_duplicate_form": {
+    "message": "Duplicate form"
+  },
+  "contact_trace_forms_duplicate_new_name": {
+    "message": "(Copy) %s"
+  },
   "contact_trace_forms_edit": {
     "message": "Edit"
   },
@@ -1383,6 +1392,9 @@
   "contact_trace_notification_processing": {
     "message": "Processing"
   },
+  "contact_trace_notification_scheduled": {
+    "message": "Scheduled"
+  },
   "contact_trace_notification_sent": {
     "message": "Sent"
   },
@@ -1394,6 +1406,24 @@
   },
   "contact_trace_notification_template": {
     "message": "Template"
+  },
+  "contact_trace_notification_template_header": {
+    "message": "Notification Templates"
+  },
+  "contact_trace_notification_template_title_clear": {
+    "message": "Clear"
+  },
+  "contact_trace_notification_template_title_confirmed": {
+    "message": "Confirmed"
+  },
+  "contact_trace_notification_template_title_exposed": {
+    "message": "Exposed"
+  },
+  "contact_trace_notification_template_title_self_reported": {
+    "message": "Reported"
+  },
+  "contact_trace_notification_template_title_symptomatic": {
+    "message": "Symptomatic"
   },
   "contact_trace_notification_to": {
     "message": "To"
@@ -3814,6 +3844,9 @@
   },
   "t_personas_tile_create_resource_type_form": {
     "message": "Form"
+  },
+  "t_personas_tile_create_resource_type_health_pass": {
+    "message": "Health Pass"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
