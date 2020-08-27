@@ -26,7 +26,7 @@ import {
   CaseViewComponent,
   CaseLogComponent,
   NoteViewComponent,
-  EventViewComponent
+  CaseEventViewComponent
 } from './details/components';
 import { CasesExcelModalComponent, CasesImportTopBarComponent } from './excel/components';
 import { CasesExcelComponent } from './excel';
@@ -48,7 +48,7 @@ import { CaseDeleteComponent } from './delete';
     CaseDeleteComponent,
     CaseLogComponent,
     NoteViewComponent,
-    EventViewComponent
+    CaseEventViewComponent
   ],
 
   imports: [

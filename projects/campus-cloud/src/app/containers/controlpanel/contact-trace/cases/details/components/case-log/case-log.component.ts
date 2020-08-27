@@ -8,11 +8,12 @@ import { HttpParams } from '@angular/common/http';
 import * as fromStore from '../../../store';
 import { IItem } from '@projects/campus-cloud/src/app/shared/components';
 import { CasesUtilsService } from '../../../cases.utils.service';
-import { IDateFilter } from '@controlpanel/assess/engagement/engagement.utils.service';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
+import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
+import { CPDate } from '@projects/campus-cloud/src/app/shared/utils';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
@@ -28,7 +29,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
 
   @Output() onLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  dateRanges: IDateFilter[];
+  dateRanges: EngageUtils.IDateFilter[];
   casesFilter: IItem[];
   caseLog: ICaseLog[];
   dateFormat = FORMAT.SHORT;
@@ -46,6 +47,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
   public get sourceActivityType(): typeof SourceActivityType {
     return SourceActivityType;
   }
+  dateFilterOpts;
 
   state = {
     current_status_id: null,
@@ -58,6 +60,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     private service: CasesService,
     private cpI18nPipe: CPI18nPipe,
     private utils: CasesUtilsService,
+    private engageUtils: EngageUtils.EngagementUtilsService,
     private store: Store<fromStore.State>,
     public cpTracking: CPTrackingService
   ) {
@@ -79,7 +82,14 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
 
     let search = new HttpParams();
     search = this.session.addSchoolId(search);
-    search = search.append('case_id', this.case.id.toString());
+    search = search
+      .append('case_id', this.case.id.toString())
+      .append('start', this.state.start)
+      .append('end', this.state.end);
+
+    if(this.state.current_status_id != 0) {
+      search = search.append('new_status_ids', this.state.current_status_id);
+    }
 
     super.fetchData(this.service.getCaseActivityLog(search)).then((res) => {
       this.loading = false;
@@ -96,16 +106,10 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
 
   onDateChange(dateRange) {
     if (dateRange.payload) {
-      dateRange = {
-        label: dateRange.label,
-        start: dateRange.payload.range.start,
-        end: dateRange.payload.range.end
-      };
-
       this.state = {
         ...this.state,
-        start: dateRange.start,
-        end: dateRange.end
+        start: dateRange.payload.range.start,
+        end: dateRange.payload.range.end
       };
 
       this.loadCaseActivityLog();
@@ -117,7 +121,6 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       ...this.state,
       current_status_id: item.action
     };
-
     this.loadCaseActivityLog();
   }
 
@@ -126,6 +129,11 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     $('#viewNote').modal({ keyboard: true, focus: true });
   }
 
+  onUpdatedCase(updated) {
+    this.loadCaseActivityLog();
+  }
+
+  onLogLoaded(event) {}
   launchCaseEventModal(event_id) {
     this.eventModalLoading = true;
 
@@ -145,6 +153,15 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     this.sourceActivityName = this.utils.sourceActivityName;
 
     this.noteSvgPath = `${environment.root}assets/svg/contact-trace/cases/external-link.svg`;
+    this.dateRanges = this.engageUtils.dateFilter();
+
+    this.dateFilterOpts = {
+      inline: true,
+      mode: 'range',
+      maxDate: CPDate.now(this.session.tz).format(),
+      minDate: null
+    };
+
     this.getCasesStatus();
     this.loadCaseActivityLog();
 
