@@ -94,4 +94,17 @@ export class CaseViewComponent implements OnInit {
     this.destroy$.complete();
     this.destroy$.unsubscribe();
   }
+
+  traceContactAction(caseItem: ICase) {
+    const updatedCase = {
+      ...caseItem,
+      perform_current_action: true
+    };
+    this.store.dispatch(new fromStore.EditCase(
+      {
+        body: updatedCase,
+        id: caseItem.id
+      }
+    ));
+  }
 }

@@ -25,6 +25,15 @@ const appRoutes: Routes = [
       title: pageTitle.CONTACT_TRACE_EXPOSURE_NOTIFICATION
     },
     component: ExposureNotificationEditComponent
+  },
+  {
+    path: 'case-action/:case_id',
+    data: {
+      zendesk: 'exposure notification',
+      amplitude: 'IGNORE',
+      title: pageTitle.CONTACT_TRACE_EXPOSURE_NOTIFICATION
+    },
+    component: ExposureNotificationEditComponent
   }
 ];
 @NgModule({

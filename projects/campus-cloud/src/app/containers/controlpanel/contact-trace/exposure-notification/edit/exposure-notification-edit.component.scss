@@ -53,6 +53,11 @@
   .form-group {
     margin-bottom: 15px;
   }
+
+  .user-full-name:disabled {
+    background: $color-white;
+    color: #121212;
+  }
 }
 
 .footer {

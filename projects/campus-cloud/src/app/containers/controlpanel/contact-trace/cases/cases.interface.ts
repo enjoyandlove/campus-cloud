@@ -23,6 +23,7 @@ export interface ICaseAction {
   case_status_id: number;
   rank: number;
   name: string;
+  code: string;
 }
 
 export interface ICaseLog {

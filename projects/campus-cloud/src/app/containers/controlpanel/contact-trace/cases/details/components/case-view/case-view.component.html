@@ -96,7 +96,15 @@
             <p class="title">{{ 'case_pending_action' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description">{{ newCase.current_action.name }}</p>
+            <div *ngIf="case.current_action.id !== 0">
+              <a class="action-to-do-link" *ngIf="case.current_action.code !== 'ct:trace_contacts'"
+                 [routerLink]="['/contact-trace', 'exposure-notification', 'case-action', case.id]">
+                {{ case.current_action.name }}</a>
+              <p class="action-to-do-link" *ngIf="case.current_action.code === 'ct:trace_contacts'"
+                 (click)="traceContactAction(case)">
+                {{ case.current_action.name }}</p>
+            </div>
+            <p *ngIf="newCase.current_action.id === 0" class="description">{{'contact_trace_notification_none' | cpI18n}}</p>
           </div>
         </div>
         <div class="row">

@@ -19,7 +19,8 @@
     <div class="row" *ngIf="(cases$ | async).length">
       <div class="col-9">
         <cp-cases-list  [data$]="cases$"
-                        (deleteClick)="onLaunchDeleteModal($event)">
+                        (deleteClick)="onLaunchDeleteModal($event)"
+                        (contactTraceAction)="onContactTraceAction($event)">
         </cp-cases-list>
 
         <cp-pagination [pageNext]="pageNext"

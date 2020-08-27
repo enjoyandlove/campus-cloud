@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { finalize, map, takeUntil } from 'rxjs/operators';
+import { filter, finalize, map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {
   ExposureNotification,
   ExposureNotificationService
@@ -11,6 +11,10 @@ import { Store } from '@ngrx/store';
 import { AnnouncementPriority } from '@controlpanel/notify/announcements/model';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CPSession } from '@campus-cloud/session';
+import * as fromStore from '@controlpanel/contact-trace/cases/store';
+import { ICase } from '@controlpanel/contact-trace/cases/cases.interface';
+import { HttpParams } from '@angular/common/http';
+import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
 
 @Component({
   selector: 'cp-exposure-notification-edit',
@@ -18,8 +22,8 @@ import { CPSession } from '@campus-cloud/session';
   styleUrls: ['./exposure-notification-edit.component.scss']
 })
 export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
-  private unsubscribe: Subject<void> = new Subject();
-  notification: ExposureNotification;
+  protected unsubscribe: Subject<void> = new Subject();
+  notification: ExposureNotification = {};
   webServiceCallInProgress: boolean;
   types = [
     {
@@ -47,6 +51,14 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       label: this.cpI18n.translate('contact_trace_notification_custom_list')
     }
   ];
+
+  toCaseOption = [
+    {
+      action: 'custom_list',
+      disabled: false,
+      label: this.cpI18n.translate('contact_trace_notification_custom_list')
+    }
+  ];
   templates;
   filterOptions;
   selectedType;
@@ -59,15 +71,31 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   };
   highlightFormError: boolean;
   templateTypeToTemplateMap;
+  CaseActionToTemplateTypeMap;
+  caseId: number;
+
+  private getCasesById$: Observable<any>;
+  private casesById: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private notificationService: ExposureNotificationService,
     private store: Store<IHeader>,
+    private caseStore: Store<fromStore.State>,
     private router: Router,
     private cpI18n: CPI18nService,
-    private session: CPSession
-  ) {}
+    private session: CPSession,
+    private casesService: CasesService
+  ) {
+
+    this.CaseActionToTemplateTypeMap = {
+      'ct:exposed_notify' : 2,
+      'ct:symptomatic_notify' : 3,
+      'ct:self_reported_notify' : 4,
+      'ct:trace_contacts' : 2,
+      'ct:exposure_notify' : 2
+    };
+  }
 
   ngOnDestroy() {
     // Do this to un-subscribe all subscriptions on this page
@@ -86,6 +114,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
     this.getNotificationTemplates();
     this.getCaseStatuses();
+    this.initNotificationForm();
   }
 
   private getItemForEdit(notificationId: number): Observable<ExposureNotification> {
@@ -124,6 +153,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   cancelClickHandler(): void {
+    if (this.caseId) {
+      window.history.back();
+    }
+
     this.router.navigate(['/contact-trace/exposure-notification']);
   }
 
@@ -194,6 +227,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   sendClickHandler(): void {
+    if (this.casesById) {
+      this.notification.user_ids = [this.casesById.user_id];
+    }
     this.highlightFormError = false;
     const errorMessages: string[] = this.validateBeforeSave(this.notification);
     if (errorMessages && errorMessages.length > 0) {
@@ -204,7 +240,23 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       this.notificationService
         .createNotification(this.notification)
         .pipe(finalize(() => (this.webServiceCallInProgress = false)))
-        .subscribe((notification) => this.handleSaveSuccess(notification));
+        .subscribe((notification) => {
+          if (this.caseId) {
+            const param = new HttpParams().set('school_id', this.session.g.get('school').id);
+            this.casesService
+              .updateCase(
+                {
+                  ...this.casesById,
+                  perform_current_action: true
+                },
+                this.caseId,
+                param
+              )
+              .subscribe((value) => this.handleSaveSuccess(notification));
+          } else {
+            return this.handleSaveSuccess(notification);
+          }
+        });
     }
   }
 
@@ -214,6 +266,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   private handleSaveSuccess(notification: ExposureNotification): void {
     this.handleSuccess('contact_trace_notification_successfully_saved');
+    if (this.caseId) {
+      window.history.back();
+    }
     this.router.navigate(['/contact-trace/exposure-notification']);
   }
 
@@ -297,6 +352,36 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             action: status.id,
             label: status.name
           });
+        });
+      }
+    });
+  }
+
+  initNotificationForm(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      this.caseId = Number(params['case_id']);
+      if (this.caseId) {
+        this.webServiceCallInProgress = true;
+        this.getCasesById$ = this.caseStore
+          .select(fromStore.getCasesById)
+          .pipe(filter((res: ICase) => !!res));
+        const param = new HttpParams().set('school_id', this.session.g.get('school').id);
+        this.casesService.getCaseById(param, this.caseId).subscribe((value) => {
+          this.casesById = value;
+
+          this.onToOptionChanged({
+            action: 'custom_list',
+            disabled: false,
+            label: this.cpI18n.translate('contact_trace_notification_custom_list')
+          });
+          setTimeout(() => {
+            const templateType = this.CaseActionToTemplateTypeMap[this.casesById.current_action.code];
+            this.onTemplateOptionChanged({
+              action: templateType,
+              label: this.templateTypeToTemplateMap[templateType].name
+            });
+            this.webServiceCallInProgress = false;
+          }, 500);
         });
       }
     });

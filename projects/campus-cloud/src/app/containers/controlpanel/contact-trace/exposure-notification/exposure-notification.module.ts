@@ -19,6 +19,7 @@ import {
 import { AnnouncementsModule } from '@controlpanel/notify/announcements/announcements.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AudienceSharedModule } from '@controlpanel/audience/shared/audience.shared.module';
+import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,6 @@ import { AudienceSharedModule } from '@controlpanel/audience/shared/audience.sha
     ReactiveFormsModule,
     AudienceSharedModule
   ],
-  providers: [CPI18nPipe]
+  providers: [CPI18nPipe, CasesService]
 })
 export class ExposureNotificationModule {}
