@@ -269,4 +269,17 @@ export class CasesComponent extends BaseComponent implements OnInit {
     this.destroy$.complete();
     this.destroy$.unsubscribe();
   }
+
+  onContactTraceAction(caseItem: ICase) {
+    const updatedCase = {
+      ...caseItem,
+      perform_current_action: true
+    };
+    this.store.dispatch(new fromStore.EditCase(
+       {
+        body: updatedCase,
+        id: caseItem.id
+      }
+    ));
+  }
 }

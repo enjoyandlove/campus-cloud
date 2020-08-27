@@ -15,6 +15,7 @@ import { ICase } from '../cases.interface';
 export class CasesListComponent implements OnInit {
   @Input() data$: Observable<ICase[]>;
   @Output() deleteClick: EventEmitter<ICase> = new EventEmitter();
+  @Output() contactTraceAction: EventEmitter<ICase> = new EventEmitter();
 
   eventData;
   dateFormat = FORMAT.SHORT;
@@ -32,5 +33,9 @@ export class CasesListComponent implements OnInit {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM
     };
+  }
+
+  traceContactAction(caseItem: ICase) {
+    this.contactTraceAction.emit(caseItem);
   }
 }
