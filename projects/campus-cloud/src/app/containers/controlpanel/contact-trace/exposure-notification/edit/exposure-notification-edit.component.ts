@@ -179,6 +179,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       this.setPriority(selectedTemplate.priority);
       this.notification.subject = selectedTemplate.subject;
       this.notification.message = selectedTemplate.message;
+    } else {
+      this.setPriority(AnnouncementPriority.regular);
+      this.notification.subject = '';
+      this.notification.message = '';
     }
   }
 
