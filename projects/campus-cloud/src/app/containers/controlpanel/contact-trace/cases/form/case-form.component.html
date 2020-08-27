@@ -31,7 +31,8 @@
       <label>{{ 't_shared_status' | cpI18n }}</label>
       <cp-dropdown [items]="caseStatus$ | async"
                    [selectedItem]="selectedStatus"
-                   (selected)="onSelectedStatus($event)">
+                   (selected)="onSelectedStatus($event)"
+                   [isRequiredError]="formErrors && form.controls['current_status_id'].hasError('required')">
       </cp-dropdown>
     </div>
   </div>

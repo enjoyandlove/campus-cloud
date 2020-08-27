@@ -57,7 +57,8 @@ export class CasesUtilsService {
       lastname: [formData ? formData.lastname : null, Validators.required],
       extern_user_id: [formData ? formData.extern_user_id : null, Validators.required],
       current_status_id: [
-        formData && formData.current_status.id != 0 ? formData.current_status.id : 1
+        formData && formData.current_status.id != 0 ? formData.current_status.id : null,
+        Validators.required
       ]
     });
   }
