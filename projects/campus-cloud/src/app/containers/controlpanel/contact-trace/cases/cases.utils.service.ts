@@ -57,7 +57,7 @@ export class CasesUtilsService {
       lastname: [formData ? formData.lastname : null, Validators.required],
       extern_user_id: [formData ? formData.extern_user_id : null, Validators.required],
       current_status_id: [
-        formData && formData.current_status_id != 0 ? formData.current_status_id : 1
+        formData && formData.current_status.id != 0 ? formData.current_status.id : 1
       ]
     });
   }
@@ -181,5 +181,42 @@ export class CasesUtilsService {
       };
     });
     createSpreadSheet(cases, columns);
+  }
+
+  exportCaseActivity(currentCase, caseActivities) {
+    let columns = [
+      this.cpI18nPipe.transform('first_name'),
+      this.cpI18nPipe.transform('last_name'),
+      this.cpI18nPipe.transform('email'),
+      this.cpI18nPipe.transform('student_id'),
+      this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
+      this.cpI18nPipe.transform('event'),
+      this.cpI18nPipe.transform('t_case_status'),
+      this.cpI18nPipe.transform('t_shared_source')
+    ];
+
+    caseActivities = caseActivities.map((item) => {
+      return {
+        [this.cpI18nPipe.transform('first_name')]: currentCase.firstname,
+
+        [this.cpI18nPipe.transform('last_name')]: currentCase.lastname,
+
+        [this.cpI18nPipe.transform('email')]: currentCase.extern_user_id,
+
+        [this.cpI18nPipe.transform('student_id')]: item.student_id,
+
+        [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
+          item.activity_time_epoch,
+          this.session.tz
+        ).format(Formats.dateFormat),
+
+        [this.cpI18nPipe.transform('event')]: item.event,
+
+        [this.cpI18nPipe.transform('t_case_status')]: item.new_status.name,
+
+        [this.cpI18nPipe.transform('t_shared_source')]: item.source
+      };
+    });
+    createSpreadSheet(caseActivities, columns);
   }
 }

@@ -780,7 +780,7 @@
     "message": "Escalated by"
   },
   "case_status_all": {
-    "message": "All Cases"
+    "message": "All Statuses"
   },
   "category": {
     "message": "Category"
@@ -1589,7 +1589,7 @@
     "message": "Downloads"
   },
   "download_activity": {
-    "message": "Download_Activity"
+    "message": "Download Activity"
   },
   "download_all_cases": {
     "message": "Download All Cases"

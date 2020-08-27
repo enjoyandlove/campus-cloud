@@ -133,7 +133,13 @@ export class CasesComponent extends BaseComponent implements OnInit {
   }
 
   onDownload() {
-    this.cases$.subscribe((data) => this.util.exportCases(data));
+    let exposureData;
+    this.cases$.subscribe((cases: ICase[]) => {
+      exposureData = [...cases];
+    });
+    if (!!exposureData.length) {
+      this.util.exportCases(exposureData);
+    }
   }
 
   getCases(isFiltered?: boolean) {

@@ -20,10 +20,11 @@
           </cp-dropdown>
         </div>
         <div class="col-1">
-          <button          
+          <button
             ui-button
             variant="stroked"
             overlayWidth="9.78em"
+            [triggerFor]="primary"
             ready-ui-menu-trigger
             direction="bottom-left"
             class="action-button"
@@ -116,3 +117,19 @@
 <cp-modal modalId="viewEvent">
   <cp-event-view-modal [cases]="eventCases" [loading]="eventModalLoading"></cp-event-view-modal>
 </cp-modal>
+
+<ready-ui-menu #primary="menu">
+  <ready-ui-menu-item>
+    <button ui-button
+            type="button"
+            color="inherit"
+            variant="inline"
+            fullWidth="true"
+            (click)="downloadActivity(); primary.close();"
+    >
+      <ready-ui-stack spacing="tight">
+        <span>{{ 'download_activity' | cpI18n }}</span>
+      </ready-ui-stack>
+    </button>
+  </ready-ui-menu-item>
+</ready-ui-menu>

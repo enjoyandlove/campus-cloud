@@ -16,3 +16,19 @@ cp-dot {
   color: #0085ff;
   margin-left: 8px;
 }
+
+.button-container {
+  float: right;
+
+  .action-button {
+    vertical-align: top; // this is needed to make the alignment look reasonable in IE, even though we do not support IE.
+
+    &:not(:first-child) {
+      margin-left: 10px;
+    }
+  }
+}
+
+ready-ui-menu-item {
+  padding: 0.5em 0em 0.5em 0.7em;
+}
