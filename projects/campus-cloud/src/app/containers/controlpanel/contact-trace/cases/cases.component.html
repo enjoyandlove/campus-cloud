@@ -1,10 +1,10 @@
 <div class="row">    
   <div class="col-12">
-    <cp-cases-list-action-box (launchCreateCaseModal)="onLaunchCaseCreate($event)"
+    <cp-cases-list-action-box (launchCreateCaseModal)="onLaunchCaseCreate()"
                               (search)="onSearch($event)"
                               (selectedFilter)="onSelectedFilter($event)"
                               (filterByDates)="onDateFilter($event)"
-                              (onDownload)="onDownload($event)">
+                              (onDownload)="onDownload()">
     </cp-cases-list-action-box>
   </div>
 </div>
