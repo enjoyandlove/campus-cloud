@@ -28,7 +28,7 @@ describe('CaseViewComponent', () => {
     store = TestBed.get(Store);
 
     component.case = {
-      current_action: { name: '', id: 0, case_status_id: 0, rank: 0 },
++      current_action: { name: '', id: 0, case_status_id: 0, rank: 0, code: '' },
       current_status: { name: 'Symptomatic', color: 'FF7A00', id: 2, case_count: 0 },
       current_status_id: 2,
       date_last_modified: 1597879214,
@@ -46,7 +46,7 @@ describe('CaseViewComponent', () => {
 
     fixture.detectChanges();
   });
-  
+
   it('should create', inject([Store], (store) => {
     expect(store).toBeTruthy();
   }));
