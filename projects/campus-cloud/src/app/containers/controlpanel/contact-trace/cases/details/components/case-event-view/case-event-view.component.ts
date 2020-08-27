@@ -5,11 +5,11 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
-  selector: 'cp-event-view-modal',
-  templateUrl: './event-view.component.html',
-  styleUrls: ['./event-view.component.scss']
+  selector: 'cp-case-event-view-modal',
+  templateUrl: './case-event-view.component.html',
+  styleUrls: ['./case-event-view.component.scss']
 })
-export class EventViewComponent implements OnInit {
+export class CaseEventViewComponent implements OnInit {
   @Input() cases: ICase[];
   @Input() loading: boolean;
 

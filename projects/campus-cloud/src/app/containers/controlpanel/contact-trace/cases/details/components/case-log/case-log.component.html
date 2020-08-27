@@ -6,12 +6,14 @@
         <div class="col-6">
           <h4>{{ 't_case_history' | cpI18n }}</h4>
         </div>
-        <div class="col-3 float-right">
+        <div class="col-3">
           <cp-range-picker [class]="'cancel'"
                             [icon]="'date_range'"
                             [dateRanges]="dateRanges"
-                            (rangeChange)="onDateChange($event)">
-          </cp-range-picker>
+                            (rangeChange)="onDateChange($event)"
+                            [maxDate]="dateFilterOpts.maxDate"
+                            [minDate]="dateFilterOpts.minDate">
+          </cp-range-picker>          
         </div>
         <div class="col-2">
           <cp-dropdown class="topbar--dropdown"
@@ -115,7 +117,9 @@
 </cp-modal>
 
 <cp-modal modalId="viewEvent">
-  <cp-event-view-modal [cases]="eventCases" [loading]="eventModalLoading"></cp-event-view-modal>
+  <cp-case-event-view-modal 
+    [cases]="eventCases" 
+    [loading]="eventModalLoading"></cp-case-event-view-modal>
 </cp-modal>
 
 <ready-ui-menu #primary="menu">

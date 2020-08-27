@@ -38,6 +38,7 @@ export interface ICaseLog {
   admin_name: string;
   source: string;
   event: string;
+  contact_trace_event_id: number;
 }
 
 export interface ISourceActivityName {
