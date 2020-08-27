@@ -13,7 +13,7 @@ export class CasesService {
   }
 
   getCases(startRange: number, endRange: number, search: HttpParams) {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/${startRange};${endRange}`;
     return this.api.get(url, search);
   }
 
