@@ -52,6 +52,10 @@ export class CasesComponent extends BaseComponent implements OnInit {
   private destroy$ = new Subject();
   resetFilterStatus: boolean = false;
 
+  public startRange = 1;
+  public maxPerPage = 20;
+  public endRange = this.maxPerPage + 1;
+
   constructor(
     public cpI18nPipe: CPI18nPipe,
     public cpTracking: CPTrackingService,
@@ -87,13 +91,11 @@ export class CasesComponent extends BaseComponent implements OnInit {
 
   onPaginationNext() {
     super.goToNext();
-
     this.fetch();
   }
 
   onPaginationPrevious() {
     super.goToPrevious();
-
     this.fetch();
   }
 
