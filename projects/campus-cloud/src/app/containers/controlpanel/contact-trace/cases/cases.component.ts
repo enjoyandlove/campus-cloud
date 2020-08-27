@@ -50,6 +50,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean>;
   isCaseCreate: boolean = false;
   private destroy$ = new Subject();
+  resetFilterStatus: boolean = false;
 
   constructor(
     public cpI18nPipe: CPI18nPipe,
@@ -108,6 +109,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedFilter(statusID) {
+    this.resetFilterStatus = false;
     this.state = {
       ...this.state,
       current_status_ids: statusID
@@ -168,8 +170,12 @@ export class CasesComponent extends BaseComponent implements OnInit {
     $('#createCase').modal({ keyboard: true, focus: true });
   }
 
-  onLaunchCaseCreate() {
-    this.cases$ = this.getCases();
+  onLaunchCaseCreate(fromCreateMomdal) {
+    if (fromCreateMomdal) {
+      this.cases$ = this.getCases();
+      this.resetFilterStatus = true;
+    }
+
     this.isCaseCreate = true;
 
     setTimeout(() => {

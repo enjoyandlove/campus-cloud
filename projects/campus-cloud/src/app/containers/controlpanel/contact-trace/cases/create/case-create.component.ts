@@ -56,6 +56,7 @@ export class CaseCreateComponent implements OnInit {
     };
 
     this.store.dispatch(new fromStore.CreateCase(payload));
+    this.created.emit(true);
     $('#createCase').modal('hide');
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CPSession } from '@campus-cloud/session';
 import { Observable, Subject } from 'rxjs';
@@ -21,7 +21,7 @@ import { CPDate } from '@projects/campus-cloud/src/app/shared/utils';
   styleUrls: ['./list-action-box.component.scss']
 })
 export class CasesListActionBoxComponent implements OnInit {
-  @Output() launchCreateCaseModal: EventEmitter<null> = new EventEmitter();
+  @Output() launchCreateCaseModal: EventEmitter<boolean> = new EventEmitter();
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() selectedFilter: EventEmitter<number> = new EventEmitter();
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
@@ -74,7 +74,7 @@ export class CasesListActionBoxComponent implements OnInit {
 
   onCreateCases() {
     this.launchCreateModal();
-    this.launchCreateCaseModal.emit();
+    this.launchCreateCaseModal.emit(false);
   }
 
   onImportCSV() {
