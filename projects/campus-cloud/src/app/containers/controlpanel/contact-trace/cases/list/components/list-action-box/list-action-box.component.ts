@@ -24,7 +24,7 @@ export class CasesListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() selectedFilter: EventEmitter<number> = new EventEmitter();
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
-  @Output() download: EventEmitter<null> = new EventEmitter();
+  @Output() onDownload: EventEmitter<null> = new EventEmitter();
   eventData;
   caseStatus$: Observable<IItem[]>;
   dateRanges: EngageUtils.IDateFilter[];
@@ -80,7 +80,7 @@ export class CasesListActionBoxComponent implements OnInit {
   }
 
   onDownloadCases() {
-    this.download.emit();
+    this.onDownload.emit();
   }
 
   launchCreateModal() {

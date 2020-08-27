@@ -52,7 +52,7 @@ export class CaseViewComponent implements OnInit {
       this.caseStatus = [...caseStatus];
       this.statusFilter = this.utils.getCaseStatusOptions(this.caseStatus);
       this.selectedStatusFilter = this.statusFilter.filter(
-        (item) => this.case.current_status_id === item.action
+        (item) => this.case.current_status.id === item.action
       )[0];
     });
   }
@@ -85,6 +85,7 @@ export class CaseViewComponent implements OnInit {
   ngOnInit(): void {
     this.newCase = JSON.parse(JSON.stringify(this.case));
     this.listenForUpdateCase();
+    this.store.dispatch(new fromStore.GetCaseStatus());
     this.getCaseStatus();
   }
 

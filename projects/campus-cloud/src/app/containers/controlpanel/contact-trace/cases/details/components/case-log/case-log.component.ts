@@ -88,6 +88,12 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     });
   }
 
+  downloadActivity() {
+    if (!!this.caseLog.length){
+      this.utils.exportCaseActivity(this.case, this.caseLog);
+    }
+  }
+
   onDateChange(dateRange) {
     if (dateRange.payload) {
       dateRange = {
@@ -134,12 +140,6 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
 
     $('#viewEvent').modal({ keyboard: true, focus: true });
   }
-
-  onUpdatedCase(updated) {
-    this.loadCaseActivityLog();
-  }
-
-  onLogLoaded(event) {}
 
   ngOnInit() {
     this.sourceActivityName = this.utils.sourceActivityName;
