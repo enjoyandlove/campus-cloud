@@ -30,7 +30,13 @@ export class CaseFormComponent implements OnInit {
   getCaseStatus() {
     this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
       map((caseStatus: ICaseStatus[]) => {
-        const responseCopy = [...caseStatus];
+        const defaultStatus: ICaseStatus = {
+          id: 0,
+          name: 'Select Status',
+          color: null,
+          case_count: null
+        };
+        const responseCopy = [defaultStatus, ...caseStatus];
         return this.utils.getCaseStatusOptions(responseCopy);
       })
     );
