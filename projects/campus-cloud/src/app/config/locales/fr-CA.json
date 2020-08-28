@@ -1630,14 +1630,14 @@
   "downloads": {
     "message": "Téléchargements"
   },
-  "download_activity": {
-    "message": "Télécharger l'activité"
-  },
   "download_all_cases": {
-    "message": "Télécharger tous les cas"
+    "message": "Télécharger des cas"
   },
   "download_all_qr_codes": {
     "message": "Télécharger tous les codes QR"
+  },
+  "download_case": {
+    "message": "Télécharger le cas"
   },
   "download_csv": {
     "message": "Télécharger les données d'évaluation"
