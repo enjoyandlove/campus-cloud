@@ -73,7 +73,7 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
   loadCaseDetails() {
     if (this.caseId) {
       this.pageLoading = true;
-
+      this.loading = true;
       this.getCasesById$ = this.store.select(fromStore.getCasesById).pipe(
         takeUntil(this.destroy$),
         filter((res: ICase) => !!res)
@@ -82,6 +82,8 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
       this.getCasesById$.subscribe((res: ICase) => {
         if (res) {
           this.case = res;
+          this.loading = false;
+          this.isEditing = false;
         }
         this.pageLoading = false;
       });
@@ -96,6 +98,7 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
       stream$.toPromise().then((res: any) => {
         this.case = res[0];
         this.loading = false;
+        this.isEditing = false;
       });
     }
   }
@@ -103,10 +106,15 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
   onSubmitted(submitted) {
     this.isSubmitted = true;
     this.isEditing = false;
+    this.loadCaseDetails();
   }
 
   onEditing(editing) {
     this.isEditing = editing;
+  }
+
+  onEditFinished() {
+    this.loading = true;
   }
 
   ngOnInit() {
