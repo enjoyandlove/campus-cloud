@@ -2,13 +2,12 @@
   <table ui-table>
     <thead>
       <tr ui-table-row>
-        <th ui-table-cell>
+        <th ui-table-cell class="w-50">
           {{ 't_shared_identifier' | cpI18n }}
         </th>
-        <th ui-table-cell>{{ 't_shared_status' | cpI18n }}</th>
-        <th ui-table-cell>{{ 't_shared_last_update' | cpI18n }}</th>
-        <th ui-table-cell>{{ 't_shared_action' | cpI18n }}</th>
-        <th ui-table-cell></th>
+        <th ui-table-cell class="w-20">{{ 't_shared_status' | cpI18n }}</th>
+        <th ui-table-cell class="w-20">{{ 't_shared_last_update' | cpI18n }}</th>
+        <th ui-table-cell class="w-10"></th>
       </tr>
     </thead>
 
@@ -27,7 +26,7 @@
                 {{ case.firstname }} {{ case.lastname }}
               </a>
             </strong>
-            {{ case.extern_user_id }}
+            {{ ( case.extern_user_id.length>45 )? ( case.extern_user_id | slice:0:40 ) + '...' : case.extern_user_id }}
           </ready-ui-stack>
         </td>
 
@@ -39,19 +38,6 @@
           {{ case.date_last_modified | cpDatePipe: dateFormat }}
         </td>
 
-        <td ui-table-cell>
-          <div *ngIf="case.current_action.id !== 0">
-            <a class="action-to-do-link" *ngIf="case.current_action.code !== 'ct:trace_contacts'"
-               [routerLink]="['/contact-trace', 'exposure-notification', 'case-action', case.id]">
-              {{ case.current_action.name }}</a>
-            <p class="action-to-do-link" *ngIf="case.current_action.code === 'ct:trace_contacts'"
-               (click)="traceContactAction(case)">
-              {{ case.current_action.name }}</p>
-          </div>
-
-          <p *ngIf="case.current_action.id === 0">{{ 'contact_trace_notification_none' | cpI18n }}</p>
-        </td>
-        
         <td ui-table-cell
             align="right">
           <button ui-button
