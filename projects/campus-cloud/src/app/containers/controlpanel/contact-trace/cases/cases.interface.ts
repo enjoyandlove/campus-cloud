@@ -38,8 +38,9 @@ export interface ICaseLog {
   new_status: ICaseStatus;
   source_case_action_id: number;
   new_notes: string;
-  form_name: string;
-  admin_name: string;
+  form_name?: string;
+  form_id?: number;
+  admin_name?: string;
   source: string;
   event: string;
   contact_trace_event_id: number;
