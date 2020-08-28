@@ -9,6 +9,7 @@ export interface ICase {
   extern_user_id: string;
   firstname: string;
   lastname: string;
+  student_id?: string;
 }
 
 export interface ICaseStatus {
@@ -73,4 +74,12 @@ export enum SourceActivityType {
   ActionNotify,
   ActionContactTrace,
   ExposureAlerts
+}
+
+export enum SourceType {
+  Creation = 0,
+  FormResponse,
+  OtherCase,
+  Admin,
+  AdminAction
 }

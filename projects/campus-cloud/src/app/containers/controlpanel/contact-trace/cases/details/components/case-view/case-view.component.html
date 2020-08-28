@@ -22,7 +22,7 @@
             <p class="title">{{ 'first_name' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description" *ngIf="!isEditing else inputFirstName">{{ newCase.firstname }}</p>
+            <p class="description" *ngIf="!isEditing || newCase.user_id > 0 else inputFirstName">{{ newCase.firstname }}</p>
             <ng-template #inputFirstName>
               <input
                     type="text"
@@ -38,7 +38,7 @@
             <p class="title">{{ 'last_name' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description" *ngIf="!isEditing else inputLastName">{{ newCase.lastname }}</p>
+            <p class="description" *ngIf="!isEditing || newCase.user_id > 0 else inputLastName">{{ newCase.lastname }}</p>
             <ng-template #inputLastName>
               <input
                     type="text"
@@ -54,7 +54,7 @@
             <p class="title">{{ 'email' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description" *ngIf="!isEditing else inputDescription">{{ newCase.extern_user_id }}</p>
+            <p class="description" *ngIf="!isEditing || newCase.user_id > 0 else inputDescription">{{ newCase.extern_user_id }}</p>
             <ng-template #inputDescription>
               <input
                     type="text"
@@ -65,12 +65,12 @@
             </ng-template>
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="newCase.student_id" class="row">
           <div class="col-3">
             <p class="title">{{ 'student_id' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description">{{ newCase.user_id }}</p>
+            <p class="description">{{ newCase.student_id }}</p>
           </div>
         </div>
         <div class="row">
@@ -91,7 +91,8 @@
             </ng-template>
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="!isEditing"
+             class="row">
           <div class="col-3">
             <p class="title">{{ 'case_pending_action' | cpI18n }}</p>
           </div>
@@ -135,7 +136,6 @@
             variant="flat"
             color="primary"
             class="action-button"
-            [disabled]="isDisabled"
             (click)="onSubmit()">
             {{'save' | cpI18n}}
           </button>

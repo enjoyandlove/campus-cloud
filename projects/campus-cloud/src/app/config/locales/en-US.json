@@ -780,7 +780,7 @@
     "message": "Pending Action"
   },
   "case_source_automatic_escalated": {
-    "message": "Automatically escalated"
+    "message": "Escalated Automatically"
   },
   "case_source_creation": {
     "message": "Manually Added"
