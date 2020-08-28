@@ -84,7 +84,6 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
           this.case = res;
         }
         this.pageLoading = false;
-        this.buildHeader();
       });
     } else {
       this.loading = true;
@@ -117,5 +116,6 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
     }
 
     this.loadCaseDetails();
+    this.buildHeader();
   }
 }
