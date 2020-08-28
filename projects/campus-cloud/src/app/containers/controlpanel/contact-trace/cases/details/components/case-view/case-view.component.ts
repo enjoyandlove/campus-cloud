@@ -15,8 +15,8 @@ import { takeUntil, filter } from 'rxjs/operators';
 export class CaseViewComponent implements OnInit {
   @Input() case: ICase;
   @Output() onEditing: EventEmitter<boolean> = new EventEmitter();
+  @Output() onEditFinished: EventEmitter<boolean> = new EventEmitter();
   @Output() onSubmitted: EventEmitter<boolean> = new EventEmitter();
-
   isEditing: boolean;
   newCase: ICase;
   selectedStatusFilter: IItem;
@@ -43,9 +43,9 @@ export class CaseViewComponent implements OnInit {
       body,
       id: caseId
     };
-
-    this.store.dispatch(new fromStore.EditCase(payload));
     this.isEditing = false;
+    this.onEditFinished.emit(true);
+    this.store.dispatch(new fromStore.EditCase(payload));
   }
 
   getCaseStatus() {
@@ -101,11 +101,11 @@ export class CaseViewComponent implements OnInit {
       ...caseItem,
       perform_current_action: true
     };
-    this.store.dispatch(new fromStore.EditCase(
-      {
+    this.store.dispatch(
+      new fromStore.EditCase({
         body: updatedCase,
         id: caseItem.id
-      }
-    ));
+      })
+    );
   }
 }

@@ -6,6 +6,7 @@
     <cp-case-view *ngIf="!loading"
       (onSubmitted)="onSubmitted($event)"
       (onEditing)="onEditing($event)"
+      (onEditFinished)="onEditFinished($event)"
       [case]="case"
     >
     </cp-case-view>
