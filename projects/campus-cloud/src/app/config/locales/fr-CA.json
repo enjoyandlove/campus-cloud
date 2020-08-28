@@ -1395,6 +1395,9 @@
   "contact_trace_notification_scheduled": {
     "message": "Planifié"
   },
+  "contact_trace_notification_select_filter_option": {
+    "message": "Sélectionnez un filtre"
+  },
   "contact_trace_notification_sent": {
     "message": "Envoyé"
   },
@@ -3008,6 +3011,9 @@
   },
   "t_campus_app_management": {
     "message": "Gestion de l'Application du Campus"
+  },
+  "t_cases_activity_no_record_found": {
+    "message": "No case activities found..."
   },
   "t_cases_no_record_found": {
     "message": "Aucun cas trouvé..."

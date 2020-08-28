@@ -87,7 +87,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       .append('start', this.state.start)
       .append('end', this.state.end);
 
-    if(this.state.current_status_id != 0) {
+    if (this.state.current_status_id != 0) {
       search = search.append('new_status_ids', this.state.current_status_id);
     }
 
@@ -99,17 +99,17 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
   }
 
   downloadActivity() {
-    if (!!this.caseLog.length){
+    if (!!this.caseLog.length) {
       this.utils.exportCaseActivity(this.case, this.caseLog);
     }
   }
 
   onDateChange(dateRange) {
-    if (dateRange.payload) {
+    if (dateRange) {
       this.state = {
         ...this.state,
-        start: dateRange.payload.range.start,
-        end: dateRange.payload.range.end
+        start: dateRange.payload ? dateRange.payload.range.start : dateRange.start,
+        end: dateRange.payload ? dateRange.payload.range.end : dateRange.end
       };
 
       this.loadCaseActivityLog();

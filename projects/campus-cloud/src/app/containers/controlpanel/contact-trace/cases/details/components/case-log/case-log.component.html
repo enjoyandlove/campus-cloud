@@ -48,65 +48,71 @@
           <cp-spinner class="float-center"></cp-spinner>
         </div>        
         <div class="col-12" *ngSwitchCase="false">
-          <table ui-table>
-            <thead>
-              <tr ui-table-row>
-                <th ui-table-cell>{{ 't_shared_date' | cpI18n }}</th>                                                     
-                <th ui-table-cell>{{ 'event' | cpI18n }}</th>
-                <th ui-table-cell>{{ 't_case_status' | cpI18n }}</th>
-                <th ui-table-cell>{{ 't_shared_source' | cpI18n }}</th>
-                <th ui-table-cell></th>
-              </tr>
-            </thead>
-        
-            <tbody>
-              <tr ui-table-row
-                  *ngFor="let log of caseLog; index as i">
-                <td ui-table-cell>
-                  {{ log.activity_time_epoch | cpDatePipe: dateFormat }}
-                </td>
-                
-                <td ui-table-cell>
-                  {{ log.event }}
-                </td>
-        
-                <td ui-table-cell>
-                  <cp-dot color="#{{log.new_status.color}}"></cp-dot>{{ log.new_status.name }}
-                </td>
-        
-                <td ui-table-cell>
-                  <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ManualNotes].tag; else actionCell" 
-                        (click)="launchNoteModal(log.new_notes)">
-                    <img [src]="noteSvgPath"> <span class="note-link">{{ log.source }}</span>
-                  </div>
-                  <ng-template #actionCell>
-                    <div *ngIf="log.source_activity_name.includes(sourceActivityName[sourceActivityType.ActionContactTrace].tag); else exposureCell" 
-                          (click)="launchCaseEventModal(log.contact_trace_event_id)">
-                      <span class="note-link">{{ log.source }}</span>
+          <cp-no-content class="margin-top"
+                          *ngIf="!caseLog.length"
+                          [noContentText]="'t_cases_activity_no_record_found' | cpI18n">
+          </cp-no-content>
+          <div *ngIf="caseLog.length">
+            <table ui-table>
+              <thead>
+                <tr ui-table-row>
+                  <th ui-table-cell>{{ 't_shared_date' | cpI18n }}</th>                                                     
+                  <th ui-table-cell>{{ 'event' | cpI18n }}</th>
+                  <th ui-table-cell>{{ 't_case_status' | cpI18n }}</th>
+                  <th ui-table-cell>{{ 't_shared_source' | cpI18n }}</th>
+                  <th ui-table-cell></th>
+                </tr>
+              </thead>
+          
+              <tbody>
+                <tr ui-table-row
+                    *ngFor="let log of caseLog; index as i">
+                  <td ui-table-cell>
+                    {{ log.activity_time_epoch | cpDatePipe: dateFormat }}
+                  </td>
+                  
+                  <td ui-table-cell>
+                    {{ log.event }}
+                  </td>
+          
+                  <td ui-table-cell>
+                    <cp-dot color="#{{log.new_status.color}}"></cp-dot>{{ log.new_status.name }}
+                  </td>
+          
+                  <td ui-table-cell>
+                    <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ManualNotes].tag; else actionCell" 
+                          (click)="launchNoteModal(log.new_notes)">
+                      <img [src]="noteSvgPath"> <span class="note-link">{{ log.source }}</span>
                     </div>
-                    <ng-template #exposureCell>
-                      <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ExposureAlerts].tag; else normalCell">
-                        <a ui-button
-                          cpTracker
-                          variant="inline"
-                          cpTarget="view_info"
-                          [eventData]="eventData"
-                          [routerLink]="['/contact-trace', 'cases', log.source_obj_id]">
-                          {{ log.source_obj_id }}
-                        </a>
+                    <ng-template #actionCell>
+                      <div *ngIf="log.source_activity_name.includes(sourceActivityName[sourceActivityType.ActionContactTrace].tag); else exposureCell" 
+                            (click)="launchCaseEventModal(log.contact_trace_event_id)">
+                        <span class="note-link">{{ log.source }}</span>
                       </div>
-                      <ng-template #normalCell>
-                        <div>{{ log.source }}</div>
+                      <ng-template #exposureCell>
+                        <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ExposureAlerts].tag; else normalCell">
+                          <a ui-button
+                            cpTracker
+                            variant="inline"
+                            cpTarget="view_info"
+                            [eventData]="eventData"
+                            [routerLink]="['/contact-trace', 'cases', log.source_obj_id]">
+                            {{ log.source_obj_id }}
+                          </a>
+                        </div>
+                        <ng-template #normalCell>
+                          <div>{{ log.source }}</div>
+                        </ng-template>
                       </ng-template>
                     </ng-template>
-                  </ng-template>
-                </td>
-                
-                <td ui-table-cell align="right">
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  
+                  <td ui-table-cell align="right">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
