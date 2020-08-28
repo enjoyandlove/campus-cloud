@@ -6,7 +6,7 @@
         <div class="col-6">
           <h4>{{ 't_case_history' | cpI18n }}</h4>
         </div>
-        <div class="col-3">
+        <div class="col-3 text-right float-right pr-0">
           <cp-range-picker [class]="'cancel'"
                             [icon]="'date_range'"
                             [dateRanges]="dateRanges"
@@ -15,7 +15,7 @@
                             [minDate]="dateFilterOpts.minDate">
           </cp-range-picker>          
         </div>
-        <div class="col-2">
+        <div class="col-2 pr-0">
           <cp-dropdown class="topbar--dropdown"
                         [items]="caseStatus$ | async"
                         (selected)="onLogFilter($event)">
