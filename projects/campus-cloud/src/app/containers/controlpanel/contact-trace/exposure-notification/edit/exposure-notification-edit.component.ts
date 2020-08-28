@@ -13,6 +13,8 @@ import * as fromStore from '@controlpanel/contact-trace/cases/store';
 import { ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
 import { HttpParams } from '@angular/common/http';
 import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
+import { AnnouncementUtilsService } from '@controlpanel/notify/announcements/announcement.utils.service';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 
 @Component({
   selector: 'cp-exposure-notification-edit',
@@ -20,6 +22,7 @@ import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
   styleUrls: ['./exposure-notification-edit.component.scss']
 })
 export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
+  dateTimeFormat = FORMAT.DATETIME;
   protected unsubscribe: Subject<void> = new Subject();
   notification: ExposureNotification = {};
   webServiceCallInProgress: boolean;
@@ -113,7 +116,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.getCaseStatuses();
     this.initNotificationForm();
 
-
     this.getCasesById$ = this.storeCase.select(fromStore.getSelectedCaseStatus);
     this.getCasesById$
       .pipe(filter((caseStatus) => caseStatus !== null && caseStatus.user_list_id !== null))
@@ -167,6 +169,14 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   onSchedule(scheduledAt: number) {
     this.notification.notify_at_epoch = scheduledAt;
+  }
+
+  get isScheduledAnnouncement() {
+    return this.notification.notify_at_epoch !== -1
+      ? AnnouncementUtilsService.isScheduledAnnouncement({
+          notify_at_epoch: this.notification.notify_at_epoch
+        })
+      : false;
   }
 
   onTypeChanged(type): void {
@@ -323,6 +333,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       if (!notification.message || notification.message.trim().length === 0) {
         errorMessages.push('Message');
       }
+
+      if (this.notification.notify_at_epoch > 0 && !this.isScheduledAnnouncement) {
+        errorMessages.push('Scheduled');
+      }
     }
 
     return errorMessages;
@@ -380,12 +394,14 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   private getCaseStatuses(): void {
     this.storeCase.dispatch(new fromStore.GetCaseStatus());
     this.notificationService.searchCaseStatuses().subscribe((statuses: ICaseStatus[]) => {
-      this.filterOptions = [{
-        action: 0,
-        disabled: true,
-        displayCheckIcon: false,
-        label: this.cpI18n.translate('contact_trace_notification_select_filter_option')
-      }];
+      this.filterOptions = [
+        {
+          action: 0,
+          disabled: true,
+          displayCheckIcon: false,
+          label: this.cpI18n.translate('contact_trace_notification_select_filter_option')
+        }
+      ];
       this.selectedFilterOption = this.filterOptions[0];
       if (statuses) {
         statuses.forEach((status) => {

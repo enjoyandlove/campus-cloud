@@ -35,6 +35,7 @@ import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils
     ExposureNotificationEditComponent,
     ExposureNotificationUserListModalComponent
   ],
+  entryComponents: [ExposureNotificationDeleteComponent],
   imports: [
     CommonModule,
     ExposureNotificationRoutingModule,

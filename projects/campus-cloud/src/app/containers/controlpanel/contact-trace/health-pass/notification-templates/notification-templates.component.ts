@@ -16,6 +16,7 @@ import {
 import { NotificationTemplatePageActions } from '@controlpanel/contact-trace/health-pass/store/actions';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-notification-templates',
@@ -29,6 +30,7 @@ export class NotificationTemplatesComponent implements OnInit {
   shouldDisplaySuccessMessage$: Observable<boolean>;
 
   editModal: OverlayRef;
+  envRootPath = environment.root;
 
   constructor(private modalService: ModalService,
               private healthPassStore: Store<State>,

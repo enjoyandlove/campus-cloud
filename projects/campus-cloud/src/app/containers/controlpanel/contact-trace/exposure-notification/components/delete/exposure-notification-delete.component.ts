@@ -1,18 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, OnInit } from '@angular/core';
 import { CPSession } from '@campus-cloud/session';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { HttpParams } from '@angular/common/http';
 import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification/models';
 import { ExposureNotificationService } from '@controlpanel/contact-trace/exposure-notification/services';
-import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays';
 
 @Component({
   selector: 'cp-exposure-notification-delete',
@@ -20,29 +12,24 @@ import { CPI18nPipe } from '@campus-cloud/shared/pipes';
   styleUrls: ['./exposure-notification-delete.component.scss']
 })
 export class ExposureNotificationDeleteComponent implements OnInit {
-  @Input() notification: ExposureNotification;
-  @Output() deleteForm: EventEmitter<number> = new EventEmitter();
-
-  buttonData;
+  notification: ExposureNotification;
 
   constructor(
     private el: ElementRef,
     private session: CPSession,
-    private cpI18n: CPI18nPipe,
     private cpTracking: CPTrackingService,
-    private notificationService: ExposureNotificationService
-  ) {}
+    private notificationService: ExposureNotificationService,
+    @Inject(READY_MODAL_DATA) public modal: any
+  ) {
+    this.notification = this.modal.data;
+  }
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
     // out of modal
     if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
+      this.modal.onClose();
     }
-  }
-
-  resetModal() {
-    $('#notificationDeleteModal').modal('hide');
   }
 
   onDelete() {
@@ -52,25 +39,14 @@ export class ExposureNotificationDeleteComponent implements OnInit {
       (_) => {
         $('#notificationDeleteModal').modal('hide');
 
-        this.deleteForm.emit(this.notification.id);
-
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
+        this.modal.onAction(this.notification.id);
       },
       (err) => {
-        $('#notificationDeleteModal').modal('hide');
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
+        this.modal.onClose();
       }
     );
   }
 
   ngOnInit() {
-    this.buttonData = {
-      class: 'danger',
-      text: this.cpI18n.transform('delete')
-    };
   }
 }

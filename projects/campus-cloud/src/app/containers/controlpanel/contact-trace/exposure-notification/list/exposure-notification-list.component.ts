@@ -3,16 +3,7 @@ import { merge, Observable, of, Subject } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
 import { ContactTraceHeaderService } from '@controlpanel/contact-trace/utils';
 import { Router } from '@angular/router';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  finalize,
-  map,
-  share,
-  startWith,
-  switchMap
-} from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, finalize, map, share, startWith, switchMap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { ExposureNotification, ExposureNotificationStatus } from '../models';
 import { ExposureNotificationService } from '../services';
@@ -20,6 +11,9 @@ import { FORMAT } from '@campus-cloud/shared/pipes';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Store } from '@ngrx/store';
+import { ModalService } from '@ready-education/ready-ui/overlays';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { ExposureNotificationDeleteComponent } from '@controlpanel/contact-trace/exposure-notification';
 
 @Component({
   selector: 'cp-exposure-notification-list',
@@ -44,11 +38,11 @@ export class ExposureNotificationListComponent implements OnInit {
   dateFormat = FORMAT.DATETIME;
   showViewMessageModal: boolean;
   notificationForView: ExposureNotification;
-  showNotificationDeleteModal: boolean;
-  notificationForDelete: ExposureNotification;
   notificationStatus = ExposureNotificationStatus;
+  deleteModal: OverlayRef;
 
   constructor(
+    private modalService: ModalService,
     private session: CPSession,
     private headerService: ContactTraceHeaderService,
     private notificationService: ExposureNotificationService,
@@ -162,6 +156,7 @@ export class ExposureNotificationListComponent implements OnInit {
     this.handleSuccess('contact_trace_notification_delete_success');
     // Refresh items on current page
     this.pageStream.next(this.pageCounter);
+    this.resetModal();
   }
 
   private handleSuccess(key) {
@@ -174,5 +169,17 @@ export class ExposureNotificationListComponent implements OnInit {
 
   caseLinkClickHandler(userId: number): void {
     this.router.navigate(['/contact-trace/cases/caseInfo/', userId]);
+  }
+
+  onDeleteClick(result: ExposureNotification) {
+   this.deleteModal = this.modalService.open(ExposureNotificationDeleteComponent, {
+      data: result,
+      onAction: this.onDeletedNotification.bind(this),
+      onClose: this.resetModal.bind(this)
+    });
+  }
+
+  resetModal() {
+    this.deleteModal.dispose();
   }
 }

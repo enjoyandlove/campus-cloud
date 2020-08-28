@@ -1,5 +1,5 @@
 <cp-delete-modal
-  (cancelClick)="resetModal()"
+  (cancelClick)="modal.onClose()"
   (deleteClick)="onDelete()"
   [modalTitle]="'contact_trace_notification_delete_notification' | cpI18n"
   [modalBody]="'contact_trace_notification_delete_confirmation' | cpI18n: notification.subject">
