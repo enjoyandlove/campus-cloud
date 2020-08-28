@@ -90,18 +90,33 @@
                         <span class="note-link">{{ log.source }}</span>
                       </div>
                       <ng-template #exposureCell>
-                        <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ExposureAlerts].tag; else normalCell">
+                        <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ExposureAlerts].tag; else formResponseCell">
                           <a ui-button
-                            cpTracker
-                            variant="inline"
-                            cpTarget="view_info"
+                             cpTracker
+                             variant="inline"
+                             color="primary"
+                             cpTarget="view_info"
                             [eventData]="eventData"
                             [routerLink]="['/contact-trace', 'cases', log.source_obj_id]">
                             {{ log.source }}
                           </a>
                         </div>
-                        <ng-template #normalCell>
-                          <div>{{ log.source }}</div>
+                        <ng-template #formResponseCell>
+                          <div *ngIf="log.source_type === sourceType.FormResponse && log.source === log.form_name; else normalCell">
+                            <a ui-button
+                               cpTracker
+                               variant="inline"
+                               color="primary"
+                               cpTarget="view_info"
+                               [eventData]="eventData"
+                               [routerLink]="['/contact-trace', 'forms', log.form_id, 'response', log.source_obj_id]"
+                               [queryParams]="{caseId: this.case.id}">
+                              {{ log.source }}
+                            </a>
+                          </div>
+                          <ng-template #normalCell>
+                            <div>{{ log.source }}</div>
+                          </ng-template>
                         </ng-template>
                       </ng-template>
                     </ng-template>

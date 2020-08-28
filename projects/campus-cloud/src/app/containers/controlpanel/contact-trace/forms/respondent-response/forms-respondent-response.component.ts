@@ -51,19 +51,22 @@ export class FormsRespondentResponseComponent implements OnInit, OnDestroy {
   }
 
   private buildHeader(form: Form) {
-    const payload = {
-      heading: 'contact_trace_forms_form_result',
-      subheading: `[NOTRANSLATE]${form.name}[NOTRANSLATE]`,
-      crumbs: {
-        url: `forms/edit/${form.id}/results`,
-        label: 'contact_trace_forms_results'
-      },
-      children: []
-    };
+    this.activatedRoute.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe((queryParams) => {
+      let caseId = Number(queryParams['caseId']);
+      const payload = {
+        heading: 'contact_trace_forms_form_result',
+        subheading: `[NOTRANSLATE]${form.name}[NOTRANSLATE]`,
+        crumbs: {
+          url: caseId ? `cases/${caseId}` : `forms/edit/${form.id}/results`,
+          label: 'contact_trace_forms_results'
+        },
+        children: []
+      };
 
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload
+      this.store.dispatch({
+        type: baseActions.HEADER_UPDATE,
+        payload
+      });
     });
   }
 

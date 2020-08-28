@@ -100,7 +100,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       search = search.append('new_status_ids', this.state.current_status_id);
     }
 
-    super.fetchData(this.service.getCaseActivityLog(search)).then((res) => {
+    super.fetchData(this.service.getCaseActivityLog(1, 100, search)).then((res) => {
       this.loading = false;
       this.onLoaded.emit(true);
       this.caseLog = this.utils.serializeCaseLog(res.data);
