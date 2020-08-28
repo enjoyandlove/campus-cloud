@@ -1630,14 +1630,14 @@
   "downloads": {
     "message": "Downloads"
   },
-  "download_activity": {
-    "message": "Download Activity"
-  },
   "download_all_cases": {
-    "message": "Download All Cases"
+    "message": "Download Cases"
   },
   "download_all_qr_codes": {
     "message": "Download All QR Codes"
+  },
+  "download_case": {
+    "message": "Download Case"
   },
   "download_csv": {
     "message": "Download Assessment"
@@ -3021,8 +3021,8 @@
   "t_campus_app_management": {
     "message": "Campus App Management"
   },
-  "t_cases_activity_no_record_found": {
-    "message": "No case activities found..."
+  "t_cases_log_no_record_found": {
+    "message": "No case logs found..."
   },
   "t_cases_no_record_found": {
     "message": "No cases found..."
