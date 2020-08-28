@@ -8,8 +8,8 @@
         <h2 class="section__name">{{ 'message' | cpI18n }}</h2>
         <cp-datetime-picker
           (dateSet)="onSchedule($event)"
-          [clearable]="false"
-          [label]="'t_notify_send_later' | cpI18n">
+          [clearable]="true"
+          [label]="isScheduledAnnouncement ? (this.notification.notify_at_epoch | cpDatePipe:dateTimeFormat) : 't_notify_send_later' | cpI18n">
 
         </cp-datetime-picker>
       </header>

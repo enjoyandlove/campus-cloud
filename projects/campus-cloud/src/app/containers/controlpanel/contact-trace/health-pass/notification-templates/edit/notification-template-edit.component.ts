@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { INotificationTemplate } from '@controlpanel/contact-trace/health-pass/notification-templates/notification-template';
 import { READY_MODAL_DATA } from '@ready-education/ready-ui/overlays';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-notification-template-edit',
@@ -12,6 +13,7 @@ export class NotificationTemplateEditComponent {
 
   form: FormGroup;
   template: INotificationTemplate;
+  envRootPath = environment.root;
 
   constructor(private formBuilder: FormBuilder,
               @Inject(READY_MODAL_DATA) public modal: any) {
