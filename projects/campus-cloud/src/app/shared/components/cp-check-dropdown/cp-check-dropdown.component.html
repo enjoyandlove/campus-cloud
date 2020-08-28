@@ -11,7 +11,7 @@
       </div>
     </div>
   </button>
-  <ul class="dropdown-menu dropdown__list">
+  <ul class="dropdown-menu dropdown__list {{dropdownListClass}}">
     <li *ngFor="let item of items"
         class="dropdown__item hover"
         [class.disabled]="item.disabled"

@@ -27,6 +27,7 @@ export class CPCheckDropdownComponent implements OnInit, ControlValueAccessor {
   @Input() reset: Observable<boolean>;
   @Input() selectedItem: IItem;
   @Input() buttonClass: string;
+  @Input() dropdownListClass: string;
   @Output() selected: EventEmitter<IItem> = new EventEmitter();
 
   constructor() {}
