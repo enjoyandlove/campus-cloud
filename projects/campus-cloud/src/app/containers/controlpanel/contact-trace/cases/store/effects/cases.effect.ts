@@ -177,6 +177,7 @@ export class CasesEffect {
     return new HttpParams()
       .append('search_str', state.search_str)
       .append('current_status_ids', state.current_status_ids)
+      .append('exclude_external', state.exclude_external)
       .append('start', state.start)
       .append('end', state.end)
       .append('school_id', this.session.g.get('school').id);

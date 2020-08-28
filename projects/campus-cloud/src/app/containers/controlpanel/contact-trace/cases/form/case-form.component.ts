@@ -34,7 +34,9 @@ export class CaseFormComponent implements OnInit {
           id: 0,
           name: 'Select Status',
           color: null,
-          case_count: null
+          case_count: null,
+          user_list_id: null,
+          rank: null
         };
         const responseCopy = [defaultStatus, ...caseStatus];
         return this.utils.getCaseStatusOptions(responseCopy);

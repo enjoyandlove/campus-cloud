@@ -10,7 +10,7 @@ import { AnnouncementPriority } from '@controlpanel/notify/announcements/model';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CPSession } from '@campus-cloud/session';
 import * as fromStore from '@controlpanel/contact-trace/cases/store';
-import { ICase } from '@controlpanel/contact-trace/cases/cases.interface';
+import { ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
 import { HttpParams } from '@angular/common/http';
 import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
 
@@ -72,26 +72,25 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   CaseActionToTemplateTypeMap;
   caseId: number;
 
-  private getCasesById$: Observable<any>;
+  private getCasesById$: Observable<ICaseStatus>;
   private casesById: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private notificationService: ExposureNotificationService,
     private store: Store<IHeader>,
-    private caseStore: Store<fromStore.State>,
+    private storeCase: Store<fromStore.State>,
     private router: Router,
     private cpI18n: CPI18nService,
     private session: CPSession,
     private casesService: CasesService
   ) {
-
     this.CaseActionToTemplateTypeMap = {
-      'ct:exposed_notify' : 2,
-      'ct:symptomatic_notify' : 3,
-      'ct:self_reported_notify' : 4,
-      'ct:trace_contacts' : 2,
-      'ct:exposure_notify' : 2
+      'ct:exposed_notify': 2,
+      'ct:symptomatic_notify': 3,
+      'ct:self_reported_notify': 4,
+      'ct:trace_contacts': 2,
+      'ct:exposure_notify': 2
     };
   }
 
@@ -113,6 +112,14 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.getNotificationTemplates();
     this.getCaseStatuses();
     this.initNotificationForm();
+
+
+    this.getCasesById$ = this.storeCase.select(fromStore.getSelectedCaseStatus);
+    this.getCasesById$
+      .pipe(filter((caseStatus) => caseStatus !== null && caseStatus.user_list_id !== null))
+      .subscribe(({ user_list_id }) => {
+        this.notification.list_ids = [user_list_id];
+      });
   }
 
   private getItemForEdit(notificationId: number): Observable<ExposureNotification> {
@@ -209,6 +216,22 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   onFilterOptionChanged(option): void {
+    this.store.dispatch(
+      new fromStore.GetCaseStatusById({
+        id: option.action,
+        exclude_external_cases: true
+      })
+    );
+    this.store.dispatch(
+      new fromStore.GetCases({
+        startRange: null,
+        endRange: null,
+        state: {
+          current_status_ids: option.action,
+          exclude_external: true
+        }
+      })
+    );
     this.selectedFilterOption = option;
   }
 
@@ -285,6 +308,15 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       ) {
         errorMessages.push('User Ids');
       }
+
+      if (
+        this.selectedToOption &&
+        this.selectedToOption.action === 'case_status' &&
+        (!notification.list_ids || notification.list_ids.length === 0)
+      ) {
+        errorMessages.push('Case Filter');
+      }
+
       if (!notification.subject || notification.subject.trim().length === 0) {
         errorMessages.push('Subject');
       }
@@ -346,8 +378,15 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   private getCaseStatuses(): void {
-    this.notificationService.searchCaseStatuses().subscribe((statuses) => {
-      this.filterOptions = [];
+    this.storeCase.dispatch(new fromStore.GetCaseStatus());
+    this.notificationService.searchCaseStatuses().subscribe((statuses: ICaseStatus[]) => {
+      this.filterOptions = [{
+        action: 0,
+        disabled: true,
+        displayCheckIcon: false,
+        label: this.cpI18n.translate('contact_trace_notification_select_filter_option')
+      }];
+      this.selectedFilterOption = this.filterOptions[0];
       if (statuses) {
         statuses.forEach((status) => {
           this.filterOptions.push({
@@ -364,9 +403,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       this.caseId = Number(params['case_id']);
       if (this.caseId) {
         this.webServiceCallInProgress = true;
-        this.getCasesById$ = this.caseStore
-          .select(fromStore.getCasesById)
-          .pipe(filter((res: ICase) => !!res));
         const param = new HttpParams().set('school_id', this.session.g.get('school').id);
         this.casesService.getCaseById(param, this.caseId).subscribe((value) => {
           this.casesById = value;
@@ -377,7 +413,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             label: this.cpI18n.translate('contact_trace_notification_custom_list')
           });
           setTimeout(() => {
-            const templateType = this.CaseActionToTemplateTypeMap[this.casesById.current_action.code];
+            const templateType = this.CaseActionToTemplateTypeMap[
+              this.casesById.current_action.code
+            ];
             this.onTemplateOptionChanged({
               action: templateType,
               label: this.templateTypeToTemplateMap[templateType].name

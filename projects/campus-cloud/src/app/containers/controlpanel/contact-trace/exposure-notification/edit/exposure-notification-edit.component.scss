@@ -70,6 +70,7 @@
   border-top: 1px solid $border-color;
 
   .action-button {
+    min-width: 95px;
     &:first-child {
       margin-left: calc(50% - 375px);
     }

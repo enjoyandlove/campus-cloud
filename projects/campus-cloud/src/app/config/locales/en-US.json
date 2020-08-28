@@ -1395,6 +1395,9 @@
   "contact_trace_notification_scheduled": {
     "message": "Scheduled"
   },
+  "contact_trace_notification_select_filter_option": {
+    "message": "Select filter"
+  },
   "contact_trace_notification_sent": {
     "message": "Sent"
   },

@@ -7,6 +7,7 @@ interface IItem {
   action: number;
   decsritpion: string;
   disabled?: boolean;
+  displayCheckIcon?: boolean;
 }
 
 @Component({

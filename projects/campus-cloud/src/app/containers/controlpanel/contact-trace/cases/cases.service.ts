@@ -12,8 +12,16 @@ export class CasesService {
     return this.api.get(url, search);
   }
 
+  getCaseStatusById(caseStatusId: number, search?: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE_STATUS}/${caseStatusId}`;
+    return this.api.get(url, search);
+  }
+
   getCases(startRange: number, endRange: number, search: HttpParams) {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/${startRange};${endRange}`;
+    const startEndRange = (startRange ? startRange : '') + (endRange ? ';' + endRange : '');
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/${
+      startEndRange !== '' ? startEndRange : ''
+    }`;
     return this.api.get(url, search);
   }
 
