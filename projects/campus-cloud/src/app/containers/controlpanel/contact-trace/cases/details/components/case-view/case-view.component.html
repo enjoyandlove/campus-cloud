@@ -53,7 +53,7 @@
           <div class="col-3">
             <p class="title">{{ 'email' | cpI18n }}</p>
           </div>
-          <div class="col-4">
+          <div class="col-5">
             <p class="description" *ngIf="!isEditing || newCase.user_id > 0 else inputDescription">{{ newCase.extern_user_id }}</p>
             <ng-template #inputDescription>
               <input
@@ -112,13 +112,13 @@
           <div class="col-3">
             <p class="title">{{ 'notes' | cpI18n }}</p>
           </div>
-          <div class="col-4">
+          <div class="col-8">
             <p class="description" *ngIf="!isEditing else inputNotes">{{ newCase.notes }}</p>
             <ng-template #inputNotes>
               <textarea [(ngModel)]="newCase.notes"
                        class="form-control"
                        row="5"
-                       maxlength="1024"
+                       maxlength="512"
                        autocomplete="off"></textarea>  
           </ng-template>
           </div>
