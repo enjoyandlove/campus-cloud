@@ -4,13 +4,6 @@
   "em": null,
   "children": [
     {
-      "privilege": 44,
-      "label": "cases",
-      "clearParams": true,
-      "amplitude": "Cases",
-      "url": "/contact-trace/cases"
-    },
-    {
       "privilege": 41,
       "label": "admin_contact_trace_forms",
       "clearParams": true,
@@ -25,11 +18,11 @@
       "url": "/contact-trace/qr"
     },
     {
-      "privilege": 41,
-      "label": "settings",
+      "privilege": 44,
+      "label": "cases",
       "clearParams": true,
-      "amplitude": "Settings",
-      "url": "/contact-trace/health-pass"
+      "amplitude": "Cases",
+      "url": "/contact-trace/cases"
     },
     {
       "privilege": 43,
@@ -37,6 +30,13 @@
       "clearParams": true,
       "amplitude": "Exposure Notification",
       "url": "/contact-trace/exposure-notification"
+    },
+    {
+      "privilege": 41,
+      "label": "settings",
+      "clearParams": true,
+      "amplitude": "Settings",
+      "url": "/contact-trace/health-pass"
     }
   ]
 }
