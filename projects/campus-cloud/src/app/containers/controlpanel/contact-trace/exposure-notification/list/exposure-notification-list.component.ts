@@ -3,7 +3,16 @@ import { merge, Observable, of, Subject } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
 import { ContactTraceHeaderService } from '@controlpanel/contact-trace/utils';
 import { Router } from '@angular/router';
-import { catchError, debounceTime, distinctUntilChanged, finalize, map, share, startWith, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  finalize,
+  map,
+  share,
+  startWith,
+  switchMap
+} from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { ExposureNotification, ExposureNotificationStatus } from '../models';
 import { ExposureNotificationService } from '../services';
@@ -13,7 +22,7 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { Store } from '@ngrx/store';
 import { ModalService } from '@ready-education/ready-ui/overlays';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { ExposureNotificationDeleteComponent } from '@controlpanel/contact-trace/exposure-notification';
+import { ExposureNotificationDeleteComponent } from '@controlpanel/contact-trace/exposure-notification/components/delete';
 
 @Component({
   selector: 'cp-exposure-notification-list',
@@ -172,7 +181,7 @@ export class ExposureNotificationListComponent implements OnInit {
   }
 
   onDeleteClick(result: ExposureNotification) {
-   this.deleteModal = this.modalService.open(ExposureNotificationDeleteComponent, {
+    this.deleteModal = this.modalService.open(ExposureNotificationDeleteComponent, {
       data: result,
       onAction: this.onDeletedNotification.bind(this),
       onClose: this.resetModal.bind(this)

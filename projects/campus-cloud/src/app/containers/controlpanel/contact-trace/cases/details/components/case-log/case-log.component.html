@@ -78,9 +78,9 @@
                   <td ui-table-cell>
                     <cp-dot color="#{{log.new_status.color}}"></cp-dot>{{ log.new_status.name }}
                   </td>
-          
+
                   <td ui-table-cell>
-                    <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ManualNotes].tag; else actionCell" 
+                    <div *ngIf="log.source_activity_name === sourceActivityName[sourceActivityType.ManualNotes].tag; else actionCell"
                           (click)="launchNoteModal(log.new_notes)">
                       <img [src]="noteSvgPath"> <span class="note-link">{{ log.source }}</span>
                     </div>
@@ -97,7 +97,7 @@
                             cpTarget="view_info"
                             [eventData]="eventData"
                             [routerLink]="['/contact-trace', 'cases', log.source_obj_id]">
-                            {{ log.source_obj_id }}
+                            {{ log.source }}
                           </a>
                         </div>
                         <ng-template #normalCell>

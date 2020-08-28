@@ -1,5 +1,11 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { ICaseLog, ICaseStatus, ICase, SourceActivityType } from '../../../cases.interface';
+import {
+  ICaseLog,
+  ICaseStatus,
+  ICase,
+  SourceActivityType,
+  SourceType
+} from '../../../cases.interface';
 import { CPI18nPipe, FORMAT } from '@projects/campus-cloud/src/app/shared/pipes';
 import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { CasesService } from '../../../cases.service';
@@ -46,6 +52,9 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
 
   public get sourceActivityType(): typeof SourceActivityType {
     return SourceActivityType;
+  }
+  public get sourceType(): typeof SourceType {
+    return SourceType;
   }
   dateFilterOpts;
 

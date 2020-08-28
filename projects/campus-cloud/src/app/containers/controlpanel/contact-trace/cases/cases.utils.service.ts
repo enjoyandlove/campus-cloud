@@ -4,7 +4,8 @@ import {
   ICaseStatus,
   ICaseLog,
   ISourceActivityName,
-  SourceActivityType
+  SourceActivityType,
+  SourceType
 } from './cases.interface';
 import { FormBuilder, Validators } from '@angular/forms';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -46,7 +47,7 @@ export class CasesUtilsService {
       {
         tag: '%exposure_alert%',
         name: cpI18nPipe.transform('case_event_exposure_alert'),
-        source: cpI18nPipe.transform('case_source_exposure_alert')
+        source: cpI18nPipe.transform('contact_trace_notification_case')
       }
     ];
   }
@@ -107,7 +108,7 @@ export class CasesUtilsService {
               matchedSource.tag,
               this.sourceActivityName[SourceActivityType.Creation].name
             );
-            newItem.source = this.sourceActivityName[0].source;
+            newItem.source = this.sourceActivityName[SourceActivityType.Creation].source;
             break;
           case this.sourceActivityName[SourceActivityType.ManualNotes].tag:
             newItem.event = matchedSource.name;
@@ -116,37 +117,47 @@ export class CasesUtilsService {
           case this.sourceActivityName[SourceActivityType.ManualStatus].tag:
             newItem.event = item.source_activity_name.replace(
               matchedSource.tag,
-              this.sourceActivityName[SourceActivityType.ManualStatus].name
+              matchedSource.name
             );
-            newItem.source = `${matchedSource.source} ${item.admin_name}`;
+            if (item.source_type === SourceType.Admin) {
+              newItem.source = `${matchedSource.source} ${item.admin_name}`;
+            } else {
+              newItem.source = this.cpI18nPipe.transform('case_source_automatic_escalated');
+            }
             break;
           case this.sourceActivityName[SourceActivityType.ActionNotify].tag:
             newItem.event = item.source_activity_name.replace(
               matchedSource.tag,
-              this.sourceActivityName[SourceActivityType.ActionNotify].name
+              matchedSource.name
             );
             newItem.source = '';
             break;
           case this.sourceActivityName[SourceActivityType.ActionContactTrace].tag:
             newItem.event = item.source_activity_name.replace(
               matchedSource.tag,
-              this.sourceActivityName[SourceActivityType.ActionContactTrace].name
+              matchedSource.name
             );
-            newItem.source = item.source_activity_name.substring(
+            let tracedContactsCount = item.source_activity_name.substring(
               0,
               item.source_activity_name.indexOf('%') - 1
             );
+            if (tracedContactsCount != '0') {
+              newItem.source = tracedContactsCount;
+            }
             break;
           case this.sourceActivityName[SourceActivityType.ExposureAlerts].tag:
             newItem.event = item.source_activity_name.replace(
               matchedSource.tag,
-              this.sourceActivityName[SourceActivityType.ExposureAlerts].name
+              matchedSource.name
             );
-            newItem.source = '';
+            newItem.source = `${matchedSource.source} ${item.source_obj_id}`;
             break;
         }
       } else {
         newItem.event = item.source_activity_name;
+        if (item.form_name) {
+          newItem.source = item.form_name;
+        }
       }
       return newItem;
     });
