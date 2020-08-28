@@ -30,7 +30,7 @@
               <div [formGroupName]="i"
                    class="col-12">
                 <div class="row form__item">
-                  <div class="col-4 text-truncate">
+                  <div class="col-1 text-truncate">
                     <div class="row margin-top">
                       <div class="col-3">
                         <div class="row">
@@ -42,15 +42,18 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-8 text-truncate">
-                        <span class="cases__title">
-                          <strong>{{ case.controls.firstname.value }} {{ case.controls.lastname.value }}</strong>
-                        </span>
-                        <br />
-                        <span class="cases__description">
-                          {{ case.controls.extern_user_id.value }}
-                        </span>
-                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label>{{ 't_shared_identifier' | cpI18n }}</label>
+                    <div>
+                      <span class="cases__title">
+                        <strong>{{ case.controls.firstname.value }} {{ case.controls.lastname.value }}</strong>
+                      </span>
+                      <br />
+                      <span class="cases__description">
+                        {{ case.controls.extern_user_id.value }}
+                      </span>
                     </div>
                   </div>
                   <div class="col-3">

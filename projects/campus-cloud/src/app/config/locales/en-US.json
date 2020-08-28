@@ -746,6 +746,12 @@
   "cases_import_items_to_import": {
     "message": "File contains data for %s case(s)."
   },
+  "case_create_message_exist": {
+    "message": "Case already exists"
+  },
+  "case_create_message_success": {
+    "message": "Case has been successfully created."
+  },
   "case_details": {
     "message": "Case Details"
   },
@@ -762,7 +768,7 @@
     "message": "Exposure Alert"
   },
   "case_event_manual_notes": {
-    "message": "Notes Changes"
+    "message": "Notes Changed"
   },
   "case_event_manual_status": {
     "message": "Status Change -"
@@ -773,8 +779,11 @@
   "case_pending_action": {
     "message": "Pending Action"
   },
+  "case_source_automatic_escalated": {
+    "message": "Automatically escalated"
+  },
   "case_source_creation": {
-    "message": "Manual Import"
+    "message": "Manually Added"
   },
   "case_source_manual_status": {
     "message": "Escalated by"
@@ -991,7 +1000,7 @@
     "message": "Contact Details"
   },
   "contact_trace_exposure_notification": {
-    "message": "Exposure Notification"
+    "message": "Notifications"
   },
   "contact_trace_forms_all_forms": {
     "message": "All Forms"
@@ -1423,7 +1432,7 @@
     "message": "Exposed"
   },
   "contact_trace_notification_template_title_self_reported": {
-    "message": "Reported"
+    "message": "Self-Reported"
   },
   "contact_trace_notification_template_title_symptomatic": {
     "message": "Symptomatic"

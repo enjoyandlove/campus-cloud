@@ -69,7 +69,7 @@ export class CasesExcelComponent extends BaseComponent implements OnInit, OnDest
   getCaseStatus() {
     this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
       map((caseStatus: ICaseStatus[]) => {
-        const responseCopy = [...caseStatus];
+        const responseCopy = [...caseStatus].sort((a, b) => (a.rank < b.rank ? 1 : -1));
         return this.utils.getCaseStatusOptions(responseCopy);
       })
     );
@@ -165,7 +165,7 @@ export class CasesExcelComponent extends BaseComponent implements OnInit, OnDest
   enableSubmitButton() {
     let isValid = false;
 
-    if (this.isChecked.length > 0) {
+    if (!this.isChecked.every((item) => !item.checked)) {
       isValid = this.form.controls.cases['controls'].reduce((prev, item, index) => {
         let valid = true;
         if (this.isChecked[index].checked) {
@@ -236,7 +236,7 @@ export class CasesExcelComponent extends BaseComponent implements OnInit, OnDest
   handleError(err?: string) {
     this.store.dispatch(
       new baseActionClass.SnackbarError({
-        body: err ? err : this.cpI18nPipe.transform('something_went_wrong')
+        body: err ? err : this.cpI18nPipe.transform('case_create_message_exist')
       })
     );
   }
