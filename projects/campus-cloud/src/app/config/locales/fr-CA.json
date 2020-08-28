@@ -746,6 +746,12 @@
   "cases_import_items_to_import": {
     "message": "File contains data for %s case(s)."
   },
+  "case_create_message_exist": {
+    "message": "Case already exists"
+  },
+  "case_create_message_success": {
+    "message": "Case has been successfully created."
+  },
   "case_details": {
     "message": "Détails du cas"
   },
@@ -762,7 +768,7 @@
     "message": "Exposure Alert"
   },
   "case_event_manual_notes": {
-    "message": "Notes Changes"
+    "message": "Notes Changed"
   },
   "case_event_manual_status": {
     "message": "Status Change -"
@@ -773,8 +779,11 @@
   "case_pending_action": {
     "message": "Action en attente"
   },
+  "case_source_automatic_escalated": {
+    "message": "Automatically escalated"
+  },
   "case_source_creation": {
-    "message": "Manual Import"
+    "message": "Manually Added"
   },
   "case_source_manual_status": {
     "message": "Escalated by"
@@ -991,7 +1000,7 @@
     "message": "Détails du contact"
   },
   "contact_trace_exposure_notification": {
-    "message": "Notification d'exposition"
+    "message": "Notifications"
   },
   "contact_trace_forms_all_forms": {
     "message": "Tous les formulaires"
