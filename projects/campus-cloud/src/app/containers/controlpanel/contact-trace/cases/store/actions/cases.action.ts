@@ -145,7 +145,7 @@ export class ImportCases implements Action {
 
 export class GetCaseStatus implements Action {
   readonly type = caseActions.GET_CASE_STATUS;
-  constructor() {}
+  constructor(public payload?: { startRange: number; endRange: number; state }) {}
 }
 
 export class GetCaseStatusFail implements Action {

@@ -67,6 +67,38 @@ export function reducer(state = initialState, action: fromCases.CasesAction | fr
       };
     }
 
+    case CaseStatusActionTypes.UPDATE_CASE_STATUS_COUNT_FOR_VIEW_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: false,
+        loading: false
+      };
+    }
+
+    case CaseStatusActionTypes.UPDATE_CASE_STATUS_COUNT_FOR_VIEW: {
+      return {
+        ...state,
+        error: false,
+        loading: true,
+        loaded: false
+      };
+    }
+
+    case CaseStatusActionTypes.UPDATE_CASE_STATUS_COUNT_FOR_VIEW_SUCCESS: {
+      const payload: any = action.payload;
+      const data = state.data.map(
+        caseStatus => caseStatus.id !== payload.id ? {...caseStatus, case_count: 0} : payload);
+      return {
+        ...state,
+        data: data,
+        selectedStatus: payload,
+        error: false,
+        loaded: true,
+        loading: false
+      };
+    }
+
     default: {
       return state;
     }

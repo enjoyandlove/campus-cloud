@@ -96,7 +96,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       .append('start', this.state.start)
       .append('end', this.state.end);
 
-    if (this.state.current_status_id != 0) {
+    if (this.state.current_status_id !== 0) {
       search = search.append('new_status_ids', this.state.current_status_id);
     }
 
