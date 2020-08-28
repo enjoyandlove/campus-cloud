@@ -68,6 +68,7 @@ export class CaseViewComponent implements OnInit {
 
   onCancel() {
     this.isEditing = false;
+    this.newCase = JSON.parse(JSON.stringify(this.case));
     this.onEditing.emit(false);
   }
 
