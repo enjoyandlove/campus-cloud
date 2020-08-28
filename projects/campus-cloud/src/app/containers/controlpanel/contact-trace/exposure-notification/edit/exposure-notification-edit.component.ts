@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, finalize, map, takeUntil } from 'rxjs/operators';
+import { filter, finalize, map, takeUntil, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification/models';
@@ -7,8 +7,8 @@ import { ExposureNotificationService } from '@controlpanel/contact-trace/exposur
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
 import { AnnouncementPriority } from '@controlpanel/notify/announcements/model';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { CPSession } from '@campus-cloud/session';
+import { CPI18nService, SchoolService } from '@campus-cloud/shared/services';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import * as fromStore from '@controlpanel/contact-trace/cases/store';
 import { ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
 import { HttpParams } from '@angular/common/http';
@@ -42,23 +42,19 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   ];
   toOptions = [
     {
-      action: 'case_status',
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_case_status')
-    },
-    {
       action: 'custom_list',
       disabled: false,
       label: this.cpI18n.translate('contact_trace_notification_custom_list')
+    },
+    {
+      action: 'case_status',
+      disabled: false,
+      label: this.cpI18n.translate('contact_trace_notification_case_status')
     }
   ];
 
   toCaseOption = [
-    {
-      action: 'custom_list',
-      disabled: false,
-      label: this.cpI18n.translate('contact_trace_notification_custom_list')
-    }
+    this.toOptions[0]
   ];
   templates;
   filterOptions;
@@ -74,6 +70,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   templateTypeToTemplateMap;
   CaseActionToTemplateTypeMap;
   caseId: number;
+  clientName = '';
 
   private getCasesById$: Observable<ICaseStatus>;
   private casesById: any;
@@ -122,13 +119,15 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       .subscribe(({ user_list_id }) => {
         this.notification.list_ids = [user_list_id];
       });
+    this.onToOptionChanged(this.toOptions[0]);
   }
 
   private getItemForEdit(notificationId: number): Observable<ExposureNotification> {
     if (!notificationId) {
       const serviceId: number = this.session.g.get('school').ct_service_id;
-      return this.notificationService.getStoreId(serviceId).pipe(
-        map((storeId) => {
+      return this.notificationService.getStore(serviceId).pipe(
+        tap(({name}) => this.clientName = name),
+        map(({storeId}) => {
           const newObj: ExposureNotification = {
             type: 1,
             store_id: storeId
@@ -172,7 +171,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   get isScheduledAnnouncement() {
-    return this.notification.notify_at_epoch !== -1
+    return this.notification.notify_at_epoch !== undefined && this.notification.notify_at_epoch !== -1
       ? AnnouncementUtilsService.isScheduledAnnouncement({
           notify_at_epoch: this.notification.notify_at_epoch
         })

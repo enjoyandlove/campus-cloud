@@ -25,7 +25,7 @@
                       type="text"
                       class="form-control subject-input__input"
                       disabled
-                      [value]="'contact_trace_notification_contact_tracing_service' | cpI18n"
+                      [value]="clientName ? clientName : ('contact_trace_notification_contact_tracing_service' | cpI18n)"
                     />
                   </div>
                 </div>
@@ -34,10 +34,10 @@
                 <label>{{ 'announcements_type' | cpI18n }}</label>
                 <div class="row">
                   <div class="col-12">
-                    <cp-check-dropdown
+                    <cp-check-dropdown [dropdownListClass]="'small-width'"
                       [items]="types"
                       [selectedItem]="selectedType"
-                      buttonClass="cpbtn cpbtn--cancel"
+                      buttonClass="cpbtn cpbtn--cancel full-width"
                       (selected)="onTypeChanged($event)">
                     </cp-check-dropdown>
                   </div>
@@ -54,7 +54,7 @@
                     <label>{{ 'to' | cpI18n }}</label>
                     <div class="row">
                       <div class="col-12">
-                        <cp-check-dropdown
+                        <cp-check-dropdown [dropdownListClass]="'small-width'"
                           [items]="caseId ? toCaseOption : toOptions"
                           [selectedItem]="selectedToOption"
                           buttonClass="cpbtn cpbtn--cancel"
@@ -69,7 +69,7 @@
                 <label>{{ 'contact_trace_notification_template' | cpI18n }}</label>
                 <div class="row">
                   <div class="col-12">
-                    <cp-check-dropdown
+                    <cp-check-dropdown [dropdownListClass]="'small-width'"
                       *ngIf="templates"
                       [items]="templates"
                       [selectedItem]="selectedTemplate"
@@ -93,7 +93,7 @@
                     <label>{{ 'contact_trace_notification_filter' | cpI18n }}</label>
                     <div class="row">
                       <div class="col-12">
-                        <cp-check-dropdown
+                        <cp-check-dropdown [dropdownListClass]="'small-width'"
                           *ngIf="filterOptions"
                           [items]="filterOptions"
                           [selectedItem]="selectedFilterOption"

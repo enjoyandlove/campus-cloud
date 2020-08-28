@@ -72,11 +72,16 @@ export class ExposureNotificationService {
     );
   }
 
-  getStoreId(serviceId: number): Observable<number | any> {
+  getStore(serviceId: number): Observable<number | any> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/${serviceId}`;
 
     return this.api.get(url).pipe(
-      map((service) => service['store_id']),
+      map((service) => {
+        return {
+          storeId: service['store_id'],
+          name: service['name']
+        };
+      }),
       catchError((error) => {
         this.handleError();
         return throwError(error);
