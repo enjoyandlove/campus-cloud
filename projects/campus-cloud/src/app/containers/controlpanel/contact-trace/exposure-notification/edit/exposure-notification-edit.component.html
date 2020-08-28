@@ -97,7 +97,7 @@
                           *ngIf="filterOptions"
                           [items]="filterOptions"
                           [selectedItem]="selectedFilterOption"
-                          buttonClass="cpbtn cpbtn--cancel"
+                          buttonClass="cpbtn cpbtn--cancel {{(highlightFormError && selectedFilterOption.action === 0) ? 'validation-error' : ''}}"
                           (selected)="onFilterOptionChanged($event)">
                         </cp-check-dropdown>
                       </div>
@@ -194,7 +194,16 @@
   <div class="footer">
     <div class="cp-wrapper cp-wrapper--outer">
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 d-flex flex-wrap justify-content-end">
+          <button
+                  ui-button
+                  type="button"
+                  variant="flat"
+                  color="secondary"
+                  class="action-button"
+                  (click)="cancelClickHandler()">
+            {{'cancel' | cpI18n}}
+          </button>
           <button
             ui-button
             type="button"
@@ -204,16 +213,6 @@
             [disabled]="webServiceCallInProgress"
             (click)="sendClickHandler()">
             {{'send' | cpI18n}}
-          </button>
-
-          <button
-            ui-button
-            type="button"
-            variant="flat"
-            color="secondary"
-            class="action-button"
-            (click)="cancelClickHandler()">
-            {{'cancel' | cpI18n}}
           </button>
         </div>
       </div>

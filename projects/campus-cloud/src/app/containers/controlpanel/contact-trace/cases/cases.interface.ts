@@ -13,9 +13,11 @@ export interface ICase {
 
 export interface ICaseStatus {
   id: number;
+  rank: number;
   name: string;
   color: string;
   case_count: number;
+  user_list_id: number;
 }
 
 export interface ICaseAction {

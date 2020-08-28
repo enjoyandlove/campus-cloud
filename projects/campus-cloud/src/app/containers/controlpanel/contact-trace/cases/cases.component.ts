@@ -19,6 +19,7 @@ import { CasesUtilsService } from './cases.utils.service';
 interface IState {
   search_str: string;
   current_status_ids: string;
+  exclude_external: boolean;
   start: number;
   end: number;
 }
@@ -27,7 +28,8 @@ const state: IState = {
   search_str: null,
   current_status_ids: null,
   start: null,
-  end: null
+  end: null,
+  exclude_external: false
 };
 
 @Component({
@@ -48,7 +50,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
   cases$: Observable<ICase[]>;
   caseStatus$: Observable<ICaseStatus[]>;
   loading$: Observable<boolean>;
-  isCaseCreate: boolean = false;
+  isCaseCreate = false;
   private destroy$ = new Subject();
   resetFilterStatus: boolean = false;
 
@@ -117,7 +119,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
       current_status_ids: statusID
     };
 
-    if (this.state.current_status_ids == '0') {
+    if (this.state.current_status_ids === '0') {
       delete this.state.current_status_ids;
     }
 
@@ -195,9 +197,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
       .select(fromStore.getCasesLoaded)
       .pipe(
         tap((loaded: boolean) => {
-          if (!loaded) {
             this.fetch();
-          }
         }),
         take(1)
       )

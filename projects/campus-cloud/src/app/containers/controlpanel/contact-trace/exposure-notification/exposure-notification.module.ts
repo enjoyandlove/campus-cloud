@@ -20,6 +20,10 @@ import { AnnouncementsModule } from '@controlpanel/notify/announcements/announce
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AudienceSharedModule } from '@controlpanel/audience/shared/audience.shared.module';
 import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
+import { EffectsModule } from '@ngrx/effects';
+import { effects, reducers } from '@controlpanel/contact-trace/cases/store';
+import { StoreModule } from '@ngrx/store';
+import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils.service';
 
 @NgModule({
   declarations: [
@@ -39,8 +43,10 @@ import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
     AnnouncementsModule,
     FormsModule,
     ReactiveFormsModule,
-    AudienceSharedModule
+    AudienceSharedModule,
+    EffectsModule.forFeature(effects),
+    StoreModule.forFeature('casesModule', reducers)
   ],
-  providers: [CPI18nPipe, CasesService]
+  providers: [CPI18nPipe, CasesService, CasesUtilsService]
 })
 export class ExposureNotificationModule {}
