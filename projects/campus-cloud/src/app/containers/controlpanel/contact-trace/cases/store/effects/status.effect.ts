@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import * as fromActions from '../actions';
@@ -32,4 +32,29 @@ export class CasesStatusEffect {
       )
     )
   );
+
+  UpdateCaseStatusCountForView$ =
+    createEffect(() => this.actions$.pipe(
+      ofType(fromActions.CaseStatusActionTypes.UPDATE_CASE_STATUS_COUNT_FOR_VIEW),
+      mergeMap((action: fromActions.UpdateCaseStatusCountForView) => {
+        let params = null, state;
+        if (action.payload) {
+          state = action.payload.state;
+          params = this.defaultParamsForCaseStatus(state);
+        } else {
+          params = new HttpParams().append('school_id', this.session.g.get('school').id);
+        }
+        return this.casesService.getCaseStatusById(state.current_status_ids, params).pipe(
+          map((data: ICaseStatus) => new fromActions.UpdateCaseStatusCountForViewSuccess(data)),
+          catchError((error) => of(new fromActions.UpdateCaseStatusCountForViewFail(parseErrorResponse(error))))
+        );
+      })));
+
+  private defaultParamsForCaseStatus(state): HttpParams {
+    return new HttpParams()
+      .append('search_str', state.search_str)
+      .append('start', state.start)
+      .append('end', state.end)
+      .append('school_id', this.session.g.get('school').id);
+  }
 }

@@ -162,10 +162,16 @@ export class CasesEffect {
   @Effect()
   getCaseStatus$: Observable<
     fromActions.GetCaseStatusSuccess | fromActions.GetCaseStatusFail
-  > = this.actions$.pipe(
+    > = this.actions$.pipe(
     ofType(fromActions.caseActions.GET_CASE_STATUS),
-    mergeMap(() => {
-      const params = new HttpParams().append('school_id', this.session.g.get('school').id);
+    mergeMap((action: fromActions.GetCaseStatus) => {
+      let params;
+      if (action.payload) {
+        const state = action.payload.state;
+        params = this.defaultParamsForCaseStatus(state);
+      } else {
+        params = new HttpParams().append('school_id', this.session.g.get('school').id);
+      }
       return this.service.getCaseStatus(params).pipe(
         map((data: ICaseStatus[]) => new fromActions.GetCaseStatusSuccess(data)),
         catchError((error) => of(new fromActions.GetCaseStatusFail(parseErrorResponse(error))))
@@ -178,6 +184,14 @@ export class CasesEffect {
       .append('search_str', state.search_str)
       .append('current_status_ids', state.current_status_ids)
       .append('exclude_external', state.exclude_external)
+      .append('start', state.start)
+      .append('end', state.end)
+      .append('school_id', this.session.g.get('school').id);
+  }
+
+  private defaultParamsForCaseStatus(state): HttpParams {
+    return new HttpParams()
+      .append('search_str', state.search_str)
       .append('start', state.start)
       .append('end', state.end)
       .append('school_id', this.session.g.get('school').id);

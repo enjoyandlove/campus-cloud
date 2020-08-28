@@ -87,6 +87,11 @@ export class CasesComponent extends BaseComponent implements OnInit {
       endRange: this.endRange
     };
     this.store.dispatch(new fromStore.GetFilteredCases(payload));
+    if (!this.state.current_status_ids) {
+      this.store.dispatch(new fromStore.GetCaseStatus(payload));
+    } else {
+      this.store.dispatch(new fromStore.UpdateCaseStatusCountForView(payload));
+    }
 
     this.cases$ = this.getCases(true);
   }
@@ -116,12 +121,8 @@ export class CasesComponent extends BaseComponent implements OnInit {
     this.resetFilterStatus = false;
     this.state = {
       ...this.state,
-      current_status_ids: statusID
+      current_status_ids: statusID === 0 ? null : statusID
     };
-
-    if (this.state.current_status_ids === '0') {
-      delete this.state.current_status_ids;
-    }
 
     this.resetPagination();
     this.fetchFilteredCases();
