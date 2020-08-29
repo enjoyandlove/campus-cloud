@@ -85,7 +85,9 @@ export class CaseViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.newCase = JSON.parse(JSON.stringify(this.case));
+    if (this.case) {
+      this.newCase = JSON.parse(JSON.stringify(this.case));
+    }
     this.listenForUpdateCase();
     this.store.dispatch(new fromStore.GetCaseStatus());
   }

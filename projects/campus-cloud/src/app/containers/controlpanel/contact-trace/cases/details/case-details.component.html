@@ -3,7 +3,7 @@
     <cp-spinner class="float-center"></cp-spinner>
   </div>
   <div class="col-12" *ngSwitchCase="false">
-    <cp-case-view *ngIf="!loading"
+    <cp-case-view *ngIf="!caseNotFound && !loading && case"
       (onSubmitted)="onSubmitted($event)"
       (onEditing)="onEditing($event)"
       (onEditFinished)="onEditFinished($event)"
@@ -11,12 +11,13 @@
     >
     </cp-case-view>
 
-    <cp-case-log #caseLogList
-          *ngIf="!isEditing && isSubmitted"
-          [case]="case" 
-          [isSubmitted]="isSubmitted"        
-    >
-    </cp-case-log>
+      <cp-case-log #caseLogList
+                   *ngIf="!caseNotFound && !isEditing && isSubmitted && case"
+                   [case]="case"
+                   [isSubmitted]="isSubmitted"
+      >
+      </cp-case-log>
+
   </div>
 </div>
 

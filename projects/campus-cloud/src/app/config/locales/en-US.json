@@ -1002,6 +1002,9 @@
   "contact_trace_exposure_notification": {
     "message": "Notifications"
   },
+  "contact_trace_exposure_notification_case_not_available": {
+    "message": "Case is not available"
+  },
   "contact_trace_forms_all_forms": {
     "message": "All Forms"
   },
@@ -1409,6 +1412,9 @@
   },
   "contact_trace_notification_sent": {
     "message": "Sent"
+  },
+  "contact_trace_notification_status": {
+    "message": "Status"
   },
   "contact_trace_notification_subject": {
     "message": "Subject"

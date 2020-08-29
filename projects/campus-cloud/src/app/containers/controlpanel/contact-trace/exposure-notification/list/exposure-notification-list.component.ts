@@ -3,26 +3,18 @@ import { merge, Observable, of, Subject } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
 import { ContactTraceHeaderService } from '@controlpanel/contact-trace/utils';
 import { Router } from '@angular/router';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  finalize,
-  map,
-  share,
-  startWith,
-  switchMap
-} from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, finalize, map, share, startWith, switchMap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { ExposureNotification, ExposureNotificationStatus } from '../models';
 import { ExposureNotificationService } from '../services';
-import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CPI18nPipe, FORMAT } from '@campus-cloud/shared/pipes';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { Store } from '@ngrx/store';
 import { ModalService } from '@ready-education/ready-ui/overlays';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ExposureNotificationDeleteComponent } from '@controlpanel/contact-trace/exposure-notification/components/delete';
+import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
+import { ICase } from '@controlpanel/contact-trace/cases/cases.interface';
 
 @Component({
   selector: 'cp-exposure-notification-list',
@@ -56,8 +48,9 @@ export class ExposureNotificationListComponent implements OnInit {
     private headerService: ContactTraceHeaderService,
     private notificationService: ExposureNotificationService,
     private router: Router,
-    private cpI18n: CPI18nService,
-    private store: Store<ISnackbar>
+    private cpI18n: CPI18nPipe,
+    private store: Store<ISnackbar>,
+    public casesService: CasesService
   ) {}
 
   ngOnInit(): void {
@@ -171,13 +164,28 @@ export class ExposureNotificationListComponent implements OnInit {
   private handleSuccess(key) {
     this.store.dispatch(
       new baseActionClass.SnackbarSuccess({
-        body: this.cpI18n.translate(key)
+        body: this.cpI18n.transform(key)
       })
     );
   }
 
+
   caseLinkClickHandler(userId: number): void {
-    this.router.navigate(['/contact-trace/cases/caseInfo/', userId]);
+    const params = new HttpParams()
+      .append('user_id', userId.toString())
+      .append('school_id', this.session.g.get('school').id);
+
+    const stream$ = this.casesService.getCaseById(params);
+
+    stream$.toPromise().then((cases: ICase[]) => {
+      this.router.navigate(['/contact-trace/cases/', cases[0].id]);
+    }).catch(reason => {
+      this.store.dispatch(
+        new baseActionClass.SnackbarError({
+          body: this.cpI18n.transform('contact_trace_exposure_notification_case_not_available')
+        })
+      );
+    });
   }
 
   onDeleteClick(result: ExposureNotification) {

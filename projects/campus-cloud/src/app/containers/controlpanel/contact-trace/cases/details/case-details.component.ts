@@ -33,6 +33,7 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
   loading: boolean;
   pageLoading: boolean;
   getCasesById$: Observable<any>;
+  caseNotFound = false;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -88,6 +89,7 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
         this.pageLoading = false;
       });
     } else {
+      /*TODO : Check if we can remove this, same action for navigation to /caseInfo/:userId*/
       this.loading = true;
       const params = new HttpParams()
         .append('user_id', this.userId.toString())
@@ -95,11 +97,19 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
 
       const stream$ = this.service.getCaseById(params);
 
-      stream$.toPromise().then((res: any) => {
-        this.case = res[0];
-        this.loading = false;
-        this.isEditing = false;
-      });
+      stream$
+        .toPromise()
+        .then((res: any) => {
+          this.case = res[0];
+          this.loading = false;
+          this.pageLoading = false;
+          this.isEditing = false;
+        })
+        .catch((reason) => {
+          this.loading = false;
+          this.pageLoading = false;
+          this.caseNotFound = true;
+        });
     }
   }
 

@@ -231,16 +231,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         exclude_external_cases: true
       })
     );
-    this.store.dispatch(
-      new fromStore.GetCases({
-        startRange: null,
-        endRange: null,
-        state: {
-          current_status_ids: option.action,
-          exclude_external: true
-        }
-      })
-    );
+
     this.selectedFilterOption = option;
   }
 

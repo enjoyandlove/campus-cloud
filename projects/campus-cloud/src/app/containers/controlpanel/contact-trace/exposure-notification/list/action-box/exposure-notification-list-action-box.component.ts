@@ -37,10 +37,6 @@ export class ExposureNotificationListActionBoxComponent implements OnInit {
 
     this.types = [
       {
-        label: this.cpI18n.translate('contact_trace_notification_all_statuses'),
-        action: null
-      },
-      {
         label: this.cpI18n.translate('contact_trace_notification_sent'),
         action: ExposureNotificationStatus.sent
       },
