@@ -47,7 +47,10 @@ export class CasesListActionBoxComponent implements OnInit {
     this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
       map((caseStatus: ICaseStatus[]) => {
         const responseCopy = [...caseStatus];
-        return this.utils.getCaseStatusOptions(responseCopy, caseStatusLabel);
+        return this.utils.getCaseStatusOptions(
+          responseCopy.sort((a, b) => b.rank - a.rank),
+          caseStatusLabel
+        );
       })
     );
   }

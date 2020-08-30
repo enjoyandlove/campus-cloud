@@ -51,7 +51,9 @@ export class CaseViewComponent implements OnInit {
   getCaseStatus() {
     this.store.select(fromStore.getCaseStatus).subscribe((caseStatus: ICaseStatus[]) => {
       this.caseStatus = [...caseStatus];
-      this.statusFilter = this.utils.getCaseStatusOptions(this.caseStatus);
+      this.statusFilter = this.utils.getCaseStatusOptions(
+        this.caseStatus.sort((a, b) => b.rank - a.rank)
+      );
       this.selectedStatusFilter = this.statusFilter.filter(
         (item) => this.case.current_status.id === item.action
       )[0];

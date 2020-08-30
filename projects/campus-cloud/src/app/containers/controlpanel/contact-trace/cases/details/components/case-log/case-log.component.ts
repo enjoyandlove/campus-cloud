@@ -81,7 +81,10 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
       map((statuses: ICaseStatus[]) => {
         const responseCopy = [...statuses];
-        return this.utils.getCaseStatusOptions(responseCopy, caseStatusLabel);
+        return this.utils.getCaseStatusOptions(
+          responseCopy.sort((a, b) => b.rank - a.rank),
+          caseStatusLabel
+        );
       })
     );
   }
