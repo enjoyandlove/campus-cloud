@@ -4,6 +4,21 @@ stages:
   - deploy
 
 ## Staging
+Testing Web Staging:
+  stage: test
+  script:
+    - echo "Testing Web Staging..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_test
+    - echo "Web Staging tested successfully"
+  rules:
+    - if: '$CI_COMMIT_REF_SLUG == "staging"'
+      changes:
+        - 'projects/campus-cloud/**/*'
+  coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
+  artifacts:
+    paths:
+      - campus-cloud/
+  environment: Staging
 
 Building Web Staging:
   stage: build
