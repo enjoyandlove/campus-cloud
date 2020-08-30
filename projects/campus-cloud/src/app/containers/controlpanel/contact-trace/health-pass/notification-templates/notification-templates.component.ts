@@ -24,7 +24,6 @@ import { environment } from '@projects/campus-cloud/src/environments/environment
   styleUrls: ['./notification-templates.component.scss']
 })
 export class NotificationTemplatesComponent implements OnInit {
-
   templates$: Observable<INotificationTemplate[]>;
   currentTemplates: INotificationTemplate[];
   shouldDisplaySuccessMessage$: Observable<boolean>;
@@ -32,18 +31,21 @@ export class NotificationTemplatesComponent implements OnInit {
   editModal: OverlayRef;
   envRootPath = environment.root;
 
-  constructor(private modalService: ModalService,
-              private healthPassStore: Store<State>,
-              private store: Store<ISnackbar>,
-              public cpI18n: CPI18nPipe) {
-
+  constructor(
+    private modalService: ModalService,
+    private healthPassStore: Store<State>,
+    private store: Store<ISnackbar>,
+    public cpI18n: CPI18nPipe
+  ) {
     this.templates$ = this.healthPassStore.select(selectAllNotificationTemplates);
-    this.templates$.subscribe(list => {
+    this.templates$.subscribe((list) => {
       this.currentTemplates = list;
     });
 
-    this.shouldDisplaySuccessMessage$ = this.healthPassStore.select(selectDisplayTemplateSuccessMessage);
-    this.shouldDisplaySuccessMessage$.subscribe(hasSuccessMessage => {
+    this.shouldDisplaySuccessMessage$ = this.healthPassStore.select(
+      selectDisplayTemplateSuccessMessage
+    );
+    this.shouldDisplaySuccessMessage$.subscribe((hasSuccessMessage) => {
       if (hasSuccessMessage) {
         this.resetModal();
         this.store.dispatch(
@@ -70,8 +72,10 @@ export class NotificationTemplatesComponent implements OnInit {
   }
 
   onEdited(updatedTemplate: INotificationTemplate) {
-    const updatedTemplates = this.currentTemplates.map((template) => template.type === updatedTemplate.type ? updatedTemplate : template);
-    this.healthPassStore.dispatch(NotificationTemplatePageActions.edit({updatedTemplates}));
+    const updatedTemplates = this.currentTemplates.map((template) =>
+      template.type === updatedTemplate.type ? updatedTemplate : template
+    );
+    this.healthPassStore.dispatch(NotificationTemplatePageActions.edit({ updatedTemplates }));
   }
 
   resetModal() {
@@ -79,7 +83,8 @@ export class NotificationTemplatesComponent implements OnInit {
   }
 
   templateTypeTitleProperty(type: number) {
-    return 'contact_trace_notification_template_title_' +
-      NotificationTemplateType[type].toLowerCase();
+    return (
+      'contact_trace_notification_template_title_' + NotificationTemplateType[type].toLowerCase()
+    );
   }
 }

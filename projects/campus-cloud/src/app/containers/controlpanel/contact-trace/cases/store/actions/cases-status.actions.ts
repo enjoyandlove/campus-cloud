@@ -10,10 +10,9 @@ export enum CaseStatusActionTypes {
   UPDATE_CASE_STATUS_COUNT_FOR_VIEW_SUCCESS = '[contact_trace.cases.view] update count on case status Success',
 }
 
-
 export class GetCaseStatusById implements Action {
   readonly type = CaseStatusActionTypes.GET_CASE_STATUS_BY_ID;
-  constructor(public payload: { id: number, exclude_external_cases: boolean }) {}
+  constructor(public payload: { id: number; exclude_external_cases: boolean }) {}
 }
 
 export class GetCaseStatusByIdSuccess implements Action {
@@ -43,7 +42,7 @@ export class UpdateCaseStatusCountForViewFail implements Action {
 
 
 export type CasesStatusActions =
-  GetCaseStatusById
+  | GetCaseStatusById
   | GetCaseStatusByIdSuccess
   | GetCaseStatusByIdFail
   | UpdateCaseStatusCountForView

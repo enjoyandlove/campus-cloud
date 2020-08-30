@@ -18,7 +18,10 @@ export const initialState: ICaseStatusState = {
   loaded: false
 };
 
-export function reducer(state = initialState, action: fromCases.CasesAction | fromCases.CasesStatusActions ) {
+export function reducer(
+  state = initialState,
+  action: fromCases.CasesAction | fromCases.CasesStatusActions
+) {
   switch (action.type) {
     case fromCases.caseActions.GET_CASE_STATUS: {
       return {

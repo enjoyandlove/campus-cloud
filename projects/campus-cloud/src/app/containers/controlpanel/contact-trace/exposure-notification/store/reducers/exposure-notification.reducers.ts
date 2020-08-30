@@ -2,7 +2,6 @@ import { ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
 import { createReducer, on } from '@ngrx/store';
 import { ExposureNotificationPageActions } from '@controlpanel/contact-trace/exposure-notification/store/actions';
 
-
 export interface ExposureNotificationState {
   selectedCaseStatus: string;
   caseStatus: ICaseStatus;

@@ -17,14 +17,18 @@ describe('CaseViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CPTestModule, HttpClientModule, RouterTestingModule],
-      providers: [CasesUtilsService, provideMockStore({
-        initialState: {
-          casesModule: {
-            cases: {},
-            caseStatus: {}
+      providers: [
+        CasesUtilsService,
+        provideMockStore({
+          initialState: {
+            casesModule: {
+              cases: {},
+              caseStatus: {}
+            }
           }
-        }
-      }), CPI18nPipe],
+        }),
+        CPI18nPipe
+      ],
       declarations: [CaseViewComponent]
     }).compileComponents();
   }));
@@ -36,7 +40,14 @@ describe('CaseViewComponent', () => {
 
     component.case = {
       current_action: { name: '', id: 0, case_status_id: 0, rank: 0, code: '' },
-      current_status: { name: 'Symptomatic', color: 'FF7A00', id: 2, case_count: 0, rank: 0, user_list_id: 1111 },
+      current_status: {
+        name: 'Symptomatic',
+        color: 'FF7A00',
+        id: 2,
+        case_count: 0,
+        rank: 0,
+        user_list_id: 1111
+      },
       current_status_id: 2,
       date_last_modified: 1597879214,
       extern_user_id: 'testtest1@test.com',

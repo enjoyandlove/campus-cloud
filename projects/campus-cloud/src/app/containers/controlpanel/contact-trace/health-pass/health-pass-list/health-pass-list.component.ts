@@ -8,7 +8,6 @@ import { environment } from '@projects/campus-cloud/src/environments/environment
   styleUrls: ['./health-pass-list.component.scss']
 })
 export class HealthPassListComponent implements OnInit {
-
   @Input()
   list: IHealthPass[];
 
@@ -16,9 +15,7 @@ export class HealthPassListComponent implements OnInit {
 
   envRootPath = environment.root;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
