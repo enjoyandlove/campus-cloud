@@ -19,7 +19,7 @@ export class CaseTotalCountViewComponent implements OnInit {
     this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
       map((caseStatus: ICaseStatus[]) => {
         const responseCopy = [...caseStatus];
-        return responseCopy;
+        return responseCopy.sort((a, b) => b.rank - a.rank);
       })
     );
   }

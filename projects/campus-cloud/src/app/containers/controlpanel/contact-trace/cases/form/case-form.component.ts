@@ -38,7 +38,7 @@ export class CaseFormComponent implements OnInit {
           user_list_id: null,
           rank: null
         };
-        const responseCopy = [defaultStatus, ...caseStatus];
+        const responseCopy = [defaultStatus, ...caseStatus.slice().sort((a, b) => b.rank - a.rank)];
         return this.utils.getCaseStatusOptions(responseCopy);
       })
     );
