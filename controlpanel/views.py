@@ -275,7 +275,7 @@ def import_cases(request):
 
     parser = CSVParser(csv_as_string)
     try:
-        parsed_data = parser.all_fields_required('identifier', 'current_status', 'first_name', 'last_name')
+        parsed_data = parser.all_fields_required('identifier', 'case_status', 'first_name', 'last_name')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]}, safe=False, status=400)
     
