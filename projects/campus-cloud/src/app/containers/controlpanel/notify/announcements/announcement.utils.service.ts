@@ -16,7 +16,7 @@ export class AnnouncementUtilsService {
     return fiveMinutes > timestamp * 1000 && !this.isNotifyAtTimestampInThePast(timestamp);
   }
 
-  static isScheduledAnnouncement(announcement: IAnnouncement | {notify_at_epoch: number}) {
+  static isScheduledAnnouncement(announcement: IAnnouncement | { notify_at_epoch: number }) {
     return announcement.notify_at_epoch !== notifyAtEpochNow;
   }
 }

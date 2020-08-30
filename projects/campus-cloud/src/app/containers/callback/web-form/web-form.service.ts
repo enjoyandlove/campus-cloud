@@ -67,7 +67,9 @@ export class WebFormService {
   }
 
   submit(formResponseId: number, externalUserId: string, data: FormBlockResponse[]) {
-    const query = `?form_response_id=${formResponseId}&extern_user_id=${encodeURIComponent(externalUserId)}`;
+    const query = `?form_response_id=${formResponseId}&extern_user_id=${encodeURIComponent(
+      externalUserId
+    )}`;
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.NON_SESSION_FORM_BLOCK_RESPONSE}/${query}`;
 
     return this.api.post(url, data);

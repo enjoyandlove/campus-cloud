@@ -47,6 +47,5 @@ export class ExposureNotificationDeleteComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

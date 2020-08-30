@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, ActionsSubject } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, filter, tap, take } from 'rxjs/operators';
@@ -15,6 +15,8 @@ import * as fromRoot from '@campus-cloud/store';
 import { ContactTraceHeaderService } from '../utils';
 import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
 import { CasesUtilsService } from './cases.utils.service';
+import { baseActionClass } from '@campus-cloud/store';
+import { CasesListActionBoxComponent } from './list/components/list-action-box';
 
 interface IState {
   search_str: string;
@@ -57,6 +59,8 @@ export class CasesComponent extends BaseComponent implements OnInit {
   public startRange = 1;
   public maxPerPage = 20;
   public endRange = this.maxPerPage + 1;
+
+  @ViewChild('actionbox') actionBox: CasesListActionBoxComponent;
 
   constructor(
     public cpI18nPipe: CPI18nPipe,
@@ -198,7 +202,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
       .select(fromStore.getCasesLoaded)
       .pipe(
         tap((loaded: boolean) => {
-            this.fetch();
+          this.fetch();
         }),
         take(1)
       )
@@ -223,6 +227,22 @@ export class CasesComponent extends BaseComponent implements OnInit {
         )
       )
       .subscribe(() => {
+        $('#createCase').modal('hide');
+        this.store.dispatch(
+          new baseActionClass.SnackbarSuccess({
+            body: this.cpI18nPipe.transform('case_create_message_success')
+          })
+        );
+
+        this.state = {
+          search_str: null,
+          start: null,
+          end: null,
+          exclude_external: false,
+          current_status_ids: null
+        };
+
+        this.actionBox.onResetActionBox();
         this.store.dispatch(new fromStore.GetCaseStatus());
         this.getCasesStatus();
       });
@@ -244,17 +264,6 @@ export class CasesComponent extends BaseComponent implements OnInit {
               })
             )
             .subscribe();
-          const payload = {
-            body: err_message ? err_message : this.cpI18nPipe.transform('something_went_wrong'),
-            sticky: true,
-            autoClose: true,
-            class: 'danger'
-          };
-
-          this.store.dispatch({
-            type: fromRoot.baseActions.SNACKBAR_SHOW,
-            payload
-          });
         })
       )
       .subscribe();
@@ -265,7 +274,6 @@ export class CasesComponent extends BaseComponent implements OnInit {
     this.loadCases();
     this.loadCaseStatus();
     this.listenForUpdateCase();
-    this.listenForErrors();
     this.loading$ =
       this.store.select(fromStore.getCasesLoading) ||
       this.store.select(fromStore.getCaseStatusLoading);
@@ -282,11 +290,11 @@ export class CasesComponent extends BaseComponent implements OnInit {
       ...caseItem,
       perform_current_action: true
     };
-    this.store.dispatch(new fromStore.EditCase(
-       {
+    this.store.dispatch(
+      new fromStore.EditCase({
         body: updatedCase,
         id: caseItem.id
-      }
-    ));
+      })
+    );
   }
 }

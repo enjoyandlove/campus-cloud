@@ -1,14 +1,16 @@
 import { Input, OnInit, Output, Component, ViewChild, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Store, ActionsSubject } from '@ngrx/store';
 
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { CasesUtilsService } from '../cases.utils.service';
 import * as fromStore from '../store';
+import * as fromRoot from '@campus-cloud/store';
 import { ICase } from '../cases.interface';
 import { Subject } from 'rxjs';
+import { takeUntil, filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cp-case-create',
@@ -37,7 +39,8 @@ export class CaseCreateComponent implements OnInit {
     public cpI18nPipe: CPI18nPipe,
     public cpTracking: CPTrackingService,
     public utils: CasesUtilsService,
-    public store: Store<fromStore.State>
+    public store: Store<fromStore.State>,
+    private actionsSubject$: ActionsSubject
   ) {}
 
   onSubmit() {
@@ -57,10 +60,9 @@ export class CaseCreateComponent implements OnInit {
 
     this.store.dispatch(new fromStore.CreateCase(payload));
     this.created.emit(true);
-    $('#createCase').modal('hide');
   }
 
-  onInputChange() {
+  onValidateFormError() {
     if (this.isSubmitClicked) {
       this.formErrors = false;
 
@@ -83,6 +85,21 @@ export class CaseCreateComponent implements OnInit {
     );
   }
 
+  listenForErrors() {
+    this.store
+      .select(fromStore.getCasesError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
+          this.store.select(fromStore.getCasesErrorMessage).subscribe();
+          this.formErrors = true;
+          this.errorMessage = this.cpI18nPipe.transform('case_create_message_exist');
+        })
+      )
+      .subscribe();
+  }
+
   resetModal() {
     this.teardown.emit();
     $('#createCase').modal('hide');
@@ -96,6 +113,7 @@ export class CaseCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.listenForErrors();
     this.form = this.utils.getCaseForm(null);
 
     this.buttonData = {

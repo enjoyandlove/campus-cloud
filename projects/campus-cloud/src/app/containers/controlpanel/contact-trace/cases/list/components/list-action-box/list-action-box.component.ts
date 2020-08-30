@@ -1,10 +1,15 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CPSession } from '@campus-cloud/session';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IItem, IDateRange } from '@campus-cloud/shared/components';
+import {
+  IItem,
+  IDateRange,
+  CPSearchBoxComponent,
+  CPRangePickerComponent
+} from '@campus-cloud/shared/components';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
@@ -26,9 +31,14 @@ export class CasesListActionBoxComponent implements OnInit {
   @Output() selectedFilter: EventEmitter<number> = new EventEmitter();
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
   @Output() onDownload: EventEmitter<null> = new EventEmitter();
+
+  @ViewChild('searchbox') searchBox: CPSearchBoxComponent;
+  @ViewChild('datepicker') datePicker: CPRangePickerComponent;
+
   eventData;
   caseStatus$: Observable<IItem[]>;
   dateRanges: EngageUtils.IDateFilter[];
+  resetActionbox$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   dateFilterOpts;
 
   private destroy$ = new Subject();
@@ -87,6 +97,18 @@ export class CasesListActionBoxComponent implements OnInit {
 
   launchCreateModal() {
     $('#createCase').modal({ keyboard: true, focus: true });
+  }
+
+  onResetActionBox() {
+    this.resetActionbox$.next(true);
+    this.searchBox.onClear();
+    const date = {
+      start: null,
+      end: null,
+      label: ''
+    };
+    this.datePicker.setLabel(date);
+    this.dateRanges = null;
   }
 
   ngOnInit() {
