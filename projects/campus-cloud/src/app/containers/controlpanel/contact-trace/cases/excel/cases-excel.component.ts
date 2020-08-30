@@ -122,7 +122,7 @@ export class CasesExcelComponent extends BaseComponent implements OnInit, OnDest
     this.caseStatus$.subscribe((statuses) => {
       const current_status =
         this.env.name !== 'development'
-          ? statuses.filter((el) => el.label == item.current_status)
+          ? statuses.filter((el) => el.label == item.case_status)
           : statuses.filter((el) => el.action == item.current_status.id);
       this.selectedStatus.push(current_status[0]);
       current_form = this.fb.group({

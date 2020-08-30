@@ -1,44 +1,65 @@
 [
   {
-    "current_action": { "name": "", "id": 0 },
-    "current_action_id": 0,
-    "current_status": { "name": "Symptomatic", "color": "FF7A00", "id": 2 },
-    "current_status_id": 2,
-    "date_last_modified": 1597879214,
-    "extern_user_id": "testtest1@test.com",
-    "firstname": "test1",
-    "id": 12,
-    "lastname": "test1",
-    "notes": "test notes for a test case kangaroo",
+    "current_action": {
+      "name": "Contact Trace",
+      "code": "ct:trace_contacts",
+      "id": 10
+    },
+    "current_status": {
+      "name": "Confirmed",
+      "color": "FF2121",
+      "id": 4
+    },
+    "date_last_modified": 1564588800,
+    "extern_user_id": "test1@gmail.com",
+    "firstname": "John",
+    "id": 1,
+    "lastname": "Doe",
+    "notes": "There are some notes on the case",
+    "student_id": "",
     "type": 1,
-    "user_id": 0
+    "user_id": 1
   },
   {
-    "current_action": { "name": "", "id": 0 },
-    "current_action_id": 0,
-    "current_status": { "name": "Exposed", "color": "FFD600", "id": 1 },
-    "current_status_id": 1,
-    "date_last_modified": 1597879214,
-    "extern_user_id": "testtest2@test.com",
-    "firstname": "test2",
-    "id": 12,
-    "lastname": "test2",
-    "notes": "test notes for a test case kangaroo",
+    "current_action": {
+      "name": "Contact Trace",
+      "code": "ct:trace_contacts",
+      "id": 10
+    },
+    "current_status": {
+      "name": "Confirmed",
+      "color": "FF2121",
+      "id": 4
+    },
+    "date_last_modified": 1564588800,
+    "extern_user_id": "test2albert@gmail.com",
+    "firstname": "Albert",
+    "id": 2,
+    "lastname": "Peter",
+    "notes": "There are some notes on the case",
+    "student_id": "",
     "type": 1,
-    "user_id": 0
+    "user_id": 1
   },
   {
-    "current_action": { "name": "", "id": 0 },
-    "current_action_id": 0,
-    "current_status": { "name": "Symptomatic", "color": "FF7A00", "id": 2 },
-    "current_status_id": 2,
-    "date_last_modified": 1597879214,
-    "extern_user_id": "testtest3@test.com",
-    "firstname": "test3",
-    "id": 12,
-    "lastname": "test3",
-    "notes": "test notes for a test case kangaroo",
+    "current_action": {
+      "name": "Contact Trace",
+      "code": "ct:trace_contacts",
+      "id": 10
+    },
+    "current_status": {
+      "name": "Confirmed",
+      "color": "FF2121",
+      "id": 4
+    },
+    "date_last_modified": 1564588800,
+    "extern_user_id": "test3james@gmail.com",
+    "firstname": "John",
+    "id": 3,
+    "lastname": "James",
+    "notes": "There are some notes on the case",
+    "student_id": "",
     "type": 1,
-    "user_id": 0
+    "user_id": 1
   }
 ]
