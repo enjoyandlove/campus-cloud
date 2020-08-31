@@ -32,7 +32,6 @@ import { CPTrackingService } from '@campus-cloud/shared/services';
 export class CaseLogComponent extends BaseComponent implements OnInit {
   @Input() case: ICase;
   @Input() isSubmitted: boolean;
-
   @Output() onLoaded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   dateRanges: EngageUtils.IDateFilter[];
@@ -105,11 +104,13 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       search = search.append('new_status_ids', this.state.current_status_id);
     }
 
-    super.fetchData(this.service.getCaseActivityLog(this.startRange, this.endRange, search)).then((res) => {
-      this.loading = false;
-      this.onLoaded.emit(true);
-      this.caseLog = this.utils.serializeCaseLog(res.data);
-    });
+    super
+      .fetchData(this.service.getCaseActivityLog(this.startRange, this.endRange, search))
+      .then((res) => {
+        this.loading = false;
+        this.onLoaded.emit(true);
+        this.caseLog = this.utils.serializeCaseLog(res.data);
+      });
   }
 
   downloadActivity() {

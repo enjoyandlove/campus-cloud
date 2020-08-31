@@ -17,6 +17,7 @@ export class CaseViewComponent implements OnInit {
   @Output() onEditing: EventEmitter<boolean> = new EventEmitter();
   @Output() onEditFinished: EventEmitter<boolean> = new EventEmitter();
   @Output() onSubmitted: EventEmitter<boolean> = new EventEmitter();
+  @Output() onPendingActionFinished: EventEmitter<boolean> = new EventEmitter();
   isEditing: boolean;
   newCase: ICase;
   selectedStatusFilter: IItem;
@@ -82,6 +83,7 @@ export class CaseViewComponent implements OnInit {
         filter((action) => action.type === fromStore.caseActions.EDIT_CASE_SUCCESS)
       )
       .subscribe(() => {
+        this.onPendingActionFinished.emit(true);
         this.onSubmitted.emit(true);
       });
   }
@@ -101,6 +103,7 @@ export class CaseViewComponent implements OnInit {
   }
 
   traceContactAction(caseItem: ICase) {
+    this.onPendingActionFinished.emit(false);
     const updatedCase = {
       ...caseItem,
       perform_current_action: true

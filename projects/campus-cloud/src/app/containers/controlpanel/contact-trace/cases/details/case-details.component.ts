@@ -23,7 +23,7 @@ import { CaseLogComponent } from './components';
 })
 export class CaseDetailsComponent extends BaseComponent implements OnInit {
   @ViewChild('caseLogList') caseLogList: CaseLogComponent;
-
+  isPendingActionFinished: boolean = true;
   isSubmitted: boolean = true;
   isEditing: boolean = false;
   caseId;
@@ -111,6 +111,10 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
           this.caseNotFound = true;
         });
     }
+  }
+
+  onActionFinished(flag: boolean) {
+    this.isPendingActionFinished = flag;
   }
 
   onSubmitted(submitted) {
