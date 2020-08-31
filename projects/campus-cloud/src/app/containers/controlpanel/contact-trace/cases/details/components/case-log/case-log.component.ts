@@ -105,11 +105,13 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       search = search.append('new_status_ids', this.state.current_status_id);
     }
 
-    super.fetchData(this.service.getCaseActivityLog(this.startRange, this.endRange, search)).then((res) => {
-      this.loading = false;
-      this.onLoaded.emit(true);
-      this.caseLog = this.utils.serializeCaseLog(res.data);
-    });
+    super
+      .fetchData(this.service.getCaseActivityLog(this.startRange, this.endRange, search))
+      .then((res) => {
+        this.loading = false;
+        this.onLoaded.emit(true);
+        this.caseLog = this.utils.serializeCaseLog(res.data);
+      });
   }
 
   downloadActivity() {
@@ -132,7 +134,15 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
 
     stream$.toPromise().then((caseLogs: any) => {
       if (!!caseLogs.length) {
-        this.util.exportCaseActivity(this.case, this.utils.serializeCaseLog(caseLogs));
+        caseLogs = caseLogs.map((el) => ({
+          firstname: this.case.firstname,
+          lastname: this.case.lastname,
+          extern_user_id: this.case.extern_user_id,
+          student_id: this.case.student_id,
+          ...el
+        }));
+
+        this.util.exportCaseActivities(this.utils.serializeCaseLog(caseLogs));
         this.isDownloading = false;
       }
     });

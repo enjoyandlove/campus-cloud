@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { saveAs } from 'file-saver';
 import {
   ICase,
   ICaseStatus,
@@ -11,13 +12,17 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { getItem } from '@campus-cloud/shared/components';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { CPDate, Formats, createSpreadSheet } from '@campus-cloud/shared/utils';
+import { CPDate, Formats, createSpreadSheet, compressFiles } from '@campus-cloud/shared/utils';
 import { CPSession } from '@campus-cloud/session';
 import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CasesUtilsService {
   sourceActivityName: ISourceActivityName[];
+
+  readonly fileDateSignature = CPDate.format(new Date(), 'YYYY_MM_DD_HHmm');
+
   constructor(public fb: FormBuilder, public cpI18nPipe: CPI18nPipe, public session: CPSession) {
     this.sourceActivityName = [
       {
@@ -183,7 +188,7 @@ export class CasesUtilsService {
     return caseLog;
   }
 
-  exportCases(cases) {
+  createCaseCSVData(cases) {
     let columns = [
       this.cpI18nPipe.transform('first_name'),
       this.cpI18nPipe.transform('last_name'),
@@ -211,10 +216,12 @@ export class CasesUtilsService {
         [this.cpI18nPipe.transform('t_case_status')]: item.current_status.name
       };
     });
-    createSpreadSheet(cases, columns);
+
+    const csvData = { columns: columns, data: cases };
+    return csvData;
   }
 
-  exportCaseActivity(currentCase, caseActivities) {
+  createCaseActivityCSVData(caseActivities) {
     let columns = [
       this.cpI18nPipe.transform('first_name'),
       this.cpI18nPipe.transform('last_name'),
@@ -228,11 +235,11 @@ export class CasesUtilsService {
 
     caseActivities = caseActivities.map((item) => {
       return {
-        [this.cpI18nPipe.transform('first_name')]: currentCase.firstname,
+        [this.cpI18nPipe.transform('first_name')]: item.firstname,
 
-        [this.cpI18nPipe.transform('last_name')]: currentCase.lastname,
+        [this.cpI18nPipe.transform('last_name')]: item.lastname,
 
-        [this.cpI18nPipe.transform('email')]: currentCase.extern_user_id,
+        [this.cpI18nPipe.transform('email')]: item.extern_user_id,
 
         [this.cpI18nPipe.transform('student_id')]: item.student_id,
 
@@ -248,6 +255,35 @@ export class CasesUtilsService {
         [this.cpI18nPipe.transform('t_shared_source')]: item.source
       };
     });
-    createSpreadSheet(caseActivities, columns);
+
+    const csvData = { columns: columns, data: caseActivities };
+    return csvData;
+  }
+
+  exportCaseActivities(caseActivities) {
+    const csvData = this.createCaseActivityCSVData(caseActivities);
+    createSpreadSheet(csvData.data, csvData.columns);
+  }
+
+  generateCSV(columns: string[], data: any[]) {
+    return createSpreadSheet(data, columns, 'file', false);
+  }
+
+  async exportCases(cases, caseActivities) {
+    const caseData = this.createCaseCSVData(cases);
+    const caseActivityData = this.createCaseActivityCSVData(caseActivities);
+    const files = [
+      {
+        name: `CASE_${this.fileDateSignature}`,
+        content: this.generateCSV(caseData.columns, caseData.data)
+      },
+      {
+        name: `CASE_ACTIVITY_${this.fileDateSignature}`,
+        content: this.generateCSV(caseActivityData.columns, caseActivityData.data)
+      }
+    ];
+
+    const content = await compressFiles(files);
+    saveAs(content, `CASES_${this.fileDateSignature}.zip`);
   }
 }

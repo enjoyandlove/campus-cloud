@@ -19,13 +19,15 @@ import { CasesService } from './cases.service';
 import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { baseActionClass } from '@campus-cloud/store';
 import { CasesListActionBoxComponent } from './list/components/list-action-box';
+import { HttpParams } from '@angular/common/http';
+import { Promise } from 'core-js';
 
 interface IState {
   search_str: string;
   current_status_ids: string;
   exclude_external: boolean;
-  start: number;
-  end: number;
+  start: any;
+  end: any;
 }
 
 const state: IState = {
@@ -150,15 +152,62 @@ export class CasesComponent extends BaseComponent implements OnInit {
 
   onDownload() {
     this.isDownloading = true;
-    const search = this.util.defaultParams(this.state).append('all', '1');
+    const caseSearch = this.util.defaultParams(this.state).append('all', '1');
 
-    const stream$ = this.service.getCases(this.startRange, this.endRange, search);
+    const caseStream$ = this.service.getCases(this.startRange, this.endRange, caseSearch);
+    const casePromise = caseStream$.toPromise();
 
-    stream$.toPromise().then((cases: any) => {
-      if (!!cases.length) {
-        this.util.exportCases(cases);
-        this.isDownloading = false;
+    let cases = [];
+    let caseActivities = [];
+
+    casePromise.then((res: any) => {
+      if (!!res.length) {
+        cases = [...res];
       }
+    });
+
+    let activitySearch = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('start', this.state.start)
+      .append('end', this.state.end)
+      .append('new_status_ids', this.state.current_status_ids)
+      .append('all', '1');
+
+    const activityStream$ = this.service.getCaseActivityLog(
+      this.startRange,
+      this.endRange,
+      activitySearch
+    );
+    const activityPromise = activityStream$.toPromise();
+    activityPromise.then((res: any) => {
+      if (!!res.length) {
+        caseActivities = [...res];
+      }
+    });
+
+    const ref = this;
+    Promise.all([casePromise, activityPromise]).then(function() {
+      if (!!caseActivities.length) {
+        caseActivities = caseActivities
+          .map((ca) => {
+            const c = cases.find((c) => c.id === ca.case_id);
+            if (!c) {
+              return null;
+            }
+            const { firstname, lastname, extern_user_id, student_id } = c;
+            return {
+              ...ca,
+              firstname,
+              lastname,
+              extern_user_id,
+              student_id
+            };
+          })
+          .filter((ca) => !!ca);
+      }
+
+      ref.util.exportCases(cases, ref.util.serializeCaseLog(caseActivities));
+      ref.isDownloading = false;
     });
   }
 
