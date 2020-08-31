@@ -6,13 +6,13 @@ import {
   SourceActivityType,
   SourceType
 } from '../../../cases.interface';
-import { CPI18nPipe, FORMAT } from '@projects/campus-cloud/src/app/shared/pipes';
-import { CPSession } from '@projects/campus-cloud/src/app/session';
+import { CPI18nPipe, FORMAT } from '@campus-cloud/shared/pipes';
+import { CPSession } from '@campus-cloud/session';
 import { CasesService } from '../../../cases.service';
 import { BaseComponent } from '@projects/campus-cloud/src/app/base';
 import { HttpParams } from '@angular/common/http';
 import * as fromStore from '../../../store';
-import { IItem } from '@projects/campus-cloud/src/app/shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 import { CasesUtilsService } from '../../../cases.utils.service';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
@@ -49,6 +49,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
   sourceActivityName;
   eventCases: ICase[];
   eventData;
+  isDownloading = false;
 
   public get sourceActivityType(): typeof SourceActivityType {
     return SourceActivityType;
@@ -71,7 +72,8 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     private utils: CasesUtilsService,
     private engageUtils: EngageUtils.EngagementUtilsService,
     private store: Store<fromStore.State>,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    private util: CasesUtilsService
   ) {
     super();
   }
@@ -103,7 +105,7 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       search = search.append('new_status_ids', this.state.current_status_id);
     }
 
-    super.fetchData(this.service.getCaseActivityLog(1, 100, search)).then((res) => {
+    super.fetchData(this.service.getCaseActivityLog(this.startRange, this.endRange, search)).then((res) => {
       this.loading = false;
       this.onLoaded.emit(true);
       this.caseLog = this.utils.serializeCaseLog(res.data);
@@ -111,9 +113,29 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
   }
 
   downloadActivity() {
-    if (!!this.caseLog.length) {
-      this.utils.exportCaseActivity(this.case, this.caseLog);
+    this.isDownloading = true;
+
+    let search = new HttpParams();
+
+    search = this.session.addSchoolId(search);
+    search = search
+      .append('case_id', this.case.id.toString())
+      .append('start', this.state.start)
+      .append('end', this.state.end)
+      .append('all', '1');
+
+    if (this.state.current_status_id !== 0) {
+      search = search.append('new_status_ids', this.state.current_status_id);
     }
+
+    const stream$ = this.service.getCaseActivityLog(this.startRange, this.endRange, search);
+
+    stream$.toPromise().then((caseLogs: any) => {
+      if (!!caseLogs.length) {
+        this.util.exportCaseActivity(this.case, this.utils.serializeCaseLog(caseLogs));
+        this.isDownloading = false;
+      }
+    });
   }
 
   onDateChange(dateRange) {
@@ -141,11 +163,10 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     $('#viewNote').modal({ keyboard: true, focus: true });
   }
 
-  onUpdatedCase(updated) {
+  onUpdatedCase() {
     this.loadCaseActivityLog();
   }
 
-  onLogLoaded(event) {}
   launchCaseEventModal(event_id) {
     this.eventModalLoading = true;
 

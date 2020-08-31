@@ -5,7 +5,8 @@
                               (search)="onSearch($event)"
                               (selectedFilter)="onSelectedFilter($event)"
                               (filterByDates)="onDateFilter($event)"
-                              (onDownload)="onDownload()">
+                              (onDownload)="onDownload()"
+                              [isDownloading] = "isDownloading">
     </cp-cases-list-action-box>
   </div>
 </div>

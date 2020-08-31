@@ -10,9 +10,10 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { getItem } from '@campus-cloud/shared/components';
-import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { CPDate, Formats, createSpreadSheet } from '@campus-cloud/shared/utils';
-import { CPSession } from '@projects/campus-cloud/src/app/session';
+import { CPSession } from '@campus-cloud/session';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class CasesUtilsService {
@@ -50,6 +51,24 @@ export class CasesUtilsService {
         source: cpI18nPipe.transform('contact_trace_notification_case')
       }
     ];
+  }
+
+  defaultParams(state): HttpParams {
+    return new HttpParams()
+      .append('search_str', state.search_str)
+      .append('current_status_ids', state.current_status_ids)
+      .append('exclude_external', state.exclude_external)
+      .append('start', state.start)
+      .append('end', state.end)
+      .append('school_id', this.session.g.get('school').id);
+  }
+
+  defaultParamsForCaseStatus(state): HttpParams {
+    return new HttpParams()
+      .append('search_str', state.search_str)
+      .append('start', state.start)
+      .append('end', state.end)
+      .append('school_id', this.session.g.get('school').id);
   }
 
   getCaseForm(formData: ICase) {
