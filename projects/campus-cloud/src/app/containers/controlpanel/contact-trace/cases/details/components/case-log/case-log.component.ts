@@ -133,7 +133,15 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
 
     stream$.toPromise().then((caseLogs: any) => {
       if (!!caseLogs.length) {
-        this.util.exportCaseActivity(this.case, this.utils.serializeCaseLog(caseLogs));
+        caseLogs = caseLogs.map((el) => ({
+          firstname: this.case.firstname,
+          lastname: this.case.lastname,
+          extern_user_id: this.case.extern_user_id,
+          student_id: this.case.student_id,
+          ...el
+        }));
+
+        this.util.exportCaseActivities(this.utils.serializeCaseLog(caseLogs));
         this.isDownloading = false;
       }
     });
