@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="row mt-4" [ngSwitch]=loading>
+      <div class="row mt-4" [ngSwitch]="loading">
         <div class="col-12" *ngSwitchCase="true">
           <cp-spinner class="float-center"></cp-spinner>
         </div>        

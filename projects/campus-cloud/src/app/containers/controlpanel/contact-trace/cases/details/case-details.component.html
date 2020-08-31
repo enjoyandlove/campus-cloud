@@ -7,12 +7,13 @@
       (onSubmitted)="onSubmitted($event)"
       (onEditing)="onEditing($event)"
       (onEditFinished)="onEditFinished($event)"
+      (onPendingActionFinished)="onActionFinished($event)"
       [case]="case"
     >
     </cp-case-view>
 
       <cp-case-log #caseLogList
-                   *ngIf="!caseNotFound && !isEditing && isSubmitted && case"
+                   *ngIf="!caseNotFound && !isEditing && isSubmitted && case && isPendingActionFinished"
                    [case]="case"
                    [isSubmitted]="isSubmitted"
       >
