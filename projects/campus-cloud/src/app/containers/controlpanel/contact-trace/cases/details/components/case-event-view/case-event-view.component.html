@@ -57,7 +57,7 @@
                           variant="inline"
                           cpTarget="view_info"
                           [eventData]="eventData"
-                          [routerLink]="[case.id]">
+                          (click)="onClicked(case.id)">
                         {{ case.id }}
                       </a>
                     </strong>
