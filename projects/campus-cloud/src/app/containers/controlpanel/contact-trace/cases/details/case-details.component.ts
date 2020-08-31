@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
 import { map, filter, takeUntil } from 'rxjs/operators';
@@ -42,7 +42,8 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     public store: Store<fromStore.State | fromRoot.IHeader>,
     public service: CasesService,
-    private session: CPSession
+    private session: CPSession,
+    private router: Router
   ) {
     super();
     this.caseId = this.route.snapshot.params['caseId']
@@ -132,6 +133,10 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+
     if (this.caseId) {
       this.store.dispatch(new fromStore.SetSelectedCaseId({ id: this.caseId }));
       this.store.dispatch(new fromStore.GetCaseById({ id: this.caseId }));
