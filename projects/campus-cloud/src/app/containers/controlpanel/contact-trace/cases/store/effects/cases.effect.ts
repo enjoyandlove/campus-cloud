@@ -33,7 +33,7 @@ export class CasesEffect {
     ofType(fromActions.caseActions.GET_CASES),
     mergeMap((action: fromActions.GetCases) => {
       const { startRange, endRange, state } = action.payload;
-      const params = this.defaultParams(state);
+      const params = this.utils.defaultParams(state);
 
       return this.service.getCases(startRange, endRange, params).pipe(
         map((data: ICase[]) => new fromActions.GetCasesSuccess(data)),
@@ -49,7 +49,7 @@ export class CasesEffect {
     ofType(fromActions.caseActions.GET_FILTERED_CASES),
     mergeMap((action: fromActions.GetFilteredCases) => {
       const { startRange, endRange, state } = action.payload;
-      const params = this.defaultParams(state);
+      const params = this.utils.defaultParams(state);
       return this.service.getCases(startRange, endRange, params).pipe(
         map((data: ICase[]) => new fromActions.GetFilteredCasesSuccess(data)),
         catchError((error) => of(new fromActions.GetFilteredCasesFail(parseErrorResponse(error))))
@@ -162,13 +162,13 @@ export class CasesEffect {
   @Effect()
   getCaseStatus$: Observable<
     fromActions.GetCaseStatusSuccess | fromActions.GetCaseStatusFail
-    > = this.actions$.pipe(
+  > = this.actions$.pipe(
     ofType(fromActions.caseActions.GET_CASE_STATUS),
     mergeMap((action: fromActions.GetCaseStatus) => {
       let params;
       if (action.payload) {
         const state = action.payload.state;
-        params = this.defaultParamsForCaseStatus(state);
+        params = this.utils.defaultParamsForCaseStatus(state);
       } else {
         params = new HttpParams().append('school_id', this.session.g.get('school').id);
       }
@@ -178,22 +178,4 @@ export class CasesEffect {
       );
     })
   );
-
-  private defaultParams(state): HttpParams {
-    return new HttpParams()
-      .append('search_str', state.search_str)
-      .append('current_status_ids', state.current_status_ids)
-      .append('exclude_external', state.exclude_external)
-      .append('start', state.start)
-      .append('end', state.end)
-      .append('school_id', this.session.g.get('school').id);
-  }
-
-  private defaultParamsForCaseStatus(state): HttpParams {
-    return new HttpParams()
-      .append('search_str', state.search_str)
-      .append('start', state.start)
-      .append('end', state.end)
-      .append('school_id', this.session.g.get('school').id);
-  }
 }

@@ -26,6 +26,8 @@ import { CPDate } from '@projects/campus-cloud/src/app/shared/utils';
   styleUrls: ['./list-action-box.component.scss']
 })
 export class CasesListActionBoxComponent implements OnInit {
+  @Input() isDownloading;
+
   @Output() launchCreateCaseModal: EventEmitter<boolean> = new EventEmitter();
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() selectedFilter: EventEmitter<number> = new EventEmitter();
@@ -95,7 +97,9 @@ export class CasesListActionBoxComponent implements OnInit {
   }
 
   onDownloadCases() {
-    this.onDownload.emit();
+    if (!this.isDownloading) {
+      this.onDownload.emit();
+    }
   }
 
   launchCreateModal() {

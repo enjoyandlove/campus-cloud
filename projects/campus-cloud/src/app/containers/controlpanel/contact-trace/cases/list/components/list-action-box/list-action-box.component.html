@@ -39,7 +39,7 @@
               <span (click)="onImportCSV()">{{ 'import_from_csv' | cpI18n }}</span>
             </cp-menu-item>
             <cp-menu-item>
-              <span (click)="onDownloadCases()">{{ 'download_all_cases' | cpI18n }}</span>
+              <span [class.disabled]="isDownloading" (click)="onDownloadCases()">{{ 'download_all_cases' | cpI18n }}</span>
             </cp-menu-item>
           </cp-menu>
         </div>

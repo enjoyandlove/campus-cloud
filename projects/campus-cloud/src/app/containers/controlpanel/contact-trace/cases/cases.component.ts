@@ -15,6 +15,8 @@ import * as fromRoot from '@campus-cloud/store';
 import { ContactTraceHeaderService } from '../utils';
 import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
 import { CasesUtilsService } from './cases.utils.service';
+import { CasesService } from './cases.service';
+import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { baseActionClass } from '@campus-cloud/store';
 import { CasesListActionBoxComponent } from './list/components/list-action-box';
 
@@ -53,6 +55,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
   caseStatus$: Observable<ICaseStatus[]>;
   loading$: Observable<boolean>;
   isCaseCreate = false;
+  isDownloading: boolean = false;
   private destroy$ = new Subject();
   resetFilterStatus: boolean = false;
 
@@ -68,7 +71,9 @@ export class CasesComponent extends BaseComponent implements OnInit {
     public headerService: ContactTraceHeaderService,
     public store: Store<fromStore.State>,
     private actionsSubject$: ActionsSubject,
-    private util: CasesUtilsService
+    private util: CasesUtilsService,
+    private service: CasesService,
+    private session: CPSession
   ) {
     super();
   }
@@ -144,13 +149,17 @@ export class CasesComponent extends BaseComponent implements OnInit {
   }
 
   onDownload() {
-    let exposureData;
-    this.cases$.subscribe((cases: ICase[]) => {
-      exposureData = [...cases];
+    this.isDownloading = true;
+    const search = this.util.defaultParams(this.state).append('all', '1');
+
+    const stream$ = this.service.getCases(this.startRange, this.endRange, search);
+
+    stream$.toPromise().then((cases: any) => {
+      if (!!cases.length) {
+        this.util.exportCases(cases);
+        this.isDownloading = false;
+      }
     });
-    if (!!exposureData.length) {
-      this.util.exportCases(exposureData);
-    }
   }
 
   getCases(isFiltered?: boolean) {

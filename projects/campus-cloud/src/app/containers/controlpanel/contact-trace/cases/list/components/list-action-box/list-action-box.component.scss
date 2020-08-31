@@ -27,5 +27,13 @@ cp-menu {
       padding: 12px;
       cursor: pointer;
     }
+
+    .disabled {
+      color: $color-med-grey;
+      cursor: not-allowed !important;
+      &:hover {
+        background-color: $color-white;
+      }
+    }
   }
 }

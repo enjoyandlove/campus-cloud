@@ -151,6 +151,7 @@
             variant="inline"
             fullWidth="true"
             (click)="downloadActivity(); primary.close();"
+            [disabled]="isDownloading"
     >
       <ready-ui-stack spacing="tight">
         <span>{{ 'download_case' | cpI18n }}</span>
