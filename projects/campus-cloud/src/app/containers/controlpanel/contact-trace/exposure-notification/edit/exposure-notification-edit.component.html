@@ -132,7 +132,8 @@
               {{ 'users' | cpI18n }}
             </label>
             <div class="subject-input">
-              <input class="user-full-name" [value]="casesById.firstname + ' ' + casesById.lastname" [disabled]="true"/>
+              <input *ngIf="notification.user_ids.length === 1" class="user-full-name" [value]="notifyDestination" [disabled]="true" />
+              <textarea *ngIf="notification.user_ids.length > 1" class="user-full-name" [value]="notifyDestination" [disabled]="true"></textarea>
             </div>
           </div>
 

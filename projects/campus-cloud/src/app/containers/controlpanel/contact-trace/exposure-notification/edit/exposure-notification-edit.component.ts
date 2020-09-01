@@ -11,7 +11,7 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { CPSession } from '@campus-cloud/session';
 import * as fromStore from '@controlpanel/contact-trace/cases/store';
 import { getCases, getSelectedCaseStatus } from '@controlpanel/contact-trace/cases/store';
-import { ICase, ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
+import { ICase, ICaseLog, ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
 import { HttpParams } from '@angular/common/http';
 import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
 import { AnnouncementUtilsService } from '@controlpanel/notify/announcements/announcement.utils.service';
@@ -82,11 +82,12 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   CaseActionToTemplateTypeMap;
   caseId: number;
   serviceName = '';
+  notifyDestination = '';
 
   importFromCSVModal: OverlayRef;
 
   private getCasesById$: Observable<ICaseStatus>;
-  casesById: any;
+  casesById: ICase;
   cases$: Observable<ICase[]>;
   caseStatus$: Observable<ICaseStatus>;
   selectedCaseStatus: ICaseStatus;
@@ -313,9 +314,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   sendClickHandler(): void {
-    if (this.casesById) {
-      this.notification.user_ids = [this.casesById.user_id];
-    }
     this.highlightFormError = false;
     const errorMessages: string[] = this.validateBeforeSave(this.notification);
     if (errorMessages && errorMessages.length > 0) {
@@ -476,9 +474,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       if (this.caseId) {
         this.webServiceCallInProgress = true;
         const param = new HttpParams().set('school_id', this.session.schoolIdAsString);
-        this.casesService.getCaseById(param, this.caseId).subscribe((value) => {
+        this.casesService.getCaseById(param, this.caseId).subscribe((value: ICase) => {
           this.casesById = value;
-
+          this.notifyDestination = this.casesById.firstname + ' ' + this.casesById.lastname + '<' + this.casesById.extern_user_id + '>';
+          this.notification.user_ids = [this.casesById.user_id];
           this.onToOptionChanged({
             action: 'custom_list',
             disabled: false,
@@ -494,9 +493,41 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             });
             this.webServiceCallInProgress = false;
           }, 500);
+
+          this.ifExposureNotification(this.casesById);
+
         });
       }
     });
+  }
+
+  private ifExposureNotification(casesById: ICase) {
+    if (casesById.current_action.code !== 'ct:exposure_notify') {
+      return;
+    }
+    const params = new HttpParams()
+      .append('school_id', this.session.school.id.toString())
+      .append('case_id', casesById.id.toString())
+      .append('all', '1');
+    this.casesService.getCaseActivityLog(1, 1000, params)
+      .subscribe((logs: ICaseLog[]) => {
+        const activityLog = logs.find((log) => log.contact_trace_event_id !== 0);
+
+        const casesParams = new HttpParams()
+          .append('school_id', this.session.school.id.toString())
+          .append('contact_trace_event_id', activityLog.contact_trace_event_id.toString())
+          .append('all', '1');
+        this.casesService.getCases(1, 10000, casesParams)
+          .subscribe((cases: ICase[]) => {
+            if (cases.length) {
+              this.notification.user_ids = cases.map((caseItem) => caseItem.user_id);
+              this.notifyDestination = '';
+              cases.forEach((caseItem) => {
+                this.notifyDestination += caseItem.firstname + ' ' + caseItem.lastname + '<' + caseItem.extern_user_id + '>, ';
+              });
+            }
+          });
+      });
   }
 
   importModal() {
@@ -550,7 +581,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   private updateCasesForUsersAndDownload(user_ids: number[]) {
     const filteredUserIds = user_ids.filter((userId) => !this.casesForUsers.get(userId));
-    console.log(filteredUserIds);
     const params = new HttpParams()
       .append('user_ids', filteredUserIds.toString())
       .append('school_id', this.session.g.get('school').id);
