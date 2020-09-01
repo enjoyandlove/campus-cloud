@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 import { UnsubscribeGenericComponent } from './unsubscribe-generic.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
@@ -13,7 +14,22 @@ describe('UnsubscribeGenericComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule, UnsubscribeModule],
-        providers: [{ provide: UnsubscribeFeedsService, useClass: MockUnsubscribe }]
+        providers: [
+          { provide: UnsubscribeFeedsService, useClass: MockUnsubscribe },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                url: [
+                  { path: 'forms' }
+                ],
+                params: [
+                  { adminId: '123' },
+                  { schoolId: '321' }
+                ]
+              }
+            }
+          }]
       });
 
       await TestBed.compileComponents();
