@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, ActionsSubject } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
-import { map, filter, takeUntil } from 'rxjs/operators';
+import { map, filter, takeUntil, tap } from 'rxjs/operators';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
@@ -14,6 +14,8 @@ import { CasesService } from '../cases.service';
 import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
 import { CaseLogComponent } from './components';
+import { baseActionClass } from '@campus-cloud/store';
+import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
 
 @Mixin([Destroyable])
 @Component({
@@ -35,15 +37,16 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
   getCasesById$: Observable<any>;
   caseNotFound = false;
 
-  destroy$ = new Subject<null>();
-  emitDestroy() {}
+  destroy$ = new Subject();
 
   constructor(
     private route: ActivatedRoute,
     public store: Store<fromStore.State | fromRoot.IHeader>,
     public service: CasesService,
     private session: CPSession,
-    private router: Router
+    private router: Router,
+    public actionsSubject$: ActionsSubject,
+    private cpI18n: CPI18nPipe
   ) {
     super();
     this.caseId = this.route.snapshot.params['caseId']
@@ -118,21 +121,46 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
     this.isPendingActionFinished = flag;
   }
 
-  onSubmitted(submitted) {
-    this.isSubmitted = true;
-    this.isEditing = false;
-    this.loadCaseDetails();
-  }
-
   onEditing(editing) {
     this.isEditing = editing;
   }
 
-  onEditFinished() {
-    this.loading = true;
+  listenForUpdateCase() {
+    this.actionsSubject$
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((action) => action.type === fromStore.caseActions.EDIT_CASE_SUCCESS)
+      )
+      .subscribe(() => {
+        this.store.dispatch(
+          new baseActionClass.SnackbarSuccess({
+            body: this.cpI18n.transform('case_update_message_success')
+          })
+        );
+        this.loadCaseDetails();
+      });
+  }
+
+  listenForErrors() {
+    this.store
+      .select(fromStore.getCasesError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
+          this.store.dispatch(
+            new baseActionClass.SnackbarError({
+              body: this.cpI18n.transform('case_create_message_exist')
+            })
+          );
+        })
+      )
+      .subscribe();
   }
 
   ngOnInit() {
+    this.listenForErrors();
+    this.listenForUpdateCase();
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -144,5 +172,11 @@ export class CaseDetailsComponent extends BaseComponent implements OnInit {
 
     this.loadCaseDetails();
     this.buildHeader();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }

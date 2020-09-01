@@ -779,6 +779,9 @@
   "case_pending_action": {
     "message": "Pending Action"
   },
+  "case_select_status": {
+    "message": "Select Status"
+  },
   "case_source_automatic_escalated": {
     "message": "Escalated Automatically"
   },
@@ -790,6 +793,9 @@
   },
   "case_status_all": {
     "message": "All Statuses"
+  },
+  "case_update_message_success": {
+    "message": "Case has been successfully updated."
   },
   "category": {
     "message": "Category"
