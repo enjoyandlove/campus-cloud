@@ -87,7 +87,7 @@
     "message": "codes QR"
   },
   "admin_contact_trace_title": {
-    "message": "Traçage de contact"
+    "message": "Contactez Trace"
   },
   "admin_create_account": {
     "message": "Créer compte"
@@ -779,6 +779,9 @@
   "case_pending_action": {
     "message": "Action en attente"
   },
+  "case_select_status": {
+    "message": "Sélectionnez le statut"
+  },
   "case_source_automatic_escalated": {
     "message": "Escalated Automatically"
   },
@@ -790,6 +793,9 @@
   },
   "case_status_all": {
     "message": "Tous les statuts"
+  },
+  "case_update_message_success": {
+    "message": "Case has been successfully updated."
   },
   "category": {
     "message": "Catégorie"

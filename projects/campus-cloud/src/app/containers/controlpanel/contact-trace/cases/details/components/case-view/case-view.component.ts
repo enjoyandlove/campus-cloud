@@ -6,7 +6,6 @@ import * as fromStore from '../../../store';
 import { CasesUtilsService } from '../../../cases.utils.service';
 import { ICase, ICaseStatus } from '../../../cases.interface';
 import { Subject } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
 @Component({
   selector: 'cp-case-view',
   templateUrl: './case-view.component.html',
@@ -15,7 +14,6 @@ import { takeUntil, filter } from 'rxjs/operators';
 export class CaseViewComponent implements OnInit {
   @Input() case: ICase;
   @Output() onEditing: EventEmitter<boolean> = new EventEmitter();
-  @Output() onEditFinished: EventEmitter<boolean> = new EventEmitter();
   @Output() onSubmitted: EventEmitter<boolean> = new EventEmitter();
   @Output() onPendingActionFinished: EventEmitter<boolean> = new EventEmitter();
   isEditing: boolean;
@@ -44,8 +42,6 @@ export class CaseViewComponent implements OnInit {
       body,
       id: caseId
     };
-    this.isEditing = false;
-    this.onEditFinished.emit(true);
     this.store.dispatch(new fromStore.EditCase(payload));
   }
 
@@ -76,30 +72,11 @@ export class CaseViewComponent implements OnInit {
     this.onEditing.emit(false);
   }
 
-  listenForUpdateCase() {
-    this.actionsSubject$
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((action) => action.type === fromStore.caseActions.EDIT_CASE_SUCCESS)
-      )
-      .subscribe(() => {
-        this.onPendingActionFinished.emit(true);
-        this.onSubmitted.emit(true);
-      });
-  }
-
   ngOnInit(): void {
     if (this.case) {
       this.newCase = JSON.parse(JSON.stringify(this.case));
     }
-    this.listenForUpdateCase();
     this.store.dispatch(new fromStore.GetCaseStatus());
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-    this.destroy$.unsubscribe();
   }
 
   traceContactAction(caseItem: ICase) {

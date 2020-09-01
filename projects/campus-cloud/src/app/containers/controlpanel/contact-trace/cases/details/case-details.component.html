@@ -4,20 +4,18 @@
   </div>
   <div class="col-12" *ngSwitchCase="false">
     <cp-case-view *ngIf="!caseNotFound && !loading && case"
-      (onSubmitted)="onSubmitted($event)"
       (onEditing)="onEditing($event)"
-      (onEditFinished)="onEditFinished($event)"
       (onPendingActionFinished)="onActionFinished($event)"
       [case]="case"
     >
     </cp-case-view>
 
-      <cp-case-log #caseLogList
-                   *ngIf="!caseNotFound && !isEditing && isSubmitted && case && isPendingActionFinished"
-                   [case]="case"
-                   [isSubmitted]="isSubmitted"
-      >
-      </cp-case-log>
+    <cp-case-log #caseLogList
+                  *ngIf="!caseNotFound && !isEditing && isSubmitted && case && isPendingActionFinished"
+                  [case]="case"
+                  [isSubmitted]="isSubmitted"
+    >
+    </cp-case-log>
 
   </div>
 </div>

@@ -174,7 +174,9 @@ export function reducer(state = initialState, action: fromCases.CasesAction) {
         ...state,
         error: true,
         loaded: true,
-        loading: false
+        loading: false,
+        err_message:
+          action.payload === '409' ? cpI18nPipe.transform('case_message_duplicate_email') : null
       };
     }
 

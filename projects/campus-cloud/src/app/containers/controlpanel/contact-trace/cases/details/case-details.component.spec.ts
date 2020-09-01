@@ -7,6 +7,7 @@ import { CasesService } from '../cases.service';
 import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { provideMockStore } from '@ngrx/store/testing';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 describe('CaseDetailsComponent', () => {
   let component: CaseDetailsComponent;
@@ -16,14 +17,18 @@ describe('CaseDetailsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CaseDetailsComponent],
       imports: [RouterTestingModule, CPTestModule],
-      providers: [CasesService, provideMockStore({
-        initialState: {
-          casesModule: {
-            cases: {},
-            caseStatus: {}
+      providers: [
+        CasesService,
+        CPI18nPipe,
+        provideMockStore({
+          initialState: {
+            casesModule: {
+              cases: {},
+              caseStatus: {}
+            }
           }
-        }
-      })]
+        })
+      ]
     }).compileComponents();
   }));
 

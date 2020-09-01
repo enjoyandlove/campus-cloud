@@ -125,7 +125,7 @@ export class CasesEffect {
           return new fromActions.EditCaseSuccess({ data: data, id: id });
         }),
         tap(() => this.router.navigate([`/contact-trace/cases/${id}`])),
-        catchError((error) => of(new fromActions.EditCaseFail(parseErrorResponse(error))))
+        catchError((error) => of(new fromActions.EditCaseFail(error.status.toString())))
       );
     })
   );
