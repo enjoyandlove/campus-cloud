@@ -18,10 +18,10 @@ export class FormResponseService {
     private cpI18n: CPI18nService
   ) {}
 
-  getFormResponse(responseId: number): Observable<FormResponse> {
+  getFormResponse(responseId: number, params?: HttpParams): Observable<FormResponse> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORM_RESPONSE}/${responseId}`;
 
-    return this.api.get(url).pipe(
+    return this.api.get(url, params).pipe(
       catchError((error) => {
         this.handleError();
         return throwError(error);
@@ -42,6 +42,28 @@ export class FormResponseService {
       .set('form_id', formId ? '' + '' + formId : null)
       .set('form_block_id', nonTerminalBlockId ? '' + '' + nonTerminalBlockId : null)
       .set('terminal_form_block_id', terminalBlockId ? '' + '' + terminalBlockId : null);
+
+    return this.api.get(url, params).pipe(
+      catchError((error) => {
+        this.handleError();
+        return throwError(error);
+      })
+    );
+  }
+
+  getFullFormResponse(
+    formId: number,
+    nonTerminalBlockId: number,
+    terminalBlockId: number
+  ): Observable<FormResponse[] | any> {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORM_RESPONSE}/`;
+
+    const params = new HttpParams()
+      .set('form_id', formId ? '' + '' + formId : null)
+      .set('include_full_data', '1')
+      .set('form_block_id', nonTerminalBlockId ? '' + '' + nonTerminalBlockId : null)
+      .set('terminal_form_block_id', terminalBlockId ? '' + '' + terminalBlockId : null)
+      .set('all', '1');
 
     return this.api.get(url, params).pipe(
       catchError((error) => {

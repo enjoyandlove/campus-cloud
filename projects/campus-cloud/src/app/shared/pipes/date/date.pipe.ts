@@ -28,7 +28,7 @@ export const FORMAT = locale === 'fr-CA' ? FORMAT_FR : FORMAT_EN;
 @Pipe({ name: 'cpDatePipe' })
 export class CPDatePipe implements PipeTransform {
   constructor(public session: CPSession) {}
-  transform(date: number, format: string, timezone?: string) {
+  transform(date: number, format: string, timezone?: string): string {
     moment.locale(CPI18nService.getLocale());
 
     return moment.tz(moment.unix(date), timezone ? timezone : this.session.tz).format(format);

@@ -10,7 +10,7 @@ export class CollectionMethodCodeToDisplayStringPipe implements PipeTransform {
     [CollectionMethod.web]: 'contact_trace_forms_web'
   };
 
-  transform(code: CollectionMethod): unknown {
+  transform(code: CollectionMethod): string {
     return code && this.collectionMethodToDisplayStringMap[code]
       ? this.collectionMethodToDisplayStringMap[code]
       : '';

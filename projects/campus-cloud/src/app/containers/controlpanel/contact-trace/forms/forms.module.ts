@@ -45,6 +45,7 @@ import {
 } from './';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
+import { FormResponseExportService } from '@controlpanel/contact-trace/forms/services/form-response-export.service';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,6 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
     TextareaDynamicResizeComponent
   ],
   imports: [CommonModule, FormsRoutingModule, SharedModule, FormsModule, LayoutsModule, ReactiveFormsModule],
-  providers: [CPI18nPipe]
+  providers: [CPI18nPipe, CollectionMethodCodeToDisplayStringPipe, FormResponseExportService]
 })
 export class CTFormsModule {}

@@ -2,12 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { baseActions, IHeader } from '@campus-cloud/store';
-import { FormResponseService, FormsService } from '../../services';
+import { FormResponseService, FormsHelperService, FormsService } from '../../services';
 import { filter, finalize, map, takeUntil } from 'rxjs/operators';
-import { Form, FormBlock, FormResponse } from '../../models';
+import { Form, FormBlock, FormResponse, FormResultExport } from '@controlpanel/contact-trace/forms/models';
 import { IItem } from '@campus-cloud/shared/components';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { Router } from '@angular/router';
+import { CPDatePipe, CPI18nPipe, FORMAT } from '@campus-cloud/shared/pipes';
+import { CollectionMethodCodeToDisplayStringPipe } from '@controlpanel/contact-trace/forms';
+import { FormResponseExportService } from '@controlpanel/contact-trace/forms/services/form-response-export.service';
 
 @Component({
   selector: 'cp-forms-create-results',
@@ -27,13 +29,17 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
   pageCounter = 1;
   paginationCountPerPage = 25;
   webServiceCallInProgress: boolean;
+  formResultExport: FormResultExport[];
 
   constructor(
     public store: Store<IHeader>,
     private formsService: FormsService,
     private formResponseService: FormResponseService,
-    private cpI18n: CPI18nService,
-    private router: Router
+    private cpI18n: CPI18nPipe,
+    private collectionMethodPipe: CollectionMethodCodeToDisplayStringPipe,
+    private router: Router,
+    private cPDatePipe: CPDatePipe,
+    private formResponseExportService: FormResponseExportService
   ) {}
 
   ngOnDestroy() {
@@ -61,13 +67,13 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
     this.blockIdToBlockMap = {};
     this.questionOptions = [
       {
-        label: this.cpI18n.translate('contact_trace_forms_all_questions'),
+        label: this.cpI18n.transform('contact_trace_forms_all_questions'),
         action: null
       }
     ];
     this.resultOptions = [
       {
-        label: this.cpI18n.translate('contact_trace_forms_all_responses'),
+        label: this.cpI18n.transform('contact_trace_forms_all_responses'),
         action: null
       }
     ];
@@ -95,9 +101,9 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
   }
 
   private refreshDataOnScreen(): void {
-    let startRecordCount = this.paginationCountPerPage * (this.pageCounter - 1) + 1;
+    const startRecordCount = this.paginationCountPerPage * (this.pageCounter - 1) + 1;
     // Get an extra record so that we know if there are more records left to fetch
-    let endRecordCount = this.paginationCountPerPage * this.pageCounter + 1;
+    const endRecordCount = this.paginationCountPerPage * this.pageCounter + 1;
     this.webServiceCallInProgress = true;
     this.formResponseService
       .getFormResponseWithFilter(
@@ -165,5 +171,46 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
 
   responseTileClickHandler(formId: number, responseId: number): void {
     this.router.navigate(['/contact-trace/forms', formId, 'response', responseId]);
+  }
+
+  onExportData() {
+    this.formResultExport = [];
+    this.formResponseService
+      .getFullFormResponse(this.form.id, this.filterQuestionBlockId, this.filterResultBlockId)
+      .pipe(filter((formResponses: FormResponse[]) => formResponses.length > 0))
+      .subscribe((formResponses: FormResponse[]) => {
+        formResponses.forEach((formResponse) => {
+          for (let i = 1; i < this.form.form_block_list.length; i++) {
+            const formBloc = this.form.form_block_list[i];
+            if (formBloc.is_terminal || (this.filterQuestionBlockId && this.filterQuestionBlockId !== formBloc.id)) {
+              continue;
+            }
+            const formResultExportItem: FormResultExport = this.initFormResultExportItem(formResponse);
+            formResultExportItem.question = formBloc.text;
+            formResultExportItem.answer = FormsHelperService.generateRespondentResponsesForQuestion(
+              formResponse,
+              formBloc
+            ).join('\n');
+
+            this.formResultExport.push(formResultExportItem);
+          }
+        });
+        const fileName = this.form.name + '_Result-Export_' + this.cPDatePipe.transform(new Date().getDate(), FORMAT.DATETIME);
+        const includeInternalUserFields = !!formResponses.find((response: FormResponse) => response.user_id > 0);
+        this.formResponseExportService.exportFormResponsesAsCsv(this.formResultExport, includeInternalUserFields, fileName);
+      });
+  }
+
+  private initFormResultExportItem(formResponse: FormResponse): FormResultExport {
+    return {
+      fistname: formResponse.firstname,
+      lastname: formResponse.lastname,
+      extern_user_id: formResponse.user_id > 0 ? formResponse.email : formResponse.extern_user_id,
+      completionDate: this.cPDatePipe.transform(formResponse.response_completed_epoch, FORMAT.DATETIME),
+      collectionMethod: this.cpI18n.transform(this.collectionMethodPipe.transform(formResponse.collection_method)),
+      result: this.blockIdToBlockMap[formResponse.terminal_form_block_id].name,
+      question: '',
+      answer: ''
+    };
   }
 }

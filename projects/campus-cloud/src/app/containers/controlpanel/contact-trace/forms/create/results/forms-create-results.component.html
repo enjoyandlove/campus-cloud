@@ -12,6 +12,19 @@
         >
         </cp-dropdown>
       </div>
+
+      <div class="col-4 ml-auto">
+        <button
+                class="action-button float-right"
+                ui-button
+                variant="stroked"
+                color="primary"
+                type="button"
+                (click)="onExportData()"
+        >
+          {{ 't_data_export' | cpI18n }}
+        </button>
+      </div>
     </div>
 
   </ready-ui-card>
