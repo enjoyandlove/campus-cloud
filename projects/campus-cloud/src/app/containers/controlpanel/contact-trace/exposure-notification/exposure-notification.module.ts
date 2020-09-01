@@ -24,6 +24,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { effects, reducers } from '@controlpanel/contact-trace/cases/store';
 import { StoreModule } from '@ngrx/store';
 import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils.service';
+import { ImportUserListComponent } from '@controlpanel/contact-trace/exposure-notification/components/import-download/import-user-list.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,10 @@ import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils
     ExposureNotificationToDisplayComponent,
     ExposureNotificationListActionBoxComponent,
     ExposureNotificationEditComponent,
-    ExposureNotificationUserListModalComponent
+    ExposureNotificationUserListModalComponent,
+    ImportUserListComponent
   ],
-  entryComponents: [ExposureNotificationDeleteComponent],
+  entryComponents: [ExposureNotificationDeleteComponent, ImportUserListComponent],
   imports: [
     CommonModule,
     ExposureNotificationRoutingModule,

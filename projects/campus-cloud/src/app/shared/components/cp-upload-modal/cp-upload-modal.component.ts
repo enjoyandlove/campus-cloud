@@ -13,6 +13,7 @@ interface IOptions {
   parser: Function; // Promise
   templateUrl: string;
   validExtensions: Array<string>;
+  instruction?: string;
 }
 
 @Component({
@@ -24,6 +25,7 @@ export class CPUploadModalComponent implements OnInit {
   @Input() props: IOptions;
 
   @Output() navigate: EventEmitter<null> = new EventEmitter();
+  @Output() cancel: EventEmitter<null> = new EventEmitter();
 
   ready$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -52,5 +54,9 @@ export class CPUploadModalComponent implements OnInit {
     if (this.props === undefined) {
       console.warn('Missing Options Input');
     }
+  }
+
+  close() {
+    this.cancel.emit();
   }
 }

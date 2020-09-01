@@ -127,6 +127,16 @@
                 </tr>
               </tbody>
             </table>
+            <div class="row">
+              <div class="col-12">
+                <cp-pagination [pageNext]="pageNext"
+                               [pagePrev]="pagePrev"
+                               [pageNumber]="pageNumber"
+                               (next)="onPaginationNext()"
+                               (previous)="onPaginationPrevious()">
+                </cp-pagination>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,11 +1,12 @@
 <div class="cpmodal">
   <div class="cpmodal__header">
-    <cp-upload-modal-header (reset)="doReset()"> </cp-upload-modal-header>
+    <cp-upload-modal-header (reset)="doReset();close()"> </cp-upload-modal-header>
   </div>
 
   <div class="cpmodal__body">
     <cp-upload-modal-body [reset]="reset$"
                           [props]="props"
+                          [instruction]="props.instruction"
                           (ready)="ready$.next(true)">
     </cp-upload-modal-body>
   </div>
@@ -13,7 +14,7 @@
   <div class="cpmodal__footer">
     <cp-upload-modal-footer [valid]="ready$"
                             (navigate)="onNavigate()"
-                            (reset)="doReset()">
+                            (reset)="doReset();close()">
     </cp-upload-modal-footer>
   </div>
 </div>

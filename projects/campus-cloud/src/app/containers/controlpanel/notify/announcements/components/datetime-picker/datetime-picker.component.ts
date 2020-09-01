@@ -32,6 +32,9 @@ export class AnnouncementsDatetimePickerComponent implements OnInit {
   @Input()
   clearable = false;
 
+  @Input()
+  static = true;
+
   @Output()
   dateSet: EventEmitter<number> = new EventEmitter();
 

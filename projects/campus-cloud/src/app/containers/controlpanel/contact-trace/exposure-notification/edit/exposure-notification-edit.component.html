@@ -1,14 +1,14 @@
 <cp-spinner *ngIf="webServiceCallInProgress"></cp-spinner>
 
-<div *ngIf="!webServiceCallInProgress && notification">
+<div [ngClass]="{'d-none' : !(!webServiceCallInProgress && notification)}">
 
   <div class="page-container">
     <ready-ui-card>
       <header>
         <h2 class="section__name">{{ 'message' | cpI18n }}</h2>
-        <cp-datetime-picker
+        <cp-datetime-picker class="with-shadow"
           (dateSet)="onSchedule($event)"
-          [clearable]="true"
+          [clearable]="true" [static]="false"
           [label]="isScheduledAnnouncement ? (this.notification.notify_at_epoch | cpDatePipe:dateTimeFormat) : 't_notify_send_later' | cpI18n">
 
         </cp-datetime-picker>
@@ -25,7 +25,7 @@
                       type="text"
                       class="form-control subject-input__input"
                       disabled
-                      [value]="clientName ? clientName : ('contact_trace_notification_contact_tracing_service' | cpI18n)"
+                      [value]="serviceName ? serviceName : ('contact_trace_notification_contact_tracing_service' | cpI18n)"
                     />
                   </div>
                 </div>
@@ -90,7 +90,7 @@
               <div class="col-6">
                 <div class="row">
                   <div class="col-12">
-                    <label>{{ 'contact_trace_notification_filter' | cpI18n }}</label>
+                    <label>{{ 'contact_trace_notification_status' | cpI18n }}</label>
                     <div class="row">
                       <div class="col-12">
                         <cp-check-dropdown [dropdownListClass]="'small-width'"
@@ -105,7 +105,21 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-6" *ngIf="(caseStatus$ | async) && (caseStatus$ | async).case_count > 0">
+                <div class="row d-flex h-100">
+                  <div class="col-8 align-self-end">
+                    <p class="cases-counter m-0 pb-2 d-flex"><i class="material-icons mr-2 align-self-end">group</i>
+                      <span class="align-self-center">{{(caseStatus$ | async).case_count + ' ' + ('users' | cpI18n)}}</span>
+                    </p>
+                  </div>
+                  <div class="col-4 align-self-end">
+                    <div class="row">
+                      <div class="col-12">
+                        <p (click)="onDownloadCasesFromCaseStatus()" class="cursor-pointer import-link m-0 pb-2 float-right">{{'download' | cpI18n}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -124,11 +138,33 @@
 
           <div
             class="form-group"
-            *ngIf="!caseId && selectedToOption && selectedToOption.action === 'custom_list'"
+            [ngClass]="{'d-none' : !(!caseId && selectedToOption && selectedToOption.action === 'custom_list')}"
           >
-            <label>
-              {{ 'users' | cpI18n }}
-            </label>
+            <div class="row">
+              <div class="col-8">
+                <div class="row d-flex h-100">
+                  <div class="col-8 align-self-end">
+                    <p class="cases-counter m-0 pb-2 d-flex"><i class="material-icons mr-2 align-self-end">group</i>
+                      <span class="align-self-center">
+                        {{((userList$ | async).length !== 0 ? (userList$ | async).length : '') + ' ' + ('users' | cpI18n)}}
+                      </span>
+                    </p>
+                  </div>
+                  <div class="col-4 align-self-end">
+                    <div class="row">
+                      <div class="col-12">
+                        <p *ngIf="(userList$ | async).length > 0" (click)="onDownloadCasesFromUsers()" class="cursor-pointer import-link m-0 pb-2 float-right">{{'download' | cpI18n}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <p class="cursor-pointer float-right import-link m-0" (click)="importModal()">
+                  {{ 'import_from_csv' | cpI18n}}
+                </p>
+              </div>
+            </div>
             <div class="subject-input">
               <cp-audience-users-typeahead
                 [ngClass]="{'typeahead-validation-error': highlightFormError && (!notification.user_ids || notification.user_ids.length === 0)}"

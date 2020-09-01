@@ -1,20 +1,31 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { filter, finalize, map, takeUntil, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification/models';
 import { ExposureNotificationService } from '@controlpanel/contact-trace/exposure-notification/services';
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
 import { AnnouncementPriority } from '@controlpanel/notify/announcements/model';
-import { CPI18nService, SchoolService } from '@campus-cloud/shared/services';
-import { CPSession, ISchool } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPSession } from '@campus-cloud/session';
 import * as fromStore from '@controlpanel/contact-trace/cases/store';
-import { ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
+import { getCases, getSelectedCaseStatus } from '@controlpanel/contact-trace/cases/store';
+import { ICase, ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
 import { HttpParams } from '@angular/common/http';
 import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
 import { AnnouncementUtilsService } from '@controlpanel/notify/announcements/announcement.utils.service';
 import { FORMAT } from '@campus-cloud/shared/pipes';
+import { ModalService } from '@ready-education/ready-ui/overlays';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { AudienceService } from '@controlpanel/audience/audience.service';
+import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils.service';
+import { ImportUserListComponent } from '@controlpanel/contact-trace/exposure-notification/components';
+
+interface IImportedUser {
+  name: string;
+  email: string;
+}
 
 @Component({
   selector: 'cp-exposure-notification-edit',
@@ -24,7 +35,9 @@ import { FORMAT } from '@campus-cloud/shared/pipes';
 export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   dateTimeFormat = FORMAT.DATETIME;
   protected unsubscribe: Subject<void> = new Subject();
-  notification: ExposureNotification = {};
+  notification: ExposureNotification = {
+    user_ids: []
+  };
   webServiceCallInProgress: boolean;
   types = [
     {
@@ -53,9 +66,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     }
   ];
 
-  toCaseOption = [
-    this.toOptions[0]
-  ];
+  toCaseOption = [this.toOptions[0]];
   templates;
   filterOptions;
   selectedType;
@@ -70,10 +81,22 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   templateTypeToTemplateMap;
   CaseActionToTemplateTypeMap;
   caseId: number;
-  clientName = '';
+  serviceName = '';
+
+  importFromCSVModal: OverlayRef;
 
   private getCasesById$: Observable<ICaseStatus>;
-  private casesById: any;
+  casesById: any;
+  cases$: Observable<ICase[]>;
+  caseStatus$: Observable<ICaseStatus>;
+  selectedCaseStatus: ICaseStatus;
+  casesForUsers: Map<number, ICase> = new Map<number, ICase>();
+
+  /*User list observable*/
+  userList$: Observable<number[]> = new Observable<number[]>();
+  userImportedFromCSV$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+  userInsertedFromInput$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+  importedUsers$: BehaviorSubject<IImportedUser[]> = new BehaviorSubject<IImportedUser[]>([]);
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -83,7 +106,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     private router: Router,
     private cpI18n: CPI18nService,
     private session: CPSession,
-    private casesService: CasesService
+    private casesService: CasesService,
+    private modalService: ModalService,
+    private audienceService: AudienceService,
+    private util: CasesUtilsService
   ) {
     this.CaseActionToTemplateTypeMap = {
       'ct:exposed_notify': 2,
@@ -92,6 +118,43 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       'ct:trace_contacts': 2,
       'ct:exposure_notify': 2
     };
+
+    this.cases$ = this.storeCase.select(getCases);
+
+    this.caseStatus$ = this.storeCase.select(getSelectedCaseStatus);
+    this.caseStatus$.subscribe((value) => {
+      this.selectedCaseStatus = value;
+    });
+    this.userList$ = combineLatest([this.userImportedFromCSV$, this.userInsertedFromInput$]).pipe(
+      map(([userImportedFromCSV, userInsertedFromInput]) => {
+        let userList: number[] = [];
+        userList = userList.concat(userImportedFromCSV);
+        userList = userList.concat(userInsertedFromInput);
+
+        const result = [...new Set(userList)];
+        return result;
+      })
+    );
+
+    this.importedUsers$.subscribe((users) => {
+      users.forEach((user) =>
+        this.addUserFromAudience(user.email)
+          .pipe(
+            filter((audiences) => audiences && audiences.length > 0),
+            tap((audiences) =>
+              this.userImportedFromCSV$.next([
+                ...this.userImportedFromCSV$.getValue(),
+                audiences[0].id
+              ])
+            )
+          )
+          .subscribe()
+      );
+    });
+
+    this.userList$.subscribe((userList) => {
+      this.notification.user_ids = userList;
+    });
   }
 
   ngOnDestroy() {
@@ -104,7 +167,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.pipe(takeUntil(this.unsubscribe)).subscribe((params) => {
       const notificationId: number = Number(params['notificationId']);
       this.getItemForEdit(notificationId).subscribe((notification) => {
-        this.notification = notification;
+        this.notification = { ...notification, user_ids: [] };
         this.buildHeader();
       });
     });
@@ -124,10 +187,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   private getItemForEdit(notificationId: number): Observable<ExposureNotification> {
     if (!notificationId) {
-      const serviceId: number = this.session.g.get('school').ct_service_id;
-      return this.notificationService.getStore(serviceId).pipe(
-        tap(({name}) => this.clientName = name),
-        map(({storeId}) => {
+      return this.notificationService.getStore(this.session.schoolCTServiceId).pipe(
+        tap(({ name }) => (this.serviceName = name)),
+        map(({ storeId }) => {
           const newObj: ExposureNotification = {
             type: 1,
             store_id: storeId
@@ -171,7 +233,8 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   get isScheduledAnnouncement() {
-    return this.notification.notify_at_epoch !== undefined && this.notification.notify_at_epoch !== -1
+    return this.notification.notify_at_epoch !== undefined &&
+      this.notification.notify_at_epoch !== -1
       ? AnnouncementUtilsService.isScheduledAnnouncement({
           notify_at_epoch: this.notification.notify_at_epoch
         })
@@ -231,7 +294,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         exclude_external_cases: true
       })
     );
-
     this.selectedFilterOption = option;
   }
 
@@ -248,7 +310,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   usersChanged(userIds): void {
-    this.notification.user_ids = userIds;
+    this.userInsertedFromInput$.next(userIds);
   }
 
   sendClickHandler(): void {
@@ -261,13 +323,16 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       this.showWarning();
       this.highlightFormError = true;
     } else {
+      if (this.notification.user_ids && this.notification.user_ids.length === 0) {
+        delete this.notification.user_ids;
+      }
       this.webServiceCallInProgress = true;
       this.notificationService
         .createNotification(this.notification)
         .pipe(finalize(() => (this.webServiceCallInProgress = false)))
         .subscribe((notification) => {
           if (this.caseId) {
-            const param = new HttpParams().set('school_id', this.session.g.get('school').id);
+            const param = new HttpParams().set('school_id', this.session.schoolIdAsString);
             this.casesService
               .updateCase(
                 {
@@ -389,7 +454,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
           action: 0,
           disabled: true,
           displayCheckIcon: false,
-          label: this.cpI18n.translate('contact_trace_notification_select_filter_option')
+          label: this.cpI18n.translate('contact_trace_notification_select_status')
         }
       ];
       this.selectedFilterOption = this.filterOptions[0];
@@ -397,7 +462,8 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         statuses.forEach((status) => {
           this.filterOptions.push({
             action: status.id,
-            label: status.name
+            label: status.name,
+            caseCount: status.case_count
           });
         });
       }
@@ -409,7 +475,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       this.caseId = Number(params['case_id']);
       if (this.caseId) {
         this.webServiceCallInProgress = true;
-        const param = new HttpParams().set('school_id', this.session.g.get('school').id);
+        const param = new HttpParams().set('school_id', this.session.schoolIdAsString);
         this.casesService.getCaseById(param, this.caseId).subscribe((value) => {
           this.casesById = value;
 
@@ -429,6 +495,85 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             this.webServiceCallInProgress = false;
           }, 500);
         });
+      }
+    });
+  }
+
+  importModal() {
+    this.importFromCSVModal = this.modalService.open(ImportUserListComponent, {
+      data: {},
+      onAction: this.onImport.bind(this),
+      onClose: this.resetImportModal.bind(this)
+    });
+  }
+
+  onImport(usersList: IImportedUser[]) {
+    if (usersList) {
+      this.importedUsers$.next(usersList);
+    }
+    this.resetImportModal();
+  }
+
+  resetImportModal() {
+    this.importFromCSVModal.dispose();
+  }
+
+  private addUserFromAudience(email: string): Observable<any> {
+    const param = new HttpParams()
+      .set('school_id', this.session.schoolIdAsString)
+      .append('email', email);
+    return this.audienceService.getUsers(param);
+  }
+
+  onDownloadCasesFromCaseStatus() {
+    const params = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('exclude_external', 'true')
+      .append('current_status_ids', this.selectedCaseStatus.id.toString())
+      .append('all', '1');
+
+    this.casesService.getCases(null, null, params).subscribe((cases: ICase[]) => {
+      if (cases.length) {
+        this.util.exportCases(cases);
+      }
+    });
+  }
+
+  onDownloadCasesFromUsers() {
+    const userIds: number[] = Array.from(this.casesForUsers.keys());
+    userIds
+      .filter((id) => !this.notification.user_ids.find((userId) => userId === id))
+      .forEach((id) => this.casesForUsers.delete(id));
+
+    this.updateCasesForUsersAndDownload(this.notification.user_ids);
+  }
+
+  private updateCasesForUsersAndDownload(user_ids: number[]) {
+    const filteredUserIds = user_ids.filter((userId) => !this.casesForUsers.get(userId));
+    console.log(filteredUserIds);
+    const params = new HttpParams()
+      .append('user_ids', filteredUserIds.toString())
+      .append('school_id', this.session.g.get('school').id);
+    const stream$ = this.casesService
+      .getCaseById(params)
+      .pipe(
+        tap((cases: ICase[]) =>
+          cases
+            .filter((caseItem) => caseItem)
+            .forEach((caseItem) => this.casesForUsers.set(caseItem.user_id, caseItem))
+        )
+      );
+
+    stream$.subscribe(() => {
+      const exposureData = Array.from(this.casesForUsers.values());
+      if (!!exposureData.length) {
+        this.util.exportCases(exposureData);
+      } else {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({
+            body: this.cpI18n.translate('contact_trace_exposure_notification_empty_cases')
+          })
+        );
       }
     });
   }

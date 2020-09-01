@@ -9,7 +9,7 @@
       </a>
     </p>
 
-    <small>{{ instruction | cpI18n }}</small>
+    <small>{{ (instruction ? instruction : 'csv_modal_instruction') | cpI18n }}</small>
   </div>
 </div>
 

@@ -75,6 +75,8 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     private util: CasesUtilsService
   ) {
     super();
+    this.maxPerPage = 20;
+    this.endRange = this.maxPerPage + 1;
   }
 
   getCasesStatus() {
@@ -217,5 +219,14 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM
     };
+  }
+
+  onPaginationNext() {
+    super.goToNext();
+    this.loadCaseActivityLog();
+  }
+  onPaginationPrevious() {
+    super.goToPrevious();
+    this.loadCaseActivityLog();
   }
 }
