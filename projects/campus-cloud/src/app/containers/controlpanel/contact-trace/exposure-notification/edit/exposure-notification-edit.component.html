@@ -249,7 +249,7 @@
             class="action-button"
             [disabled]="webServiceCallInProgress"
             (click)="sendClickHandler()">
-            {{'send' | cpI18n}}
+            {{(isScheduledAnnouncement ? 't_notify_send_later' : 'send') | cpI18n }}
           </button>
         </div>
       </div>
