@@ -6,10 +6,10 @@ import { ApiService } from '@campus-cloud/base';
 import { UnsubscribeComponent } from './unsubscribe.component';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { UnsubscribeRoutingModule } from './unsubscribe.routing.module';
-import { UnsubscribeFeedsComponent } from '@campus-cloud/containers/unsubscribe';
+import { UnsubscribeGenericComponent } from '@campus-cloud/containers/unsubscribe/generic';
 
 @NgModule({
-  declarations: [UnsubscribeComponent, UnsubscribeFeedsComponent],
+  declarations: [UnsubscribeComponent, UnsubscribeGenericComponent],
 
   imports: [CommonModule, SharedModule, RouterModule, UnsubscribeRoutingModule],
 

@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { UnsubscribeFeedsComponent } from './feeds';
+import { UnsubscribeGenericComponent } from './generic';
 import { pageTitle } from '@campus-cloud/shared/constants';
 import { UnsubscribeComponent } from './unsubscribe.component';
 
@@ -12,8 +12,13 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'feeds/:schoolId/:adminId',
-        component: UnsubscribeFeedsComponent,
+        component: UnsubscribeGenericComponent,
         data: { zendesk: 'unsubscribe feeds', title: pageTitle.UNSUBSCRIBE_MAIL }
+      },
+      {
+        path: 'cases/:schoolId/:adminId',
+        component: UnsubscribeGenericComponent,
+        data: { zendesk: 'unsubscribe cases', title: pageTitle.UNSUBSCRIBE_MAIL }
       },
 
       { path: '**', redirectTo: '/login' }

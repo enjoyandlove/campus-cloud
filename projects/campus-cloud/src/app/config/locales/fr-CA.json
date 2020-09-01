@@ -4605,6 +4605,9 @@
   "t_tile_button_locked": {
     "message": "Verrouillé"
   },
+  "t_unsubscribe_contact_trace_plus": {
+    "message": "Unsubscribed from Contact Trace Case Alerts"
+  },
   "t_unsubscribe_feed_email_digest": {
     "message": "Se désabonner du résumé quotidien."
   },

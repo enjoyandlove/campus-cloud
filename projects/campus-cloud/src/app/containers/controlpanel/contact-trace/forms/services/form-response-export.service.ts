@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormResultExport } from '@controlpanel/contact-trace/forms';
+import { FormResultExport } from '@controlpanel/contact-trace/forms/models';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { createSpreadSheet } from '@campus-cloud/shared/utils';
 

@@ -4,7 +4,9 @@ import { of } from 'rxjs';
 import { UnsubscribeService } from '@campus-cloud/containers/unsubscribe/unsubscribe.service';
 
 export enum EmailType {
-  feedEmailDigest = 14
+  feedEmailDigest = 14,
+  caseStatusChange = 15,
+  contactTrace = 16
 }
 
 export class MockUnsubscribe {

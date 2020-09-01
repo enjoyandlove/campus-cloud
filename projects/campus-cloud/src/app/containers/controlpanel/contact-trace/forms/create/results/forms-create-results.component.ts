@@ -8,7 +8,7 @@ import { Form, FormBlock, FormResponse, FormResultExport } from '@controlpanel/c
 import { IItem } from '@campus-cloud/shared/components';
 import { Router } from '@angular/router';
 import { CPDatePipe, CPI18nPipe, FORMAT } from '@campus-cloud/shared/pipes';
-import { CollectionMethodCodeToDisplayStringPipe } from '@controlpanel/contact-trace/forms';
+import { CollectionMethodCodeToDisplayStringPipe } from '@controlpanel/contact-trace/forms/pipes';
 import { FormResponseExportService } from '@controlpanel/contact-trace/forms/services/form-response-export.service';
 
 @Component({

@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 
-import { UnsubscribeFeedsComponent } from './unsubscribe-feeds.component';
+import { UnsubscribeGenericComponent } from './unsubscribe-generic.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { MockUnsubscribe, UnsubscribeFeedsService } from '@campus-cloud/services/social';
 import { UnsubscribeModule } from '@campus-cloud/containers/unsubscribe/unsubscribe.module';
 
-describe('UnsubscribeFeedsComponent', () => {
+describe('UnsubscribeGenericComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
@@ -22,11 +22,11 @@ describe('UnsubscribeFeedsComponent', () => {
       .catch(done.fail)
   );
 
-  let fixture: ComponentFixture<UnsubscribeFeedsComponent>;
-  let comp: UnsubscribeFeedsComponent;
+  let fixture: ComponentFixture<UnsubscribeGenericComponent>;
+  let comp: UnsubscribeGenericComponent;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UnsubscribeFeedsComponent);
+    fixture = TestBed.createComponent(UnsubscribeGenericComponent);
     comp = fixture.componentInstance;
 
     fixture.detectChanges();
