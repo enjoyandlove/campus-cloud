@@ -10,6 +10,7 @@
     </cp-cases-list-action-box>
   </div>
 </div>
+
 <div [ngSwitch]="loading$ | async">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <div *ngSwitchCase="false">
@@ -25,12 +26,16 @@
                         (contactTraceAction)="onContactTraceAction($event)">
         </cp-cases-list>
 
-        <cp-pagination [pageNext]="pageNext"
-                      [pagePrev]="pagePrev"
-                      [pageNumber]="pageNumber"
-                      (next)="onPaginationNext()"
-                      (previous)="onPaginationPrevious()">
-        </cp-pagination>
+        <div class="row">
+          <div class="col-12">
+            <cp-pagination [pageNext]="pageNext"
+                           [pagePrev]="pagePrev"
+                           [pageNumber]="pageNumber"
+                           (next)="onPaginationNext()"
+                           (previous)="onPaginationPrevious()">
+            </cp-pagination>
+          </div>
+        </div>
       </div>
 
       <div class="col-3">

@@ -1,66 +1,62 @@
- <div>
-  <table ui-table>
-    <thead>
-      <tr ui-table-row>
-        <th ui-table-cell class="w-50">
-          {{ 't_shared_identifier' | cpI18n }}
-        </th>
-        <th ui-table-cell class="w-20">{{ 't_shared_status' | cpI18n }}</th>
-        <th ui-table-cell class="w-20">{{ 't_shared_last_update' | cpI18n }}</th>
-        <th ui-table-cell class="w-10"></th>
-      </tr>
-    </thead>
+<table ui-table>
+  <thead>
+    <tr ui-table-row>
+      <th ui-table-cell class="w-50">
+        {{ 't_shared_identifier' | cpI18n }}
+      </th>
+      <th ui-table-cell class="w-20">{{ 't_shared_status' | cpI18n }}</th>
+      <th ui-table-cell class="w-20">{{ 't_shared_last_update' | cpI18n }}</th>
+      <th ui-table-cell class="w-10"></th>
+    </tr>
+  </thead>
 
-    <tbody>
-      <tr ui-table-row
-          *ngFor="let case of data$ | async; index as i">
-        <td ui-table-cell>
-          <ready-ui-stack direction="vertical">
-            <strong>
-              <a ui-button
-                  cpTracker
-                  variant="inline"
-                  cpTarget="view_info"
-                  [eventData]="eventData"
-                  [routerLink]="[case.id]">
-                {{ case.firstname }} {{ case.lastname }}
-              </a>
-            </strong>
-            <strong>
-              <a ui-button
-                  cpTracker
-                  variant="inline"
-                  cpTarget="view_info"
-                  [eventData]="eventData"
-                  [routerLink]="[case.id]">
-                {{ ( case.extern_user_id.length>45 )? ( case.extern_user_id | slice:0:40 ) + '...' : case.extern_user_id }}
-              </a>
-            </strong>
-           
-          </ready-ui-stack>
-        </td>
+  <tbody>
+    <tr ui-table-row
+        *ngFor="let case of data$ | async; index as i">
+      <td ui-table-cell>
+        <ready-ui-stack direction="vertical">
+          <strong>
+            <a ui-button
+                cpTracker
+                variant="inline"
+                cpTarget="view_info"
+                [eventData]="eventData"
+                [routerLink]="[case.id]">
+              {{ case.firstname }} {{ case.lastname }}
+            </a>
+          </strong>
+          <strong>
+            <a ui-button
+                cpTracker
+                variant="inline"
+                cpTarget="view_info"
+                [eventData]="eventData"
+                [routerLink]="[case.id]">
+              {{ ( case.extern_user_id.length>45 )? ( case.extern_user_id | slice:0:40 ) + '...' : case.extern_user_id }}
+            </a>
+          </strong>
 
-        <td ui-table-cell>
-          {{ case.current_status.name }}
-        </td>
+        </ready-ui-stack>
+      </td>
 
-        <td ui-table-cell>
-          {{ case.date_last_modified | cpDatePipe: dateFormat }}
-        </td>
+      <td ui-table-cell>
+        {{ case.current_status.name }}
+      </td>
 
-        <td ui-table-cell
-            align="right">
-          <button ui-button
-                  type="button"
-                  variant="inline"
-                  cpTarget="delete"
-                  (click)="deleteClick.emit(case)">
-            <ready-ui-icon name="close"></ready-ui-icon>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+      <td ui-table-cell>
+        {{ case.date_last_modified | cpDatePipe: dateFormat }}
+      </td>
 
-
+      <td ui-table-cell
+          align="right">
+        <button ui-button
+                type="button"
+                variant="inline"
+                cpTarget="delete"
+                (click)="deleteClick.emit(case)">
+          <ready-ui-icon name="close"></ready-ui-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
