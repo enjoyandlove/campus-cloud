@@ -458,6 +458,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       ];
       this.selectedFilterOption = this.filterOptions[0];
       if (statuses) {
+        statuses.sort((a, b) => b.rank - a.rank);
         statuses.forEach((status) => {
           this.filterOptions.push({
             action: status.id,
