@@ -1068,6 +1068,9 @@
   "contact_trace_forms_alphabet_o": {
     "message": "O"
   },
+  "contact_trace_forms_answer": {
+    "message": "Réponse"
+  },
   "contact_trace_forms_app": {
     "message": "App"
   },
