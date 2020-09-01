@@ -65,6 +65,7 @@ export class CasesUtilsService {
       .append('exclude_external', state.exclude_external)
       .append('start', state.start)
       .append('end', state.end)
+      .append('all', state.all ? state.all : 0)
       .append('school_id', this.session.g.get('school').id);
   }
 

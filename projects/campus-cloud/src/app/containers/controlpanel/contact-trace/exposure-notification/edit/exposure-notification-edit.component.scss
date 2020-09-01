@@ -52,6 +52,22 @@
 
   .form-group {
     margin-bottom: 15px;
+    .import-link {
+      color: $color-brand;
+    }
+
+    .cases-counter {
+      span {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 19px;
+      }
+    }
+
+    .h-100 {
+      height: 100%;
+    }
   }
 
   .user-full-name:disabled {

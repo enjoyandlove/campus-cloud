@@ -1005,6 +1005,9 @@
   "contact_trace_exposure_notification_case_not_available": {
     "message": "Case is not available"
   },
+  "contact_trace_exposure_notification_empty_cases": {
+    "message": "No case to be downloaded"
+  },
   "contact_trace_forms_all_forms": {
     "message": "All Forms"
   },
@@ -1383,9 +1386,6 @@
   "contact_trace_notification_error": {
     "message": "Error"
   },
-  "contact_trace_notification_filter": {
-    "message": "Filter"
-  },
   "contact_trace_notification_message": {
     "message": "Message"
   },
@@ -1407,8 +1407,8 @@
   "contact_trace_notification_scheduled": {
     "message": "Scheduled"
   },
-  "contact_trace_notification_select_filter_option": {
-    "message": "Select filter"
+  "contact_trace_notification_select_status": {
+    "message": "Select status"
   },
   "contact_trace_notification_sent": {
     "message": "Sent"

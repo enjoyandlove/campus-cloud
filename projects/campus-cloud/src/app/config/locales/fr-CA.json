@@ -1005,6 +1005,9 @@
   "contact_trace_exposure_notification_case_not_available": {
     "message": "Cas n'est disponible"
   },
+  "contact_trace_exposure_notification_empty_cases": {
+    "message": "Aucun cas à télécharger"
+  },
   "contact_trace_forms_all_forms": {
     "message": "Tous les formulaires"
   },
@@ -1383,9 +1386,6 @@
   "contact_trace_notification_error": {
     "message": "Erreur"
   },
-  "contact_trace_notification_filter": {
-    "message": "Filtrer"
-  },
   "contact_trace_notification_message": {
     "message": "Message"
   },
@@ -1407,8 +1407,8 @@
   "contact_trace_notification_scheduled": {
     "message": "Planifié"
   },
-  "contact_trace_notification_select_filter_option": {
-    "message": "Sélectionnez un filtre"
+  "contact_trace_notification_select_status": {
+    "message": "Sélectionnez un statut"
   },
   "contact_trace_notification_sent": {
     "message": "Envoyé"

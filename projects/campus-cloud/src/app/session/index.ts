@@ -70,6 +70,18 @@ export class CPSession {
     return this.g.get('school');
   }
 
+  get schoolId(): number {
+    return this.school.id;
+  }
+
+  get schoolIdAsString(): string {
+    return this.schoolId.toString();
+  }
+
+  get schoolCTServiceId(): number {
+    return this.school.ct_service_id;
+  }
+
   set school(school: ISchool) {
     this.g.set('school', school);
   }

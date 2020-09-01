@@ -85,7 +85,7 @@
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
           <p>{{ blockContent.text }}</p>
           <div class="form-group">
-            <input
+            <input [maxLength]="16"
               type="text"
               [id]="blockContent.id"
               class="form-control"
@@ -126,7 +126,7 @@
         <div *ngFor="let blockContent of currentFormBlock.block_content_list">
           <p>{{ blockContent.text }}</p>
           <div class="form-group">
-            <input
+            <input [maxLength]="16"
               type="text"
               [id]="blockContent.id"
               class="form-control"
