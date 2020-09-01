@@ -131,8 +131,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         userList = userList.concat(userImportedFromCSV);
         userList = userList.concat(userInsertedFromInput);
 
-        const result = [...new Set(userList)];
-        return result;
+        return [...new Set(userList)];
       })
     );
 
@@ -534,7 +533,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
     this.casesService.getCases(null, null, params).subscribe((cases: ICase[]) => {
       if (cases.length) {
-        this.util.exportCases(cases);
+        this.util.exportUserCases(cases);
       }
     });
   }
@@ -567,7 +566,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     stream$.subscribe(() => {
       const exposureData = Array.from(this.casesForUsers.values());
       if (!!exposureData.length) {
-        this.util.exportCases(exposureData);
+        this.util.exportUserCases(exposureData);
       } else {
         this.store.dispatch(
           new baseActionClass.SnackbarError({

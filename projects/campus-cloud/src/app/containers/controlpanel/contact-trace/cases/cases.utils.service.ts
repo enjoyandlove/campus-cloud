@@ -218,8 +218,7 @@ export class CasesUtilsService {
       };
     });
 
-    const csvData = { columns: columns, data: cases };
-    return csvData;
+    return { columns: columns, data: cases };
   }
 
   createCaseActivityCSVData(caseActivities) {
@@ -257,8 +256,7 @@ export class CasesUtilsService {
       };
     });
 
-    const csvData = { columns: columns, data: caseActivities };
-    return csvData;
+    return { columns: columns, data: caseActivities };
   }
 
   exportCaseActivities(caseActivities) {
@@ -268,6 +266,11 @@ export class CasesUtilsService {
 
   generateCSV(columns: string[], data: any[]) {
     return createSpreadSheet(data, columns, 'file', false);
+  }
+
+  exportUserCases(cases) {
+    const caseData = this.createCaseCSVData(cases);
+    createSpreadSheet(caseData.data, caseData.columns);
   }
 
   async exportCases(cases, caseActivities) {
