@@ -153,7 +153,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     });
 
     this.userList$.subscribe((userList) => {
-      this.notification.user_ids = userList;
+      if (this.caseId) {
+        this.notification.user_ids = userList;
+      }
     });
   }
 
@@ -167,7 +169,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.pipe(takeUntil(this.unsubscribe)).subscribe((params) => {
       const notificationId: number = Number(params['notificationId']);
       this.getItemForEdit(notificationId).subscribe((notification) => {
-        this.notification = { ...notification, user_ids: [] };
+        this.notification = { ...notification, user_ids: this.notification.user_ids };
         this.buildHeader();
       });
     });
@@ -512,21 +514,22 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.casesService.getCaseActivityLog(1, 1000, params)
       .subscribe((logs: ICaseLog[]) => {
         const activityLog = logs.find((log) => log.contact_trace_event_id !== 0);
-
-        const casesParams = new HttpParams()
-          .append('school_id', this.session.school.id.toString())
-          .append('contact_trace_event_id', activityLog.contact_trace_event_id.toString())
-          .append('all', '1');
-        this.casesService.getCases(1, 10000, casesParams)
-          .subscribe((cases: ICase[]) => {
-            if (cases.length) {
-              this.notification.user_ids = cases.map((caseItem) => caseItem.user_id);
-              this.notifyDestination = '';
-              cases.forEach((caseItem) => {
-                this.notifyDestination += caseItem.firstname + ' ' + caseItem.lastname + '<' + caseItem.extern_user_id + '>, ';
-              });
-            }
-          });
+        if (activityLog) {
+          const casesParams = new HttpParams()
+            .append('school_id', this.session.school.id.toString())
+            .append('contact_trace_event_id', activityLog.contact_trace_event_id.toString())
+            .append('all', '1');
+          this.casesService.getCases(1, 10000, casesParams)
+            .subscribe((cases: ICase[]) => {
+              if (cases.length) {
+                this.notification.user_ids = cases.map((caseItem) => caseItem.user_id);
+                this.notifyDestination = '';
+                cases.forEach((caseItem) => {
+                  this.notifyDestination += caseItem.firstname + ' ' + caseItem.lastname + '<' + caseItem.extern_user_id + '>, ';
+                });
+              }
+            });
+        }
       });
   }
 
