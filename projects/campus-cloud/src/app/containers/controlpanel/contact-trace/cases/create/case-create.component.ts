@@ -49,6 +49,7 @@ export class CaseCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formErrors = true;
+      this.errorMessage = this.cpI18nPipe.transform('error_fill_out_marked_fields');
       this.enableSaveButton();
       return;
     }
@@ -57,7 +58,7 @@ export class CaseCreateComponent implements OnInit {
     const payload = {
       body
     };
-
+    this.listenForErrors();
     this.store.dispatch(new fromStore.CreateCase(payload));
     this.created.emit(true);
   }
@@ -113,7 +114,6 @@ export class CaseCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listenForErrors();
     this.form = this.utils.getCaseForm(null);
 
     this.buttonData = {
