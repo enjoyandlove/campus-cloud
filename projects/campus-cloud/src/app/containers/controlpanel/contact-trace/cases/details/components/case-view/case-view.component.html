@@ -97,7 +97,7 @@
             <p class="title">{{ 'case_pending_action' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <div *ngIf="case.current_action.id !== 0 && case.current_action.code !== 'ct:exposure_notify'">
+            <div class="action-cell" *ngIf="case.current_action.id !== 0 && case.current_action.code !== 'ct:exposure_notify'">
               <a class="action-to-do-link" *ngIf="case.current_action.code !== 'ct:trace_contacts'"
                  [routerLink]="['/contact-trace', 'exposure-notification', 'case-action', case.id]">
                 {{ case.current_action.name }}</a>
