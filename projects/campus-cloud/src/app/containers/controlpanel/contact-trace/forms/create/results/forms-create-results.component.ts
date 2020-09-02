@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CPDatePipe, CPI18nPipe, FORMAT } from '@campus-cloud/shared/pipes';
 import { CollectionMethodCodeToDisplayStringPipe } from '@controlpanel/contact-trace/forms/pipes';
 import { FormResponseExportService } from '@controlpanel/contact-trace/forms/services/form-response-export.service';
+import { CPDate } from '@campus-cloud/shared/utils';
 
 @Component({
   selector: 'cp-forms-create-results',
@@ -197,7 +198,7 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
           }
           this.formResultExport.push(formResultExportItem);
         });
-        const fileName = this.form.name + '_Result-Export_' + this.cPDatePipe.transform(new Date().getDate(), FORMAT.DATETIME);
+        const fileName = this.form.name + '_Result-Export_' + this.cPDatePipe.transform(CPDate.localNow().unix(), FORMAT.DATETIME);
 
         this.formResponseExportService.exportFormResponsesAsCsv(this.formResultExport, fileName);
       });
