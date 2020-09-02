@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, ActionsSubject } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { map, takeUntil, filter, tap, take } from 'rxjs/operators';
+import { map, takeUntil, filter, tap } from 'rxjs/operators';
 
 import { IFilterState } from '@controlpanel/manage/services/providers.utils.service';
 import { BaseComponent } from '@projects/campus-cloud/src/app/base';
@@ -11,7 +11,6 @@ import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { ICase, ICaseStatus } from './cases.interface';
 
 import * as fromStore from './store';
-import * as fromRoot from '@campus-cloud/store';
 import { ContactTraceHeaderService } from '../utils';
 import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
 import { CasesUtilsService } from './cases.utils.service';
@@ -21,7 +20,6 @@ import { baseActionClass } from '@campus-cloud/store';
 import { CasesListActionBoxComponent } from './list/components/list-action-box';
 import { HttpParams } from '@angular/common/http';
 import { Promise } from 'core-js';
-import { ICaseState } from './store/reducers/cases.reducer';
 
 interface IState {
   search_str: string;
@@ -81,7 +79,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
     super();
   }
 
-  fetch() {
+  loadCases() {
     const payload = {
       state: this.state,
       startRange: this.startRange,
@@ -110,12 +108,12 @@ export class CasesComponent extends BaseComponent implements OnInit {
 
   onPaginationNext() {
     super.goToNext();
-    this.fetch();
+    this.loadCases();
   }
 
   onPaginationPrevious() {
     super.goToPrevious();
-    this.fetch();
+    this.loadCases();
   }
 
   onSearch(search_str) {
@@ -224,6 +222,14 @@ export class CasesComponent extends BaseComponent implements OnInit {
     );
   }
 
+  getCasesStatus() {
+    return this.store.select(fromStore.getCaseStatus).pipe(
+      map((statuses: ICaseStatus[]) => {
+        return [...statuses];
+      })
+    );
+  }
+
   launchCreateModal() {
     $('#createCase').modal({ keyboard: true, focus: true });
   }
@@ -248,60 +254,56 @@ export class CasesComponent extends BaseComponent implements OnInit {
     setTimeout(() => $('#deleteCase').modal({ keyboard: true, focus: true }));
   }
 
-  loadCases() {
-    this.store
-      .select(fromStore.getCasesLoaded)
-      .pipe(
-        tap((loaded: boolean) => {
-          if (!loaded) {
-            this.fetch();
-          }
-        }),
-        take(1)
-      )
-      .subscribe();
-    this.cases$ = this.getCases();
-  }
-
   loadCaseStatus() {
-    this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
-      takeUntil(this.destroy$),
-      tap((statuses: ICaseStatus[]) => {
-        if (!statuses.length) {
-          this.store.dispatch(new fromStore.GetCaseStatus());
-        }
-      })
-    );
+    this.store.dispatch(new fromStore.GetCaseStatus());
+    this.caseStatus$ = this.getCasesStatus();
   }
 
-  listenForUpdateCase() {
+  resetActionBox() {
+    this.state = {
+      search_str: null,
+      start: null,
+      end: null,
+      exclude_external: false,
+      current_status_ids: null
+    };
+
+    this.actionBox.onResetActionBox();
+  }
+
+  listenForCreateCase() {
     this.actionsSubject$
       .pipe(
         takeUntil(this.destroy$),
-        filter(
-          (action) =>
-            action.type === fromStore.caseActions.CREATE_CASE_SUCCESS ||
-            action.type === fromStore.caseActions.DELETE_CASE_SUCCESS
-        )
+        filter((action) => action.type === fromStore.caseActions.CREATE_CASE_SUCCESS)
       )
       .subscribe(() => {
         $('#createCase').modal('hide');
+
         this.store.dispatch(
           new baseActionClass.SnackbarSuccess({
             body: this.cpI18nPipe.transform('case_create_message_success')
           })
         );
+        this.resetActionBox();
+      });
+  }
 
-        this.state = {
-          search_str: null,
-          start: null,
-          end: null,
-          exclude_external: false,
-          current_status_ids: null
-        };
+  listenForDeleteCase() {
+    this.actionsSubject$
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((action) => action.type === fromStore.caseActions.DELETE_CASE_SUCCESS)
+      )
+      .subscribe(() => {
+        $('#deleteCase').modal('hide');
 
-        this.actionBox.onResetActionBox();
-        this.loadCaseStatus();
+        this.store.dispatch(
+          new baseActionClass.SnackbarSuccess({
+            body: this.cpI18nPipe.transform('case_delete_message_success')
+          })
+        );
+        this.resetActionBox();
       });
   }
 
@@ -312,15 +314,11 @@ export class CasesComponent extends BaseComponent implements OnInit {
         takeUntil(this.destroy$),
         filter((error) => error),
         tap(() => {
-          let err_message;
-          this.store
-            .select(fromStore.getCasesErrorMessage)
-            .pipe(
-              tap((message) => {
-                err_message = message;
-              })
-            )
-            .subscribe();
+          this.store.dispatch(
+            new baseActionClass.SnackbarError({
+              body: this.cpI18nPipe.transform('something_went_wrong')
+            })
+          );
         })
       )
       .subscribe();
@@ -330,7 +328,8 @@ export class CasesComponent extends BaseComponent implements OnInit {
     this.headerService.updateHeader();
     this.loadCases();
     this.loadCaseStatus();
-    this.listenForUpdateCase();
+    this.listenForCreateCase();
+    this.listenForDeleteCase();
     this.loading$ =
       this.store.select(fromStore.getCasesLoading) ||
       this.store.select(fromStore.getCaseStatusLoading);
