@@ -1,4 +1,6 @@
 # Campus Cloud Changelog
+### [1.9.5](https://gitlab.com/oohlalamobile-web/cc_front_end/compare/v1.9.4...v1.9.5) (2020-09-02)
+
 ### [1.9.4](https://gitlab.com/oohlalamobile-web/cc_front_end/compare/v1.9.3...v1.9.4) (2020-09-01)
 
 ### [1.9.3](https://gitlab.com/oohlalamobile-web/cc_front_end/compare/v1.9.2...v1.9.3) (2020-08-31)
