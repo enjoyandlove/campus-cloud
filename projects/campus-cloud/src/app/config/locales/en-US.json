@@ -752,6 +752,9 @@
   "case_create_message_success": {
     "message": "Case has been successfully created."
   },
+  "case_delete_message_success": {
+    "message": "Case has been successfully removed."
+  },
   "case_details": {
     "message": "Case Details"
   },

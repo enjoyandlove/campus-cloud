@@ -24,7 +24,7 @@ export const getCaseStatusLoading = createSelector(
 
 export const getCaseStatusLoaded = createSelector(
   getCaseStatusState,
-  fromCaseStatus.getCaseStatusLoading
+  fromCaseStatus.getCaseStatusLoaded
 );
 
 export const getSelectedCaseStatus = createSelector(
