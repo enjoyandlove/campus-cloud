@@ -5,6 +5,6 @@ export interface FormResultExport {
   completionDate: string;
   collectionMethod: string;
   result: string;
-  question: string;
-  answer: string;
+  question: string[];
+  answer: string[];
 }

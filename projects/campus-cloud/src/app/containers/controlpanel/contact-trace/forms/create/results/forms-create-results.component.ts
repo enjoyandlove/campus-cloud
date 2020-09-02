@@ -180,24 +180,26 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
       .pipe(filter((formResponses: FormResponse[]) => formResponses.length > 0))
       .subscribe((formResponses: FormResponse[]) => {
         formResponses.forEach((formResponse) => {
+
+          const formResultExportItem: FormResultExport = this.initFormResultExportItem(formResponse);
           for (let i = 1; i < this.form.form_block_list.length; i++) {
             const formBloc = this.form.form_block_list[i];
             if (formBloc.is_terminal || (this.filterQuestionBlockId && this.filterQuestionBlockId !== formBloc.id)) {
               continue;
             }
-            const formResultExportItem: FormResultExport = this.initFormResultExportItem(formResponse);
-            formResultExportItem.question = formBloc.text;
-            formResultExportItem.answer = FormsHelperService.generateRespondentResponsesForQuestion(
+
+            formResultExportItem.question.push(formBloc.text);
+            formResultExportItem.answer.push(FormsHelperService.generateRespondentResponsesForQuestion(
               formResponse,
               formBloc
-            ).join('\n');
+            ).join('\n'));
 
-            this.formResultExport.push(formResultExportItem);
           }
+          this.formResultExport.push(formResultExportItem);
         });
         const fileName = this.form.name + '_Result-Export_' + this.cPDatePipe.transform(new Date().getDate(), FORMAT.DATETIME);
-        const includeInternalUserFields = !!formResponses.find((response: FormResponse) => response.user_id > 0);
-        this.formResponseExportService.exportFormResponsesAsCsv(this.formResultExport, includeInternalUserFields, fileName);
+
+        this.formResponseExportService.exportFormResponsesAsCsv(this.formResultExport, fileName);
       });
   }
 
@@ -209,8 +211,8 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
       completionDate: this.cPDatePipe.transform(formResponse.response_completed_epoch, FORMAT.DATETIME),
       collectionMethod: this.cpI18n.transform(this.collectionMethodPipe.transform(formResponse.collection_method)),
       result: this.blockIdToBlockMap[formResponse.terminal_form_block_id].name,
-      question: '',
-      answer: ''
+      question: [],
+      answer: []
     };
   }
 }
