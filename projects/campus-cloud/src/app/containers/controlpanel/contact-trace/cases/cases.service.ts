@@ -25,12 +25,12 @@ export class CasesService {
     return this.api.get(url, search);
   }
 
-  getCaseById(search: HttpParams, caseId?: number) {
+  getCaseById(search: HttpParams, caseId?: number, silent?: boolean) {
     const url = caseId
       ? `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/${caseId}`
       : `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE}/`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, silent);
   }
 
   updateCase(body, caseId: number, search: HttpParams) {

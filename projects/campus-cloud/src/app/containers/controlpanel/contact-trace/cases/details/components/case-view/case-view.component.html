@@ -99,7 +99,7 @@
           <div class="col-4">
             <div class="action-cell" *ngIf="case.current_action.id !== 0">
               <a class="action-to-do-link" *ngIf="case.current_action.code !== 'ct:trace_contacts'"
-                 [routerLink]="['/contact-trace', 'exposure-notification', 'case-action', case.id]">
+                 (click)="doNotificationAction(case.id)">
                 {{ case.current_action.name }}</a>
               <p class="action-to-do-link" *ngIf="case.current_action.code === 'ct:trace_contacts'"
                  (click)="traceContactAction(case)">

@@ -1,11 +1,17 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Store, ActionsSubject } from '@ngrx/store';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 import { IItem } from '@campus-cloud/shared/components';
 import * as fromStore from '../../../store';
 import { CasesUtilsService } from '../../../cases.utils.service';
 import { ICase, ICaseStatus } from '../../../cases.interface';
-import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { baseActionClass, ISnackbar } from '@campus-cloud/store';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+
 @Component({
   selector: 'cp-case-view',
   templateUrl: './case-view.component.html',
@@ -21,12 +27,13 @@ export class CaseViewComponent implements OnInit {
   selectedStatusFilter: IItem;
   caseStatus: ICaseStatus[];
   statusFilter: IItem[];
-  private destroy$ = new Subject();
 
   constructor(
-    public store: Store<fromStore.State>,
+    public store: Store<fromStore.State | ISnackbar>,
     public utils: CasesUtilsService,
-    public actionsSubject$: ActionsSubject
+    private router: Router,
+    public session: CPSession,
+    private cpI18n: CPI18nPipe
   ) {}
 
   onEdit() {
@@ -91,5 +98,19 @@ export class CaseViewComponent implements OnInit {
         id: caseItem.id
       })
     );
+  }
+
+  doNotificationAction(caseId: number) {
+    if (
+      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_exposure_notification)
+    ) {
+      this.router.navigate(['/contact-trace', 'exposure-notification', 'case-action', caseId]);
+    } else {
+      this.store.dispatch(
+        new baseActionClass.SnackbarError({
+          body: this.cpI18n.transform('contact_trace_exposure_notification_not_authorized')
+        })
+      );
+    }
   }
 }
