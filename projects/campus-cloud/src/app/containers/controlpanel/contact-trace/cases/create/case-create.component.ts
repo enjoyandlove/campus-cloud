@@ -11,6 +11,7 @@ import * as fromRoot from '@campus-cloud/store';
 import { ICase } from '../cases.interface';
 import { Subject } from 'rxjs';
 import { takeUntil, filter, tap } from 'rxjs/operators';
+import { baseActionClass } from '@campus-cloud/store';
 
 @Component({
   selector: 'cp-case-create',
@@ -46,6 +47,7 @@ export class CaseCreateComponent implements OnInit {
   onSubmit() {
     this.isSubmitClicked = true;
     this.formErrors = false;
+    this.errorMessage = null;
 
     if (!this.form.valid) {
       this.formErrors = true;
@@ -58,7 +60,7 @@ export class CaseCreateComponent implements OnInit {
     const payload = {
       body
     };
-    this.listenForErrors();
+
     this.store.dispatch(new fromStore.CreateCase(payload));
     this.created.emit(true);
   }
@@ -96,6 +98,7 @@ export class CaseCreateComponent implements OnInit {
           this.store.select(fromStore.getCasesErrorMessage).subscribe();
           this.formErrors = true;
           this.errorMessage = this.cpI18nPipe.transform('case_create_message_exist');
+          this.enableSaveButton();
         })
       )
       .subscribe();
@@ -115,7 +118,7 @@ export class CaseCreateComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.utils.getCaseForm(null);
-
+    this.listenForErrors();
     this.buttonData = {
       class: 'primary',
       disabled: false,
