@@ -184,7 +184,7 @@ export class ExposureNotificationListComponent implements OnInit {
     if (!canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_cases)) {
       this.store.dispatch(
         new baseActionClass.SnackbarError({
-          body: this.cpI18n.transform('contact_trace_exposure_notification_not_authorized')
+          body: this.cpI18n.transform('case_details_not_authorized')
         })
       );
       return;

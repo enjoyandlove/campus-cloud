@@ -62,9 +62,8 @@ export class CasesEffect {
       ofType(fromActions.caseActions.GET_CASE_BY_ID),
       mergeMap((action: fromActions.GetCaseById) => {
         const { id } = action.payload;
-        const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-        return this.service.getCaseById(params, id).pipe(
+        return this.service.getCaseById(new HttpParams(), id).pipe(
           map((data: ICase) => new fromActions.GetCaseByIdSuccess(data)),
           catchError((error) => of(new fromActions.GetCaseByIdFail(parseErrorResponse(error))))
         );
