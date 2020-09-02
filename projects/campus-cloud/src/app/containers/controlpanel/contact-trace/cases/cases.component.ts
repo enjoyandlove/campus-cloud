@@ -21,6 +21,7 @@ import { baseActionClass } from '@campus-cloud/store';
 import { CasesListActionBoxComponent } from './list/components/list-action-box';
 import { HttpParams } from '@angular/common/http';
 import { Promise } from 'core-js';
+import { ICaseState } from './store/reducers/cases.reducer';
 
 interface IState {
   search_str: string;
@@ -223,14 +224,6 @@ export class CasesComponent extends BaseComponent implements OnInit {
     );
   }
 
-  getCasesStatus() {
-    return this.store.select(fromStore.getCaseStatus).pipe(
-      map((statuses: ICaseStatus[]) => {
-        return [...statuses];
-      })
-    );
-  }
-
   launchCreateModal() {
     $('#createCase').modal({ keyboard: true, focus: true });
   }
@@ -260,18 +253,25 @@ export class CasesComponent extends BaseComponent implements OnInit {
       .select(fromStore.getCasesLoaded)
       .pipe(
         tap((loaded: boolean) => {
-          this.fetch();
+          if (!loaded) {
+            this.fetch();
+          }
         }),
         take(1)
       )
       .subscribe();
-
     this.cases$ = this.getCases();
   }
 
   loadCaseStatus() {
-    this.store.dispatch(new fromStore.GetCaseStatus());
-    this.caseStatus$ = this.getCasesStatus();
+    this.caseStatus$ = this.store.select(fromStore.getCaseStatus).pipe(
+      takeUntil(this.destroy$),
+      tap((statuses: ICaseStatus[]) => {
+        if (!statuses.length) {
+          this.store.dispatch(new fromStore.GetCaseStatus());
+        }
+      })
+    );
   }
 
   listenForUpdateCase() {
@@ -301,8 +301,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
         };
 
         this.actionBox.onResetActionBox();
-        this.store.dispatch(new fromStore.GetCaseStatus());
-        this.getCasesStatus();
+        this.loadCaseStatus();
       });
   }
 
