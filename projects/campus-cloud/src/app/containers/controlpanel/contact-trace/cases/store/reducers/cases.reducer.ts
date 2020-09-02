@@ -120,7 +120,7 @@ export function reducer(state = initialState, action: fromCases.CasesAction) {
       return {
         ...state,
         error: false,
-        loading: true
+        loading: false
       };
     }
 
