@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store, ActionsSubject } from '@ngrx/store';
-import { Subject, Observable } from 'rxjs';
-import { map, filter, takeUntil, tap } from 'rxjs/operators';
+import { ActionsSubject, Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
+import { baseActionClass } from '@campus-cloud/store';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
 import { BaseComponent } from '@campus-cloud/base/base.component';
@@ -14,7 +15,6 @@ import { CasesService } from '../cases.service';
 import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
 import { CaseLogComponent } from './components';
-import { baseActionClass } from '@campus-cloud/store';
 import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
 
 @Mixin([Destroyable])
@@ -23,11 +23,11 @@ import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
   templateUrl: './case-details.component.html',
   styleUrls: ['./case-details.component.scss']
 })
-export class CaseDetailsComponent extends BaseComponent implements OnInit {
+export class CaseDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild('caseLogList') caseLogList: CaseLogComponent;
-  isPendingActionFinished: boolean = true;
-  isSubmitted: boolean = true;
-  isEditing: boolean = false;
+  isPendingActionFinished = true;
+  isSubmitted = true;
+  isEditing = false;
   caseId;
   userId;
   case_status;

@@ -14,7 +14,6 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'cases',
-        canActivate: [PrivilegesGuard],
         data: {
           zendesk: 'cases',
           amplitude: 'Cases',

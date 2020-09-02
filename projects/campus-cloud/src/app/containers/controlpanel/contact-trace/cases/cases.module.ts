@@ -31,6 +31,7 @@ import {
 import { CasesExcelModalComponent, CasesImportTopBarComponent } from './excel/components';
 import { CasesExcelComponent } from './excel';
 import { CaseDeleteComponent } from './delete';
+import { SwitchSchoolGuard } from '@controlpanel/contact-trace/cases/switch-school.guard';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,6 @@ import { CaseDeleteComponent } from './delete';
     StoreModule.forFeature('casesModule', reducers)
   ],
 
-  providers: [CPI18nPipe, AdminService, ModalService, CasesService, CasesUtilsService]
+  providers: [CPI18nPipe, AdminService, ModalService, CasesService, CasesUtilsService, SwitchSchoolGuard]
 })
 export class CasesModule {}
