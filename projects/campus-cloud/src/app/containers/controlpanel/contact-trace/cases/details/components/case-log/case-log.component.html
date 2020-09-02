@@ -109,8 +109,7 @@
                                color="primary"
                                cpTarget="view_info"
                                [eventData]="eventData"
-                               [routerLink]="['/contact-trace', 'forms', log.form_id, 'response', log.source_obj_id]"
-                               [queryParams]="{caseId: this.case.id}">
+                               (click)="doStatusSettingFormAction(log, case.id)">
                               {{ log.source }}
                             </a>
                           </div>

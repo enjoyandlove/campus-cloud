@@ -1,6 +1,7 @@
 @import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/core/typography';
 @import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/colors';
 
 .actions {
   @include card-margin();
@@ -66,7 +67,7 @@ textarea {
 }
 
 .action-to-do-link {
-  color: #2096f3;
+  color: $color-brand !important;
   cursor: pointer;
 }
 

@@ -19,10 +19,13 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
-import { CPDate } from '@projects/campus-cloud/src/app/shared/utils';
+import { canSchoolWriteResource, CPDate } from '@projects/campus-cloud/src/app/shared/utils';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
+import { Router } from '@angular/router';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { baseActionClass } from '@campus-cloud/store';
 
 @Component({
   selector: 'cp-case-log',
@@ -72,7 +75,8 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
     private engageUtils: EngageUtils.EngagementUtilsService,
     private store: Store<fromStore.State>,
     public cpTracking: CPTrackingService,
-    private util: CasesUtilsService
+    private util: CasesUtilsService,
+    private router: Router
   ) {
     super();
     this.maxPerPage = 20;
@@ -228,5 +232,22 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
   onPaginationPrevious() {
     super.goToPrevious();
     this.loadCaseActivityLog();
+  }
+
+  doStatusSettingFormAction(log: ICaseLog, caseId: number) {
+    if (canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_forms)) {
+      this.router.navigate(
+        ['/contact-trace', 'forms', log.form_id, 'response', log.source_obj_id],
+        {
+          queryParams: { caseId: caseId }
+        }
+      );
+    } else {
+      this.store.dispatch(
+        new baseActionClass.SnackbarError({
+          body: this.cpI18nPipe.transform('contact_trace_form_not_authorized')
+        })
+      );
+    }
   }
 }
