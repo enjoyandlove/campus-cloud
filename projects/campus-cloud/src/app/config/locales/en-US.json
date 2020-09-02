@@ -783,7 +783,7 @@
     "message": "Duplicate Email"
   },
   "case_pending_action": {
-    "message": "Pending Action"
+    "message": "Action"
   },
   "case_select_status": {
     "message": "Select Status"
