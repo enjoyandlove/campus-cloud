@@ -235,13 +235,7 @@ export class CasesComponent extends BaseComponent implements OnInit {
   }
 
   onLaunchCaseCreate(fromCreateMomdal) {
-    if (fromCreateMomdal) {
-      this.cases$ = this.getCases();
-      this.resetFilterStatus = true;
-    }
-
     this.isCaseCreate = true;
-
     setTimeout(() => {
       $('#createCase').modal({ keyboard: true, focus: true });
     }, 1);
@@ -286,6 +280,8 @@ export class CasesComponent extends BaseComponent implements OnInit {
           })
         );
         this.resetActionBox();
+        this.cases$ = this.getCases();
+        this.resetFilterStatus = true;
       });
   }
 
