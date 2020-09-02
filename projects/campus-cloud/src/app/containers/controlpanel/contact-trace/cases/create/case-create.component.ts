@@ -22,8 +22,6 @@ export class CaseCreateComponent implements OnInit {
   @ViewChild('createCase', { static: true }) createCase;
 
   @Input() case: ICase;
-
-  @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   formErrors;
@@ -62,7 +60,6 @@ export class CaseCreateComponent implements OnInit {
     };
 
     this.store.dispatch(new fromStore.CreateCase(payload));
-    this.created.emit(true);
   }
 
   onValidateFormError() {
