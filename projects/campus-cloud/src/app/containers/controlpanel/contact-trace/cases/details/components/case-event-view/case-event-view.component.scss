@@ -7,6 +7,45 @@ label.error i {
   vertical-align: text-bottom;
 }
 
-.body-container {
-  min-height: 128px;
+::ng-deep .case-spinner > .spinner {
+  margin: 40px auto;
+}
+
+::ng-deep .case-nocontent > .cp-card {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.page-container {
+  padding: 0 20px;
+  max-height: 200px;
+  overflow: auto;
+
+  .user-row {
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+
+    .left-col {
+      display: inline-block;
+      width: calc(100% - 150px);
+
+      .user-name-cell {
+        font-weight: bold;
+      }
+    }
+
+    .right-col {
+      display: inline-block;
+      width: 150px;
+      text-align: right;
+
+      .item-link-button {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 5px;
+        font-weight: 600;
+      }
+    }
+  }
 }
