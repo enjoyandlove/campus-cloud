@@ -221,7 +221,7 @@ def import_qr_codes(request):
     parser = CSVParser(csv_as_string)
 
     try:
-        parsed_data = parser.all_fields_required('name')
+        parsed_data = parser.all_fields_required('name', data_len=1000)
     except KeyError as e:
         return JsonResponse({"error": e.args[0]}, safe=False, status=400)
 
@@ -252,10 +252,10 @@ def import_locations(request):
         parsed_data = parser.all_fields_required('location_name', 'category', 'latitude', 'longitude')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]}, safe=False, status=400)
-    
+
     for item in parsed_data:
         item['name'] = item.pop('location_name')
-        
+
     return JsonResponse(json.dumps(parsed_data), safe=False)
 
 '''
@@ -278,11 +278,11 @@ def import_cases(request):
         parsed_data = parser.all_fields_required('identifier', 'case_status', 'first_name', 'last_name')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]}, safe=False, status=400)
-    
+
     for item in parsed_data:
         item['extern_user_id'] = item.pop('identifier')
         item['firstname'] = item.pop('first_name')
         item['lastname'] = item.pop('last_name')
-        
+
     return JsonResponse(json.dumps(parsed_data), safe=False)
 

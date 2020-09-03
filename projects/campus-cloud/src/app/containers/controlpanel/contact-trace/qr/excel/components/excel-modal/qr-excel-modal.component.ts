@@ -4,6 +4,7 @@ import { EnvService } from '@campus-cloud/config/env';
 import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { ProvidersService } from '@controlpanel/manage/services/providers.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'cp-qr-excel-modal',
@@ -13,6 +14,8 @@ import { ProvidersService } from '@controlpanel/manage/services/providers.servic
 export class QrExcelModalComponent implements OnInit {
   options;
   fileName;
+  ready$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -60,5 +63,10 @@ export class QrExcelModalComponent implements OnInit {
       validExtensions: ['csv'],
       parser: this.parser.bind(this)
     };
+  }
+
+  doReset() {
+    this.reset$.next(true);
+    this.ready$.next(false);
   }
 }
