@@ -1506,6 +1506,9 @@
   "csv_modal_instruction_audience": {
     "message": "Limit of 10,000 items to import at a time."
   },
+  "csv_modal_instruction_qr": {
+    "message": "Limit of 1000 items to import at a time."
+  },
   "csv_modal_title": {
     "message": "Upload CSV File"
   },
