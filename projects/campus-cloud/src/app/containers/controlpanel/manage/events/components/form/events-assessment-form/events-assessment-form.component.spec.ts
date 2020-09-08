@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpParams } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
@@ -12,7 +12,8 @@ import { EventsModel } from '@controlpanel/manage/events/model/events.model';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { EventsAssessmentFormComponent } from './events-assessment-form.component';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
-import { CheckInMethod, EventAttendance, EventFeedback } from '../../../event.status';
+import { CheckInMethod, EventAttendance, EventFeedback, SelfCheckInOption } from '../../../event.status';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 describe('EventsAssessmentFormComponent', () => {
   configureTestSuite();
@@ -21,7 +22,7 @@ describe('EventsAssessmentFormComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         declarations: [EventsAssessmentFormComponent],
-        providers: [AdminService, EventUtilService],
+        providers: [AdminService, EventUtilService, CPI18nPipe],
         imports: [CPTestModule],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -44,26 +45,36 @@ describe('EventsAssessmentFormComponent', () => {
     component.form = EventsModel.form(false);
   }));
 
-  it('should toggle QR code value onSelectedQRCode', () => {
+  it('should toggle SelfCheckIn option values onSelectedCheckInMethods', () => {
     let result;
     component.form
       .get('attend_verification_methods')
-      .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
+      .setValue([CheckInMethod.web,
+        CheckInMethod.deepLink]);
 
-    component.onSelectedQRCode(false);
-
-    result = component.form.get('attend_verification_methods').value;
-
-    expect(result).toEqual([CheckInMethod.web, CheckInMethod.webQr]);
-
-    component.onSelectedQRCode(true);
+    component.onSelectedCheckInMethods([SelfCheckInOption.qr]);
 
     result = component.form.get('attend_verification_methods').value;
 
-    expect(result).toEqual([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
+    expect(result).toEqual([
+      CheckInMethod.web,
+      CheckInMethod.deepLink,
+      CheckInMethod.app
+    ]);
+
+    component.onSelectedCheckInMethods([SelfCheckInOption.qr, SelfCheckInOption.email]);
+
+    result = component.form.get('attend_verification_methods').value;
+
+    expect(result).toEqual([
+      CheckInMethod.web,
+      CheckInMethod.deepLink,
+      CheckInMethod.app,
+      CheckInMethod.userWebEntry
+    ]);
   });
 
-  it('should reset event attendance & QR code value on toggleEventAttendance', () => {
+  it('should reset event attendance & Check-in methods value on toggleEventAttendance', () => {
     const feedbackQuestion = component.cpI18n.translate('t_events_default_feedback_question');
     component.attendanceFeedbackLabel = feedbackQuestion;
 
@@ -77,7 +88,7 @@ describe('EventsAssessmentFormComponent', () => {
     expect(feedbackLabel).toBe(feedbackQuestion);
     expect(feedback).toBe(EventFeedback.enabled);
     expect(eventAttendance).toBe(EventAttendance.enabled);
-    expect(attend_methods).toEqual([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
+    expect(attend_methods).toEqual([CheckInMethod.web, CheckInMethod.deepLink, CheckInMethod.app]);
   });
 
   it('should set feedback status & question onEventFeedbackChange', () => {

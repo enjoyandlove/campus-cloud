@@ -61,7 +61,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   noProviderAddProviderMessage;
   showEditProviderModal = false;
   listStarSize = STAR_SIZE.DEFAULT;
-  isDownloading: boolean = false;
+  isDownloading = false;
 
   constructor(
     private cpI18n: CPI18nService,
@@ -167,11 +167,11 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       sub_menu_name: amplitudeEvents.SERVICES
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN, eventProperties);
   }
 
   importProvidersFromLocations() {
-    let params = new HttpParams().append('service_id', this.service.id.toString());
+    const params = new HttpParams().append('service_id', this.service.id.toString());
     this.providersService
       .importProvidersFromLocations(params)
       .toPromise()

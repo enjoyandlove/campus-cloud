@@ -7,7 +7,8 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
 import { EventUtilService } from '../../../events.utils.service';
 import { AdminService, CPI18nService } from '@campus-cloud/shared/services';
-import { CheckInMethod, EventFeedback, EventAttendance } from '../../../event.status';
+import { CheckInMethod, EventAttendance, EventFeedback, SelfCheckInOption } from '../../../event.status';
+import { IMultiSelectItem } from '@campus-cloud/shared/components';
 
 @Component({
   selector: 'cp-events-assessment-form',
@@ -22,17 +23,16 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
   @Input() isOrientation: boolean;
   @Input() changedHost$: BehaviorSubject<number> = new BehaviorSubject(null);
 
-  selectedQRCode;
   selectedManager;
   originalAttnFeedback;
   selectedAttendanceType;
   attendanceFeedbackLabel;
-  eventQRCodes = this.utils.getQROptions();
   managers: Array<any> = [{ label: '---' }];
   attendanceEnabled = EventAttendance.enabled;
   eventFeedbackEnabled = EventFeedback.enabled;
   attendanceTypes = this.utils.getAttendanceTypeOptions();
   attendanceFeedback = this.utils.getAttendanceFeedback();
+  selfCheckInMethods: IMultiSelectItem[];
 
   constructor(
     private session: CPSession,
@@ -47,16 +47,6 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
 
   onSelectedAttendanceType(type): void {
     this.form.controls['has_checkout'].setValue(type.action);
-  }
-
-  onSelectedQRCode(isEnabled: boolean): void {
-    const verificationMethods = this.form.controls['attend_verification_methods'].value;
-
-    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
-      verificationMethods.push(CheckInMethod.app);
-    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
-      verificationMethods.pop(CheckInMethod.app);
-    }
   }
 
   fetchManagersBySelectedStore(storeId) {
@@ -97,14 +87,14 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
-    this.selectedQRCode = this.eventQRCodes[0];
     this.enableStudentFeedbackOnAttendanceToggle(value);
     this.form.controls['event_attendance'].setValue(value);
     this.form.controls['attend_verification_methods'].setValue([
       CheckInMethod.web,
-      CheckInMethod.webQr,
+      CheckInMethod.deepLink,
       CheckInMethod.app
     ]);
+    this.setSelfCheckInMethods(this.form.controls['attend_verification_methods'].value);
   }
 
   onEventFeedbackChange(option) {
@@ -146,11 +136,20 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
       event.has_checkout
     );
 
-    this.selectedQRCode = EventUtilService.getFromArray(
-      this.utils.getQROptions(),
-      'action',
-      EventUtilService.getQRCodeStatus(event.attend_verification_methods)
-    );
+    this.setSelfCheckInMethods(event.attend_verification_methods);
+  }
+
+  private setSelfCheckInMethods(attend_verification_methods) {
+    if (!attend_verification_methods) {
+      return;
+    }
+    this.selfCheckInMethods = this.utils.getSelfCheckInMethods()
+      .map((option) => {
+        return {
+          ...option,
+          selected: EventUtilService.getSelfCheckInStatus(attend_verification_methods, option.action)
+        };
+      });
   }
 
   ngOnInit() {
@@ -164,5 +163,17 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.changedHost$.unsubscribe();
+  }
+
+  onSelectedCheckInMethods(options: number[]) {
+    const verificationMethods = this.form.controls['attend_verification_methods'].value;
+
+    options.forEach(option => {
+      if (option === SelfCheckInOption.qr && !verificationMethods.includes(CheckInMethod.app)) {
+        verificationMethods.push(CheckInMethod.app);
+      } else if (option === SelfCheckInOption.email && !verificationMethods.includes(CheckInMethod.userWebEntry)) {
+        verificationMethods.push(CheckInMethod.userWebEntry);
+      }
+    });
   }
 }

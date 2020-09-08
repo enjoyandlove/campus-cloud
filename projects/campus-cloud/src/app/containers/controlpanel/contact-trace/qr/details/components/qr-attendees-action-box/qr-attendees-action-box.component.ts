@@ -84,7 +84,7 @@ export class QrAttendeesActionBoxComponent implements OnInit {
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
+      eventName: amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN,
       eventProperties
     };
   }

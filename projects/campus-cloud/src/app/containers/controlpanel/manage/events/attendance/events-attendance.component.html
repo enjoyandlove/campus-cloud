@@ -12,7 +12,8 @@
                                      (querySearch)="doSearch($event)"
                                      (sendMessage)="messageAllAttendees()"
                                      (updateStudentFilter)="onStudentFilter($event)"
-                                     (trackClickCheckIn)="onTrackClickCheckinEvent($event)">
+                                     (trackClickKioskCheckIn)="onTrackClickKioskCheckinEvent($event)"
+                                     (trackClickSelfCheckIn)="onTrackClickSelfCheckinEvent($event)">
     </cp-events-attendance-action-box>
 
     <div *ngIf="!state.searchText && !summaryLoading"

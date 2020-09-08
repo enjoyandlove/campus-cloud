@@ -48,10 +48,10 @@
                 </button>
 
               </label>
-              <cp-dropdown [items]="eventQRCodes"
-                           [selectedItem]="selectedQRCode"
-                           (selected)="onSelectedQRCode($event.action)">
-              </cp-dropdown>
+              <cp-dropdown-multiselect [items]="selfCheckInMethods"
+                                       (selection)="onSelectedCheckInMethods($event)"
+                                       [placeholder]="'checkin_no_self_method' | cpI18n">
+              </cp-dropdown-multiselect>
             </div>
           </div>
         </div>

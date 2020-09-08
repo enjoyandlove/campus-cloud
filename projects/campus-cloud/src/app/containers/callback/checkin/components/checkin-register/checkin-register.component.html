@@ -2,20 +2,50 @@
   <div class="registration__header">
     <div class="row">
       <div class="col-12">
-        <div class="row">
-          <div class="col-6">
-            <span>{{ 'checkin_scannable_qr_code' | cpI18n }}</span>
-          </div>
-          <div class="col-6">
-            <span>{{ 'checkin_manual_checkin' | cpI18n }}</span>
-          </div>
-        </div>
+        <span>{{'t_events_attendance_track' | cpI18n}}</span>
       </div>
     </div>
   </div>
   <div class="registration__form">
+    <ng-container *ngIf="data.deep_link_url">
+      <div class="row">
+        <div class="col-12">
+          <p class="font-weight-bold m-0">
+            {{ 't_event_assessment_self_check_in' | cpI18n }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row share-bloc mt-4">
+        <div class="col-12">
+          <input
+                  type="text"
+                  class="form-control url-txt-box"
+                  readonly
+                  [value]="data.deep_link_url"
+          />
+          <button
+                  class="cpbtn cpbtn--primary share-button"
+                  (copied)="notifyCopySuccess()"
+                  [cpCopyClipboard]="data.deep_link_url"
+          >
+            {{ 'contact_trace_forms_share' | cpI18n }}
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="divider"></div>
+        </div>
+      </div>
+    </ng-container>
     <div class="row">
       <div class="col-sm-12 col-md-6">
+        <div class="row mb-1">
+          <div class="col-12">
+            <p class="font-weight-bold">{{ 'checkin_scannable_qr_code' | cpI18n }}</p>
+          </div>
+        </div>
         <div class="registration__form__overlay_wrapper">
           <div class="registration__form__overlay"
                *ngIf="disabledQRCode">
@@ -30,6 +60,11 @@
         </div>
       </div>
       <div class="col-sm-12 col-md-6">
+        <div class="row mb-1">
+          <div class="col-12">
+            <p class="font-weight-bold">{{ 'checkin_manual_checkin' | cpI18n }}</p>
+          </div>
+        </div>
         <form [formGroup]="registrationForm">
           <div class="form-group">
             <label>{{ 'first_name' | cpI18n }}</label>

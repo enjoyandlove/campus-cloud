@@ -74,4 +74,6 @@ export default interface IEvent {
   is_external?: boolean;
 
   integration_feed_id?: number;
+
+  deep_link_url: string;
 }

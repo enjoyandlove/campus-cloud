@@ -7,6 +7,9 @@ import { CPDate } from '@campus-cloud/shared/utils';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { emailAddress } from '@campus-cloud/shared/utils/forms';
 import { CheckInMethod } from '@campus-cloud/containers/controlpanel/manage/events/event.status';
+import { baseActionClass, IHeader } from '@campus-cloud/store';
+import { Store } from '@ngrx/store';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   enableTime: true
@@ -33,7 +36,9 @@ export class CheckinRegisterComponent implements OnInit {
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private cpI18n: CPI18nService) {}
+  constructor(private fb: FormBuilder,
+              public store: Store<IHeader>,
+              private cpI18n: CPI18nPipe) {}
 
   onSubmit(data) {
     this.datePickerOptions = {
@@ -49,7 +54,7 @@ export class CheckinRegisterComponent implements OnInit {
     const disabled = !this.verificationMethods.includes(CheckInMethod.web);
 
     if (disabled) {
-      this.disableCheckInTooltip = this.cpI18n.translate(
+      this.disableCheckInTooltip = this.cpI18n.transform(
         't_external_check_in_disable_manual_check_in'
       );
 
@@ -84,7 +89,7 @@ export class CheckinRegisterComponent implements OnInit {
 
     this.buttonData = {
       disabled: true,
-      text: this.cpI18n.translate('confirm'),
+      text: this.cpI18n.transform('confirm'),
       class: 'primary cpbtn--full-width cpbtn--tall'
     };
 
@@ -98,5 +103,13 @@ export class CheckinRegisterComponent implements OnInit {
     });
 
     this.disabledQRCode = !this.verificationMethods.includes(CheckInMethod.app);
+  }
+
+  notifyCopySuccess() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.transform('contact_trace_forms_copied_clipboard')
+      })
+    );
   }
 }

@@ -423,7 +423,9 @@ export const amplitudeEvents = {
 
   INTEGRATED_FEED_CHANNEL: 'Integrated Feed Channel',
 
-  MANAGE_CC_WEB_CHECK_IN: 'Manage - CC  Web Check-In',
+  MANAGE_CC_KIOSK_CHECK_IN: 'Manage - CC  Kiosk Check-In',
+
+  MANAGE_CC_SELF_CHECK_IN: 'Manage - CC  Self Check-In',
 
   COMMUNITY_EDITED_THREAD: 'Community - Edited Thread',
 

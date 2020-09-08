@@ -8,6 +8,7 @@ import { ListPastComponent } from './list-past.component';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 const initialState = {
   start: null,
@@ -34,7 +35,8 @@ describe('ListPastComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule],
-        declarations: [ListPastComponent, IntegrationSourceToIconPipe]
+        declarations: [ListPastComponent, IntegrationSourceToIconPipe],
+        providers: [CPI18nPipe]
       });
 
       await TestBed.compileComponents();
