@@ -80,4 +80,6 @@ export default interface ICheckIn {
   custom_basic_feedback_label: string;
 
   attend_verification_methods: number[];
+
+  deep_link_url: string;
 }

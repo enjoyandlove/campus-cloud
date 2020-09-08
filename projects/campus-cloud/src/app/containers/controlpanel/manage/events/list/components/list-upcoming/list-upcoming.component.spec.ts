@@ -9,6 +9,7 @@ import { ListUpcomingComponent } from './list-upcoming.component';
 import { EventUtilService } from './../../../events.utils.service';
 import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 const initialState = {
   start: null,
@@ -30,7 +31,7 @@ describe('ListUpcomingComponent', () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule, RouterTestingModule],
         declarations: [ListUpcomingComponent, IntegrationSourceToIconPipe],
-        providers: [EventUtilService]
+        providers: [EventUtilService, CPI18nPipe]
       });
 
       await TestBed.compileComponents();

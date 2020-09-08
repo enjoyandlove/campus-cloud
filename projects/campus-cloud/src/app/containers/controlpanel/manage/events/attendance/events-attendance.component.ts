@@ -522,14 +522,24 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     );
   }
 
-  onTrackClickCheckinEvent(event: IEvent) {
+  onTrackClickKioskCheckinEvent(event: IEvent) {
     const eventProperties = {
       source_id: event.encrypted_id,
       sub_menu_name: this.subMenuName,
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN, eventProperties);
+  }
+
+  onTrackClickSelfCheckinEvent(event: IEvent) {
+    const eventProperties = {
+      source_id: event.encrypted_id,
+      sub_menu_name: this.subMenuName,
+      assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_SELF_CHECK_IN, eventProperties);
   }
 
   trackQrCode(event) {

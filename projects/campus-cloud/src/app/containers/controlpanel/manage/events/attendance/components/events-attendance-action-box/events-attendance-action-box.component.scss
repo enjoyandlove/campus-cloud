@@ -13,6 +13,12 @@
   @include card-margin();
 
   margin-top: 0;
+
+  .dropdown-menu {
+    &.dropdown-menu-right {
+      max-height: 215px;
+    }
+  }
 }
 
 .margin-right {

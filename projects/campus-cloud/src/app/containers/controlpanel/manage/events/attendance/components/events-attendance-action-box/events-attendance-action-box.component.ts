@@ -28,7 +28,8 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
   @Output() toggleQr: EventEmitter<boolean> = new EventEmitter();
   @Output() querySearch: EventEmitter<string> = new EventEmitter();
-  @Output() trackClickCheckIn: EventEmitter<IEvent> = new EventEmitter();
+  @Output() trackClickKioskCheckIn: EventEmitter<IEvent> = new EventEmitter();
+  @Output() trackClickSelfCheckIn: EventEmitter<IEvent> = new EventEmitter();
   @Output() updateStudentFilter: EventEmitter<EngageUtils.IStudentFilter> = new EventEmitter();
 
   hasQr: boolean;

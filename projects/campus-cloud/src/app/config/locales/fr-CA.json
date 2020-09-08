@@ -840,6 +840,12 @@
   "checkin_manual_checkin": {
     "message": "Vérification de présence manuelle"
   },
+  "checkin_no_self_method": {
+    "message": "Aucune méthode"
+  },
+  "checkin_qr_scan": {
+    "message": "Scannez le code QR"
+  },
   "checkin_scannable_qr_code": {
     "message": "Code QR"
   },
@@ -3397,6 +3403,9 @@
   "t_events_attendance_no_students_tooltip_text": {
     "message": "Il n'y a aucun invité à qui envoyer un message."
   },
+  "t_events_attendance_track": {
+    "message": "Suivi de présence"
+  },
   "t_events_attendance_type": {
     "message": "Type de présence"
   },
@@ -3462,6 +3471,9 @@
   },
   "t_event_assessment_qr_code_enable_success_message": {
     "message": "Code QR d'entrée activé avec succès"
+  },
+  "t_event_assessment_self_check_in": {
+    "message": "Auto Vérification "
   },
   "t_event_assessment_web_checkin_page": {
     "message": "Vérification de présence web"

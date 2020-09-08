@@ -148,7 +148,7 @@ export class EventsInfoComponent extends EventsComponent implements OnInit, OnDe
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN, eventProperties);
   }
 
   ngOnInit() {

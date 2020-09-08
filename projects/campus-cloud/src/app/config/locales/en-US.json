@@ -840,6 +840,12 @@
   "checkin_manual_checkin": {
     "message": "Manual Check-In"
   },
+  "checkin_no_self_method": {
+    "message": "No Method"
+  },
+  "checkin_qr_scan": {
+    "message": "QR Scan"
+  },
   "checkin_scannable_qr_code": {
     "message": "QR Code"
   },
@@ -3397,6 +3403,9 @@
   "t_events_attendance_no_students_tooltip_text": {
     "message": "There are no attendees to send a message to."
   },
+  "t_events_attendance_track": {
+    "message": "Track Attendance"
+  },
   "t_events_attendance_type": {
     "message": "Attendance Type"
   },
@@ -3463,8 +3472,11 @@
   "t_event_assessment_qr_code_enable_success_message": {
     "message": "QR Code successfully enabled"
   },
-  "t_event_assessment_web_checkin_page": {
-    "message": "Web Check-in"
+  "t_event_assessment_self_check_in": {
+    "message": "Self Check-In"
+  },
+  "t_event_assessment_kiosk_checkin_page": {
+    "message": "Kiosk Check-in"
   },
   "t_event_check_in_attendee_already_exist": {
     "message": "This person has already checked in."

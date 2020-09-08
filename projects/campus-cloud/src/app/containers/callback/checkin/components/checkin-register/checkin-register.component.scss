@@ -47,7 +47,7 @@
     }
 
     &__overlay {
-      top: 0;
+      top: 38px;
       left: 0;
       right: 0;
       bottom: 0;
@@ -70,6 +70,25 @@
       span i {
         @include font-16px();
 
+        vertical-align: middle;
+      }
+    }
+
+    .divider {
+      border: 1px solid #dcdcdc;
+      margin: 32px 0;
+    }
+
+    .share-bloc {
+      .url-txt-box {
+        width: calc(100% - 80px);
+        background: #ffffff;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .share-button {
+        width: 80px;
+        display: inline-block;
         vertical-align: middle;
       }
     }

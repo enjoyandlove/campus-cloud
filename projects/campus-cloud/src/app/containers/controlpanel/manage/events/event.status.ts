@@ -53,7 +53,14 @@ export enum CheckInOut {
 export enum CheckInMethod {
   'web' = 1,
   'webQr' = 2,
-  'app' = 3
+  'app' = 3,
+  'deepLink' = 5,
+  'userWebEntry' = 6
+}
+
+export enum SelfCheckInOption {
+  qr = 0,
+  email = 1
 }
 
 export enum CheckInOutTime {

@@ -8,7 +8,7 @@ import {
   ElementRef
 } from '@angular/core';
 
-interface IItem {
+export interface IMultiSelectItem {
   action: number;
   label: string;
   selected: boolean;
@@ -22,7 +22,7 @@ interface IItem {
 export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
   @Input() showErrors = false;
   @Input() placeholder = '...';
-  @Input() items: IItem[] = [];
+  @Input() items: IMultiSelectItem[] = [];
 
   @Output() selection: EventEmitter<Array<number>> = new EventEmitter();
 
@@ -42,7 +42,7 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
   }
 
   reset() {
-    this.items.map((i: IItem) => (i.selected = false));
+    this.items.map((i: IMultiSelectItem) => (i.selected = false));
     this.state = { ...this.state, label: null };
   }
 
