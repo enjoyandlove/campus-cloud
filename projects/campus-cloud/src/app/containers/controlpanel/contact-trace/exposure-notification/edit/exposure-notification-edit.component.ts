@@ -21,8 +21,6 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { AudienceService } from '@controlpanel/audience/audience.service';
 import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils.service';
 import { ImportUserListComponent } from '@controlpanel/contact-trace/exposure-notification/components';
-import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 interface IImportedUser {
   name: string;
@@ -60,6 +58,11 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       action: 'custom_list',
       disabled: false,
       label: this.cpI18n.translate('contact_trace_notification_custom_list')
+    },
+    {
+      action: 'case_status',
+      disabled: false,
+      label: this.cpI18n.translate('contact_trace_notification_case_status')
     }
   ];
 
@@ -443,16 +446,8 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   private getCaseStatuses(): void {
-    if (!canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.contact_trace_cases)) {
-      return;
-    }
     this.storeCase.dispatch(new fromStore.GetCaseStatus());
     this.notificationService.searchCaseStatuses().subscribe((statuses: ICaseStatus[]) => {
-      this.toOptions.push({
-        action: 'case_status',
-        disabled: false,
-        label: this.cpI18n.translate('contact_trace_notification_case_status')
-      });
       this.filterOptions = [
         {
           action: 0,
