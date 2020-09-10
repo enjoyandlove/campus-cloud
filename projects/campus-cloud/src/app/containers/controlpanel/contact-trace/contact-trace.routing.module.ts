@@ -64,6 +64,17 @@ const appRoutes: Routes = [
           import('./exposure-notification/exposure-notification.module').then(
             (m) => m.ExposureNotificationModule
           )
+      },
+      {
+        path: 'health-dashboard',
+        canActivate: [PrivilegesGuard],
+        data: {
+          zendesk: 'health dashboard',
+          amplitude: 'Health Dashboard',
+          privilege: CP_PRIVILEGES_MAP.contact_trace_health_dashboard
+        },
+        loadChildren: () =>
+          import('./health-dashboard/health-dashboard.module').then((m) => m.HealthDashboardModule)
       }
     ]
   }

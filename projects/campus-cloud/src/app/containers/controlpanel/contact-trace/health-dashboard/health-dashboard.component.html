@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-4 col-sm-12">
+    <div class="cp-card text-center mb-2">
+      <div class="case-count">
+        {{ (caseStatusesByRank$ | async)[statusMapping.clear]?.case_count || 0 }}
+      </div>
+      {{ 'contact_trace_health_dashboard_student_protected' | cpI18n }}
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="cp-card text-center">
+      <div class="case-count">
+        {{ (caseStatusesByRank$ | async)[statusMapping.selfReported]?.case_count || 0 }}
+      </div>
+      {{ 'contact_trace_health_dashboard_new_reports' | cpI18n }}
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="cp-card text-center">
+      <div class="case-count">
+        {{ (caseStatusesByRank$ | async)[statusMapping.exposed]?.case_count || 0 }}
+      </div>
+      {{ 'contact_trace_health_dashboard_new_exposures' | cpI18n }}
+    </div>
+  </div>
+</div>
