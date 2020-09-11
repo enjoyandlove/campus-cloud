@@ -95,7 +95,7 @@
                 {{ 'subject' | cpI18n }}
                 <span class="float-right">
                   <cp-char-counter class="float-right"
-                                   [limit]="128"
+                                   [limit]="255"
                                    [charCount]="getSubjectLength()">
                   </cp-char-counter>
                 </span>
@@ -123,7 +123,7 @@
               <label for="message">
                 {{ 'message_noun' | cpI18n }}
                 <span class="float-right">
-                  {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
+                  {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/2048
                 </span>
               </label>
               <textarea id="message"

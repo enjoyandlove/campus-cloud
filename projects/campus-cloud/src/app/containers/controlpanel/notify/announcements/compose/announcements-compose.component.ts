@@ -704,8 +704,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       persona_id: [null],
       is_school_wide: true,
       notify_at_epoch: [notifyAtEpochNow],
-      subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(1024)]],
+      subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(255)]],
+      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(2048)]],
       priority: [this.types[0].action, Validators.required]
     });
 

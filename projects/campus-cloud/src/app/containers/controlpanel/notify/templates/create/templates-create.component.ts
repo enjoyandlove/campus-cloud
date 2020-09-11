@@ -197,8 +197,8 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(255)]],
+      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(2048)]],
       priority: [this.types[0].action, Validators.required]
     });
 
