@@ -71,5 +71,7 @@ export const pageTitle = {
 
   CONTACT_TRACE_CASES: 'Contact Trace | Cases',
 
-  CONTACT_TRACE_EXPOSURE_NOTIFICATION: 'Contact Trace | Exposure Notification'
+  CONTACT_TRACE_EXPOSURE_NOTIFICATION: 'Contact Trace | Exposure Notification',
+
+  CONTACT_TRACE_HEALTH_DASHBOARD: 'Contact Trace | Health Dashboard',
 };

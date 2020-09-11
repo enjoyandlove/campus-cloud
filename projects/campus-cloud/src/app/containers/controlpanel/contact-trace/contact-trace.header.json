@@ -32,6 +32,13 @@
       "url": "/contact-trace/exposure-notification"
     },
     {
+      "privilege": 45,
+      "label": "contact_trace_health_dashboard",
+      "clearParams": true,
+      "amplitude": "Health Dashboard",
+      "url": "/contact-trace/health-dashboard"
+    },
+    {
       "privilege": 41,
       "label": "settings",
       "clearParams": true,

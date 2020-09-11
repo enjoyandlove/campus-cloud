@@ -1380,6 +1380,18 @@
   "contact_trace_form_not_authorized": {
     "message": "You do not have access to this From"
   },
+  "contact_trace_health_dashboard": {
+    "message": "Health Dashboard"
+  },
+  "contact_trace_health_dashboard_new_exposures": {
+    "message": "New Exposures"
+  },
+  "contact_trace_health_dashboard_new_reports": {
+    "message": "New Reports"
+  },
+  "contact_trace_health_dashboard_student_protected": {
+    "message": "Student Protected"
+  },
   "contact_trace_notification_all_statuses": {
     "message": "All Statuses"
   },
@@ -3343,6 +3355,9 @@
   "t_events_assessment_add_check_in": {
     "message": "Add Check-in"
   },
+  "t_events_assessment_app_link_check_in": {
+    "message": "App Link Check-in"
+  },
   "t_events_assessment_check_in_and_checkout": {
     "message": "Check-in & Check-out"
   },
@@ -3466,6 +3481,9 @@
   "t_event_assessment_check_out_date": {
     "message": "Check-out"
   },
+  "t_event_assessment_kiosk_checkin_page": {
+    "message": "Kiosk Check-in"
+  },
   "t_event_assessment_qr_code_disabled_success_message": {
     "message": "QR Code successfully disabled"
   },
@@ -3475,8 +3493,14 @@
   "t_event_assessment_self_check_in": {
     "message": "Self Check-In"
   },
-  "t_event_assessment_kiosk_checkin_page": {
-    "message": "Kiosk Check-in"
+  "t_event_assessment_self_check_in_methods": {
+    "message": "Self Check-In Methods"
+  },
+  "t_event_assessment_self_check_in_title": {
+    "message": "Verify Your Attendance"
+  },
+  "t_event_assessment_web_checkin_page": {
+    "message": "Web Check-in"
   },
   "t_event_check_in_attendee_already_exist": {
     "message": "This person has already checked in."
@@ -3492,6 +3516,9 @@
   },
   "t_external_checkin_chechout": {
     "message": "Check-out"
+  },
+  "t_external_checkin_manual_self_checkin": {
+    "message": "Verify your attendance manually"
   },
   "t_external_checkin_method": {
     "message": "Method"
@@ -3532,14 +3559,32 @@
   "t_external_check_in_greater_than_checkout_error": {
     "message": "Check-out time must be later than check-in time."
   },
+  "t_external_check_in_message_not_available": {
+    "message": "Check-In Not Available"
+  },
+  "t_external_check_in_message_successful": {
+    "message": "Check-In Successful"
+  },
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
   "t_external_check_in_service_feedback_already_provided": {
     "message": "You have already provided feedback for this service."
   },
+  "t_external_download_on_the_app_store_badge": {
+    "message": "Download_on_the_App_Store_Badge_EN.svg"
+  },
   "t_external_event_not_found": {
     "message": "The event does not exist."
+  },
+  "t_external_google_play_badge": {
+    "message": "google-play-badge-en.png"
+  },
+  "t_external_self_checkin_download_app": {
+    "message": "Download the app if you don’t have it."
+  },
+  "t_external_self_checkin_scannable_qr_code": {
+    "message": "Scan QR Code with the %s App"
   },
   "t_feeds_approve": {
     "message": "Approve"
