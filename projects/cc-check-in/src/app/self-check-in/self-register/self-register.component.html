@@ -1,0 +1,120 @@
+<div class="registration mt-4">
+    <div class="registration__header">
+        <div class="row">
+            <div class="col-12">
+                <span>{{ 't_event_assessment_self_check_in_title' | cpI18n}}</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="clientConfig && (displayQR() || displayForm())" class="registration__form px-3">
+        <div class="row row-divided d-flex justify-content-center">
+            <div class="col-sm-12 col-md-6 column-one">
+                <div class="row mb-1">
+                    <div class="col-12 col-md-border">
+                        <div class="row">
+                            <div class="col-2 px-0">
+                                <img class="mobile-app-logo" [src]="clientConfig.app_logo_thumb_url_android">
+                            </div>
+                            <div class="col-10 pl-4">
+                                <p class="bloc-title">{{ 't_external_self_checkin_scannable_qr_code' | cpI18n: clientConfig.app_name_android }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="registration__form__overlay_wrapper">
+                    <div class="registration__form__overlay"
+                         *ngIf="!displayQR()">
+            <span>
+              <i class="material-icons">block</i>
+                {{ 't_external_check_in_disable_qr' | cpI18n }}
+            </span>
+                    </div>
+                    <div class="registration__form__qr_image"
+                         [ngStyle]="{ 'background-image': 'url(' + data.qr_img_url + ')' }">
+                    </div>
+                    <div class="row p-0 d-flex justify-content-center">
+                        <p class="app-download pr-0">{{'t_external_self_checkin_download_app' | cpI18n}}</p>
+                    </div>
+                    <div class="row p-0 d-flex justify-content-center">
+                        <a target="_blank" href="https://play.google.com/store/apps/details?id={{clientConfig.app_id_android}}"> <img class="app-badge mr-1" src="{{envRootPath}}assets/app/{{'t_external_google_play_badge' | cpI18n}}"></a>
+                        <a  target="_blank" [href]="clientConfig.app_url_ios"><img class="app-badge" src="{{envRootPath}}assets/app/{{'t_external_download_on_the_app_store_badge' | cpI18n}}"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-divider" *ngIf="displayForm()">
+                <span>OR</span>
+            </div>
+            <div class="col-sm-12 col-md-6 column-two mt-4 mt-md-0" *ngIf="displayForm()">
+                <div class="row mb-4">
+                    <div class="col-12 pr-5">
+                        <p class="bloc-title">{{ 't_external_checkin_manual_self_checkin' | cpI18n }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <form [formGroup]="registrationForm">
+                            <div class="form-group">
+                                <label>{{ 'first_name' | cpI18n }}</label>
+                                <input type="text"
+                                       class="form-control"
+                                       formControlName="firstname" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ 'last_name' | cpI18n }}</label>
+                                <input type="text"
+                                       class="form-control"
+                                       formControlName="lastname" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ 'email' | cpI18n }}</label>
+                                <input type="email"
+                                       class="form-control"
+                                       formControlName="email" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="m-0">&nbsp;</label>
+                                <cp-button ui-tooltip
+                                           [props]="buttonData"
+                                           [title]="disableCheckInTooltip"
+                                           (buttonClick)="onSubmit(registrationForm.value)">
+                                </cp-button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="clientConfig && onlyDeepLinkByApp()" class="registration__form px-0 d-flex justify-content-center">
+        <div class="col-sm-12 col-md-9 col-lg-8">
+            <div class="container">
+                <div class="row mt-4">
+                    <div class="col-4 d-flex flex-wrap justify-content-end">
+                        <img class="mobile-app-logo" [src]="clientConfig.app_logo_thumb_url_android">
+                    </div>
+                    <div class="col-7 pl-sm-2 pl-lg-3 pr-0">
+                        <p class="bloc-title">{{ 't_external_self_checkin_scannable_qr_code' | cpI18n: clientConfig.app_name_android }}</p>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-6 pr-lg-3">
+                        <a target="_blank" class="h-100 float-right"
+                           href="https://play.google.com/store/apps/details?id={{clientConfig.app_id_android}}">
+                            <img class="app-badge"
+                                 src="{{envRootPath}}assets/app/{{'t_external_google_play_badge' | cpI18n}}"></a>
+                    </div>
+                    <div class="col-6 pl-lg-3">
+                        <a target="_blank"
+                           [href]="clientConfig.app_url_ios"><img
+                                class="app-badge"
+                                src="{{envRootPath}}assets/app/{{'t_external_download_on_the_app_store_badge' | cpI18n}}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

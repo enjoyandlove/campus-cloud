@@ -3,10 +3,27 @@ import { FormGroup, ValidationErrors } from '@angular/forms';
 
 import IEvent from './event.interface';
 import { CPSession } from '@campus-cloud/session';
-import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { attendanceType, AttendeeType, CheckInOutTime, EventAttendance, EventType, qrCode, SelfCheckInOption } from './event.status';
+import {
+  amplitudeEvents,
+  CP_PRIVILEGES_MAP
+} from '@campus-cloud/shared/constants';
+import {
+  attendanceType,
+  AttendeeType,
+  CheckInOutTime,
+  EventAttendance,
+  EventType,
+  qrCode,
+  SelfCheckInOption
+} from './event.status';
 
-import { canSchoolWriteResource, canStoreReadResource, CPDate, createSpreadSheet, Formats } from '@campus-cloud/shared/utils';
+import {
+  canSchoolWriteResource,
+  canStoreReadResource,
+  CPDate,
+  createSpreadSheet,
+  Formats
+} from '@campus-cloud/shared/utils';
 import { CheckInMethod } from '@controlpanel/manage/events/event.status';
 import { IMultiSelectItem } from '@campus-cloud/shared/components';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
@@ -52,6 +69,7 @@ export class EventUtilService {
     switch (option) {
       case SelfCheckInOption.qr : return selfCheckInMethods.includes(CheckInMethod.app);
       case SelfCheckInOption.email : return selfCheckInMethods.includes(CheckInMethod.userWebEntry);
+      case SelfCheckInOption.appLink: return selfCheckInMethods.includes(CheckInMethod.deepLink);
       default: return false;
     }
   }
@@ -187,6 +205,11 @@ export class EventUtilService {
 
   getSelfCheckInMethods(): IMultiSelectItem[] {
     return [
+      {
+        label: this.cpI18n.transform('t_events_assessment_app_link_check_in'),
+        action: SelfCheckInOption.appLink,
+        selected: false
+      },
       {
         label: this.cpI18n.transform('checkin_qr_scan'),
         action: SelfCheckInOption.qr,

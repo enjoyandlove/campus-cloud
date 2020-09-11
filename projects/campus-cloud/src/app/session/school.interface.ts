@@ -1,6 +1,6 @@
 export interface ISchool {
   app_logo_url: string;
-  app_url_android: string;
+  app_id_android: string;
   app_url_ios: string;
   branding_color: string;
   email: string;

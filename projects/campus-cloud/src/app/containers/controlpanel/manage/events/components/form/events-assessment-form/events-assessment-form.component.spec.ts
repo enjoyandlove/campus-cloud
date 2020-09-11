@@ -12,7 +12,12 @@ import { EventsModel } from '@controlpanel/manage/events/model/events.model';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { EventsAssessmentFormComponent } from './events-assessment-form.component';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
-import { CheckInMethod, EventAttendance, EventFeedback, SelfCheckInOption } from '../../../event.status';
+import {
+  CheckInMethod,
+  EventAttendance,
+  EventFeedback,
+  SelfCheckInOption
+} from '../../../event.status';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
 describe('EventsAssessmentFormComponent', () => {
@@ -52,7 +57,7 @@ describe('EventsAssessmentFormComponent', () => {
       .setValue([CheckInMethod.web,
         CheckInMethod.deepLink]);
 
-    component.onSelectedCheckInMethods([SelfCheckInOption.qr]);
+    component.onSelectedCheckInMethods([SelfCheckInOption.appLink, SelfCheckInOption.qr]);
 
     result = component.form.get('attend_verification_methods').value;
 
@@ -62,7 +67,7 @@ describe('EventsAssessmentFormComponent', () => {
       CheckInMethod.app
     ]);
 
-    component.onSelectedCheckInMethods([SelfCheckInOption.qr, SelfCheckInOption.email]);
+    component.onSelectedCheckInMethods([SelfCheckInOption.appLink, SelfCheckInOption.qr, SelfCheckInOption.email]);
 
     result = component.form.get('attend_verification_methods').value;
 
@@ -88,7 +93,7 @@ describe('EventsAssessmentFormComponent', () => {
     expect(feedbackLabel).toBe(feedbackQuestion);
     expect(feedback).toBe(EventFeedback.enabled);
     expect(eventAttendance).toBe(EventAttendance.enabled);
-    expect(attend_methods).toEqual([CheckInMethod.web, CheckInMethod.deepLink, CheckInMethod.app]);
+    expect(attend_methods).toEqual([CheckInMethod.web, CheckInMethod.deepLink, CheckInMethod.app, CheckInMethod.userWebEntry]);
   });
 
   it('should set feedback status & question onEventFeedbackChange', () => {

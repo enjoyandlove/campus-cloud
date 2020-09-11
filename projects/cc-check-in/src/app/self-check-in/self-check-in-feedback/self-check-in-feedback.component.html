@@ -1,0 +1,12 @@
+<div class="feed-back mt-4">
+    <div class="container py-4">
+        <div class="row">
+            <img *ngIf="isSubmittedSuccessfully()" src="{{envRootPath}}assets/svg/feed-back-success.svg">
+            <img *ngIf="isNotAvailable()" src="{{envRootPath}}assets/svg/feed-back-unavailable.svg">
+        </div>
+        <div class="row">
+            <p *ngIf="isSubmittedSuccessfully()" class="msg">{{'t_external_check_in_message_successful' | cpI18n}}</p>
+            <p *ngIf="isNotAvailable()" class="msg">{{'t_external_check_in_message_not_available' | cpI18n}}</p>
+        </div>
+    </div>
+</div>

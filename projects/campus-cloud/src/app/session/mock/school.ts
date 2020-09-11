@@ -1,7 +1,7 @@
 import { ContactTraceFeatureLevel } from '@campus-cloud/session';
 
 export const mockSchool = {
-  app_url_android: '',
+  app_id_android: '',
   is_configured: true,
   app_logo_url: '',
   main_union_store_id: 0,

@@ -1,10 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CheckInMethod } from '../../../../events/event.status';
+import {
+  CheckInMethod,
+  SelfCheckInOption
+} from '../../../../events/event.status';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { EventUtilService } from '../../../../events/events.utils.service';
+import { IMultiSelectItem } from '@campus-cloud/shared/components';
 
 @Component({
   selector: 'cp-providers-form',
@@ -15,7 +19,7 @@ export class ServicesProvidersFormComponent implements OnInit {
   @Input() formErrors;
   @Input() form: FormGroup;
 
-  serviceQRCodes;
+  selfCheckInMethods: IMultiSelectItem[];
   selectedQrCode;
   attendanceTypes;
   attendanceFeedback;
@@ -61,7 +65,7 @@ export class ServicesProvidersFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.serviceQRCodes = this.utils.getQROptions();
+    this.selfCheckInMethods = this.utils.getSelfCheckInMethods();
     this.attendanceTypes = this.utils.getAttendanceTypeOptions();
     this.attendanceFeedback = this.serviceUtils.getAttendanceFeedback();
 
@@ -77,10 +81,36 @@ export class ServicesProvidersFormComponent implements OnInit {
       this.form.controls['has_feedback'].value
     );
 
-    this.selectedQrCode = this.getFromArray(
-      this.serviceQRCodes,
-      'action',
-      this.getQRCodeStatus(this.form.controls['checkin_verification_methods'].value)
-    );
+
+    this.setSelfCheckInMethods(this.form.controls['checkin_verification_methods'].value);
+  }
+
+  onSelectedCheckInMethods(options: number[]) {
+    this.form.controls['checkin_verification_methods'].setValue([CheckInMethod.web]);
+    const verificationMethods = this.form.controls['checkin_verification_methods'].value;
+
+    options.forEach(option => {
+      if (option === SelfCheckInOption.qr && !verificationMethods.includes(CheckInMethod.app)) {
+        verificationMethods.push(CheckInMethod.app);
+      } else if (option === SelfCheckInOption.email && !verificationMethods.includes(CheckInMethod.userWebEntry)) {
+        verificationMethods.push(CheckInMethod.userWebEntry);
+      } else if (option === SelfCheckInOption.appLink && !verificationMethods.includes(CheckInMethod.deepLink)) {
+        verificationMethods.push(CheckInMethod.deepLink);
+      }
+    });
+  }
+
+  private setSelfCheckInMethods(attend_verification_methods) {
+    if (!attend_verification_methods) {
+      return;
+    }
+    this.selfCheckInMethods = this.utils.getSelfCheckInMethods()
+      .map((option) => {
+        return {
+          ...option,
+          selected: EventUtilService.getSelfCheckInStatus(attend_verification_methods, option.action)
+        };
+      });
   }
 }
+

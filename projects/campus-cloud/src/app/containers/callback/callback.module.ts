@@ -91,6 +91,7 @@ import {
     StoreModule.forFeature('webForm', webFormReducer),
     StoreModule.forFeature('webFormError', webFormErrorReducer)
   ],
+  exports: [CheckinServiceHeaderComponent, CheckinEventHeaderComponent],
 
   providers: [
     AuthService,

@@ -1,0 +1,27 @@
+<div class="page">
+    <div class="cp-wrapper cp-wrapper--outer">
+        <cp-one-column [width]="layoutWidth"
+                       [aligned]="layoutAlign">
+            <cp-service-header [service]="data"
+                               *ngIf="isService"
+                               class="card-margin">
+            </cp-service-header>
+
+            <cp-event-header [event]="data"
+                             *ngIf="isEvent"
+                             class="card-margin"> </cp-event-header>
+
+            <check-self-register *ngIf="checkInFormStatus && (displayForm() || displayQR() || onlyDeepLinkByApp())" [isSelfCheckIn]="true"
+                                 [checkInFormStatus]="checkInFormStatus"
+                                 [clientConfig]="clientConfig"
+                                 [data]="data"
+                                 class="card-margin"
+                                 [isService]="isService"
+                                 (send)="send.emit($event)">
+            </check-self-register>
+            <check-self-check-in-feedback *ngIf="checkInFormStatus && (isSubmittedSuccessfully() || isNotAvailable())"
+                                          [checkInFormStatus]="checkInFormStatus">
+            </check-self-check-in-feedback>
+        </cp-one-column>
+    </div>
+</div>

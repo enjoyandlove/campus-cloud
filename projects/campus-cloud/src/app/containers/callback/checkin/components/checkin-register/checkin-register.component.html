@@ -39,10 +39,10 @@
         </div>
       </div>
     </ng-container>
-    <div class="row">
-      <div class="col-sm-12 col-md-6">
+    <div class="row row-divided">
+      <div class="col-sm-12 col-md-6 column-one">
         <div class="row mb-1">
-          <div class="col-12">
+          <div class="col-12 col-md-border">
             <p class="font-weight-bold">{{ 'checkin_scannable_qr_code' | cpI18n }}</p>
           </div>
         </div>
@@ -59,7 +59,10 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-6">
+      <div class="vertical-divider">
+          <span>OR</span>
+      </div>
+      <div class="col-sm-12 col-md-6 column-two">
         <div class="row mb-1">
           <div class="col-12">
             <p class="font-weight-bold">{{ 'checkin_manual_checkin' | cpI18n }}</p>

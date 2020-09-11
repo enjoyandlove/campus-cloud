@@ -60,7 +60,8 @@ export enum CheckInMethod {
 
 export enum SelfCheckInOption {
   qr = 0,
-  email = 1
+  email = 1,
+  appLink = 2
 }
 
 export enum CheckInOutTime {

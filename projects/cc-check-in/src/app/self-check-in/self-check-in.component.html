@@ -1,0 +1,17 @@
+<div [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+    <check-base-self-check-in
+            [checkInFormStatus]="checkInFormStatus"
+            [eventId]="eventId"
+            [clientConfig]="clientConfig"
+            [isEvent]="isEvent"
+            [isOrientation]="isOrientation"
+            [isService]="isService"
+            *ngSwitchCase="false"
+            [data]="state.attendanceEntity"
+            [timeZone]="timeZone"
+            (send)="onSubmit($event)">
+    </check-base-self-check-in>
+
+</div>

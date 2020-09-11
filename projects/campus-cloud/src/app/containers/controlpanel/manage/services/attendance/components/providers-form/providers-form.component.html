@@ -25,11 +25,11 @@
       </cp-dropdown>
     </div>
     <div class="col-6">
-      <label>{{ 't_services_service_qr_enabled' | cpI18n }}</label>
-      <cp-dropdown [items]="serviceQRCodes"
-                   [selectedItem]="selectedQrCode"
-                   (selected)="onSelectedQRCode($event.action)">
-      </cp-dropdown>
+      <label>{{ 't_event_assessment_self_check_in_methods' | cpI18n }}</label>
+        <cp-dropdown-multiselect [items]="selfCheckInMethods"
+                                 (selection)="onSelectedCheckInMethods($event)"
+                                 [placeholder]="'checkin_no_self_method' | cpI18n">
+        </cp-dropdown-multiselect>
     </div>
   </div>
 
