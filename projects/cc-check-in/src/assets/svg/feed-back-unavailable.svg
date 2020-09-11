@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="121px" height="121px" viewBox="0 0 121 121" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>Errorerror</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#CE3838" offset="0%"></stop>
+            <stop stop-color="#C21313" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="webcheckinError" transform="translate(-659.000000, -419.000000)">
+            <g id="Error" transform="translate(659.000000, 419.000000)">
+                <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="60.5" cy="60.5" r="60.5"></circle>
+                <path d="M60.5,28 C42.56,28 28,42.56 28,60.5 C28,78.44 42.56,93 60.5,93 C78.44,93 93,78.44 93,60.5 C93,42.56 78.44,28 60.5,28 Z M54.46,60.824 L43.5,49.864 L49.864,43.5 L60.824,54.46 L71.784,43.5 L78.148,49.864 L67.188,60.824 L78.148,71.784 L71.784,78.148 L60.824,67.188 L49.864,78.148 L43.5,71.784 L54.46,60.824 Z" id="Shape" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

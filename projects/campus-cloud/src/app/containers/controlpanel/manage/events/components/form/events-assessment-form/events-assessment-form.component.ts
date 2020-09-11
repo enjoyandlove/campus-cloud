@@ -7,7 +7,12 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
 import { EventUtilService } from '../../../events.utils.service';
 import { AdminService, CPI18nService } from '@campus-cloud/shared/services';
-import { CheckInMethod, EventAttendance, EventFeedback, SelfCheckInOption } from '../../../event.status';
+import {
+  CheckInMethod,
+  EventAttendance,
+  EventFeedback,
+  SelfCheckInOption
+} from '../../../event.status';
 import { IMultiSelectItem } from '@campus-cloud/shared/components';
 
 @Component({
@@ -92,7 +97,8 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
     this.form.controls['attend_verification_methods'].setValue([
       CheckInMethod.web,
       CheckInMethod.deepLink,
-      CheckInMethod.app
+      CheckInMethod.app,
+      CheckInMethod.userWebEntry
     ]);
     this.setSelfCheckInMethods(this.form.controls['attend_verification_methods'].value);
   }
@@ -166,6 +172,7 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
   }
 
   onSelectedCheckInMethods(options: number[]) {
+    this.form.controls['attend_verification_methods'].setValue([CheckInMethod.web]);
     const verificationMethods = this.form.controls['attend_verification_methods'].value;
 
     options.forEach(option => {
@@ -173,6 +180,8 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
         verificationMethods.push(CheckInMethod.app);
       } else if (option === SelfCheckInOption.email && !verificationMethods.includes(CheckInMethod.userWebEntry)) {
         verificationMethods.push(CheckInMethod.userWebEntry);
+      } else if (option === SelfCheckInOption.appLink && !verificationMethods.includes(CheckInMethod.deepLink)) {
+        verificationMethods.push(CheckInMethod.deepLink);
       }
     });
   }

@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import IAttendee from '../attendee.interface';
 import ICheckIn from '../../checkin.interface';
 import { CPDate } from '@campus-cloud/shared/utils';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { emailAddress } from '@campus-cloud/shared/utils/forms';
 import { CheckInMethod } from '@campus-cloud/containers/controlpanel/manage/events/event.status';
 import { baseActionClass, IHeader } from '@campus-cloud/store';
@@ -36,9 +35,7 @@ export class CheckinRegisterComponent implements OnInit {
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder,
-              public store: Store<IHeader>,
-              private cpI18n: CPI18nPipe) {}
+  constructor(private fb: FormBuilder, public store: Store<IHeader>, private cpI18n: CPI18nPipe) {}
 
   onSubmit(data) {
     this.datePickerOptions = {

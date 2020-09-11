@@ -261,6 +261,8 @@ export const amplitudeEvents = {
 
   CC_WEB_CHECK_IN: 'CC Web Check-In',
 
+  CC_SELF_CHECK_IN: 'CC Self Check-In',
+
   ANNOUNCEMENT_TYPE_URGENT: 'Urgent',
 
   CHANGE_PASSWORD: 'Changed Password',

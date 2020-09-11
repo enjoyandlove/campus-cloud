@@ -1,0 +1,29 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/variables';
+@import '~node_modules/bootstrap/scss/mixins/breakpoints';
+
+.feed-back {
+  @include card-shadow();
+  border-radius: 4px;
+  background: $color-white;
+
+    .row {
+      @include card-padding();
+
+        img, p {
+          margin: 0 auto;
+        }
+        .msg {
+          font-family: Open Sans;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 24px;
+          line-height: 33px;
+        }
+    }
+}

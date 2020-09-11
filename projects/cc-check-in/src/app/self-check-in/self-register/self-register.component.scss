@@ -1,0 +1,206 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/variables';
+@import '~node_modules/bootstrap/scss/mixins/breakpoints';
+
+:host {
+  display: block;
+}
+
+.registration {
+  @include card-shadow();
+  border-radius: 4px;
+
+  &__header {
+    @include card-padding();
+
+    border-radius: 4px 4px 0 0;
+    background: $color-text-alt;
+    border: 1px solid $border-color;
+    border-bottom: none;
+
+    span {
+      @include font-semi-bold();
+    }
+  }
+
+  &__form {
+    @include card-padding();
+
+    background: $color-white;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid $border-color;
+
+    .mobile-app-logo {
+      width: 50px;
+      height: 50px;
+    }
+    &__qr_image {
+      height: 310px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: left center;
+    }
+
+    &__overlay_wrappe {
+      position: relative;
+    }
+
+    &__overlay {
+      top: 70px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.9;
+      height: 310px;
+      margin: 0 auto;
+      position: absolute;
+      background-color: #fff;
+
+      span {
+        @include font-16px();
+
+        position: absolute;
+        font-weight: normal;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      span i {
+        @include font-16px();
+
+        vertical-align: middle;
+      }
+    }
+
+    .divider {
+      border: 1px solid #dcdcdc;
+      margin: 32px 0;
+    }
+
+    .share-bloc {
+      .url-txt-box {
+        width: calc(100% - 80px);
+        background: #ffffff;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .share-button {
+        width: 80px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    p {
+      &.bloc-title {
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 25px;
+      }
+      @media screen and (max-width: 768px) {
+        &.bloc-title {
+          max-width: 200px;
+        }
+      }
+    }
+
+    .row-divided {
+      position:relative;
+      padding-top: 30px;
+      [class^="col-"],
+      [class*=" col-"] {
+
+      }
+      .row {
+        padding-left: 20px;
+      }
+      .column-two {
+        padding-right: 30px;
+      }
+      .form-group {
+        margin-bottom: 5px;
+      }
+      .app-download {
+        font-style: italic;
+        padding-right: 80px;
+      }
+
+
+      @media screen and (max-width: 768px) {
+        .vertical-divider { display: none; }
+      }
+      .vertical-divider {
+        height: calc(30% - 1rem);
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        left: 50%;
+        margin: 0;
+        padding: 0;
+        width: auto;
+        line-height: 0;
+        text-align:center;
+        text-transform: uppercase;
+        font-size: 20px;
+        font-weight: bold;
+        transform: translateX(-50%);
+
+        &:before,
+        &:after {
+          position: absolute;
+          left: 50%;
+          content: '';
+          z-index: 9;
+          border-left: 1.5px solid #848b908c;
+          width: 0;
+          height: calc(80% - 1rem);
+        }
+
+        &:before {
+          top: -100%;
+        }
+        &:after {
+          top: auto;
+          bottom: 0;
+        }
+
+        span {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 24px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  img {
+    &.app-badge {
+      width: 120px;
+      height: 40px;
+      border-radius: 8px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .registration {
+    &__header {
+      display: none;
+    }
+
+    &__form {
+      &__qr_image {
+        background-position: center;
+      }
+    }
+  }
+}
