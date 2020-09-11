@@ -83,7 +83,7 @@
             <label for="subject">
               {{ 'subject' | cpI18n }}
               <cp-char-counter class="float-right"
-                               [limit]="128"
+                               [limit]="255"
                                [charCount]="getSubjectLength()">
               </cp-char-counter>
             </label>
@@ -110,7 +110,7 @@
             <label for="message">
               {{ 'message_noun' | cpI18n }}
               <cp-char-counter class="float-right"
-                               [limit]="400"
+                               [limit]="2048"
                                [charCount]="form.controls.message.value">
               </cp-char-counter>
             </label>

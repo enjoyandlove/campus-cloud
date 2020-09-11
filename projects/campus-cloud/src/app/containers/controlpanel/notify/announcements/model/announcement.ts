@@ -18,11 +18,11 @@ export class Announcement {
       notify_at_epoch: [_get(announcement, 'notify_at_epoch', notifyAtEpochNow)],
       subject: [
         _get(announcement, 'subject', null),
-        [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]
+        [CustomValidators.requiredNonEmpty, Validators.maxLength(255)]
       ],
       message: [
         _get(announcement, 'message', null),
-        [CustomValidators.requiredNonEmpty, Validators.maxLength(1024)]
+        [CustomValidators.requiredNonEmpty, Validators.maxLength(2048)]
       ],
       priority: [_get(announcement, 'priority', null), Validators.required]
     });
