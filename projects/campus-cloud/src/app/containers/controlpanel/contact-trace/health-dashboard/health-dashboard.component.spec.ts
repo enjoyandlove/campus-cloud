@@ -19,9 +19,11 @@ describe('HealthDashboardComponent', () => {
         CasesService,
         provideMockStore({
           initialState: {
-            caseStatusByName: null,
-            error: null,
-            loading: false
+            healthDashBoard: {
+              caseStatusesByRank: {},
+              error: null,
+              loading: false
+            }
           }
         })
       ]
