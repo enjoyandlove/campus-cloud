@@ -172,8 +172,10 @@ export class ServicesUtilsService {
     }
 
     const check_in_method = {
-      1: 'Web check-in',
-      3: 'App check-in'
+      1: 'Web',
+      3: 'App',
+      5: 'App',
+      6: 'Web'
     };
 
     assessments = assessments.map((item) => {
