@@ -54,16 +54,6 @@ export class ServicesProvidersFormComponent implements OnInit {
     return arr.filter((item) => item[key] === val)[0];
   }
 
-  onSelectedQRCode(isEnabled: boolean): void {
-    const verificationMethods = this.form.controls['checkin_verification_methods'].value;
-
-    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
-      verificationMethods.push(CheckInMethod.app);
-    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
-      verificationMethods.pop(CheckInMethod.app);
-    }
-  }
-
   ngOnInit() {
     this.selfCheckInMethods = this.utils.getSelfCheckInMethods();
     this.attendanceTypes = this.utils.getAttendanceTypeOptions();
@@ -86,7 +76,7 @@ export class ServicesProvidersFormComponent implements OnInit {
   }
 
   onSelectedCheckInMethods(options: number[]) {
-    this.form.controls['checkin_verification_methods'].setValue([CheckInMethod.web]);
+    this.form.controls['checkin_verification_methods'].setValue([CheckInMethod.web, CheckInMethod.webQr]);
     const verificationMethods = this.form.controls['checkin_verification_methods'].value;
 
     options.forEach(option => {

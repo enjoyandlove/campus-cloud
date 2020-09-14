@@ -8,6 +8,10 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { EventUtilService } from '../../../../events/events.utils.service';
 import { ServicesProvidersFormComponent } from './providers-form.component';
+import {
+  CheckInMethod,
+  SelfCheckInOption
+} from '@controlpanel/manage/events/event.status';
 
 describe('ServicesProviderFormComponent', () => {
   let component: ServicesProvidersFormComponent;
@@ -37,19 +41,20 @@ describe('ServicesProviderFormComponent', () => {
     expect(component.form.controls['has_checkout'].value).toBe(true);
   });
 
-  it('onSelectedQRCode', () => {
+  it('onSelectedCheckInMethods', () => {
     let verificationMethods;
 
-    component.onSelectedQRCode(false);
+    component.onSelectedCheckInMethods([SelfCheckInOption.appLink, SelfCheckInOption.qr]);
 
     verificationMethods = component.form.controls['checkin_verification_methods'].value;
 
-    expect(verificationMethods).toEqual([1, 2]);
+    expect(verificationMethods).toEqual([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.deepLink, CheckInMethod.app]);
 
-    component.onSelectedQRCode(true);
+    component.onSelectedCheckInMethods([SelfCheckInOption.appLink, SelfCheckInOption.qr, SelfCheckInOption.email]);
 
     verificationMethods = component.form.controls['checkin_verification_methods'].value;
 
-    expect(verificationMethods).toEqual([1, 2, 3]);
+    expect(verificationMethods).toEqual([CheckInMethod.web, CheckInMethod.webQr,
+      CheckInMethod.deepLink, CheckInMethod.app, CheckInMethod.userWebEntry]);
   });
 });
