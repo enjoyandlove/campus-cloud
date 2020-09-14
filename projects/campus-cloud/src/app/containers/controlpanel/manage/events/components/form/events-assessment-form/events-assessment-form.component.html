@@ -16,15 +16,8 @@
           <div class="col-6">
             <div class="form-group attendance-type-tooltip">
               <label class="with-tooltip">
+
                 {{ 't_events_attendance_type' | cpI18n }}
-                <button ui-tooltip
-                        type="button"
-                        class="unstyled-button"
-                        [title]="'t_events_event_attendance_type_tooltip' | cpI18n">
-                  <i class="material-icons">
-                    info_outline
-                  </i>
-                </button>
 
               </label>
               <cp-dropdown [items]="attendanceTypes"
@@ -36,16 +29,8 @@
           <div class="col-6">
             <div class="form-group event-qr-enable-tooltip">
               <label class="with-tooltip">
-                {{ 't_events_event_qr_enabled' | cpI18n }}
 
-                <button ui-tooltip
-                        type="button"
-                        class="unstyled-button"
-                        [title]="'t_events_event_qr_code_tooltip' | cpI18n">
-                  <i class="material-icons">
-                    info_outline
-                  </i>
-                </button>
+                  {{ 't_event_assessment_self_check_in_methods' | cpI18n }}
 
               </label>
               <cp-dropdown-multiselect [items]="selfCheckInMethods"
@@ -59,16 +44,8 @@
           <div class="col-6">
             <div class="form-group event-manager-tooltip">
               <label class="with-tooltip">
-                {{ 'events_event_manager' | cpI18n }}
 
-                <button ui-tooltip
-                        type="button"
-                        class="unstyled-button"
-                        [title]="'events_event_manager_tooltip' | cpI18n">
-                  <i class="material-icons">
-                    info_outline
-                  </i>
-                </button>
+                {{ 'events_event_manager' | cpI18n }}
 
               </label>
               <cp-dropdown [items]="managers"
@@ -81,16 +58,8 @@
           <div class="col-6">
             <div class="form-group attendance-manager-tooltip">
               <label class="with-tooltip">
-                {{ 'events_attendance_manager_full' | cpI18n }}
 
-                <button ui-tooltip
-                        type="button"
-                        class="unstyled-button"
-                        [title]="'events_attendance_manager_tooltip' | cpI18n">
-                  <i class="material-icons">
-                    info_outline
-                  </i>
-                </button>
+                {{ 'events_attendance_manager_full' | cpI18n }}
 
               </label>
               <input type="text"
@@ -103,16 +72,8 @@
         <div class="row form-group student-feedback-tooltip">
           <div class="col-6">
             <label class="with-tooltip">
-              {{ 'student_feedback' | cpI18n }}
 
-              <button ui-tooltip
-                      type="button"
-                      class="unstyled-button"
-                      [title]="'events_event_feedback_tooltip' | cpI18n">
-                <i class="material-icons">
-                  info_outline
-                </i>
-              </button>
+              {{ 'student_feedback' | cpI18n }}
 
             </label>
             <cp-dropdown [items]="attendanceFeedback"
