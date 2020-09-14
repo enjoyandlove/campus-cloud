@@ -45,7 +45,7 @@ export default interface IEvent {
 
   related_feedback_obj_id?: number;
 
-  attend_verification_methods?: number[];
+  attend_verification_methods: number[];
 
   address?: string;
 
