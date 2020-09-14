@@ -11,7 +11,7 @@ import { mockSchool } from '@campus-cloud/session/mock';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { CheckInCreateComponent } from './create.component';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import { EventUtilService } from '../../../events.utils.service';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 class MockService {
   dummy;

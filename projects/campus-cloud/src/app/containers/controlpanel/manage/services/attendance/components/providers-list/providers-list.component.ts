@@ -16,6 +16,7 @@ import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking/tracking.d
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 import { AMPLITUDE_INTERVAL_MAP } from '@campus-cloud/containers/controlpanel/assess/engagement/engagement.utils.service';
 import { baseActionClass, IHeader, ISnackbar } from '@campus-cloud/store';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 interface IState {
   providers: Array<IServiceProvider>;
@@ -66,6 +67,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   constructor(
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
+    public eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
     private store: Store<IHeader | ISnackbar>,
     public providersService: ProvidersService,
@@ -160,14 +162,22 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
   }
 
-  trackCheckinEvent(source_id) {
+  trackKioskCheckinEvent(encrypted_campus_service_id: string) {
+    this.trackCheckinEvent(encrypted_campus_service_id, amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN);
+  }
+
+  trackSelfCheckinEvent(encrypted_campus_service_id: string) {
+    this.trackCheckinEvent(encrypted_campus_service_id, amplitudeEvents.MANAGE_CC_SELF_CHECK_IN);
+  }
+
+  trackCheckinEvent(source_id, eventId: string) {
     const eventProperties = {
       source_id,
       assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       sub_menu_name: amplitudeEvents.SERVICES
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(eventId, eventProperties);
   }
 
   importProvidersFromLocations() {
@@ -275,5 +285,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     this.noProviderMessage = this.cpI18n.translate('t_services_no_service_provider_found');
     this.noProviderAddProviderMessage = this.cpI18n.translate('services_providers_no_results');
+  }
+
+  displaySelfCheckInLink(provider: IServiceProvider) {
+    return this.eventUtils.displaySelfCheckInLink({attend_verification_methods: provider.checkin_verification_methods});
   }
 }

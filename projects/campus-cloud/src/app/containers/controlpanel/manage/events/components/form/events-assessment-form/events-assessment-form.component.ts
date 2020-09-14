@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 
 import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
-import { EventUtilService } from '../../../events.utils.service';
 import { AdminService, CPI18nService } from '@campus-cloud/shared/services';
 import {
   CheckInMethod,
@@ -14,6 +13,7 @@ import {
   SelfCheckInOption
 } from '../../../event.status';
 import { IMultiSelectItem } from '@campus-cloud/shared/components';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 @Component({
   selector: 'cp-events-assessment-form',

@@ -40,6 +40,7 @@ import {
   EventsImportTopBarComponent,
   EventsImportActionDropdownComponent
 } from './excel/components';
+import { CheckinMethodeListComponent } from '@controlpanel/manage/events/list/components/list-upcoming/checkin-methode-list';
 
 @NgModule({
   entryComponents: [EventsDeleteComponent],
@@ -61,7 +62,8 @@ import {
     EventsImportTopBarComponent,
     EventsAssessmentFormComponent,
     EventsAttendanceActionBoxComponent,
-    EventsImportActionDropdownComponent
+    EventsImportActionDropdownComponent,
+    CheckinMethodeListComponent
   ],
 
   imports: [
@@ -96,7 +98,8 @@ import {
     EventsExcelModalComponent,
     EventsImportTopBarComponent,
     EventsAttendanceActionBoxComponent,
-    EventsImportActionDropdownComponent
+    EventsImportActionDropdownComponent,
+    CheckinMethodeListComponent
   ]
 })
 export class EventsModule {}

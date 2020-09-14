@@ -6,10 +6,10 @@ import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { EnvService } from '@campus-cloud/config/env';
 import { EventsService } from '../../../events.service';
-import { EventUtilService } from '../../../events.utils.service';
 import { EventsComponent } from '../../../list/base/events.component';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { FileUploadService, CPI18nService, ModalService } from '@campus-cloud/shared/services';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 @Component({
   selector: 'cp-events-excel-modal',

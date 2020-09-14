@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="registration__form">
-    <ng-container *ngIf="data.deep_link_url">
+    <ng-container *ngIf="data.deep_link_url && displaySelfCheckInBloc()">
       <div class="row">
         <div class="col-12">
           <p class="font-weight-bold m-0">
@@ -29,7 +29,7 @@
                   (copied)="notifyCopySuccess()"
                   [cpCopyClipboard]="data.deep_link_url"
           >
-            {{ 'contact_trace_forms_share' | cpI18n }}
+            {{ 't_copy' | cpI18n }}
           </button>
         </div>
       </div>

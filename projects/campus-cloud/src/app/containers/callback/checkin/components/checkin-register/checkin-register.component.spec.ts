@@ -48,7 +48,7 @@ const simpleData: ICheckIn = {
   app_logo_img_base64: 'app_logo_img_base64',
   rating_scale_maximum: 0,
   custom_basic_feedback_label: 'custom_basic_feedback_label',
-  attend_verification_methods: [],
+  attend_verification_methods: [1, 3, 5, 6],
   deep_link_url: 'deep_link_url'
 };
 describe('CheckinRegisterComponent Tests', () => {

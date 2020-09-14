@@ -9,8 +9,8 @@ import { CheckInMethod } from '../../../event.status';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { mockUser } from '@campus-cloud/session/mock/user';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { EventUtilService } from '../../../events.utils.service';
 import { EventsAttendanceActionBoxComponent } from './events-attendance-action-box.component';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 describe('EventsAttendanceActionBoxComponent', () => {
   let component: EventsAttendanceActionBoxComponent;

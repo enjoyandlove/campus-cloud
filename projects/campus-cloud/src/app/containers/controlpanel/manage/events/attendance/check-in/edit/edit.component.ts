@@ -14,11 +14,11 @@ import IEvent from '../../../event.interface';
 import { ICheckIn } from '../check-in.interface';
 import { CheckInOut } from '../../../event.status';
 import { EventsService } from '../../../events.service';
-import { CPSession } from './../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import { EventUtilService } from '../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
 import IServiceProvider from '../../../../services/providers.interface';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 @Component({
   selector: 'cp-edit-check-in',

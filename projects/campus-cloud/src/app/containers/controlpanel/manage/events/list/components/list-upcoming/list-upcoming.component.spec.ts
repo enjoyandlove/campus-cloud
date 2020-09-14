@@ -6,10 +6,10 @@ import { DebugElement } from '@angular/core';
 import { CPSession } from '@campus-cloud/session';
 import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListUpcomingComponent } from './list-upcoming.component';
-import { EventUtilService } from './../../../events.utils.service';
 import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 const initialState = {
   start: null,

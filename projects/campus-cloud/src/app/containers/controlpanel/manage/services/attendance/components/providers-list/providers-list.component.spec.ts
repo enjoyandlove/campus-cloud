@@ -36,6 +36,7 @@ const mockProvider = [
     id: 12,
     img_url: '',
     qr_img_url: '',
+    deep_link_url: '',
     num_ratings: 50,
     contactphone: '',
     encrypted_id: '',

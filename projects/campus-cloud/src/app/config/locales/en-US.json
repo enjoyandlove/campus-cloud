@@ -2027,6 +2027,9 @@
   "from": {
     "message": "From"
   },
+  "health_dashboard_form_completion": {
+    "message": "Form Completion"
+  },
   "health_pass_green": {
     "message": "Green Health Pass"
   },
@@ -3164,6 +3167,9 @@
   },
   "t_community_tooltip_download_csv_zip_file": {
     "message": "Community CSV downloads reflect the search and applied filters"
+  },
+  "t_copy": {
+    "message": "Copy"
   },
   "t_copy_of": {
     "message": "Copy of"

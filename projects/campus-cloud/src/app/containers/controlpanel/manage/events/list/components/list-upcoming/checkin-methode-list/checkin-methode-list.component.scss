@@ -1,0 +1,50 @@
+.checkin-dropdown {
+  ul {
+    list-style: none;
+    width: 100%;
+    li {
+      width: 100%;
+      display: inline-block;
+      position: relative;
+      line-height: 21px;
+      text-align: left;
+      min-height: 25px;
+
+      label {
+        display: block;
+        font-family: "Open Sans", sans-serif;
+
+        padding: 8px 25px;
+        color: #1771b5;
+        text-decoration: none;
+      }
+
+      .checkin-dropdown-list {
+        min-width: 100%;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+        display: none;
+        position: absolute;
+        padding: 12px;
+        z-index: 999;
+        left: 0;
+        li {
+          width: 100%;
+          display: block;
+          a {
+            font-family: "Open Sans", sans-serif;
+            font-weight: 510;
+          }
+        }
+      }
+
+    }
+    :hover {
+      .checkin-dropdown-list {
+        display: block;
+      }
+    }
+  }
+}

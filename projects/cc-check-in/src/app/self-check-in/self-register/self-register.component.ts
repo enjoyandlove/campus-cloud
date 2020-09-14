@@ -36,6 +36,7 @@ export class SelfRegisterComponent implements OnInit {
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
   @Input() clientConfig: any = {};
+  disabledQRPath = environment.root + 'assets/app/disabledQR.png';
 
   constructor(private fb: FormBuilder,
               public store: Store<IHeader>,

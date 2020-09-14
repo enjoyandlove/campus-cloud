@@ -17,7 +17,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SelfCheckInService } from '@projects/cc-check-in/src/app/self-check-in/services/self-check-in.service';
 import { SelfCheckInCallbackService } from '@projects/cc-check-in/src/app/self-check-in/services/self-check-in-callback.service';
 import { SelfCheckInFeedbackComponent } from './self-check-in-feedback';
-import { CPSpinnerComponent } from '@campus-cloud/shared/components';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 
 

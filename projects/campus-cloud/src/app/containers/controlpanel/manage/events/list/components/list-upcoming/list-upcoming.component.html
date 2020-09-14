@@ -49,13 +49,14 @@
       </td>
 
       <td ui-table-cell>
-        <a target="_blank"
-           (click)="trackCheckinEvent(event)"
-           [routerLink]="[eventCheckinRoute + event.encrypted_id]"
-           *ngIf="event.event_attendance === attendanceEnabled"
-           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
-          {{ 't_shared_web_checkin' | cpI18n }}
-        </a>
+          <cp-checkin-methode-list [kioskCheckinLink]="[eventCheckinRoute + event.encrypted_id]"
+                                   [displaySelfCheckIn]="displaySelfCheckInLink(event)"
+                                   [selfCheckinLink]="event.deep_link_url"
+                                   (kioskCheckinLinkEvent)="trackKioskCheckinEvent(event)"
+                                   (selfCheckinLinkEvent)="trackSelfCheckinEvent(event)"
+                                   *ngIf="event.event_attendance === attendanceEnabled"
+                                   class="btn-checkin-list w-100">
+          </cp-checkin-methode-list>
       </td>
 
       <td ui-table-cell

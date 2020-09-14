@@ -30,7 +30,7 @@
             </span>
                     </div>
                     <div class="registration__form__qr_image"
-                         [ngStyle]="{ 'background-image': 'url(' + data.qr_img_url + ')' }">
+                         [ngStyle]="{ 'background-image': data.qr_img_url? 'url(' + data.qr_img_url + ')': 'url(' + disabledQRPath + ')'}">
                     </div>
                     <div class="row p-0 d-flex justify-content-center">
                         <p class="app-download pr-0">{{'t_external_self_checkin_download_app' | cpI18n}}</p>

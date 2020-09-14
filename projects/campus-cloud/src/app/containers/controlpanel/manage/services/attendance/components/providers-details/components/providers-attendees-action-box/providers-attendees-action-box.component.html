@@ -40,7 +40,16 @@
                       '/' +
                       provider.encrypted_id
                   ]">
-                  {{ 't_services_assessment_web_checkin_page' | cpI18n }}
+                  {{ 't_event_assessment_kiosk_checkin_page' | cpI18n }}
+                </a>
+              </li>
+              <li *ngIf="displaySelfCheckInLink(provider)"
+                  class="list-as-anchor">
+                <a cpTracker
+                   target="_blank"
+                   [eventData]="eventData"
+                   [href]="provider.deep_link_url">
+                  {{ 't_event_assessment_self_check_in' | cpI18n }}
                 </a>
               </li>
               <li (click)="onEnableDisableQR()"
