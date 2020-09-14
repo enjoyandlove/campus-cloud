@@ -151,12 +151,11 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
           .subscribe()
       );
     });
-
-    this.userList$.subscribe((userList) => {
-      if (this.caseId) {
+    if (!this.caseId) {
+      this.userList$.subscribe((userList) => {
         this.notification.user_ids = userList;
-      }
-    });
+      });
+    }
   }
 
   ngOnDestroy() {
