@@ -301,7 +301,9 @@ export class EventUtilService {
 
       const check_in_method = {
         1: 'Web',
-        3: 'QR Code'
+        3: 'App',
+        5: 'App',
+        6: 'Web'
       };
 
       attendees = attendees.map((item) => {
