@@ -328,4 +328,12 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       checkin_method: this.cpI18n.translate('services_label_all_checkin_methods')
     };
   }
+
+  webCheckInMethodIcon(check_in_method: any) {
+    switch (check_in_method) {
+      case CheckInMethod.web:
+      case CheckInMethod.userWebEntry: return 'computer';
+      default: return 'smartphone';
+    }
+  }
 }
