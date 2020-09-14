@@ -6,11 +6,11 @@ import { CPSession } from '@campus-cloud/session';
 import IEvent from '../../../event.interface';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CheckInMethod } from '../../../event.status';
-import { EventUtilService } from '../../../events.utils.service';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants/privileges';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils/privileges/privileges';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 @Component({
   selector: 'cp-events-attendance-action-box',
@@ -118,5 +118,9 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     });
 
     this.studentFilter$ = this.engageUtils.getStudentFilter();
+  }
+
+  displaySelfCheckInLink({attend_verification_methods}) {
+    return this.utils.displaySelfCheckInLink({attend_verification_methods});
   }
 }

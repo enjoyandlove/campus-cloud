@@ -35,7 +35,7 @@
            [routerLink]="[eventCheckinRoute + event.encrypted_id]">
           {{ 't_event_assessment_kiosk_checkin_page' | cpI18n }}
         </a>
-        <a *ngIf="event.deep_link_url" target="_blank"
+        <a *ngIf="event.deep_link_url && displaySelfCheckInLink(event)" target="_blank"
            class="dropdown-item"
            (click)="trackClickSelfCheckIn.emit(event)"
            [href]="event.deep_link_url">

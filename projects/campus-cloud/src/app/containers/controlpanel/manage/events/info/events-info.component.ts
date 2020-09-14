@@ -63,7 +63,8 @@ export class EventsInfoComponent extends EventsComponent implements OnInit, OnDe
     public utils: EventUtilService,
     public service: EventsService,
     public modalService: ModalService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    private eventUtilService: EventUtilService
   ) {
     super(session, cpI18n, service, modalService, store);
     this.dateFormat = FORMAT.DATETIME;
@@ -140,7 +141,15 @@ export class EventsInfoComponent extends EventsComponent implements OnInit, OnDe
     });
   }
 
-  trackCheckinEvent(event: IEvent) {
+  trackKioskCheckinEvent(event: IEvent) {
+    this.trackCheckinEvent(event, amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN);
+  }
+
+  trackSelfCheckinEvent(event: IEvent) {
+    this.trackCheckinEvent(event, amplitudeEvents.MANAGE_CC_SELF_CHECK_IN);
+  }
+
+  trackCheckinEvent(event: IEvent, eventId: string) {
     const menus = this.cpTracking.getAmplitudeMenuProperties();
     const eventProperties = {
       source_id: event.encrypted_id,
@@ -148,7 +157,7 @@ export class EventsInfoComponent extends EventsComponent implements OnInit, OnDe
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(eventId, eventProperties);
   }
 
   ngOnInit() {
@@ -159,5 +168,9 @@ export class EventsInfoComponent extends EventsComponent implements OnInit, OnDe
 
   ngOnDestroy() {
     this.emitDestroy();
+  }
+
+  displaySelfCheckInLink({ attend_verification_methods }) {
+    return this.eventUtilService.displaySelfCheckInLink({ attend_verification_methods });
   }
 }

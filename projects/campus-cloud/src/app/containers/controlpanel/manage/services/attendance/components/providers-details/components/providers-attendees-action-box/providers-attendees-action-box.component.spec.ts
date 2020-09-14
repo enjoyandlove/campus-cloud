@@ -17,6 +17,7 @@ import {
   IDateFilter,
   EngagementUtilsService
 } from '@controlpanel/assess/engagement/engagement.utils.service';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 @Component({ selector: 'cp-range-picker', template: '' })
 export class CPRangePickerStubComponent {}
@@ -37,11 +38,13 @@ describe('ServicesProviderActionBoxComponent', () => {
           CPI18nService,
           EngagementService,
           EngagementUtilsService,
+          EventUtilService,
           { provide: EnvService, useClass: MockEnvService },
           {
             provide: CPSession,
             useValue: mockSession
-          }
+          },
+          CPI18nPipe
         ],
         schemas: [NO_ERRORS_SCHEMA]
       }).compileComponents();

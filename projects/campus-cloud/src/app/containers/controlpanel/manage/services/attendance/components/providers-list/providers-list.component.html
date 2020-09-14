@@ -63,22 +63,17 @@
               </cp-stars>
             </td>
             <td ui-table-cell>
+                <cp-checkin-methode-list [kioskCheckinLink]="[ '/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
+                                         [displaySelfCheckIn]="displaySelfCheckInLink(provider)"
+                                         [selfCheckinLink]="provider.deep_link_url"
+                                         (kioskCheckinLinkEvent)="trackKioskCheckinEvent(provider.encrypted_campus_service_id)"
+                                         (selfCheckinLinkEvent)="trackSelfCheckinEvent(provider.encrypted_campus_service_id)"
+                                         *ngIf="provider.qr_img_url"
+                                         class="btn-checkin-list w-100">
+                </cp-checkin-methode-list>
               <span *ngIf="!provider.qr_img_url">
                 {{ 't_shared_processing' | cpI18n }}
               </span>
-              <a *ngIf="provider.qr_img_url"
-                 ui-button
-                 variant="inline"
-                 target="_blank"
-                 (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
-                 [routerLink]="[
-                    '/cb/checkin/s/' +
-                      provider.encrypted_campus_service_id +
-                      '/' +
-                      provider.encrypted_id
-                  ]">
-                {{ 't_shared_web_checkin' | cpI18n }}
-              </a>
             </td>
             <td ui-table-cell
                 align="right">

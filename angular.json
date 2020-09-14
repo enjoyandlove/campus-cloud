@@ -400,6 +400,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "watch": false,
+            "sourceMap": false,
+            "codeCoverage": true,
             "main": "projects/cc-check-in/src/test.ts",
             "polyfills": "projects/cc-check-in/src/polyfills.ts",
             "tsConfig": "projects/cc-check-in/tsconfig.spec.json",

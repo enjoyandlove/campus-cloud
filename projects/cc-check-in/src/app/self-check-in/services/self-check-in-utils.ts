@@ -25,9 +25,6 @@ export class SelfCheckInUtils {
   }
 
   static calculateCheckInFormStatus(selfCheckinMethods: number[]) {
-    if (!selfCheckinMethods.includes(CheckInMethod.deepLink)) {
-      return CheckInFormStatus.FormNotAvailable;
-    }
     if (selfCheckinMethods.includes(CheckInMethod.userWebEntry) && selfCheckinMethods.includes(CheckInMethod.app)) {
       return CheckInFormStatus.QR_Email;
     }
@@ -37,6 +34,9 @@ export class SelfCheckInUtils {
     if (selfCheckinMethods.includes(CheckInMethod.app)) {
       return CheckInFormStatus.QR;
     }
-    return CheckInFormStatus.OnlyDeepLinkByAppIsAvailable;
+    if (selfCheckinMethods.includes(CheckInMethod.deepLink)) {
+      return CheckInFormStatus.OnlyDeepLinkByAppIsAvailable;
+    }
+    return CheckInFormStatus.FormNotAvailable;
   }
 }

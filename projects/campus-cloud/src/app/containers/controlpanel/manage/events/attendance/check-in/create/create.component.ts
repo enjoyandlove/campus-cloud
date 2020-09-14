@@ -13,11 +13,11 @@ import { HttpParams } from '@angular/common/http';
 import IEvent from '../../../event.interface';
 import { ICheckIn } from '../check-in.interface';
 import { EventsService } from '../../../events.service';
-import { CPSession } from './../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import { EventUtilService } from '../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
-import IServiceProvider from '../../../../services/providers.interface';
+import IServiceProvider from '@controlpanel/manage/services/providers.interface';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 @Component({
   selector: 'cp-create-check-in',

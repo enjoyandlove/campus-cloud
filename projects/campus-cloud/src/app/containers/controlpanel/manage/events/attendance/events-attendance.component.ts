@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/index';
@@ -12,17 +12,33 @@ import { CPSession, IUser } from '@campus-cloud/session';
 import { ICheckIn } from './check-in/check-in.interface';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { STAR_SIZE } from '@campus-cloud/shared/components';
-import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import { IHeader, baseActions, ISnackbar } from '@campus-cloud/store';
+import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
-import { CheckInMethod, CheckInOutTime, CheckInOut, AttendeeType } from '../event.status';
-import { canSchoolReadResource, canSchoolWriteResource } from '@campus-cloud/shared/utils';
-import { ModalService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
-import { CP_PRIVILEGES_MAP, amplitudeEvents, SortDirection } from '@campus-cloud/shared/constants';
+import {
+  AttendeeType,
+  CheckInMethod,
+  CheckInOut,
+  CheckInOutTime
+} from '../event.status';
+import {
+  canSchoolReadResource,
+  canSchoolWriteResource
+} from '@campus-cloud/shared/utils';
+import {
+  CPI18nService,
+  CPTrackingService,
+  ModalService
+} from '@campus-cloud/shared/services';
+import {
+  amplitudeEvents,
+  CP_PRIVILEGES_MAP,
+  SortDirection
+} from '@campus-cloud/shared/constants';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 interface IState {
   sortField: string;
@@ -237,7 +253,11 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   }
 
   checkInMethodType(method) {
-    return method === CheckInMethod.web ? 'computer' : 'smartphone';
+    switch (method) {
+      case CheckInMethod.web:
+      case CheckInMethod.userWebEntry: return 'computer';
+      default: return 'smartphone';
+    }
   }
 
   doSearch(searchText): void {

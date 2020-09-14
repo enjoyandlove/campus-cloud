@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { IMultiSelectItem } from '@campus-cloud/shared/components';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 import {
   CheckInMethod,
   SelfCheckInOption
-} from '../../../../events/event.status';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { ServicesUtilsService } from '../../../services.utils.service';
-import { EventUtilService } from '../../../../events/events.utils.service';
-import { IMultiSelectItem } from '@campus-cloud/shared/components';
+} from '@controlpanel/manage/events/event.status';
 
 @Component({
   selector: 'cp-providers-form',

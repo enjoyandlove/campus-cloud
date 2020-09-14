@@ -9,6 +9,7 @@ import { SelfCheckInService } from '@projects/cc-check-in/src/app/self-check-in/
 import { CheckInFormStatus } from '@projects/cc-check-in/src/app/self-check-in/self-check-in.models';
 import { SelfCheckInUtils } from '@projects/cc-check-in/src/app/self-check-in/services/self-check-in-utils';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { DeviceDetectorService } from '@projects/cc-check-in/src/app/self-check-in/services/device-detector.service';
 
 enum AttendanceDataType {
   Event,
@@ -56,7 +57,8 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nPipe,
     public store: Store<ISnackbar>,
     public utils: CheckinUtilsService,
-    private selfCheckInService: SelfCheckInService
+    private selfCheckInService: SelfCheckInService,
+    private deviceDetectorService: DeviceDetectorService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -193,6 +195,10 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
   }
 
   private redirectToAndroidApp() {
+    if (!this.deviceDetectorService.isAndroid()) {
+      return;
+    }
+
     const appPackage = this.clientConfig.app_id_android;
     const appScheme = this.client.deep_link_scheme;
     // tslint:disable-next-line:max-line-length
@@ -200,7 +206,6 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
     try {
       window.location.href = appUrl;
     } catch (e) {
-      console.log(e);
     }
   }
 }

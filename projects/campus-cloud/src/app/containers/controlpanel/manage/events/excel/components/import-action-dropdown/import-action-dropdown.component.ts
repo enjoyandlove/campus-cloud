@@ -5,10 +5,10 @@ import { HttpParams } from '@angular/common/http';
 
 import { EventAttendance } from '../../../event.status';
 import { CPSession, ISchool } from '@campus-cloud/session';
-import { EventUtilService } from '../../../events.utils.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { AdminService, CPI18nService, StoreService, IAdmin } from '@campus-cloud/shared/services';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 interface IState {
   store_id: any;

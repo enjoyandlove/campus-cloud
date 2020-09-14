@@ -18,6 +18,7 @@ export const mockProvider: IServiceProvider = {
   has_feedback: false,
   id: 4869,
   qr_img_url: '',
+  deep_link_url: '',
   img_url: '',
   num_ratings: 31,
   provider_name: 'Service provider with check-in and check-out',

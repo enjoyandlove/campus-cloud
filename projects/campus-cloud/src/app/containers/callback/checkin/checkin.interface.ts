@@ -81,5 +81,7 @@ export default interface ICheckIn {
 
   attend_verification_methods: number[];
 
+  checkin_verification_methods?: number[];
+
   deep_link_url: string;
 }

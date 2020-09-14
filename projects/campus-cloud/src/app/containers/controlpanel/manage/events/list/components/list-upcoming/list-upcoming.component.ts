@@ -1,19 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import {
-  canSchoolWriteResource,
-  canAccountLevelReadResource
+  canAccountLevelReadResource,
+  canSchoolWriteResource
 } from '@campus-cloud/shared/utils/privileges/privileges';
 
-import IEvent from '../../../event.interface';
 import { CPSession } from '@campus-cloud/session';
 import { FORMAT } from '@campus-cloud/shared/pipes';
-import { EventAttendance } from '../../../event.status';
-import { EventUtilService } from '../../../events.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
-import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import {
+  CPI18nService,
+  CPTrackingService
+} from '@campus-cloud/shared/services';
+import {
+  amplitudeEvents,
+  CP_PRIVILEGES_MAP
+} from '@campus-cloud/shared/constants';
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
+import { EventAttendance } from '@controlpanel/manage/events/event.status';
+import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
+import IEvent from '@controlpanel/manage/events/event.interface';
 
 interface ISort {
   sort_field: string;
@@ -84,7 +90,15 @@ export class ListUpcomingComponent implements OnInit {
     };
   }
 
-  trackCheckinEvent(event: IEvent) {
+  trackKioskCheckinEvent(event: IEvent) {
+    this.trackCheckinEvent(event, amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN);
+  }
+
+  trackSelfCheckinEvent(event: IEvent) {
+    this.trackCheckinEvent(event, amplitudeEvents.MANAGE_CC_SELF_CHECK_IN);
+  }
+
+  trackCheckinEvent(event: IEvent, eventType: string) {
     const menus = this.cpTracking.getAmplitudeMenuProperties();
     const eventProperties = {
       source_id: event.encrypted_id,
@@ -92,7 +106,7 @@ export class ListUpcomingComponent implements OnInit {
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_KIOSK_CHECK_IN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(eventType, eventProperties);
   }
 
   ngOnInit() {
@@ -111,5 +125,9 @@ export class ListUpcomingComponent implements OnInit {
       name: this.cpI18n.translate('name'),
       start_date: this.cpI18n.translate('start_date')
     };
+  }
+
+  displaySelfCheckInLink({ attend_verification_methods }) {
+    return this.utils.displaySelfCheckInLink({attend_verification_methods});
   }
 }

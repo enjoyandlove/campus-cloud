@@ -18,11 +18,18 @@
                   </a>
                   <a target="_blank"
                      class="cpbtn cpbtn--primary"
-                     (click)="trackCheckinEvent(event)"
+                     (click)="trackKioskCheckinEvent(event)"
                      *ngIf="event.event_attendance === attendanceEnabled"
                      [routerLink]="[eventCheckinRoute + event.encrypted_id]">
-                    {{ 't_shared_web_checkin' | cpI18n }}
+                    {{ 't_event_assessment_kiosk_checkin_page' | cpI18n }}
                   </a>
+                    <a target="_blank"
+                       class="cpbtn cpbtn--primary"
+                       (click)="trackSelfCheckinEvent(event)"
+                       *ngIf="displaySelfCheckInLink(event)"
+                       [href]="event.deep_link_url">
+                        {{ 't_event_assessment_self_check_in' | cpI18n }}
+                    </a>
                 </div>
               </div>
             </div>

@@ -55,6 +55,7 @@ import {
 } from './attendance/components/providers-details/components';
 
 import { ServicesFormComponent, ServicesAssessmentFormComponent } from './components/form';
+import { EventsModule } from '@controlpanel/manage/events/events.module';
 
 @NgModule({
   entryComponents: [ServicesDeleteComponent],
@@ -86,7 +87,7 @@ import { ServicesFormComponent, ServicesAssessmentFormComponent } from './compon
     ServicesProvidersAttendeesStatsComponent,
     ServicesProvidersAttendeesActionBoxComponent,
     ServicesProvidersExcelModalComponent,
-    ServicesProvidersExcelComponent
+    ServicesProvidersExcelComponent,
   ],
 
   imports: [
@@ -102,7 +103,8 @@ import { ServicesFormComponent, ServicesAssessmentFormComponent } from './compon
     ServicesEventsModule,
     ServicesMembersModule,
     AssessModule, // sorting based on route loading
-    EngagementModule
+    EngagementModule,
+    EventsModule
   ],
 
   providers: [
