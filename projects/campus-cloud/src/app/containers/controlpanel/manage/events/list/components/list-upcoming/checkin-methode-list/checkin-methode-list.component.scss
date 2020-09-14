@@ -13,10 +13,12 @@
       label {
         display: block;
         font-family: "Open Sans", sans-serif;
-
         padding: 8px 25px;
-        color: #1771b5;
+        color: #2096F3;
         text-decoration: none;
+        span {
+          margin-top: 2px;
+        }
       }
 
       .checkin-dropdown-list {
