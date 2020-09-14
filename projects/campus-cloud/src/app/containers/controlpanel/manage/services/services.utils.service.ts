@@ -108,7 +108,7 @@ export class ServicesUtilsService {
   getProviderForm(formData: IServiceProvider) {
     const verificationMethods = formData
       ? formData.checkin_verification_methods
-      : [CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app];
+      : [CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app, CheckInMethod.deepLink, CheckInMethod.userWebEntry];
 
     return this.fb.group(
       {
