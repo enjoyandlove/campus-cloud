@@ -171,8 +171,7 @@ export class CPTopBarComponent implements OnInit {
         canContactTraceQR ||
         canContactTraceForms ||
         canContactTraceCases ||
-        canContactTraceExposureNotification ||
-        canContactTraceHealthDashboard;
+        canContactTraceExposureNotification;
 
       if (canContactTraceForms) {
         this.contactTraceRouterLink = ['/contact-trace'];
@@ -182,8 +181,6 @@ export class CPTopBarComponent implements OnInit {
         this.contactTraceRouterLink = ['/contact-trace/cases'];
       } else if (canContactTraceExposureNotification) {
         this.contactTraceRouterLink = ['/contact-trace/exposure-notification'];
-      } else if (canContactTraceHealthDashboard) {
-        this.contactTraceRouterLink = ['/contact-trace/health-dashboard'];
       }
     }
 
