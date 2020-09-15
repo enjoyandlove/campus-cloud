@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store, ActionsSubject } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, filter, tap } from 'rxjs/operators';
@@ -20,6 +21,7 @@ import { baseActionClass } from '@campus-cloud/store';
 import { CasesListActionBoxComponent } from './list/components/list-action-box';
 import { HttpParams } from '@angular/common/http';
 import { Promise } from 'core-js';
+import { get } from 'lodash';
 
 interface IState {
   search_str: string;
@@ -29,36 +31,34 @@ interface IState {
   end: any;
 }
 
-const state: IState = {
-  search_str: null,
-  current_status_ids: null,
-  start: null,
-  end: null,
-  exclude_external: false
-};
-
 @Component({
   selector: 'cp-cases',
   templateUrl: './cases.component.html',
   styleUrls: ['./cases.component.scss']
 })
-export class CasesComponent extends BaseComponent implements OnInit {
+export class CasesComponent extends BaseComponent implements OnInit, OnDestroy {
   filterState: IFilterState = {
     dateRange: null,
     searchText: null,
     studentFilter: null
   };
 
-  state: IState = state;
+  state: IState = {
+    search_str: null,
+    current_status_ids: null,
+    start: null,
+    end: null,
+    exclude_external: false
+  };
   showDeleteModal = false;
   deleteCase: ICase;
   cases$: Observable<ICase[]>;
   caseStatus$: Observable<ICaseStatus[]>;
   loading$: Observable<boolean>;
   isCaseCreate = false;
-  isDownloading: boolean = false;
+  isDownloading = false;
   private destroy$ = new Subject();
-  resetFilterStatus: boolean = false;
+  resetFilterStatus = false;
 
   public startRange = 1;
   public maxPerPage = 20;
@@ -74,9 +74,17 @@ export class CasesComponent extends BaseComponent implements OnInit {
     private actionsSubject$: ActionsSubject,
     private util: CasesUtilsService,
     private service: CasesService,
-    private session: CPSession
+    private session: CPSession,
+    private router: Router
   ) {
     super();
+  }
+
+  setStatusFromNavigationState() {
+    const statusId = history.state ? history.state.statusId : null;
+    if (statusId) {
+      this.state.current_status_ids = statusId;
+    }
   }
 
   loadCases() {
@@ -322,8 +330,9 @@ export class CasesComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.headerService.updateHeader();
-    this.loadCases();
+    this.setStatusFromNavigationState();
     this.loadCaseStatus();
+    this.fetchFilteredCases();
     this.listenForCreateCase();
     this.listenForDeleteCase();
     this.loading$ =

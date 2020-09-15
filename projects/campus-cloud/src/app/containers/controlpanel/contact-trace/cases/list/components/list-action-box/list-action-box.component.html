@@ -12,7 +12,8 @@
           <cp-dropdown class="topbar--dropdown"
                        [items]="caseStatus$ | async"
                        (selected)="onCasesFilter($event)"
-                       [reset]="resetActionbox$">
+                       [reset]="resetActionbox$"
+                       [selectedItem]="selectedCaseStatus$ | async">
           </cp-dropdown>
         </div>
         <div class="col-2">

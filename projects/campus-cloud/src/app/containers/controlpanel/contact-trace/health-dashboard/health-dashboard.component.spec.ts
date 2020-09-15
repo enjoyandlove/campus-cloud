@@ -1,34 +1,18 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
-import { provideMockStore } from '@ngrx/store/testing';
-import { CasesService } from '../cases/cases.service';
-
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { HealthDashboardComponent } from './health-dashboard.component';
+import { StatusCardsComponent } from './components/status-cards';
 
 describe('HealthDashboardComponent', () => {
   let component: HealthDashboardComponent;
   let fixture: ComponentFixture<HealthDashboardComponent>;
 
-  configureTestSuite();
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HealthDashboardComponent ],
+      declarations: [HealthDashboardComponent, StatusCardsComponent],
       imports: [CPTestModule],
-      providers: [
-        CasesService,
-        provideMockStore({
-          initialState: {
-            healthDashBoard: {
-              caseStatusesByRank: {},
-              error: null,
-              loading: false
-            }
-          }
-        })
-      ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
