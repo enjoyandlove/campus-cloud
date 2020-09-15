@@ -1389,6 +1389,12 @@
   "contact_trace_health_dashboard_new_reports": {
     "message": "New Reports"
   },
+  "contact_trace_health_dashboard_review_reports": {
+    "message": "Review Reports"
+  },
+  "contact_trace_health_dashboard_send_message": {
+    "message": "Send Message"
+  },
   "contact_trace_health_dashboard_student_protected": {
     "message": "Student Protected"
   },
@@ -2029,6 +2035,12 @@
   },
   "health_dashboard_form_completion": {
     "message": "Form Completion"
+  },
+  "health_dashboard_trends": {
+    "message": "Trends"
+  },
+  "health_dashboard_views": {
+    "message": "Views"
   },
   "health_pass_green": {
     "message": "Green Health Pass"

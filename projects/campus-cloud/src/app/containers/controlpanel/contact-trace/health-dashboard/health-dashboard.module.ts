@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { HealthDashboardComponent } from './health-dashboard.component';
+import { StatusCardsComponent } from './components';
 import { HealthPassRoutingModule } from './health-dashboard.routing.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -10,9 +11,7 @@ import * as fromDashboard from './store/reducers';
 import { CasesService } from '../cases/cases.service';
 
 @NgModule({
-  declarations: [
-    HealthDashboardComponent,
-  ],
+  declarations: [HealthDashboardComponent, StatusCardsComponent],
   imports: [
     CommonModule,
     SharedModule,

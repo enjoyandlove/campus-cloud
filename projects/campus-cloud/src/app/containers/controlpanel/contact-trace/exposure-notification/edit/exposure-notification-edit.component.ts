@@ -21,6 +21,7 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { AudienceService } from '@controlpanel/audience/audience.service';
 import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils.service';
 import { ImportUserListComponent } from '@controlpanel/contact-trace/exposure-notification/components';
+import { get } from 'lodash';
 
 interface IImportedUser {
   name: string;
@@ -183,7 +184,22 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       .subscribe(({ user_list_id }) => {
         this.notification.list_ids = [user_list_id];
       });
-    this.onToOptionChanged(this.toOptions[0]);
+
+    this.setFilteredOptionFromNavState();
+  }
+
+  setFilteredOptionFromNavState() {
+    const toCaseStatus = history.state ? history.state.toCaseStatus : null;
+    if (toCaseStatus) {
+      this.onToOptionChanged(this.toOptions[1]);
+      this.onFilterOptionChanged({
+        action: toCaseStatus.id,
+        label: toCaseStatus.name,
+        caseCount: toCaseStatus.case_count
+      });
+    } else {
+      this.onToOptionChanged(this.toOptions[0]);
+    }
   }
 
   private getItemForEdit(notificationId: number): Observable<ExposureNotification> {
@@ -455,7 +471,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
           label: this.cpI18n.translate('contact_trace_notification_select_status')
         }
       ];
-      this.selectedFilterOption = this.filterOptions[0];
+      if (!this.selectedFilterOption) {
+        this.selectedFilterOption = this.filterOptions[0];
+      }
       if (statuses) {
         statuses.sort((a, b) => b.rank - a.rank);
         statuses.forEach((status) => {
@@ -477,7 +495,13 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         const param = new HttpParams().set('school_id', this.session.schoolIdAsString);
         this.casesService.getCaseById(param, this.caseId).subscribe((value: ICase) => {
           this.casesById = value;
-          this.notifyDestination = this.casesById.firstname + ' ' + this.casesById.lastname + '<' + this.casesById.extern_user_id + '>';
+          this.notifyDestination =
+            this.casesById.firstname +
+            ' ' +
+            this.casesById.lastname +
+            '<' +
+            this.casesById.extern_user_id +
+            '>';
           this.notification.user_ids = [this.casesById.user_id];
           this.onToOptionChanged({
             action: 'custom_list',
@@ -496,7 +520,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
           }, 500);
 
           this.ifExposureNotification(this.casesById);
-
         });
       }
     });
@@ -510,26 +533,30 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       .append('school_id', this.session.school.id.toString())
       .append('case_id', casesById.id.toString())
       .append('all', '1');
-    this.casesService.getCaseActivityLog(1, 1000, params)
-      .subscribe((logs: ICaseLog[]) => {
-        const activityLog = logs.find((log) => log.contact_trace_event_id !== 0);
-        if (activityLog) {
-          const casesParams = new HttpParams()
-            .append('school_id', this.session.school.id.toString())
-            .append('contact_trace_event_id', activityLog.contact_trace_event_id.toString())
-            .append('all', '1');
-          this.casesService.getCases(1, 10000, casesParams)
-            .subscribe((cases: ICase[]) => {
-              if (cases.length) {
-                this.notification.user_ids = cases.map((caseItem) => caseItem.user_id);
-                this.notifyDestination = '';
-                cases.forEach((caseItem) => {
-                  this.notifyDestination += caseItem.firstname + ' ' + caseItem.lastname + '<' + caseItem.extern_user_id + '>, ';
-                });
-              }
+    this.casesService.getCaseActivityLog(1, 1000, params).subscribe((logs: ICaseLog[]) => {
+      const activityLog = logs.find((log) => log.contact_trace_event_id !== 0);
+      if (activityLog) {
+        const casesParams = new HttpParams()
+          .append('school_id', this.session.school.id.toString())
+          .append('contact_trace_event_id', activityLog.contact_trace_event_id.toString())
+          .append('all', '1');
+        this.casesService.getCases(1, 10000, casesParams).subscribe((cases: ICase[]) => {
+          if (cases.length) {
+            this.notification.user_ids = cases.map((caseItem) => caseItem.user_id);
+            this.notifyDestination = '';
+            cases.forEach((caseItem) => {
+              this.notifyDestination +=
+                caseItem.firstname +
+                ' ' +
+                caseItem.lastname +
+                '<' +
+                caseItem.extern_user_id +
+                '>, ';
             });
-        }
-      });
+          }
+        });
+      }
+    });
   }
 
   importModal() {

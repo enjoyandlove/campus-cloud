@@ -1,4 +1,12 @@
-import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Input,
+  ViewChild,
+  OnDestroy
+} from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CPSession } from '@campus-cloud/session';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
@@ -19,13 +27,14 @@ import { CasesUtilsService } from '../../../cases.utils.service';
 import { ICaseStatus } from '../../../cases.interface';
 import * as fromStore from '../../../store';
 import { CPDate } from '@projects/campus-cloud/src/app/shared/utils';
+import { getItem } from '@campus-cloud/shared/components/cp-dropdown/cp-dropdown.component';
 
 @Component({
   selector: 'cp-cases-list-action-box',
   templateUrl: './list-action-box.component.html',
   styleUrls: ['./list-action-box.component.scss']
 })
-export class CasesListActionBoxComponent implements OnInit {
+export class CasesListActionBoxComponent implements OnInit, OnDestroy {
   @Input() isDownloading;
 
   @Output() launchCreateCaseModal: EventEmitter<boolean> = new EventEmitter();
@@ -42,6 +51,7 @@ export class CasesListActionBoxComponent implements OnInit {
   dateRanges: EngageUtils.IDateFilter[];
   resetActionbox$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   dateFilterOpts;
+  selectedCaseStatus$: Observable<IItem>;
 
   private destroy$ = new Subject();
 
@@ -135,6 +145,13 @@ export class CasesListActionBoxComponent implements OnInit {
       maxDate: CPDate.now(this.session.tz).format(),
       minDate: null
     };
+
+    this.selectedCaseStatus$ = this.store.select(fromStore.getSelectedCaseStatus).pipe(
+      map((caseStatus: ICaseStatus) => {
+        const copyStatus = { ...caseStatus };
+        return caseStatus ? getItem(copyStatus, 'name', 'id') : null;
+      })
+    );
   }
 
   ngOnDestroy() {
