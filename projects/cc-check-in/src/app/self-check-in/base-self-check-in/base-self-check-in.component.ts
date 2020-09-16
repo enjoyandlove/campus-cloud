@@ -54,6 +54,7 @@ export class BaseSelfCheckInComponent implements OnInit {
   layoutWidth = LayoutWidth.third;
   layoutAlign = LayoutAlign.center;
   @Input() clientConfig: any = {};
+  @Output() redirect: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
 

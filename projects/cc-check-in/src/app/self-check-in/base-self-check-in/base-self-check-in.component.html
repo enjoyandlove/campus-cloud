@@ -17,7 +17,7 @@
                                  [data]="data"
                                  class="card-margin"
                                  [isService]="isService"
-                                 (send)="send.emit($event)">
+                                 (send)="send.emit($event)" (redirect)="redirect.emit($event)">
             </check-self-register>
             <check-self-check-in-feedback *ngIf="checkInFormStatus && (isSubmittedSuccessfully() || isNotAvailable())"
                                           [checkInFormStatus]="checkInFormStatus">

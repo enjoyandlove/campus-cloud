@@ -179,7 +179,6 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
     this.selfCheckInService.getClientConfig(new HttpParams().append('client_id', this.client.id), true)
       .subscribe(res => {
         this.clientConfig = res;
-        this.redirectToAndroidApp();
       }, error1 => {
         console.log(error1);
       });
