@@ -36,7 +36,13 @@
                         <p class="app-download pr-0">{{'t_external_self_checkin_download_app' | cpI18n}}</p>
                     </div>
                     <div class="row p-0 d-flex justify-content-center">
-                        <a target="_blank" href="https://play.google.com/store/apps/details?id={{clientConfig.app_id_android}}"> <img class="app-badge mr-1" src="{{envRootPath}}assets/app/{{'t_external_google_play_badge' | cpI18n}}"></a>
+                        <a target="_blank" class="h-100 float-right" *ngIf="!this.deviceDetectorService.isAndroid()"
+                           href="https://play.google.com/store/apps/details?id={{clientConfig.app_id_android}}">
+                            <img class="app-badge"
+                                 src="{{envRootPath}}assets/app/{{'t_external_google_play_badge' | cpI18n}}"></a>
+                        <a target="_blank" class="h-100 float-right" *ngIf="this.deviceDetectorService.isAndroid()" (click)="redirect.emit($event)">
+                            <img class="app-badge"
+                                 src="{{envRootPath}}assets/app/{{'t_external_google_play_badge' | cpI18n}}"></a>
                         <a  target="_blank" [href]="clientConfig.app_url_ios"><img class="app-badge" src="{{envRootPath}}assets/app/{{'t_external_download_on_the_app_store_badge' | cpI18n}}"></a>
                     </div>
                 </div>
@@ -102,8 +108,11 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-6 pr-lg-3">
-                        <a target="_blank" class="h-100 float-right"
+                        <a target="_blank" class="h-100 float-right" *ngIf="!this.deviceDetectorService.isAndroid()"
                            href="https://play.google.com/store/apps/details?id={{clientConfig.app_id_android}}">
+                            <img class="app-badge"
+                                 src="{{envRootPath}}assets/app/{{'t_external_google_play_badge' | cpI18n}}"></a>
+                        <a target="_blank" class="h-100 float-right" *ngIf="this.deviceDetectorService.isAndroid()" (click)="redirect.emit($event)">
                             <img class="app-badge"
                                  src="{{envRootPath}}assets/app/{{'t_external_google_play_badge' | cpI18n}}"></a>
                     </div>

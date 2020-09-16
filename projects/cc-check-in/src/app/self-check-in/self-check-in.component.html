@@ -11,7 +11,8 @@
             *ngSwitchCase="false"
             [data]="state.attendanceEntity"
             [timeZone]="timeZone"
-            (send)="onSubmit($event)">
+            (send)="onSubmit($event)"
+            (redirect)="redirectToAndroidApp()">
     </check-base-self-check-in>
 
 </div>

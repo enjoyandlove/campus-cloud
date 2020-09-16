@@ -12,6 +12,8 @@ import { emailAddress } from '@campus-cloud/shared/utils/forms';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { CheckInFormStatus } from '@projects/cc-check-in/src/app/self-check-in/self-check-in.models';
 import { SelfCheckInUtils } from '@projects/cc-check-in/src/app/self-check-in/services/self-check-in-utils';
+import { DeviceDetectorService } from '@projects/cc-check-in/src/app/self-check-in/services/device-detector.service';
+import Any = jasmine.Any;
 
 @Component({
   selector: 'check-self-register',
@@ -27,6 +29,7 @@ export class SelfRegisterComponent implements OnInit {
 
 
   @Output() send: EventEmitter<IAttendee> = new EventEmitter();
+  @Output() redirect: EventEmitter<any> = new EventEmitter();
 
   envRootPath = environment.root;
   buttonData;
@@ -39,6 +42,7 @@ export class SelfRegisterComponent implements OnInit {
   disabledQRPath = environment.root + 'assets/app/disabledQR.png';
 
   constructor(private fb: FormBuilder,
+              public deviceDetectorService: DeviceDetectorService,
               public store: Store<IHeader>,
               private cpI18n: CPI18nPipe) {}
 
@@ -97,5 +101,9 @@ export class SelfRegisterComponent implements OnInit {
 
   onlyDeepLinkByApp() {
     return SelfCheckInUtils.onlyDeepLinkByAppIsAvailable(this.checkInFormStatus);
+  }
+
+  redirectToApp($event: any) {
+    this.redirect.emit($event);
   }
 }
