@@ -388,7 +388,6 @@ export class EventUtilService {
 
   displaySelfCheckInLink({ attend_verification_methods }) {
     return attend_verification_methods && (
-      attend_verification_methods.includes(CheckInMethod.app)
-      || attend_verification_methods.includes(CheckInMethod.userWebEntry));
+      attend_verification_methods.includes(CheckInMethod.deepLink));
   }
 }
