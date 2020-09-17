@@ -24,15 +24,16 @@ export class StatusCardsComponent implements OnDestroy {
   };
   caseStatusesByRank$: Observable<Record<number, ICaseStatus>>;
   caseStatusesByRank: Record<number, ICaseStatus>;
-
+  loading$: Observable<boolean>;
   destroy$ = new Subject();
 
   constructor(
-    public store: Store<{ healthDashboard: fromStore.DashboardState }>,
+    public store: Store<{ healthDashboard: fromStore.HealthDashboardState }>,
     private router: Router,
     private session: CPSession
   ) {
     this.getCaseStatusesByRank();
+    this.loading$ = this.store.select(fromStore.selectCaseStatusesLoading);
   }
 
   getCaseStatusesByRank() {

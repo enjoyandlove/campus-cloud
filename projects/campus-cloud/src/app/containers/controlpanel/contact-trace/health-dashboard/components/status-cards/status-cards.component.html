@@ -1,42 +1,45 @@
-<div class="row">
-  <div class="col-md-4 col-sm-12 mb-2 d-flex">
-    <div class="cp-card text-center flex-grow-1">
-      <div class="case-count">
-        {{ caseStatusesByRank[statusMapping.clear]?.case_count || 0 }}
-      </div>
-      <div class="mb-2">
-        {{ 'contact_trace_health_dashboard_student_protected' | cpI18n }}
+<div [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div class="row" *ngSwitchCase="false">
+    <div class="col-md-4 col-sm-12 mb-2 d-flex">
+      <div class="cp-card text-center flex-grow-1">
+        <div class="case-count">
+          {{ caseStatusesByRank[statusMapping.clear]?.case_count || 0 }}
+        </div>
+        <div class="mb-2">
+          {{ 'contact_trace_health_dashboard_student_protected' | cpI18n }}
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-4 col-sm-12 mb-2 d-flex">
-    <div class="cp-card text-center flex-grow-1">
-      <div class="case-count">
-        {{ caseStatusesByRank[statusMapping.selfReported]?.case_count || 0 }}
+    <div class="col-md-4 col-sm-12 mb-2 d-flex">
+      <div class="cp-card text-center flex-grow-1">
+        <div class="case-count">
+          {{ caseStatusesByRank[statusMapping.selfReported]?.case_count || 0 }}
+        </div>
+        <div class="mb-2">
+          {{ 'contact_trace_health_dashboard_new_reports' | cpI18n }}
+        </div>
+        <cp-button
+          *ngIf="canReadCases()"
+          [props]="{class: 'primary', text: ('contact_trace_health_dashboard_review_reports' | cpI18n), disabled: !caseStatusesByRank}"
+          (buttonClick)="onReviewReports()">
+        </cp-button>
       </div>
-      <div class="mb-2">
-        {{ 'contact_trace_health_dashboard_new_reports' | cpI18n }}
-      </div>
-      <cp-button
-        *ngIf="canReadCases()"
-        [props]="{class: 'primary', text: ('contact_trace_health_dashboard_review_reports' | cpI18n), disabled: !caseStatusesByRank}"
-        (buttonClick)="onReviewReports()">
-      </cp-button>
     </div>
-  </div>
-  <div class="col-md-4 col-sm-12 mb-2 d-flex">
-    <div class="cp-card text-center flex-grow-1">
-      <div class="case-count">
-        {{ caseStatusesByRank[statusMapping.exposed]?.case_count || 0 }}
+    <div class="col-md-4 col-sm-12 mb-2 d-flex">
+      <div class="cp-card text-center flex-grow-1">
+        <div class="case-count">
+          {{ caseStatusesByRank[statusMapping.exposed]?.case_count || 0 }}
+        </div>
+        <div class="mb-2">
+          {{ 'contact_trace_health_dashboard_new_exposures' | cpI18n }}
+        </div>
+        <cp-button
+          *ngIf="canSendMessage()"
+          [props]="{class: 'primary', text: ('contact_trace_health_dashboard_send_message' | cpI18n), disabled: !caseStatusesByRank}"
+          (buttonClick)="sendMessageToNewExposures()">
+        </cp-button>
       </div>
-      <div class="mb-2">
-        {{ 'contact_trace_health_dashboard_new_exposures' | cpI18n }}
-      </div>
-      <cp-button
-        *ngIf="canSendMessage()"
-        [props]="{class: 'primary', text: ('contact_trace_health_dashboard_send_message' | cpI18n), disabled: !caseStatusesByRank}"
-        (buttonClick)="sendMessageToNewExposures()">
-      </cp-button>
     </div>
   </div>
 </div>

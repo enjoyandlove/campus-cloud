@@ -258,6 +258,15 @@ export class EngagementUtilsService {
     ];
   }
 
+  commonAudienceFilter() {
+    return [
+      {
+        label: this.cpI18n.translate('audience_type_all'),
+        listId: null
+      }
+    ];
+  }
+
   getStudentFilter(): Observable<any[]> {
     const schoolSearch = this.session.addSchoolId(new HttpParams());
     const personaSearch = schoolSearch.set('platform', PersonaType.app.toString());
@@ -281,6 +290,22 @@ export class EngagementUtilsService {
     return filter$.pipe(
       reduce((list, res) => [...list, ...res], this.commonStudentFilter()),
       startWith(this.commonStudentFilter())
+    );
+  }
+
+  getAudienceFilter(): Observable<any[]> {
+    const canReadAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
+    let filter$ = of([]);
+    if (canReadAudience) {
+      const audienceSearch = this.session.addSchoolId(new HttpParams());
+      filter$ = this.engageService.getLists(undefined, undefined, audienceSearch).pipe(
+        map((res: any[]) => res.map((item) => ({ label: item.name, listId: item.id }))),
+        catchError(() => of([]))
+      );
+    }
+    return filter$.pipe(
+      map((res) => [...this.commonAudienceFilter(), ...res]),
+      startWith(this.commonAudienceFilter())
     );
   }
 

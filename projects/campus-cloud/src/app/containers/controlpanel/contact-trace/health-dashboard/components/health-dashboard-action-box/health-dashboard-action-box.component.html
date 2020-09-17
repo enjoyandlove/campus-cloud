@@ -1,0 +1,18 @@
+
+<div class="cp-card mb-3">
+  <div class="row">
+    <div class="col d-flex">
+      <cp-range-picker
+        class="cancel mr-2"
+        icon="date_range"
+        [dateRanges]="dateRanges"
+        (rangeChange)="onDateChange($event)">
+      </cp-range-picker>
+      <cp-dropdown class="topbar--dropdown"
+        [items]="audiences$ | async"
+        [selectedItem]="selectedAudience$ | async"
+        (selected)="onAudienceChange($event)">
+      </cp-dropdown>
+    </div>
+  </div>
+</div>
