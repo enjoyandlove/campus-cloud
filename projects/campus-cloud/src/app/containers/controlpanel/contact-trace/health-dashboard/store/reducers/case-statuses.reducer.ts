@@ -2,20 +2,20 @@ import { ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
 import * as fromActions from '@controlpanel/contact-trace/health-dashboard/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
 
-export interface DashboardState {
+export interface CaseStatusesState {
   caseStatusesByRank: Record<string, ICaseStatus>;
   error: string | null;
   loading: boolean;
 }
 
-const dashboardInitialState: DashboardState = {
+const initialState: CaseStatusesState = {
   caseStatusesByRank: {},
   error: null,
   loading: false
 };
 
-export const dashboardReducer = createReducer(
-  dashboardInitialState,
+const reducer = createReducer(
+  initialState,
   on(fromActions.getCaseStatus, (state) => {
     return {
       ...state,
@@ -42,6 +42,6 @@ export const dashboardReducer = createReducer(
   })
 );
 
-export function reducer(state: DashboardState | undefined, action: Action) {
-  return dashboardReducer(state, action);
+export function caseStatusesReducer(state: CaseStatusesState | undefined, action: Action) {
+  return reducer(state, action);
 }

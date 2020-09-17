@@ -2033,14 +2033,35 @@
   "from": {
     "message": "From"
   },
+  "health_dashboard_campus_guide_tile": {
+    "message": "Campus Guide Tile"
+  },
+  "health_dashboard_form_activity_title": {
+    "message": "Daily Completion"
+  },
+  "health_dashboard_form_completed": {
+    "message": "Daily Form Completed"
+  },
   "health_dashboard_form_completion": {
     "message": "Form Completion"
+  },
+  "health_dashboard_form_never_completed": {
+    "message": "Never Completed Form"
+  },
+  "health_dashboard_form_not_completed": {
+    "message": "Daily Form Not Completed"
+  },
+  "health_dashboard_sources": {
+    "message": "Sources"
   },
   "health_dashboard_trends": {
     "message": "Trends"
   },
   "health_dashboard_views": {
     "message": "Views"
+  },
+  "health_dashboard_web_form": {
+    "message": "Web Form"
   },
   "health_pass_green": {
     "message": "Green Health Pass"

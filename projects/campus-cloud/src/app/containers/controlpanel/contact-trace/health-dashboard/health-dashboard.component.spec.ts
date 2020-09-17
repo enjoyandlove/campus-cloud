@@ -11,7 +11,7 @@ describe('HealthDashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HealthDashboardComponent, StatusCardsComponent],
-      imports: [CPTestModule],
+      imports: [CPTestModule]
     }).compileComponents();
   }));
 

@@ -24,6 +24,10 @@ describe('StatusCardsComponent', () => {
             {
               selector: fromStore.selectCaseStatusesByRank,
               value: { 5: { case_count: 10 } }
+            },
+            {
+              selector: fromStore.selectCaseStatusesLoading,
+              value: false
             }
           ]
         })
