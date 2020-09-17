@@ -1,8 +1,20 @@
 /* tslint:disable:no-unused-variable */
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { HealthDashboardComponent } from './health-dashboard.component';
-import { StatusCardsComponent } from './components/status-cards';
+
+@Component({
+  selector: 'cp-health-dashboard-action-box',
+  template: '<p>cp-health-dashboard-action-box</p>'
+})
+class MockHealthDashboardActionBoxComponent {}
+
+@Component({
+  selector: 'cp-status-cards',
+  template: '<p>cp-status-cards</p>'
+})
+class MockStatusCardsComponent {}
 
 describe('HealthDashboardComponent', () => {
   let component: HealthDashboardComponent;
@@ -10,7 +22,11 @@ describe('HealthDashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HealthDashboardComponent, StatusCardsComponent],
+      declarations: [
+        HealthDashboardComponent,
+        MockHealthDashboardActionBoxComponent,
+        MockStatusCardsComponent,
+      ],
       imports: [CPTestModule]
     }).compileComponents();
   }));
