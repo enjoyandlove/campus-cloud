@@ -221,7 +221,7 @@ def import_qr_codes(request):
     parser = CSVParser(csv_as_string)
 
     try:
-        parsed_data = parser.all_fields_required('name', data_len=1000)
+        parsed_data = parser.all_fields_required('name', data_len=250)
     except KeyError as e:
         return JsonResponse({"error": e.args[0]}, safe=False, status=400)
 
