@@ -83,6 +83,12 @@
   "admin_contact_trace_forms": {
     "message": "Formes"
   },
+  "admin_contact_trace_help": {
+    "message": "Monitor the health status of your campus through forms, case management and contact tracing."
+  },
+  "admin_contact_trace_privacy_help": {
+    "message": "Keep student health data anonymized with Privacy On."
+  },
   "admin_contact_trace_qr": {
     "message": "codes QR"
   },
@@ -190,6 +196,9 @@
   },
   "all_fields_are_required": {
     "message": "Tous les champs sont requis"
+  },
+  "all_qr_codes": {
+    "message": "All QR Codes"
   },
   "and": {
     "message": "et"
@@ -1506,6 +1515,15 @@
   "contact_trace_no_qr_found": {
     "message": "Aucun code QR trouvé"
   },
+  "contact_trace_peak_traffic": {
+    "message": "Peak Traffic"
+  },
+  "contact_trace_top_traffic": {
+    "message": "Top Traffic"
+  },
+  "contact_trace_traffic": {
+    "message": "Traffic"
+  },
   "cp_top_banner_copy": {
     "message": "Campus Cloud a été mis à jour"
   },
@@ -1531,7 +1549,7 @@
     "message": "Limiter à 10,000 éléments à importer à la fois."
   },
   "csv_modal_instruction_qr": {
-    "message": "Limiter à 1000 éléments à importer à la fois."
+    "message": "Limiter à 250 éléments à importer à la fois."
   },
   "csv_modal_title": {
     "message": "Téléverser fichier CSV"
@@ -2033,14 +2051,35 @@
   "from": {
     "message": "Depuis"
   },
+  "health_dashboard_campus_guide_tile": {
+    "message": "Campus Guide Tile"
+  },
+  "health_dashboard_form_activity_title": {
+    "message": "Daily Completion"
+  },
+  "health_dashboard_form_completed": {
+    "message": "Daily Form Completed"
+  },
   "health_dashboard_form_completion": {
     "message": "Form Completion"
+  },
+  "health_dashboard_form_never_completed": {
+    "message": "Never Completed Form"
+  },
+  "health_dashboard_form_not_completed": {
+    "message": "Daily Form Not Completed"
+  },
+  "health_dashboard_sources": {
+    "message": "Sources"
   },
   "health_dashboard_trends": {
     "message": "Trends"
   },
   "health_dashboard_views": {
     "message": "Views"
+  },
+  "health_dashboard_web_form": {
+    "message": "Web Form"
   },
   "health_pass_green": {
     "message": "Passe santé vert"
