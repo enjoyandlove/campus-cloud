@@ -165,6 +165,9 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
       this.fetch();
     }, error => {
       console.log(error);
+      if (error.status === 404) {
+        this.checkInFormStatus = CheckInFormStatus.LinkNotAvailable;
+      }
     });
     const httpParams = new HttpParams().append('deep_link_url', window.location.hostname);
     this.selfCheckInService.getClient(httpParams, true).subscribe(res => {

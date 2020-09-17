@@ -21,6 +21,6 @@ export class SelfCheckInFeedbackComponent implements OnInit {
   }
 
   isNotAvailable() {
-    return SelfCheckInUtils.isNotAvailable(this.checkInFormStatus);
+    return SelfCheckInUtils.isNotAvailable(this.checkInFormStatus) || this.checkInFormStatus  === CheckInFormStatus.LinkNotAvailable;
   }
 }
