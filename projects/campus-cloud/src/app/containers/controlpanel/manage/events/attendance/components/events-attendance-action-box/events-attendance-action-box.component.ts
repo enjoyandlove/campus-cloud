@@ -120,7 +120,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     this.studentFilter$ = this.engageUtils.getStudentFilter();
   }
 
-  displaySelfCheckInLink({attend_verification_methods}) {
-    return this.utils.displaySelfCheckInLink({attend_verification_methods});
+  displaySelfCheckInLink({ attend_verification_methods }) {
+    return this.utils.displaySelfCheckInLink({ attend_verification_methods });
   }
 }

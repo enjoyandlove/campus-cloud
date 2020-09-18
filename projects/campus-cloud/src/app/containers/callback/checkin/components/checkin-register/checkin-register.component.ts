@@ -112,8 +112,10 @@ export class CheckinRegisterComponent implements OnInit {
 
   displaySelfCheckInBloc() {
     const methods = this.data.attend_verification_methods || this.data.checkin_verification_methods;
-    return methods.includes(CheckInMethod.deepLink)
-    || methods.includes(CheckInMethod.app)
-    || methods.includes(CheckInMethod.userWebEntry);
+    return (
+      methods.includes(CheckInMethod.deepLink) ||
+      methods.includes(CheckInMethod.app) ||
+      methods.includes(CheckInMethod.userWebEntry)
+    );
   }
 }

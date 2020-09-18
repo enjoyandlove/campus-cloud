@@ -20,11 +20,18 @@ describe('SelfCheckInComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, StoreModule],
       declarations: [SelfCheckInComponent, CPI18nPipe],
-      providers: [provideMockStore({
-        initialState: {}
-      }), CPI18nPipe, CheckinUtilsService, CPI18nService, SelfCheckInService, SelfCheckInCallbackService, EnvService]
-    })
-      .compileComponents();
+      providers: [
+        provideMockStore({
+          initialState: {}
+        }),
+        CPI18nPipe,
+        CheckinUtilsService,
+        CPI18nService,
+        SelfCheckInService,
+        SelfCheckInCallbackService,
+        EnvService
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -39,7 +39,8 @@ import {
   ServicesProviderDeleteComponent,
   ServicesProviderDetailsComponent,
   ServicesProviderActionBoxComponent,
-  ServicesProvidersExcelModalComponent, ServicesProvidersExcelComponent
+  ServicesProvidersExcelModalComponent,
+  ServicesProvidersExcelComponent
 } from './attendance/components';
 
 import {
@@ -87,7 +88,7 @@ import { EventsModule } from '@controlpanel/manage/events/events.module';
     ServicesProvidersAttendeesStatsComponent,
     ServicesProvidersAttendeesActionBoxComponent,
     ServicesProvidersExcelModalComponent,
-    ServicesProvidersExcelComponent,
+    ServicesProvidersExcelComponent
   ],
 
   imports: [

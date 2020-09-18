@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import IEvent from '@controlpanel/manage/events/event.interface';
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
-import {
-  amplitudeEvents,
-  CP_PRIVILEGES_MAP
-} from '@campus-cloud/shared/constants';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
@@ -24,7 +21,5 @@ export class CheckinMethodeListComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }

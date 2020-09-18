@@ -5,10 +5,7 @@ import { IMultiSelectItem } from '@campus-cloud/shared/components';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
-import {
-  CheckInMethod,
-  SelfCheckInOption
-} from '@controlpanel/manage/events/event.status';
+import { CheckInMethod, SelfCheckInOption } from '@controlpanel/manage/events/event.status';
 
 @Component({
   selector: 'cp-providers-form',
@@ -71,20 +68,28 @@ export class ServicesProvidersFormComponent implements OnInit {
       this.form.controls['has_feedback'].value
     );
 
-
     this.setSelfCheckInMethods(this.form.controls['checkin_verification_methods'].value);
   }
 
   onSelectedCheckInMethods(options: number[]) {
-    this.form.controls['checkin_verification_methods'].setValue([CheckInMethod.web, CheckInMethod.webQr]);
+    this.form.controls['checkin_verification_methods'].setValue([
+      CheckInMethod.web,
+      CheckInMethod.webQr
+    ]);
     const verificationMethods = this.form.controls['checkin_verification_methods'].value;
 
-    options.forEach(option => {
+    options.forEach((option) => {
       if (option === SelfCheckInOption.qr && !verificationMethods.includes(CheckInMethod.app)) {
         verificationMethods.push(CheckInMethod.app);
-      } else if (option === SelfCheckInOption.email && !verificationMethods.includes(CheckInMethod.userWebEntry)) {
+      } else if (
+        option === SelfCheckInOption.email &&
+        !verificationMethods.includes(CheckInMethod.userWebEntry)
+      ) {
         verificationMethods.push(CheckInMethod.userWebEntry);
-      } else if (option === SelfCheckInOption.appLink && !verificationMethods.includes(CheckInMethod.deepLink)) {
+      } else if (
+        option === SelfCheckInOption.appLink &&
+        !verificationMethods.includes(CheckInMethod.deepLink)
+      ) {
         verificationMethods.push(CheckInMethod.deepLink);
       }
     });
@@ -94,13 +99,11 @@ export class ServicesProvidersFormComponent implements OnInit {
     if (!attend_verification_methods) {
       return;
     }
-    this.selfCheckInMethods = this.utils.getSelfCheckInMethods()
-      .map((option) => {
-        return {
-          ...option,
-          selected: EventUtilService.getSelfCheckInStatus(attend_verification_methods, option.action)
-        };
-      });
+    this.selfCheckInMethods = this.utils.getSelfCheckInMethods().map((option) => {
+      return {
+        ...option,
+        selected: EventUtilService.getSelfCheckInStatus(attend_verification_methods, option.action)
+      };
+    });
   }
 }
-

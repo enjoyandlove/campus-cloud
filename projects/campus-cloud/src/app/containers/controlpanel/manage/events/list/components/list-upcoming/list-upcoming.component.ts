@@ -8,14 +8,8 @@ import {
 import { CPSession } from '@campus-cloud/session';
 import { FORMAT } from '@campus-cloud/shared/pipes';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
-import {
-  CPI18nService,
-  CPTrackingService
-} from '@campus-cloud/shared/services';
-import {
-  amplitudeEvents,
-  CP_PRIVILEGES_MAP
-} from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 import { EventAttendance } from '@controlpanel/manage/events/event.status';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
@@ -128,6 +122,6 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   displaySelfCheckInLink({ attend_verification_methods }) {
-    return this.utils.displaySelfCheckInLink({attend_verification_methods});
+    return this.utils.displaySelfCheckInLink({ attend_verification_methods });
   }
 }

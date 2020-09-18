@@ -7,7 +7,6 @@ import ICheckIn from '@campus-cloud/containers/callback/checkin/checkin.interfac
 import { Store, StoreModule } from '@ngrx/store';
 import { baseActionClass, baseReducers, IHeader } from '@campus-cloud/store';
 
-
 const simpleData: ICheckIn = {
   color: 0,
   id: 0,
@@ -74,7 +73,7 @@ describe('CheckinRegisterComponent Tests', () => {
         ],
         providers: [CPI18nPipe],
         declarations: [CheckinRegisterComponent],
-        schemas: [ NO_ERRORS_SCHEMA ]
+        schemas: [NO_ERRORS_SCHEMA]
       });
       await TestBed.compileComponents();
     })()
@@ -100,7 +99,9 @@ describe('CheckinRegisterComponent Tests', () => {
 
   it('snackbar notification should be called when we click on copy sharable link', function() {
     const dispatchSpy = spyOn(store, 'dispatch');
-    const copyBtn: HTMLElement = fixture.nativeElement.querySelector('.share-bloc button.share-button');
+    const copyBtn: HTMLElement = fixture.nativeElement.querySelector(
+      '.share-bloc button.share-button'
+    );
     copyBtn.click();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
@@ -110,5 +111,4 @@ describe('CheckinRegisterComponent Tests', () => {
       })
     );
   });
-
 });

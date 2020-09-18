@@ -332,8 +332,10 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   webCheckInMethodIcon(check_in_method: any) {
     switch (check_in_method) {
       case CheckInMethod.web:
-      case CheckInMethod.userWebEntry: return 'computer';
-      default: return 'smartphone';
+      case CheckInMethod.userWebEntry:
+        return 'computer';
+      default:
+        return 'smartphone';
     }
   }
 }

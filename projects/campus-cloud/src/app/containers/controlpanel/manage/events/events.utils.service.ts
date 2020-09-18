@@ -3,10 +3,7 @@ import { FormGroup, ValidationErrors } from '@angular/forms';
 
 import IEvent from './event.interface';
 import { CPSession } from '@campus-cloud/session';
-import {
-  amplitudeEvents,
-  CP_PRIVILEGES_MAP
-} from '@campus-cloud/shared/constants';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import {
   attendanceType,
   AttendeeType,
@@ -67,10 +64,14 @@ export class EventUtilService {
 
   static getSelfCheckInStatus(selfCheckInMethods, option: number) {
     switch (option) {
-      case SelfCheckInOption.qr : return selfCheckInMethods.includes(CheckInMethod.app);
-      case SelfCheckInOption.email : return selfCheckInMethods.includes(CheckInMethod.userWebEntry);
-      case SelfCheckInOption.appLink: return selfCheckInMethods.includes(CheckInMethod.deepLink);
-      default: return false;
+      case SelfCheckInOption.qr:
+        return selfCheckInMethods.includes(CheckInMethod.app);
+      case SelfCheckInOption.email:
+        return selfCheckInMethods.includes(CheckInMethod.userWebEntry);
+      case SelfCheckInOption.appLink:
+        return selfCheckInMethods.includes(CheckInMethod.deepLink);
+      default:
+        return false;
     }
   }
 

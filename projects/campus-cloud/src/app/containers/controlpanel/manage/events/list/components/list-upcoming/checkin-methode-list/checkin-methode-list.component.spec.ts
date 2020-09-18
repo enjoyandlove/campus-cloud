@@ -9,9 +9,8 @@ describe('CheckinMethodeListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CheckinMethodeListComponent, CPI18nPipeMock ]
-    })
-    .compileComponents();
+      declarations: [CheckinMethodeListComponent, CPI18nPipeMock]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

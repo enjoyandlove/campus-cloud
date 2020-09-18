@@ -4,6 +4,13 @@
   "em": null,
   "children": [
     {
+      "privilege": 45,
+      "label": "contact_trace_health_dashboard",
+      "clearParams": true,
+      "amplitude": "Health Dashboard",
+      "url": "/contact-trace/health-dashboard"
+    },
+    {
       "privilege": 41,
       "label": "admin_contact_trace_forms",
       "clearParams": true,
@@ -30,13 +37,6 @@
       "clearParams": true,
       "amplitude": "Exposure Notification",
       "url": "/contact-trace/exposure-notification"
-    },
-    {
-      "privilege": 45,
-      "label": "contact_trace_health_dashboard",
-      "clearParams": true,
-      "amplitude": "Health Dashboard",
-      "url": "/contact-trace/health-dashboard"
     },
     {
       "privilege": 41,
