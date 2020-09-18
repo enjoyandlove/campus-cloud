@@ -24,7 +24,7 @@ export class SelfCheckInService {
 
   getCampusLinksNoSession(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.SELF_CHECK_IN_ENDPOINTS.NO_SESSION_LINKS}/`;
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 
   getEventDetails(id: string, search?: HttpParams, silent?: boolean) {

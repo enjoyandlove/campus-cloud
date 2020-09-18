@@ -5,5 +5,6 @@ export enum CheckInFormStatus {
   SubmittedSuccess = 'SubmittedSuccess',
   SubmittedFail = 'SubmittedFail',
   FormNotAvailable = 'FormNotAvailable',
+  LinkNotAvailable = 'LinkNotAvailable',
   OnlyDeepLinkByAppIsAvailable = 'OnlyDeepLinkByAppIsAvailable'
 }

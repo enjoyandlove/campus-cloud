@@ -14,5 +14,11 @@
             (send)="onSubmit($event)"
             (redirect)="redirectToAndroidApp()">
     </check-base-self-check-in>
+    <div class="row justify-content-center" *ngIf="checkInFormStatus && checkInFormStatus == 'LinkNotAvailable'">
+        <div class="col-xs-12 col-sm-8">
+            <check-self-check-in-feedback [checkInFormStatus]="checkInFormStatus">
+            </check-self-check-in-feedback>
+        </div>
+    </div>
 
 </div>
