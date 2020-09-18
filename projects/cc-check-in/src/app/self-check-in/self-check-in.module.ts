@@ -4,10 +4,7 @@ import { SelfCheckInComponent } from './self-check-in.component';
 import { SelfCheckInRoutingModule } from './self-check-in-routing.module';
 import { CallbackModule } from '@campus-cloud/containers/callback/callback.module';
 import { StoreModule } from '@ngrx/store';
-import {
-  webFormErrorReducer,
-  webFormReducer
-} from '@campus-cloud/containers/callback/web-form';
+import { webFormErrorReducer, webFormReducer } from '@campus-cloud/containers/callback/web-form';
 import { ApiService } from '@campus-cloud/base';
 import { BaseSelfCheckInComponent } from './base-self-check-in/base-self-check-in.component';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
@@ -19,9 +16,13 @@ import { SelfCheckInCallbackService } from '@projects/cc-check-in/src/app/self-c
 import { SelfCheckInFeedbackComponent } from './self-check-in-feedback';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 
-
 @NgModule({
-  declarations: [SelfCheckInComponent, BaseSelfCheckInComponent, SelfRegisterComponent, SelfCheckInFeedbackComponent],
+  declarations: [
+    SelfCheckInComponent,
+    BaseSelfCheckInComponent,
+    SelfRegisterComponent,
+    SelfCheckInFeedbackComponent
+  ],
   imports: [
     CommonModule,
     SelfCheckInRoutingModule,
@@ -39,5 +40,4 @@ import { SharedModule } from '@campus-cloud/shared/shared.module';
     { provide: ApiService, useClass: SelfCheckInCallbackService }
   ]
 })
-export class SelfCheckInModule {
-}
+export class SelfCheckInModule {}

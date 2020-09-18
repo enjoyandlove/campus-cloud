@@ -15,7 +15,7 @@ enum AttendanceDataType {
   Event,
   UserEvent,
   ServiceProvider,
-  None,
+  None
 }
 interface IState {
   attendanceEntity: Array<any>;
@@ -24,7 +24,6 @@ interface IState {
 const state: IState = {
   attendanceEntity: []
 };
-
 
 @Component({
   selector: 'check-self-check-in',
@@ -77,11 +76,23 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
     };
     let dataSubmitter = null;
     if (this.attendanceDataType === AttendanceDataType.Event) {
-      dataSubmitter = this.selfCheckInService.doEventCheckin(this.attendanceDataId, formSubmission, null);
+      dataSubmitter = this.selfCheckInService.doEventCheckin(
+        this.attendanceDataId,
+        formSubmission,
+        null
+      );
     } else if (this.attendanceDataType === AttendanceDataType.UserEvent) {
-      dataSubmitter = this.selfCheckInService.doUserEventCheckin(this.attendanceDataId, formSubmission, null);
+      dataSubmitter = this.selfCheckInService.doUserEventCheckin(
+        this.attendanceDataId,
+        formSubmission,
+        null
+      );
     } else if (this.attendanceDataType === AttendanceDataType.ServiceProvider) {
-      dataSubmitter = this.selfCheckInService.doServiceProviderCheckin(this.attendanceDataId, formSubmission, null);
+      dataSubmitter = this.selfCheckInService.doServiceProviderCheckin(
+        this.attendanceDataId,
+        formSubmission,
+        null
+      );
     }
     if (dataSubmitter != null) {
       dataSubmitter.subscribe(
@@ -136,7 +147,11 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
       this.isEvent = false;
       this.isOrientation = false;
       this.isService = true;
-      dataFetcher = this.selfCheckInService.getServiceProviderDetails(this.attendanceDataId, null, true);
+      dataFetcher = this.selfCheckInService.getServiceProviderDetails(
+        this.attendanceDataId,
+        null,
+        true
+      );
     }
     /*TODO handle data fetcher null (campus link not recognized)*/
     super
@@ -149,8 +164,10 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
         };
 
         this.checkInFormStatus = SelfCheckInUtils.calculateCheckInFormStatus(
-          this.isService ? res.data.checkin_verification_methods :
-          res.data.attend_verification_methods);
+          this.isService
+            ? res.data.checkin_verification_methods
+            : res.data.attend_verification_methods
+        );
       })
       .catch((_) => {
         console.log(_);
@@ -170,12 +187,15 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
       }
     });
     const httpParams = new HttpParams().append('deep_link_url', window.location.hostname);
-    this.selfCheckInService.getClient(httpParams, true).subscribe(res => {
-      this.client = res;
-      this.getClientConfig();
-    }, error => {
-      console.log(error);
-    });
+    this.selfCheckInService.getClient(httpParams, true).subscribe(
+      (res) => {
+        this.client = res;
+        this.getClientConfig();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   private getClientConfig() {
@@ -207,7 +227,6 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
     const appUrl = `intent://${appScheme}${this.getDeepLinkDomainRelativePath()}#Intent;scheme=${appScheme};package=${appPackage};S.browser_fallback_url=https%3A%2F%2Fplay.google.com/store/apps/details?id=${appPackage};end`;
     try {
       window.location.href = appUrl;
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 }

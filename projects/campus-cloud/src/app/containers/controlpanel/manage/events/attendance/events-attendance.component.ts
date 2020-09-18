@@ -18,26 +18,10 @@ import { EventsAmplitudeService } from '../events.amplitude.service';
 import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
-import {
-  AttendeeType,
-  CheckInMethod,
-  CheckInOut,
-  CheckInOutTime
-} from '../event.status';
-import {
-  canSchoolReadResource,
-  canSchoolWriteResource
-} from '@campus-cloud/shared/utils';
-import {
-  CPI18nService,
-  CPTrackingService,
-  ModalService
-} from '@campus-cloud/shared/services';
-import {
-  amplitudeEvents,
-  CP_PRIVILEGES_MAP,
-  SortDirection
-} from '@campus-cloud/shared/constants';
+import { AttendeeType, CheckInMethod, CheckInOut, CheckInOutTime } from '../event.status';
+import { canSchoolReadResource, canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP, SortDirection } from '@campus-cloud/shared/constants';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 
 interface IState {
@@ -255,8 +239,10 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   checkInMethodType(method) {
     switch (method) {
       case CheckInMethod.web:
-      case CheckInMethod.userWebEntry: return 'computer';
-      default: return 'smartphone';
+      case CheckInMethod.userWebEntry:
+        return 'computer';
+      default:
+        return 'smartphone';
     }
   }
 

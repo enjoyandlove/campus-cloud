@@ -5,10 +5,8 @@ import { CPSession } from '@campus-cloud/session';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { CheckInMethod } from '@controlpanel/manage/events/event.status';
-import IServiceProvider
-  from '@controlpanel/manage/services/providers.interface';
-import * as EngageUtils
-  from '@controlpanel/assess/engagement/engagement.utils.service';
+import IServiceProvider from '@controlpanel/manage/services/providers.interface';
+import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 
@@ -107,7 +105,9 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
     this.dateRanges = this.engageUtils.dateFilter();
   }
 
-  displaySelfCheckInLink({checkin_verification_methods}) {
-    return this.eventUtilService.displaySelfCheckInLink({attend_verification_methods: checkin_verification_methods});
+  displaySelfCheckInLink({ checkin_verification_methods }) {
+    return this.eventUtilService.displaySelfCheckInLink({
+      attend_verification_methods: checkin_verification_methods
+    });
   }
 }

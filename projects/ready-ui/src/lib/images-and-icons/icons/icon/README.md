@@ -2,28 +2,31 @@
 
 > SVG icons from [Material Design](https://material.io/resources/icons/). Depends on `ready-ui-symbol` being present in the document (include in your application's root component once)
 
-*Not all icons may be implemented, if missing make sure to add the svg code from the missing icon in `SymbolComponent`'s template*
+_Not all icons may be implemented, if missing make sure to add the svg code from the missing icon in `SymbolComponent`'s template_
 
 ---
 
 ```html
+
 ```
+
 <ready-ui-icon [name]="name" [size]="size" [color]="color"></ready-ui-icon>
 
 ---
 
 ## Import From
+
 ```typescript
 import { IconsModule } from '@ready-education/ready-ui';
 ```
 
 ## When to use it?
+
 TODO
 
-
 ## Selector
-`ready-ui-icon`
 
+`ready-ui-icon`
 
 ## Inputs
 
@@ -55,7 +58,6 @@ TODO
 
   HEX code color without the `#`
 
-
 ## Outputs
 
 ---
@@ -63,6 +65,7 @@ TODO
 None
 
 ### Availble Icons
+
 `cloud_upload`
 `today`
 `info`
@@ -98,3 +101,4 @@ None
 `collections`
 `more_vert`
 `delete`
+`vertical_align_bottom`

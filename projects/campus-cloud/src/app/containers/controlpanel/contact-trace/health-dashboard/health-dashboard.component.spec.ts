@@ -2,7 +2,9 @@
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CPTestModule } from '@campus-cloud/shared/tests';
+import { CPSession } from '@campus-cloud/session';
 import { HealthDashboardComponent } from './health-dashboard.component';
+import { mockSchool } from '@campus-cloud/session/mock';
 
 @Component({
   selector: 'cp-health-dashboard-action-box',
@@ -19,13 +21,13 @@ class MockStatusCardsComponent {}
 describe('HealthDashboardComponent', () => {
   let component: HealthDashboardComponent;
   let fixture: ComponentFixture<HealthDashboardComponent>;
-
+  let session: CPSession;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         HealthDashboardComponent,
         MockHealthDashboardActionBoxComponent,
-        MockStatusCardsComponent,
+        MockStatusCardsComponent
       ],
       imports: [CPTestModule]
     }).compileComponents();
@@ -34,6 +36,9 @@ describe('HealthDashboardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HealthDashboardComponent);
     component = fixture.componentInstance;
+
+    session = TestBed.get(CPSession);
+    session.g.set('school', mockSchool);
     fixture.detectChanges();
   });
 

@@ -15,17 +15,23 @@ export class SelfCheckInUtils {
   }
 
   static displayQR(checkInFormStatus: CheckInFormStatus) {
-    return checkInFormStatus === CheckInFormStatus.QR_Email ||
-      checkInFormStatus === CheckInFormStatus.QR;
+    return (
+      checkInFormStatus === CheckInFormStatus.QR_Email || checkInFormStatus === CheckInFormStatus.QR
+    );
   }
 
   static displayForm(checkInFormStatus: CheckInFormStatus) {
-    return checkInFormStatus === CheckInFormStatus.QR_Email ||
-      checkInFormStatus === CheckInFormStatus.Email;
+    return (
+      checkInFormStatus === CheckInFormStatus.QR_Email ||
+      checkInFormStatus === CheckInFormStatus.Email
+    );
   }
 
   static calculateCheckInFormStatus(selfCheckinMethods: number[]) {
-    if (selfCheckinMethods.includes(CheckInMethod.userWebEntry) && selfCheckinMethods.includes(CheckInMethod.app)) {
+    if (
+      selfCheckinMethods.includes(CheckInMethod.userWebEntry) &&
+      selfCheckinMethods.includes(CheckInMethod.app)
+    ) {
       return CheckInFormStatus.QR_Email;
     }
     if (selfCheckinMethods.includes(CheckInMethod.userWebEntry)) {

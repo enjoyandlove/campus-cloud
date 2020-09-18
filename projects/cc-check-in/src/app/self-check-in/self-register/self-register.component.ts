@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import ICheckIn
-  from '@campus-cloud/containers/callback/checkin/checkin.interface';
-import IAttendee
-  from '@campus-cloud/containers/callback/checkin/components/attendee.interface';
+import ICheckIn from '@campus-cloud/containers/callback/checkin/checkin.interface';
+import IAttendee from '@campus-cloud/containers/callback/checkin/components/attendee.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { IHeader } from '@campus-cloud/store';
@@ -21,12 +19,10 @@ import Any = jasmine.Any;
   styleUrls: ['./self-register.component.scss']
 })
 export class SelfRegisterComponent implements OnInit {
-
   @Input() data: ICheckIn;
   @Input() isService: boolean;
   @Input() isSelfCheckIn = false;
   @Input() checkInFormStatus: CheckInFormStatus;
-
 
   @Output() send: EventEmitter<IAttendee> = new EventEmitter();
   @Output() redirect: EventEmitter<any> = new EventEmitter();

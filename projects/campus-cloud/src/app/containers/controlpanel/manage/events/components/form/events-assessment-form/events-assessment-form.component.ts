@@ -149,13 +149,12 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
     if (!attend_verification_methods) {
       return;
     }
-    this.selfCheckInMethods = this.utils.getSelfCheckInMethods()
-      .map((option) => {
-        return {
-          ...option,
-          selected: EventUtilService.getSelfCheckInStatus(attend_verification_methods, option.action)
-        };
-      });
+    this.selfCheckInMethods = this.utils.getSelfCheckInMethods().map((option) => {
+      return {
+        ...option,
+        selected: EventUtilService.getSelfCheckInStatus(attend_verification_methods, option.action)
+      };
+    });
   }
 
   ngOnInit() {
@@ -175,12 +174,18 @@ export class EventsAssessmentFormComponent implements OnInit, OnDestroy {
     this.form.controls['attend_verification_methods'].setValue([CheckInMethod.web]);
     const verificationMethods = this.form.controls['attend_verification_methods'].value;
 
-    options.forEach(option => {
+    options.forEach((option) => {
       if (option === SelfCheckInOption.qr && !verificationMethods.includes(CheckInMethod.app)) {
         verificationMethods.push(CheckInMethod.app);
-      } else if (option === SelfCheckInOption.email && !verificationMethods.includes(CheckInMethod.userWebEntry)) {
+      } else if (
+        option === SelfCheckInOption.email &&
+        !verificationMethods.includes(CheckInMethod.userWebEntry)
+      ) {
         verificationMethods.push(CheckInMethod.userWebEntry);
-      } else if (option === SelfCheckInOption.appLink && !verificationMethods.includes(CheckInMethod.deepLink)) {
+      } else if (
+        option === SelfCheckInOption.appLink &&
+        !verificationMethods.includes(CheckInMethod.deepLink)
+      ) {
         verificationMethods.push(CheckInMethod.deepLink);
       }
     });

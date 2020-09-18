@@ -288,6 +288,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   displaySelfCheckInLink(provider: IServiceProvider) {
-    return this.eventUtils.displaySelfCheckInLink({attend_verification_methods: provider.checkin_verification_methods});
+    return this.eventUtils.displaySelfCheckInLink({
+      attend_verification_methods: provider.checkin_verification_methods
+    });
   }
 }
