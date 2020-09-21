@@ -9,9 +9,7 @@ import { ContactTraceFeatureLevel, CPSession } from '@campus-cloud/session';
 export class HealthDashboardComponent implements OnInit {
   isContactTracePlus: boolean;
 
-  constructor(
-    private session: CPSession
-  ) {}
+  constructor(private session: CPSession) {}
 
   ngOnInit() {
     this.isContactTracePlus =

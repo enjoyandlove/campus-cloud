@@ -10,6 +10,8 @@ import { ChartsUtilsService } from '@campus-cloud/shared/services';
 import { HealthDashboardUtilsService } from '../../health-dashboard.utils.service';
 import { HealthDashboardService } from '../../health-dashboard.service';
 import { of } from 'rxjs';
+import { provideMockStore } from '@ngrx/store/testing';
+import * as fromStore from '../../store';
 
 class MockHealthDashboardService {
   getFormResponseStats() {
@@ -31,7 +33,19 @@ describe('HealthDashboardFormCompletionComponent', () => {
         ChartsUtilsService,
         FormsService,
         HealthDashboardUtilsService,
-        { provide: HealthDashboardService, useClass: MockHealthDashboardService }
+        { provide: HealthDashboardService, useClass: MockHealthDashboardService },
+        provideMockStore({
+          selectors: [
+            {
+              selector: fromStore.selectDateFilter,
+              value: { start: null, end: null }
+            },
+            {
+              selector: fromStore.selectAudienceFilter,
+              value: { listId: null }
+            }
+          ]
+        })
       ]
     }).compileComponents();
   }));
