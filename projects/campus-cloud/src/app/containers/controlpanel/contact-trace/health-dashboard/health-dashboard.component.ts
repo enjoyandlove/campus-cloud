@@ -17,5 +17,4 @@ export class HealthDashboardComponent implements OnInit {
     this.isContactTracePlus =
       this.session.g.get('school').contact_trace_feature_level === ContactTraceFeatureLevel.Plus;
   }
-
 }

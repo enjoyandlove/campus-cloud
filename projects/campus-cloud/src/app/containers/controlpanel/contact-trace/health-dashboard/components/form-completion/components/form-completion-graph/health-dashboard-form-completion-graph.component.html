@@ -1,0 +1,18 @@
+<div class="chart">
+  <div class="chart__header">
+    <p class="chart__header--title">
+        {{ 'health_dashboard_trends' | cpI18n }}
+    </p>
+    <div class="chart__header--option">
+      <cp-dot color="#2096F3"></cp-dot>{{ 'health_dashboard_views' | cpI18n }}
+      <cp-dot color="#60E47D" class="ml-5"></cp-dot>{{ 'contact_trace_forms_completed' | cpI18n }}
+    </div>
+  </div>
+  <hr>
+  <div class="chart__body">
+    <ready-ui-line-chart [xLabels] = "labels"
+                         [series] = "series"
+                         [colors]="['#60e47d','#2096f3']">
+    </ready-ui-line-chart>
+  </div>
+</div>
