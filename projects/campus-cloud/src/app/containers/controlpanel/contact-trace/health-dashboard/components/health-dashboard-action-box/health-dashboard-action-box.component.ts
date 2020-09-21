@@ -32,7 +32,7 @@ export class HealthDashboardActionBoxComponent {
         end: dates.payload.range.end
       };
     }
-    this.store.dispatch(fromStore.setDateFilter({ dates.start, dates.end }));
+    this.store.dispatch(fromStore.setDateFilter({ start: dates.start, end: dates.end }));
   }
 
   onAudienceChange(audience) {
