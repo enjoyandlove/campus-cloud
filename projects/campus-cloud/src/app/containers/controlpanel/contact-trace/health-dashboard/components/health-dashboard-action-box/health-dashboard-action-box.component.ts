@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 import { Store } from '@ngrx/store';
-import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
+
 import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 
@@ -24,9 +24,15 @@ export class HealthDashboardActionBoxComponent {
     this.selectedAudience$ = this.store.select(fromStore.selectAudienceFilter);
   }
 
-  onDateChange(dates: IDateRange) {
-    const { start, end } = dates;
-    this.store.dispatch(fromStore.setDateFilter({ start, end }));
+  onDateChange(dates) {
+    if (dates.payload) {
+      dates = {
+        label: dates.label,
+        start: dates.payload.range.start,
+        end: dates.payload.range.end
+      };
+    }
+    this.store.dispatch(fromStore.setDateFilter({ dates.start, dates.end }));
   }
 
   onAudienceChange(audience) {

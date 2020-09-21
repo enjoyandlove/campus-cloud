@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Form, FormStatus } from '@controlpanel/contact-trace/forms/models';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { HttpParams } from '@angular/common/http';
 import { CPSession } from '@campus-cloud/session';
@@ -19,10 +18,13 @@ import {
   map,
   share,
   startWith,
-  switchMap
+  switchMap,
+  takeUntil
 } from 'rxjs/operators';
 import { Observable, of, Subject, merge } from 'rxjs';
 import { HealthDashboardService } from '../../health-dashboard.service';
+import { Store } from '@ngrx/store';
+import * as fromStore from '../../store';
 
 const year = 365;
 const threeMonths = 90;
@@ -33,7 +35,7 @@ const twoYears = year * 2;
   templateUrl: './health-dashboard-form-completion.component.html',
   styleUrls: ['./health-dashboard-form-completion.component.scss']
 })
-export class HealthDashboardFormCompletionComponent implements OnInit {
+export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy {
   loading: boolean;
   groupByDateForm;
   chartData;
@@ -62,25 +64,41 @@ export class HealthDashboardFormCompletionComponent implements OnInit {
 
   handleTimeOut = null;
 
+  audienceFilter$: Observable<Record<number, any>>;
+  audienceFilter = null;
+
+  dateFilter$: Observable<Record<number, any>>;
+  dateFilter = null;
+
+  destroy$ = new Subject();
+
   constructor(
+    public store: Store<{ healthDashboard: fromStore.HealthDashboardState }>,
     public cpI18n: CPI18nPipe,
     public service: HealthDashboardService,
     public formsService: FormsService,
     private session: CPSession,
     public chartUtils: ChartsUtilsService,
     public utils: HealthDashboardUtilsService
-  ) {}
+  ) {
+    this.registerFilterStates();
+  }
 
   fetch() {
     let params;
-    if (this.filters.length != 0) {
-      params = new HttpParams()
-        .append('school_id', this.session.g.get('school').id)
-        .append('form_ids', this.filters.join(','));
-    } else {
-      params = new HttpParams().append('school_id', this.session.g.get('school').id);
+
+    params = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    if (this.filters.length > 0) {
+      params = params.append('form_ids', this.filters.join(','));
+    }
+    if (this.audienceFilter !== null) {
+      params = params.append('user_list_id', this.audienceFilter.listId);
     }
 
+    if (this.dateFilter !== null) {
+      params = params.append('start', this.dateFilter.start).append('end', this.dateFilter.end);
+    }
     this.loading = true;
 
     const stream$ = this.service.getFormResponseStats(params);
@@ -96,12 +114,12 @@ export class HealthDashboardFormCompletionComponent implements OnInit {
         }
 
         res.map((item) => {
-          if (item.collection_method == 1) {
-            item.response_completed_epoch == -1
+          if (item.collection_method === 1) {
+            item.response_completed_epoch === -1
               ? this.sources.tileViews++
               : this.sources.tileCompleted++;
-          } else if (item.collection_method == 2) {
-            item.response_completed_epoch == -1
+          } else if (item.collection_method === 2) {
+            item.response_completed_epoch === -1
               ? this.sources.webViews++
               : this.sources.webCompleted++;
           }
@@ -197,6 +215,24 @@ export class HealthDashboardFormCompletionComponent implements OnInit {
       });
   }
 
+  registerFilterStates() {
+    this.audienceFilter$ = this.store.select(fromStore.selectAudienceFilter).pipe(startWith({}));
+    this.audienceFilter$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
+      if (value) {
+        this.audienceFilter = value;
+        this.fetch();
+      }
+    });
+
+    this.dateFilter$ = this.store.select(fromStore.selectDateFilter).pipe(startWith({}));
+    this.dateFilter$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
+      if (value) {
+        this.dateFilter = value;
+        this.fetch();
+      }
+    });
+  }
+
   handleClearSelectedForms() {
     this.filters = [];
     this.selectedForms = [];
@@ -209,11 +245,11 @@ export class HealthDashboardFormCompletionComponent implements OnInit {
   }
 
   fetchForms(page): Observable<any[]> {
-    let startRecordCount = this.formsPaginationCountPerPage * (page - 1) + 1;
+    const startRecordCount = this.formsPaginationCountPerPage * (page - 1) + 1;
     // Get an extra record so that we know if there are more records left to fetch
-    let endRecordCount = this.formsPaginationCountPerPage * page + 1;
+    const endRecordCount = this.formsPaginationCountPerPage * page + 1;
 
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('school_id', this.session.school.id.toString())
       .set('is_template', 'false')
       .set('status', '1')
@@ -289,5 +325,11 @@ export class HealthDashboardFormCompletionComponent implements OnInit {
     );
 
     formsSearchCombinedSource.subscribe((data) => (this.formData = [...this.formData, ...data]));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }
