@@ -6,6 +6,9 @@ import { HealthDashboardFormCompletionComponent } from './health-dashboard-form-
 import { mockSchool } from '@campus-cloud/session/mock';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { FormsService } from '../../../forms';
+import { ChartsUtilsService } from '@campus-cloud/shared/services';
+import { HealthDashboardUtilsService } from '../../health-dashboard.utils.service';
+import { HealthDashboardService } from '../../health-dashboard.service';
 
 describe('HealthDashboardFormCompletionComponent', () => {
   let component: HealthDashboardFormCompletionComponent;
@@ -15,7 +18,14 @@ describe('HealthDashboardFormCompletionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HealthDashboardFormCompletionComponent],
       imports: [CPTestModule],
-      providers: [CPI18nPipe, CPSession, FormsService]
+      providers: [
+        CPI18nPipe,
+        CPSession,
+        HealthDashboardService,
+        ChartsUtilsService,
+        FormsService,
+        HealthDashboardUtilsService
+      ]
     }).compileComponents();
   }));
 

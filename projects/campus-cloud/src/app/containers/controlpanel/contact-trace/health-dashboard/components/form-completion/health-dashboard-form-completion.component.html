@@ -15,38 +15,60 @@
       </button>
     </div>
   </div>
-    <div class="row mt-2">
-      <div class="col-2">
-        <button
-            ui-button
-            type="button"
-            variant="flat"
-            color="secondary"
-            class="action-button"
-            ready-ui-menu-trigger
-            [triggerFor]="forms">          
-            {{ 'contact_trace_forms_all_forms' | cpI18n }}
-          <ready-ui-icon name="keyboard_arrow_down"></ready-ui-icon>
-        </button>
-          
+  <div class="row mt-2">
+    <div class="col-2">
+      <button
+          ui-button
+          type="button"
+          variant="flat"
+          color="secondary"
+          class="action-button"
+          ready-ui-menu-trigger
+          [triggerFor]="forms">
+          {{ 'contact_trace_forms_all_forms' | cpI18n }}
+        <ready-ui-icon name="keyboard_arrow_down"></ready-ui-icon>
+      </button>
+    </div>
+  </div>
+  <div [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+    <div *ngSwitchCase="false">
+      <div class="row mt-2">
+          <div class="col-3">
+
+          </div>
+          <div class="col-6">
+            <cp-health-dashboard-form-completion-graph [labels]="labels"
+                                                        [series]="series"
+            >
+            </cp-health-dashboard-form-completion-graph>
+          </div>
+          <div class="col-3">
+
+          </div>
       </div>
     </div>
+  </div>
 </div>
 <ready-ui-menu #forms="menu"
                 maxHeight="20em">
   <ready-ui-menu-search (search)="formsSearchTermStream.next($event)"
                         [placeholder]="'t_walls_search_placeholder' | cpI18n">
   </ready-ui-menu-search>
-  <ready-ui-menu-item *ngFor="let form of formData">
-    <ready-ui-stack>
-      <ready-ui-checkbox
-                [context]="{form: form}"
-                [disabled]="false">
-      </ready-ui-checkbox>
-      {{ form.name }}
-    </ready-ui-stack>
-  </ready-ui-menu-item>
-
+  <ready-ui-menu-section [headerTpl]="headerTpl"
+                         class="custom-section-header">
+    <ready-ui-menu-item *ngFor="let form of formData">
+      <ready-ui-stack>
+        <ready-ui-checkbox
+                  [context]="{form: form}"
+                  (changed)="handleForm(form)"
+                  [checked]="this.selectedForms.includes(form)"
+                  [disabled]="false">
+        </ready-ui-checkbox>
+        {{ form.name }}
+      </ready-ui-stack>
+    </ready-ui-menu-item>
+</ready-ui-menu-section>
   <ready-ui-menu-item *ngIf="!formData.length">
   {{ 't_walls_no_users_found' | cpI18n }}
   </ready-ui-menu-item>
@@ -62,3 +84,22 @@
     </button>
   </ready-ui-menu-item>
 </ready-ui-menu>
+
+<ng-template #headerTpl>
+  <ready-ui-stack *ngIf="selectedForms.length > 0" alignment="between">
+    <ready-ui-stack spacing="tight">
+      <ui-text-style variant="semibold">{{'t_shared_selection' | cpI18n}}
+      </ui-text-style>
+    </ready-ui-stack>
+    <button ui-button
+            type="button"
+            variant="inline"
+            (click)="handleClearSelectedForms()">
+      {{ 't_shared_clear' | cpI18n }}
+    </button>
+  </ready-ui-stack>
+</ng-template>
+
+<ng-template #activeItem>
+  <ready-ui-menu-dot></ready-ui-menu-dot>
+</ng-template>

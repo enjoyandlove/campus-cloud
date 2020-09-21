@@ -1,12 +1,6 @@
 @import '~projects/campus-cloud/src/sass/core/typography';
 @import '~projects/campus-cloud/src/sass/components/card';
 
-ready-ui-line-chart {
-  width: 100%;
-  height: 305px;
-  display: block;
-}
-
 .action-button {
   background-color: transparent;
   border: 1px solid #bdbdbd;
@@ -18,8 +12,7 @@ ready-ui-line-chart {
 
 .chart {
   @include card-margin();
-
-  height: 416px;
+  height: 480px;
   display: block;
 }
 

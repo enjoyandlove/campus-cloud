@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormStatus } from '@controlpanel/contact-trace/forms/models';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { HttpParams } from '@angular/common/http';
+import { CPSession } from '@campus-cloud/session';
+import {
+  ChartsUtilsService,
+  DivideBy,
+  groupByMonth,
+  groupByQuarter,
+  groupByWeek
+} from '@campus-cloud/shared/services';
+import { HealthDashboardUtilsService } from '../../health-dashboard.utils.service';
 import { FormsService } from '../../../forms';
 import {
   catchError,
@@ -11,9 +21,12 @@ import {
   startWith,
   switchMap
 } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
-import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { Observable, of, Subject, merge } from 'rxjs';
+import { HealthDashboardService } from '../../health-dashboard.service';
+
+const year = 365;
+const threeMonths = 90;
+const twoYears = year * 2;
 
 @Component({
   selector: 'cp-health-dashboard-form-completion',
@@ -21,6 +34,14 @@ import { Observable, of, Subject, merge } from 'rxjs';
   styleUrls: ['./health-dashboard-form-completion.component.scss']
 })
 export class HealthDashboardFormCompletionComponent implements OnInit {
+  loading: boolean;
+  groupByDateForm;
+  chartData;
+  series;
+  labels;
+  range;
+  divider = DivideBy.daily;
+
   formsSearchTermStream = new Subject();
   formsPageStream = new Subject<number>();
   formsSearchTerm: string;
@@ -28,12 +49,159 @@ export class HealthDashboardFormCompletionComponent implements OnInit {
   formsPaginationCountPerPage = 10;
   formsHasMorePages = false;
   formData = [];
+  selectedForms = [];
+
+  filters = [];
+
+  sources = {
+    tileViews: 0,
+    tileCompleted: 0,
+    webViews: 0,
+    webCompleted: 0
+  };
+
+  handleTimeOut = null;
 
   constructor(
-    public session: CPSession,
     public cpI18n: CPI18nPipe,
-    private formsService: FormsService
+    public service: HealthDashboardService,
+    public formsService: FormsService,
+    private session: CPSession,
+    public chartUtils: ChartsUtilsService,
+    public utils: HealthDashboardUtilsService
   ) {}
+
+  fetch() {
+    let params;
+    if (this.filters.length != 0) {
+      params = new HttpParams()
+        .append('school_id', this.session.g.get('school').id)
+        .append('form_ids', this.filters.join(','));
+    } else {
+      params = new HttpParams().append('school_id', this.session.g.get('school').id);
+    }
+
+    this.loading = true;
+
+    const stream$ = this.service.getFormResponseStats(params);
+    stream$
+      .toPromise()
+      .then((res: any) => {
+        this.loading = false;
+
+        if (res.length === 0) {
+          this.labels = [];
+          this.series = [];
+          return;
+        }
+
+        res.map((item) => {
+          if (item.collection_method == 1) {
+            item.response_completed_epoch == -1
+              ? this.sources.tileViews++
+              : this.sources.tileCompleted++;
+          } else if (item.collection_method == 2) {
+            item.response_completed_epoch == -1
+              ? this.sources.webViews++
+              : this.sources.webCompleted++;
+          }
+        });
+
+        this.groupByDateForm = this.utils.getCompletedForm(res);
+        this.chartData = this.groupByDateForm.reduce(
+          (prev, item) => {
+            return {
+              label: [...prev.label, this.utils.formatDate(item.date)],
+              seriesComplete: [...prev.seriesComplete, item.count.complete],
+              seriesViews: [...prev.seriesViews, item.count.views]
+            };
+          },
+          { label: new Array(), seriesComplete: new Array(), seriesViews: new Array() }
+        );
+
+        const labels = this.utils.getDateArray(
+          this.groupByDateForm[0].date,
+          this.groupByDateForm[this.groupByDateForm.length - 1].date
+        );
+
+        let newSeriesComplete = [];
+        let newSeriesViews = [];
+
+        labels.map((item) => {
+          if (this.chartData.label.includes(item)) {
+            newSeriesComplete = [
+              ...newSeriesComplete,
+              this.chartData.seriesComplete[this.chartData.label.indexOf(item)]
+            ];
+            newSeriesViews = [
+              ...newSeriesViews,
+              this.chartData.seriesViews[this.chartData.label.indexOf(item)]
+            ];
+          } else {
+            newSeriesComplete = [...newSeriesComplete, 0];
+            newSeriesViews = [...newSeriesViews, 0];
+          }
+        });
+
+        const series = [newSeriesComplete, newSeriesViews];
+        const data = { labels: labels, series: series };
+
+        this.range = Object.assign({}, this.range, {
+          start: data.labels[0],
+          end: data.labels[data.labels.length - 1]
+        });
+        if (data.series[0].length >= twoYears) {
+          this.divider = DivideBy.quarter;
+
+          return Promise.all([
+            groupByQuarter(data.labels, data.series[0]),
+            groupByQuarter(data.labels, data.series[1])
+          ]);
+        }
+
+        if (data.series[0].length >= year) {
+          this.divider = DivideBy.monthly;
+
+          return Promise.all([
+            groupByMonth(data.labels, data.series[0]),
+            groupByMonth(data.labels, data.series[1])
+          ]);
+        }
+
+        if (data.series[0].length >= threeMonths) {
+          this.divider = DivideBy.weekly;
+
+          return Promise.all([
+            groupByWeek(data.labels, data.series[0]),
+            groupByWeek(data.labels, data.series[1])
+          ]);
+        }
+
+        this.divider = DivideBy.daily;
+        return Promise.resolve(data.series);
+      })
+      .then((series: any) => {
+        if (series) {
+          this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
+          this.series = series.map((data: number[], idx: number) => {
+            return {
+              data,
+              type: 'line',
+              name:
+                idx === 0
+                  ? this.cpI18n.transform('contact_trace_forms_completed')
+                  : this.cpI18n.transform('health_dashboard_views')
+            };
+          });
+        }
+      });
+  }
+
+  handleClearSelectedForms() {
+    this.filters = [];
+    this.selectedForms = [];
+    this.fetch();
+  }
 
   formsLoadMoreClickHandler(): void {
     this.formsPageCounter++;
@@ -71,7 +239,27 @@ export class HealthDashboardFormCompletionComponent implements OnInit {
     ) as Observable<any[]>;
   }
 
+  handleForm(form: any) {
+    const index = this.filters.indexOf(form.id);
+    if (index > -1) {
+      this.filters.splice(index, 1);
+      this.selectedForms.splice(this.selectedForms.indexOf(form), 1);
+    } else {
+      this.filters.push(form.id);
+      this.selectedForms.push(form);
+    }
+
+    if (this.handleTimeOut) {
+      clearTimeout(this.handleTimeOut);
+    }
+    this.handleTimeOut = setTimeout(() => {
+      this.fetch();
+    }, 1500);
+  }
+
   ngOnInit(): void {
+    this.fetch();
+
     const formsSearchSource = this.formsSearchTermStream.pipe(
       debounceTime(500),
       distinctUntilChanged(),
