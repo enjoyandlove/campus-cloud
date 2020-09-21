@@ -9,6 +9,13 @@ import { FormsService } from '../../../forms';
 import { ChartsUtilsService } from '@campus-cloud/shared/services';
 import { HealthDashboardUtilsService } from '../../health-dashboard.utils.service';
 import { HealthDashboardService } from '../../health-dashboard.service';
+import { of } from 'rxjs';
+
+class MockHealthDashboardService {
+  getFormResponseStats() {
+    return of([]);
+  }
+}
 
 describe('HealthDashboardFormCompletionComponent', () => {
   let component: HealthDashboardFormCompletionComponent;
@@ -21,10 +28,10 @@ describe('HealthDashboardFormCompletionComponent', () => {
       providers: [
         CPI18nPipe,
         CPSession,
-        HealthDashboardService,
         ChartsUtilsService,
         FormsService,
-        HealthDashboardUtilsService
+        HealthDashboardUtilsService,
+        { provide: HealthDashboardService, useClass: MockHealthDashboardService }
       ]
     }).compileComponents();
   }));
