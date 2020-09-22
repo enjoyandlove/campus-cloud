@@ -42,7 +42,7 @@ describe('HealthDashboardFormCompletionComponent', () => {
             },
             {
               selector: fromStore.selectAudienceFilter,
-              value: { listId: null }
+              value: {}
             }
           ]
         })

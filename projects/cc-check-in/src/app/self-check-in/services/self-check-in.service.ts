@@ -7,8 +7,7 @@ import { SelfCheckInCallbackService } from '@projects/cc-check-in/src/app/self-c
   providedIn: 'root'
 })
 export class SelfCheckInService {
-
-  constructor(public api: SelfCheckInCallbackService) { }
+  constructor(public api: SelfCheckInCallbackService) {}
 
   getClientConfig(search: HttpParams, silent) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.SELF_CHECK_IN_ENDPOINTS.NO_SESSION_CLIENT_CONFIG}/`;
@@ -65,11 +64,11 @@ export class SelfCheckInService {
 
   doServiceProviderCheckin(id: string, data: any, search: HttpParams, silent = true) {
     const body = {
-      'email': data.email,
-      'firstname': data.firstname,
-      'lastname': data.lastname,
-      'checkin_verification_method': data.attend_verification_method,
-      'checkin_verification_data': data.attend_verification_data
+      email: data.email,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      checkin_verification_method: data.attend_verification_method,
+      checkin_verification_data: data.attend_verification_data
     };
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.SELF_CHECK_IN_ENDPOINTS.NO_SESSION_CAMPUS_SERVICE_PROVIDER}/`;
     return this.api.update(url, body, search, silent);

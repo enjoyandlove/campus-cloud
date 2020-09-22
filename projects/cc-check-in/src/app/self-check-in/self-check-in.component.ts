@@ -175,17 +175,23 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    const campusLinkParams = new HttpParams().append('deep_link_path', this.getDeepLinkDomainRelativePath());
-    this.selfCheckInService.getCampusLinksNoSession(campusLinkParams).subscribe(res => {
-      this.campusLink = res;
-      this.search = new HttpParams().append('event_id', this.campusLink.link_params.id);
-      this.fetch();
-    }, error => {
-      console.log(error);
-      if (error.status === 404) {
-        this.checkInFormStatus = CheckInFormStatus.LinkNotAvailable;
+    const campusLinkParams = new HttpParams().append(
+      'deep_link_path',
+      this.getDeepLinkDomainRelativePath()
+    );
+    this.selfCheckInService.getCampusLinksNoSession(campusLinkParams).subscribe(
+      (res) => {
+        this.campusLink = res;
+        this.search = new HttpParams().append('event_id', this.campusLink.link_params.id);
+        this.fetch();
+      },
+      (error) => {
+        console.log(error);
+        if (error.status === 404) {
+          this.checkInFormStatus = CheckInFormStatus.LinkNotAvailable;
+        }
       }
-    });
+    );
     const httpParams = new HttpParams().append('deep_link_url', window.location.hostname);
     this.selfCheckInService.getClient(httpParams, true).subscribe(
       (res) => {
@@ -199,12 +205,16 @@ export class SelfCheckInComponent extends BaseComponent implements OnInit {
   }
 
   private getClientConfig() {
-    this.selfCheckInService.getClientConfig(new HttpParams().append('client_id', this.client.id), true)
-      .subscribe(res => {
-        this.clientConfig = res;
-      }, error1 => {
-        console.log(error1);
-      });
+    this.selfCheckInService
+      .getClientConfig(new HttpParams().append('client_id', this.client.id), true)
+      .subscribe(
+        (res) => {
+          this.clientConfig = res;
+        },
+        (error1) => {
+          console.log(error1);
+        }
+      );
   }
 
   private getDeepLinkDomainRelativePath() {

@@ -107,6 +107,13 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
       .then((res: any) => {
         this.loading = false;
 
+        this.sources = {
+          tileViews: 0,
+          tileCompleted: 0,
+          webViews: 0,
+          webCompleted: 0
+        };
+
         if (res.length === 0) {
           this.labels = [];
           this.series = [];

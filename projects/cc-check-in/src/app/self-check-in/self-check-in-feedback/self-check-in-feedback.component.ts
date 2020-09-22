@@ -11,16 +11,18 @@ import { SelfCheckInUtils } from '@projects/cc-check-in/src/app/self-check-in/se
 export class SelfCheckInFeedbackComponent implements OnInit {
   @Input() checkInFormStatus: CheckInFormStatus;
   envRootPath = environment.root;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   isSubmittedSuccessfully() {
     return SelfCheckInUtils.isSubmittedSuccessfully(this.checkInFormStatus);
   }
 
   isNotAvailable() {
-    return SelfCheckInUtils.isNotAvailable(this.checkInFormStatus) || this.checkInFormStatus  === CheckInFormStatus.LinkNotAvailable;
+    return (
+      SelfCheckInUtils.isNotAvailable(this.checkInFormStatus) ||
+      this.checkInFormStatus === CheckInFormStatus.LinkNotAvailable
+    );
   }
 }
