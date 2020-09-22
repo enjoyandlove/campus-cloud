@@ -457,6 +457,18 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification];
     }
 
+    if (selectedActions.indexOf(contactTraceMenu.manageDashboard) > -1) {
+      this.schoolPrivileges = {
+        ...this.schoolPrivileges,
+        [CP_PRIVILEGES_MAP.contact_trace_health_dashboard]: {
+          r: true,
+          w: false
+        }
+      };
+    } else {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_health_dashboard];
+    }
+
     return;
   }
 
@@ -719,6 +731,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms] ||
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_cases] ||
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification] ||
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_health_dashboard] ||
       false;
 
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
@@ -752,10 +765,12 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms],
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_cases],
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification],
+      schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_health_dashboard],
       this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_qr],
       this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_forms],
       this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_cases],
-      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification]
+      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification],
+      this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_health_dashboard]
     );
 
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);

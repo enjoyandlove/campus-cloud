@@ -46,7 +46,8 @@ export enum contactTraceMenu {
   manageQR = 2,
   manageForms = 3,
   manageCases = 4,
-  manageNotifications = 5
+  manageNotifications = 5,
+  manageDashboard = 6
 }
 
 export enum manageAdminMenu {
@@ -167,16 +168,19 @@ export class TeamUtilsService {
     viewerContactTraceFormsPrivilege = { r: false, w: false },
     viewerContactTraceCasesPrivilege = { r: false, w: false },
     viewerContactTraceNotificationsPrivilege = { r: false, w: false },
+    viewerContactTraceDashboardPrivilege = { r: false, w: false },
     adminContactTraceQRPrivilege = { r: false, w: false },
     adminContactTraceFormsPrivilege = { r: false, w: false },
     adminContactTraceCasesPrivilege = { r: false, w: false },
-    adminContactTraceNotificationsPrivilege = { r: false, w: false }
+    adminContactTraceNotificationsPrivilege = { r: false, w: false },
+    adminContactTraceDashboardPrivilege = { r: false, w: false }
   ): Array<any> {
     let items = [];
     if (!viewerContactTraceQRPrivilege.r
       && !viewerContactTraceFormsPrivilege.r
       && !viewerContactTraceCasesPrivilege.r
-      && !viewerContactTraceNotificationsPrivilege.r) {
+      && !viewerContactTraceNotificationsPrivilege.r
+      && !viewerContactTraceDashboardPrivilege.r) {
       return items;
     }
 
@@ -225,6 +229,17 @@ export class TeamUtilsService {
           }
         ];
       }
+    }
+
+    if (viewerContactTraceDashboardPrivilege.r) {
+      items = [
+        ...items,
+        {
+          label: this.cpI18n.translate('contact_trace_health_dashboard'),
+          action: contactTraceMenu.manageDashboard,
+          selected: adminContactTraceDashboardPrivilege.r
+        }
+      ];
     }
 
     return items;
