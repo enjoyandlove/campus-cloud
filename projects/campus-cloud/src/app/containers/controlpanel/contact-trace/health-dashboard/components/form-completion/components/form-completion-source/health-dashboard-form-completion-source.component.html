@@ -1,0 +1,40 @@
+<div class="chart">
+  <div class="chart__header">
+    <p class="chart__header--title">
+      {{ 'health_dashboard_sources' | cpI18n }}
+    </p>
+  </div>
+  <hr>
+  <div class="chart__body">
+    <div class="row">
+      <div class="col-6 heading">
+        <span class="heading__title">{{ 'health_dashboard_campus_guide_tile' | cpI18n }}</span>
+        <span class="heading__count">
+          {{ sources.tileViews }} ({{ sources.tileCompleted }})
+        </span>
+      </div>
+      <div class="col-6 text-right download-button">
+        <button type="button"
+                class="cpbtn cpbtn--primary"
+                [disabled]="sources.tileViews==0">
+          {{ 'download' | cpI18n }}
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-6 heading">
+        <span class="heading__title">{{ 'health_dashboard_web_form' | cpI18n }}</span>
+        <span class="heading__count">
+          {{ sources.webViews }} ({{ sources.webCompleted }})
+        </span>
+      </div>
+      <div class="col-6 text-right download-button">
+        <button type="button"
+                class="cpbtn cpbtn--primary"
+                [disabled]="sources.webViews==0">
+          {{ 'download' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

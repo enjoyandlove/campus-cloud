@@ -13,7 +13,10 @@ import { reducers } from './store/reducers';
 import { CasesService } from '../cases/cases.service';
 import { ChartsUtilsService } from '@campus-cloud/shared/services';
 import { HealthDashboardFormCompletionComponent } from './components/form-completion';
-import { HealthDashboardFormCompletionGraphComponent } from './components/form-completion/components';
+import {
+  HealthDashboardFormCompletionGraphComponent,
+  HealthDashboardFormCompletionSourceComponent
+} from './components/form-completion/components';
 import { HealthDashboardUtilsService } from './health-dashboard.utils.service';
 import { EngagementUtilsService } from '../../assess/engagement/engagement.utils.service';
 import { EngagementService } from '../../assess/engagement/engagement.service';
@@ -25,7 +28,8 @@ import { HealthDashboardService } from './health-dashboard.service';
     HealthDashboardActionBoxComponent,
     StatusCardsComponent,
     HealthDashboardFormCompletionComponent,
-    HealthDashboardFormCompletionGraphComponent
+    HealthDashboardFormCompletionGraphComponent,
+    HealthDashboardFormCompletionSourceComponent
   ],
   imports: [
     CommonModule,
@@ -41,8 +45,8 @@ import { HealthDashboardService } from './health-dashboard.service';
     CPI18nPipe,
     HealthDashboardUtilsService,
     FormsService,
-    EngagementUtilsService, 
-    EngagementService,
+    EngagementUtilsService,
+    EngagementService
   ]
 })
 export class HealthDashboardModule {}

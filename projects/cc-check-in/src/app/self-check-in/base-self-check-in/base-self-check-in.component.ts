@@ -1,14 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import ICheckIn
-  from '@campus-cloud/containers/callback/checkin/checkin.interface';
+import ICheckIn from '@campus-cloud/containers/callback/checkin/checkin.interface';
 import { LayoutAlign, LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { CheckinUtilsService } from '@campus-cloud/containers/callback/checkin/checkin.utils.service';
-import {
-  CPI18nService,
-  CPTrackingService
-} from '@campus-cloud/shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CheckInFormStatus } from '@projects/cc-check-in/src/app/self-check-in/self-check-in.models';
 import { SelfCheckInUtils } from '@projects/cc-check-in/src/app/self-check-in/services/self-check-in-utils';
@@ -37,7 +33,6 @@ MYEEEkgggQQSCIEEEkgggQQSSCAEek+djl6GVboAAACwT3kB1UmGx0x3AAAAwK/J\
   styleUrls: ['./base-self-check-in.component.scss']
 })
 export class BaseSelfCheckInComponent implements OnInit {
-
   @Input() data: any;
   @Input() eventId: number;
   @Input() isEvent: boolean;

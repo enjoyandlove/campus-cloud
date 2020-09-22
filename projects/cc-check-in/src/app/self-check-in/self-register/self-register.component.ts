@@ -37,10 +37,12 @@ export class SelfRegisterComponent implements OnInit {
   @Input() clientConfig: any = {};
   disabledQRPath = environment.root + 'assets/app/disabledQR.png';
 
-  constructor(private fb: FormBuilder,
-              public deviceDetectorService: DeviceDetectorService,
-              public store: Store<IHeader>,
-              private cpI18n: CPI18nPipe) {}
+  constructor(
+    private fb: FormBuilder,
+    public deviceDetectorService: DeviceDetectorService,
+    public store: Store<IHeader>,
+    private cpI18n: CPI18nPipe
+  ) {}
 
   onSubmit(data) {
     this.send.emit(data);
