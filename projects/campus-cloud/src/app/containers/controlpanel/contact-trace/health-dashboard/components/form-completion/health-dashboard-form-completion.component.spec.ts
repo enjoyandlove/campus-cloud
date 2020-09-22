@@ -42,7 +42,12 @@ describe('HealthDashboardFormCompletionComponent', () => {
             },
             {
               selector: fromStore.selectAudienceFilter,
-              value: {}
+              value: {
+                route_id: null,
+                cohort_type: null,
+                label: '',
+                listId: null
+              }
             }
           ]
         })

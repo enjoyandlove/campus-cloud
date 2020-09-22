@@ -21,17 +21,16 @@ export class HealthDashboardUtilsService {
         newArray.length === 0 ||
         newArray[newArray.length - 1].date.getTime() !== date.getTime()
       ) {
-        if (item.response_completed_epoch === -1) {
-          newArray = [...newArray, { date: date, count: { views: 1, complete: 0 } }];
-        } else {
-          newArray = [...newArray, { date: date, count: { views: 0, complete: 1 } }];
-        }
+        newArray =
+          item.response_completed_epoch > 0
+            ? [...newArray, { date: date, count: { views: 1, complete: 1 } }]
+            : [...newArray, { date: date, count: { views: 1, complete: 0 } }];
       } else {
-        if (item.response_completed_epoch === -1) {
-          newArray[newArray.length - 1].count.views += 1;
-        } else {
-          newArray[newArray.length - 1].count.complete += 1;
-        }
+        newArray[newArray.length - 1].count.complete =
+          item.response_completed_epoch > 0
+            ? newArray[newArray.length - 1].count.complete + 1
+            : newArray[newArray.length - 1].count.complete;
+        newArray[newArray.length - 1].count.views += 1;
       }
     });
     return newArray;

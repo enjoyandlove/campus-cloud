@@ -21,7 +21,7 @@ import {
   switchMap,
   takeUntil
 } from 'rxjs/operators';
-import { Observable, of, Subject, merge } from 'rxjs';
+import { Observable, of, Subject, merge, combineLatest } from 'rxjs';
 import { HealthDashboardService } from '../../health-dashboard.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
@@ -80,9 +80,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
     private session: CPSession,
     public chartUtils: ChartsUtilsService,
     public utils: HealthDashboardUtilsService
-  ) {
-    this.registerFilterStates();
-  }
+  ) {}
 
   fetch() {
     let params;
@@ -122,13 +120,17 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
 
         res.map((item) => {
           if (item.collection_method === 1) {
-            item.response_completed_epoch === -1
-              ? this.sources.tileViews++
-              : this.sources.tileCompleted++;
+            this.sources.tileCompleted =
+              item.response_completed_epoch > 0
+                ? this.sources.tileCompleted + 1
+                : this.sources.tileCompleted;
+            this.sources.tileViews++;
           } else if (item.collection_method === 2) {
-            item.response_completed_epoch === -1
-              ? this.sources.webViews++
-              : this.sources.webCompleted++;
+            this.sources.webCompleted =
+              item.response_completed_epoch > 0
+                ? this.sources.webCompleted + 1
+                : this.sources.webCompleted;
+            this.sources.webViews++;
           }
         });
 
@@ -168,7 +170,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
           }
         });
 
-        const series = [newSeriesComplete, newSeriesViews];
+        const series = [newSeriesViews, newSeriesComplete];
         const data = { labels: labels, series: series };
 
         this.range = Object.assign({}, this.range, {
@@ -214,8 +216,8 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
               type: 'line',
               name:
                 idx === 0
-                  ? this.cpI18n.transform('contact_trace_forms_completed')
-                  : this.cpI18n.transform('health_dashboard_views')
+                  ? this.cpI18n.transform('health_dashboard_views')
+                  : this.cpI18n.transform('contact_trace_forms_completed')
             };
           });
         }
@@ -224,19 +226,14 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
 
   registerFilterStates() {
     this.audienceFilter$ = this.store.select(fromStore.selectAudienceFilter).pipe(startWith({}));
-    this.audienceFilter$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      if (value) {
-        this.audienceFilter = value;
-        this.fetch();
-      }
-    });
-
     this.dateFilter$ = this.store.select(fromStore.selectDateFilter).pipe(startWith({}));
-    this.dateFilter$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      if (value) {
-        this.dateFilter = value;
-        this.fetch();
-      }
+
+    const state$ = combineLatest([this.audienceFilter$, this.dateFilter$]);
+
+    state$.pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      this.audienceFilter = res[0];
+      this.dateFilter = res[1];
+      this.fetch();
     });
   }
 
@@ -301,7 +298,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
   }
 
   ngOnInit(): void {
-    this.fetch();
+    this.registerFilterStates();
 
     const formsSearchSource = this.formsSearchTermStream.pipe(
       debounceTime(500),
