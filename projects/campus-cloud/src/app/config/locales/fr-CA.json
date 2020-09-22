@@ -1392,6 +1392,9 @@
   "contact_trace_health_dashboard": {
     "message": "Health Dashboard"
   },
+  "contact_trace_health_dashboard_case_overview": {
+    "message": "Case Overview"
+  },
   "contact_trace_health_dashboard_new_exposures": {
     "message": "New Exposures"
   },
@@ -2347,6 +2350,15 @@
   "location_name": {
     "message": "Nom du lieu"
   },
+  "location_peak_traffic": {
+    "message": "Peak Traffic"
+  },
+  "location_top_traffic": {
+    "message": "Top Traffic"
+  },
+  "location_traffic": {
+    "message": "Traffic"
+  },
   "login": {
     "message": "Connexion",
     "description": "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
@@ -2526,6 +2538,15 @@
   },
   "qr_codes_no_results": {
     "message": "Il n'y a pas de codes QR. Utilisez \"Créer un code QR\" pour en créer un."
+  },
+  "qr_code_repeat_visits": {
+    "message": "Repeat Visits"
+  },
+  "qr_code_total_visits": {
+    "message": "Total Visits"
+  },
+  "qr_code_unique_visits": {
+    "message": "Unique Visits"
   },
   "qr_delete_modal_title": {
     "message": "Supprimer code QR"

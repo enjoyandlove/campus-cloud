@@ -18,6 +18,18 @@ class MockHealthDashboardActionBoxComponent {}
 })
 class MockStatusCardsComponent {}
 
+@Component({
+  selector: 'cp-health-dashboard-case-status-graph',
+  template: '<p>It works!</p>'
+})
+class MockHealthDashboardCaseStatusGraphComponent {}
+
+@Component({
+  selector: 'cp-health-dashboard-form-completion',
+  template: '<p>It works!</p>'
+})
+class MockHealthDashboardFormCompletionComponent {}
+
 describe('HealthDashboardComponent', () => {
   let component: HealthDashboardComponent;
   let fixture: ComponentFixture<HealthDashboardComponent>;
@@ -27,7 +39,9 @@ describe('HealthDashboardComponent', () => {
       declarations: [
         HealthDashboardComponent,
         MockHealthDashboardActionBoxComponent,
-        MockStatusCardsComponent
+        MockStatusCardsComponent,
+        MockHealthDashboardCaseStatusGraphComponent,
+        MockHealthDashboardFormCompletionComponent,
       ],
       imports: [CPTestModule]
     }).compileComponents();

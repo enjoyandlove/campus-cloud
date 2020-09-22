@@ -13,13 +13,3 @@ export const getCaseStatusFailure = createAction(
   '[contact_trace.health_dashboard] get case status failure',
   props<{ error: string }>()
 );
-
-export const setDateFilter = createAction(
-  '[contact_trace.health_dashboard] set date filter',
-  props<{ start: number; end: number }>()
-);
-
-export const setAudienceFilter = createAction(
-  '[contact_trace.health_dashboard] set audience filter',
-  props<{ audience: any }>()
-);

@@ -4,12 +4,14 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 export interface CaseStatusesState {
   caseStatusesByRank: Record<string, ICaseStatus>;
+  data: ICaseStatus[];
   error: string | null;
   loading: boolean;
 }
 
 const initialState: CaseStatusesState = {
   caseStatusesByRank: {},
+  data: [],
   error: null,
   loading: false
 };
@@ -29,6 +31,7 @@ const reducer = createReducer(
         statuses[caseStatus.rank] = caseStatus;
         return statuses;
       }, {}),
+      data,
       loading: false,
       error: null
     };

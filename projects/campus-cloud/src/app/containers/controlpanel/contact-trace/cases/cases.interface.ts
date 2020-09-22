@@ -52,6 +52,13 @@ export interface ISourceActivityName {
   source: string;
 }
 
+export interface ICaseStatusStat {
+  id: number;
+  case_status_id: string;
+  case_id: number;
+  day_start_epoch: number;
+}
+
 export enum CaseTypes {
   CtCase = 1
 }

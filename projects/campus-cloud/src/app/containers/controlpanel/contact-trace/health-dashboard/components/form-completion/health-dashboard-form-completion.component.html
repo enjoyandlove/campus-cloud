@@ -87,7 +87,7 @@
 </ready-ui-menu>
 
 <ng-template #headerTpl>
-  <ready-ui-stack *ngIf="selectedForms.length > 0" alignment="between">
+  <ready-ui-stack *ngIf="selectedForms && selectedForms.length > 0" alignment="between">
     <ready-ui-stack spacing="tight">
       <ui-text-style variant="semibold">{{'t_shared_selection' | cpI18n}}
       </ui-text-style>

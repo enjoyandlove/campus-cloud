@@ -12,6 +12,10 @@ export const selectCaseStatusesByRank = createSelector(
   selectCaseStatuses,
   (state: CaseStatusesState) => state.caseStatusesByRank
 );
+export const selectCaseStatusData = createSelector(
+  selectCaseStatuses,
+  (state: CaseStatusesState) => state.data
+);
 export const selectCaseStatusesLoading = createSelector(
   selectHealthDashboard,
   (state: HealthDashboardState) => state.caseStatuses.loading

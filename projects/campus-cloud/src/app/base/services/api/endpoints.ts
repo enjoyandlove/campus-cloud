@@ -165,6 +165,8 @@ export const ENDPOINTS = {
 
   CASE_ACTIVITY_LOG: 'case_activity_log',
 
+  CASE_STATUS_DAILY_STATS: 'case_status_daily_stats',
+
   FORMS: 'form',
 
   FORM_RESPONSE: 'form_response',

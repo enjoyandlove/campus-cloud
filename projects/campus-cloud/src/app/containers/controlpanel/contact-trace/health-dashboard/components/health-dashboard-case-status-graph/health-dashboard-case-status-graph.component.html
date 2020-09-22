@@ -1,0 +1,8 @@
+
+<div class="cp-card mb-3">
+  <h4 class="chart--title">{{'contact_trace_health_dashboard_case_overview' | cpI18n}}</h4>
+  <div class="chart-wrapper">
+    <cp-spinner *ngIf="loading$ | async" class="spinner"></cp-spinner>
+    <div #chart class="chart"></div>
+  </div>
+</div>

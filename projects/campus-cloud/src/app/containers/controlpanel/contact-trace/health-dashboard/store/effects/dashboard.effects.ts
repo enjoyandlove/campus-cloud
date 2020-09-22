@@ -1,3 +1,4 @@
+import { ICaseStatusStat } from '@controlpanel/contact-trace/cases/cases.interface';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CPSession } from '@campus-cloud/session';
@@ -27,7 +28,7 @@ export class DashboardEffects {
       withLatestFrom(this.store$.select(fromSelectors.selectAudienceFilter)),
       switchMap(([action, audience]) => {
         let params = new HttpParams().append('school_id', this.session.g.get('school').id);
-        if (audience) {
+        if (audience && audience.listId) {
           params = params.set('count_user_list_id', audience.listId);
         }
         return this.service.getCaseStatus(params).pipe(
@@ -38,12 +39,35 @@ export class DashboardEffects {
     )
   );
 
+  getCaseStatusStats$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.getCaseStatusStats),
+      withLatestFrom(this.store$.select(fromSelectors.selectFilters)),
+      switchMap(([action, filters]) => {
+        let params = new HttpParams().append('school_id', this.session.g.get('school').id);
+        if (filters.dateRange) {
+          params = params.set('start', String(filters.dateRange.start));
+          params = params.set('end', String(filters.dateRange.end));
+        }
+        if (filters.audience && filters.audience.listId) {
+          params = params.set('user_list_id', filters.audience.listId);
+        }
+        return this.service.getCaseStatusStats(params).pipe(
+          map((data: ICaseStatusStat[]) => fromActions.getCaseStatusStatsSuccess({ data })),
+          catchError((error) => of(fromActions.getCaseStatusStatsFailure(parseErrorResponse(error))))
+        );
+      })
+    )
+  );
+
   setDateFilter$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.setDateFilter),
       switchMap((action) => {
-        // next actions for date filter
-        return [];
+        return [
+          fromActions.getCaseStatusStats(),
+          // more actions to be dispatched here...
+        ];
       })
     )
   );
@@ -53,7 +77,8 @@ export class DashboardEffects {
       ofType(fromActions.setAudienceFilter),
       switchMap((action) => {
         return [
-          fromActions.getCaseStatus()
+          fromActions.getCaseStatus(),
+          fromActions.getCaseStatusStats(),
           // more actions to be dispatched here...
         ];
       })

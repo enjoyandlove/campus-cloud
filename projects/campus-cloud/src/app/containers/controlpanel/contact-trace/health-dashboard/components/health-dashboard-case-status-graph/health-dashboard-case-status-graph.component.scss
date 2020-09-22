@@ -1,0 +1,23 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+
+.chart {
+  height: 250px;
+}
+.chart-wrapper {
+  position: relative;
+}
+.spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.chart--title {
+  @include font-24px;
+  @include font-bold();
+}
