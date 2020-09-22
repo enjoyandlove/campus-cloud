@@ -1,13 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil, startWith } from 'rxjs/operators';
-import * as fromStore from '../../store';
 import { Router } from '@angular/router';
-import { ICaseStatus } from '../../../cases/cases.interface';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { canSchoolReadResource, canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { select, Store } from '@ngrx/store';
 import { CPSession } from '@projects/campus-cloud/src/app/session';
+import { Observable, Subject } from 'rxjs';
+import { startWith, takeUntil } from 'rxjs/operators';
+import { ICaseStatus } from '../../../cases/cases.interface';
+import * as fromStore from '../../store';
 
 @Component({
   selector: 'cp-status-cards',
@@ -33,7 +33,10 @@ export class StatusCardsComponent implements OnDestroy {
     private session: CPSession
   ) {
     this.getCaseStatusesByRank();
-    this.loading$ = this.store.select(fromStore.selectCaseStatusesLoading);
+    this.loading$ = this.store.pipe(
+      select(fromStore.selectCaseStatusesLoading),
+      takeUntil(this.destroy$)
+    );
   }
 
   getCaseStatusesByRank() {

@@ -9,7 +9,7 @@ export const selectFilters = createSelector(
 );
 export const selectDateFilter = createSelector(
   selectFilters,
-  (state: FiltersState) => state.timeRange
+  (state: FiltersState) => state.dateRange
 );
 export const selectAudienceFilter = createSelector(
   selectFilters,

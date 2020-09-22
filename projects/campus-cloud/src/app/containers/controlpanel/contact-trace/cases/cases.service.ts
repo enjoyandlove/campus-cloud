@@ -57,4 +57,9 @@ export class CasesService {
     }`;
     return this.api.get(url, search);
   }
+
+  getCaseStatusStats(search?: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE_STATUS_DAILY_STATS}/`;
+    return this.api.get(url, search);
+  }
 }

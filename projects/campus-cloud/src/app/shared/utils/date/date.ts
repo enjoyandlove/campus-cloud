@@ -41,6 +41,20 @@ function getTimeDuration(time, unit = null) {
   return moment.duration(time, unit);
 }
 
+function enumerateDaysBetweenDates(startDate, endDate) {
+  const dates = [];
+
+  const currDate = moment(startDate).startOf('day');
+  const lastDate = moment(endDate).startOf('day');
+
+  while (currDate.isBefore(lastDate)) {
+    dates.push(currDate.clone());
+    currDate.add(1, 'days');
+  }
+
+  return dates;
+}
+
 function format(date, formatStr) {
   return moment(date).format(formatStr);
 }
@@ -53,5 +67,6 @@ export const CPDate = {
   getMonth,
   fromEpoch,
   fromEpochLocal,
-  getTimeDuration
+  getTimeDuration,
+  enumerateDaysBetweenDates
 };

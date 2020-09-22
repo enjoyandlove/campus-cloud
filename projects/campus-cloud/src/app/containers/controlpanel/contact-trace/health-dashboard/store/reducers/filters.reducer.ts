@@ -1,25 +1,26 @@
 import * as fromActions from '@controlpanel/contact-trace/health-dashboard/store/actions';
 import { Action, createReducer, on } from '@ngrx/store';
+import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
 
 export interface FiltersState {
-  timeRange: {
-    start: number;
-    end: number;
-  } | null;
-  audience: any;
+  dateRange: IDateRange | null;
+  audience: {
+    label: string;
+    listId: string;
+  };
 }
 
 const initialState: FiltersState = {
-  timeRange: null,
+  dateRange: null,
   audience: null
 };
 
 const reducer = createReducer(
   initialState,
-  on(fromActions.setDateFilter, (state, { start, end }) => {
+  on(fromActions.setDateFilter, (state, dateRange) => {
     return {
       ...state,
-      timeRange: { start, end }
+      dateRange: dateRange
     };
   }),
   on(fromActions.setAudienceFilter, (state, { audience }) => {

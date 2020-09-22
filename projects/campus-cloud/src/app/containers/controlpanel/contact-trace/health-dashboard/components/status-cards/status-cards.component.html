@@ -1,6 +1,9 @@
 <div [ngSwitch]="loading$ | async">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  <div class="row" *ngSwitchCase="false">
+  <div class="cp-card mb-3 card-loading d-flex justify-content-center align-items-center"
+    *ngSwitchCase="true">
+    <cp-spinner theme="m-auto"></cp-spinner>
+  </div>
+  <div class="row mb-2" *ngSwitchCase="false">
     <div class="col-md-4 col-sm-12 mb-2 d-flex">
       <div class="cp-card text-center flex-grow-1">
         <div class="case-count">

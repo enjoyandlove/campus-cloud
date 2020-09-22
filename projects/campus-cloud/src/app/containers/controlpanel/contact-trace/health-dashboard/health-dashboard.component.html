@@ -1,5 +1,14 @@
-<cp-health-dashboard-action-box></cp-health-dashboard-action-box>
+<div #actionBox
+     class="mb-3"
+     [class.action-box-pinned]="isActionBoxPinned"
+     [class.shadow]="isActionBoxPinned">
+  <cp-health-dashboard-action-box></cp-health-dashboard-action-box>
+</div>
+<div [class.action-box-placeholder]="isActionBoxPinned"></div>
+
 <cp-status-cards></cp-status-cards>
+<cp-health-dashboard-case-status-graph></cp-health-dashboard-case-status-graph>
 <cp-health-dashboard-form-completion #formGraph
                                      *ngIf="isContactTracePlus">
 </cp-health-dashboard-form-completion>
+
