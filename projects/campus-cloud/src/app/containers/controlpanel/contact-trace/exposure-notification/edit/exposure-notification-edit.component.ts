@@ -169,13 +169,15 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.pipe(takeUntil(this.unsubscribe)).subscribe((params) => {
       const notificationId: number = Number(params['notificationId']);
       this.getItemForEdit(notificationId).subscribe((notification) => {
-        this.notification = { ...notification, user_ids: this.notification.user_ids };
+        this.notification = {
+          ...this.notification,
+          ...notification,
+          user_ids: this.notification.user_ids
+        };
         this.buildHeader();
       });
     });
 
-    this.getNotificationTemplates();
-    this.getCaseStatuses();
     this.initNotificationForm();
 
     this.getCasesById$ = this.storeCase.select(fromStore.getSelectedCaseStatus);
@@ -185,20 +187,16 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         this.notification.list_ids = [user_list_id];
       });
 
-    this.setFilteredOptionFromNavState();
-  }
-
-  setFilteredOptionFromNavState() {
+    // Apply for exposed status which comes from Health Dashboard "Send Message" button
     const toCaseStatus = history.state ? history.state.toCaseStatus : null;
     if (toCaseStatus) {
       this.onToOptionChanged(this.toOptions[1]);
-      this.onFilterOptionChanged({
-        action: toCaseStatus.id,
-        label: toCaseStatus.name,
-        caseCount: toCaseStatus.case_count
-      });
+      this.getNotificationTemplates(2);
+      this.getCaseStatuses(toCaseStatus);
     } else {
       this.onToOptionChanged(this.toOptions[0]);
+      this.getCaseStatuses();
+      this.getNotificationTemplates();
     }
   }
 
@@ -275,8 +273,11 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       this.notification.message = selectedTemplate.message;
     } else {
       this.setPriority(AnnouncementPriority.regular);
-      this.notification.subject = '';
-      this.notification.message = '';
+      this.notification = {
+        ...this.notification,
+        subject: '',
+        message: ''
+      };
     }
   }
 
@@ -439,7 +440,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getNotificationTemplates(): void {
+  private getNotificationTemplates(selectedType = null): void {
     this.notificationService.searchNotificationTemplates().subscribe((templates) => {
       this.templateTypeToTemplateMap = {};
       this.templates = [
@@ -456,12 +457,15 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             label: template.name
           });
         });
+        if (selectedType && this.templateTypeToTemplateMap[selectedType]) {
+          const {type: action, name: label} = this.templateTypeToTemplateMap[selectedType];
+          this.onTemplateOptionChanged({action, label});
+        }
       }
     });
   }
 
-  private getCaseStatuses(): void {
-    this.storeCase.dispatch(new fromStore.GetCaseStatus());
+  private getCaseStatuses(selectedOption = null): void {
     this.notificationService.searchCaseStatuses().subscribe((statuses: ICaseStatus[]) => {
       this.filterOptions = [
         {
@@ -471,9 +475,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
           label: this.cpI18n.translate('contact_trace_notification_select_status')
         }
       ];
-      if (!this.selectedFilterOption) {
-        this.selectedFilterOption = this.filterOptions[0];
-      }
+
       if (statuses) {
         statuses.sort((a, b) => b.rank - a.rank);
         statuses.forEach((status) => {
@@ -483,6 +485,16 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             caseCount: status.case_count
           });
         });
+      }
+
+      if (selectedOption) {
+        this.onFilterOptionChanged({
+          action: selectedOption.id,
+          label: selectedOption.name,
+          caseCount: selectedOption.case_count
+        });
+      } else {
+        this.selectedFilterOption = this.filterOptions[0];
       }
     });
   }
