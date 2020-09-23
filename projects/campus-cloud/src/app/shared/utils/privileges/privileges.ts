@@ -1,4 +1,5 @@
 import { get as _get, isEmpty } from 'lodash';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 const accountLevelEmpty = (user) => {
   const accountLevel = _get(user, 'account_level_privileges', []);
@@ -179,4 +180,8 @@ export const canClientWriteResource = (session: Map<any, any>, privilegeType: nu
   }
 
   return false;
+};
+
+export const privacyConfigurationOn = (session: Map<any, any>) => {
+  return !canSchoolReadResource(session, CP_PRIVILEGES_MAP.contact_trace_pii);
 };

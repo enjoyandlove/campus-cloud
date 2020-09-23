@@ -12,10 +12,17 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { getItem } from '@campus-cloud/shared/components';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { CPDate, Formats, createSpreadSheet, compressFiles } from '@campus-cloud/shared/utils';
+import {
+  CPDate,
+  Formats,
+  createSpreadSheet,
+  compressFiles,
+  privacyConfigurationOn
+} from '@campus-cloud/shared/utils';
 import { CPSession } from '@campus-cloud/session';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { PrivacyConfiguration } from '@controlpanel/settings/team/team.utils.service';
 
 @Injectable()
 export class CasesUtilsService {
@@ -82,7 +89,7 @@ export class CasesUtilsService {
       lastname: [formData ? formData.lastname : null, Validators.required],
       extern_user_id: [formData ? formData.extern_user_id : null, Validators.required],
       current_status_id: [
-        formData && formData.current_status.id != 0 ? formData.current_status.id : null,
+        formData && formData.current_status.id !== 0 ? formData.current_status.id : null,
         Validators.required
       ]
     });
@@ -188,78 +195,146 @@ export class CasesUtilsService {
     return caseLog;
   }
 
-  createCaseCSVData(cases) {
-    let columns = [
-      this.cpI18nPipe.transform('first_name'),
-      this.cpI18nPipe.transform('last_name'),
-      this.cpI18nPipe.transform('email'),
-      this.cpI18nPipe.transform('student_id'),
-      this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
-      this.cpI18nPipe.transform('t_case_status')
-    ];
+  createCaseCSVData(cases, privacyOn: boolean = false) {
+    let columns = !privacyOn
+      ? [
+          this.cpI18nPipe.transform('first_name'),
+          this.cpI18nPipe.transform('last_name'),
+          this.cpI18nPipe.transform('email'),
+          this.cpI18nPipe.transform('student_id'),
+          this.cpI18nPipe.transform('contact_trace_health_identifier'),
+          this.cpI18nPipe.transform('contact_trace_case_id'),
+          this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
+          this.cpI18nPipe.transform('t_case_status')
+        ]
+      : [
+          this.cpI18nPipe.transform('contact_trace_health_identifier'),
+          this.cpI18nPipe.transform('contact_trace_case_id'),
+          this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
+          this.cpI18nPipe.transform('t_case_status')
+        ];
+    cases = cases.map((item, data) => {
+      return !privacyOn
+        ? {
+            [this.cpI18nPipe.transform('first_name')]: item.firstname,
 
-    cases = cases.map((item) => {
-      return {
-        [this.cpI18nPipe.transform('first_name')]: item.firstname,
+            [this.cpI18nPipe.transform('last_name')]: item.lastname,
 
-        [this.cpI18nPipe.transform('last_name')]: item.lastname,
+            [this.cpI18nPipe.transform('email')]: item.extern_user_id,
 
-        [this.cpI18nPipe.transform('email')]: item.extern_user_id,
+            [this.cpI18nPipe.transform('student_id')]: item.student_id,
 
-        [this.cpI18nPipe.transform('student_id')]: item.student_id,
+            [this.cpI18nPipe.transform(
+              'contact_trace_health_identifier'
+            )]: item.anonymous_identifier,
 
-        [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
-          item.date_last_modified,
-          this.session.tz
-        ).format(Formats.dateFormat),
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.id,
 
-        [this.cpI18nPipe.transform('t_case_status')]: item.current_status.name
-      };
+            [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
+              item.date_last_modified,
+              this.session.tz
+            ).format(Formats.dateFormat),
+
+            [this.cpI18nPipe.transform('t_case_status')]: item.current_status.name
+          }
+        : {
+            [this.cpI18nPipe.transform(
+              'contact_trace_health_identifier'
+            )]: item.anonymous_identifier,
+
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.id,
+
+            [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
+              item.date_last_modified,
+              this.session.tz
+            ).format(Formats.dateFormat),
+
+            [this.cpI18nPipe.transform('t_case_status')]: item.current_status.name
+          };
     });
 
     return { columns: columns, data: cases };
   }
 
-  createCaseActivityCSVData(caseActivities) {
-    let columns = [
-      this.cpI18nPipe.transform('first_name'),
-      this.cpI18nPipe.transform('last_name'),
-      this.cpI18nPipe.transform('email'),
-      this.cpI18nPipe.transform('student_id'),
-      this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
-      this.cpI18nPipe.transform('event'),
-      this.cpI18nPipe.transform('t_case_status'),
-      this.cpI18nPipe.transform('t_shared_source')
-    ];
+  createCaseActivityCSVData(caseActivities, privacyOn: boolean = false) {
+    let columns = !privacyOn
+      ? [
+          this.cpI18nPipe.transform('first_name'),
+          this.cpI18nPipe.transform('last_name'),
+          this.cpI18nPipe.transform('email'),
+          this.cpI18nPipe.transform('student_id'),
+          this.cpI18nPipe.transform('contact_trace_health_identifier'),
+          this.cpI18nPipe.transform('contact_trace_case_id'),
+          this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
+          this.cpI18nPipe.transform('event'),
+          this.cpI18nPipe.transform('t_case_status'),
+          this.cpI18nPipe.transform('t_shared_source')
+        ]
+      : [
+          this.cpI18nPipe.transform('contact_trace_health_identifier'),
+          this.cpI18nPipe.transform('contact_trace_case_id'),
+          this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
+          this.cpI18nPipe.transform('event'),
+          this.cpI18nPipe.transform('t_case_status'),
+          this.cpI18nPipe.transform('t_shared_source')
+        ];
 
     caseActivities = caseActivities.map((item) => {
-      return {
-        [this.cpI18nPipe.transform('first_name')]: item.firstname,
+      return !privacyOn
+        ? {
+            [this.cpI18nPipe.transform('first_name')]: item.firstname,
 
-        [this.cpI18nPipe.transform('last_name')]: item.lastname,
+            [this.cpI18nPipe.transform('last_name')]: item.lastname,
 
-        [this.cpI18nPipe.transform('email')]: item.extern_user_id,
+            [this.cpI18nPipe.transform('email')]: item.extern_user_id,
 
-        [this.cpI18nPipe.transform('student_id')]: item.student_id,
+            [this.cpI18nPipe.transform('student_id')]: item.student_id,
 
-        [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
-          item.activity_time_epoch,
-          this.session.tz
-        ).format(Formats.dateFormat),
+            [this.cpI18nPipe.transform(
+              'contact_trace_health_identifier'
+            )]: item.anonymous_identifier,
 
-        [this.cpI18nPipe.transform('event')]: item.event,
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.case_id,
 
-        [this.cpI18nPipe.transform('t_case_status')]: item.new_status.name,
+            [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
+              item.activity_time_epoch,
+              this.session.tz
+            ).format(Formats.dateFormat),
 
-        [this.cpI18nPipe.transform('t_shared_source')]: item.source
-      };
+            [this.cpI18nPipe.transform('event')]: item.event,
+
+            [this.cpI18nPipe.transform('t_case_status')]: item.new_status.name,
+
+            [this.cpI18nPipe.transform('t_shared_source')]: item.source
+          }
+        : {
+            [this.cpI18nPipe.transform(
+              'contact_trace_health_identifier'
+            )]: item.anonymous_identifier,
+
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.case_id,
+
+            [this.cpI18nPipe.transform('t_data_export_csv_walls_date_created')]: CPDate.fromEpoch(
+              item.activity_time_epoch,
+              this.session.tz
+            ).format(Formats.dateFormat),
+
+            [this.cpI18nPipe.transform('event')]: item.event,
+
+            [this.cpI18nPipe.transform('t_case_status')]: item.new_status.name,
+
+            [this.cpI18nPipe.transform('t_shared_source')]: item.source
+          };
     });
 
     return { columns: columns, data: caseActivities };
   }
 
   exportCaseActivities(caseActivities) {
-    const csvData = this.createCaseActivityCSVData(caseActivities);
+    const csvData = this.createCaseActivityCSVData(
+      caseActivities,
+      privacyConfigurationOn(this.session.g)
+    );
     createSpreadSheet(csvData.data, csvData.columns);
   }
 
@@ -273,8 +348,11 @@ export class CasesUtilsService {
   }
 
   async exportCases(cases, caseActivities) {
-    const caseData = this.createCaseCSVData(cases);
-    const caseActivityData = this.createCaseActivityCSVData(caseActivities);
+    const caseData = this.createCaseCSVData(cases, privacyConfigurationOn(this.session.g));
+    const caseActivityData = this.createCaseActivityCSVData(
+      caseActivities,
+      privacyConfigurationOn(this.session.g)
+    );
     const files = [
       {
         name: `CASE_${this.fileDateSignature}`,

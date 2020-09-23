@@ -8,6 +8,7 @@ import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { CheckInMethod } from '@controlpanel/manage/events/event.status';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
 
 interface IDateRange {
   end: number;
@@ -101,5 +102,9 @@ export class QrAttendeesActionBoxComponent implements OnInit {
 
     this.studentFilter$ = this.engageUtils.getStudentFilter();
     this.dateRanges = this.engageUtils.dateFilter();
+  }
+
+  isPrivacyOn() {
+    return privacyConfigurationOn(this.session.g);
   }
 }

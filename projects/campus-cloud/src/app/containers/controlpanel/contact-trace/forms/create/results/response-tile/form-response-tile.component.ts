@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BlockType, FormBlock, FormResponse } from '../../../models';
 import { FORMAT } from '@campus-cloud/shared/pipes';
 import { FormsHelperService } from '../../../services';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
 
 @Component({
   selector: 'cp-form-response-tile',
@@ -16,7 +18,7 @@ export class FormResponseTileComponent implements OnInit {
   dateFormat = FORMAT.DATETIME;
   isImageBlock: boolean;
 
-  constructor() {}
+  constructor(private session: CPSession) {}
 
   ngOnInit(): void {
     this.initializeResponseLabel(this.response);
@@ -49,5 +51,9 @@ export class FormResponseTileComponent implements OnInit {
       this.blockIdToBlockMap &&
       this.blockIdToBlockMap[this.filterQuestionBlockId] &&
       this.blockIdToBlockMap[this.filterQuestionBlockId].block_type === BlockType.image;
+  }
+
+  isPrivacyOn() {
+    return privacyConfigurationOn(this.session.g);
   }
 }

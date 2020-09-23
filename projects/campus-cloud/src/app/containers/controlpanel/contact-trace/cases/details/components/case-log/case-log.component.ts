@@ -144,6 +144,8 @@ export class CaseLogComponent extends BaseComponent implements OnInit {
           lastname: this.case.lastname,
           extern_user_id: this.case.extern_user_id,
           student_id: this.case.student_id,
+          anonymous_identifier: this.case.anonymous_identifier,
+          case_id: this.case.case_id,
           ...el
         }));
 

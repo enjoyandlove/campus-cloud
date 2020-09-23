@@ -26,6 +26,8 @@ import {
   IFilterState,
   ProvidersUtilsService
 } from '@campus-cloud/containers/controlpanel/manage/services/providers.utils.service';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
 
 interface IState {
   end: string;
@@ -88,7 +90,8 @@ export class QrAttendeesListComponent extends BaseComponent implements OnInit {
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     public providersService: ProvidersService,
-    public providerUtils: ProvidersUtilsService
+    public providerUtils: ProvidersUtilsService,
+    private session: CPSession
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -327,5 +330,9 @@ export class QrAttendeesListComponent extends BaseComponent implements OnInit {
       checkout_time: this.cpI18n.translate('t_services_label_checkout_time'),
       checkin_method: this.cpI18n.translate('services_label_all_checkin_methods')
     };
+  }
+
+  isPrivacyOn() {
+    return privacyConfigurationOn(this.session.g);
   }
 }

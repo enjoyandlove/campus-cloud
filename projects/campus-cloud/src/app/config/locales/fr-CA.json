@@ -87,7 +87,7 @@
     "message": "Monitor the health status of your campus through forms, case management and contact tracing."
   },
   "admin_contact_trace_privacy_help": {
-    "message": "Keep student health data anonymized with Privacy On."
+    "message": "Gardez les données sur la santé des élèves anonymes grâce à Privacy On."
   },
   "admin_contact_trace_qr": {
     "message": "codes QR"
@@ -169,6 +169,12 @@
   },
   "admin_permissions": {
     "message": "Sélectionner permissions"
+  },
+  "admin_privacy_disabled": {
+    "message": "Confidentialité Désactivée"
+  },
+  "admin_privacy_enabled": {
+    "message": "Confidentialité Activée"
   },
   "admin_search_by_email_or_email": {
     "message": "Rechercher par nom ou courriel..."
@@ -1026,6 +1032,9 @@
   "contact_details": {
     "message": "Détails du contact"
   },
+  "contact_trace_case_id": {
+    "message": "Case ID"
+  },
   "contact_trace_exposure_notification": {
     "message": "Notifications"
   },
@@ -1409,6 +1418,9 @@
   },
   "contact_trace_health_dashboard_student_protected": {
     "message": "Student Protected"
+  },
+  "contact_trace_health_identifier": {
+    "message": "Health Identifier"
   },
   "contact_trace_notification_all_statuses": {
     "message": "Tous les statuts"
@@ -4205,6 +4217,9 @@
   },
   "t_services_assessment_enable_qr_check_in": {
     "message": "Activer code QR"
+  },
+  "t_services_assessment_kiosk_checkin_page": {
+    "message": "Kiosk Check-in"
   },
   "t_services_assessment_qr_code_disabled_success_message": {
     "message": "Code QR désactivé avec succès"

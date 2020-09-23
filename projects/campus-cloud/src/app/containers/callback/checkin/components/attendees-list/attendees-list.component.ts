@@ -4,6 +4,8 @@ import { FORMAT } from '@campus-cloud/shared/pipes';
 import ICheckIn from '../../checkin.interface';
 import IAttendee from '../attendee.interface';
 import { CheckInOutTime, CheckInType } from '../../../callback.status';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
 
 @Component({
   selector: 'cp-attendees-list',
@@ -22,6 +24,8 @@ export class CheckinAttendeesListComponent {
   empty = CheckInOutTime.empty;
   checkInType = CheckInType.web;
   dateFormat = FORMAT.DATETIME_SHORT;
+
+  constructor(private session: CPSession) {}
 
   onCheckOutModal(attendee: IAttendee) {
     this.attendee = attendee;
@@ -59,5 +63,9 @@ export class CheckinAttendeesListComponent {
     };
 
     this.checkout.emit({ data: this.data, userId: newAttendee.attendance_id });
+  }
+
+  isPrivacyOn() {
+    return privacyConfigurationOn(this.session.g);
   }
 }

@@ -125,15 +125,23 @@
               <p class="section-sub-title">
                 {{ 'admin_contact_trace_title' | cpI18n }}
               </p>
-              <!--<p class="section-description">
+              <p class="section-description">
                 {{ 'admin_contact_trace_help' | cpI18n }}
-              </p>-->
+              </p>
+              <p class="section-description font-italic margin-top">
+                {{ 'admin_contact_trace_privacy_help' | cpI18n }}
+              </p>
             </div>
             <div class="col-4">
               <cp-dropdown-multiselect [items]="contactTraceMenu"
                                        (selection)="onContactTraceSelection($event)"
                                        [placeholder]="'admin_no_access' | cpI18n">
               </cp-dropdown-multiselect>
+              <cp-dropdown [disabled]="!canEditPrivacyPermission"
+                           [items]="privacyOptions" class="margin-top"
+                           [selectedItem]="privacyPermission()"
+                           (selected)="onPrivacyToggle($event)">
+              </cp-dropdown>
             </div>
           </div>
         </div>

@@ -16,7 +16,8 @@
       <td ui-table-cell>
         <ready-ui-stack direction="vertical">
           <strong>
-            <a ui-button
+            <a  *ngIf="!privacyTurnedOn"
+                ui-button
                 cpTracker
                 variant="inline"
                 cpTarget="view_info"
@@ -24,9 +25,19 @@
                 [routerLink]="[case.id]">
               {{ case.firstname }} {{ case.lastname }}
             </a>
+              <a *ngIf="privacyTurnedOn"
+                 ui-button
+                 cpTracker
+                 variant="inline"
+                 cpTarget="view_info"
+                 [eventData]="eventData"
+                 [routerLink]="[case.id]"
+              >
+                  {{case.anonymous_identifier}}
+              </a>
           </strong>
-          <strong>
-            <a ui-button
+          <strong *ngIf="!privacyTurnedOn">
+            <a  ui-button
                 cpTracker
                 variant="inline"
                 cpTarget="view_info"

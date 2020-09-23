@@ -26,6 +26,14 @@ export class CheckInUtilsService {
       check_out_time_epoch: [checkOutTime],
       event_id: [data.id, Validators.required],
       email: [formData ? formData.email : null, Validators.required],
+      anonymous_identifier: [
+        formData
+          ? formData.anonymous_identifier
+            ? formData.anonymous_identifier
+            : 'A041411414'
+          : null,
+        Validators.required
+      ],
       lastname: [formData ? formData.lastname : null, Validators.required],
       firstname: [formData ? formData.firstname : null, Validators.required],
       check_in_method: [formData ? formData.check_in_method : CheckInMethod.web],

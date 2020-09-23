@@ -4,7 +4,7 @@
       <div class="col-12 text-center">
         <span>
           <strong>{{ 'cases' | cpI18n }}</strong>
-        </span>        
+        </span>
         <button type="button"
                 aria-label="close"
                 (click)="resetModal()"
@@ -19,36 +19,40 @@
   <div class="cpmodal__body">
     <div class="page-container">
       <div [ngSwitch]="loading">
-        <cp-spinner *ngSwitchCase="true" class="case-spinner"></cp-spinner>
+        <cp-spinner *ngSwitchCase="true"
+                    class="case-spinner"></cp-spinner>
         <div *ngSwitchCase="false">
           <cp-no-content class="margin-top case-nocontent"
-                    *ngIf="!cases.length"
-                    [noContentText]="'t_cases_no_record_found' | cpI18n">
+                         *ngIf="!cases.length"
+                         [noContentText]="'t_cases_no_record_found' | cpI18n">
           </cp-no-content>
           <div *ngIf="!!cases.length">
-            <div
-              class="row user-row"
-              *ngFor="let case of cases"
-            >
-              <div class="left-col">
+            <div class="row user-row"
+                    *ngFor="let case of cases">
+              <div class="left-col w-50"
+                   *ngIf="!isPrivacyOn() else healthId">
                 <div class="user-name-cell">
                   {{case | fullName}}
                 </div>
                 <div class="email-cell">
-                  {{case.email}}
+                  {{case.extern_user_id}}
                 </div>
               </div>
-              <div class="right-col">
-                <div
-                  class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button"
-                  (click)="onClicked(case.id)"
-                >
+              <ng-template #healthId>
+                <div class="user-name-cell w-50">
+                  {{case.anonymous_identifier}}
+                </div>
+              </ng-template>
+              <div class="right-col w-50">
+                <div class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button"
+                        (click)="onClicked(case.id)">
                   {{ 'contact_trace_notification_view_case' | cpI18n }}
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>

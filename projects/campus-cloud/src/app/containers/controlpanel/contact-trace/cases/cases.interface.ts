@@ -10,6 +10,8 @@ export interface ICase {
   firstname: string;
   lastname: string;
   student_id?: string;
+  case_id?: string;
+  anonymous_identifier?: string;
 }
 
 export interface ICaseStatus {
@@ -44,6 +46,8 @@ export interface ICaseLog {
   source: string;
   event: string;
   contact_trace_event_id: number;
+  case_id?: string;
+  anonymous_identifier?: string;
 }
 
 export interface ISourceActivityName {

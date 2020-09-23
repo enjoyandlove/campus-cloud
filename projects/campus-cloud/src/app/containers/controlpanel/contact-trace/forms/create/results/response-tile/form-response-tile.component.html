@@ -1,7 +1,7 @@
 <div class="page-container">
 
   <div class="top-row">
-    <div class="name-cell">
+    <div class="name-cell" *ngIf="!isPrivacyOn() else healthIdTitle">
       <ng-container *ngIf="!response.user_id">
         {{response.extern_user_id}}
       </ng-container>
@@ -9,6 +9,13 @@
         {{response | respondentNameFromFormResponse}}
       </ng-container>
     </div>
+    <ng-template #healthIdTitle>
+      <div class="name-cell">
+        <ng-container>
+          {{response.anonymous_identifier? response.anonymous_identifier: 'A45451245'}}
+        </ng-container>
+      </div>
+    </ng-template>
     <div class="collection-method-cell">
       {{ (response.collection_method | collectionMethodCodeToDisplayString) | cpI18n }}
     </div>

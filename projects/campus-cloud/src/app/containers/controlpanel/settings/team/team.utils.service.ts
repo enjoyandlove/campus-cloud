@@ -69,6 +69,11 @@ export enum PhraseAppKeys {
   inviteFail = 't_team_settings_resend_invite_admin_already_activated'
 }
 
+export enum PrivacyConfiguration {
+  on = 1,
+  off = 0
+}
+
 @Injectable()
 export class TeamUtilsService {
   constructor(public session: CPSession, public cpI18n: CPI18nService) {}
@@ -397,6 +402,20 @@ export class TeamUtilsService {
     }
 
     return items;
+  }
+
+  privacyDropdown() {
+    const privacyDropdownItems = [
+      {
+        label: this.cpI18n.translate('admin_privacy_enabled'),
+        action: PrivacyConfiguration.on
+      },
+      {
+        label: this.cpI18n.translate('admin_privacy_disabled'),
+        action: PrivacyConfiguration.off
+      }
+    ];
+    return privacyDropdownItems;
   }
 
   isService(obj) {

@@ -40,7 +40,7 @@
           <ng-container *ngFor="let assessment of assessments; index as i">
             <tr ui-table-row>
               <td ui-table-cell>
-                <ready-ui-stack>
+                <ready-ui-stack *ngIf="!isPrivacyOn() else healthId">
                   <ready-ui-avatar [alt]="'t_shared_img_alt' | cpI18n: i + 1"
                                    [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage">
                   </ready-ui-avatar>
@@ -54,6 +54,12 @@
                     </small>
                   </div>
                 </ready-ui-stack>
+                <ng-template #healthId>
+                  <strong>
+                    {{assessment.anonymous_identifier ? assessment.anonymous_identifier : 'A041411414' }}
+                    <a class="text-primary" [routerLink]="[assessment.case_id]">({{ assessment.case_id ? assessment.case_id : '120' }})</a>
+                  </strong>
+                </ng-template>
               </td>
               <td ui-table-cell>
                 {{ assessment.check_in_time_epoch | cpDatePipe: dateFormat }}
@@ -72,7 +78,7 @@
                                [name]="[assessment.check_in_method === webCheckInMethod ? 'computer' : 'smartphone']">
                 </ready-ui-icon>
 
-              </td>         
+              </td>
               <td ui-table-cell
                   align="right">
                 <ng-container
@@ -93,7 +99,7 @@
                   </button>
                 </ng-container>
               </td>
-            </tr>           
+            </tr>
           </ng-container>
         </tbody>
       </table>

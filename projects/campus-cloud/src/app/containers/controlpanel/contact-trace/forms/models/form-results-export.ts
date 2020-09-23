@@ -1,7 +1,9 @@
 export interface FormResultExport {
-  fistname: string;
+  firstname: string;
   lastname: string;
   extern_user_id: string;
+  anonymous_identifier: string;
+  case_id: string;
   completionDate: string;
   collectionMethod: string;
   result: string;

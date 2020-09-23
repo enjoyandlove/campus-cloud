@@ -9,9 +9,11 @@ export interface FormResponse {
   response_last_modified_epoch?: number;
   response_completed_epoch?: number;
   user_id?: number;
+  case_id?: string;
   email?: string;
   firstname?: string;
   lastname?: string;
   extern_user_id?: string;
+  anonymous_identifier?: string;
   form_block_response_list?: FormBlockResponse[];
 }

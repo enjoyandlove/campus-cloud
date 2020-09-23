@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <div class="row form-group">
+  <div class="row form-group" *ngIf="!isPrivacyOn()">
     <div class="col-6">
       <label>{{ 't_events_attendance_add_edit_check_in_first_name' | cpI18n }}</label>
       <input type="text"
@@ -16,13 +16,20 @@
     </div>
   </div>
   <div class="row form-group">
-    <div class="col-6">
+    <div class="col-6" *ngIf="!isPrivacyOn()">
       <label>{{ 't_events_attendance_add_edit_check_in_email' | cpI18n }}</label>
       <input type="text"
              class="form-control"
              formControlName="email"
              [attr.disabled]="isEdit ? 'disabled' : null"
              [class.error]="formErrors && form.controls.email.hasError('required')" />
+    </div>
+    <div class="col-6" *ngIf="isEdit">
+      <label>{{ 'contact_trace_health_identifier' | cpI18n }}</label>
+      <input type="text"
+             class="form-control"
+             formControlName="anonymous_identifier"
+             [attr.disabled]="'disabled'"/>
     </div>
   </div>
   <div class="row form-group item-details">

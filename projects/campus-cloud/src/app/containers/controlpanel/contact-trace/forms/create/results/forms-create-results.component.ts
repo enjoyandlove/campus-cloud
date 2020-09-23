@@ -4,13 +4,19 @@ import { Store } from '@ngrx/store';
 import { baseActions, IHeader } from '@campus-cloud/store';
 import { FormResponseService, FormsHelperService, FormsService } from '../../services';
 import { filter, finalize, map, takeUntil } from 'rxjs/operators';
-import { Form, FormBlock, FormResponse, FormResultExport } from '@controlpanel/contact-trace/forms/models';
+import {
+  Form,
+  FormBlock,
+  FormResponse,
+  FormResultExport
+} from '@controlpanel/contact-trace/forms/models';
 import { IItem } from '@campus-cloud/shared/components';
 import { Router } from '@angular/router';
 import { CPDatePipe, CPI18nPipe, FORMAT } from '@campus-cloud/shared/pipes';
 import { CollectionMethodCodeToDisplayStringPipe } from '@controlpanel/contact-trace/forms/pipes';
 import { FormResponseExportService } from '@controlpanel/contact-trace/forms/services/form-response-export.service';
-import { CPDate } from '@campus-cloud/shared/utils';
+import { CPDate, privacyConfigurationOn } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
 
 @Component({
   selector: 'cp-forms-create-results',
@@ -181,24 +187,32 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
       .pipe(filter((formResponses: FormResponse[]) => formResponses.length > 0))
       .subscribe((formResponses: FormResponse[]) => {
         formResponses.forEach((formResponse) => {
-
-          const formResultExportItem: FormResultExport = this.initFormResultExportItem(formResponse);
+          const formResultExportItem: FormResultExport = this.initFormResultExportItem(
+            formResponse
+          );
           for (let i = 1; i < this.form.form_block_list.length; i++) {
             const formBloc = this.form.form_block_list[i];
-            if (formBloc.is_terminal || (this.filterQuestionBlockId && this.filterQuestionBlockId !== formBloc.id)) {
+            if (
+              formBloc.is_terminal ||
+              (this.filterQuestionBlockId && this.filterQuestionBlockId !== formBloc.id)
+            ) {
               continue;
             }
 
             formResultExportItem.question.push(formBloc.text);
-            formResultExportItem.answer.push(FormsHelperService.generateRespondentResponsesForQuestion(
-              formResponse,
-              formBloc
-            ).join('\n'));
-
+            formResultExportItem.answer.push(
+              FormsHelperService.generateRespondentResponsesForQuestion(
+                formResponse,
+                formBloc
+              ).join('\n')
+            );
           }
           this.formResultExport.push(formResultExportItem);
         });
-        const fileName = this.form.name + '_Result-Export_' + this.cPDatePipe.transform(CPDate.localNow().unix(), FORMAT.DATETIME);
+        const fileName =
+          this.form.name +
+          '_Result-Export_' +
+          this.cPDatePipe.transform(CPDate.localNow().unix(), FORMAT.DATETIME);
 
         this.formResponseExportService.exportFormResponsesAsCsv(this.formResultExport, fileName);
       });
@@ -206,11 +220,20 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
 
   private initFormResultExportItem(formResponse: FormResponse): FormResultExport {
     return {
-      fistname: formResponse.firstname,
+      firstname: formResponse.firstname,
       lastname: formResponse.lastname,
       extern_user_id: formResponse.user_id > 0 ? formResponse.email : formResponse.extern_user_id,
-      completionDate: this.cPDatePipe.transform(formResponse.response_completed_epoch, FORMAT.DATETIME),
-      collectionMethod: this.cpI18n.transform(this.collectionMethodPipe.transform(formResponse.collection_method)),
+      case_id: formResponse.case_id ? formResponse.case_id : '120',
+      anonymous_identifier: formResponse.anonymous_identifier
+        ? formResponse.anonymous_identifier
+        : 'A041411414',
+      completionDate: this.cPDatePipe.transform(
+        formResponse.response_completed_epoch,
+        FORMAT.DATETIME
+      ),
+      collectionMethod: this.cpI18n.transform(
+        this.collectionMethodPipe.transform(formResponse.collection_method)
+      ),
       result: this.blockIdToBlockMap[formResponse.terminal_form_block_id].name,
       question: [],
       answer: []

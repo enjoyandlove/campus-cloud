@@ -170,6 +170,12 @@
   "admin_permissions": {
     "message": "Select Permissions"
   },
+  "admin_privacy_disabled": {
+    "message": "Privacy Off"
+  },
+  "admin_privacy_enabled": {
+    "message": "Privacy On"
+  },
   "admin_search_by_email_or_email": {
     "message": "Search by name or email..."
   },
@@ -1026,6 +1032,9 @@
   "contact_details": {
     "message": "Contact Details"
   },
+  "contact_trace_case_id": {
+    "message": "Case ID"
+  },
   "contact_trace_exposure_notification": {
     "message": "Notifications"
   },
@@ -1409,6 +1418,9 @@
   },
   "contact_trace_health_dashboard_student_protected": {
     "message": "Student Protected"
+  },
+  "contact_trace_health_identifier": {
+    "message": "Health Identifier"
   },
   "contact_trace_notification_all_statuses": {
     "message": "All Statuses"
@@ -4205,6 +4217,9 @@
   },
   "t_services_assessment_enable_qr_check_in": {
     "message": "Enable QR Code"
+  },
+  "t_services_assessment_kiosk_checkin_page": {
+    "message": "Kiosk Check-in"
   },
   "t_services_assessment_qr_code_disabled_success_message": {
     "message": "QR Code successfully disabled"

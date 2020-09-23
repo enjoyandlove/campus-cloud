@@ -201,18 +201,18 @@ export class CasesComponent extends BaseComponent implements OnInit, OnDestroy {
             if (!c) {
               return null;
             }
-            const { firstname, lastname, extern_user_id, student_id } = c;
+            const { firstname, lastname, extern_user_id, student_id, anonymous_identifier } = c;
             return {
               ...ca,
               firstname,
               lastname,
               extern_user_id,
-              student_id
+              student_id,
+              anonymous_identifier
             };
           })
           .filter((ca) => !!ca);
       }
-
       ref.util.exportCases(cases, ref.util.serializeCaseLog(caseActivities));
       ref.isDownloading = false;
     });
