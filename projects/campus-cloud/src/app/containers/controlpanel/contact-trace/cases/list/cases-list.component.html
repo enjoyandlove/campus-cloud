@@ -43,7 +43,7 @@
                 cpTarget="view_info"
                 [eventData]="eventData"
                 [routerLink]="[case.id]">
-              {{ ( case.extern_user_id.length>45 )? ( case.extern_user_id | slice:0:40 ) + '...' : case.extern_user_id }}
+              {{ displayExternalUserId(case) }}
             </a>
           </strong>
 

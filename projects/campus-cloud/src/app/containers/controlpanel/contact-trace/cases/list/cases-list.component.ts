@@ -23,7 +23,11 @@ export class CasesListComponent implements OnInit {
   eventData;
   dateFormat = FORMAT.SHORT;
 
-  constructor(public cpI18nPipe: CPI18nPipe, public cpTracking: CPTrackingService, public session: CPSession) {
+  constructor(
+    public cpI18nPipe: CPI18nPipe,
+    public cpTracking: CPTrackingService,
+    public session: CPSession
+  ) {
     this.privacyTurnedOn = privacyConfigurationOn(this.session.g);
   }
 
@@ -42,5 +46,12 @@ export class CasesListComponent implements OnInit {
 
   traceContactAction(caseItem: ICase) {
     this.contactTraceAction.emit(caseItem);
+  }
+
+  displayExternalUserId({ extern_user_id }) {
+    if (extern_user_id) {
+      return extern_user_id.length > 45 ? extern_user_id.substr(0, 40) + '...' : extern_user_id;
+    }
+    return '';
   }
 }
