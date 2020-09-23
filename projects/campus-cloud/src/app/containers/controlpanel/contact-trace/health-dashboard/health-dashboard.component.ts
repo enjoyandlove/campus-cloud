@@ -21,7 +21,11 @@ export class HealthDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.actionBoxTop = this.actionBox.nativeElement.getBoundingClientRect().top;
+    // when coming from another route, the previous route components don't get removed in this hook.
+    // setTimeout can be removed after this issue is solved: https://github.com/angular/angular/issues/19742
+    setTimeout(() => {
+      this.actionBoxTop = this.actionBox.nativeElement.getBoundingClientRect().top;
+    });
   }
 
   @HostListener('window:scroll')
