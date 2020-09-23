@@ -22,7 +22,8 @@ import {
   createSpreadSheet,
   canSchoolReadResource,
   canStoreReadAndWriteResource,
-  canSchoolWriteResource
+  canSchoolWriteResource,
+  privacyConfigurationOn
 } from '@campus-cloud/shared/utils';
 
 @Injectable()
@@ -150,28 +151,46 @@ export class ServicesUtilsService {
   }
 
   exportServiceProvidersAttendees(assessments, isQR: boolean) {
-    let columns = [
-      this.cpI18n.translate('t_service_provider_csv_column_provider_name'),
-      this.cpI18n.translate('t_service_provider_csv_column_first_name'),
-      this.cpI18n.translate('t_service_provider_csv_column_last_name'),
-      this.cpI18n.translate('email'),
-      this.cpI18n.translate('services_label_checked_in_method'),
-      this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
-      this.cpI18n.translate('t_service_provider_csv_column_time_in'),
-      this.cpI18n.translate('t_service_provider_csv_column_check_out_date'),
-      this.cpI18n.translate('t_service_provider_csv_column_time_out'),
-      this.cpI18n.translate('t_service_provider_csv_column_time_spent'),
-      this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
-      this.cpI18n.translate('t_service_provider_csv_column_ratings'),
-      this.cpI18n.translate('feedback'),
-      this.cpI18n.translate('student_id')
-    ];
+    const isPrivacyOn = privacyConfigurationOn(this.session.g);
+    let columns = !isPrivacyOn
+      ? [
+          this.cpI18n.translate('t_service_provider_csv_column_provider_name'),
+          this.cpI18n.translate('t_service_provider_csv_column_first_name'),
+          this.cpI18n.translate('t_service_provider_csv_column_last_name'),
+          this.cpI18n.translate('email'),
+          this.cpI18n.translate('contact_trace_health_identifier'),
+          this.cpI18n.translate('contact_trace_case_id'),
+          this.cpI18n.translate('services_label_checked_in_method'),
+          this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_in'),
+          this.cpI18n.translate('t_service_provider_csv_column_check_out_date'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_out'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_spent'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
+          this.cpI18n.translate('t_service_provider_csv_column_ratings'),
+          this.cpI18n.translate('feedback'),
+          this.cpI18n.translate('student_id')
+        ]
+      : [
+          this.cpI18n.translate('t_service_provider_csv_column_provider_name'),
+          this.cpI18n.translate('contact_trace_health_identifier'),
+          this.cpI18n.translate('contact_trace_case_id'),
+          this.cpI18n.translate('services_label_checked_in_method'),
+          this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_in'),
+          this.cpI18n.translate('t_service_provider_csv_column_check_out_date'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_out'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_spent'),
+          this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
+          this.cpI18n.translate('t_service_provider_csv_column_ratings'),
+          this.cpI18n.translate('feedback')
+        ];
 
     if (isQR) {
       columns = columns.filter((val) => {
         return (
-          val != this.cpI18n.translate('t_service_provider_csv_column_ratings') &&
-          val != this.cpI18n.translate('feedback')
+          val !== this.cpI18n.translate('t_service_provider_csv_column_ratings') &&
+          val !== this.cpI18n.translate('feedback')
         );
       });
       columns[0] = this.cpI18n.translate('location_name');
@@ -197,62 +216,138 @@ export class ServicesUtilsService {
       const firstname = !isDeletedAttendee
         ? item.firstname
         : this.cpI18n.translate('t_shared_closed_account');
+      const healthId = !isDeletedAttendee
+        ? item.anonymous_identifier
+          ? item.anonymous_identifier
+          : 'A041411414'
+        : isPrivacyOn
+        ? this.cpI18n.translate('t_shared_closed_account')
+        : '-';
+      const caseId = !isDeletedAttendee
+        ? item.case_id
+          ? item.case_id
+          : '120'
+        : isPrivacyOn
+        ? this.cpI18n.translate('t_shared_closed_account')
+        : '-';
 
-      const assess = {
-        [this.cpI18n.translate(
-          't_service_provider_csv_column_provider_name'
-        )]: item.service_provider_name,
+      const assess = !isPrivacyOn
+        ? {
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_provider_name'
+            )]: item.service_provider_name,
 
-        [this.cpI18n.translate('t_service_provider_csv_column_first_name')]: firstname,
+            [this.cpI18n.translate('t_service_provider_csv_column_first_name')]: firstname,
 
-        [this.cpI18n.translate('t_service_provider_csv_column_last_name')]: lastname,
+            [this.cpI18n.translate('t_service_provider_csv_column_last_name')]: lastname,
 
-        [this.cpI18n.translate('email')]: email,
+            [this.cpI18n.translate('email')]: email,
 
-        [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
-          item.check_in_method
-        ],
+            [this.cpI18n.translate('contact_trace_health_identifier')]: healthId,
 
-        [this.cpI18n.translate('t_service_provider_csv_column_check_in_date')]: CPDate.fromEpoch(
-          item.check_in_time,
-          this.session.tz
-        ).format(Formats.dateFormat),
+            [this.cpI18n.translate('contact_trace_case_id')]: caseId,
 
-        [this.cpI18n.translate('t_service_provider_csv_column_time_in')]: CPDate.fromEpoch(
-          item.check_in_time,
-          this.session.tz
-        ).format(Formats.timeFormatLong),
+            [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
+              item.check_in_method
+            ],
 
-        [this.cpI18n.translate(
-          't_service_provider_csv_column_check_out_date'
-        )]: hasCheckOutTimeSpent
-          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(Formats.dateFormat)
-          : '',
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_check_in_date'
+            )]: CPDate.fromEpoch(item.check_in_time, this.session.tz).format(Formats.dateFormat),
 
-        [this.cpI18n.translate('t_service_provider_csv_column_time_out')]: hasCheckOutTimeSpent
-          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
-              Formats.timeFormatLong
-            )
-          : '',
+            [this.cpI18n.translate('t_service_provider_csv_column_time_in')]: CPDate.fromEpoch(
+              item.check_in_time,
+              this.session.tz
+            ).format(Formats.timeFormatLong),
 
-        [this.cpI18n.translate('t_service_provider_csv_column_time_spent')]: hasCheckOutTimeSpent
-          ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat, {
-              trim: false,
-              useGrouping: false
-            })
-          : '',
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_check_out_date'
+            )]: hasCheckOutTimeSpent
+              ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                  Formats.dateFormat
+                )
+              : '',
 
-        [this.cpI18n.translate(
-          't_service_provider_csv_column_time_spent_seconds'
-        )]: hasCheckOutTimeSpent ? timeSpentSeconds : '',
+            [this.cpI18n.translate('t_service_provider_csv_column_time_out')]: hasCheckOutTimeSpent
+              ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                  Formats.timeFormatLong
+                )
+              : '',
 
-        [this.cpI18n.translate('t_service_provider_csv_column_ratings')]:
-          item.feedback_rating === -1 ? 'N/A' : (item.feedback_rating / 100) * 5,
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_time_spent'
+            )]: hasCheckOutTimeSpent
+              ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat, {
+                  trim: false,
+                  useGrouping: false
+                })
+              : '',
 
-        [this.cpI18n.translate('feedback')]: item.feedback_text,
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_time_spent_seconds'
+            )]: hasCheckOutTimeSpent ? timeSpentSeconds : '',
 
-        [this.cpI18n.translate('student_id')]: item.student_identifier
-      };
+            [this.cpI18n.translate('t_service_provider_csv_column_ratings')]:
+              item.feedback_rating === -1 ? 'N/A' : (item.feedback_rating / 100) * 5,
+
+            [this.cpI18n.translate('feedback')]: item.feedback_text,
+
+            [this.cpI18n.translate('student_id')]: item.student_identifier
+          }
+        : {
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_provider_name'
+            )]: item.service_provider_name,
+
+            [this.cpI18n.translate('contact_trace_health_identifier')]: healthId,
+
+            [this.cpI18n.translate('contact_trace_case_id')]: caseId,
+
+            [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
+              item.check_in_method
+            ],
+
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_check_in_date'
+            )]: CPDate.fromEpoch(item.check_in_time, this.session.tz).format(Formats.dateFormat),
+
+            [this.cpI18n.translate('t_service_provider_csv_column_time_in')]: CPDate.fromEpoch(
+              item.check_in_time,
+              this.session.tz
+            ).format(Formats.timeFormatLong),
+
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_check_out_date'
+            )]: hasCheckOutTimeSpent
+              ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                  Formats.dateFormat
+                )
+              : '',
+
+            [this.cpI18n.translate('t_service_provider_csv_column_time_out')]: hasCheckOutTimeSpent
+              ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                  Formats.timeFormatLong
+                )
+              : '',
+
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_time_spent'
+            )]: hasCheckOutTimeSpent
+              ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat, {
+                  trim: false,
+                  useGrouping: false
+                })
+              : '',
+
+            [this.cpI18n.translate(
+              't_service_provider_csv_column_time_spent_seconds'
+            )]: hasCheckOutTimeSpent ? timeSpentSeconds : '',
+
+            [this.cpI18n.translate('t_service_provider_csv_column_ratings')]:
+              item.feedback_rating === -1 ? 'N/A' : (item.feedback_rating / 100) * 5,
+
+            [this.cpI18n.translate('feedback')]: item.feedback_text
+          };
 
       const qr_assess = {};
 

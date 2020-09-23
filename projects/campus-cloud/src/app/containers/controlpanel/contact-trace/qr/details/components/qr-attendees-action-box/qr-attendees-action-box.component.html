@@ -19,10 +19,16 @@
           </cp-dropdown>
         </div>
         <div class="col-3 text-right">
-          <button (click)="onAddCheckIn()"
+          <button (click)="onAddCheckIn()" *ngIf="!isPrivacyOn() else downloadAssessement"
                   class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right">
             {{ 't_events_assessment_add_check_in' | cpI18n }}
           </button>
+          <ng-template #downloadAssessement>
+            <button class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right" [disabled]="!hasAttendees"
+                    (click)="onDownload()">
+              {{ 'services_button_download_attendance_data' | cpI18n }}
+            </button>
+          </ng-template>
           <div
                class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
             <i class="material-icons"
@@ -40,14 +46,14 @@
                       '/' +
                       provider.encrypted_id
                   ]">
-                  {{ 't_services_assessment_web_checkin_page' | cpI18n }}
+                  {{ 't_services_assessment_kiosk_checkin_page' | cpI18n }}
                 </a>
               </li>
               <li (click)="onEnableDisableQR()"
                   class="list-as-anchor">
                 {{ qrLabel }}
               </li>
-              <li *ngIf="hasAttendees"
+              <li *ngIf="hasAttendees && !isPrivacyOn()"
                   class="list-as-anchor"
                   (click)="onDownload()">
                 {{ 'services_button_download_attendance_data' | cpI18n }}

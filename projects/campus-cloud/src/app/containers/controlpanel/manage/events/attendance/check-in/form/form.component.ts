@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import IEvent from '../../../event.interface';
 import { CheckInOutTime } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';
-import { CPDate } from '../../../../../../../shared/utils';
+import { CPDate, privacyConfigurationOn } from '../../../../../../../shared/utils';
 import IServiceProvider from '../../../../services/providers.interface';
 
 const COMMON_DATE_PICKER_OPTIONS = {
@@ -54,5 +54,9 @@ export class CheckInFormComponent implements OnInit {
           ? CPDate.fromEpochLocal(checkOutTime, _self.session.tz).format()
           : null
     };
+  }
+
+  isPrivacyOn() {
+    return privacyConfigurationOn(this.session.g);
   }
 }

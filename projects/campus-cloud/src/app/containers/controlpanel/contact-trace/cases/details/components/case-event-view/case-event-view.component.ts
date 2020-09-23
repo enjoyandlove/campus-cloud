@@ -4,6 +4,9 @@ import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { Router } from '@angular/router';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
+import { PrivacyConfiguration } from '@controlpanel/settings/team/team.utils.service';
+import { CPSession } from '@campus-cloud/session';
 
 @Component({
   selector: 'cp-case-event-view-modal',
@@ -16,7 +19,11 @@ export class CaseEventViewComponent implements OnInit {
 
   eventData;
 
-  constructor(public cpTracking: CPTrackingService, private router: Router) {}
+  constructor(
+    public cpTracking: CPTrackingService,
+    private router: Router,
+    private session: CPSession
+  ) {}
 
   resetModal() {
     $('#viewEvent').modal('hide');
@@ -38,5 +45,9 @@ export class CaseEventViewComponent implements OnInit {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM
     };
+  }
+
+  isPrivacyOn() {
+    return privacyConfigurationOn(this.session.g);
   }
 }

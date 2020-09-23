@@ -10,7 +10,11 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { TEAM_ACCESS } from '@controlpanel/settings/team/utils';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { canAccountLevelReadResource, canSchoolReadResource } from '@campus-cloud/shared/utils';
+import {
+  canAccountLevelReadResource,
+  canSchoolReadResource,
+  privacyConfigurationOn
+} from '@campus-cloud/shared/utils';
 import {
   clubMenu,
   eventMenu,
@@ -19,7 +23,8 @@ import {
   manageAdminMenu,
   TeamUtilsService,
   audienceMenuStatus,
-  contactTraceMenu
+  contactTraceMenu,
+  PrivacyConfiguration
 } from '@controlpanel/settings/team/team.utils.service';
 
 @Mixin([Destroyable])
@@ -50,6 +55,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   servicesMenu;
   manageAdmins;
   athleticsMenu;
+  privacyOptions;
   schoolId: number;
   clubsCount = null;
   isFormError = false;
@@ -61,6 +67,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   isServiceModal = false;
   canReadAudience: boolean;
   canReadContactTrace: boolean;
+  canEditPrivacyPermission: boolean;
   isContactTraceEnabled = false;
   isAthleticsModal = false;
   canReadServices: boolean;
@@ -187,6 +194,13 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     return allAccess
       ? this.audienceMenu.filter((item) => item.action === audienceMenuStatus.allAccess)[0]
       : this.audienceMenu.filter((item) => item.action === audienceMenuStatus.noAccess)[0];
+  }
+
+  privacyPermission() {
+    const privacyOff = _get(this.schoolPrivileges, CP_PRIVILEGES_MAP.contact_trace_pii, false);
+    return privacyOff
+      ? this.privacyOptions.filter((item) => item.action === PrivacyConfiguration.off)[0]
+      : this.privacyOptions.filter((item) => item.action === PrivacyConfiguration.on)[0];
   }
 
   eventsDefaultPermission() {
@@ -472,6 +486,23 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     return;
   }
 
+  onPrivacyToggle(privacyOption) {
+    if (privacyConfigurationOn(this.session.g)) {
+      return;
+    }
+    if (privacyOption.action === PrivacyConfiguration.off) {
+      this.schoolPrivileges = {
+        ...this.schoolPrivileges,
+        [CP_PRIVILEGES_MAP.contact_trace_pii]: {
+          r: true,
+          w: true
+        }
+      };
+    } else if (privacyOption.action === PrivacyConfiguration.on) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_pii];
+    }
+  }
+
   onAthleticsSelected(athletic) {
     if (athletic.action === athleticMenu.selectAthletic) {
       this.isAthleticsModal = true;
@@ -733,7 +764,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_exposure_notification] ||
       schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_health_dashboard] ||
       false;
-
+    this.canEditPrivacyPermission = !!schoolPrivileges[CP_PRIVILEGES_MAP.contact_trace_pii];
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     const clubsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
@@ -784,6 +815,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       servicesPrivilegeSchool,
       servicesPrivilegeAccount
     );
+    this.privacyOptions = this.utils.privacyDropdown();
 
     if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
       this.updateServicesDropdownLabel();

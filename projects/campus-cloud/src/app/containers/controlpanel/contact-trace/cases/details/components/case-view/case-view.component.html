@@ -11,66 +11,98 @@
               ui-button
               type="button"
               class="edit-button"
-              (click)="onEdit()">   
-              <ready-ui-icon name="edit"></ready-ui-icon>       
+              (click)="onEdit()">
+              <ready-ui-icon name="edit"></ready-ui-icon>
               {{'edit' | cpI18n}}
             </button>
           </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-3" *ngIf="!privacyTurnedOn()">
           <div class="col-3">
             <p class="title">{{ 'first_name' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description" *ngIf="!isEditing || newCase.user_id > 0 else inputFirstName">{{ newCase.firstname }}</p>
+            <p class="description"
+               *ngIf="!isEditing || newCase.user_id > 0 else inputFirstName">{{ newCase.firstname }}</p>
             <ng-template #inputFirstName>
               <input
-                    type="text"
-                    class="form-control"
-                    autocomplete="off"
-                    [(ngModel)]="newCase.firstname"
+                type="text"
+                class="form-control"
+                autocomplete="off"
+                [(ngModel)]="newCase.firstname"
               />
             </ng-template>
           </div>
         </div>
-        <div class="row mt-1">
+        <div class="row mt-1" *ngIf="!privacyTurnedOn()">
           <div class="col-3">
             <p class="title">{{ 'last_name' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description" *ngIf="!isEditing || newCase.user_id > 0 else inputLastName">{{ newCase.lastname }}</p>
+            <p class="description"
+               *ngIf="!isEditing || newCase.user_id > 0 else inputLastName">{{ newCase.lastname }}</p>
             <ng-template #inputLastName>
               <input
-                    type="text"
-                    class="form-control"
-                    autocomplete="off"
-                    [(ngModel)]="newCase.lastname"
+                type="text"
+                class="form-control"
+                autocomplete="off"
+                [(ngModel)]="newCase.lastname"
               />
             </ng-template>
           </div>
         </div>
-        <div class="row mt-1">
+        <div class="row mt-1" *ngIf="!privacyTurnedOn()">
           <div class="col-3">
             <p class="title">{{ 'email' | cpI18n }}</p>
           </div>
           <div class="col-5">
-            <p class="description" *ngIf="!isEditing || newCase.user_id > 0 else inputDescription">{{ newCase.extern_user_id }}</p>
+            <p class="description"
+               *ngIf="!isEditing || newCase.user_id > 0 else inputDescription">{{ newCase.extern_user_id }}</p>
             <ng-template #inputDescription>
               <input
-                    type="text"
-                    class="form-control"
-                    autocomplete="off"
-                    [(ngModel)]="newCase.extern_user_id"
+                type="text"
+                class="form-control"
+                autocomplete="off"
+                [(ngModel)]="newCase.extern_user_id"
               />
             </ng-template>
           </div>
         </div>
-        <div *ngIf="newCase.student_id" class="row">
+        <div *ngIf="newCase.student_id && !privacyTurnedOn()" class="row mt-1">
           <div class="col-3">
             <p class="title">{{ 'student_id' | cpI18n }}</p>
           </div>
           <div class="col-4">
-            <p class="description">{{ newCase.student_id }}</p>
+            <p class="description"
+               *ngIf="!isEditing || newCase.user_id > 0 else inputStudentId">{{ newCase.student_id }}</p>
+            <ng-template #inputStudentId>
+              <input
+                type="text"
+                class="form-control"
+                autocomplete="off"
+                [value]="newCase.student_id"
+                disabled
+              />
+            </ng-template>
+          </div>
+        </div>
+        <div class="row" [ngClass]="{'mt-3' : privacyTurnedOn()}">
+          <div class="col-3">
+            <p
+              class="title">{{ 'contact_trace_health_identifier' | cpI18n }}</p>
+          </div>
+          <div class="col-4">
+            <p class="description"
+               *ngIf="!isEditing || newCase.user_id > 0 else inputHealthId">{{ newCase.anonymous_identifier }}</p>
+            <ng-template #inputHealthId>
+              <input
+                type="text"
+                class="form-control"
+                autocomplete="off"
+                [value]="newCase.anonymous_identifier"
+                disabled
+              />
+            </ng-template>
           </div>
         </div>
         <div class="row">
@@ -84,9 +116,9 @@
             </div>
             <ng-template #inputStatus>
               <cp-dropdown class="topbar--dropdown"
-                         [items]="statusFilter"
-                         [selectedItem]="selectedStatusFilter"
-                         (selected)="onStatusFilter($event)">
+                           [items]="statusFilter"
+                           [selectedItem]="selectedStatusFilter"
+                           (selected)="onStatusFilter($event)">
               </cp-dropdown>
             </ng-template>
           </div>
@@ -98,10 +130,12 @@
           </div>
           <div class="col-4">
             <div class="action-cell" *ngIf="case.current_action.id !== 0">
-              <a class="action-to-do-link" *ngIf="case.current_action.code !== 'ct:trace_contacts'"
+              <a class="action-to-do-link"
+                 *ngIf="case.current_action.code !== 'ct:trace_contacts'"
                  (click)="doNotificationAction(case.id)">
                 {{ case.current_action.name }}</a>
-              <p class="action-to-do-link" *ngIf="case.current_action.code === 'ct:trace_contacts'"
+              <p class="action-to-do-link"
+                 *ngIf="case.current_action.code === 'ct:trace_contacts'"
                  (click)="traceContactAction(case)">
                 {{ case.current_action.name }}</p>
             </div>
@@ -115,14 +149,16 @@
             <p class="title">{{ 'notes' | cpI18n }}</p>
           </div>
           <div class="col-8">
-            <p class="description" *ngIf="!isEditing else inputNotes">{{ newCase.notes }}</p>
+            <p class="description"
+               *ngIf="!isEditing else inputNotes">{{ newCase.notes }}</p>
             <ng-template #inputNotes>
               <textarea [(ngModel)]="newCase.notes"
-                       class="form-control"
-                       row="5"
-                       maxlength="512"
-                       autocomplete="off"></textarea>  
-          </ng-template>
+                        class="form-control"
+                        row="5"
+                        maxlength="512"
+                        autocomplete="off">
+              </textarea>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -133,7 +169,7 @@
       <div class="row">
         <div class="col-12">
           <button
-            ui-button          
+            ui-button
             type="button"
             variant="flat"
             color="primary"
@@ -141,14 +177,13 @@
             (click)="onSubmit()">
             {{'save' | cpI18n}}
           </button>
-  
           <button
             ui-button
             type="button"
             variant="flat"
             color="secondary"
             class="action-button"
-            (click)="onCancel()">          
+            (click)="onCancel()">
             {{'cancel' | cpI18n}}
           </button>
         </div>

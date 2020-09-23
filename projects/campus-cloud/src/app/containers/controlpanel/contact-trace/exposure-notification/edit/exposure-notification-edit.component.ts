@@ -22,6 +22,7 @@ import { AudienceService } from '@controlpanel/audience/audience.service';
 import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils.service';
 import { ImportUserListComponent } from '@controlpanel/contact-trace/exposure-notification/components';
 import { get } from 'lodash';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
 
 interface IImportedUser {
   name: string;
@@ -507,13 +508,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         const param = new HttpParams().set('school_id', this.session.schoolIdAsString);
         this.casesService.getCaseById(param, this.caseId).subscribe((value: ICase) => {
           this.casesById = value;
-          this.notifyDestination =
-            this.casesById.firstname +
-            ' ' +
-            this.casesById.lastname +
-            '<' +
-            this.casesById.extern_user_id +
-            '>';
+          this.notifyDestination = this.buildNotifyDestination();
           this.notification.user_ids = [this.casesById.user_id];
           this.onToOptionChanged({
             action: 'custom_list',
@@ -535,6 +530,19 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  private buildNotifyDestination() {
+    return !privacyConfigurationOn(this.session.g)
+      ? this.casesById.firstname +
+          ' ' +
+          this.casesById.lastname +
+          '<' +
+          this.casesById.extern_user_id +
+          '>'
+      : this.casesById.anonymous_identifier
+      ? this.casesById.anonymous_identifier
+      : 'A041411414';
   }
 
   private ifExposureNotification(casesById: ICase) {

@@ -75,7 +75,9 @@ export const CP_PRIVILEGES_MAP = {
 
   contact_trace_cases: 44,
 
-  contact_trace_health_dashboard: 45
+  contact_trace_health_dashboard: 45,
+
+  contact_trace_pii: 46
 };
 
 export const CP_PRIVILEGES = {
@@ -155,5 +157,7 @@ export const CP_PRIVILEGES = {
 
   44: 'Contact Trace Cases',
 
-  45: 'Contact Trace Dashboard'
+  45: 'Contact Trace Dashboard',
+
+  46: 'Contact Trace PII'
 };

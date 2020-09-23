@@ -12,4 +12,8 @@ export default interface IAttendee {
   check_out_time_epoch: number;
 
   check_in_time_epoch: number;
+
+  anonymous_identifier?: string;
+
+  case_id?: string;
 }

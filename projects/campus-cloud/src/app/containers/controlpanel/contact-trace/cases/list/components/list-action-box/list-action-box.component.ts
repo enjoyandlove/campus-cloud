@@ -26,7 +26,10 @@ import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.s
 import { CasesUtilsService } from '../../../cases.utils.service';
 import { ICaseStatus } from '../../../cases.interface';
 import * as fromStore from '../../../store';
-import { CPDate } from '@projects/campus-cloud/src/app/shared/utils';
+import {
+  CPDate,
+  privacyConfigurationOn
+} from '@projects/campus-cloud/src/app/shared/utils';
 import { getItem } from '@campus-cloud/shared/components/cp-dropdown/cp-dropdown.component';
 
 @Component({
@@ -159,4 +162,9 @@ export class CasesListActionBoxComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     this.destroy$.unsubscribe();
   }
+
+  privacyTurnedOn() {
+    return privacyConfigurationOn(this.session.g);
+  }
+
 }

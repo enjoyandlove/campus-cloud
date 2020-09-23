@@ -7,6 +7,8 @@ import { baseActions, IHeader } from '@campus-cloud/store';
 import { Store } from '@ngrx/store';
 import { FormResponseService, FormsService } from '@controlpanel/contact-trace/forms/services';
 import { FORMAT } from '@campus-cloud/shared/pipes';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
 
 @Component({
   selector: 'cp-forms-respondent-response',
@@ -26,7 +28,8 @@ export class FormsRespondentResponseComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private formsService: FormsService,
     private formResponseService: FormResponseService,
-    private store: Store<IHeader>
+    private store: Store<IHeader>,
+    private session: CPSession
   ) {}
 
   ngOnDestroy() {
@@ -80,5 +83,9 @@ export class FormsRespondentResponseComponent implements OnInit, OnDestroy {
     }
 
     return questionBlocks.length;
+  }
+
+  isPrivacyOn() {
+    return privacyConfigurationOn(this.session.g);
   }
 }

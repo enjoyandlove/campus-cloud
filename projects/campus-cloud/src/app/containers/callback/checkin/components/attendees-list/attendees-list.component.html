@@ -24,13 +24,17 @@
          *ngFor="let attendee of data.attendees">
       <div class="text-truncate"
            [ngClass]="data.has_checkout ? 'col-sm-12 col-md-4' : 'col-sm-12 col-md-6'">
-        <strong>
-          {{ attendee.firstname }}
-          {{ attendee.lastname }}
+        <ready-ui-stack *ngIf="!isPrivacyOn()">
+          <strong>
+            {{ attendee.firstname }}
+            {{ attendee.lastname }}
+          </strong>
+          <br />
+          <small class="text-muted">{{ attendee.email }}</small>
+        </ready-ui-stack>
+        <strong *ngIf="isPrivacyOn()">
+          {{ attendee.anonymous_identifier ? attendee.anonymous_identifier : 'A041411414' }}
         </strong>
-        <br />
-        <small class="
-           text-muted">{{ attendee.email }}</small>
       </div>
       <div class="col-2 d-none d-md-block d-lg-block">
         <i class="material-icons">{{

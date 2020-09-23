@@ -17,21 +17,21 @@
           </cp-dropdown>
         </div>
         <div class="col-2">
-          <cp-range-picker  #datepicker
-                            [class]="'cancel'"
-                            [icon]="'date_range'"
-                            [dateRanges]="dateRanges"
-                            [clearable]="true"
-                            (rangeChange)="onDateChange($event)"
-                            [maxDate]="dateFilterOpts.maxDate"
-                            [minDate]="dateFilterOpts.minDate">
+          <cp-range-picker #datepicker
+                           [class]="'cancel'"
+                           [icon]="'date_range'"
+                           [dateRanges]="dateRanges"
+                           [clearable]="true"
+                           (rangeChange)="onDateChange($event)"
+                           [maxDate]="dateFilterOpts.maxDate"
+                           [minDate]="dateFilterOpts.minDate">
           </cp-range-picker>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="row">
-        <div class="col-12 text-right">
+        <div class="col-12 text-right" *ngIf="!privacyTurnedOn()">
           <button type="button"
                   cpTracker
                   [eventData]="eventData"
@@ -41,12 +41,22 @@
           </button>
           <cp-menu>
             <cp-menu-item>
-              <span (click)="onImportCSV()">{{ 'import_from_csv' | cpI18n }}</span>
+              <span
+                (click)="onImportCSV()">{{ 'import_from_csv' | cpI18n }}</span>
             </cp-menu-item>
             <cp-menu-item>
-              <span [class.disabled]="isDownloading" (click)="onDownloadCases()">{{ 'download_all_cases' | cpI18n }}</span>
+              <span [class.disabled]="isDownloading"
+                    (click)="onDownloadCases()">{{ 'download_all_cases' | cpI18n }}</span>
             </cp-menu-item>
           </cp-menu>
+        </div>
+        <div class="col-12 text-right" *ngIf="privacyTurnedOn()">
+          <button type="button"
+                  class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding"
+                  [class.disabled]="isDownloading"
+                  (click)="onDownloadCases()">
+            {{ 'download_all_cases' | cpI18n }}
+          </button>
         </div>
       </div>
     </div>
