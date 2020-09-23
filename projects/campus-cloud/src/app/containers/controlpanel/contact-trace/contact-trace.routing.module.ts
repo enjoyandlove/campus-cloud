@@ -5,7 +5,7 @@ import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ContactTraceComponent } from './contact-trace.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'health-dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'forms', pathMatch: 'full' },
 
   {
     path: '',
