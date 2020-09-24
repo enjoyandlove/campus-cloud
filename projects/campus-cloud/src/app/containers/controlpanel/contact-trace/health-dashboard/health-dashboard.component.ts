@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  HostListener
+} from '@angular/core';
 import { ContactTraceFeatureLevel, CPSession } from '@campus-cloud/session';
 
 @Component({

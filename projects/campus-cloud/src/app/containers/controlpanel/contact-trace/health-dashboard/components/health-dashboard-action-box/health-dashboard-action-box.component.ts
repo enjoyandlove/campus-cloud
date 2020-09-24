@@ -7,7 +7,6 @@ import { Observable, Subject } from 'rxjs';
 import { DashboardUtilsService } from '../../../../dashboard/dashboard.utils.service';
 import * as fromStore from '../../store';
 
-
 @Component({
   selector: 'cp-health-dashboard-action-box',
   templateUrl: './health-dashboard-action-box.component.html',

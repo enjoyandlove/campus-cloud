@@ -29,7 +29,6 @@ import * as fromStore from '../../store';
 const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
-
 @Component({
   selector: 'cp-health-dashboard-form-completion',
   templateUrl: './health-dashboard-form-completion.component.html',

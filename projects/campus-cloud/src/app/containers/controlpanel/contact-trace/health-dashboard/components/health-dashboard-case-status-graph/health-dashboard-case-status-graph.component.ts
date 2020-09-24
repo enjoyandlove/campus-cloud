@@ -31,7 +31,7 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
 
   constructor(
     private echartService: EChartsService,
-    private store: Store<{ healthDashboard: fromStore.HealthDashboardState }>,
+    private store: Store<{ healthDashboard: fromStore.HealthDashboardState }>
   ) {
     this.loading$ = this.store.pipe(
       select(fromStore.selectCaseStatusStatsLoading),
@@ -42,7 +42,7 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
   ngAfterViewInit() {
     this.stats$ = combineLatest([
       this.store.select(fromStore.selectCaseStatusData),
-      this.store.select(fromStore.selectCaseStatusStatsForGraph),
+      this.store.select(fromStore.selectCaseStatusStatsForGraph)
     ]).pipe(
       takeUntil(this.destroy$),
       map(([caseStatuses, stats]) => {
@@ -53,7 +53,7 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
       })
     );
 
-    this.stats$.subscribe(stats => {
+    this.stats$.subscribe((stats) => {
       this.generateChart(stats);
     });
   }
@@ -66,12 +66,12 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
 
   generateChart(stats: ICaseStatusGraph) {
     const chart = this.echartService.init(this.chart.nativeElement);
-    const xAxisData = stats.ranges.map(date => date.format('MMM D'));
+    const xAxisData = stats.ranges.map((date) => date.format('MMM D'));
     const caseStatuses = stats.caseStatuses.slice();
     caseStatuses.sort((a, b) => a.id - b.id);
-    const legendData = caseStatuses.map(item => item.name);
-    const colors = caseStatuses.map(item => `#${item.color}`);
-    const series = caseStatuses.map(item => ({
+    const legendData = caseStatuses.map((item) => item.name);
+    const colors = caseStatuses.map((item) => `#${item.color}`);
+    const series = caseStatuses.map((item) => ({
       name: item.name,
       data: stats.data[item.id],
       type: 'line'
@@ -109,7 +109,7 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
         axisTick: {
           show: false
         },
-        offset: 10,
+        offset: 10
       },
       yAxis: {
         type: 'value',
@@ -122,7 +122,7 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
         axisTick: {
           show: false
         },
-        offset: 20,
+        offset: 20
       },
       tooltip: {
         trigger: 'axis',
@@ -130,7 +130,7 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
         textStyle: {
           color: '#BDBDBD'
         },
-        padding: 7,
+        padding: 7
       },
       series: series,
       color: colors

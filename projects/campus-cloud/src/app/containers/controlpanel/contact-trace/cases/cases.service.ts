@@ -52,9 +52,9 @@ export class CasesService {
 
   getCaseActivityLog(startRange: number, endRange: number, search: HttpParams) {
     const startEndRange = (startRange ? startRange : '') + (endRange ? ';' + endRange : '');
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CASE_ACTIVITY_LOG}/${
-      startEndRange !== '' ? startEndRange : ''
-    }`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${
+      this.api.ENDPOINTS.CASE_ACTIVITY_LOG
+    }/${startEndRange !== '' ? startEndRange : ''}`;
     return this.api.get(url, search);
   }
 

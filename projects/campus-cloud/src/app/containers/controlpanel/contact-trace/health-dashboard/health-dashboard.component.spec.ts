@@ -41,7 +41,7 @@ describe('HealthDashboardComponent', () => {
         MockHealthDashboardActionBoxComponent,
         MockStatusCardsComponent,
         MockHealthDashboardCaseStatusGraphComponent,
-        MockHealthDashboardFormCompletionComponent,
+        MockHealthDashboardFormCompletionComponent
       ],
       imports: [CPTestModule]
     }).compileComponents();

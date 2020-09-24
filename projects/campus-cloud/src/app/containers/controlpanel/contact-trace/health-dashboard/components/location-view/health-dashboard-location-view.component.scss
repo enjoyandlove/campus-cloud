@@ -1,0 +1,22 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/card';
+
+.action-button {
+  background-color: transparent;
+  border: 1px solid #bdbdbd;
+
+  ready-ui-icon {
+    margin-left: 12px;
+  }
+}
+
+.chart {
+  @include card-margin();
+  height: 480px;
+  display: block;
+}
+
+.chart--title {
+  @include font-24px;
+  @include font-bold();
+}
