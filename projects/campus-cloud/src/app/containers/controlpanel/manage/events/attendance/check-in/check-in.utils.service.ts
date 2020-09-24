@@ -27,12 +27,7 @@ export class CheckInUtilsService {
       event_id: [data.id, Validators.required],
       email: [formData ? formData.email : null, Validators.required],
       anonymous_identifier: [
-        formData
-          ? formData.anonymous_identifier
-            ? formData.anonymous_identifier
-            : 'A041411414'
-          : null,
-        Validators.required
+        formData ? (formData.anonymous_identifier ? formData.anonymous_identifier : '') : null
       ],
       lastname: [formData ? formData.lastname : null, Validators.required],
       firstname: [formData ? formData.firstname : null, Validators.required],

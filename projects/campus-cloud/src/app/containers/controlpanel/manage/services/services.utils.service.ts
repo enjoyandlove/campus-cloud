@@ -216,20 +216,15 @@ export class ServicesUtilsService {
       const firstname = !isDeletedAttendee
         ? item.firstname
         : this.cpI18n.translate('t_shared_closed_account');
-      const healthId = !isDeletedAttendee
-        ? item.anonymous_identifier
-          ? item.anonymous_identifier
-          : 'A041411414'
-        : isPrivacyOn
-        ? this.cpI18n.translate('t_shared_closed_account')
-        : '-';
-      const caseId = !isDeletedAttendee
-        ? item.case_id
-          ? item.case_id
-          : '120'
-        : isPrivacyOn
-        ? this.cpI18n.translate('t_shared_closed_account')
-        : '-';
+      let healthId = '';
+      let caseId = '';
+      if (!isDeletedAttendee) {
+        healthId = item.anonymous_identifier;
+        caseId = item.case_id && item.case_id !== 0 ? item.case_id : '';
+      } else {
+        healthId = this.cpI18n.translate('t_shared_closed_account');
+        caseId = this.cpI18n.translate('t_shared_closed_account');
+      }
 
       const assess = !isPrivacyOn
         ? {
