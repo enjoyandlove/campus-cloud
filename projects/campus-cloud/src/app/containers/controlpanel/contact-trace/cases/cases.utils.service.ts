@@ -168,11 +168,11 @@ export class CasesUtilsService {
               matchedSource.tag,
               matchedSource.name
             );
-            let tracedContactsCount = item.source_activity_name.substring(
+            const tracedContactsCount = item.source_activity_name.substring(
               0,
               item.source_activity_name.indexOf('%') - 1
             );
-            if (tracedContactsCount != '0') {
+            if (tracedContactsCount !== '0') {
               newItem.source = tracedContactsCount;
             }
             break;
@@ -196,7 +196,7 @@ export class CasesUtilsService {
   }
 
   createCaseCSVData(cases, privacyOn: boolean = false) {
-    let columns = !privacyOn
+    const columns = !privacyOn
       ? [
           this.cpI18nPipe.transform('first_name'),
           this.cpI18nPipe.transform('last_name'),
@@ -213,7 +213,7 @@ export class CasesUtilsService {
           this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
           this.cpI18nPipe.transform('t_case_status')
         ];
-    cases = cases.map((item, data) => {
+    cases = cases.map((item) => {
       return !privacyOn
         ? {
             [this.cpI18nPipe.transform('first_name')]: item.firstname,
@@ -257,7 +257,7 @@ export class CasesUtilsService {
   }
 
   createCaseActivityCSVData(caseActivities, privacyOn: boolean = false) {
-    let columns = !privacyOn
+    const columns = !privacyOn
       ? [
           this.cpI18nPipe.transform('first_name'),
           this.cpI18nPipe.transform('last_name'),

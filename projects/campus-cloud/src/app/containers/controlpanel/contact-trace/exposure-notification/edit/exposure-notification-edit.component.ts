@@ -459,8 +459,8 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
           });
         });
         if (selectedType && this.templateTypeToTemplateMap[selectedType]) {
-          const {type: action, name: label} = this.templateTypeToTemplateMap[selectedType];
-          this.onTemplateOptionChanged({action, label});
+          const { type: action, name: label } = this.templateTypeToTemplateMap[selectedType];
+          this.onTemplateOptionChanged({ action, label });
         }
       }
     });
@@ -540,9 +540,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
           '<' +
           this.casesById.extern_user_id +
           '>'
-      : this.casesById.anonymous_identifier
-      ? this.casesById.anonymous_identifier
-      : 'A041411414';
+      : this.casesById.anonymous_identifier;
   }
 
   private ifExposureNotification(casesById: ICase) {

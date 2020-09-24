@@ -14,10 +14,10 @@ import IEvent from '../../../event.interface';
 import { ICheckIn } from '../check-in.interface';
 import { EventsService } from '../../../events.service';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import IServiceProvider from '@controlpanel/manage/services/providers.interface';
-import { CPSession } from '@campus-cloud/session';
+import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
+import IServiceProvider from '../../../../services/providers.interface';
+import { CPSession } from '@campus-cloud/session';
 
 @Component({
   selector: 'cp-create-check-in',

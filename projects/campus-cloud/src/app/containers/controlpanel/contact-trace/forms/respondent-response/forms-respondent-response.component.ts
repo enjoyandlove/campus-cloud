@@ -23,6 +23,7 @@ export class FormsRespondentResponseComponent implements OnInit, OnDestroy {
   response: FormResponse;
   dateFormat = FORMAT.SHORT;
   totalNumberOfQuestionsInForm = 0;
+  isPrivacyOn: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,11 +52,13 @@ export class FormsRespondentResponseComponent implements OnInit, OnDestroy {
         .getFormResponse(this.responseId)
         .subscribe((response) => (this.response = response));
     });
+
+    this.isPrivacyOn = privacyConfigurationOn(this.session.g);
   }
 
   private buildHeader(form: Form) {
     this.activatedRoute.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe((queryParams) => {
-      let caseId = Number(queryParams['caseId']);
+      const caseId = Number(queryParams['caseId']);
       const payload = {
         heading: 'contact_trace_forms_form_result',
         subheading: `[NOTRANSLATE]${form.name}[NOTRANSLATE]`,
@@ -83,9 +86,5 @@ export class FormsRespondentResponseComponent implements OnInit, OnDestroy {
     }
 
     return questionBlocks.length;
-  }
-
-  isPrivacyOn() {
-    return privacyConfigurationOn(this.session.g);
   }
 }

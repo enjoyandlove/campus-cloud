@@ -223,10 +223,8 @@ export class FormsCreateResultsComponent implements OnInit, OnDestroy {
       firstname: formResponse.firstname,
       lastname: formResponse.lastname,
       extern_user_id: formResponse.user_id > 0 ? formResponse.email : formResponse.extern_user_id,
-      case_id: formResponse.case_id ? formResponse.case_id : '120',
-      anonymous_identifier: formResponse.anonymous_identifier
-        ? formResponse.anonymous_identifier
-        : 'A041411414',
+      case_id: formResponse.case_id,
+      anonymous_identifier: formResponse.anonymous_identifier,
       completionDate: this.cPDatePipe.transform(
         formResponse.response_completed_epoch,
         FORMAT.DATETIME

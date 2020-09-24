@@ -40,6 +40,7 @@ export class FormResponseExportService {
     ];
 
     const csvData = formResultExport.map((item) => {
+      const caseId = item.case_id && item.case_id !== '0' ? item.case_id : '';
       const data = !privacyConfigurationOn(this.session.g)
         ? {
             [this.cpI18nPipe.transform('first_name')]: item.firstname,
@@ -48,7 +49,7 @@ export class FormResponseExportService {
             [this.cpI18nPipe.transform(
               'contact_trace_health_identifier'
             )]: item.anonymous_identifier,
-            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.case_id,
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: caseId,
             [this.cpI18nPipe.transform('contact_trace_forms_date')]: item.completionDate,
             [this.cpI18nPipe.transform(
               'contact_trace_forms_collection_method'
@@ -59,7 +60,7 @@ export class FormResponseExportService {
             [this.cpI18nPipe.transform(
               'contact_trace_health_identifier'
             )]: item.anonymous_identifier,
-            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.case_id,
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: caseId,
             [this.cpI18nPipe.transform('contact_trace_forms_date')]: item.completionDate,
             [this.cpI18nPipe.transform(
               'contact_trace_forms_collection_method'

@@ -8,7 +8,7 @@
       {{ 'contact_trace_forms_responder' | cpI18n }}
     </div>
 
-    <div class="row form-row" *ngIf="response.user_id && !isPrivacyOn()">
+    <div class="row form-row" *ngIf="response.user_id && !isPrivacyOn">
       <div class="col-3 label-text">
         {{ 'contact_trace_forms_name' | cpI18n }}
       </div>
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="row form-row" *ngIf="!isPrivacyOn()">
+    <div class="row form-row" *ngIf="!isPrivacyOn">
       <div class="col-3 label-text">
         {{ 'contact_trace_forms_email' | cpI18n }}
       </div>
@@ -30,13 +30,13 @@
         </ng-container>
       </div>
     </div>
-    <div class="row form-row">
+    <div class="row form-row" *ngIf="response.case_id">
       <div class="col-3 label-text">
         {{ 'contact_trace_case_id' | cpI18n }}
       </div>
       <div class="col-9">
         <a class="text-primary"
-           href="#">{{ response.case_id ? response.case_id : '120' }}</a>
+           [routerLink]="['/contact-trace', 'cases', response.case_id]">{{ response.case_id }}</a>
       </div>
     </div>
     <div class="row form-row">
@@ -45,7 +45,7 @@
       </div>
       <div class="col-9">
         <ng-container>
-          {{response.anonymous_identifier ? response.anonymous_identifier : 'A56566623'}}
+          {{ response.anonymous_identifier }}
         </ng-container>
       </div>
     </div>
