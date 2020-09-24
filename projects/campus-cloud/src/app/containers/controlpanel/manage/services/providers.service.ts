@@ -24,7 +24,6 @@ export class ProvidersService {
   getProviders(startRange: number, endRange: number, search?: HttpParams) {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICE_PROVIDER}`;
     const url = `${common}/${startRange};${endRange}`;
-
     return this.api.get(url, search);
   }
 

@@ -6,14 +6,13 @@ import { EChartsService } from '@projects/ready-ui/src/lib/charts/providers/echa
 import { HealthDashboardCaseStatusGraphComponent } from './health-dashboard-case-status-graph.component';
 import * as fromStore from '../../store';
 
-
 describe('HealthDashboardCaseStatusGraphComponent', () => {
   let component: HealthDashboardCaseStatusGraphComponent;
   let fixture: ComponentFixture<HealthDashboardCaseStatusGraphComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HealthDashboardCaseStatusGraphComponent ],
+      declarations: [HealthDashboardCaseStatusGraphComponent],
       imports: [CPTestModule],
       providers: [
         EChartsService,
@@ -37,8 +36,7 @@ describe('HealthDashboardCaseStatusGraphComponent', () => {
           ]
         })
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

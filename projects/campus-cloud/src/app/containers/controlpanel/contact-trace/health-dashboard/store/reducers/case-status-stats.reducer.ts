@@ -42,10 +42,10 @@ const reducer = createReducer(
 
 const getCaseStatusStats = (data: ICaseStatusStat[]) => {
   const result = {};
-  data.forEach(stat => {
+  data.forEach((stat) => {
     const date = moment.unix(stat.day_start_epoch).format('YYYY-MM-DD');
     if (!result[date]) {
-      result[date] = {[stat.case_status_id]: 1};
+      result[date] = { [stat.case_status_id]: 1 };
     } else if (!result[date][stat.case_status_id]) {
       result[date][stat.case_status_id] = 1;
     } else {

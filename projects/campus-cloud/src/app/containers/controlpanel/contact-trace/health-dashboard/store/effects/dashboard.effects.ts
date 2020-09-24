@@ -54,7 +54,9 @@ export class DashboardEffects {
         }
         return this.service.getCaseStatusStats(params).pipe(
           map((data: ICaseStatusStat[]) => fromActions.getCaseStatusStatsSuccess({ data })),
-          catchError((error) => of(fromActions.getCaseStatusStatsFailure(parseErrorResponse(error))))
+          catchError((error) =>
+            of(fromActions.getCaseStatusStatsFailure(parseErrorResponse(error)))
+          )
         );
       })
     )
@@ -65,7 +67,7 @@ export class DashboardEffects {
       ofType(fromActions.setDateFilter),
       switchMap((action) => {
         return [
-          fromActions.getCaseStatusStats(),
+          fromActions.getCaseStatusStats()
           // more actions to be dispatched here...
         ];
       })
@@ -78,7 +80,7 @@ export class DashboardEffects {
       switchMap((action) => {
         return [
           fromActions.getCaseStatus(),
-          fromActions.getCaseStatusStats(),
+          fromActions.getCaseStatusStats()
           // more actions to be dispatched here...
         ];
       })

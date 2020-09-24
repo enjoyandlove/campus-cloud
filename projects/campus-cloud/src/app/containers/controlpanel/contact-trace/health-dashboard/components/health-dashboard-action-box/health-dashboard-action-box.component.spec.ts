@@ -28,19 +28,19 @@ class MockEngagementUtilsService extends EngagementUtilsService {
 @Injectable()
 class MockDashboardUtilsService extends DashboardUtilsService {
   last30Days: () => {
-    start: 0,
-    end: 0,
-    label: ''
+    start: 0;
+    end: 0;
+    label: '';
   };
   last90Days: () => {
-    start: 0,
-    end: 0,
-    label: ''
+    start: 0;
+    end: 0;
+    label: '';
   };
   lastYear: () => {
-    start: 0,
-    end: 0,
-    label: ''
+    start: 0;
+    end: 0;
+    label: '';
   };
 }
 

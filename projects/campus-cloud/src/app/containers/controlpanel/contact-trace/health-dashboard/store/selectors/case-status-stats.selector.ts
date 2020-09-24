@@ -5,7 +5,6 @@ import { CaseStatusStatsState } from '../reducers/case-status-stats.reducer';
 import { selectHealthDashboard } from './case-statuses.selector';
 import { selectDateFilter } from './filters.selector';
 
-
 export const selectCaseStatusStats = createSelector(
   selectHealthDashboard,
   (state: HealthDashboardState) => state.caseStatusStats
@@ -24,10 +23,10 @@ export const selectCaseStatusStatsForGraph = createSelector(
       2: [],
       3: [],
       4: [],
-      5: [],
+      5: []
     };
     const dates = CPDate.enumerateDaysBetweenDates(dateRange.start * 1000, dateRange.end * 1000);
-    dates.forEach(date => {
+    dates.forEach((date) => {
       for (const key in result) {
         if (Object.prototype.hasOwnProperty.call(result, key)) {
           const dateKey = date.format('YYYY-MM-DD');
@@ -39,6 +38,6 @@ export const selectCaseStatusStatsForGraph = createSelector(
         }
       }
     });
-    return {ranges: dates, data: result};
+    return { ranges: dates, data: result };
   }
 );

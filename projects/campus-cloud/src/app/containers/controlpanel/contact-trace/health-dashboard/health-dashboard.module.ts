@@ -8,18 +8,21 @@ import { StoreModule } from '@ngrx/store';
 import { EngagementService } from '../../assess/engagement/engagement.service';
 import { EngagementUtilsService } from '../../assess/engagement/engagement.utils.service';
 import { DashboardUtilsService } from '../../dashboard/dashboard.utils.service';
+import { ProvidersService } from '../../manage/services/providers.service';
 import { CasesService } from '../cases/cases.service';
 import { FormsService } from '../forms';
 import {
   HealthDashboardActionBoxComponent,
   HealthDashboardCaseStatusGraphComponent,
-  StatusCardsComponent
+  StatusCardsComponent,
+  HealthDashboardFormCompletionComponent,
+  HealthDashboardLocationViewComponent
 } from './components';
-import { HealthDashboardFormCompletionComponent } from './components/form-completion';
 import {
   HealthDashboardFormCompletionGraphComponent,
   HealthDashboardFormCompletionSourceComponent
 } from './components/form-completion/components';
+import { HealthDashboardLocationVisitsComponent, HealthDashboardTrafficLocationComponent } from './components/location-view/components';
 import { HealthDashboardComponent } from './health-dashboard.component';
 import { HealthPassRoutingModule } from './health-dashboard.routing.module';
 import { HealthDashboardService } from './health-dashboard.service';
@@ -35,7 +38,10 @@ import { reducers } from './store/reducers';
     HealthDashboardFormCompletionComponent,
     HealthDashboardFormCompletionGraphComponent,
     HealthDashboardCaseStatusGraphComponent,
-    HealthDashboardFormCompletionSourceComponent
+    HealthDashboardFormCompletionSourceComponent,
+    HealthDashboardLocationViewComponent,
+    HealthDashboardLocationVisitsComponent,
+    HealthDashboardTrafficLocationComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +59,8 @@ import { reducers } from './store/reducers';
     EngagementUtilsService,
     EngagementService,
     FormsService,
-    DashboardUtilsService
+    DashboardUtilsService,
+    ProvidersService
   ]
 })
 export class HealthDashboardModule {}

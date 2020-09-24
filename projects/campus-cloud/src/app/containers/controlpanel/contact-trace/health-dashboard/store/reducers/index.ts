@@ -12,5 +12,5 @@ export interface HealthDashboardState {
 export const reducers: ActionReducerMap<HealthDashboardState> = {
   caseStatuses: caseStatusesReducer,
   filters: filtersReducer,
-  caseStatusStats: caseStatusStatsReducer,
+  caseStatusStats: caseStatusStatsReducer
 };

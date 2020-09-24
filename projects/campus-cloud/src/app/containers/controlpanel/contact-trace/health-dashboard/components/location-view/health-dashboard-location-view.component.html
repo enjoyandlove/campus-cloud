@@ -1,0 +1,104 @@
+<div class="chart cp-card">
+  <div class="row">
+    <div class="col-4 d-flex">
+      <span class="chart--title">
+        {{ 'qr_code' | cpI18n }}
+      </span>
+      <button ui-button
+                variant="inline"
+                type="button"
+                class="unstyled-button download-file ml-2"
+                >
+        <ready-ui-stack>
+            <ready-ui-icon name="vertical_align_bottom"></ready-ui-icon>
+        </ready-ui-stack>
+      </button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-2">
+      <button
+          ui-button
+          type="button"
+          variant="flat"
+          color="secondary"
+          class="action-button"
+          ready-ui-menu-trigger
+          [triggerFor]="qrcodes"
+      >
+          {{ 'all_qr_codes' | cpI18n }}
+        <ready-ui-icon name="keyboard_arrow_down"></ready-ui-icon>
+      </button>
+    </div>
+  </div>
+  <div [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+    <div *ngSwitchCase="false">
+      <div class="row mt-2">
+          <div class="col-6">
+            <cp-health-dashboard-location-visits [locationVisits]="locationVisits"></cp-health-dashboard-location-visits>
+          </div>
+          <div class="col-6">
+            <cp-health-dashboard-traffic-location [locationTraffics]="locationTraffics"
+                                                  (selectedSort)="onSelectSortBy($event)"
+            ></cp-health-dashboard-traffic-location>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ready-ui-menu #qrcodes="menu"
+                maxHeight="20em">
+  <ready-ui-menu-search (search)="qrCodeSearchTermStream.next($event)"
+                        [placeholder]="'t_walls_search_placeholder' | cpI18n">
+  </ready-ui-menu-search>
+  <ready-ui-menu-section [headerTpl]="headerTpl"
+                         class="custom-section-header">
+    <ready-ui-menu-item *ngFor="let qrCode of qrCodeData">
+      <ready-ui-stack>
+        <ready-ui-checkbox
+                  [context]="{qr: qrCode}"
+                  (changed)="handleQrCode(qrCode)"
+                  [checked]="this.selectedQrCode.includes(qrCode)"
+                  [disabled]="false">
+        </ready-ui-checkbox>
+        {{ qrCode.provider_name }}
+      </ready-ui-stack>
+    </ready-ui-menu-item>
+</ready-ui-menu-section>
+  <ready-ui-menu-item *ngIf="!qrCodeData.length">
+  {{ 't_walls_no_users_found' | cpI18n }}
+  </ready-ui-menu-item>
+  <ready-ui-menu-item class="load-more"
+          *ngIf="qrCodeHasMorePages">
+    <button ui-button
+            type="button"
+            variant="inline"
+            fullWidth="true"
+            (click)="qrCodeLoadMoreClickHandler()">
+    <ui-text-style color="muted">{{ 't_load_more' | cpI18n }}
+    </ui-text-style>
+    </button>
+  </ready-ui-menu-item>
+</ready-ui-menu>
+
+<ng-template #headerTpl>
+  <ready-ui-stack *ngIf="selectedQrCode.length > 0" alignment="between">
+    <ready-ui-stack spacing="tight">
+      <ui-text-style variant="semibold">{{'t_shared_selection' | cpI18n}}
+      </ui-text-style>
+    </ready-ui-stack>
+    <button ui-button
+            type="button"
+            variant="inline"
+            (click)="handleClearSelectedQrCode()">
+      {{ 't_shared_clear' | cpI18n }}
+    </button>
+  </ready-ui-stack>
+</ng-template>
+
+<ng-template #activeItem>
+  <ready-ui-menu-dot></ready-ui-menu-dot>
+</ng-template>
+
