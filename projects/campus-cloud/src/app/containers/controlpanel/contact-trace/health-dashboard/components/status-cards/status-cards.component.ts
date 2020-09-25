@@ -36,25 +36,21 @@ export class StatusCardsComponent implements OnDestroy {
     private router: Router,
     private session: CPSession
   ) {
-    this.getCaseStatusesByRank();
     this.loading$ = this.store.pipe(
       select(fromStore.selectCaseStatusesLoading),
       takeUntil(this.destroy$)
     );
+
     this.store.pipe(
       select(fromStore.selectAudienceFilter),
       takeUntil(this.destroy$)
     ).subscribe(value => this.audience = value);
-  }
 
-  getCaseStatusesByRank() {
-    this.store.dispatch(fromStore.getCaseStatus());
-    this.caseStatusesByRank$ = this.store
-      .select(fromStore.selectCaseStatusesByRank)
-      .pipe(startWith({}));
-    this.caseStatusesByRank$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((value) => (this.caseStatusesByRank = value));
+    this.store.pipe(
+      select(fromStore.selectCaseStatusesByRank),
+      startWith({}),
+      takeUntil(this.destroy$)
+    ).subscribe((value) => (this.caseStatusesByRank = value));
   }
 
   onReviewReports() {
