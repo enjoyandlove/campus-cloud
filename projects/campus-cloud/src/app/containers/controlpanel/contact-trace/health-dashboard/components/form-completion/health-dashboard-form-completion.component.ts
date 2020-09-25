@@ -51,7 +51,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
   formsHasMorePages = false;
   formData = [];
   selectedForms = [];
-
+  isFormSearching = false;
   filters = [];
   formFilter$ = new Subject<any>();
 
@@ -338,6 +338,14 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
     this.formFilter$.next(this.filters);
   }
 
+  private handleFormsDataLoad(data: any[]) {
+    if (this.formsPageCounter === 1) {
+      this.formData = data;
+    } else {
+      this.formData = this.formData.concat(data);
+    }
+  }
+
   ngOnInit(): void {
     this.registerFilterStates();
 
@@ -346,6 +354,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
       map((searchTerm: string) => {
         this.formsSearchTerm = searchTerm;
         this.formsPageCounter = 1;
+        this.isFormSearching = searchTerm !== '';
         return { searchTerm: searchTerm, page: this.formsPageCounter };
       })
     );
@@ -368,7 +377,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
       share()
     );
 
-    formsSearchCombinedSource.subscribe((data) => (this.formData = [...this.formData, ...data]));
+    formsSearchCombinedSource.subscribe((data) => this.handleFormsDataLoad(data));
   }
 
   ngOnDestroy() {

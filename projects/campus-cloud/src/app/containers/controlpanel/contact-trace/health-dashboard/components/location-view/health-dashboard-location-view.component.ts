@@ -39,6 +39,7 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   qrCodePageStream = new Subject<number>();
   qrCodePaginationCountPerPage = 10;
   qrCodeHasMorePages = false;
+  isQrCodeSearching = false;
   qrCodeData = [];
 
   selectedQrCode = [];
@@ -87,7 +88,13 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
       .set('school_id', this.session.school.id.toString())
       .set('service_id', this.session.schoolCTServiceId.toString())
       .set('sort_field', 'provider_name')
-      .set('sort_direction', 'asc');
+      .set('sort_direction', 'asc')
+      .set(
+        'search_text',
+        Boolean(this.qrCodeSearchTerm && this.qrCodeSearchTerm.trim().length)
+          ? this.qrCodeSearchTerm.trim()
+          : null
+      );
     return this.providerService.getProviders(startRecordCount, endRecordCount, params).pipe(
       map((results: any[]) => {
         if (results && results.length > this.qrCodePaginationCountPerPage) {
@@ -208,7 +215,11 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   }
 
   handleQrCodeDataLoad(data: any[]) {
-    this.qrCodeData = [...this.qrCodeData, ...data];
+    if (this.qrCodePageCounter === 1) {
+      this.qrCodeData = data;
+    } else {
+      this.qrCodeData = this.qrCodeData.concat(data);
+    }
   }
 
   qrCodeLoadMoreClickHandler(): void {
@@ -307,6 +318,7 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
       map((searchTerm: string) => {
         this.qrCodeSearchTerm = searchTerm;
         this.qrCodePageCounter = 1;
+        this.isQrCodeSearching = searchTerm !== '';
         return { searchTerm: searchTerm, page: this.qrCodePageCounter };
       })
     );
