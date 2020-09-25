@@ -53,12 +53,19 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
   selectedForms = [];
 
   filters = [];
+  formFilter$ = new Subject<any>();
 
   sources = {
     tileViews: 0,
     tileCompleted: 0,
     webViews: 0,
     webCompleted: 0
+  };
+
+  activities = {
+    never_submitted: 0,
+    not_submitted_today: 0,
+    unique_submissions_today: 0
   };
 
   handleTimeOut = null;
@@ -68,6 +75,9 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
 
   dateFilter$: Observable<Record<number, any>>;
   dateFilter = null;
+
+  formActivityStream$ = null;
+  formResponseStream$ = null;
 
   destroy$ = new Subject();
 
@@ -81,7 +91,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
     public utils: HealthDashboardUtilsService
   ) {}
 
-  fetch() {
+  fetchFormResponseStats() {
     let params;
 
     params = new HttpParams().set('school_id', this.session.g.get('school').id);
@@ -223,23 +233,60 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
       });
   }
 
+  fetchFormActivityInfo() {
+    let params;
+
+    params = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    if (this.filters.length > 0) {
+      params = params.append('form_ids', this.filters.join(','));
+    }
+    if (this.audienceFilter !== null) {
+      params = params.append('user_list_id', this.audienceFilter.listId);
+    }
+
+    params = params.append('total_daily_stats', 'true');
+
+    if (this.formActivityStream$) {
+      this.formActivityStream$.unsubscribe();
+    }
+
+    this.formActivityStream$ = this.service
+      .getFormResponseStats(params)
+      .pipe(
+        map((results: any) => {
+          return results;
+        }),
+        catchError(() => of())
+      )
+      .subscribe((data) => {
+        this.fetchFormResponseStats();
+        this.activities = {
+          never_submitted: data.never_submitted,
+          not_submitted_today: data.not_submitted_today,
+          unique_submissions_today: data.unique_submissions_today
+        };
+      });
+  }
+
   registerFilterStates() {
     this.audienceFilter$ = this.store.select(fromStore.selectAudienceFilter).pipe(startWith({}));
     this.dateFilter$ = this.store.select(fromStore.selectDateFilter).pipe(startWith({}));
-
-    const state$ = combineLatest([this.audienceFilter$, this.dateFilter$]);
+    const state$ = combineLatest([this.audienceFilter$, this.dateFilter$, this.formFilter$]);
 
     state$.pipe(takeUntil(this.destroy$)).subscribe((res) => {
       this.audienceFilter = res[0];
       this.dateFilter = res[1];
-      this.fetch();
+      this.filters = res[2];
+      this.fetchFormActivityInfo();
     });
+    this.formFilter$.next(this.filters);
   }
 
   handleClearSelectedForms() {
     this.filters = [];
     this.selectedForms = [];
-    this.fetch();
+    this.formFilter$.next(this.filters);
   }
 
   formsLoadMoreClickHandler(): void {
@@ -288,19 +335,13 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
       this.selectedForms.push(form);
     }
 
-    if (this.handleTimeOut) {
-      clearTimeout(this.handleTimeOut);
-    }
-    this.handleTimeOut = setTimeout(() => {
-      this.fetch();
-    }, 1500);
+    this.formFilter$.next(this.filters);
   }
 
   ngOnInit(): void {
     this.registerFilterStates();
 
     const formsSearchSource = this.formsSearchTermStream.pipe(
-      debounceTime(500),
       distinctUntilChanged(),
       map((searchTerm: string) => {
         this.formsSearchTerm = searchTerm;
