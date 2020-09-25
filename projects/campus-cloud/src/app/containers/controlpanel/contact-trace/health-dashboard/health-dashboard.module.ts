@@ -20,6 +20,7 @@ import {
   HealthDashboardLocationViewComponent
 } from './components';
 import {
+  HealthDashboardFormCompletionActivityComponent,
   HealthDashboardFormCompletionGraphComponent,
   HealthDashboardFormCompletionSourceComponent
 } from './components/form-completion/components';
@@ -47,6 +48,7 @@ import { reducers } from './store/reducers';
     HealthDashboardLocationViewComponent,
     HealthDashboardLocationVisitsComponent,
     HealthDashboardTrafficLocationComponent,
+    HealthDashboardFormCompletionActivityComponent,
     HealthDashboardLocationViewGraphComponent
   ],
   imports: [

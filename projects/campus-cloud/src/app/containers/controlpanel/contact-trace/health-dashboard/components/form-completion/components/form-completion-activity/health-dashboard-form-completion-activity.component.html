@@ -1,0 +1,52 @@
+<div class="chart">
+  <div class="chart__header">
+    <p class="chart__header--title">
+      {{ 'health_dashboard_form_activity_title' | cpI18n }}
+    </p>
+  </div>
+  <hr>
+  <div class="chart__body">
+    <div class="row">
+      <div class="col-7 heading">
+        <span class="heading__count">
+          {{ activities.not_submitted_today }}
+        </span>
+        <span class="heading__title">{{ 'health_dashboard_form_not_completed' | cpI18n }}</span>
+      </div>
+      <div class="col-5 text-right download-button">
+        <button type="button"
+                class="cpbtn cpbtn--primary">
+          {{ 'download' | cpI18n }}
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-7 heading">
+        <span class="heading__count">
+          {{ activities.unique_submissions_today }}
+        </span>
+        <span class="heading__title">{{ 'health_dashboard_form_completed' | cpI18n }}</span>
+      </div>
+      <div class="col-5 text-right download-button">
+        <button type="button"
+                class="cpbtn cpbtn--primary">
+          {{ 'download' | cpI18n }}
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-7 heading">
+        <span class="heading__count">
+           {{ activities.never_submitted }}
+        </span>
+        <span class="heading__title">{{ 'health_dashboard_form_never_completed' | cpI18n }}</span>
+      </div>
+      <div class="col-5 text-right download-button">
+        <button type="button"
+                class="cpbtn cpbtn--primary">
+          {{ 'download' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

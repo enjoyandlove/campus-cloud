@@ -304,8 +304,6 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
     this.registerFilterStates();
 
     const qrCodeSearchSource = this.qrCodeSearchTermStream.pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
       map((searchTerm: string) => {
         this.qrCodeSearchTerm = searchTerm;
         this.qrCodePageCounter = 1;

@@ -181,11 +181,13 @@ export class TeamUtilsService {
     adminContactTraceDashboardPrivilege = { r: false, w: false }
   ): Array<any> {
     let items = [];
-    if (!viewerContactTraceQRPrivilege.r
-      && !viewerContactTraceFormsPrivilege.r
-      && !viewerContactTraceCasesPrivilege.r
-      && !viewerContactTraceNotificationsPrivilege.r
-      && !viewerContactTraceDashboardPrivilege.r) {
+    if (
+      !viewerContactTraceQRPrivilege.r &&
+      !viewerContactTraceFormsPrivilege.r &&
+      !viewerContactTraceCasesPrivilege.r &&
+      !viewerContactTraceNotificationsPrivilege.r &&
+      !viewerContactTraceDashboardPrivilege.r
+    ) {
       return items;
     }
 
