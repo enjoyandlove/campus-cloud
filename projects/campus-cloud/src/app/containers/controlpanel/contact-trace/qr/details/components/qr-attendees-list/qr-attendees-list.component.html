@@ -47,6 +47,7 @@
                   <div class="meta">
                     <strong>
                       {{ assessment.attendee_type !== deletedAttendee ? assessment.firstname + ' ' + assessment.lastname : ('t_shared_closed_account' | cpI18n) }}
+                      <a *ngIf="assessment.case_id" class="text-primary" [routerLink]="['/contact-trace', 'cases', assessment.case_id]">({{ assessment.case_id }})</a>
                     </strong>
                     <br />
                     <small class="text-muted">
