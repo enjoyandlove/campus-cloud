@@ -525,7 +525,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         const param = new HttpParams().set('school_id', this.session.schoolIdAsString);
         this.casesService.getCaseById(param, this.caseId).subscribe((value: ICase) => {
           this.casesById = value;
-          this.notifyDestination = this.buildNotifyDestination();
+          this.notifyDestination = this.buildNotifyDestination(this.casesById);
           this.notification.user_ids = [this.casesById.user_id];
           this.onToOptionChanged({
             action: 'custom_list',
@@ -549,15 +549,11 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private buildNotifyDestination() {
-    return !privacyConfigurationOn(this.session.g)
-      ? this.casesById.firstname +
-          ' ' +
-          this.casesById.lastname +
-          '<' +
-          this.casesById.extern_user_id +
-          '>'
-      : this.casesById.anonymous_identifier;
+  private buildNotifyDestination(caseItem: ICase) {
+    const { firstname, lastname, extern_user_id, anonymous_identifier } = caseItem;
+    return !this.isPrivacyOn
+      ? firstname + ' ' + lastname + '<' + extern_user_id + '>'
+      : anonymous_identifier;
   }
 
   private ifExposureNotification(casesById: ICase) {
@@ -580,13 +576,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             this.notification.user_ids = cases.map((caseItem) => caseItem.user_id);
             this.notifyDestination = '';
             cases.forEach((caseItem) => {
-              this.notifyDestination +=
-                caseItem.firstname +
-                ' ' +
-                caseItem.lastname +
-                '<' +
-                caseItem.extern_user_id +
-                '>, ';
+              this.notifyDestination += this.buildNotifyDestination(caseItem) + ', ';
             });
           }
         });
