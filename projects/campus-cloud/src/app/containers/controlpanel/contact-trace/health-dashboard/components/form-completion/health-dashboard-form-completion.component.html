@@ -56,23 +56,39 @@
   <ready-ui-menu-search (search)="formsSearchTermStream.next($event)"
                         [placeholder]="'t_walls_search_placeholder' | cpI18n">
   </ready-ui-menu-search>
-  <ready-ui-menu-section [headerTpl]="headerTpl"
-                         class="custom-section-header">
-    <ready-ui-menu-item *ngFor="let form of formData">
-      <ready-ui-stack>
-        <ready-ui-checkbox
-                  [context]="{form: form}"
-                  (changed)="handleForm(form)"
-                  [checked]="this.selectedForms.includes(form)"
-                  [disabled]="false">
-        </ready-ui-checkbox>
-        {{ form.name }}
-      </ready-ui-stack>
-    </ready-ui-menu-item>
-</ready-ui-menu-section>
-  <ready-ui-menu-item *ngIf="!formData.length">
-  {{ 't_walls_no_users_found' | cpI18n }}
+  <ng-container
+                    *ngIf="selectedForms.length && !isFormSearching">
+    <ready-ui-menu-section [headerTpl]="headerTpl"
+                          class="custom-section-header">
+      <ready-ui-menu-item *ngFor="let form of selectedForms">
+        <ready-ui-stack>
+          <ready-ui-checkbox checked="true"
+                            [context]="{form: form}"
+                            (changed)="handleForm(form) ">
+          </ready-ui-checkbox>
+          {{ form.name }}
+        </ready-ui-stack>
+      </ready-ui-menu-item>
+      <ready-ui-menu-divider></ready-ui-menu-divider>
+    </ready-ui-menu-section>
+  </ng-container>
+
+  <ready-ui-menu-item *ngFor="let form of formData">
+    <ready-ui-stack>
+      <ready-ui-checkbox
+                [context]="{form: form}"
+                (changed)="handleForm(form)"
+                [checked]="selectedForms.includes(form)"
+                [disabled]="false">
+      </ready-ui-checkbox>
+      {{ form.name }}
+    </ready-ui-stack>
   </ready-ui-menu-item>
+
+  <ready-ui-menu-item *ngIf="!formData.length">
+  {{ 'contact_trace_forms_no_results' | cpI18n }}
+  </ready-ui-menu-item>
+
   <ready-ui-menu-item class="load-more"
           *ngIf="formsHasMorePages">
     <button ui-button
