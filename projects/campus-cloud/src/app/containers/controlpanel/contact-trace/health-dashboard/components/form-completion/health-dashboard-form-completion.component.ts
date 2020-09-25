@@ -13,7 +13,6 @@ import { HealthDashboardUtilsService } from '../../health-dashboard.utils.servic
 import { FormsService } from '../../../forms';
 import {
   catchError,
-  debounceTime,
   distinctUntilChanged,
   map,
   share,
@@ -21,7 +20,7 @@ import {
   switchMap,
   takeUntil
 } from 'rxjs/operators';
-import { Observable, of, Subject, merge, combineLatest } from 'rxjs';
+import { Observable, of, Subject, merge, combineLatest, from } from 'rxjs';
 import { HealthDashboardService } from '../../health-dashboard.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
@@ -108,129 +107,18 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
     }
     this.loading = true;
 
-    const stream$ = this.service.getFormResponseStats(params);
-    stream$
-      .toPromise()
-      .then((res: any) => {
-        this.loading = false;
+    if (this.formResponseStream$) {
+      this.formResponseStream$.unsubscribe();
+    }
 
-        this.sources = {
-          tileViews: 0,
-          tileCompleted: 0,
-          webViews: 0,
-          webCompleted: 0
-        };
+    if (this.formActivityStream$) {
+      this.formActivityStream$.unsubscribe();
+    }
 
-        if (res.length === 0) {
-          this.labels = [];
-          this.series = [];
-          return;
-        }
-
-        res.map((item) => {
-          if (item.collection_method === 1) {
-            this.sources.tileCompleted =
-              item.response_completed_epoch > 0
-                ? this.sources.tileCompleted + 1
-                : this.sources.tileCompleted;
-            this.sources.tileViews++;
-          } else if (item.collection_method === 2) {
-            this.sources.webCompleted =
-              item.response_completed_epoch > 0
-                ? this.sources.webCompleted + 1
-                : this.sources.webCompleted;
-            this.sources.webViews++;
-          }
-        });
-
-        this.groupByDateForm = this.utils.getCompletedForm(res);
-        this.chartData = this.groupByDateForm.reduce(
-          (prev, item) => {
-            return {
-              label: [...prev.label, this.utils.formatDate(item.date)],
-              seriesComplete: [...prev.seriesComplete, item.count.complete],
-              seriesViews: [...prev.seriesViews, item.count.views]
-            };
-          },
-          { label: new Array(), seriesComplete: new Array(), seriesViews: new Array() }
-        );
-
-        const labels = this.utils.getDateArray(
-          this.groupByDateForm[0].date,
-          this.groupByDateForm[this.groupByDateForm.length - 1].date
-        );
-
-        let newSeriesComplete = [];
-        let newSeriesViews = [];
-
-        labels.map((item) => {
-          if (this.chartData.label.includes(item)) {
-            newSeriesComplete = [
-              ...newSeriesComplete,
-              this.chartData.seriesComplete[this.chartData.label.indexOf(item)]
-            ];
-            newSeriesViews = [
-              ...newSeriesViews,
-              this.chartData.seriesViews[this.chartData.label.indexOf(item)]
-            ];
-          } else {
-            newSeriesComplete = [...newSeriesComplete, 0];
-            newSeriesViews = [...newSeriesViews, 0];
-          }
-        });
-
-        const series = [newSeriesViews, newSeriesComplete];
-        const data = { labels: labels, series: series };
-
-        this.range = Object.assign({}, this.range, {
-          start: data.labels[0],
-          end: data.labels[data.labels.length - 1]
-        });
-        if (data.series[0].length >= twoYears) {
-          this.divider = DivideBy.quarter;
-
-          return Promise.all([
-            groupByQuarter(data.labels, data.series[0]),
-            groupByQuarter(data.labels, data.series[1])
-          ]);
-        }
-
-        if (data.series[0].length >= year) {
-          this.divider = DivideBy.monthly;
-
-          return Promise.all([
-            groupByMonth(data.labels, data.series[0]),
-            groupByMonth(data.labels, data.series[1])
-          ]);
-        }
-
-        if (data.series[0].length >= threeMonths) {
-          this.divider = DivideBy.weekly;
-
-          return Promise.all([
-            groupByWeek(data.labels, data.series[0]),
-            groupByWeek(data.labels, data.series[1])
-          ]);
-        }
-
-        this.divider = DivideBy.daily;
-        return Promise.resolve(data.series);
-      })
-      .then((series: any) => {
-        if (series) {
-          this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
-          this.series = series.map((data: number[], idx: number) => {
-            return {
-              data,
-              type: 'line',
-              name:
-                idx === 0
-                  ? this.cpI18n.transform('health_dashboard_views')
-                  : this.cpI18n.transform('contact_trace_forms_completed')
-            };
-          });
-        }
-      });
+    this.formResponseStream$ = this.service.getFormResponseStats(params).subscribe((data) => {
+      this.fetchFormActivityInfo();
+      this.buildChartSeries(data);
+    });
   }
 
   fetchFormActivityInfo() {
@@ -251,22 +139,18 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
       this.formActivityStream$.unsubscribe();
     }
 
-    this.formActivityStream$ = this.service
-      .getFormResponseStats(params)
-      .pipe(
-        map((results: any) => {
-          return results;
-        }),
-        catchError(() => of())
-      )
-      .subscribe((data) => {
-        this.fetchFormResponseStats();
-        this.activities = {
-          never_submitted: data.never_submitted,
-          not_submitted_today: data.not_submitted_today,
-          unique_submissions_today: data.unique_submissions_today
-        };
-      });
+    if (this.formResponseStream$) {
+      this.formResponseStream$.unsubscribe();
+    }
+
+    this.formActivityStream$ = this.service.getFormResponseStats(params).subscribe((data: any) => {
+      this.loading = false;
+      this.activities = {
+        never_submitted: data.never_submitted,
+        not_submitted_today: data.not_submitted_today,
+        unique_submissions_today: data.unique_submissions_today
+      };
+    });
   }
 
   registerFilterStates() {
@@ -278,7 +162,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
       this.audienceFilter = res[0];
       this.dateFilter = res[1];
       this.filters = res[2];
-      this.fetchFormActivityInfo();
+      this.fetchFormResponseStats();
     });
     this.formFilter$.next(this.filters);
   }
@@ -286,6 +170,12 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
   handleClearSelectedForms() {
     this.filters = [];
     this.selectedForms = [];
+    if (this.formResponseStream$) {
+      this.formResponseStream$.unsubscribe();
+    }
+    if (this.formActivityStream$) {
+      this.formActivityStream$.unsubscribe();
+    }
     this.formFilter$.next(this.filters);
   }
 
@@ -338,7 +228,131 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
     this.formFilter$.next(this.filters);
   }
 
-  private handleFormsDataLoad(data: any[]) {
+  buildChartSeries(res) {
+    this.sources = {
+      tileViews: 0,
+      tileCompleted: 0,
+      webViews: 0,
+      webCompleted: 0
+    };
+
+    if (res.length === 0) {
+      this.labels = [];
+      this.series = [];
+      return;
+    }
+
+    res.map((item) => {
+      if (item.collection_method === 1) {
+        this.sources.tileCompleted =
+          item.response_completed_epoch > 0
+            ? this.sources.tileCompleted + 1
+            : this.sources.tileCompleted;
+        this.sources.tileViews++;
+      } else if (item.collection_method === 2) {
+        this.sources.webCompleted =
+          item.response_completed_epoch > 0
+            ? this.sources.webCompleted + 1
+            : this.sources.webCompleted;
+        this.sources.webViews++;
+      }
+    });
+
+    this.groupByDateForm = this.utils.getCompletedForm(res);
+    this.chartData = this.groupByDateForm.reduce(
+      (prev, item) => {
+        return {
+          label: [...prev.label, this.utils.formatDate(item.date)],
+          seriesComplete: [...prev.seriesComplete, item.count.complete],
+          seriesViews: [...prev.seriesViews, item.count.views]
+        };
+      },
+      { label: [], seriesComplete: [], seriesViews: [] }
+    );
+
+    const labels = this.utils.getDateArray(
+      this.groupByDateForm[0].date,
+      this.groupByDateForm[this.groupByDateForm.length - 1].date
+    );
+
+    let newSeriesComplete = [];
+    let newSeriesViews = [];
+
+    labels.map((item) => {
+      if (this.chartData.label.includes(item)) {
+        newSeriesComplete = [
+          ...newSeriesComplete,
+          this.chartData.seriesComplete[this.chartData.label.indexOf(item)]
+        ];
+        newSeriesViews = [
+          ...newSeriesViews,
+          this.chartData.seriesViews[this.chartData.label.indexOf(item)]
+        ];
+      } else {
+        newSeriesComplete = [...newSeriesComplete, 0];
+        newSeriesViews = [...newSeriesViews, 0];
+      }
+    });
+
+    const series = [newSeriesViews, newSeriesComplete];
+    const data = { labels: labels, series: series };
+
+    this.range = Object.assign({}, this.range, {
+      start: data.labels[0],
+      end: data.labels[data.labels.length - 1]
+    });
+
+    const dataSeries$ = from(this.buildSeriesStream(data));
+    dataSeries$.subscribe((series: any) => {
+      if (series) {
+        this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
+        this.series = series.map((data: number[], idx: number) => {
+          return {
+            data,
+            type: 'line',
+            name:
+              idx === 0
+                ? this.cpI18n.transform('health_dashboard_views')
+                : this.cpI18n.transform('contact_trace_forms_completed')
+          };
+        });
+      }
+    });
+  }
+
+  buildSeriesStream(data) {
+    if (data.series[0].length >= twoYears) {
+      this.divider = DivideBy.quarter;
+
+      return Promise.all([
+        groupByQuarter(data.labels, data.series[0]),
+        groupByQuarter(data.labels, data.series[1])
+      ]);
+    }
+
+    if (data.series[0].length >= year) {
+      this.divider = DivideBy.monthly;
+
+      return Promise.all([
+        groupByMonth(data.labels, data.series[0]),
+        groupByMonth(data.labels, data.series[1])
+      ]);
+    }
+
+    if (data.series[0].length >= threeMonths) {
+      this.divider = DivideBy.weekly;
+
+      return Promise.all([
+        groupByWeek(data.labels, data.series[0]),
+        groupByWeek(data.labels, data.series[1])
+      ]);
+    }
+
+    this.divider = DivideBy.daily;
+    return Promise.resolve(data.series);
+  }
+
+  handleFormsDataLoad(data: any[]) {
     if (this.formsPageCounter === 1) {
       this.formData = data;
     } else {
