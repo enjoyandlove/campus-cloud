@@ -2078,6 +2078,9 @@
   "health_dashboard_form_completion": {
     "message": "Form Completion"
   },
+  "health_dashboard_form_graph_completion": {
+    "message": "Completions"
+  },
   "health_dashboard_form_never_completed": {
     "message": "Never Completed Form"
   },

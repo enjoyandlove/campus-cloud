@@ -313,7 +313,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
             name:
               idx === 0
                 ? this.cpI18n.transform('health_dashboard_views')
-                : this.cpI18n.transform('contact_trace_forms_completed')
+                : this.cpI18n.transform('health_dashboard_form_graph_completion')
           };
         });
       }
