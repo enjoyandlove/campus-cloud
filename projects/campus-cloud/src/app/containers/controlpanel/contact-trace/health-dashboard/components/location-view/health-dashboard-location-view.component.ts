@@ -163,12 +163,6 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
 
     this.chartService$ = this.providerService
       .getProviderAssessments(null, null, params)
-      .pipe(
-        map((res) => {
-          return res;
-        }),
-        catchError(() => of([]))
-      )
       .subscribe((results: any[]) => {
         this.initLocationChart();
         results.map((item) => {
