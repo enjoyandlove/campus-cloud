@@ -8,7 +8,7 @@ import { EventsModule } from '../../../events.module';
 import { attendanceType } from '../../../event.status';
 import { EventsService } from '../../../events.service';
 import { CheckInEditComponent } from './edit.component';
-import { mockSchool } from '@campus-cloud/session/mock';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { CheckInUtilsService } from '../check-in.utils.service';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
@@ -55,6 +55,7 @@ describe('EventCheckInEditComponent', () => {
 
         component = fixture.componentInstance;
         component.session.g.set('school', mockSchool);
+        component.session.g.set('user', mockUser);
         component.checkIn = mockCheckIn;
         component.data = {
           ...component.data,

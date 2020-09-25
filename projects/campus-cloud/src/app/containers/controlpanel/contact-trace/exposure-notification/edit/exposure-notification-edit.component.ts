@@ -21,7 +21,6 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { AudienceService } from '@controlpanel/audience/audience.service';
 import { CasesUtilsService } from '@controlpanel/contact-trace/cases/cases.utils.service';
 import { ImportUserListComponent } from '@controlpanel/contact-trace/exposure-notification/components';
-import { get } from 'lodash';
 import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
 
 interface IImportedUser {
@@ -100,6 +99,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   userImportedFromCSV$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   userInsertedFromInput$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   importedUsers$: BehaviorSubject<IImportedUser[]> = new BehaviorSubject<IImportedUser[]>([]);
+  isPrivacyOn: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -167,6 +167,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isPrivacyOn = privacyConfigurationOn(this.session.g);
     this.activatedRoute.params.pipe(takeUntil(this.unsubscribe)).subscribe((params) => {
       const notificationId: number = Number(params['notificationId']);
       this.getItemForEdit(notificationId).subscribe((notification) => {
@@ -612,7 +613,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
     this.casesService.getCases(null, null, params).subscribe((cases: ICase[]) => {
       if (cases.length) {
-        this.util.exportUserCases(cases);
+        this.util.exportUserCases(cases, this.isPrivacyOn);
       }
     });
   }
@@ -644,7 +645,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     stream$.subscribe(() => {
       const exposureData = Array.from(this.casesForUsers.values());
       if (!!exposureData.length) {
-        this.util.exportUserCases(exposureData);
+        this.util.exportUserCases(exposureData, this.isPrivacyOn);
       } else {
         this.store.dispatch(
           new baseActionClass.SnackbarError({

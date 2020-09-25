@@ -174,6 +174,10 @@ export const mockUser = {
       '33': {
         r: true,
         w: true
+      },
+      '46': {
+        r: true,
+        w: true
       }
     },
     '2806': {

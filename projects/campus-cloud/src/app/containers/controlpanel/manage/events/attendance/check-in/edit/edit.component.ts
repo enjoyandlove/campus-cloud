@@ -19,6 +19,7 @@ import IServiceProvider from '../../../../services/providers.interface';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
 
 @Component({
   selector: 'cp-edit-check-in',
@@ -39,6 +40,7 @@ export class CheckInEditComponent implements OnInit {
   errorMessage;
   checkedIn = CheckInOut.no;
   checkedOut = CheckInOut.no;
+  isPrivacyOn: boolean;
 
   constructor(
     public el: ElementRef,
@@ -144,7 +146,8 @@ export class CheckInEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.data);
+    this.isPrivacyOn = privacyConfigurationOn(this.session.g);
+    this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.data, this.isPrivacyOn);
     this.onValueChanges();
 
     this.buttonData = {

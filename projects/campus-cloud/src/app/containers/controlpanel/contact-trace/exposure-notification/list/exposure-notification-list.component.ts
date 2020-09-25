@@ -25,7 +25,7 @@ import { ExposureNotificationDeleteComponent } from '@controlpanel/contact-trace
 import { CasesService } from '@controlpanel/contact-trace/cases/cases.service';
 import { ICase } from '@controlpanel/contact-trace/cases/cases.interface';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { canSchoolWriteResource, privacyConfigurationOn } from '@campus-cloud/shared/utils';
 
 @Component({
   selector: 'cp-exposure-notification-list',
@@ -52,6 +52,7 @@ export class ExposureNotificationListComponent implements OnInit {
   notificationForView: ExposureNotification;
   notificationStatus = ExposureNotificationStatus;
   deleteModal: OverlayRef;
+  isPrivacyOn: boolean;
 
   constructor(
     private modalService: ModalService,
@@ -65,6 +66,7 @@ export class ExposureNotificationListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isPrivacyOn = privacyConfigurationOn(this.session.g);
     this.headerService.updateHeader();
 
     const searchSource = this.searchTermStream.pipe(

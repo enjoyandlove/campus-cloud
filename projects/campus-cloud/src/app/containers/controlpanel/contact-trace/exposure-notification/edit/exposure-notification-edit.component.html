@@ -160,7 +160,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-4" *ngIf="!isPrivacyOn">
                 <p class="cursor-pointer float-right import-link m-0" (click)="importModal()">
                   {{ 'import_from_csv' | cpI18n}}
                 </p>
