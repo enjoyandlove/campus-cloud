@@ -30,6 +30,12 @@ class MockHealthDashboardCaseStatusGraphComponent {}
 })
 class MockHealthDashboardFormCompletionComponent {}
 
+@Component({
+  selector: 'cp-health-dashboard-location-view',
+  template: '<p>It works!</p>'
+})
+class MockHealthDashboardLocationViewComponent {}
+
 describe('HealthDashboardComponent', () => {
   let component: HealthDashboardComponent;
   let fixture: ComponentFixture<HealthDashboardComponent>;
@@ -41,7 +47,8 @@ describe('HealthDashboardComponent', () => {
         MockHealthDashboardActionBoxComponent,
         MockStatusCardsComponent,
         MockHealthDashboardCaseStatusGraphComponent,
-        MockHealthDashboardFormCompletionComponent
+        MockHealthDashboardFormCompletionComponent,
+        MockHealthDashboardLocationViewComponent
       ],
       imports: [CPTestModule]
     }).compileComponents();
