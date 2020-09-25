@@ -28,6 +28,10 @@ describe('StatusCardsComponent', () => {
             {
               selector: fromStore.selectCaseStatusesLoading,
               value: false
+            },
+            {
+              selector: fromStore.selectAudienceFilter,
+              value: null
             }
           ]
         })
