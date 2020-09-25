@@ -55,10 +55,12 @@
                     <div class="row">
                       <div class="col-12">
                         <cp-check-dropdown [dropdownListClass]="'small-width'"
+                          [class.disabled]="toSpecificUsers.length"
                           [items]="caseId ? toCaseOption : toOptions"
                           [selectedItem]="selectedToOption"
                           buttonClass="cpbtn cpbtn--cancel"
-                          (selected)="onToOptionChanged($event)">
+                          (selected)="onToOptionChanged($event)"
+                          >
                         </cp-check-dropdown>
                       </div>
                     </div>
@@ -160,19 +162,22 @@
                   </div>
                 </div>
               </div>
-              <div class="col-4" *ngIf="!isPrivacyOn">
+              <div class="col-4" *ngIf="!toSpecificUsers.length && !isPrivacyOn">
                 <p class="cursor-pointer float-right import-link m-0" (click)="importModal()">
                   {{ 'import_from_csv' | cpI18n}}
                 </p>
               </div>
             </div>
-            <div class="subject-input">
+            <div class="subject-input" *ngIf="!toSpecificUsers.length">
               <cp-audience-users-typeahead
                 [ngClass]="{'typeahead-validation-error': highlightFormError && (!notification.user_ids || notification.user_ids.length === 0)}"
                 [withChips]="[]"
                 (users)="usersChanged($event)"
               >
               </cp-audience-users-typeahead>
+            </div>
+            <div class="specific-users" *ngIf="toSpecificUsers.length">
+              {{toSpecificUsers.join(', ')}}
             </div>
           </div>
 

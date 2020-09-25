@@ -25,6 +25,10 @@ export class StatusCardsComponent implements OnDestroy {
   caseStatusesByRank$: Observable<Record<number, ICaseStatus>>;
   caseStatusesByRank: Record<number, ICaseStatus>;
   loading$: Observable<boolean>;
+  audience: {
+    label: string;
+    listId: string;
+  } = null;
   destroy$ = new Subject();
 
   constructor(
@@ -37,6 +41,10 @@ export class StatusCardsComponent implements OnDestroy {
       select(fromStore.selectCaseStatusesLoading),
       takeUntil(this.destroy$)
     );
+    this.store.pipe(
+      select(fromStore.selectAudienceFilter),
+      takeUntil(this.destroy$)
+    ).subscribe(value => this.audience = value);
   }
 
   getCaseStatusesByRank() {
@@ -60,7 +68,10 @@ export class StatusCardsComponent implements OnDestroy {
   sendMessageToNewExposures() {
     if (this.caseStatusesByRank[this.statusMapping.exposed]) {
       this.router.navigateByUrl('/contact-trace/exposure-notification/edit/0', {
-        state: { toCaseStatus: this.caseStatusesByRank[this.statusMapping.exposed] }
+        state: {
+          toCaseStatus: this.caseStatusesByRank[this.statusMapping.exposed],
+          audience: this.audience
+        }
       });
     }
   }
