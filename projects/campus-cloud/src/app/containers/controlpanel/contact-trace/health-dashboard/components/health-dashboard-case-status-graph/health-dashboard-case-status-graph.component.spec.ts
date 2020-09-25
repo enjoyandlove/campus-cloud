@@ -2,9 +2,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { provideMockStore } from '@ngrx/store/testing';
+import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
 import { EChartsService } from '@projects/ready-ui/src/lib/charts/providers/echarts/echarts.service';
-import { HealthDashboardCaseStatusGraphComponent } from './health-dashboard-case-status-graph.component';
+import { CasesService } from '../../../cases/cases.service';
+import { CasesUtilsService } from '../../../cases/cases.utils.service';
 import * as fromStore from '../../store';
+import { HealthDashboardCaseStatusGraphComponent } from './health-dashboard-case-status-graph.component';
 
 describe('HealthDashboardCaseStatusGraphComponent', () => {
   let component: HealthDashboardCaseStatusGraphComponent;
@@ -16,6 +19,9 @@ describe('HealthDashboardCaseStatusGraphComponent', () => {
       imports: [CPTestModule],
       providers: [
         EChartsService,
+        CasesService,
+        CasesUtilsService,
+        CPI18nPipe,
         provideMockStore({
           selectors: [
             {
@@ -32,6 +38,14 @@ describe('HealthDashboardCaseStatusGraphComponent', () => {
                 ranges: [],
                 data: {}
               }
+            },
+            {
+              selector: fromStore.selectDateFilter,
+              value: {}
+            },
+            {
+              selector: fromStore.selectAudienceFilter,
+              value: {audience: null}
             }
           ]
         })

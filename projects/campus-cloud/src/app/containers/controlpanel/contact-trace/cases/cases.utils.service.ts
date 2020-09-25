@@ -21,8 +21,7 @@ import {
 } from '@campus-cloud/shared/utils';
 import { CPSession } from '@campus-cloud/session';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { PrivacyConfiguration } from '@controlpanel/settings/team/team.utils.service';
+
 
 @Injectable()
 export class CasesUtilsService {
@@ -256,6 +255,70 @@ export class CasesUtilsService {
     return { columns: columns, data: cases };
   }
 
+  createCaseStatsCSVData(cases, caseStatuses, privacyOn: boolean = false) {
+    const columnNames = {
+      date: this.cpI18nPipe.transform('t_data_export_csv_walls_date_created'),
+      firstName: this.cpI18nPipe.transform('first_name'),
+      lastName: this.cpI18nPipe.transform('last_name'),
+      email: this.cpI18nPipe.transform('email'),
+      studentId: this.cpI18nPipe.transform('student_id'),
+      healthIdentifier: this.cpI18nPipe.transform('contact_trace_health_identifier'),
+      caseId: this.cpI18nPipe.transform('contact_trace_case_id'),
+      caseStatus: this.cpI18nPipe.transform('t_case_status')
+    };
+
+    const columns = !privacyOn
+      ? [
+          columnNames.date,
+          columnNames.firstName,
+          columnNames.lastName,
+          columnNames.email,
+          columnNames.studentId,
+          columnNames.healthIdentifier,
+          columnNames.caseId,
+          columnNames.caseStatus,
+        ]
+      : [
+          columnNames.date,
+          columnNames.healthIdentifier,
+          columnNames.caseId,
+          columnNames.caseStatus,
+        ];
+
+    const caseStatusMapping = {};
+    caseStatuses.forEach(caseStatus => {
+      caseStatusMapping[caseStatus.id] = caseStatus.name;
+    });
+
+    cases = cases.map((item) => {
+      return !privacyOn
+        ? {
+            [columnNames.date]: CPDate.fromEpoch(
+              item.day_start_epoch,
+              this.session.tz
+            ).format(Formats.dateFormat),
+            [columnNames.firstName]: item.firstname,
+            [columnNames.lastName]: item.lastname,
+            [columnNames.email]: item.extern_user_id,
+            [columnNames.studentId]: item.student_id,
+            [columnNames.healthIdentifier]: item.anonymous_identifier,
+            [columnNames.caseId]: item.case_id,
+            [columnNames.caseStatus]: caseStatusMapping[item.case_status_id]
+          }
+        : {
+          [columnNames.date]: CPDate.fromEpoch(
+            item.day_start_epoch,
+            this.session.tz
+          ).format(Formats.dateFormat),
+          [columnNames.healthIdentifier]: item.anonymous_identifier,
+          [columnNames.caseId]: item.case_id,
+          [columnNames.caseStatus]: caseStatusMapping[item.case_status_id]
+        };
+    });
+
+    return { columns: columns, data: cases };
+  }
+
   createCaseActivityCSVData(caseActivities, privacyOn: boolean = false) {
     const columns = !privacyOn
       ? [
@@ -344,6 +407,11 @@ export class CasesUtilsService {
 
   exportUserCases(cases, isPrivacyOn) {
     const caseData = this.createCaseCSVData(cases, isPrivacyOn);
+    createSpreadSheet(caseData.data, caseData.columns);
+  }
+
+  exportCaseStats(cases, caseStatuses) {
+    const caseData = this.createCaseStatsCSVData(cases, caseStatuses, privacyConfigurationOn(this.session.g));
     createSpreadSheet(caseData.data, caseData.columns);
   }
 

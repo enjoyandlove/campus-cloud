@@ -1,6 +1,17 @@
 
 <div class="cp-card mb-3">
-  <h4 class="chart--title">{{'contact_trace_health_dashboard_case_overview' | cpI18n}}</h4>
+  <div class="d-flex">
+    <span class="chart--title">{{'contact_trace_health_dashboard_case_overview' | cpI18n}}</span>
+      <button ui-button variant="inline" type="button"
+        class="unstyled-button download-file ml-2"
+        (click)="downloadCSV()"
+        [disabled]="!downloadable">
+        <ready-ui-stack>
+            <ready-ui-icon *ngIf="downloadable" name="vertical_align_bottom"></ready-ui-icon>
+            <ready-ui-icon *ngIf="!downloadable" name="vertical_align_bottom_disabled"></ready-ui-icon>
+        </ready-ui-stack>
+      </button>
+  </div>
   <div class="chart-wrapper">
     <cp-spinner *ngIf="loading$ | async" class="spinner"></cp-spinner>
     <div #chart class="chart"></div>

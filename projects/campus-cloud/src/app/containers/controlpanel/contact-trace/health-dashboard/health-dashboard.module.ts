@@ -11,13 +11,14 @@ import { DashboardUtilsService } from '../../dashboard/dashboard.utils.service';
 import { ProvidersService } from '../../manage/services/providers.service';
 import { ServicesUtilsService } from '../../manage/services/services.utils.service';
 import { CasesService } from '../cases/cases.service';
+import { CasesUtilsService } from '../cases/cases.utils.service';
 import { FormsService } from '../forms';
 import {
   HealthDashboardActionBoxComponent,
   HealthDashboardCaseStatusGraphComponent,
-  StatusCardsComponent,
   HealthDashboardFormCompletionComponent,
-  HealthDashboardLocationViewComponent
+  HealthDashboardLocationViewComponent,
+  StatusCardsComponent,
 } from './components';
 import {
   HealthDashboardFormCompletionActivityComponent,
@@ -25,9 +26,8 @@ import {
   HealthDashboardFormCompletionSourceComponent
 } from './components/form-completion/components';
 import {
-  HealthDashboardLocationVisitsComponent,
-  HealthDashboardTrafficLocationComponent,
-  HealthDashboardLocationViewGraphComponent
+  HealthDashboardLocationViewGraphComponent, HealthDashboardLocationVisitsComponent,
+  HealthDashboardTrafficLocationComponent
 } from './components/location-view/components';
 import { HealthDashboardComponent } from './health-dashboard.component';
 import { HealthPassRoutingModule } from './health-dashboard.routing.module';
@@ -69,7 +69,8 @@ import { reducers } from './store/reducers';
     FormsService,
     DashboardUtilsService,
     ProvidersService,
-    ServicesUtilsService
+    ServicesUtilsService,
+    CasesUtilsService,
   ]
 })
 export class HealthDashboardModule {}
