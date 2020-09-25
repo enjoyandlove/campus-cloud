@@ -29,6 +29,12 @@ export class BarComponent implements AfterViewInit {
     this._chartInstance = this.chart.init(this.element.nativeElement);
     this.chart.setOptions(this._chartInstance, {
       ...commonOptions,
+      grid: {
+        bottom: 30,
+        left: 30,
+        right: 30,
+        top: 20
+      },
       color: this.colors,
       series: this.series,
       xAxis: this.xAxis,

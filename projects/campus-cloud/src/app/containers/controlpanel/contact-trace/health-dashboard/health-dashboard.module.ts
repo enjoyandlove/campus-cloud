@@ -9,6 +9,7 @@ import { EngagementService } from '../../assess/engagement/engagement.service';
 import { EngagementUtilsService } from '../../assess/engagement/engagement.utils.service';
 import { DashboardUtilsService } from '../../dashboard/dashboard.utils.service';
 import { ProvidersService } from '../../manage/services/providers.service';
+import { ServicesUtilsService } from '../../manage/services/services.utils.service';
 import { CasesService } from '../cases/cases.service';
 import { FormsService } from '../forms';
 import {
@@ -22,7 +23,11 @@ import {
   HealthDashboardFormCompletionGraphComponent,
   HealthDashboardFormCompletionSourceComponent
 } from './components/form-completion/components';
-import { HealthDashboardLocationVisitsComponent, HealthDashboardTrafficLocationComponent } from './components/location-view/components';
+import {
+  HealthDashboardLocationVisitsComponent,
+  HealthDashboardTrafficLocationComponent,
+  HealthDashboardLocationViewGraphComponent
+} from './components/location-view/components';
 import { HealthDashboardComponent } from './health-dashboard.component';
 import { HealthPassRoutingModule } from './health-dashboard.routing.module';
 import { HealthDashboardService } from './health-dashboard.service';
@@ -41,7 +46,8 @@ import { reducers } from './store/reducers';
     HealthDashboardFormCompletionSourceComponent,
     HealthDashboardLocationViewComponent,
     HealthDashboardLocationVisitsComponent,
-    HealthDashboardTrafficLocationComponent
+    HealthDashboardTrafficLocationComponent,
+    HealthDashboardLocationViewGraphComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +66,8 @@ import { reducers } from './store/reducers';
     EngagementService,
     FormsService,
     DashboardUtilsService,
-    ProvidersService
+    ProvidersService,
+    ServicesUtilsService
   ]
 })
 export class HealthDashboardModule {}

@@ -16,7 +16,7 @@
       <div class="col-3 heading">
         <span class="heading__title">{{ 'qr_code_repeat_visits' | cpI18n }}</span>
         <span class="heading__count">
-          {{ locationVisits.repeat_visit }}
+          {{ locationVisits.total_visit - locationVisits.unique_visit }}
         </span>
       </div>
     </div>

@@ -59,7 +59,7 @@ export class ProvidersService {
 
   getProviderAssessments(startRange: number, endRange: number, search?: HttpParams) {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICE_ASSESSMENT}`;
-    const url = `${common}/${startRange};${endRange}`;
+    const url = startRange && endRange ? `${common}/${startRange};${endRange}` : `${common}/`;
 
     return this.api.get(url, search);
   }

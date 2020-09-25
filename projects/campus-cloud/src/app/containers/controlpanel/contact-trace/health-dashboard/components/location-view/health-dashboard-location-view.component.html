@@ -8,9 +8,12 @@
                 variant="inline"
                 type="button"
                 class="unstyled-button download-file ml-2"
+                (click)="downloadProvidersCSV()"
+                [disabled]="downloading"
                 >
         <ready-ui-stack>
-            <ready-ui-icon name="vertical_align_bottom"></ready-ui-icon>
+            <ready-ui-icon *ngIf="!downloading" name="vertical_align_bottom"></ready-ui-icon>
+            <ready-ui-icon *ngIf="downloading" name="vertical_align_bottom_disabled"></ready-ui-icon>
         </ready-ui-stack>
       </button>
     </div>
@@ -35,10 +38,12 @@
     <cp-spinner *ngSwitchCase="true"></cp-spinner>
     <div *ngSwitchCase="false">
       <div class="row mt-2">
-          <div class="col-6">
+          <div class="col-6 d-flex flex-column">
             <cp-health-dashboard-location-visits [locationVisits]="locationVisits"></cp-health-dashboard-location-visits>
+            <cp-health-dashboard-location-view-graph class="flex-grow-1" [chartData]="locationChartData"></cp-health-dashboard-location-view-graph>
           </div>
-          <div class="col-6">
+          <div class="col-6 chart-wrapper">
+            <cp-spinner *ngIf="trafficLoading" class="spinner"></cp-spinner>
             <cp-health-dashboard-traffic-location [locationTraffics]="locationTraffics"
                                                   (selectedSort)="onSelectSortBy($event)"
             ></cp-health-dashboard-traffic-location>

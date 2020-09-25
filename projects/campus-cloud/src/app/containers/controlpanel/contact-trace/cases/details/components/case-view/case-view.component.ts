@@ -6,10 +6,7 @@ import * as fromStore from '../../../store';
 import { CasesUtilsService } from '../../../cases.utils.service';
 import { ICase, ICaseStatus } from '../../../cases.interface';
 import { Router } from '@angular/router';
-import {
-  canSchoolWriteResource,
-  privacyConfigurationOn
-} from '@campus-cloud/shared/utils';
+import { canSchoolWriteResource, privacyConfigurationOn } from '@campus-cloud/shared/utils';
 import { CPSession } from '@campus-cloud/session';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { baseActionClass, ISnackbar } from '@campus-cloud/store';

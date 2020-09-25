@@ -18,7 +18,12 @@ import { Observable, of, Subject, merge, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
+import { ServicesUtilsService } from '../../../../manage/services/services.utils.service';
 
+interface ILocationChart {
+  hour: string;
+  checkins: number;
+}
 @Component({
   selector: 'cp-health-dashboard-location-view',
   templateUrl: './health-dashboard-location-view.component.html',
@@ -26,6 +31,8 @@ import * as fromStore from '../../store';
 })
 export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   loading: boolean = false;
+  trafficLoading: boolean = false;
+  downloading: boolean = false;
   qrCodeSearchTermStream = new Subject();
   qrCodeSearchTerm: string;
   qrCodePageCounter = 1;
@@ -38,11 +45,11 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
 
   locationVisits = {
     total_visit: 0,
-    unique_visit: 0,
-    repeat_visit: 0
+    unique_visit: 0
   };
 
   trafficService$;
+  chartService$;
 
   filters = [];
   providerFilter$ = new Subject<any>();
@@ -58,6 +65,9 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
 
   locationTraffics = [];
 
+  locationChartData = new Array<ILocationChart>(24).fill({ hour: '', checkins: 0 });
+  locationChartData$ = new Subject<any>();
+
   destroy$ = new Subject();
 
   constructor(
@@ -65,7 +75,8 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
     public cpI18n: CPI18nPipe,
     public providerService: ProvidersService,
     private session: CPSession,
-    public chartUtils: ChartsUtilsService
+    public chartUtils: ChartsUtilsService,
+    public serviceUtils: ServicesUtilsService
   ) {}
 
   fetchQrCodes(page): Observable<any[]> {
@@ -93,12 +104,13 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   }
 
   fetchTraffic() {
-    this.loading = true;
     let params = new HttpParams()
       .append('school_id', this.session.school.id.toString())
       .append('service_id', this.session.schoolCTServiceId.toString())
-      .append('sort_fied', this.sortBy[this.selectedSortItem].item)
-      .append('sort_direction', 'desc');
+      .append('sort_field', this.sortBy[this.selectedSortItem].item)
+      .append('sort_direction', 'desc')
+      .append('start', this.dateFilter.start)
+      .append('end', this.dateFilter.end);
     if (this.filters.length > 0) {
       params = params.append('service_provider_ids', this.filters.join(','));
     }
@@ -106,18 +118,14 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
       params = params.append('user_list_id', this.audienceFilter.listId);
     }
 
-    if (this.dateFilter !== null) {
-      params = params.append('start', this.dateFilter.start).append('end', this.dateFilter.end);
-    }
-
     if (this.trafficService$) {
       this.trafficService$.unsubscribe();
     }
-
     this.trafficService$ = this.providerService
       .getProviders(1, 5, params)
       .pipe(
         map((results: any[]) => {
+          this.trafficLoading = false;
           this.loading = false;
           return results;
         }),
@@ -125,12 +133,66 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.locationTraffics = [...data];
-        this.locationTraffics.map((item) => {
-          this.locationVisits.total_visit += item.total_visits;
-          this.locationVisits.unique_visit += item.unique_visits;
-          this.locationVisits.repeat_visit += item.peak_hourly_visits;
-        });
       });
+  }
+
+  fetchChartSeries() {
+    let params = new HttpParams()
+      .append('school_id', this.session.school.id.toString())
+      .append('service_id', this.session.schoolCTServiceId.toString())
+      .append('start', this.dateFilter.start)
+      .append('end', this.dateFilter.end)
+      .append('all', '1');
+    if (this.filters.length > 0) {
+      params = params.append('service_provider_ids', this.filters.join(','));
+    }
+    if (this.audienceFilter !== null) {
+      params = params.append('user_list_id', this.audienceFilter.listId);
+    }
+
+    if (this.chartService$) {
+      this.chartService$.unsubscribe();
+    }
+
+    this.chartService$ = this.providerService
+      .getProviderAssessments(null, null, params)
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        catchError(() => of([]))
+      )
+      .subscribe((results: any[]) => {
+        this.initLocationChart();
+        results.map((item) => {
+          this.locationChartData[new Date(item.check_in_time_epoch * 1000).getHours()].checkins++;
+        });
+        this.calculateVisits(results);
+        this.fetchTraffic();
+      });
+  }
+
+  calculateVisits(res: any[]) {
+    this.locationVisits.total_visit = 0;
+    this.locationVisits.unique_visit = 0;
+    this.locationVisits.total_visit = res.length;
+    const email = res.filter((item) => item.user_id === 0);
+    const users = res.filter((item) => item.user_id !== 0);
+    let unique_users = [];
+    users.map((item) => {
+      if (!unique_users.includes(item.user_id)) {
+        unique_users.push(item.user_id);
+      }
+    });
+
+    let unique_email = [];
+    email.map((item) => {
+      if (!unique_email.includes(item.email)) {
+        unique_email.push(item.email);
+      }
+    });
+
+    this.locationVisits.unique_visit = unique_email.length + unique_users.length;
   }
 
   handleQrCode(qrcode: any) {
@@ -157,6 +219,7 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   handleClearSelectedQrCode() {
     this.filters = [];
     this.selectedQrCode = [];
+    this.providerFilter$.next(this.filters);
   }
 
   registerFilterStates() {
@@ -165,16 +228,65 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
     const state$ = combineLatest([this.audienceFilter$, this.dateFilter$, this.providerFilter$]);
 
     state$.pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      this.loading = true;
       this.audienceFilter = res[0];
       this.dateFilter = res[1];
       this.filters = res[2];
-      this.fetchTraffic();
+      this.fetchChartSeries();
     });
+
+    this.providerFilter$.next(this.filters);
   }
 
   onSelectSortBy(item) {
+    this.trafficLoading = true;
     this.selectedSortItem = item.action;
     this.fetchTraffic();
+  }
+
+  downloadProvidersCSV() {
+    this.downloading = true;
+    let params = new HttpParams()
+      .append('school_id', this.session.school.id.toString())
+      .append('service_id', this.session.schoolCTServiceId.toString());
+
+    params =
+      this.filters.length > 0
+        ? params.append('service_provider_ids', this.filters.join(','))
+        : params.append('all', '1');
+
+    if (this.audienceFilter !== null) {
+      params = params.append('user_list_id', this.audienceFilter.listId);
+    }
+
+    if (this.dateFilter !== null) {
+      params = params.append('start', this.dateFilter.start).append('end', this.dateFilter.end);
+    }
+
+    const stream$ = this.providerService.getProviderAssessments(null, null, params);
+
+    stream$.toPromise().then((providers: any) => {
+      this.downloading = false;
+      this.serviceUtils.exportServiceProvidersAttendees(providers, true);
+    });
+  }
+
+  initLocationChart() {
+    this.locationChartData = this.locationChartData.map((item, index) => {
+      let hour: any = index % 12;
+      if (hour === 0) {
+        hour = 12;
+      }
+      if (index < 12) {
+        hour = `${hour} AM`;
+      } else {
+        hour = `${hour} PM`;
+      }
+      return {
+        hour: hour,
+        checkins: 0
+      };
+    });
   }
 
   ngOnInit(): void {
