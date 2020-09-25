@@ -44,10 +44,10 @@ function getTimeDuration(time, unit = null) {
 function enumerateDaysBetweenDates(startDate, endDate) {
   const dates = [];
 
-  const currDate = moment(startDate).startOf('day');
-  const lastDate = moment(endDate).startOf('day');
+  const currDate = moment(startDate);
+  const lastDate = moment(endDate);
 
-  while (currDate.isBefore(lastDate)) {
+  while (currDate.diff(lastDate) < 0) {
     dates.push(currDate.clone());
     currDate.add(1, 'days');
   }
