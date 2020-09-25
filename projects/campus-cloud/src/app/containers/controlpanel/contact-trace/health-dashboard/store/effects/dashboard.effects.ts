@@ -6,7 +6,7 @@ import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { ICaseStatus } from '../../../cases/cases.interface';
 import { CasesService } from '../../../cases/cases.service';
 import * as fromActions from '../actions';
@@ -25,6 +25,7 @@ export class DashboardEffects {
   getCaseStatus$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.getCaseStatus),
+      debounceTime(50),
       withLatestFrom(this.store$.select(fromSelectors.selectAudienceFilter)),
       switchMap(([action, audience]) => {
         let params = new HttpParams().append('school_id', this.session.g.get('school').id);
@@ -42,6 +43,7 @@ export class DashboardEffects {
   getCaseStatusStats$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.getCaseStatusStats),
+      debounceTime(50),
       withLatestFrom(this.store$.select(fromSelectors.selectFilters)),
       switchMap(([action, filters]) => {
         let params = new HttpParams().append('school_id', this.session.g.get('school').id);
