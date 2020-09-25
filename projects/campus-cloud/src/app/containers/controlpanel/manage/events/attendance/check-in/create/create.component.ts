@@ -18,6 +18,7 @@ import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import IServiceProvider from '../../../../services/providers.interface';
 import { CPSession } from '@campus-cloud/session';
+import { privacyConfigurationOn } from '@campus-cloud/shared/utils';
 
 @Component({
   selector: 'cp-create-check-in',
@@ -35,6 +36,7 @@ export class CheckInCreateComponent implements OnInit {
   formErrors;
   buttonData;
   errorMessage;
+  private isPrivacyOn: boolean;
 
   constructor(
     public el: ElementRef,
@@ -136,7 +138,8 @@ export class CheckInCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(null, this.data);
+    this.isPrivacyOn = privacyConfigurationOn(this.session.g);
+    this.form = this.checkInUtils.getCheckInForm(null, this.data, this.isPrivacyOn);
 
     this.buttonData = {
       class: 'primary',

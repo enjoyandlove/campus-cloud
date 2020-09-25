@@ -16,6 +16,7 @@ import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notif
 })
 export class ExposureNotificationUserListModalComponent implements OnInit {
   @Input() notification: ExposureNotification;
+  @Input() isPrivacyOn: boolean;
   @Output() caseLinkClicked: EventEmitter<number> = new EventEmitter();
 
   constructor(private el: ElementRef) {}

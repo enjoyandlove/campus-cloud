@@ -21,13 +21,16 @@
           class="row user-row"
           *ngFor="let user of notification.user_details"
         >
-          <div class="left-col">
+          <div class="left-col" *ngIf="!isPrivacyOn">
             <div class="user-name-cell">
               {{user | fullName}}
             </div>
             <div class="email-cell">
               {{user.email}}
             </div>
+          </div>
+          <div class="left-col">
+            {{user.anonymous_identifier}}
           </div>
           <div class="right-col">
             <div

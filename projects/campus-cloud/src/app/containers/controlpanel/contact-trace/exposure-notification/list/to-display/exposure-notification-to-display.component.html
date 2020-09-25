@@ -1,8 +1,11 @@
 <ng-container *ngIf="notification.user_details">
 
   <ng-container *ngIf="notification.user_details.length === 1">
-    <div class="name-label">
+    <div class="name-label" *ngIf="!isPrivacyOn">
       {{(notification.user_details[0].firstname || notification.user_details[0].lastname) ? ((notification.user_details[0].firstname ? (notification.user_details[0].firstname + ' ') : '') + (notification.user_details[0].lastname ? notification.user_details[0].lastname : '')) : (notification.user_details[0].email ? notification.user_details[0].email : '')}}
+    </div>
+    <div class="name-label" *ngIf="isPrivacyOn">
+      {{notification.user_details[0].anonymous_identifier}}
     </div>
     <div
       class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button"
@@ -42,6 +45,7 @@
 >
     <cp-exposure-notification-user-list-modal
       [notification]="notification"
+      [isPrivacyOn]="isPrivacyOn"
       (caseLinkClicked)="caseLinkClicked.emit($event)"
     >
     </cp-exposure-notification-user-list-modal>

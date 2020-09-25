@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <div class="row form-group" *ngIf="!isPrivacyOn()">
+  <div class="row form-group" *ngIf="!isPrivacyOn">
     <div class="col-6">
       <label>{{ 't_events_attendance_add_edit_check_in_first_name' | cpI18n }}</label>
       <input type="text"
@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="row form-group">
-    <div class="col-6" *ngIf="!isPrivacyOn()">
+    <div class="col-6" *ngIf="!isPrivacyOn">
       <label>{{ 't_events_attendance_add_edit_check_in_email' | cpI18n }}</label>
       <input type="text"
              class="form-control"

@@ -342,8 +342,8 @@ export class CasesUtilsService {
     return createSpreadSheet(data, columns, 'file', false);
   }
 
-  exportUserCases(cases) {
-    const caseData = this.createCaseCSVData(cases);
+  exportUserCases(cases, isPrivacyOn) {
+    const caseData = this.createCaseCSVData(cases, isPrivacyOn);
     createSpreadSheet(caseData.data, caseData.columns);
   }
 
