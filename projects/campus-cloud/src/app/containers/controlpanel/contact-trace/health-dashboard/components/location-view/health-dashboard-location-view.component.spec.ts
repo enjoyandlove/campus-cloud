@@ -11,6 +11,7 @@ import { HealthDashboardService } from '../../health-dashboard.service';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import * as fromStore from '../../store';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 
 class MockHealthDashboardService {
   getFormResponseStats() {
@@ -31,6 +32,7 @@ describe('HealthDashboardLocationViewComponent', () => {
         CPSession,
         ChartsUtilsService,
         ProvidersService,
+        ServicesUtilsService,
         { provide: HealthDashboardService, useClass: MockHealthDashboardService },
         provideMockStore({
           selectors: [

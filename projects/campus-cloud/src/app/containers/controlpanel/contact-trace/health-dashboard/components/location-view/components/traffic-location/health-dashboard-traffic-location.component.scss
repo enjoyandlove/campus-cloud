@@ -12,7 +12,6 @@ h3 {
 }
 
 .dashboard-table {
-  height: 373px;
   margin-top: 20px;
 
   .traffic-content {
@@ -31,7 +30,7 @@ h3 {
     @include font-16px();
     @include font-semi-bold();
 
-    margin-top: 180px;
+    margin-top: 100px;
   }
 
   &--header {
