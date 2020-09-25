@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { filter, finalize, map, takeUntil, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
 import { ExposureNotification } from '@controlpanel/contact-trace/exposure-notification/models';
 import { ExposureNotificationService } from '@controlpanel/contact-trace/exposure-notification/services';
 import { baseActionClass, baseActions, IHeader } from '@campus-cloud/store';
@@ -101,6 +101,13 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   importedUsers$: BehaviorSubject<IImportedUser[]> = new BehaviorSubject<IImportedUser[]>([]);
   isPrivacyOn: boolean;
 
+  audience: {
+    label: string;
+    listId: string;
+  } | null;
+
+  toSpecificUsers = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private notificationService: ExposureNotificationService,
@@ -181,6 +188,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     });
 
     this.initNotificationForm();
+    this.onToOptionChanged(this.toOptions[0]);
 
     this.getCasesById$ = this.storeCase.select(fromStore.getSelectedCaseStatus);
     this.getCasesById$
@@ -192,14 +200,31 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     // Apply for exposed status which comes from Health Dashboard "Send Message" button
     const toCaseStatus = history.state ? history.state.toCaseStatus : null;
     if (toCaseStatus) {
-      this.onToOptionChanged(this.toOptions[1]);
+      this.getUsersByCaseStatusAndAudience(toCaseStatus.id);
       this.getNotificationTemplates(2);
-      this.getCaseStatuses(toCaseStatus);
     } else {
-      this.onToOptionChanged(this.toOptions[0]);
-      this.getCaseStatuses();
       this.getNotificationTemplates();
     }
+  }
+
+  private getUsersByCaseStatusAndAudience(caseStatusId) {
+    let params = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('exclude_external', 'true')
+      .append('current_status_ids', caseStatusId.toString())
+      .append('all', '1');
+
+    const audience = history.state ? history.state.audience : null;
+    if (audience) {
+      params = params.set('user_list_id', audience.listId.toString());
+    }
+
+    this.casesService.getCases(null, null, params).subscribe((cases: ICase[]) => {
+      const userIds = cases.map(user => user.user_id);
+      this.userList$ = of(userIds);
+      this.notification.user_ids = userIds;
+      this.toSpecificUsers = cases.map(user => [user.firstname, user.lastname].join(' '));
+    });
   }
 
   private getItemForEdit(notificationId: number): Observable<ExposureNotification> {
@@ -264,6 +289,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
 
   onToOptionChanged(option): void {
     this.selectedToOption = option;
+    if (option.action === 'case_status') {
+      this.getCaseStatuses();
+    }
   }
 
   onTemplateOptionChanged(option): void {
@@ -275,11 +303,8 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       this.notification.message = selectedTemplate.message;
     } else {
       this.setPriority(AnnouncementPriority.regular);
-      this.notification = {
-        ...this.notification,
-        subject: '',
-        message: ''
-      };
+      this.notification.subject = '';
+      this.notification.message = '';
     }
   }
 
@@ -467,7 +492,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getCaseStatuses(selectedOption = null): void {
+  private getCaseStatuses(): void {
     this.notificationService.searchCaseStatuses().subscribe((statuses: ICaseStatus[]) => {
       this.filterOptions = [
         {
@@ -478,6 +503,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
         }
       ];
 
+      this.selectedFilterOption = this.filterOptions[0];
       if (statuses) {
         statuses.sort((a, b) => b.rank - a.rank);
         statuses.forEach((status) => {
@@ -487,16 +513,6 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             caseCount: status.case_count
           });
         });
-      }
-
-      if (selectedOption) {
-        this.onFilterOptionChanged({
-          action: selectedOption.id,
-          label: selectedOption.name,
-          caseCount: selectedOption.case_count
-        });
-      } else {
-        this.selectedFilterOption = this.filterOptions[0];
       }
     });
   }

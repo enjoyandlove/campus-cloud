@@ -83,6 +83,26 @@
     background: $color-white;
     color: #121212;
   }
+
+  cp-check-dropdown {
+    &.disabled {
+      filter: contrast(0.85);
+      pointer-events: none;
+    }
+  }
+
+  .specific-users {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 34px;
+    padding: 8px;
+    line-height: 18px;
+    border-radius: 4px;
+    color: $color-grey;
+    background: #eeeeee;
+    border: 1px solid $color-med-grey;
+  }
 }
 
 .footer {

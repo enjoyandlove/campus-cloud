@@ -41,6 +41,7 @@ export class HealthDashboardActionBoxComponent implements OnDestroy {
     );
 
     this.store.dispatch(fromStore.setDateFilter(this.dashboardUtils.last30Days()));
+    this.store.dispatch(fromStore.setAudienceFilter(null));
   }
 
   onDateChange(dates: IDateRange) {
