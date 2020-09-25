@@ -1422,6 +1422,15 @@
   "contact_trace_health_identifier": {
     "message": "Health Identifier"
   },
+  "contact_trace_location_peak_traffic": {
+    "message": "Peak Hourly Traffic"
+  },
+  "contact_trace_location_top_traffic": {
+    "message": "Top Traffic"
+  },
+  "contact_trace_location_traffic": {
+    "message": "Total Visits"
+  },
   "contact_trace_notification_all_statuses": {
     "message": "Tous les statuts"
   },
@@ -1530,14 +1539,11 @@
   "contact_trace_no_qr_found": {
     "message": "Aucun code QR trouvé"
   },
-  "contact_trace_peak_traffic": {
-    "message": "Peak Traffic"
+  "contact_trace_total_completions": {
+    "message": "Total Completions"
   },
-  "contact_trace_top_traffic": {
-    "message": "Top Traffic"
-  },
-  "contact_trace_traffic": {
-    "message": "Traffic"
+  "contact_trace_total_views": {
+    "message": "Total Views"
   },
   "cp_top_banner_copy": {
     "message": "Campus Cloud a été mis à jour"
@@ -2364,15 +2370,6 @@
   },
   "location_name": {
     "message": "Nom du lieu"
-  },
-  "location_peak_traffic": {
-    "message": "Peak Traffic"
-  },
-  "location_top_traffic": {
-    "message": "Top Traffic"
-  },
-  "location_traffic": {
-    "message": "Traffic"
   },
   "login": {
     "message": "Connexion",

@@ -297,11 +297,11 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sortBy = [
       {
-        label: this.cpI18n.transform('contact_trace_traffic'),
+        label: this.cpI18n.transform('contact_trace_location_traffic'),
         item: 'total_visits'
       },
       {
-        label: this.cpI18n.transform('contact_trace_peak_traffic'),
+        label: this.cpI18n.transform('contact_trace_location_peak_traffic'),
         item: 'peak_hourly_visits'
       }
     ];

@@ -31,11 +31,11 @@ export class HealthDashboardTrafficLocationComponent extends BaseComponent
   ngOnInit() {
     this.sortBy = [
       {
-        label: this.cpI18n.transform('location_traffic'),
+        label: this.cpI18n.transform('contact_trace_location_traffic'),
         action: 0
       },
       {
-        label: this.cpI18n.transform('location_peak_traffic'),
+        label: this.cpI18n.transform('contact_trace_location_peak_traffic'),
         action: 1
       }
     ];
