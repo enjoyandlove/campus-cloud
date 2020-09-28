@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'cp-health-dashboard-form-completion-source',
@@ -7,8 +7,18 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HealthDashboardFormCompletionSourceComponent implements OnInit {
   @Input() sources;
-
+  @Input() downloading = false;
+  @Output() downloadSourceApp: EventEmitter<boolean> = new EventEmitter();
+  @Output() downloadSourceWeb: EventEmitter<boolean> = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {}
+
+  onDownloadSourceApp() {
+    this.downloadSourceApp.emit(true);
+  }
+
+  onDownloadSourceWeb() {
+    this.downloadSourceWeb.emit(true);
+  }
 }

@@ -4,16 +4,7 @@ import { CPSession } from '@campus-cloud/session';
 import { ChartsUtilsService } from '@campus-cloud/shared/services';
 import { ProvidersService } from '@controlpanel/manage/services/providers.service';
 
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  share,
-  startWith,
-  switchMap,
-  takeUntil
-} from 'rxjs/operators';
+import { catchError, map, share, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, of, Subject, merge, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';

@@ -173,6 +173,8 @@ export const ENDPOINTS = {
 
   FORM_RESPONSE_STATS: 'form_response_stats',
 
+  EXPORT_FORM_RESPONSE_STATS: 'export/user_form_response_data',
+
   NON_SESSION_WEB_FORM: 'ns_form',
 
   NON_SESSION_WEB_FORM_RESPONSE: 'ns_form_response',

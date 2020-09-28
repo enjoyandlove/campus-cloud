@@ -16,7 +16,8 @@
       <div class="col-6 text-right download-button">
         <button type="button"
                 class="cpbtn cpbtn--primary"
-                [disabled]="sources.tileViews==0">
+                [disabled]="sources.tileViews==0 || downloading"
+                (click)="onDownloadSourceApp()">
           {{ 'download' | cpI18n }}
         </button>
       </div>
@@ -31,7 +32,8 @@
       <div class="col-6 text-right download-button">
         <button type="button"
                 class="cpbtn cpbtn--primary"
-                [disabled]="sources.webViews==0">
+                [disabled]="sources.webViews==0 || downloading"
+                (click)="onDownloadSourceWeb()">
           {{ 'download' | cpI18n }}
         </button>
       </div>

@@ -7,10 +7,13 @@
       <button ui-button
                 variant="inline"
                 type="button"
+                (click)="downloadFormResponse(exportCategory.AllForms)"
+                [disabled]="downloading"
                 class="unstyled-button download-file ml-2"
                 >
         <ready-ui-stack>
-            <ready-ui-icon name="vertical_align_bottom"></ready-ui-icon>
+            <ready-ui-icon *ngIf="!downloading" name="vertical_align_bottom"></ready-ui-icon>
+            <ready-ui-icon *ngIf="downloading" name="vertical_align_bottom_disabled"></ready-ui-icon>
         </ready-ui-stack>
       </button>
     </div>
@@ -35,7 +38,13 @@
     <div *ngSwitchCase="false">
       <div class="row mt-2">
           <div class="col-3">
-            <cp-health-dashboard-form-completion-activity [activities]="activities"></cp-health-dashboard-form-completion-activity>
+            <cp-health-dashboard-form-completion-activity [activities]="activities"
+                                                          [downloading]="downloading"
+                                                          (downloadCompleted)="onExportCompleted($event)"
+                                                          (downloadNotCompleted)="onExportNotCompleted($event)"
+                                                          (downloadNeverCompleted)="onExportNeverCompleted($event)"
+            >
+            </cp-health-dashboard-form-completion-activity>
           </div>
           <div class="col-6">
             <cp-health-dashboard-form-completion-graph [labels]="labels"
@@ -44,7 +53,11 @@
             </cp-health-dashboard-form-completion-graph>
           </div>
           <div class="col-3">
-            <cp-health-dashboard-form-completion-source [sources]="sources">	
+            <cp-health-dashboard-form-completion-source [sources]="sources"
+                                                        [downloading]="downloading"
+                                                        (downloadSourceApp)="onExportSourceApp($event)"
+                                                        (downloadSourceWeb)="onExportSourceWeb($event)"
+            >	
             </cp-health-dashboard-form-completion-source>
           </div>
       </div>

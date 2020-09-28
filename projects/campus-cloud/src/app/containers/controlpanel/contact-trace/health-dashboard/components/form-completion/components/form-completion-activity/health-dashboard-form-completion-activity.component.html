@@ -15,7 +15,9 @@
       </div>
       <div class="col-5 text-right download-button">
         <button type="button"
-                class="cpbtn cpbtn--primary">
+                class="cpbtn cpbtn--primary"
+                [disabled]="downloading"
+                (click)="onDownload(exportCategory.NotCompletedToday)">
           {{ 'download' | cpI18n }}
         </button>
       </div>
@@ -29,7 +31,9 @@
       </div>
       <div class="col-5 text-right download-button">
         <button type="button"
-                class="cpbtn cpbtn--primary">
+                class="cpbtn cpbtn--primary"
+                [disabled]="downloading"
+                (click)="onDownload(exportCategory.CompletedToday)">
           {{ 'download' | cpI18n }}
         </button>
       </div>
@@ -43,7 +47,9 @@
       </div>
       <div class="col-5 text-right download-button">
         <button type="button"
-                class="cpbtn cpbtn--primary">
+                class="cpbtn cpbtn--primary"
+                (click)="onDownload(exportCategory.NeverCompleted)"
+                [disabled]="downloading">
           {{ 'download' | cpI18n }}
         </button>
       </div>
