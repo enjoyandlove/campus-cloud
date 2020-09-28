@@ -61,6 +61,11 @@ export interface ICaseStatusStat {
   case_status_id: string;
   case_id: number;
   day_start_epoch: number;
+  firstname?: string;
+  lastname?: string;
+  extern_user_id?: string;
+  student_id?: string;
+  anonymous_identifier?: string;
 }
 
 export enum CaseTypes {

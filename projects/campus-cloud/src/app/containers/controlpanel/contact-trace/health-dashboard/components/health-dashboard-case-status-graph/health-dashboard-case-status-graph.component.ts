@@ -1,10 +1,16 @@
+import { HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { ICaseStatus } from '@controlpanel/contact-trace/cases/cases.interface';
+import { ICaseStatus, ICaseStatusStat } from '@controlpanel/contact-trace/cases/cases.interface';
 import { select, Store } from '@ngrx/store';
+import { CPSession } from '@projects/campus-cloud/src/app/session';
+import { IDateRange } from '@projects/campus-cloud/src/app/shared/components';
 import { EChartsService } from '@projects/ready-ui/src/lib/charts/providers/echarts/echarts.service';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { CasesService } from '../../../cases/cases.service';
+import { CasesUtilsService } from '../../../cases/cases.utils.service';
 import * as fromStore from '../../store';
+
 
 interface ICaseStatusGraph {
   ranges: any[];
@@ -28,15 +34,56 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
   stats$: Observable<ICaseStatusGraph>;
   loading$: Observable<boolean>;
   destroy$ = new Subject();
+  downloadable = false;
+  dateFilter: IDateRange;
+  audience: {
+    label: string;
+    listId: string;
+  };
+  caseStatuses: ICaseStatus[];
 
   constructor(
     private echartService: EChartsService,
-    private store: Store<{ healthDashboard: fromStore.HealthDashboardState }>
+    private store: Store<{ healthDashboard: fromStore.HealthDashboardState }>,
+    private casesService: CasesService,
+    private util: CasesUtilsService,
+    private session: CPSession,
   ) {
+
     this.loading$ = this.store.pipe(
       select(fromStore.selectCaseStatusStatsLoading),
       takeUntil(this.destroy$)
     );
+
+    this.store.pipe(
+      select(fromStore.selectDateFilter),
+      takeUntil(this.destroy$)
+    ).subscribe(value => this.dateFilter = value);
+
+    this.store.pipe(
+      select(fromStore.selectAudienceFilter),
+      takeUntil(this.destroy$)
+    ).subscribe(value => this.audience = value);
+  }
+
+  downloadCSV() {
+    this.downloadable = false;
+    let params = new HttpParams()
+      .append('school_id', this.session.g.get('school').id)
+      .append('include_case_data', '1');
+
+    if (this.dateFilter) {
+      params = params.set('start', this.dateFilter.start.toString());
+      params = params.set('end', this.dateFilter.end.toString());
+    }
+    if (this.audience) {
+      params = params.set('user_list_id', this.audience.listId.toString());
+    }
+
+    this.casesService.getCaseStatusStats(params).subscribe((cases: ICaseStatusStat[]) => {
+      this.downloadable = true;
+      this.util.exportCaseStats(cases, this.caseStatuses);
+    });
   }
 
   ngAfterViewInit() {
@@ -54,6 +101,10 @@ export class HealthDashboardCaseStatusGraphComponent implements AfterViewInit, O
     );
 
     this.stats$.subscribe((stats) => {
+      this.caseStatuses = stats.caseStatuses;
+      if (this.caseStatuses.length) {
+        this.downloadable = true;
+      }
       this.generateChart(stats);
     });
   }
