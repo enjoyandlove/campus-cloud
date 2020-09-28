@@ -15,6 +15,10 @@ export class EventsModel {
         country: [_get(event, 'country', null)],
         longitude: [_get(event, 'longitude', 0)],
         location: [_get(event, 'location', null)],
+        virtual_location: [
+          _get(event, 'virtual_location', null),
+          Validators.compose([Validators.maxLength(255), CustomValidators.isValidURL])
+        ],
         province: [_get(event, 'province', null)],
         room_data: [_get(event, 'room_data', null)],
         is_all_day: [_get(event, 'is_all_day', null)],
@@ -26,7 +30,7 @@ export class EventsModel {
         start: [_get(event, 'start', null), Validators.required],
         event_attendance: [_get(event, 'event_attendance', null)],
         event_manager_id: [_get(event, 'event_manager_id', null)],
-        address: [_get(event, 'address', null), Validators.required],
+        address: [_get(event, 'address', null),  Validators.required],
         poster_url: [_get(event, 'poster_url', null), Validators.required],
         attendance_manager_email: [_get(event, 'attendance_manager_email', null)],
         poster_thumb_url: [_get(event, 'poster_thumb_url', null), Validators.required],
@@ -38,7 +42,9 @@ export class EventsModel {
           Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
         ]
       },
-      { validator: EventUtilService.assessmentEnableCustomValidator }
+      {
+        validator: [EventUtilService.assessmentEnableCustomValidator]
+      }
     );
   }
 }

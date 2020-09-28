@@ -42,7 +42,7 @@
               <div class="row">
                 <div class="col-12">
                   <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                       <p>
                         <strong
                                 *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}</strong>
@@ -50,13 +50,13 @@
                                 *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}</strong>
                       </p>
                     </div>
-                    <div class="col-10">
+                    <div class="col-9">
                       <p>{{ event.start | cpDatePipe: dateFormat }}</p>
                     </div>
                   </div>
 
                   <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                       <p>
                         <strong
                                 *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}</strong>
@@ -64,20 +64,28 @@
                                 *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}</strong>
                       </p>
                     </div>
-                    <div class="col-10">
+                    <div class="col-9">
                       {{ event.end | cpDatePipe: dateFormat }}
                     </div>
                   </div>
 
                   <div class="row"
                        *ngIf="event.address">
-                    <div class="col-2">
+                    <div class="col-3">
                       <p>
                         <strong>{{ 'location' | cpI18n }}</strong>
                       </p>
                     </div>
-                    <div class="col-10">
+                    <div class="col-9">
                       <p>{{ event.address }}</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="event.virtual_location">
+                    <div class="col-3">
+                      <strong>{{ 'conference_link' | cpI18n }}</strong>
+                    </div>
+                    <div class="col-9">
+                      <a [href]="event.virtual_location" target="_blank">{{ event.virtual_location }}</a>
                     </div>
                   </div>
                 </div>
