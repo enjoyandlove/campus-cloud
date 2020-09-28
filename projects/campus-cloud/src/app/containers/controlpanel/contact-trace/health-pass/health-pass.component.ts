@@ -20,7 +20,8 @@ import {
 import { HealthPassPageActions } from '@controlpanel/contact-trace/health-pass/store/actions';
 import { map } from 'rxjs/operators';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 @Component({
   selector: 'cp-health-pass',
@@ -38,6 +39,8 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
   isDisabled = false;
 
   editModal: OverlayRef;
+  hasFormsPrivileges: boolean | any;
+  hasNotificationPrivileges: boolean | any;
 
   constructor(
     private session: CPSession,
@@ -49,14 +52,16 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
   ) {
     super();
 
-    this.healthPassData$  = this.healthPassStore.select(selectAllHealthPass).pipe(map((list) => this.assignIcons(list)));
+    this.healthPassData$ = this.healthPassStore
+      .select(selectAllHealthPass)
+      .pipe(map((list) => this.assignIcons(list)));
 
-    this.healthPassData$.subscribe(list => {
+    this.healthPassData$.subscribe((list) => {
       this.currentHealthPassData = list;
     });
 
     this.shouldDisplaySuccessMessage$ = this.healthPassStore.select(selectDisplaySuccessMessage);
-    this.shouldDisplaySuccessMessage$.subscribe(hasSuccessMessage => {
+    this.shouldDisplaySuccessMessage$.subscribe((hasSuccessMessage) => {
       if (hasSuccessMessage) {
         this.resetModal();
         this.store.dispatch(
@@ -70,7 +75,7 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
     });
 
     this.shouldDisplayErrorMessage$ = this.healthPassStore.select(selectDisplayErrorMessage);
-    this.shouldDisplayErrorMessage$.subscribe(hasErrorMessage => {
+    this.shouldDisplayErrorMessage$.subscribe((hasErrorMessage) => {
       if (hasErrorMessage) {
         this.store.dispatch(
           new baseActionClass.SnackbarError({
@@ -113,32 +118,45 @@ export class HealthPassComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.healthPassStore.dispatch(HealthPassPageActions.enter({school_id: this.session.school.id.toString()}));
+    this.hasFormsPrivileges = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.contact_trace_forms
+    );
+    this.hasNotificationPrivileges = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.contact_trace_exposure_notification
+    );
+    if (this.hasFormsPrivileges) {
+      this.healthPassStore.dispatch(
+        HealthPassPageActions.enter({ school_id: this.session.school.id.toString() })
+      );
+    }
 
     this.headerService.updateHeader();
   }
 
   openEditModal(healthPass: IHealthPass) {
-
     this.editModal = this.modalService.open(HealthPassEditComponent, {
       data: healthPass,
       onAction: this.onEdited.bind(this),
       onClose: this.resetModal.bind(this)
     });
-
   }
 
   onEdited(healthPass: IHealthPass): void {
-    this.healthPassStore.dispatch(HealthPassPageActions.edit({
-      healthPassList: this.currentHealthPassData.map(({ name, description, state }) => {
-        return state === healthPass.state ?
-          {name: healthPass.name, description: healthPass.description, state} :
-          { name, description, state };
-      }), school_id: this.session.school.id.toString()}));
+    this.healthPassStore.dispatch(
+      HealthPassPageActions.edit({
+        healthPassList: this.currentHealthPassData.map(({ name, description, state }) => {
+          return state === healthPass.state
+            ? { name: healthPass.name, description: healthPass.description, state }
+            : { name, description, state };
+        }),
+        school_id: this.session.school.id.toString()
+      })
+    );
   }
 
   resetModal() {
     this.editModal.dispose();
   }
-
 }
