@@ -104,16 +104,7 @@ export class CaseViewComponent implements OnInit {
   }
 
   filterCaseBody(updatedCase: any) {
-    if (this.isPrivacyOn) {
-      const {
-        ['firstname']: firstname,
-        ['lastname']: lastname,
-        ['extern_user_id']: externalUserId,
-        ...privacyUpdatedCase
-      } = updatedCase;
-      return privacyUpdatedCase;
-    }
-    return updatedCase;
+    return this.utils.filterCaseBody(updatedCase, this.isPrivacyOn);
   }
 
   doNotificationAction(caseId: number) {

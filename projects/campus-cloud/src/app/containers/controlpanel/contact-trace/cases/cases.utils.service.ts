@@ -22,7 +22,6 @@ import {
 import { CPSession } from '@campus-cloud/session';
 import { HttpParams } from '@angular/common/http';
 
-
 @Injectable()
 export class CasesUtilsService {
   sourceActivityName: ISourceActivityName[];
@@ -276,27 +275,26 @@ export class CasesUtilsService {
           columnNames.studentId,
           columnNames.healthIdentifier,
           columnNames.caseId,
-          columnNames.caseStatus,
+          columnNames.caseStatus
         ]
       : [
           columnNames.date,
           columnNames.healthIdentifier,
           columnNames.caseId,
-          columnNames.caseStatus,
+          columnNames.caseStatus
         ];
 
     const caseStatusMapping = {};
-    caseStatuses.forEach(caseStatus => {
+    caseStatuses.forEach((caseStatus) => {
       caseStatusMapping[caseStatus.id] = caseStatus.name;
     });
 
     cases = cases.map((item) => {
       return !privacyOn
         ? {
-            [columnNames.date]: CPDate.fromEpoch(
-              item.day_start_epoch,
-              this.session.tz
-            ).format(Formats.dateFormat),
+            [columnNames.date]: CPDate.fromEpoch(item.day_start_epoch, this.session.tz).format(
+              Formats.dateFormat
+            ),
             [columnNames.firstName]: item.firstname,
             [columnNames.lastName]: item.lastname,
             [columnNames.email]: item.extern_user_id,
@@ -306,14 +304,13 @@ export class CasesUtilsService {
             [columnNames.caseStatus]: caseStatusMapping[item.case_status_id]
           }
         : {
-          [columnNames.date]: CPDate.fromEpoch(
-            item.day_start_epoch,
-            this.session.tz
-          ).format(Formats.dateFormat),
-          [columnNames.healthIdentifier]: item.anonymous_identifier,
-          [columnNames.caseId]: item.case_id,
-          [columnNames.caseStatus]: caseStatusMapping[item.case_status_id]
-        };
+            [columnNames.date]: CPDate.fromEpoch(item.day_start_epoch, this.session.tz).format(
+              Formats.dateFormat
+            ),
+            [columnNames.healthIdentifier]: item.anonymous_identifier,
+            [columnNames.caseId]: item.case_id,
+            [columnNames.caseStatus]: caseStatusMapping[item.case_status_id]
+          };
     });
 
     return { columns: columns, data: cases };
@@ -411,7 +408,11 @@ export class CasesUtilsService {
   }
 
   exportCaseStats(cases, caseStatuses) {
-    const caseData = this.createCaseStatsCSVData(cases, caseStatuses, privacyConfigurationOn(this.session.g));
+    const caseData = this.createCaseStatsCSVData(
+      cases,
+      caseStatuses,
+      privacyConfigurationOn(this.session.g)
+    );
     createSpreadSheet(caseData.data, caseData.columns);
   }
 
@@ -434,5 +435,18 @@ export class CasesUtilsService {
 
     const content = await compressFiles(files);
     saveAs(content, `CASES_${this.fileDateSignature}.zip`);
+  }
+
+  filterCaseBody(updatedCase: any, isPrivacyOn = false) {
+    if (isPrivacyOn) {
+      const {
+        ['firstname']: firstname,
+        ['lastname']: lastname,
+        ['extern_user_id']: externalUserId,
+        ...privacyUpdatedCase
+      } = updatedCase;
+      return privacyUpdatedCase;
+    }
+    return updatedCase;
   }
 }
