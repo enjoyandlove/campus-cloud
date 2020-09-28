@@ -69,5 +69,46 @@ describe('CaseViewComponent', () => {
     expect(store).toBeTruthy();
   }));
 
+  it('filter update case for privacy', () => {
+    component.isPrivacyOn = true;
+    const caseExample = {
+      id: 88849,
+      type: 1,
+      user_id: 4888858,
+      extern_user_id: '',
+      firstname: '',
+      lastname: '',
+      notes: '',
+      date_last_modified: 1601311259,
+      current_status: {
+        id: 2,
+        rank: 3,
+        name: 'Symptomatic',
+        color: 'FF7A00',
+        case_count: 38,
+        user_list_id: 2103996
+      },
+      current_action: {
+        name: 'Send Instructions',
+        code: 'ct:self_reported_notify',
+        id: 9
+      },
+      student_id: '',
+      anonymous_identifier: 'KKJKJKJJKJ',
+      current_status_id: 2
+    };
+
+    const filterCaseBodyPrivacyOn = component.filterCaseBody(caseExample);
+    expect(filterCaseBodyPrivacyOn.hasOwnProperty('firstname')).toBeFalse();
+    expect(filterCaseBodyPrivacyOn.hasOwnProperty('lastname')).toBeFalse();
+    expect(filterCaseBodyPrivacyOn.hasOwnProperty('extern_user_id')).toBeFalse();
+
+    component.isPrivacyOn = false;
+    const filterCaseBodyPrivacyOff = component.filterCaseBody(caseExample);
+    expect(filterCaseBodyPrivacyOff.hasOwnProperty('firstname')).toBeTrue();
+    expect(filterCaseBodyPrivacyOff.hasOwnProperty('lastname')).toBeTrue();
+    expect(filterCaseBodyPrivacyOff.hasOwnProperty('extern_user_id')).toBeTrue();
+  });
+
   afterAll(() => store.resetSelectors());
 });
