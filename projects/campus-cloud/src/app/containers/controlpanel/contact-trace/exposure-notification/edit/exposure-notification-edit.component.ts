@@ -380,7 +380,7 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
             this.casesService
               .updateCase(
                 {
-                  ...this.casesById,
+                  ...this.util.filterCaseBody(this.casesById, this.isPrivacyOn),
                   perform_current_action: true
                 },
                 this.caseId,
