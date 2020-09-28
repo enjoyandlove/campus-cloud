@@ -35,11 +35,11 @@
           </div>
           </ng-template>
           <div class="right-col w-50">
-            <div
-              class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button"
-              (click)="caseLinkClicked.emit(user.id); resetModal();"
-            >
-              {{ 'contact_trace_notification_view_case' | cpI18n }}
+            <div class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary item-link-button">
+              <a class="link" *ngIf="user.case_id" (click)="resetModal();"
+                 [routerLink]="['/contact-trace', 'cases', user.case_id]">
+                {{ ('contact_trace_notification_view_case' | cpI18n) + ' (' + user.case_id  + ')' }}
+              </a>
             </div>
           </div>
         </div>
