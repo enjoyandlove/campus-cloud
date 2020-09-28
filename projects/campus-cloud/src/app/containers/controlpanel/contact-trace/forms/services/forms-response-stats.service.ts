@@ -11,30 +11,16 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 @Injectable({
   providedIn: 'root'
 })
-export class HealthDashboardService {
+export class FormResponseStatsService {
   constructor(
     private api: ApiService,
     private store: Store<ISnackbar>,
     private cpI18n: CPI18nService
   ) {}
 
-  getFormResponseStats(params?: HttpParams): Observable<FormResponse> {
+  getFormResponse(params?: HttpParams): Observable<FormResponse> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FORM_RESPONSE_STATS}/`;
 
-    return this.api.get(url, params).pipe(
-      catchError((error) => {
-        this.store.dispatch(
-          new baseActionClass.SnackbarError({
-            body: this.cpI18n.translate('something_went_wrong')
-          })
-        );
-        return throwError(error);
-      })
-    );
-  }
-
-  exportFormResponseStats(params?: HttpParams): Observable<FormResponse> {
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXPORT_FORM_RESPONSE_STATS}/`;
     return this.api.get(url, params).pipe(
       catchError((error) => {
         this.store.dispatch(

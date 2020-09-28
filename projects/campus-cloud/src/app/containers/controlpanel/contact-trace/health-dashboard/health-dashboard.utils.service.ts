@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
+import {
+  CPDate,
+  createSpreadSheet,
+  Formats,
+  privacyConfigurationOn
+} from '@projects/campus-cloud/src/app/shared/utils';
+import { ExportCategory } from './components';
 
 const EventType = {
   event: 'event',
@@ -11,7 +18,10 @@ const EventType = {
 
 @Injectable()
 export class HealthDashboardUtilsService {
-  constructor(public cpI18n: CPI18nService, public session: CPSession) {}
+  readonly fileDateSignature = CPDate.format(new Date(), 'YYYY_MM_DD_HHmm');
+
+  constructor(public cpI18nPipe: CPI18nPipe, public session: CPSession) {}
+
   getCompletedForm(res) {
     let newArray = [];
     res.map((item) => {
@@ -56,5 +66,156 @@ export class HealthDashboardUtilsService {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
+  }
+
+  createFormCSVData(forms, category, privacyOn: boolean = false) {
+    const columns = !privacyOn
+      ? [
+          this.cpI18nPipe.transform('first_name'),
+          this.cpI18nPipe.transform('last_name'),
+          this.cpI18nPipe.transform('email'),
+          this.cpI18nPipe.transform('student_id'),
+          this.cpI18nPipe.transform('contact_trace_health_identifier'),
+          this.cpI18nPipe.transform('contact_trace_case_id')
+        ]
+      : [
+          this.cpI18nPipe.transform('contact_trace_health_identifier'),
+          this.cpI18nPipe.transform('contact_trace_case_id')
+        ];
+
+    switch (category) {
+      case ExportCategory.AllForms:
+        columns.push(this.cpI18nPipe.transform('contact_trace_total_views'));
+        columns.push(this.cpI18nPipe.transform('contact_trace_total_completions'));
+        forms.map((item) => {
+          Object.entries(item.form_response_data).map((k: any) => {
+            if (!columns.includes(`${k[1].name}-Views`)) {
+              columns.push(`${k[1].name}-Views`);
+              columns.push(`${k[1].name}-Completions`);
+            }
+          });
+        });
+        break;
+      case ExportCategory.CompletedToday:
+        columns.push(this.cpI18nPipe.transform('contact_trace_total_completions'));
+        forms.map((item) => {
+          Object.entries(item.form_response_data).map((k: any) => {
+            if (!columns.includes(`${k[1].name}-Completions`)) {
+              columns.push(`${k[1].name}-Completions`);
+            }
+          });
+        });
+        break;
+      case ExportCategory.NeverCompleted:
+        break;
+      case ExportCategory.NotCompletedToday:
+        break;
+      case ExportCategory.SourceApp:
+        columns.push(this.cpI18nPipe.transform('contact_trace_total_views'));
+        columns.push(this.cpI18nPipe.transform('contact_trace_total_completions'));
+        break;
+      case ExportCategory.SourceWeb:
+        columns.push(this.cpI18nPipe.transform('contact_trace_total_views'));
+        columns.push(this.cpI18nPipe.transform('contact_trace_total_completions'));
+        break;
+      default:
+        break;
+    }
+
+    forms = forms.map((item) => {
+      let row = !privacyOn
+        ? {
+            [this.cpI18nPipe.transform('first_name')]: item.firstname,
+
+            [this.cpI18nPipe.transform('last_name')]: item.lastname,
+
+            [this.cpI18nPipe.transform('email')]: item.extern_user_id,
+
+            [this.cpI18nPipe.transform('student_id')]: item.student_id,
+
+            [this.cpI18nPipe.transform(
+              'contact_trace_health_identifier'
+            )]: item.anonymous_identifier,
+
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.id
+          }
+        : {
+            [this.cpI18nPipe.transform(
+              'contact_trace_health_identifier'
+            )]: item.anonymous_identifier,
+
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.id
+          };
+      switch (category) {
+        case ExportCategory.AllForms:
+          row = {
+            ...row,
+
+            [this.cpI18nPipe.transform('contact_trace_total_completions')]:
+              item.total_app_submissions_count + item.total_web_submissions_count,
+
+            [this.cpI18nPipe.transform('contact_trace_total_views')]:
+              item.total_app_views_count + item.total_web_views_count
+          };
+
+          Object.entries(item.form_response_data).map((k: any) => {
+            row = {
+              ...row,
+              [`${k[1].name}-Completions`]: k[1].app_submissions_count + k[1].web_submissions_count,
+              [`${k[1].name}-Views`]: k[1].app_views_count + k[1].web_views_count
+            };
+          });
+          break;
+        case ExportCategory.CompletedToday:
+          row = {
+            ...row,
+            [this.cpI18nPipe.transform('contact_trace_total_completions')]:
+              item.total_app_submissions_count + item.total_web_submissions_count
+          };
+          Object.entries(item.form_response_data).map((k: any) => {
+            row = {
+              ...row,
+              [`${k[1].name}-Completions`]: k[1].app_submissions_count + k[1].web_submissions_count
+            };
+          });
+          break;
+        case ExportCategory.NeverCompleted:
+          break;
+        case ExportCategory.NotCompletedToday:
+          break;
+        case ExportCategory.SourceApp:
+          row = {
+            ...row,
+
+            [this.cpI18nPipe.transform(
+              'contact_trace_total_completions'
+            )]: item.total_app_submissions_count,
+
+            [this.cpI18nPipe.transform('contact_trace_total_views')]: item.total_app_views_count
+          };
+          break;
+        case ExportCategory.SourceWeb:
+          row = {
+            ...row,
+
+            [this.cpI18nPipe.transform(
+              'contact_trace_total_completions'
+            )]: item.total_web_submissions_count,
+
+            [this.cpI18nPipe.transform('contact_trace_total_views')]: item.total_web_views_count
+          };
+          break;
+        default:
+          break;
+      }
+      return row;
+    });
+
+    return { columns: columns, data: forms };
+  }
+
+  exportForms(forms, category, privacyOn) {
+    const csvData = this.createFormCSVData(forms, category, privacyOn);
+    createSpreadSheet(csvData.data, csvData.columns);
   }
 }

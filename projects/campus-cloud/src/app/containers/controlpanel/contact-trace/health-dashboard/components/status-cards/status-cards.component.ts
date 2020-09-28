@@ -41,16 +41,20 @@ export class StatusCardsComponent implements OnDestroy {
       takeUntil(this.destroy$)
     );
 
-    this.store.pipe(
-      select(fromStore.selectAudienceFilter),
-      takeUntil(this.destroy$)
-    ).subscribe(value => this.audience = value);
+    this.store
+      .pipe(
+        select(fromStore.selectAudienceFilter),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((value) => (this.audience = value));
 
-    this.store.pipe(
-      select(fromStore.selectCaseStatusesByRank),
-      startWith({}),
-      takeUntil(this.destroy$)
-    ).subscribe((value) => (this.caseStatusesByRank = value));
+    this.store
+      .pipe(
+        select(fromStore.selectCaseStatusesByRank),
+        startWith({}),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((value) => (this.caseStatusesByRank = value));
   }
 
   onReviewReports() {

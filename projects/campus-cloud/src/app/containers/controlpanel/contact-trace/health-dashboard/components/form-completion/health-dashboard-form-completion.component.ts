@@ -11,30 +11,34 @@ import {
 } from '@campus-cloud/shared/services';
 import { HealthDashboardUtilsService } from '../../health-dashboard.utils.service';
 import { FormsService } from '../../../forms';
-import {
-  catchError,
-  distinctUntilChanged,
-  map,
-  share,
-  startWith,
-  switchMap,
-  takeUntil
-} from 'rxjs/operators';
+import { catchError, map, share, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, of, Subject, merge, combineLatest, from } from 'rxjs';
 import { HealthDashboardService } from '../../health-dashboard.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
+import { privacyConfigurationOn } from '@projects/campus-cloud/src/app/shared/utils';
 
 const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
+
+export enum ExportCategory {
+  AllForms = 1,
+  CompletedToday = 2,
+  NeverCompleted = 3,
+  NotCompletedToday = 4,
+  SourceApp = 5,
+  SourceWeb = 6
+}
 @Component({
   selector: 'cp-health-dashboard-form-completion',
   templateUrl: './health-dashboard-form-completion.component.html',
   styleUrls: ['./health-dashboard-form-completion.component.scss']
 })
 export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy {
+  isPrivacyOn: boolean = false;
   loading: boolean;
+  downloading: boolean = false;
   groupByDateForm;
   chartData;
   series;
@@ -79,6 +83,10 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
   formResponseStream$ = null;
 
   destroy$ = new Subject();
+
+  public get exportCategory(): typeof ExportCategory {
+    return ExportCategory;
+  }
 
   constructor(
     public store: Store<{ healthDashboard: fromStore.HealthDashboardState }>,
@@ -228,6 +236,57 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
     this.formFilter$.next(this.filters);
   }
 
+  downloadFormResponse(category) {
+    this.downloading = true;
+    let params;
+
+    params = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    if (this.filters.length > 0) {
+      params = params.append('form_ids', this.filters.join(','));
+    }
+    if (this.audienceFilter !== null) {
+      params = params.append('user_list_id', this.audienceFilter.listId);
+    }
+
+    if (this.dateFilter !== null) {
+      params = params.append('start', this.dateFilter.start).append('end', this.dateFilter.end);
+    }
+
+    if (category === ExportCategory.SourceApp) {
+      params = params.append('collection_method', '1');
+    } else if (category === ExportCategory.SourceWeb) {
+      params = params.append('collection_method', '2');
+    } else {
+      params = params.append('category', category);
+    }
+
+    this.service.exportFormResponseStats(params).subscribe((data) => {
+      this.downloading = false;
+      this.utils.exportForms(data, category, this.isPrivacyOn);
+    });
+  }
+
+  onExportCompleted() {
+    this.downloadFormResponse(ExportCategory.CompletedToday);
+  }
+
+  onExportNotCompleted() {
+    this.downloadFormResponse(ExportCategory.NotCompletedToday);
+  }
+
+  onExportNeverCompleted() {
+    this.downloadFormResponse(ExportCategory.NeverCompleted);
+  }
+
+  onExportSourceApp() {
+    this.downloadFormResponse(ExportCategory.SourceApp);
+  }
+
+  onExportSourceWeb() {
+    this.downloadFormResponse(ExportCategory.SourceWeb);
+  }
+
   buildChartSeries(res) {
     this.sources = {
       tileViews: 0,
@@ -361,10 +420,10 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
   }
 
   ngOnInit(): void {
+    this.isPrivacyOn = privacyConfigurationOn(this.session.g);
     this.registerFilterStates();
 
     const formsSearchSource = this.formsSearchTermStream.pipe(
-      distinctUntilChanged(),
       map((searchTerm: string) => {
         this.formsSearchTerm = searchTerm;
         this.formsPageCounter = 1;
