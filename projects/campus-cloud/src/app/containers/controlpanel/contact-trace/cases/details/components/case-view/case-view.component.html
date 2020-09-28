@@ -17,7 +17,7 @@
             </button>
           </div>
         </div>
-        <div class="row mt-3" *ngIf="!privacyTurnedOn()">
+        <div class="row mt-3" *ngIf="!isPrivacyOn">
           <div class="col-3">
             <p class="title">{{ 'first_name' | cpI18n }}</p>
           </div>
@@ -34,7 +34,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="row mt-1" *ngIf="!privacyTurnedOn()">
+        <div class="row mt-1" *ngIf="!isPrivacyOn">
           <div class="col-3">
             <p class="title">{{ 'last_name' | cpI18n }}</p>
           </div>
@@ -51,7 +51,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="row mt-1" *ngIf="!privacyTurnedOn()">
+        <div class="row mt-1" *ngIf="!isPrivacyOn">
           <div class="col-3">
             <p class="title">{{ 'email' | cpI18n }}</p>
           </div>
@@ -68,7 +68,7 @@
             </ng-template>
           </div>
         </div>
-        <div *ngIf="newCase.student_id && !privacyTurnedOn()" class="row mt-1">
+        <div *ngIf="newCase.student_id && !isPrivacyOn" class="row mt-1">
           <div class="col-3">
             <p class="title">{{ 'student_id' | cpI18n }}</p>
           </div>
@@ -86,7 +86,7 @@
             </ng-template>
           </div>
         </div>
-        <div class="row" [ngClass]="{'mt-3' : privacyTurnedOn()}">
+        <div class="row" [ngClass]="{'mt-3' : isPrivacyOn}">
           <div class="col-3">
             <p
               class="title">{{ 'contact_trace_health_identifier' | cpI18n }}</p>

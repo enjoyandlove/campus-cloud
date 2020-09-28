@@ -23,6 +23,7 @@ export class CaseViewComponent implements OnInit {
   @Output() onSubmitted: EventEmitter<boolean> = new EventEmitter();
   @Output() onPendingActionFinished: EventEmitter<boolean> = new EventEmitter();
   isEditing: boolean;
+  isPrivacyOn: boolean;
   newCase: ICase;
   selectedStatusFilter: IItem;
   caseStatus: ICaseStatus[];
@@ -46,7 +47,7 @@ export class CaseViewComponent implements OnInit {
     const caseId = this.case.id;
     const body = this.newCase;
     const payload = {
-      body,
+      body: this.filterCaseBody(body),
       id: caseId
     };
     this.store.dispatch(new fromStore.EditCase(payload));
@@ -80,6 +81,7 @@ export class CaseViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isPrivacyOn = privacyConfigurationOn(this.session.g);
     if (this.case) {
       this.newCase = JSON.parse(JSON.stringify(this.case));
     }
@@ -88,16 +90,30 @@ export class CaseViewComponent implements OnInit {
 
   traceContactAction(caseItem: ICase) {
     this.onPendingActionFinished.emit(false);
-    const updatedCase = {
+    let updatedCase = {
       ...caseItem,
       perform_current_action: true
     };
+    updatedCase = this.filterCaseBody(updatedCase);
     this.store.dispatch(
       new fromStore.EditCase({
         body: updatedCase,
         id: caseItem.id
       })
     );
+  }
+
+  filterCaseBody(updatedCase: any) {
+    if (this.isPrivacyOn) {
+      const {
+        ['firstname']: firstname,
+        ['lastname']: lastname,
+        ['extern_user_id']: externalUserId,
+        ...privacyUpdatedCase
+      } = updatedCase;
+      return privacyUpdatedCase;
+    }
+    return updatedCase;
   }
 
   doNotificationAction(caseId: number) {
@@ -112,9 +128,5 @@ export class CaseViewComponent implements OnInit {
         })
       );
     }
-  }
-
-  privacyTurnedOn() {
-    return privacyConfigurationOn(this.session.g);
   }
 }
