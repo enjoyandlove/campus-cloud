@@ -39,7 +39,7 @@
       "url": "/contact-trace/health-dashboard"
     },
     {
-      "privilege": 41,
+      "privilege": "41|43",
       "label": "settings",
       "clearParams": true,
       "amplitude": "Settings",

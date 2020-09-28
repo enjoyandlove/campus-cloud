@@ -1,12 +1,12 @@
 <div>
     <div>
         <div class="page-container">
-            <div class="mb-4 mt-5">
+            <div class="mb-4 mt-5" *ngIf="hasFormsPrivileges">
                <ready-ui-card>
                     <cp-health-pass-list [list]="healthPassData$ | async" (select)="openEditModal($event)"></cp-health-pass-list>
                 </ready-ui-card>
             </div>
-            <div>
+            <div *ngIf="hasNotificationPrivileges">
                 <ready-ui-card>
                     <cp-notification-templates></cp-notification-templates>
                 </ready-ui-card>
