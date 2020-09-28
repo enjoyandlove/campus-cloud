@@ -223,7 +223,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
       const userIds = cases.map((user) => user.user_id);
       this.userList$ = of(userIds);
       this.notification.user_ids = userIds;
-      this.toSpecificUsers = cases.map((user) => [user.firstname, user.lastname].join(' '));
+      this.toSpecificUsers = cases.map((user) =>
+        this.isPrivacyOn ? user.anonymous_identifier : [user.firstname, user.lastname].join(' ')
+      );
     });
   }
 

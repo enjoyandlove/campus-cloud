@@ -14,6 +14,8 @@ import { AudienceService } from '@campus-cloud/containers/controlpanel/audience/
 })
 export class AudienceUsersTypeaheadComponent implements OnInit {
   @Input() withChips: Array<any> = [];
+  @Input() isCt = false;
+  @Input() isPrivacyOn = false;
 
   @Output() users: EventEmitter<Array<number>> = new EventEmitter();
 
@@ -37,9 +39,10 @@ export class AudienceUsersTypeaheadComponent implements OnInit {
   }
 
   onSearch(query) {
-    const search = new HttpParams()
+    let search = new HttpParams()
       .append('search_str', query)
       .append('school_id', this.session.g.get('school').id.toString());
+    search = this.isCt ? search.append('is_ct', '1') : search;
 
     this.service
       .getUsers(search)
@@ -49,10 +52,10 @@ export class AudienceUsersTypeaheadComponent implements OnInit {
             return [{ label: this.cpI18n.translate('no_results') }];
           }
 
-          return users.map(({ id, firstname, lastname, email }) => {
+          return users.map(({ id, firstname, lastname, email, anonymous_identifier }) => {
             return {
               id,
-              label: `${firstname} ${lastname} (${email})`
+              label: this.isPrivacyOn ? anonymous_identifier : `${firstname} ${lastname} (${email})`
             };
           });
         })

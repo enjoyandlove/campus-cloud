@@ -172,6 +172,8 @@
               <cp-audience-users-typeahead
                 [ngClass]="{'typeahead-validation-error': highlightFormError && (!notification.user_ids || notification.user_ids.length === 0)}"
                 [withChips]="[]"
+                [isCt]="true"
+                [isPrivacyOn]="isPrivacyOn"
                 (users)="usersChanged($event)"
               >
               </cp-audience-users-typeahead>
