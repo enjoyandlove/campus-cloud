@@ -3,7 +3,7 @@ import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { CPSession } from '@campus-cloud/session';
 
 import { mockSchool } from '@campus-cloud/session/mock';
-import { CPTestModule } from '@campus-cloud/shared/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ChartsUtilsService } from '@campus-cloud/shared/services';
 import { HealthDashboardLocationViewComponent } from '.';
 import { ProvidersService } from '@controlpanel/manage/services/providers.service';
@@ -23,6 +23,7 @@ describe('HealthDashboardLocationViewComponent', () => {
   let component: HealthDashboardLocationViewComponent;
   let fixture: ComponentFixture<HealthDashboardLocationViewComponent>;
   let session: CPSession;
+  configureTestSuite();
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HealthDashboardLocationViewComponent],
