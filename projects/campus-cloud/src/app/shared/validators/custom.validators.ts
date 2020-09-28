@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, ValidationErrors, FormControl, Validators, FormGroup, ValidatorFn } from '@angular/forms';
 
 export class CustomValidators {
   static positiveInteger(control: AbstractControl): ValidationErrors | null {
@@ -13,6 +13,25 @@ export class CustomValidators {
     return (control: AbstractControl) => {
       return options.includes(control.value) ? null : { oneOf: true };
     };
+  }
+
+  static requireAtLeastOne(controlNames: string[]): ValidatorFn {
+    return (group: FormGroup): ValidationErrors | null => {
+      let hasValue = false;
+      for (let i = 0; i < controlNames.length; i++) {
+        const control = group.get(controlNames[i]);
+        if (control.value && control.value.trim()) {
+          hasValue = true;
+          break;
+        }
+      }
+      return !hasValue ? {requireAtLeastOne: controlNames.join(', ')} : null;
+    };
+  }
+
+  static isValidURL(control: AbstractControl): ValidationErrors | null {
+    const reg = RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
+    return control.value && !reg.test(control.value) ? { invalidURL: true } : null;
   }
 
   static requiredNonEmpty(control: AbstractControl): ValidationErrors | null {

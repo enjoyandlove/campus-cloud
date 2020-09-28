@@ -72,7 +72,6 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   onSubmit() {
     this.formError = false;
     this.utils.clearDateErrors(this.form);
-
     if (this.form.invalid) {
       this.enableSaveButton();
       this.formError = true;

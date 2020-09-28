@@ -1023,6 +1023,9 @@
   "compose": {
     "message": "Créer une annonce"
   },
+  "conference_link": {
+    "message": "Conference Link"
+  },
   "confirm": {
     "message": "Confirmer"
   },
@@ -2401,6 +2404,9 @@
   },
   "maps": {
     "message": "Lieux"
+  },
+  "maximum_255_characters": {
+    "message": "Maximum 255 characters."
   },
   "member": {
     "message": "Membre"
@@ -4855,6 +4861,9 @@
   },
   "urgent": {
     "message": "Important"
+  },
+  "url_is_invalid": {
+    "message": "URL is invalid."
   },
   "users": {
     "message": "Utilisateurs"
