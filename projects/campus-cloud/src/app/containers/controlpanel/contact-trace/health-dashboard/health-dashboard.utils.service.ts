@@ -140,14 +140,14 @@ export class HealthDashboardUtilsService {
               'contact_trace_health_identifier'
             )]: item.anonymous_identifier,
 
-            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.id
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.case_id
           }
         : {
             [this.cpI18nPipe.transform(
               'contact_trace_health_identifier'
             )]: item.anonymous_identifier,
 
-            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.id
+            [this.cpI18nPipe.transform('contact_trace_case_id')]: item.case_id
           };
       switch (category) {
         case ExportCategory.AllForms:
