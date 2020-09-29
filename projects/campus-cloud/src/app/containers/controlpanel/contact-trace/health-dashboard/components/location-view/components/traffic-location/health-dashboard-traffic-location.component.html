@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="row dashboard-table">
-    <div class="col-12">
+    <div class="col-12" class="table_traffic" (scroll)="scrollHandler($event)">
       <ng-container *ngIf="!locationTraffics.length">
         <p class="dashboard-table--no-results text-center">
           {{ 'dashboard_no_data_found' | cpI18n }}
@@ -29,13 +29,13 @@
           <div class="col-1">
             <p>#</p>
           </div>
-          <div class="col-5 no-left-padding">
+          <div class="col-4 no-left-padding">
             <p>{{ 'location' | cpI18n }}</p>
           </div>
           <div class="col-2 no-left-padding traffic-content">
             <p>{{ 'contact_trace_location_traffic' | cpI18n }}</p>
           </div>
-          <div class="col-3 no-right-padding traffic-content">
+          <div class="col-4 no-right-padding traffic-content">
             <p>{{ 'contact_trace_location_peak_traffic' | cpI18n }}</p>
           </div>
         </div>
@@ -48,13 +48,13 @@
                 <div class="col-1 no-right-padding">
                   {{ index + 1 }}
                 </div>
-                <div class="col-5 no-left-padding text-truncate">
+                <div class="col-4 no-left-padding text-truncate">
                   {{ item.provider_name }}
                 </div>
                 <div class="col-2 no-left-padding traffic-content">
                   {{ item.total_visits }}
                 </div>
-                <div class="col-3 no-right-padding traffic-content">
+                <div class="col-4 no-right-padding traffic-content">
                   {{ item.peak_hourly_visits }}
                 </div>
               </div>

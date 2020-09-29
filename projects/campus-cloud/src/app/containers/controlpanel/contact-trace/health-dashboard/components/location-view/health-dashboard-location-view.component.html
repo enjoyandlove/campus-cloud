@@ -46,6 +46,8 @@
             <cp-spinner *ngIf="trafficLoading" class="spinner"></cp-spinner>
             <cp-health-dashboard-traffic-location [locationTraffics]="locationTraffics"
                                                   (selectedSort)="onSelectSortBy($event)"
+                                                  (loadMore)="onScrollDown($event)"
+                                                  [isUpdated]="!trafficLoading"
             ></cp-health-dashboard-traffic-location>
           </div>
       </div>
