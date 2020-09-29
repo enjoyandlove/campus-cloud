@@ -292,7 +292,10 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
   onToOptionChanged(option): void {
     this.selectedToOption = option;
     if (option.action === 'case_status') {
+      delete this.notification.user_ids;
       this.getCaseStatuses();
+    } else {
+      delete this.notification.list_ids;
     }
   }
 
