@@ -192,7 +192,7 @@ export class HealthDashboardFormCompletionComponent implements OnInit, OnDestroy
     const params = new HttpParams()
       .set('school_id', this.session.school.id.toString())
       .set('is_template', 'false')
-      .set('status', '1')
+      .set('statuses', '1,-1')
       .set(
         'search_str',
         Boolean(this.formsSearchTerm && this.formsSearchTerm.trim().length)
