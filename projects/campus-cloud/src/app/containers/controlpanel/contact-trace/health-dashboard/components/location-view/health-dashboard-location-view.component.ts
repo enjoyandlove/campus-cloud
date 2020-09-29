@@ -33,6 +33,9 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   isQrCodeSearching = false;
   qrCodeData = [];
 
+  trafficPageCounter = 0;
+  trafficPaginationCountPerPage = 20;
+
   selectedQrCode = [];
 
   locationVisits = {
@@ -102,6 +105,7 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
   }
 
   fetchTraffic() {
+    this.trafficLoading = true;
     let params = new HttpParams()
       .append('school_id', this.session.school.id.toString())
       .append('service_id', this.session.schoolCTServiceId.toString())
@@ -120,7 +124,11 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
       this.trafficService$.unsubscribe();
     }
     this.trafficService$ = this.providerService
-      .getProviders(1, 5, params)
+      .getProviders(
+        this.trafficPageCounter * this.trafficPaginationCountPerPage + 1,
+        (this.trafficPageCounter + 1) * this.trafficPaginationCountPerPage,
+        params
+      )
       .pipe(
         map((results: any[]) => {
           this.trafficLoading = false;
@@ -130,7 +138,14 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
         catchError(() => of([]))
       )
       .subscribe((data) => {
-        this.locationTraffics = [...data];
+        this.locationTraffics =
+          this.trafficPageCounter === 0 ? [...data] : [...this.locationTraffics, ...data];
+
+        if (data.length === this.trafficPaginationCountPerPage) {
+          this.trafficPageCounter++;
+        } else {
+          this.trafficPageCounter = -1;
+        }
       });
   }
 
@@ -160,6 +175,7 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
           this.locationChartData[new Date(item.check_in_time_epoch * 1000).getHours()].checkins++;
         });
         this.calculateVisits(results);
+        this.trafficPageCounter = 0;
         this.fetchTraffic();
       });
   }
@@ -234,9 +250,15 @@ export class HealthDashboardLocationViewComponent implements OnInit, OnDestroy {
     this.providerFilter$.next(this.filters);
   }
 
+  onScrollDown() {
+    if (this.trafficPageCounter !== -1) {
+      this.fetchTraffic();
+    }
+  }
+
   onSelectSortBy(item) {
-    this.trafficLoading = true;
     this.selectedSortItem = item.action;
+    this.trafficPageCounter = 0;
     this.fetchTraffic();
   }
 
