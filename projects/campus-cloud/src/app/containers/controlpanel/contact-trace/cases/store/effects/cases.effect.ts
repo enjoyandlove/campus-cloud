@@ -1,19 +1,19 @@
-import { map, tap, mergeMap, catchError } from 'rxjs/operators';
-import { Actions, Effect, ofType, createEffect } from '@ngrx/effects';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { of, Observable } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
-import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
-
-import { CasesService } from '../../cases.service';
-import * as fromActions from '../actions';
-import { ICase, ICaseStatus } from '../../cases.interface';
-import { CasesUtilsService } from '../../cases.utils.service';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
+import { Observable, of } from 'rxjs';
+import { catchError, debounceTime, map, mergeMap, tap, switchMap } from 'rxjs/operators';
 import { CasesAmplitudeService } from '../../cases.amplitude.service';
+import { ICase, ICaseStatus } from '../../cases.interface';
+import { CasesService } from '../../cases.service';
+import { CasesUtilsService } from '../../cases.utils.service';
+import * as fromActions from '../actions';
+
 
 @Injectable()
 export class CasesEffect {
@@ -31,7 +31,8 @@ export class CasesEffect {
     fromActions.GetCasesSuccess | fromActions.GetCasesFail
   > = this.actions$.pipe(
     ofType(fromActions.caseActions.GET_CASES),
-    mergeMap((action: fromActions.GetCases) => {
+    debounceTime(50),
+    switchMap((action: fromActions.GetCases) => {
       const { startRange, endRange, state } = action.payload;
       const params = this.utils.defaultParams(state);
 
@@ -47,7 +48,8 @@ export class CasesEffect {
     fromActions.GetFilteredCasesSuccess | fromActions.GetFilteredCasesFail
   > = this.actions$.pipe(
     ofType(fromActions.caseActions.GET_FILTERED_CASES),
-    mergeMap((action: fromActions.GetFilteredCases) => {
+    debounceTime(50),
+    switchMap((action: fromActions.GetFilteredCases) => {
       const { startRange, endRange, state } = action.payload;
       const params = this.utils.defaultParams(state);
       return this.service.getCases(startRange, endRange, params).pipe(
@@ -163,7 +165,8 @@ export class CasesEffect {
     fromActions.GetCaseStatusSuccess | fromActions.GetCaseStatusFail
   > = this.actions$.pipe(
     ofType(fromActions.caseActions.GET_CASE_STATUS),
-    mergeMap((action: fromActions.GetCaseStatus) => {
+    debounceTime(50),
+    switchMap((action: fromActions.GetCaseStatus) => {
       let params;
       if (action.payload) {
         const state = action.payload.state;
