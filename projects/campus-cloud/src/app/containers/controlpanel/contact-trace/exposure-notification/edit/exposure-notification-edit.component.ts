@@ -194,7 +194,9 @@ export class ExposureNotificationEditComponent implements OnInit, OnDestroy {
     this.getCasesById$
       .pipe(filter((caseStatus) => caseStatus !== null && caseStatus.user_list_id !== null))
       .subscribe(({ user_list_id }) => {
-        this.notification.list_ids = [user_list_id];
+        if (this.selectedToOption && this.selectedToOption.action === 'case_status') {
+          this.notification.list_ids = [user_list_id];
+        }
       });
 
     // Apply for exposed status which comes from Health Dashboard "Send Message" button
