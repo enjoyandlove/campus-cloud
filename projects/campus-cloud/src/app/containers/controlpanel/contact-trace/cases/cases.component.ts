@@ -21,7 +21,7 @@ import { baseActionClass } from '@campus-cloud/store';
 import { CasesListActionBoxComponent } from './list/components/list-action-box';
 import { HttpParams } from '@angular/common/http';
 import { Promise } from 'core-js';
-import { get } from 'lodash';
+import { debounce } from 'lodash';
 
 interface IState {
   search_str: string;
@@ -75,9 +75,9 @@ export class CasesComponent extends BaseComponent implements OnInit, OnDestroy {
     private util: CasesUtilsService,
     private service: CasesService,
     private session: CPSession,
-    private router: Router
   ) {
     super();
+    this.onSearch = debounce(this.onSearch, 500);
   }
 
   setStatusFromNavigationState() {
