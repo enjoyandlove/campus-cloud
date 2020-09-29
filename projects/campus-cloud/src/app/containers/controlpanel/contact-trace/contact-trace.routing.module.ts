@@ -47,7 +47,10 @@ const appRoutes: Routes = [
         data: {
           zendesk: 'health-pass',
           amplitude: 'Health Pass',
-          privilege: CP_PRIVILEGES_MAP.contact_trace_forms
+          privileges: [
+            CP_PRIVILEGES_MAP.contact_trace_forms,
+            CP_PRIVILEGES_MAP.contact_trace_exposure_notification
+          ]
         },
         loadChildren: () =>
           import('./health-pass/health-pass.module').then((m) => m.HealthPassModule)

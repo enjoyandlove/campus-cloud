@@ -9,10 +9,10 @@ import {
   groupByQuarter,
   groupByWeek
 } from '@campus-cloud/shared/services';
-import { HealthDashboardUtilsService } from '../../health-dashboard.utils.service';
-import { FormsService } from '../../../forms';
+import { ExportCategory, HealthDashboardUtilsService } from '../../health-dashboard.utils.service';
+import { FormsService } from '@controlpanel/contact-trace/forms/services/forms.service';
 import { catchError, map, share, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { Observable, of, Subject, merge, combineLatest, from } from 'rxjs';
+import { combineLatest, from, merge, Observable, of, Subject } from 'rxjs';
 import { HealthDashboardService } from '../../health-dashboard.service';
 import { Store } from '@ngrx/store';
 import * as fromStore from '../../store';
@@ -22,14 +22,6 @@ const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
 
-export enum ExportCategory {
-  AllForms = 1,
-  CompletedToday = 2,
-  NeverCompleted = 3,
-  NotCompletedToday = 4,
-  SourceApp = 5,
-  SourceWeb = 6
-}
 @Component({
   selector: 'cp-health-dashboard-form-completion',
   templateUrl: './health-dashboard-form-completion.component.html',

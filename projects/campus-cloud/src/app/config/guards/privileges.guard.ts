@@ -23,30 +23,61 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
   canActivateChild(activatedRoute: ActivatedRouteSnapshot) {
     const privilege = this.getPrivilegeFromRouteData(activatedRoute.data);
-    if (!privilege) {
-      return true;
+    if (privilege) {
+      return this.checkPrivilege(privilege);
     }
 
-    return this.checkPrivilege(privilege);
+    const privileges = this.getPrivilegesFromRouteData(activatedRoute.data);
+    if (privileges) {
+      return this.checkPrivileges(privileges);
+    }
+
+    return true;
   }
 
   canActivate(activatedRoute: ActivatedRouteSnapshot) {
     const privilege = this.getPrivilegeFromRouteData(activatedRoute.data);
-    if (!privilege) {
-      return true;
+    if (privilege) {
+      return this.checkPrivilege(privilege);
     }
 
-    return this.checkPrivilege(privilege);
+    const privileges = this.getPrivilegesFromRouteData(activatedRoute.data);
+    if (privileges) {
+      return this.checkPrivileges(privileges);
+    }
+
+    return true;
   }
 
   private getPrivilegeFromRouteData(data: any) {
     return _get(data, ['privilege'], null);
   }
 
+  private getPrivilegesFromRouteData(data: any) {
+    return _get(data, ['privileges'], null);
+  }
+
   private checkPrivilege(privilege: number) {
     const hasPrivileges = this.hasPrivileges(privilege);
 
     if (!hasPrivileges) {
+      this.router.navigate(['/dashboard']);
+      return;
+    }
+
+    return true;
+  }
+
+  private checkPrivileges(privileges: Array<number>) {
+    let hasPrivilege = false;
+    for (let i = 0; i < privileges.length; i++) {
+      hasPrivilege = this.hasPrivileges(privileges[i]);
+      if (hasPrivilege) {
+        break;
+      }
+    }
+
+    if (!hasPrivilege) {
       this.router.navigate(['/dashboard']);
       return;
     }

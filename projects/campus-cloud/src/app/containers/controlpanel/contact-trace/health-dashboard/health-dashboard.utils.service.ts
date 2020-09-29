@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
-import {
-  CPDate,
-  createSpreadSheet,
-  Formats,
-  privacyConfigurationOn
-} from '@projects/campus-cloud/src/app/shared/utils';
-import { ExportCategory } from './components';
+import { CPDate, createSpreadSheet } from '@projects/campus-cloud/src/app/shared/utils';
 
 const EventType = {
   event: 'event',
   service: 'service',
   orientation: 'user_event'
 };
+
+export enum ExportCategory {
+  AllForms = 1,
+  CompletedToday = 2,
+  NeverCompleted = 3,
+  NotCompletedToday = 4,
+  SourceApp = 5,
+  SourceWeb = 6
+}
 
 @Injectable()
 export class HealthDashboardUtilsService {
