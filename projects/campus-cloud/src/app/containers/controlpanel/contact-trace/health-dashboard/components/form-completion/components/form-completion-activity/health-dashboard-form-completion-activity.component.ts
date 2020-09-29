@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CPI18nPipe } from '@projects/campus-cloud/src/app/shared/pipes';
-import { ExportCategory } from '../..';
+import { ExportCategory } from '../../../../health-dashboard.utils.service';
 
 @Component({
   selector: 'cp-health-dashboard-form-completion-activity',
